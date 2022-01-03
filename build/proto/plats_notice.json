@@ -1,0 +1,13 @@
+{
+    "name": "平台公告管理",
+    "description": "平台公告管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=67042, http://18.166.154.73:8090/pages/viewpage.action?pageId=65748",
+    "list": [
+        "admin/plats_notice/table_columns",
+        "admin/plats_notice/index",
+        "admin/plats_notice/store",
+        "admin/plats_notice/update/{id}",
+        "admin/plats_notice/show/{id}",
+        "admin/resource/upload"
+    ]
+}

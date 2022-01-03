@@ -1,0 +1,12 @@
+import Layout from "@/views/layout/view/Layout.vue";
+
+const layoutRouter = {
+    path: "/layout",
+    name: "layout",
+    component: Layout,
+    children: [
+${routs}
+    ]
+}
+
+export default layoutRouter;

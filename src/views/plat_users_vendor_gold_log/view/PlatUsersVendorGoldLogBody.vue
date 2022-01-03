@@ -1,0 +1,152 @@
+<template>
+    <div>
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
+            <el-table-column prop="plat_id" :label="tableColumns['plat_id'].name" width="130px" align="center">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["plat_id"].options[row.plat_id] }}
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="vendor_id" :label="tableColumns['vendor_id'].name" width="130px" align="center">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["vendor_id"].options[row.vendor_id] }}
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="order_no" :label="tableColumns['order_no'].name" width="150px" align="center">
+            </el-table-column>
+            <el-table-column prop="order_at" :label="tableColumns['order_at'].name" width="150px" align="center">
+            </el-table-column>
+            <el-table-column prop="user_id" :label="tableColumns['user_id'].name" align="center" width="100px">
+                <template slot-scope="{ row }">
+                    <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
+                        {{ row.user_id }}
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="nick_name" :label="tableColumns['nick_name'].name" align="center" width="110px">
+            </el-table-column>
+            <el-table-column prop="type" :label="tableColumns['type'].name" align="center" width="80">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["type"].options[row.type] }}
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="gold" :label="tableColumns['gold'].name" align="center" width="120px">
+            </el-table-column>
+            <el-table-column prop="status" :label="tableColumns['status'].name" align="center" width="65">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["status"].options[row.status] }}
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="$t('plat_agent_bind.note')" align="center">
+                <template slot-scope="{ row }">
+                    <div v-if="row.status === 2">
+                        {{ JSON.parse(row.response).third_response }}
+                    </div>
+                    <div v-else>-</div>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="$t('common.operating')" align="center" width="320px">
+                <template slot-scope="{ row }">
+                    <div v-if="checkUnique(unique.plat_users_vendor_gold_log_update_manual) && row.status === 1" >
+                        <el-button
+                            type="primary"
+                            size="small"
+                            @click="handlerAutoCheck(row.vendor_gold_log_id)"
+                            >{{ buttonParam.check }}</el-button
+                        >
+                        <el-button
+                            type="primary"
+                            size="small"
+                            @click="handlerUpdate(row.vendor_gold_log_id, '0', buttonParam.fail)"
+                            >{{ buttonParam.fail }}</el-button
+                        >
+                        <el-button
+                            type="primary"
+                            size="small"
+                            @click="handlerUpdate(row.vendor_gold_log_id, '1', buttonParam.success)"
+                            >{{ buttonParam.success }}</el-button
+                        >
+                    </div>
+                    <div v-else>-</div>
+                </template>
+            </el-table-column>
+        </el-table>
+        <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
+    </div>
+</template>
+<script lang="ts">
+import AbstractView from "@/core/abstract/AbstractView";
+import { Component } from "vue-property-decorator";
+import { DialogStatus } from "@/core/global/Constant";
+import { checkUnique, unique } from "@/core/global/Permission";
+import PlatUsersVendorGoldLogProxy from "../proxy/PlatUsersVendorGoldLogProxy";
+import Pagination from "@/components/Pagination.vue";
+import GlobalVar from "@/core/global/GlobalVar";
+
+@Component({
+    components: {
+        Pagination,
+    },
+})
+export default class PlatUsersVendorGoldLogBody extends AbstractView {
+    //权限标识
+    private unique = unique;
+    private checkUnique = checkUnique;
+    //网络状态
+    private net_status = GlobalVar.net_status;
+    // proxy
+    private myProxy: PlatUsersVendorGoldLogProxy = this.getProxy(PlatUsersVendorGoldLogProxy);
+    // proxy property
+    private tableColumns = this.myProxy.tableData.columns;
+    private tableData = this.myProxy.tableData.list;
+    private pageInfo = this.myProxy.tableData.pageInfo;
+    private listQuery = this.myProxy.listQuery;
+
+    private handlerPageSwitch(page: number) {
+        this.listQuery.page_count = page;
+        this.myProxy.onQuery();
+    }
+
+    private handlerUpdate(vendor_gold_log_id: any, status: any, title: string) {
+        this.myProxy.confirmData.vendor_gold_log_id = vendor_gold_log_id;
+        this.myProxy.confirmData.status = status;
+        this.myProxy.confirmData.title = title;
+        this.myProxy.onUpdate();
+    }
+
+    private handlerAutoCheck(vendor_gold_log_id: any){
+        this.myProxy.admin_plat_users_vendor_gold_log_auto_check(vendor_gold_log_id);
+    }
+
+    private buttonParam = {
+        check: this.$t("plat_users_vendor_gold_log.btnTxtAutoCheck"),
+        fail: this.$t("plat_users_vendor_gold_log.btnTxtSetFail"),
+        success: this.$t("plat_users_vendor_gold_log.btnTxtSetSuccess"),
+    };
+
+    // 打开用户详情
+    private showUserDetail(user_id: number) {
+        this.myProxy.onShowUserDetail(user_id);
+    }
+}
+</script>
+
+<style scoped lang="scss">
+@import "@/styles/common.scss";
+</style>

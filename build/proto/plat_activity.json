@@ -1,0 +1,17 @@
+{
+    "name": "活动管理",
+    "description": "活动管理",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6559212",
+    "list": [
+        "admin/plat_activity/table_columns",
+        "admin/plat_activity/index",
+        "admin/plat_activity/store",
+        "admin/plat_activity/show/{id}",
+        "admin/plat_activity/update/{id}",
+        "admin/plat/index",
+        "admin/plat_activity_model/index",
+        "admin/plat_activity_rule/index",
+        "admin/plat_activity_model/show/{id}",
+        "admin/resource/upload"
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "name": "平台邮件",
+    "description": "平台邮件",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=65999",
+    "list": [
+        "admin/plat_mail_content/table_columns",
+        "admin/plat_mail_content/index",
+        "admin/plat_mail_content/show/{content_id}",
+        "admin/plat_mail_content/store",
+        "admin/plat_mail_content/update/{content_id}",
+        "admin/plat_users_mail/table_columns",
+        "admin/plat_users_mail/index"
+    ]
+}

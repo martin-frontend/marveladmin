@@ -1,0 +1,10 @@
+{
+    "name": "兑换流水审核",
+    "description": "兑换流水审核",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1705468",
+    "list": [
+        "admin/gold_water/table_columns",
+        "admin/gold_water/index",
+        "admin/gold_water/approved/{id}"
+    ]
+}

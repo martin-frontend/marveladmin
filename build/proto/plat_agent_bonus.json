@@ -1,0 +1,9 @@
+{
+    "name": "总代分红",
+    "description": "总代分红",
+    "document": "http://18.167.151.206:8090/pages/viewpage.action?pageId=9633825",
+    "list": [
+        "admin/plat_agent_bonus/table_columns",
+        "admin/plat_agent_bonus/index"
+    ]
+}

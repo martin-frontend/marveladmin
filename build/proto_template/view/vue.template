@@ -1,0 +1,41 @@
+<template>
+    <div class="content">
+        <${className}Dialog v-if="myProxy.dialogData.bShow"/>
+        <${className}Header/>
+        <${className}Body/>
+    </div>
+</template>
+
+<script lang="ts">
+import AbstractView from "../../../core/abstract/AbstractView";
+import ${className}Mediator from "@/views/${moduleName}/mediator/${className}Mediator";
+import ${className}Proxy from "@/views/${moduleName}/proxy/${className}Proxy";
+import { Component } from "vue-property-decorator";
+import ${className}Dialog from "./${className}Dialog.vue";
+import ${className}Header from "./${className}Header.vue";
+import ${className}Body from "./${className}Body.vue";
+
+@Component({
+    components: {
+        ${className}Dialog,
+        ${className}Header,
+        ${className}Body,
+    }
+})
+export default class ${className} extends AbstractView {
+
+    constructor() {
+        super(${className}Mediator);
+    }
+
+    destroyed() {
+        super.destroyed();
+    }
+    // proxy
+    private myProxy: ${className}Proxy = this.getProxy(${className}Proxy);
+}
+</script>
+
+<style scoped lang="scss">
+@import "@/styles/common.scss";
+</style>

@@ -1,0 +1,10 @@
+{
+    "name": "操作日志",
+    "description": "操作日志",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707048",
+    "list": [
+        "admin/admin_user_log/table_columns",
+        "admin/admin_user_log/index",
+        "admin/admin_user_log/show/{id}"
+    ]
+}

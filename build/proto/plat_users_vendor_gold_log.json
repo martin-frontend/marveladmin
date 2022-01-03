@@ -1,0 +1,12 @@
+{
+    "name": "上下分记录",
+    "description": "上下分记录",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=66173",
+    "list": [
+        "admin/plat_users_vendor_gold_log/table_columns",
+        "admin/plat_users_vendor_gold_log/index",
+        "admin/plat_users_vendor_gold_log/show/{vendor_gold_log_id}",
+        "admin/plat_users_vendor_gold_log/update_manual/{vendor_gold_log_id}",
+        "admin/plat_users_vendor_gold_log/auto_check/{vendor_gold_log_id}"
+    ]
+}

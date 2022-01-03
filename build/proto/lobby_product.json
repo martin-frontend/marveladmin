@@ -1,0 +1,13 @@
+{
+    "name": "平台大厅产品",
+    "description": "平台大厅产品",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6558288",
+    "list": [
+        "admin/lobby_product/table_columns",
+        "admin/lobby_product/index",
+        "admin/lobby_product/store",
+        "admin/lobby_product/show/{lobby_product_id}",
+        "admin/lobby_product/update/{lobby_product_id}",
+        "admin/lobby_model_product/index"
+    ]
+}

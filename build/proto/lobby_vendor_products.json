@@ -1,0 +1,10 @@
+{
+    "name": "平台大厅厂商产品",
+    "description": "平台大厅厂商产品",
+    "document": "",
+    "list": [
+        "admin/lobby_vendor_products/table_columns",
+        "admin/lobby_vendor_products/index",
+        "admin/lobby_vendor_products/update/{lobby_vendor_product_id}"
+    ]
+}

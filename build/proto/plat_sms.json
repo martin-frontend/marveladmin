@@ -1,0 +1,14 @@
+{
+    "name": "短信通道",
+    "description": "短信通道",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=67152",
+    "list": [
+        "admin/plat_sms/table_columns",
+        "admin/plat_sms/index",
+        "admin/plat_sms/show/{id}",
+        "admin/plat_sms/store",
+        "admin/plat_sms/update/{id}",
+        "admin/plat_sms/send/{id}",
+        "admin/plat_sms/getBalance/{id}"
+    ]
+}

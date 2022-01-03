@@ -1,0 +1,44 @@
+<template>
+    <div>
+        <el-dialog title="${dialogName}" :visible.sync="pageSetting.bShow" width="1100px">
+            <el-tabs v-model="activeName">
+${tabpanel}
+            </el-tabs>
+        </el-dialog>
+    </div>
+</template>
+
+<script lang="ts">
+import AbstractView from "@/core/abstract/AbstractView";
+import { Component, Prop, Watch } from "vue-property-decorator";
+import { checkUnique, unique } from "@/core/global/Permission";
+// tab components
+${imports}
+
+@Component({
+    components: {
+
+    }
+})
+export default class ${vueClassName} extends AbstractView {
+    private checkUnique = checkUnique;
+    private unique = unique;
+
+    private pageSetting = { bShow: true };
+    private activeName = "";
+
+    @Watch("pageSetting.bShow")
+    private onWatchShow() {
+        this.activeName = this.pageSetting.bShow ? "tab1" : "";
+    }
+
+    destroyed(){
+        super.destroyed();
+    }
+}
+
+</script>
+
+<style scoped lang="scss">
+@import "@/styles/common.scss";
+</style>

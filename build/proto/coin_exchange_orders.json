@@ -1,0 +1,13 @@
+{
+    "name": "定时任务",
+    "description": "定时任务",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1706722",
+    "list": [
+        "admin/coin_exchange_orders/table_columns",
+        "admin/coin_exchange_orders/index",
+        "admin/coin_exchange_orders/finish_order/{id}",
+        "admin/coin_exchange_orders/close_order_return_gold/{id}",
+        "admin/coin_exchange_orders/close_order/{id}",
+        "admin/admin_user/mine"
+    ]
+}

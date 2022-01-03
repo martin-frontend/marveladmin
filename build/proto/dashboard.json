@@ -1,0 +1,12 @@
+{
+    "name": "首页",
+    "description": "首页",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1706379，http://18.166.154.73:8090/pages/viewpage.action?pageId=1706830",
+    "list": [
+        "admin/index_statistic/table_columns",
+        "admin/index_statistic/yesterday_statistic",
+        "admin/index_statistic/today_statistic",
+        "admin/index_statistic/recharge_statistic",
+        "admin/index_statistic/exchange_statistic"
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "币商充值订单",
+    "description": "币商充值订单",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1706722",
+    "list": [
+        "admin/coin_receive_recharge_order/table_columns",
+        "admin/coin_receive_recharge_order/index",
+        "admin/coin_receive_recharge_order/show/{id}",
+        "admin/coin_receive_recharge_order/close/{id}",
+        "admin/coin_receive_recharge_order/confirm/{id}",
+        "admin/coin_wallet/wallet"
+    ]
+}

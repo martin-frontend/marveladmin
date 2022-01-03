@@ -1,0 +1,12 @@
+{
+    "name": "短信厂商",
+    "description": "短信厂商",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=67148",
+    "list": [
+        "admin/sms/table_columns",
+        "admin/sms/index",
+        "admin/sms/show/{sms_id}",
+        "admin/sms/store",
+        "admin/sms/update/{sms_id}"
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "name": "代理每日统计",
+    "description": "代理每日统计",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707322",
+    "list": [
+        "admin/statistic_user_promotion_days/table_columns",
+        "admin/statistic_user_promotion_days/index"
+    ]
+}

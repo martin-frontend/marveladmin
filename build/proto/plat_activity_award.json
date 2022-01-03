@@ -1,0 +1,12 @@
+{
+    "name": "派奖查询",
+    "description": "派奖查询",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6559439",
+    "list": [
+        "admin/plat_activity_award/table_columns",
+        "admin/plat_activity_award/index",
+        "admin/plat_activity_award/show/{id}",
+        "admin/plat_activity_award/send_by_hand",
+        "admin/plat/index"
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "name": "用户留存统计",
+    "description": "用户留存统计",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=67354",
+    "list": [
+        "admin/statistic_user_keep_days/table_columns",
+        "admin/statistic_user_keep_days/index"
+    ]
+}

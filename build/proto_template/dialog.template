@@ -1,0 +1,30 @@
+<template>
+    <div>
+        <el-dialog title="${dialogName}" :visible.sync="isShow">
+            
+        </el-dialog>
+    </div>
+</template>
+
+<script lang="ts">
+import AbstractView from "@/core/abstract/AbstractView";
+import ${vueClassName}Mediator from "@/views/${moduleName}/mediator/${vueClassName}Mediator";
+import { Component } from "vue-property-decorator";
+
+@Component
+export default class ${vueClassName} extends AbstractView {
+
+    constructor() {
+        super(${vueClassName}Mediator);
+    }
+
+    destroyed(){
+        super.destroyed();
+    }
+}
+
+</script>
+
+<style scoped lang="scss">
+@import "@/styles/common.scss";
+</style>

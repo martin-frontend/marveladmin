@@ -1,0 +1,13 @@
+{
+    "name": "代理用户",
+    "description": "代理用户",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=66117",
+    "list": [
+        "admin/plat_agent_bind/table_columns",
+        "admin/plat_agent_bind/index",
+        "admin/plat_agent_bind/show/{user_id}",
+        "admin/plat_agent_bind/show/{user_id}/floor_range",
+        "admin/plat_agent_bind/update/{user_id}",
+        "admin/plat_user/change_bind/{user_id}"
+    ]
+}

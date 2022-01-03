@@ -1,0 +1,17 @@
+{
+    "name": "活动模版配置",
+    "description": "活动模版配置",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6559173",
+    "list": [
+        "admin/plat_activity_model/table_columns",
+        "admin/plat_activity_model/index",
+        "admin/plat_activity_model/store",
+        "admin/plat_activity_model/show/{id}",
+        "admin/plat_activity_model/update/{id}",
+        "admin/plat_activity_model_plat/table_columns",
+        "admin/plat_activity_model_plat/index",
+        "admin/plat_activity_model_plat/store",
+        "admin/plat/index",
+        "admin/plat_activity_rule/index"
+    ]
+}

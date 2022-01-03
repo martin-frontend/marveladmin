@@ -1,0 +1,15 @@
+{
+    "name": "平台客服功能管理",
+    "description": "平台客服功能管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=65748, http://18.166.154.73:8090/pages/viewpage.action?pageId=66957, http://18.166.154.73:8090/pages/viewpage.action?pageId=67044",
+    "list": [
+        "admin/plats_fag/table_columns",
+        "admin/plats_fag/index",
+        "admin/plats_fag/show/{id}",
+        "admin/plats_fag/store",
+        "admin/plats_fag/update/{id}",
+        "admin/plats_fag/sync",
+        "admin/plat/show/{plat_id}",
+        "admin/plat/update/{plat_id}"
+    ]
+}

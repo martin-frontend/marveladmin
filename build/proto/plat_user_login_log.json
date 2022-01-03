@@ -1,0 +1,10 @@
+{
+    "name": "平台厂商用户登录log",
+    "description": "平台厂商用户登录log",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6558770",
+    "list": [
+        "admin/plat_user_login_log/table_columns",
+        "admin/plat_user_login_log/index",
+        "admin/plat_user_login_log/show/{id}"
+    ]
+}

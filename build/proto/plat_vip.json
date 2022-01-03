@@ -1,0 +1,13 @@
+{
+    "name": "平台VIP",
+    "description": "平台VIP",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=66161",
+    "list": [
+        "admin/plat/table_columns",
+        "admin/plat/index",
+        "admin/plat/show/{plat_id}",
+        "admin/plat/update/{plat_id}",
+        "admin/plat_users_vip_model/table_columns",
+        "admin/plat_users_vip_model/show/{vip_model_id}"
+    ]
+}

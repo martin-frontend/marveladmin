@@ -1,0 +1,13 @@
+{
+    "name": "实时返水配置",
+    "description": "实时返水配置",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6558271",
+    "list": [
+        "admin/plat_users_backwater_model/table_columns",
+        "admin/plat_users_backwater_model/index",
+        "admin/plat_users_backwater_model/show/{backwater_model_id}",
+        "admin/plat_users_backwater_model/store",
+        "admin/plat_users_backwater_model/update/{backwater_model_id}",
+        "admin/plat_users_backwater_model/destroy/{backwater_model_id}"
+    ]
+}

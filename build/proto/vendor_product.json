@@ -1,0 +1,14 @@
+{
+    "name": "厂商产品管理",
+    "description": "厂商产品管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=66135",
+    "list": [
+        "admin/vendor_product/table_columns",
+        "admin/vendor_product/index",
+        "admin/vendor_product/store",
+        "admin/vendor_product/show/{vendor_product_id}",
+        "admin/vendor_product/update/{vendor_product_id}",
+        "admin/vendor/show/{vendor_id}",
+        "admin/vendor/index"
+    ]
+}

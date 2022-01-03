@@ -1,0 +1,10 @@
+{
+    "name": "金币明细",
+    "description": "金币明细",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=66175",
+    "list": [
+        "admin/plat_users_gold_log/table_columns",
+        "admin/plat_users_gold_log/index",
+        "admin/plat_users_gold_log/show/{id}"
+    ]
+}

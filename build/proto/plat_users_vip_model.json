@@ -1,0 +1,13 @@
+{
+    "name": "VIP模版配置",
+    "description": "VIP模版配置",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=66143",
+    "list": [
+        "admin/plat_users_vip_model/table_columns",
+        "admin/plat_users_vip_model/index",
+        "admin/plat_users_vip_model/show/{vip_model_id}",
+        "admin/plat_users_vip_model/store",
+        "admin/plat_users_vip_model/update/{vip_model_id}",
+        "admin/plat_users_vip_model/destroy/{vip_model_id}"
+    ]
+}

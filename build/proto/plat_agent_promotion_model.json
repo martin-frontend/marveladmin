@@ -1,0 +1,12 @@
+{
+    "name": "推广配置",
+    "description": "推广配置",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=66277",
+    "list": [
+        "admin/plat_agent_promotion_model/table_columns",
+        "admin/plat_agent_promotion_model/index",
+        "admin/plat_agent_promotion_model/show/{promotion_model_id}",
+        "admin/plat_agent_promotion_model/store",
+        "admin/plat_agent_promotion_model/update/{promotion_model_id}"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "平台公告管理",
+    "description": "平台公告管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=67042, http://18.166.154.73:8090/pages/viewpage.action?pageId=65748",
+    "list": [
+        "admin/plat_users_bet/table_columns",
+        "admin/plat_users_bet/promotion_discount/index",
+        "admin/plat_users_bet/promotion_discount/recover",
+        "admin/plat_users_bet/store_fake_bet"
+    ]
+}

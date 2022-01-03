@@ -1,0 +1,9 @@
+{
+    "name": "用户统计",
+    "description": "用户统计",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1704626",
+    "list": [
+        "admin/statistic_user_days/table_columns",
+        "admin/statistic_user_days/index"
+    ]
+}

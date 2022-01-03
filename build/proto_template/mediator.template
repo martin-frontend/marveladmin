@@ -1,0 +1,32 @@
+import AbstractMediator from "@/core/abstract/AbstractMediator";
+import { IEventDispatcher } from "@/core/IEventDispatcher";
+import { EventType, HttpType } from "@/views/${moduleName}/setting";
+
+interface I${vueClassName} extends IEventDispatcher {
+
+}
+
+export default class ${vueClassName}Mediator extends AbstractMediator {
+
+    onRegister() {
+
+    }
+
+    protected initViewData() {
+        const myView: I${vueClassName} = this.viewComponent;
+    }
+
+    listNotificationInterests(): string[] {
+        return [
+${listNotificationInterests}
+        ];
+    }
+
+    handleNotification(notification: puremvc.INotification) {
+        const myView: I${vueClassName} = this.viewComponent;
+        const body = notification.getBody();
+        switch (notification.getName()) {
+${handleNotification}
+        }
+    }
+}

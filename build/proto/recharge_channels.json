@@ -1,0 +1,12 @@
+{
+    "name": "平台充值渠道",
+    "description": "平台充值渠道",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1704974",
+    "list": [
+        "admin/recharge_channels/table_columns",
+        "admin/recharge_channels/index",
+        "admin/recharge_channels/show/{id}",
+        "admin/recharge_channels/store",
+        "admin/recharge_channels/update/{id}"
+    ]
+}

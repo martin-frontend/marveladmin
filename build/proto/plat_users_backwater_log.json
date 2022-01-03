@@ -1,0 +1,10 @@
+{
+    "name": "返水明细",
+    "description": "返水明细",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=65977",
+    "list": [
+        "admin/plat_users_backwater_log/table_columns",
+        "admin/plat_users_backwater_log/index",
+        "admin/plat_users_backwater_log/show/{plat_id}/{id}"
+    ]
+}

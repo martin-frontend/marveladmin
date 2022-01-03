@@ -1,0 +1,12 @@
+{
+    "name": "节点管理",
+    "description": "节点管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1706040",
+    "list": [
+        "admin/admin_permission/table_columns",
+        "admin/admin_permission/index",
+        "admin/admin_permission/show/{permission_id}",
+        "admin/admin_permission/store",
+        "admin/admin_permission/update/{permission_id}"
+    ]
+}

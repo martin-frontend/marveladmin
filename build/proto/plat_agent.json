@@ -1,0 +1,14 @@
+{
+    "name": "平台代理配置",
+    "description": "平台代理配置",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=66312",
+    "list": [
+        "admin/plat/table_columns",
+        "admin/plat/index",
+        "admin/plat/show/{plat_id}",
+        "admin/plat/update/{plat_id}",
+        "admin/plat_agent_promotion_model/table_columns",
+        "admin/plat_agent_promotion_model/show/{promotion_model_id}",
+        "admin/resource/upload"
+    ]
+}

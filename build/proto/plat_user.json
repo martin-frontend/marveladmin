@@ -1,0 +1,15 @@
+{
+    "name": "平台用户",
+    "description": "平台用户",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6558294",
+    "list": [
+        "admin/plat_user/table_columns",
+        "admin/plat_user/index",
+        "admin/plat_user/store",
+        "admin/plat_user/show/{user_id}",
+        "admin/plat_user/update/{user_id}",
+        "admin/plat_user/{user_id}/vendor/withdraw",
+        "admin/plat_user/update_safe_gold/{user_id}",
+        "admin/plat_user/update_user_gold/{user_id}"
+    ]
+}

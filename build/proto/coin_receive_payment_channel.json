@@ -1,0 +1,14 @@
+{
+    "name": "币商收款通道",
+    "description": "币商收款通道",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707530",
+    "list": [
+        "admin/coin_receive_payment_channel/table_columns",
+        "admin/coin_receive_payment_channel/index",
+        "admin/coin_receive_payment_channel/show/{id}",
+        "admin/coin_receive_payment_channel/store",
+        "admin/coin_receive_payment_channel/update/{id}",
+        "admin/common/bank_list",
+        "admin/resource/upload"
+    ]
+}

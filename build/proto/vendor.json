@@ -1,0 +1,14 @@
+{
+    "name": "厂商管理",
+    "description": "厂商管理",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6558275",
+    "list": [
+        "admin/vendor/table_columns",
+        "admin/vendor/index",
+        "admin/vendor/store",
+        "admin/vendor/show/{vendor_id}",
+        "admin/vendor/update/{vendor_id}",
+        "admin/system_config/index",
+        "admin/vendor/test_vendor/{vendor_id}"
+    ]
+}

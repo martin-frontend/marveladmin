@@ -1,0 +1,20 @@
+{
+    "name": "平台钱包",
+    "description": "平台钱包",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1704160",
+    "list": [
+        "admin/plat_vendors_wallet/table_columns",
+        "admin/plat_vendors_wallet/index",
+        "admin/plat_vendors_wallet/show/{id}",
+        "admin/plat_vendors_wallet/store",
+        "admin/plat_vendors_wallet/update/{id}",
+        "admin/plat_vendors_wallet/index/{plat_id}/vendors",
+        "admin/plat_vendors_wallet/update/{id}/gold",
+        "admin/plat_vendors_wallet_log/table_columns",
+        "admin/plat_vendors_wallet_log/index",
+        "admin/plat_vendors_wallet_log/show/{id}",
+        "admin/plat_wallet/update/{plat_id}/gold",
+        "admin/plat_wallet_log/index"
+
+    ]
+}

@@ -1,0 +1,367 @@
+.content {
+    > div {
+        margin-top: 10px;
+    }
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.item {
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.215rem;
+    color: #fff;
+}
+.badge + .badge {
+    margin-left: 0.25rem;
+}
+.type {
+    background-color: #0bb2d4;
+}
+.status {
+    background-color: #11c26d;
+}
+.pagination {
+    position: relative;
+    text-align: right;
+    margin-top: 10px;
+    .slot {
+        position: absolute;
+        left: 0px;
+    }
+}
+.input {
+    width: 250px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+.dropdown-item {
+    width: 250px;
+    height: 36px;
+    display: flex;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    .label {
+        background-color: #f5f7fa;
+        color: #909399;
+        border: 1px solid #dcdfe6;
+        border-radius: 4px;
+        padding: 0px 20px;
+        white-space: nowrap;
+        font-size: 14px;
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        display: flex;
+        align-items: center;
+    }
+}
+.select {
+    flex: 1;
+}
+.select-input {
+    width: 120px;
+    margin-right: 3.5px;
+}
+.el-table {
+    thead {
+        color: red !important;
+    }
+}
+.editor-container {
+    position: relative;
+    height: 100%;
+}
+.select,.el-input__inner{
+    vertical-align: middle;
+}
+// 自定搜寻样式
+::v-deep .search_style {
+    margin: 16px 0;
+    .search_space {
+        margin: 16px 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .item_group {
+        margin: 0 10px 10px 0;
+    }
+    .cust_title {
+        min-width: 95px;
+        display: inline-block;
+        background-color: #f5f7fa;
+        text-align: center;
+        line-height: 36px;
+        height: 36px;
+        border-radius: 4px 0 0px 4px;
+        color: #909399;
+        border: 1px solid #dcdfe6;
+        border-right: 0;
+        padding: 0 20px;
+        vertical-align: top;
+        font-size: 14px;
+        vertical-align: middle;
+    }
+    .el-input__inner {
+        border-radius: 0px 4px 4px 0px;
+    }
+    .el-input--medium,
+    .el-date-editor--daterange {
+        width: 250px;
+    }
+    .el-checkbox__label {
+        margin-top: 6px;
+    }
+    //金额查询
+    .input_group {
+        display: inline-block;
+        border: 1px solid #dcdfe6;
+        height: 36px;
+
+        .el-input {
+            box-sizing: border-box;
+            width: 130px !important;
+            input {
+                border: 0;
+                height: 33px;
+                text-align: center;
+            }
+        }
+    }
+    .w-270 {
+        width: 270px !important;
+    }
+}
+// 表格优化 padding 缩为原本的一半
+::v-deep .el-table--mini th,
+::v-deep .el-table--mini td {
+    padding: 0 !important;
+}
+::v-deep .el-table--medium th,
+::v-deep .el-table--medium td {
+    padding: 0 !important;
+}
+::v-deep .el-table .cell {
+    padding: 3px 5px !important;
+}
+::v-deep .el-table p {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+// 表单底部的按扭
+.dialog-footer {
+    justify-content: space-between;
+    text-align: right;
+    &.plat {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+// header页样式
+.header-content {
+    margin: 16px 0;
+    .group {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .header-button {
+        margin-left: 0;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+}
+// 用户ID的样式
+.user_id {
+    cursor: pointer;
+    text-decoration: underline;
+}
+// 用户备注
+.user_remark {
+    color: #eb2727;
+}
+// dialog 内部滚动下方不显示滚动条
+::v-deep .el-scrollbar__wrap {
+    overflow-x: auto;
+}
+
+// 越南版语系客制化样式
+.vi {
+    // 项目名称
+    .dashboard {
+        ::v-deep .card-panel-num {
+            font-size: 16px !important;
+        }
+    }
+    .vip_receive_payment_channel {
+        ::v-deep table {
+            .el-button {
+                width: 110px !important;
+            }
+        }
+    }
+    .plat_agent_bind {
+        ::v-deep table {
+            .el-button {
+                padding: 6px 6px;
+            }
+        }
+    }
+    .plat_vendors_wallet {
+        ::v-deep table {
+            .el-button {
+                padding: 6px 6px;
+                margin-top: 6px;
+            }
+        }
+    }
+    .plat_users_vendor_gold_log {
+        ::v-deep table {
+            .el-button {
+                padding: 6px 6px;
+                margin-top: 6px;
+            }
+        }
+    }
+    .exchange_orders {
+        .tooltip-box .el-tooltip {
+            left: 60px;
+        }
+        .table_info {
+            font-size: 14px;
+            title {
+                font-size: 14px !important;
+                margin-right: 6px;
+            }
+            .item-group {
+                margin-right: 3px;
+                span {
+                    margin-right: 4px;
+                }
+            }
+        }
+        ::v-deep table {
+            .el-button {
+                width: 200px;
+                padding: 6px 6px;
+                margin-top: 6px;
+            }
+        }
+    }
+    .recharge_orders {
+        .table_info {
+            font-size: 14px;
+            title {
+                font-size: 14px !important;
+                margin-right: 6px;
+            }
+            .item-group {
+                margin-right: 3px;
+                span {
+                    margin-right: 4px;
+                }
+            }
+        }
+    }
+    .plats_notice {
+        ::v-deep table {
+            .el-button {
+                padding: 6px 6px;
+                margin-top: 6px;
+            }
+        }
+    }
+    .coin_receive_payment_channel {
+        ::v-deep table {
+            .el-button {
+                padding: 6px 6px;
+                margin-top: 6px;
+            }
+        }
+    }
+    .search_date_picker {
+        ::v-deep .el-date-editor {
+            width: 450px;
+        }
+    }
+    .plat_user {
+        ::v-deep table {
+            .el-button {
+                padding: 6px 6px;
+                width: 130px;
+            }
+        }
+    }
+    .coin_wallet {
+        ::v-deep table {
+            .el-button {
+                padding: 6px 6px;
+                margin-top: 6px;
+            }
+        }
+    }
+    .lobby_product {
+        ::v-deep table {
+            .el-button {
+                padding: 6px 6px;
+                margin-top: 6px;
+            }
+        }
+    }
+    .plat_sms {
+        ::v-deep table {
+            .el-button {
+                padding: 6px 6px;
+                width: 110px;
+                margin-left: 0;
+            }
+            .el-table_1_column_7 {
+                .el-button {
+                    width: 80px;
+                }
+            }
+        }
+    }
+    .statistic_plat_days {
+        ::v-deep .el-button {
+            padding: 6px 6px;
+            margin-top: 6px;
+        }
+    }
+    .plat_activity_model {
+        ::v-deep table {
+            .el-button {
+                padding: 6px 6px;
+            }
+        }
+        ::v-deep .el-dialog__body {
+            .el-form {
+                padding: 0 10px;
+            }
+        }
+    }
+    .coin_receive_recharge_order {
+        .autoReload {
+            ::v-deep .content {
+                width: 380px;
+            }
+        }
+    }
+    .plat_vip {
+        ::v-deep .input {
+            width: 300px;
+        }
+    }
+}

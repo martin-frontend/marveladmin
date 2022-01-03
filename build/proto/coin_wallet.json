@@ -1,0 +1,15 @@
+{
+    "name": "币商管理",
+    "description": "币商管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707580",
+    "list": [
+        "admin/coin_wallet/table_columns",
+        "admin/coin_wallet/index",
+        "admin/coin_wallet/wallet",
+        "admin/coin_wallet/deposit/{id}",
+        "admin/coin_wallet/withdraw/{id}",
+        "admin/coin_wallet_log/table_columns",
+        "admin/coin_wallet_log/index",
+        "admin/coin_wallet/update/{id}"
+    ]
+}

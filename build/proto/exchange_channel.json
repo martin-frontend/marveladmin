@@ -1,0 +1,16 @@
+{
+    "name": "平台兑换渠道",
+    "description": "平台兑换渠道",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1705770",
+    "list": [
+        "admin/exchange_channel/table_columns",
+        "admin/exchange_channel/index",
+        "admin/exchange_channel/show/{id}",
+        "admin/exchange_channel/store",
+        "admin/exchange_channel/update/{id}",
+        "admin/exchange_channel_method/table_columns",
+        "admin/exchange_channel_method/show/{id}",
+        "admin/exchange_channel_method/store",
+        "admin/exchange_channel_method/update/{id}"
+    ]
+}

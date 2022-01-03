@@ -1,0 +1,11 @@
+{
+    "name": "系统参数",
+    "description": "系统参数",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707872",
+    "list": [
+       "admin/system_config/table_columns",
+       "admin/system_config/index",
+       "admin/system_config/store",
+       "admin/system_config/update/{id}"
+    ]
+}

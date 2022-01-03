@@ -1,0 +1,22 @@
+{
+    "name": "用户兑换订单",
+    "description": "用户兑换订单",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1705433",
+    "list": [
+        "admin/exchange_orders/table_columns",
+        "admin/exchange_orders/index",
+        "admin/exchange_orders/approved/{id}",
+        "admin/exchange_orders/close_order_return_gold/{id}",
+        "admin/exchange_orders/close_order/{id}",
+        "admin/exchange_orders/finish_order/{id}",
+        "admin/exchange_orders/update_channel/{id}",
+        "admin/exchange_auto_check_setting/table_columns",
+        "admin/exchange_auto_check_setting/show/{plat_id}",
+        "admin/exchange_auto_check_setting/store",
+        "admin/exchange_auto_check_setting/update/{plat_id}",
+        "admin/exchange_orders/rush/{id}",
+        "admin/exchange_orders/update_remark/{id}",
+        "admin/exchange_orders/dispatch/{id}",
+        "admin/exchange_orders/dispatch_cancel/{id}"
+    ]
+}

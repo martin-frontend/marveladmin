@@ -1,0 +1,9 @@
+{
+    "name": "平台出入款",
+    "description": "平台出入款",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707815",
+    "list": [
+        "admin/statistic_plat_funds_flow/table_columns",
+        "admin/statistic_plat_funds_flow/show"
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "权限组",
+    "description": "权限组",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1706107",
+    "list": [
+        "admin/admin_role/table_columns",
+        "admin/admin_role/index",
+        "admin/admin_role/show/{role_id}",
+        "admin/admin_role/store",
+        "admin/admin_role/update/{role_id}",
+        "admin/admin_user/mine"
+    ]
+}

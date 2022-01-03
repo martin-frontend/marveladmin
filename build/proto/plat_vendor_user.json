@@ -1,0 +1,10 @@
+{
+    "name": "平台厂商用户",
+    "description": "平台厂商用户",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6558764",
+    "list": [
+        "admin/plat_vendor_user/table_columns",
+        "admin/plat_vendor_user/index",
+        "admin/plat_vendor_user/show/{vendor_user_id}"
+    ]
+}

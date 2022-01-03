@@ -1,0 +1,15 @@
+{
+    "name": "充值渠道管理",
+    "description": "充值渠道管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1705100",
+    "list": [
+        "admin/recharge_channels/table_columns",
+        "admin/recharge_channels/index",
+        "admin/recharge_channels/update/{id}",
+        "admin/recharge_channels_paymethods/table_columns",
+        "admin/recharge_channels_paymethods/index",
+        "admin/recharge_channels_paymethods/show/{id}",
+        "admin/recharge_channels_paymethods/store",
+        "admin/recharge_channels_paymethods/update/{id}"
+    ]
+}

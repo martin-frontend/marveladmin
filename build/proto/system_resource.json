@@ -1,0 +1,12 @@
+{
+    "name": "资源管理",
+    "description": "资源管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=66932, http://18.166.154.73:8090/pages/viewpage.action?pageId=67076",
+    "list": [
+        "admin/system_resource/table_columns",
+        "admin/system_resource/index",
+        "admin/system_resource/store",
+        "admin/system_resource/update/{id}",
+        "admin/resource/upload"
+    ]
+}

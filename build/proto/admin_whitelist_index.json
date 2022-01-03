@@ -1,0 +1,11 @@
+{
+    "name": "登录白名单",
+    "description": "登录白名单",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1706935",
+    "list": [
+        "admin/admin_whitelist/table_columns",
+        "admin/admin_whitelist/index",
+        "admin/admin_whitelist/store",
+        "admin/admin_whitelist/update/{id}"
+    ]
+}

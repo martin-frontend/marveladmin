@@ -1,0 +1,12 @@
+{
+    "name": "充值厂商",
+    "description": "充值厂商",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1705057",
+    "list": [
+        "admin/recharge_vendors/table_columns",
+        "admin/recharge_vendors/index",
+        "admin/recharge_vendors/show/{id}",
+        "admin/recharge_vendors/store",
+        "admin/recharge_vendors/update/{vendor_id}"
+    ]
+}

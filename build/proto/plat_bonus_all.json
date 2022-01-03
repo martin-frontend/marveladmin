@@ -1,0 +1,24 @@
+{
+    "name": "全盘分红配置",
+    "description": "全盘分红配置",
+    "document": "http://18.167.151.206:8090/pages/viewpage.action?pageId=11075831",
+    "list": [
+        "admin/plat_bonus_all_stock_set/table_columns",
+        "admin/plat_bonus_all_stock_set/index",
+        "admin/plat_bonus_all_stock_set/show/{id}",
+        "admin/plat_bonus_all_stock_set/update/{id}",
+       
+        "admin/plat_bonus_all_stock/table_columns", 
+        "admin/plat_bonus_all_stock/index", 
+        "admin/plat_bonus_all_stock_model/show/{all_bonus_model_id}",
+        
+        "admin/plat/update/{plat_id}",
+        "admin/plat/show/{plat_id}",
+        
+        "admin/resource/upload",
+
+        "admin/plat_agent_promotion_model/table_columns",
+        "admin/plat_agent_promotion_model/show/{promotion_model_id}"
+        
+    ]
+}

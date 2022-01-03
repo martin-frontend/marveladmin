@@ -1,0 +1,13 @@
+{
+    "name": "账号管理",
+    "description": "账号管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1706103",
+    "list": [
+        "admin/admin_user/table_columns",
+        "admin/admin_user/index",
+        "admin/admin_user/show/{admin_user_id}",
+        "admin/admin_user/store",
+        "admin/admin_user/update/{admin_user_id}",
+        "admin/plat_channel/index"
+    ]
+}

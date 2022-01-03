@@ -1,0 +1,10 @@
+{
+    "name": "平台设定",
+    "description": "平台设定",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707117",
+    "list": [
+        "admin/plat_setting/table_columns",
+        "admin/plat_setting/show/{plat_id}"
+    ]
+    
+}

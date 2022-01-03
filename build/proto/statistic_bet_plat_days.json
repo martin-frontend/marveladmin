@@ -1,0 +1,9 @@
+{
+    "name": "每日输赢统计",
+    "description": "每日输赢统计",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=67431",
+    "list": [
+        "admin/statistic_bet_plat_days/table_columns",
+        "admin/statistic_bet_plat_days/index"
+    ]
+}

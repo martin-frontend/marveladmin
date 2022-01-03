@@ -1,0 +1,12 @@
+{
+    "name": "语言管理",
+    "description": "语言管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1708654",
+    "list": [
+        "admin/system_lang/table_columns",
+        "admin/system_lang/index",
+        "admin/system_lang/store",
+        "admin/system_lang/update/{id}",
+        "admin/system_lang/delete/{id}"
+    ]
+}

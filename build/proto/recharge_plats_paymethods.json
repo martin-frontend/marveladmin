@@ -1,0 +1,10 @@
+{
+    "name": "支付方式管理",
+    "description": "支付方式管理",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1705132",
+    "list": [
+        "admin/recharge_plats_paymethods/table_columns",
+        "admin/recharge_plats_paymethods/index",
+        "admin/recharge_plats_paymethods/update/{id}"
+    ]
+}

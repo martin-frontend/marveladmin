@@ -1,0 +1,10 @@
+{
+    "name": "用户充值订单",
+    "description": "用户充值订单",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1705140",
+    "list": [
+        "admin/recharge_orders/table_columns",
+        "admin/recharge_orders/index",
+        "admin/recharge_orders/update/{id}/complete"
+    ]
+}

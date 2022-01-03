@@ -1,0 +1,12 @@
+{
+    "name": "大厅跑马灯",
+    "description": "大厅跑马灯",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=66921",
+    "list": [
+        "admin/plats_marquee/table_columns",
+        "admin/plats_marquee/index",
+        "admin/plats_marquee/show/{id}",
+        "admin/plats_marquee/store",
+        "admin/plats_marquee/update/{id}"
+    ]
+}

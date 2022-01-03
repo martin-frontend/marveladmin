@@ -1,0 +1,12 @@
+{
+    "name": "系统常见问题配置",
+    "description": "系统常见问题配置",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=65744",
+    "list": [
+        "admin/system_fag/table_columns",
+        "admin/system_fag/index",
+        "admin/system_fag/show/{id}",
+        "admin/system_fag/store",
+        "admin/system_fag/update/{id}"
+    ]
+}

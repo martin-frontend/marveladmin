@@ -1,0 +1,16 @@
+{
+    "name": "定时任务",
+    "description": "定时任务",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1706722",
+    "list": [
+        "admin/admin_cron/table_columns",
+        "admin/admin_cron/index",
+        "admin/admin_cron_queue/show/{id}",
+        "admin/admin_cron/store",
+        "admin/admin_cron/update/{id}",
+        "admin/admin_cron_queue/table_columns",
+        "admin/admin_cron_queue/index",
+        "admin/admin_cron_queue/update/{id}",
+        "admin/admin_cron_queue/update_batch"
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "name": "渠道管理",
+    "description": "渠道管理",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6558267",
+    "list": [
+        "admin/plat_channel/table_columns",
+        "admin/plat_channel/index",
+        "admin/plat_channel/store",
+        "admin/plat_channel/show/{id}",
+        "admin/plat_channel/update/{id}"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "用户排行统计",
+    "description": "用户排行统计",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1708493",
+    "list": [
+       "admin/plat_user_statistic_days/table_columns",
+       "admin/plat_user_statistic_days/index",
+       "admin/plat_user_statistic_days/store",
+       "admin/plat_user_statistic_days/update/{id}"
+    ]
+}

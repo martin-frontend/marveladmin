@@ -1,0 +1,307 @@
+<template>
+    <div>
+        <div class="stastics">
+            <div>
+                <span class="title">{{ $t("common.tableInfoTitle") }}</span>
+                <div class="item_group">
+                    <span class="label">{{ $t("recharge_orders.tableInfoTotalGold") }}:</span>
+                    <span class="name">{{ message.total_gold }}</span>
+                </div>
+                <div class="item_group">
+                    <span class="label">{{ $t("recharge_orders.tableInfoTotalNum") }}:</span>
+                    <span class="name">{{ message.total_num }}</span>
+                </div>
+                <div class="item_group">
+                    <span class="label">{{ $t("recharge_orders.tableInfoSuccessTotalGold") }}:</span>
+                    <span class="name">{{ message.success_total_gold }}</span>
+                </div>
+                <div class="item_group">
+                    <span class="label">{{ $t("recharge_orders.tableInfoSuccessTotalNum") }}:</span>
+                    <span class="name">{{ message.success_total_num }}</span>
+                </div>
+                <div class="item_group">
+                    <span class="label">{{ $t("recharge_orders.tableInfoTotalUserNum") }}:</span>
+                    <span class="name">{{ message.total_user_num }}</span>
+                </div>
+                <div class="item_group">
+                    <span class="label">{{ tableColumns["fee"].name }}:</span>
+                    <span class="name">{{ message.total_fee }}</span>
+                </div>
+                <div class="item_group">
+                    <span class="label">{{ tableColumns["gift_gold"].name }}:</span>
+                    <span class="name">{{ message.total_gift_gold }}</span>
+                </div>
+            </div>
+            <div class="search_style">
+                <el-tooltip class="item" effect="dark" :content="$t('common.autoRefreshTip')" placement="top">
+                    <button class="cust_title">
+                        {{ $t("recharge_orders.refreshOrder") }} <i class="el-icon-question"></i>
+                    </button>
+                </el-tooltip>
+
+                <el-select filterable v-model="myProxy.IntervalObj.default" @change="handlerAutoReload">
+                    <el-option v-for="(item, key) of myProxy.IntervalObj.options" :label="item" :value="key" :key="key">
+                    </el-option>
+                </el-select>
+            </div>
+        </div>
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            :header-cell-style="{
+                'text-align': 'center',
+            }"
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
+            <el-table-column :label="$t('common.platMsg')" min-width="180px">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns["plat_id"].name }}：{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
+                    <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="$t('common.userMsg')" min-width="180px">
+                <template slot-scope="{ row }">
+                    <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
+                        {{ tableColumns["user_id"].name }}：{{ row.user_id }}
+                    </div>
+                    <div>{{ tableColumns["nick_name"].name }}：{{ row.nick_name }}</div>
+                    <div>
+                        {{ tableColumns["user_remark"].name }}：<span class="user_remark">{{ row.user_remark }}</span>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="order_no" :label="tableColumns['order_no'].name" align="center" width="110px">
+            </el-table-column>
+            <el-table-column
+                prop="third_order_no"
+                :label="tableColumns['third_order_no'].name"
+                align="center"
+                width="130px"
+            >
+            </el-table-column>
+            <el-table-column prop="status" :label="tableColumns['status'].name" width="75px" align="center">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["status"].options[row.status] }}
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="paymethod_id"
+                :label="tableColumns['paymethod_id'].name"
+                min-width="180px"
+                align="center"
+            >
+                <template slot-scope="{ row }">
+                    <div align="left">
+                        <p>
+                            {{ tableColumns["vendor_id"].name }}：
+                            {{ tableColumns["vendor_id"].options[row.vendor_id] }}
+                        </p>
+                        <p>
+                            {{ tableColumns["paymethod_id"].name }}：
+                            {{ tableColumns["paymethod_id"].options[row.paymethod_id] }}
+                        </p>
+                        <p>
+                            {{ tableColumns["third_id"].name }}：
+                            {{ row.third_id }}
+                        </p>
+                        <p>
+                            {{ tableColumns["third_name"].name }}：
+                            {{ row.third_name }}
+                        </p>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="gold" :label="tableColumns['gold'].name" align="center" min-width="140px">
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="$t('recharge_orders.goldTip')" placement="top">
+                        <div>
+                            <span>{{ tableColumns["gold"].name }}</span>
+                            <i class="el-icon-question"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <div align="left">
+                        <p>{{ tableColumns["gold"].name }}： {{ row.gold }}</p>
+                        <p>{{ tableColumns["callback_gold"].name }}： {{ row.callback_gold }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="callback_gold" min-width="160px" align="center">
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="$t('recharge_orders.callbackGoldTip')"
+                        placement="top"
+                    >
+                        <div>
+                            <span>{{ tableColumns["actual_gold"].name }}</span>
+                            <i class="el-icon-question"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <div align="left">
+                        <p>{{ tableColumns["actual_gold"].name }}： {{ row.actual_gold }}</p>
+                        <p>{{ tableColumns["total_gold"].name }}： {{ row.total_gold }}</p>
+                        <p>{{ tableColumns["gift_gold"].name }}： {{ row.gift_gold }}</p>
+                        <p>{{ tableColumns["fee"].name }}： {{ row.fee }}</p>
+                        <p>{{ tableColumns["fee_rate"].name }}： {{ (row.fee_rate * 100) >> 0 }}%</p>
+                    </div>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="$t('common.orderTime')" align="left" width="150px">
+                <template slot-scope="{ row }">
+                    <p>{{ tableColumns["created_at"].name }}：<br />{{ row.created_at }}</p>
+                    <p>
+                        {{ tableColumns["paytime"].name }}：<br /><span v-if="row.status === 0">-</span
+                        ><span v-else>{{ row.paytime }}</span>
+                    </p>
+                </template>
+            </el-table-column>
+            <el-table-column prop="remark" :label="tableColumns['remark'].name" align="center" width="100px">
+            </el-table-column>
+            <el-table-column prop="address" :label="$t('common.operating')" width="100px" align="center">
+                <template slot-scope="scope">
+                    <el-button
+                        v-if="scope.row.status === 0 && checkUnique(unique.recharge_orders_complete)"
+                        @click="makeUpClickHandler(scope.row)"
+                        type="primary"
+                        size="small"
+                        >{{ $t("recharge_orders.replenishmentOrder") }}</el-button
+                    >
+                    <span v-else>--</span>
+                </template>
+            </el-table-column>
+        </el-table>
+        <Pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch" />
+    </div>
+</template>
+<script lang="ts">
+import AbstractView from "@/core/abstract/AbstractView";
+import { Component, Watch } from "vue-property-decorator";
+import { DialogStatus } from "@/core/global/Constant";
+import { checkUnique, unique } from "@/core/global/Permission";
+import RechargeOrdersProxy from "../proxy/RechargeOrdersProxy";
+import Pagination from "@/components/Pagination.vue";
+import GlobalVar from "@/core/global/GlobalVar";
+import mediator from "@/views/recharge_orders/mediator/TableListMediator";
+
+@Component({
+    components: {
+        Pagination,
+    },
+})
+export default class RechargeOrdersBody extends AbstractView {
+    constructor() {
+        super(mediator);
+    }
+    //权限标识
+    private unique = unique;
+    private checkUnique = checkUnique;
+    //网络状态
+    private net_status = GlobalVar.net_status;
+    // proxy
+    private myProxy: RechargeOrdersProxy = this.getProxy(RechargeOrdersProxy);
+    // proxy property
+    private tableColumns = this.myProxy.tableData.columns;
+    private tableData = this.myProxy.tableData.list;
+    private pageInfo = this.myProxy.tableData.pageInfo;
+    private listQuery = this.myProxy.listQuery;
+
+    get message() {
+        return this.myProxy.tableData.message;
+    }
+
+    private handlerQuery() {
+        this.myProxy.onQuery();
+    }
+
+    private handlerPageSwitch(page: number) {
+        this.listQuery.page_count = page;
+        this.myProxy.onQuery();
+        // 如果在自动刷新状态 回到第一页继续
+        if (this.myProxy.IntervalObj.default != "0") {
+            this.myProxy.autoReload();
+        }
+    }
+
+    private handleEdit(data: any) {
+        this.myProxy.showDialog(DialogStatus.update, data);
+    }
+
+    // 自动刷新
+    private handlerAutoReload(o: any) {
+        this.myProxy.IntervalObj.default = o;
+        this.myProxy.autoReload();
+    }
+
+    // 补单
+    private makeUpClickHandler(row: any) {
+        // this.$confirm(`是否对订单号 "${row.order_no}"，进行补单`, "提示", {
+        this.$confirm(this.$t("recharge_orders.makeUpConfirm", { "0": row.order_no }), this.$t("common.prompt"), {
+            confirmButtonText: this.$t("common.determine"),
+            cancelButtonText: this.$t("common.cancel"),
+            type: "warning",
+        })
+            .then(() => {
+                this.myProxy.showDialog(DialogStatus.update, row);
+            })
+            .catch(() => {});
+    }
+    // 打开用户详情
+    private showUserDetail(user_id: number) {
+        this.dispatchEvent("showUserDetail", user_id);
+    }
+
+    destroyed() {
+        super.destroyed();
+    }
+}
+</script>
+
+<style scoped lang="scss">
+@import "@/styles/common.scss";
+
+.stastics {
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 36px;
+    margin: 16px 0;
+    justify-content: space-between;
+    > div {
+        display: flex;
+        .title {
+            margin-right: 16px;
+            white-space: nowrap;
+        }
+        .item_group {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-right: 16px;
+            .label {
+                white-space: nowrap;
+            }
+        }
+    }
+    .search_style {
+        margin: 0;
+        height: 36px;
+        .cust_title {
+            margin: 0;
+        }
+        ::v-deep .el-input--medium {
+            width: 150px;
+        }
+    }
+}
+</style>

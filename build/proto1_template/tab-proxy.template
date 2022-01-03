@@ -1,0 +1,17 @@
+import AbstractProxy from "@/core/abstract/AbstractProxy";
+import { HttpType } from "@/views/${moduleName}/setting";
+import I${ClassName}Proxy from "./I${ClassName}Proxy";
+
+export default class ${ClassName}Proxy extends AbstractProxy implements I${ClassName}Proxy {
+    static NAME = "${ClassName}Proxy";
+    /**进入页面时调用 */
+    enter() {
+        
+    }
+
+    /**离开页面时调用 */
+    leave() {
+        
+    }
+
+}

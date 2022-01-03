@@ -1,0 +1,10 @@
+{
+    "name": "投注明细",
+    "description": "投注明细",
+    "document": "http://202.60.254.250:8090/pages/viewpage.action?pageId=6558292",
+    "list": [
+        "admin/plat_users_bet/table_columns",
+        "admin/plat_users_bet/index",
+        "admin/plat_users_bet/show/{plat_id}/{bet_id}"
+    ]
+}

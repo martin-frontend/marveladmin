@@ -1,0 +1,13 @@
+{
+    "name": "平台VIP通道",
+    "description": "平台VIP通道",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707582",
+    "list": [
+        "admin/vip_receive_payment_channel/table_columns",
+        "admin/vip_receive_payment_channel/index",
+        "admin/vip_receive_payment_channel/show/{id}",
+        "admin/vip_receive_payment_channel/store",
+        "admin/vip_receive_payment_channel/update/{id}"
+        
+    ]
+}

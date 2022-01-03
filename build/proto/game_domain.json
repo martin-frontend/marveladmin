@@ -1,0 +1,13 @@
+{
+    "name": "游戏域名",
+    "description": "游戏域名",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707718",
+    "list": [
+        "admin/game_domain/table_columns",
+        "admin/game_domain/index",
+        "admin/game_domain/show/{id}",
+        "admin/game_domain/store",
+        "admin/game_domain/update/{id}"
+        
+    ]
+}
