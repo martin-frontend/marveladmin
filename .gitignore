@@ -18,3 +18,5 @@ selenium-debug.log
 *.njsproj
 *.sln
 *.local
+
+build/upload.sh
