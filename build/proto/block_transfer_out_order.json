@@ -1,0 +1,9 @@
+{
+    "name": "数字兑换订单",
+    "description": "数字兑换订单",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766092",
+    "list": [
+        "admin/block_transfer_out_order/table_columns",
+        "admin/block_transfer_out_order/index"
+    ]
+}

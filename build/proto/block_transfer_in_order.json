@@ -1,0 +1,9 @@
+{
+    "name": "数字充值订单",
+    "description": "数字充值订单",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766089",
+    "list": [
+        "admin/block_transfer_in_order/table_columns",
+        "admin/block_transfer_in_order/index"
+    ]
+}

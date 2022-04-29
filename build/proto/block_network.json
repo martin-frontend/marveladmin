@@ -1,0 +1,12 @@
+{
+    "name": "区块网络配置",
+    "description": "区块网络配置",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766099",
+    "list": [
+        "admin/block_network/table_columns",
+        "admin/block_network/index",
+        "admin/block_network/show/{id}",
+        "admin/block_network/store",
+        "admin/block_network/update/{id}"
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "name": "用户帐号列表",
+    "description": "用户帐号列表",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766101",
+    "list": [
+        "admin/block_recharge_address/table_columns",
+        "admin/block_recharge_address/index"
+    ]
+}

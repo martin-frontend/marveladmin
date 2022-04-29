@@ -1,0 +1,12 @@
+{
+    "name": "区块合约配置",
+    "description": "区块合约配置",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766096",
+    "list": [
+        "admin/block_contract/table_columns",
+        "admin/block_contract/index",
+        "admin/block_contract/show/{id}",
+        "admin/block_contract/store",
+        "admin/block_contract/update/{id}"
+    ]
+}

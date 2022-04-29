@@ -1,0 +1,13 @@
+{
+    "name": "代币帐号管理",
+    "description": "代币帐号管理",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766094",
+    "list": [
+        "admin/block_transfer_account/table_columns",
+        "admin/block_transfer_account/index",
+        "admin/block_transfer_account/show/{id}",
+        "admin/block_transfer_account/store",
+        "admin/block_transfer_account/update/{id}",
+        "admin/block_transfer_account/balance/{id}"
+    ]
+}
