@@ -42,6 +42,10 @@ const layoutRouter = {
             name: "用户帐号列表",
             component: () => import(/* webpackChunkName: "block_recharge_address" */"@/views/block_recharge_address/view/BlockRechargeAddress.vue")
         },        {
+            path: "block_system_coins",
+            name: "系统代币管理",
+            component: () => import(/* webpackChunkName: "block_system_coins" */"@/views/block_system_coins/view/BlockSystemCoins.vue")
+        },        {
             path: "block_transfer_account",
             name: "代币帐号管理",
             component: () => import(/* webpackChunkName: "block_transfer_account" */"@/views/block_transfer_account/view/BlockTransferAccount.vue")
@@ -153,6 +157,10 @@ const layoutRouter = {
             path: "plat_blacklist",
             name: "黑名单管理",
             component: () => import(/* webpackChunkName: "plat_blacklist" */"@/views/plat_blacklist/view/PlatBlacklist.vue")
+        },        {
+            path: "plat_block_coins",
+            name: "平台代币管理",
+            component: () => import(/* webpackChunkName: "plat_block_coins" */"@/views/plat_block_coins/view/PlatBlockCoins.vue")
         },        {
             path: "plat_bonus_all",
             name: "全盘分红配置",

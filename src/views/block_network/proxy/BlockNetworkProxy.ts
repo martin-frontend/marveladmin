@@ -43,6 +43,7 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
             status: { name: "状态", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
+            main_coin_name: {name: '主币名称', options: {}},
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -68,6 +69,7 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
             block_confirm_number:null,
             extends:null,
             status:null,
+            main_coin_name: null,
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -127,6 +129,7 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
             block_confirm_number:null,
             extends:null,
             status:null,
+            main_coin_name:null,
         });
     }
 
@@ -148,6 +151,7 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
             block_confirm_number: form.block_confirm_number,
             extends: form.extends,
             status: form.status,
+            main_coin_name: form.main_coin_name
         };
         this.sendNotification(HttpType.admin_block_network_store, objectRemoveNull(formCopy));
     }

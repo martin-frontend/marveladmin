@@ -27,13 +27,21 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
     /**表格相关数据 */
     tableData = {
         columns: {
-            id: {name: "", options: {}},
-            plat_id: {name: "", options: {}},
-            name: {name: "", options: {}},
-            type: {name: "", options: {}},
-            address: {name: "", options: {}},
-            status: {name: "", options: {}},
-            remark: {name: "", options: {}},
+            address: { name: "账号地址", options: {} },
+            block_network_id: { name: "区块网络", options: {} },
+            created_at: { name: "创建时间", options: {} },
+            created_by: { name: "创建人", options: {} },
+            data_belong: { name: "数据归属标记", options: {} },
+            id: { name: "ID", options: {} },
+            is_delete: { name: "是否删除", options: {} },
+            name: { name: "名称", options: {} },
+            plat_id: { name: "平台", options: {} },
+            private_key: { name: "账号私钥", options: {} },
+            remark: { name: "描述", options: {} },
+            status: { name: "状态", options: {} },
+            type: { name: "类型", options: {} },
+            updated_at: { name: "修改时间", options: {} },
+            updated_by: { name: "修改人", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -55,10 +63,15 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
             address: null,
             status: null,
             remark: null,
-            token_balance: ""
+            token_balance: "",
         },
         formSource: <any>null, // 表单的原始数据
     };
+    /**弹窗显示余额 */
+    dialogBalance = {
+        bShow: false,
+        data: <any>{}
+    }
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -67,7 +80,7 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
     }
     /**表格数据 */
     setTableData(data: any) {
-        for(const item of data.list) {
+        for (const item of data.list) {
             item.main_balance = "--";
             item.token_balance = "--";
         }
@@ -92,7 +105,6 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
 
     /**显示弹窗 */
     showDialog(status: string, data?: any) {
-
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
@@ -118,7 +130,7 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
             address: null,
             status: null,
             remark: null,
-            token_balance: ""
+            token_balance: "",
         });
     }
 
@@ -145,9 +157,9 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
         // 删除多余无法去除的参数
         // TODO
         // 如果没有修改，就直接关闭弹窗
-        if(Object.keys(formCopy).length == 0){
+        if (Object.keys(formCopy).length == 0) {
             this.dialogData.bShow = false;
-            return ;
+            return;
         }
         // 添加必填参数
         formCopy.id = this.dialogData.formSource.id;
@@ -167,11 +179,10 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
             .catch(() => {});
     }
     /**获取余额 */
-    onGetBalance(id:any){
-        Http.request({},getUrl(HttpType.admin_block_transfer_account_balance, {id})).then((result:any)=>{
-            const item = this.tableData.list.find((item:any)=>item.id==id);
-            item.main_balance = result.data.main_balance;
-            item.token_balance = result.data.token_balance;
-        })
+    onGetBalance(id: any) {
+        Http.request({}, getUrl(HttpType.admin_block_transfer_account_balance, { id })).then((result: any) => {
+            this.dialogBalance.bShow = true;
+            this.dialogBalance.data = result.data;
+        });
     }
 }

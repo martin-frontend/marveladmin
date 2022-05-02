@@ -32,7 +32,13 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item :label="tableColumns.contract_abi.name" prop="contract_abi">
+            <el-form-item :label="tableColumns.coin_name_unique.name" prop="coin_name_unique">
+                <el-select filterable v-model="form.coin_name_unique" :placeholder="$t('common.pleaseChoose')">
+                    <el-option v-for="(item, key) of tableColumns.coin_name_unique.options" :label="item" :value="key" :key="key">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+             <el-form-item :label="tableColumns.contract_abi.name" prop="contract_abi">
                 <el-input type="textarea" v-model="form.contract_abi"></el-input>
             </el-form-item>
             <el-form-item :label="tableColumns.extends.name" prop="extends">

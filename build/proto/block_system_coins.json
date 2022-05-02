@@ -1,0 +1,11 @@
+{
+    "name": "系统代币管理",
+    "description": "系统代币管理",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766132",
+    "list": [
+        "admin/block_system_coins/table_columns",
+        "admin/block_system_coins/index",
+        "admin/block_system_coins/store",
+        "admin/block_system_coins/update/{id}"
+    ]
+}

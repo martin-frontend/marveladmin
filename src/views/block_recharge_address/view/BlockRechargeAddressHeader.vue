@@ -2,10 +2,29 @@
     <div class="header-content">
         <div class="group">
             <SearchInput :title="tableColumns.address.name" v-model="listQuery.address" />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options"
+                :clearable="true"
+            />
+            <SearchSelect
+                :title="tableColumns.block_network_id.name"
+                v-model="listQuery.block_network_id"
+                :options="tableColumns.block_network_id.options"
+                :clearable="true"
+            />
+            <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">查询</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">重置</el-button>
             </div>
+        </div>
+        <div class="group">
+            <div class="summary-text">
+                账号使用情况：{{ summary.total_used }}/{{ summary.total_record_count }} 账号USDT金额：{{ summary.gold }}
+            </div>
+            <el-button @click="handlerRefrush()" type="primary" icon="el-icon-refresh">刷新</el-button>
         </div>
     </div>
 </template>
@@ -24,6 +43,7 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
 @Component({
     components: {
         SearchInput,
+        SearchSelect
     },
 })
 export default class BlockRechargeAddressHeader extends AbstractView {
@@ -34,6 +54,7 @@ export default class BlockRechargeAddressHeader extends AbstractView {
     private myProxy: BlockRechargeAddressProxy = this.getProxy(BlockRechargeAddressProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
+    private summary = this.myProxy.tableData.summary;
     private listQuery = this.myProxy.listQuery;
 
     private handlerSearch() {
@@ -45,6 +66,10 @@ export default class BlockRechargeAddressHeader extends AbstractView {
         this.myProxy.resetListQuery();
     }
 
+    private handlerRefrush() {
+        this.myProxy.onQuery();
+    }
+
     // private handlerCreate() {
     //     this.myProxy.showDialog(DialogStatus.create);
     // }
@@ -53,4 +78,8 @@ export default class BlockRechargeAddressHeader extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.summary-text {
+    margin-top: 10px;
+    margin-right: 10px;
+}
 </style>

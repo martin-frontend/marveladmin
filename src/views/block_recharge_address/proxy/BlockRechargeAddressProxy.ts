@@ -27,6 +27,8 @@ export default class BlockRechargeAddressProxy extends AbstractProxy implements 
     tableData = {
         columns: {
             address: { name: "地址", options: {} },
+            block_network_id: { name: "链名", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
             created_at: { name: "创建时间", options: {} },
             created_by: { name: "创建人", options: {} },
             data_belong: { name: "数据归属标记", options: {} },
@@ -37,9 +39,15 @@ export default class BlockRechargeAddressProxy extends AbstractProxy implements 
             status: { name: "状态", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
+            user_id: { name: "平台用户", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        summary: {
+            gold: "0.000", // 总余额
+            total_record_count: 1001, // 总数量
+            total_used: 6, // 已使用的数量
+        },
     };
     /**查询条件 */
     listQuery = {
@@ -47,6 +55,9 @@ export default class BlockRechargeAddressProxy extends AbstractProxy implements 
         page_size: 20,
         order_by: "",
         address: null,
+        user_id: null,
+        coin_name_unique: null,
+        block_network_id: null,
     };
     /**弹窗相关数据 */
     // dialogData = {
@@ -69,6 +80,7 @@ export default class BlockRechargeAddressProxy extends AbstractProxy implements 
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        Object.assign(this.tableData.summary, data.summary);
     }
     /**详细数据 */
     // setDetail(data: any) {
@@ -81,6 +93,9 @@ export default class BlockRechargeAddressProxy extends AbstractProxy implements 
         Object.assign(this.listQuery, {
             order_by: "",
             address: null,
+            user_id: null,
+            coin_name_unique: null,
+            block_network_id: null,
         });
     }
 

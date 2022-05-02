@@ -10,6 +10,9 @@
             <el-form-item :label="tableColumns.name.name" prop="name">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
+            <el-form-item :label="tableColumns.main_coin_name.name" prop="main_coin_name">
+                <el-input v-model="form.main_coin_name"></el-input>
+            </el-form-item>
             <el-form-item :label="tableColumns.name_unique.name" prop="name_unique">
                 <el-input v-model="form.name_unique"></el-input>
             </el-form-item>

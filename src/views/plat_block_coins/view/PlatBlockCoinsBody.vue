@@ -1,7 +1,6 @@
 <template>
     <div>
         <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini" v-loading="net_status.loading">
-
             <el-table-column
                 prop="id"
                 :label="`${tableColumns.id.name}`"
@@ -10,64 +9,42 @@
             >
             </el-table-column>
             <el-table-column
+                prop="plat_id"
+                :label="`${tableColumns.plat_id.name}`"
+                class-name="status-col"
+                min-width="30px"
+            >
+                <template slot-scope="{ row }">
+                    {{ tableColumns.plat_id.options[row.plat_id] }}
+                </template>
+            </el-table-column>
+            <el-table-column
                 prop="coin_name_unique"
                 :label="`${tableColumns.coin_name_unique.name}`"
                 class-name="status-col"
-                min-width="90px"
+                min-width="30px"
             >
                 <template slot-scope="{ row }">
                     {{ tableColumns.coin_name_unique.options[row.coin_name_unique] }}
                 </template>
             </el-table-column>
             <el-table-column
-                prop="contract_name"
-                :label="`${tableColumns.contract_name.name}`"
-                class-name="status-col"
-                min-width="90px"
-            >
-            </el-table-column>
-            <el-table-column
                 prop="remark"
                 :label="`${tableColumns.remark.name}`"
                 class-name="status-col"
-                min-width="90px"
+                min-width="30px"
             >
             </el-table-column>
             <el-table-column
-                prop="block_network_id"
-                :label="`${tableColumns.block_network_id.name}`"
+                prop="can_play_game"
+                :label="`${tableColumns.can_play_game.name}`"
                 class-name="status-col"
-                min-width="90px"
+                min-width="30px"
             >
                 <template slot-scope="{ row }">
-                    {{ tableColumns.block_network_id.options[row.block_network_id] }}
+                    {{ tableColumns.can_play_game.options[row.can_play_game] }}
                 </template>
             </el-table-column>
-            <el-table-column
-                prop="contract_address"
-                :label="`${tableColumns.contract_address.name}`"
-                class-name="status-col"
-                min-width="90px"
-            >
-            </el-table-column>
-            <el-table-column
-                prop="type"
-                :label="`${tableColumns.type.name}`"
-                class-name="status-col"
-                min-width="90px"
-            >
-                <template slot-scope="{ row }">
-                    {{ tableColumns.type.options[row.type] }}
-                </template>
-            </el-table-column>
-            <el-table-column
-                prop="contract_decimal"
-                :label="`${tableColumns.contract_decimal.name}`"
-                class-name="status-col"
-                min-width="90px"
-            >
-            </el-table-column>
-
             <el-table-column label="操作" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
                     <el-button
@@ -87,7 +64,7 @@ import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
-import BlockContractProxy from "../proxy/BlockContractProxy";
+import PlatBlockCoinsProxy from "../proxy/PlatBlockCoinsProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 
@@ -96,14 +73,14 @@ import GlobalVar from "@/core/global/GlobalVar";
         Pagination,
     }
 })
-export default class BlockContractBody extends AbstractView {
+export default class PlatBlockCoinsBody extends AbstractView {
     //权限标识
     private unique = unique;
     private checkUnique = checkUnique;
     //网络状态
     private net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: BlockContractProxy = this.getProxy(BlockContractProxy);
+    private myProxy: PlatBlockCoinsProxy = this.getProxy(PlatBlockCoinsProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private tableData = this.myProxy.tableData.list;

@@ -1,12 +1,15 @@
 <template>
     <div>
-        <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini" v-loading="net_status.loading">
-            <el-table-column
-                prop="id"
-                :label="`${tableColumns.id.name}`"
-                class-name="status-col"
-                min-width="30px"
-            >
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
+            <el-table-column prop="id" :label="`${tableColumns.id.name}`" class-name="status-col" min-width="30px">
             </el-table-column>
             <el-table-column
                 prop="plat_id"
@@ -18,12 +21,7 @@
                     {{ tableColumns.plat_id.options[row.plat_id] }}
                 </template>
             </el-table-column>
-            <el-table-column
-                prop="name"
-                :label="`${tableColumns.name.name}`"
-                class-name="status-col"
-                min-width="90px"
-            >
+            <el-table-column prop="name" :label="`${tableColumns.name.name}`" class-name="status-col" min-width="90px">
             </el-table-column>
             <el-table-column
                 prop="remark"
@@ -32,14 +30,19 @@
                 min-width="90px"
             >
             </el-table-column>
+            <el-table-column prop="type" :label="`${tableColumns.type.name}`" class-name="status-col" min-width="90px">
+                <template slot-scope="{ row }">
+                    {{ tableColumns.type.options[row.type] }}
+                </template>
+            </el-table-column>
             <el-table-column
-                prop="type"
-                :label="`${tableColumns.type.name}`"
+                prop="block_network_id"
+                :label="`${tableColumns.block_network_id.name}`"
                 class-name="status-col"
                 min-width="90px"
             >
                 <template slot-scope="{ row }">
-                    {{ tableColumns.type.options[row.type] }}
+                    {{ tableColumns.block_network_id.options[row.block_network_id] }}
                 </template>
             </el-table-column>
 
@@ -51,28 +54,7 @@
             >
             </el-table-column>
 
-            <el-table-column
-                label="余额"
-                class-name="status-col"
-                min-width="90px"
-            >
-                <template slot-scope="{ row }">
-                    {{ row.token_balance }}
-                    <el-button
-                        size="mini"
-                        icon="el-icon-refresh"
-                        @click="handleRefrush(row)"
-                        ></el-button
-                    >
-                </template>
-            </el-table-column>
-
-            <el-table-column
-                prop="status"
-                :label="`${tableColumns.status.name}`"
-                class-name="status-col"
-                width="90px"
-            >
+            <el-table-column prop="status" :label="`${tableColumns.status.name}`" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.status.options[row.status] }}
                 </template>
@@ -80,12 +62,13 @@
 
             <el-table-column :label="$t('common.operating')" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
-                    <el-button
-                        size="mini"
-                        type="primary"
-                        @click="handleEdit(row)"
-                        >{{ $t("common.update") }}</el-button
-                    >
+                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
+                </template>
+            </el-table-column>
+
+            <el-table-column label="查看余额" class-name="status-col" min-width="90px">
+                <template slot-scope="{ row }">
+                    <el-button size="mini" type="primary" @click="handleBalance(row)">查看</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -104,7 +87,7 @@ import GlobalVar from "@/core/global/GlobalVar";
 @Component({
     components: {
         Pagination,
-    }
+    },
 })
 export default class BlockTransferAccountBody extends AbstractView {
     //权限标识
@@ -120,7 +103,7 @@ export default class BlockTransferAccountBody extends AbstractView {
     private pageInfo = this.myProxy.tableData.pageInfo;
     private listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page:number){
+    private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
@@ -133,7 +116,7 @@ export default class BlockTransferAccountBody extends AbstractView {
         this.myProxy.onDelete(data.id);
     }
 
-    private handleRefrush(data:any){
+    private handleBalance(data: any) {
         this.myProxy.onGetBalance(data.id);
     }
 }

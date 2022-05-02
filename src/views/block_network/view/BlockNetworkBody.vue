@@ -17,6 +17,13 @@
             >
             </el-table-column>
             <el-table-column
+                prop="main_coin_name"
+                :label="`${tableColumns.main_coin_name.name}`"
+                class-name="status-col"
+                min-width="30px"
+            >
+            </el-table-column>
+            <el-table-column
                 prop="name_unique"
                 :label="`${tableColumns.name_unique.name}`"
                 class-name="status-col"

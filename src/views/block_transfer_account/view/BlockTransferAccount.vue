@@ -1,5 +1,6 @@
 <template>
     <div class="content">
+        <BalanceDialog v-if="myProxy.dialogBalance.bShow"/>
         <BlockTransferAccountDialog v-if="myProxy.dialogData.bShow"/>
         <BlockTransferAccountHeader/>
         <BlockTransferAccountBody/>
@@ -14,12 +15,14 @@ import { Component } from "vue-property-decorator";
 import BlockTransferAccountDialog from "./BlockTransferAccountDialog.vue";
 import BlockTransferAccountHeader from "./BlockTransferAccountHeader.vue";
 import BlockTransferAccountBody from "./BlockTransferAccountBody.vue";
+import BalanceDialog from "./BalanceDialog.vue";
 
 @Component({
     components: {
         BlockTransferAccountDialog,
         BlockTransferAccountHeader,
         BlockTransferAccountBody,
+        BalanceDialog
     }
 })
 export default class BlockTransferAccount extends AbstractView {
