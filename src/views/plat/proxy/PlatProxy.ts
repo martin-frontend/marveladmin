@@ -99,7 +99,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         plat_id: 0,
         plat_name: "",
         region: "China",
-        language: "zh_CN",
+        language: [],
         app_types: [],
         status: 1,
         extends: {},
@@ -232,11 +232,20 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                 JSON.parse(JSON.stringify(data.promotion_discount))
             );
         }
+
+        const langKeys = Object.keys(this.tableData.columns.language.options);
+        const arr = [];
+        for (const item of this.dialogData.form.language) {
+            const idx = langKeys.indexOf(item);
+            arr.push(idx);
+        }
+        this.dialogData.form.language = arr;
+        // console.log(">>>>>>>", this.dialogData.form.language)
     }
     /**设置配置初始数据 */
     setInitConfig() {
         let type = getFirstKey(this.tableData.columns.vendor_type.options_type[0]);
-        Object.keys(this.tableData.columns.vendor_type.options).forEach((element) => {
+        Object.keys(this.tableData.columns.vendor_type.options).forEach(element => {
             this.dialogData.initPromotion_floor[element] = 0;
             this.dialogData.initWater_config[element] = { type: type, rate: 1 };
         });
@@ -370,6 +379,14 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                 extendsStr = JSON.stringify(JSON.parse(this.dialogData.form.extends));
             }
             formCopy.extends = extendsStr;
+
+            const langKeys = Object.keys(this.tableData.columns.language.options);
+            const arr = [];
+            for (const idx of language) {
+                arr.push(langKeys[idx]);
+            }
+            formCopy.language = JSON.stringify(arr);
+
             this.sendNotification(HttpType.admin_plat_store, objectRemoveNull(formCopy));
         } catch (error) {
             MessageBox.alert(<string>i18n.t("common.jsonError"));
@@ -394,6 +411,13 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                 }
                 temp.extends = extendsStr;
             }
+
+            const langKeys = Object.keys(this.tableData.columns.language.options);
+            const arr = [];
+            for (const idx of formCopy.language) {
+                if (idx > 0) arr.push(langKeys[idx]);
+            }
+            temp.language = JSON.stringify(arr);
 
             temp.plat_id = this.dialogData.form.plat_id;
             this.sendNotification(HttpType.admin_plat_update, temp);

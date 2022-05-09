@@ -22,7 +22,7 @@
                 prop="user_id"
                 :label="`${tableColumns.user_id.name}`"
                 class-name="status-col"
-                min-width="90px"
+                width="90px"
             >
             </el-table-column>
             <el-table-column
@@ -43,7 +43,7 @@
                 prop="token_name"
                 :label="`${tableColumns.token_name.name}`"
                 class-name="status-col"
-                min-width="90px"
+                width="80px"
             >
             </el-table-column>
             <el-table-column
@@ -53,9 +53,35 @@
                 min-width="90px"
             >
             </el-table-column>
+
+            <el-table-column
+                prop="gas"
+                :label="`${tableColumns.gas.name}`"
+                class-name="status-col"
+                min-width="90px"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="gas_price"
+                :label="`${tableColumns.gas_price.name}`"
+                class-name="status-col"
+                min-width="90px"
+            >
+            </el-table-column>
+
             <el-table-column
                 prop="txn_hash"
                 :label="`${tableColumns.txn_hash.name}`"
+                class-name="status-col"
+                min-width="90px"
+            >
+                <template slot-scope="{ row }">
+                    <a :href="row.scan_url" target="_blank" style="text-decoration: underline;">{{ row.txn_hash }}</a>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="created_at"
+                :label="`${tableColumns.created_at.name}`"
                 class-name="status-col"
                 min-width="90px"
             >

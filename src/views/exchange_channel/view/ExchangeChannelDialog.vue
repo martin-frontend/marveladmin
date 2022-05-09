@@ -28,17 +28,50 @@
                     <el-option
                         v-for="(value, key) in tableColumns.exchange_vendors_id.options"
                         :key="key"
-                        :label="value"
+                        :label="value.name"
                         :value="Number(key)"
                     ></el-option>
                 </el-select>
             </el-form-item>
+
+            <el-form-item v-if="form.exchange_vendors_id && tableColumns.exchange_vendors_id.options[form.exchange_vendors_id].payment_method_type == 3" :label="`${tableColumns.coin_name_unique.name}`" prop="coin_name_unique">
+                <el-select v-model="form.coin_name_unique" filterable class="select" :placeholder="$t('common.pleaseChoose')">
+                    <el-option
+                        v-for="(value, key) in tableColumns.coin_relations[form.plat_id]"
+                        :key="key"
+                        :label="value.name"
+                        :value="key"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item v-if="form.exchange_vendors_id && tableColumns.exchange_vendors_id.options[form.exchange_vendors_id].payment_method_type == 3 && form.coin_name_unique" :label="`${tableColumns.block_network_id.name}`" prop="block_network_id">
+                <el-select v-model="form.block_network_id" filterable class="select" :placeholder="$t('common.pleaseChoose')">
+                    <el-option
+                        v-for="(value, key) in tableColumns.coin_relations[form.plat_id][form.coin_name_unique].block_network_id"
+                        :key="key"
+                        :label="value.name"
+                        :value="key"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item v-if="form.exchange_vendors_id && tableColumns.exchange_vendors_id.options[form.exchange_vendors_id].payment_method_type == 3 && form.coin_name_unique && form.block_network_id" :label="`${tableColumns.account.name}`" prop="account">
+                <el-select v-model="form.account" filterable class="select" :placeholder="$t('common.pleaseChoose')" width="100%">
+                    <el-option
+                        v-for="(value, key) in tableColumns.coin_relations[form.plat_id][form.coin_name_unique].block_network_id[form.block_network_id].account"
+                        :key="key"
+                        :label="value"
+                        :value="value"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+
+
             <el-form-item size="mini" :label="tableColumns.name.name" prop="name">
                 <el-input v-model="form.name" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item>
-            <el-form-item size="mini" :label="tableColumns.account.name" prop="account">
+            <!-- <el-form-item size="mini" :label="tableColumns.account.name" prop="account">
                 <el-input v-model="form.account" :placeholder="$t('common.pleaseEnter')"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item size="mini" :label="tableColumns.secret.name" prop="secret">
                 <el-input v-model="form.secret" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item>
@@ -119,6 +152,8 @@ export default class ExchangeChannelDialog extends AbstractView {
             account: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             secret: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             status: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            coin_name_unique: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            block_network_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
         };
     }
 

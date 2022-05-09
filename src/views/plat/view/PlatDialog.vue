@@ -24,11 +24,20 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['language'].name" prop="language">
-                    <el-radio-group v-model="form.language">
+                    <!-- <el-radio-group v-model="form.language">
                         <el-radio v-for="(value, key) in tableColumns.language.options" :key="key" :label="key">
                             {{ value }}
                         </el-radio>
-                    </el-radio-group>
+                    </el-radio-group> -->
+                    <el-checkbox-group v-model="form.language">
+                        <el-checkbox
+                            v-for="(value, key) in Object.values(tableColumns.language.options)"
+                            :key="key"
+                            :label="Number(key)"
+                        >
+                            {{ value }}
+                        </el-checkbox>
+                    </el-checkbox-group>
                 </el-form-item>
 
                 <el-form-item size="mini" :label="`${tableColumns.status.name}`" prop="status">

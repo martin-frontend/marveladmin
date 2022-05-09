@@ -59,6 +59,16 @@
                 class-name="status-col"
                 min-width="90px"
             >
+                <template slot-scope="{ row }">
+                    <a :href="row.scan_url" target="_blank" style="text-decoration: underline;">{{ row.txn_hash }}</a>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="created_at"
+                :label="`${tableColumns.created_at.name}`"
+                class-name="status-col"
+                min-width="90px"
+            >
             </el-table-column>
             <el-table-column
                 prop="block_number"

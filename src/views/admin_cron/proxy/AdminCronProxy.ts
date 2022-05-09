@@ -84,6 +84,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
         page_size: 20,
         name: "",
         status: "",
+        type: "",
     };
 
     /**运行日志 查询条件 */
@@ -99,7 +100,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
     };
 
     /**table 操作数据*/
-    cronTableSwitch = {
+    cronTableSwitch = <any>{
         id: "",
         state: "",
         is_ordered_exec: "",
@@ -193,6 +194,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             page_size: 20,
             name: "",
             status: "",
+            type: ""
         });
     }
     /**运行日志 重置查询数据 */

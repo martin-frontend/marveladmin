@@ -26,21 +26,19 @@ export default class BlockTransferOutOrderProxy extends AbstractProxy implements
     /**表格相关数据 */
     tableData = {
         columns: {
-            actual_amount: { name: "到帐划转总额", options: {} },
             amount: { name: "数量", options: {} },
-            auto_transfer: { name: "自动转账", options: {} },
+            block_network_id: { name: "区块网络", options: {} },
             block_number: { name: "区块高度", options: {} },
             channel_id: { name: "渠道ID", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
             created_at: { name: "创建时间", options: {} },
             created_by: { name: "创建人", options: {} },
             created_ip: { name: "创建IP", options: {} },
             data_belong: { name: "数据归属标记", options: {} },
-            fee: { name: "手续费", options: {} },
-            fee_rate: { name: "手续费比例(单位百分比)", options: {} },
             from_address: { name: "转账地址", options: {} },
-            gas_fee: { name: "油费", options: {} },
+            gas: { name: "油量", options: {} },
+            gas_price: { name: "油价", options: {} },
             id: { name: "主键", options: {} },
-            is_internal: { name: "是否内部转账", options: {} },
             log_index: { name: "交易Log索引", options: {} },
             order_no: { name: "订单编号", options: {} },
             plat_id: { name: "所属平台", options: {} },
@@ -52,7 +50,6 @@ export default class BlockTransferOutOrderProxy extends AbstractProxy implements
             token_name: { name: "币种", options: {} },
             transfer_account_id: { name: "划转账号ID", options: {} },
             txn_hash: { name: "交易TxnHash", options: {} },
-            type: { name: "订单类型", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
             user_id: { name: "用户ID", options: {} },
@@ -62,10 +59,10 @@ export default class BlockTransferOutOrderProxy extends AbstractProxy implements
     };
     /**查询条件 */
     listQuery = {
-        plat_id:"",
-        order_no:null,
-        token_name:null,
-        status:null,
+        plat_id: "",
+        order_no: null,
+        token_name: null,
+        status: null,
         page_count: 1,
         page_size: 20,
     };

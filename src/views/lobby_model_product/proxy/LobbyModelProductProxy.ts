@@ -107,6 +107,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
         this.tableData.list.push(...data.list);
         this.tableDataFilter = data.list;
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        this.onFilterTable();
     }
 
     /**显示弹窗 */

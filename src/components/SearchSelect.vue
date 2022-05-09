@@ -15,7 +15,7 @@
             :disabled="getDisabled"
             @change="onChange"
         >
-            <el-option v-for="(value, key) in options" :key="key" :label="value" :value="key"></el-option>
+            <el-option v-for="(value, key) in options" :key="key" :label="value.name || value" :value="key"></el-option>
         </el-select>
     </div>
     <!-- 父组件用法 -->
@@ -23,7 +23,7 @@
         :title="tableColumns.status.name"
         v-model="listQuery.status"
         :options="tableColumns.status.options"
-        :placeholder="" 
+        :placeholder=""
         :width=""
     /> -->
     <!-- placeholder 如不设定 预设使用 title -->

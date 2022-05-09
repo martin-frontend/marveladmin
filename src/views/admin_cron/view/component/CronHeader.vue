@@ -7,6 +7,11 @@
                 v-model="listQuery.status"
                 :options="tableColumns.status.options"
             />
+            <SearchSelect
+                :title="tableColumns.type.name"
+                v-model="listQuery.type"
+                :options="tableColumns.type.options"
+            />
             <el-button class="header-button" icon="el-icon-search" @click="handlerSearch()" type="primary"
                 >{{ $t("common.search") }}</el-button
             >

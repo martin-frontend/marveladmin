@@ -26,7 +26,6 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
     /**表格相关数据 */
     tableData = {
         columns: {
-            // TODO
             app_types: { name: "应用平台", options: {} },
             content: { name: "公告内容", options: {} },
             created_at: { name: "创建时间", options: {} },
@@ -37,13 +36,16 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             img_uris: { name: "公告图片", options: {} },
             index_no: { name: "排序序号", options: {} },
             is_delete: { name: "是否删除", options: {} },
+            language: { name: "语言", options: {} },
             name: { name: "公告标题", options: {} },
             open_mode: { name: "打开模块", options: {} },
             open_mode_url: { name: "模块跳转网页", options: {} },
             plat_id: { name: "所属平台", options: {} },
             start_time: { name: "发布时间", options: {} },
             status: { name: "状态", options: {} },
+            thumbnail_uris: { name: "公告缩略图", options: {} },
             type: { name: "类型", options: {} },
+            type_position: { name: "位置类型", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
         },
@@ -76,6 +78,9 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             img_uris: "",
             open_mode: "1",
             open_mode_url: "",
+            thumbnail_uris: "",
+            thumbnail_urls: "",
+            language: ""
         },
         formSource: null, // 表单的原始数据
     };
@@ -158,6 +163,9 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             img_uris: "",
             open_mode: "1",
             open_mode_url: "",
+            thumbnail_uris: "",
+            thumbnail_urls: "",
+            language: null
         });
     }
 
@@ -179,13 +187,20 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             img_uris,
             open_mode,
             open_mode_url,
+            thumbnail_uris,
+            thumbnail_urls,
+            language
         } = this.dialogData.form;
         app_types = JSON.stringify(app_types);
         img_uris = JSON.stringify(img_uris);
         img_urls = JSON.stringify(img_urls);
+        thumbnail_uris = JSON.stringify(thumbnail_uris)
+        thumbnail_urls = JSON.stringify(thumbnail_urls)
         if (type == 1) {
             img_uris = "";
             img_urls = "";
+            thumbnail_uris = "";
+            thumbnail_urls = "";
         }
         if (type == 2) {
             content = "";
@@ -203,6 +218,9 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             img_uris,
             open_mode,
             open_mode_url,
+            thumbnail_uris,
+            thumbnail_urls,
+            language
         };
 
         this.sendNotification(HttpType.admin_plats_notice_store, objectRemoveNull(formCopy));
@@ -238,9 +256,9 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
 
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {
@@ -250,9 +268,9 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
     }
 
     onRemoveItem() {
-        MessageBox.confirm(<string> i18n.t("common.revokeConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>i18n.t("common.revokeConfirmStr"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {
@@ -263,15 +281,24 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
     }
 
     /**图片上传 */
-    onUploadImage(data: any) {
+    private isMin = false;
+    onUploadImage(data: any, isMin: boolean = false) {
+        this.isMin = isMin;
         this.sendNotification(HttpType.admin_resource_upload, data);
     }
 
     /**图片上传 回传url*/
     setImageUrl(body: any) {
-        this.dialogData.form.img_uris = this.dialogData.form.img_uris || {};
-        this.dialogData.form.img_urls = this.dialogData.form.img_urls || {};
-        this.dialogData.form.img_uris[this.appType] = body.uri;
-        this.dialogData.form.img_urls[this.appType] = body.url;
+        if (!this.isMin) {
+            this.dialogData.form.img_uris = this.dialogData.form.img_uris || {};
+            this.dialogData.form.img_urls = this.dialogData.form.img_urls || {};
+            this.dialogData.form.img_uris[this.appType] = body.uri;
+            this.dialogData.form.img_urls[this.appType] = body.url;
+        } else {
+            this.dialogData.form.thumbnail_uris = this.dialogData.form.thumbnail_uris || {};
+            this.dialogData.form.thumbnail_urls = this.dialogData.form.thumbnail_urls || {};
+            this.dialogData.form.thumbnail_uris[this.appType] = body.uri;
+            this.dialogData.form.thumbnail_urls[this.appType] = body.url;
+        }
     }
 }

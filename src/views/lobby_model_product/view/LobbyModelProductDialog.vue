@@ -164,7 +164,11 @@ export default class LobbyModelProductDialog extends AbstractView {
     }
 
     get venderProductData() {
-        return this.tableColumns.vendor_product_id.options_key[this.form.vendor_id];
+        if(this.form.vendor_id && this.form.vendor_type){
+            return this.tableColumns.vendor_product_id.options_key[this.form.vendor_id][this.form.vendor_type];
+            // return this.tableColumns.vendor_product_id.options_key[this.form.vendor_id];
+        }
+        return [];
     }
 
     get isStatusUpdate() {
@@ -180,7 +184,7 @@ export default class LobbyModelProductDialog extends AbstractView {
             show_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             category: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             vendor_product_name: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
-            icon: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
+            // icon: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
             list_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
         };
         const rules1 = {
@@ -191,7 +195,7 @@ export default class LobbyModelProductDialog extends AbstractView {
             show_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             category: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             vendor_product_id: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            icon: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
+            // icon: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
         };
         return { rules, rules1 };
     }

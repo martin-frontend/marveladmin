@@ -12,14 +12,20 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-
-            <el-form-item :label="tableColumns.name.name" prop="name">
+            <el-form-item :label="tableColumns.block_network_id.name" prop="block_network_id">
+                <el-select filterable v-model="form.block_network_id" class="select" :placeholder="$t('common.pleaseChoose')">
+                    <el-option
+                        v-for="(item, key) of tableColumns.block_network_id.options"
+                        :label="item"
+                        :value="key"
+                        :key="key"
+                    >
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <!-- <el-form-item :label="tableColumns.name.name" prop="name">
                 <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item :label="tableColumns.remark.name" prop="remark">
-                <el-input v-model="form.remark"></el-input>
-            </el-form-item>
-
+            </el-form-item> -->
             <el-form-item :label="tableColumns.type.name" prop="type">
                 <el-radio-group v-model="form.type">
                     <el-radio v-for="(value, key) in tableColumns.type.options" :key="key" :label="Number(key)">
@@ -27,10 +33,21 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
-
+            <el-form-item :label="tableColumns.private_key.name" prop="private_key">
+                <el-input v-model="form.private_key"></el-input>
+            </el-form-item>
             <el-form-item :label="tableColumns.address.name" prop="address">
                 <el-input v-model="form.address"></el-input>
             </el-form-item>
+
+
+            <el-form-item :label="tableColumns.remark.name" prop="remark">
+                <el-input v-model="form.remark"></el-input>
+            </el-form-item>
+
+
+
+
             <el-form-item :label="tableColumns.status.name" prop="status">
                 <el-radio-group v-model="form.status">
                     <el-radio v-for="(value, key) in tableColumns.status.options" :key="key" :label="Number(key)">

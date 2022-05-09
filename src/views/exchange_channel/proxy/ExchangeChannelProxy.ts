@@ -27,15 +27,25 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
     /**表格相关数据 */
     tableData = {
         columns: {
-            id: { name: "", options: {} },
-            plat_id: { name: "", options: {} },
-            name: { name: "", options: {} },
-            exchange_vendors_id: { name: "", options: {} },
-            vendor_name: { name: "", options: {} },
-            account: { name: "", options: {} },
-            secret: { name: "", options: {} },
-            payment_method_type: { name: "", options: {} },
-            status: { name: "", options: {} },
+            account: { name: "兑换厂商账号", options: {} },
+            block_network_id: { name: "区块网络", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
+            coin_relations: <any>{},
+            created_at: { name: "创建时间", options: {} },
+            created_by: { name: "创建人", options: {} },
+            data_belong: { name: "数据归属标记", options: {} },
+            exchange_vendors_id: { name: "兑换厂商ID", options: {} },
+            id: { name: "主键", options: {} },
+            is_delete: { name: "是否删除", options: {} },
+            name: { name: "兑换渠道名称", options: {} },
+            payment_method_detail: { name: "平台兑换方式", options: {} },
+            payment_method_type: { name: "支持兑换方式", options: {} },
+            plat_id: { name: "平台ID", options: {} },
+            secret: { name: "兑换厂商密钥", options: {} },
+            status: { name: "使用状态", options: {} },
+            updated_at: { name: "修改时间", options: {} },
+            updated_by: { name: "修改人", options: {} },
+            vendor_name: { name: "厂商名称", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -60,10 +70,13 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
             name: "",
             account: "",
             secret: "",
-            status: 1
+            status: 1,
+            //以下数据在coin_relations
+            coin_name_unique: null,
+            block_network_id: <any>null,
         },
         formSource: null, // 表单的原始数据
-        platAllOptions: {}
+        platAllOptions: {},
     };
 
     /**设置表头数据 */
@@ -71,8 +84,8 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
         Object.assign(this.tableData.columns, data);
         this.dialogData.platAllOptions = JSON.parse(JSON.stringify(this.tableData.columns.plat_id.options));
         Object.assign(this.dialogData.platAllOptions, {
-            "0": <string> i18n.t("recharge_channels.allPlat")
-        })
+            "0": <string>i18n.t("recharge_channels.allPlat"),
+        });
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
@@ -94,6 +107,7 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
     setDetail(data: any) {
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        this.dialogData.form.block_network_id = this.dialogData.form.block_network_id.toString();
     }
 
     /**重置查询条件 */
@@ -132,7 +146,10 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
             name: "",
             account: "",
             secret: "",
-            status: 1
+            status: 1,
+            //以下数据在coin_relations
+            coin_name_unique: null,
+            block_network_id: null,
         });
     }
 
@@ -144,21 +161,14 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
     }
     /**添加数据 */
     onAdd() {
-        const {
-            plat_id,
-            exchange_vendors_id,
-            name,
-            account,
-            secret,
-            status
-        } = this.dialogData.form;
+        const { plat_id, exchange_vendors_id, name, account, secret, status } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
             exchange_vendors_id,
             name,
             account,
             secret,
-            status
+            status,
         };
         this.sendNotification(HttpType.admin_exchange_channel_store, objectRemoveNull(formCopy));
     }
@@ -183,20 +193,23 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_exchange_channel_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**更新使用狀態 */
     updateStatus(data: any) {
-        this.sendNotification(HttpType.admin_exchange_channel_update, { id: data.id, status: data.status === true ? 1 : 98 });
+        this.sendNotification(HttpType.admin_exchange_channel_update, {
+            id: data.id,
+            status: data.status === true ? 1 : 98,
+        });
     }
     /**兑换方式配置数据 */
     payMethodDialogData = {
@@ -219,7 +232,7 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
             status: 1,
         },
         formSource: null, // 表单的原始数据
-    }
+    };
     /**显示兑换方式配置弹窗 */
     showPayMethodDialog(status: string, data?: any) {
         this.payMethodDialogData.bShow = true;
@@ -230,7 +243,7 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
             exchange_vendors_id: data.row.exchange_vendors_id,
             exchange_channel_id: data.row.id,
             payment_method_type: data.type,
-        })
+        });
         if (status == DialogStatus.update) {
             data.detail.status - data.detail.status.toString();
             this.payMethodDialogData.formSource = data.detail;

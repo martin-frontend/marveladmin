@@ -77,6 +77,19 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
+
+            <el-form-item size="mini" :label="tableColumns['language'].name" prop="language">
+                <el-select v-model="form.language" :placeholder="$t('common.pleaseChoose')" filterable style="width: 300px">
+                    <el-option
+                        v-for="(value, key) in tableColumns['language'].options"
+                        :key="key"
+                        :label="value"
+                        :value="key"
+                    >
+                    </el-option>
+                </el-select>
+            </el-form-item>
+
             <el-form-item size="mini" :label="tableColumns['content'].name" prop="content" v-if="form.type == 1">
                 <el-input
                     type="textarea"
@@ -125,6 +138,49 @@
                     </el-tab-pane>
                 </el-tabs>
             </el-form-item>
+
+            <el-form-item size="mini" :label="tableColumns['thumbnail_uris'].name" prop="thumbnail_urls" v-if="form.type == 2">
+                <el-tabs type="border-card" v-model="myProxy.appType">
+                    <el-tab-pane
+                        :label="tableColumns['app_types'].options[item]"
+                        :name="`${item}`"
+                        v-for="item in form['app_types']"
+                        :key="item"
+                    >
+                        <div style="display: flex">
+                            <el-upload
+                                action="#"
+                                list-type="picture-card"
+                                :on-change="handleChange1"
+                                :auto-upload="false"
+                                :multiple="false"
+                                :show-file-list="false"
+                                ref="upload"
+                                v-if="!form.thumbnail_urls[myProxy.appType]"
+                                class="upload"
+                            >
+                                <i class="el-icon-plus"></i>
+                            </el-upload>
+                            <div
+                                class="upload-box"
+                                @mouseover="onMouseEnter"
+                                @mouseleave="onMouseLeave"
+                                v-if="form.thumbnail_urls[myProxy.appType]"
+                            >
+                                <div class="mask" v-show="showMask">
+                                    <div class="icon-bar">
+                                        <i class="el-icon-delete" @click="handleRemove1"></i>
+                                        <i class="el-icon-zoom-in" @click="handlePictureCardPreview1"></i>
+                                    </div>
+                                </div>
+                                <img :src="formatImageUrl(form.thumbnail_urls[myProxy.appType])" />
+                            </div>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+            </el-form-item>
+
+
             <el-form-item class="dialog-footer">
                 <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
                     isStatusUpdate ? $t("common.save") : $t("plats_notice.releaseConfirm")
@@ -189,6 +245,8 @@ export default class PlatsNoticeDialog extends AbstractView {
             type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             content: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             img_urls: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            thumbnail_urls: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            language: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
         };
     }
 
@@ -243,14 +301,29 @@ export default class PlatsNoticeDialog extends AbstractView {
             file: file.raw,
         });
     }
+    handleChange1(file: any) {
+        // this.myProxy.appType = this.myProxy.appType;
+        this.myProxy.onUploadImage({
+            type: 2,
+            file: file.raw,
+        }, true);
+    }
     handleRemove() {
         this.form.img_urls[this.myProxy.appType] = "";
         this.form.img_uris[this.myProxy.appType] = "";
         this.showMask = false;
     }
+    handleRemove1() {
+        this.form.thumbnail_urls[this.myProxy.appType] = "";
+        this.form.thumbnail_uris[this.myProxy.appType] = "";
+        this.showMask = false;
+    }
 
     handlePictureCardPreview() {
         GlobalVar.preview_image.url = this.form.img_urls[this.myProxy.appType];
+    }
+    handlePictureCardPreview1() {
+        GlobalVar.preview_image.url = this.form.thumbnail_urls[this.myProxy.appType];
     }
 }
 </script>

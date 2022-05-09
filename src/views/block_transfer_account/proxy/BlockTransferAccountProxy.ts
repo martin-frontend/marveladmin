@@ -58,12 +58,14 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
         form: {
             id: null,
             plat_id: "",
-            name: null,
+            name: "",
             type: "",
             address: null,
             status: null,
             remark: null,
             token_balance: "",
+            block_network_id:null,
+            private_key:null
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -125,12 +127,14 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
         Object.assign(this.dialogData.form, {
             id: null,
             plat_id: "",
-            name: null,
+            name: "",
             type: "",
             address: null,
             status: null,
             remark: null,
             token_balance: "",
+            block_network_id:null,
+            private_key:null
         });
     }
 
@@ -148,6 +152,8 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
             address: form.address,
             status: form.status,
             remark: form.remark,
+            block_network_id: form.block_network_id,
+            private_key: form.private_key
         };
         this.sendNotification(HttpType.admin_block_transfer_account_store, objectRemoveNull(formCopy));
     }

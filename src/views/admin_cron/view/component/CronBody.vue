@@ -10,6 +10,11 @@
             v-loading="net_status.loading"
         >
             <el-table-column prop="id" :label="tableColumns.id.name" align="center"> </el-table-column>
+            <el-table-column prop="type" :label="tableColumns.type.name" align="center">
+                <template slot-scope="{ row }">
+                    {{tableColumns.type.options[row.type]}}
+                </template>
+            </el-table-column>
             <el-table-column prop="name" :label="tableColumns.name.name" align="center"> </el-table-column>
             <el-table-column prop="frequency" :label="tableColumns.frequency.name" align="center"> </el-table-column>
             <el-table-column prop="content" :label="tableColumns.content.name" align="center"> </el-table-column>

@@ -25,7 +25,7 @@
                 :label="tableColumns['app_types'].name"
                 prop="app_types"
                 class-name="status-col"
-                width="180"
+                width="90"
                 align="center"
             >
                 <template slot-scope="scope" align="center">
@@ -41,6 +41,11 @@
                             </el-tag>
                         </span>
                     </div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns['language'].name" align="center">
+                <template slot-scope="{ row }">
+                    {{ tableColumns["language"].options[row.language] }}
                 </template>
             </el-table-column>
             <el-table-column

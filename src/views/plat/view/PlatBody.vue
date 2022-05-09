@@ -95,7 +95,8 @@
             <el-table-column :label="tableColumns['language'].name" min-width="80px">
                 <template slot-scope="{ row }">
                     <div>
-                        {{ tableColumns.language.options[row.language] }}
+                        <span v-for="lang of row.language" :key="lang">{{tableColumns.language.options[lang]}},</span>
+                        <!-- {{ tableColumns.language.options[row.language] }} -->
                     </div>
                 </template>
             </el-table-column>
