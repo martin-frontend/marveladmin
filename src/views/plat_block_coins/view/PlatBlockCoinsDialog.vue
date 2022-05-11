@@ -19,6 +19,12 @@
                     </el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item :label="tableColumns.type.name" prop="type">
+                <el-select filterable v-model="form.type" :placeholder="$t('common.pleaseChoose')">
+                    <el-option v-for="(item, key) of tableColumns.type.options" :label="item" :value="key" :key="key">
+                    </el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item :label="tableColumns.remark.name" prop="remark">
                 <el-input type="textarea" v-model="form.remark"></el-input>
             </el-form-item>

@@ -29,6 +29,16 @@
                 </template>
             </el-table-column>
             <el-table-column
+                prop="type"
+                :label="`${tableColumns.type.name}`"
+                class-name="status-col"
+                min-width="30px"
+            >
+                <template slot-scope="{ row }">
+                    {{ tableColumns.type.options[row.type] }}
+                </template>
+            </el-table-column>
+            <el-table-column
                 prop="remark"
                 :label="`${tableColumns.remark.name}`"
                 class-name="status-col"
@@ -75,28 +85,28 @@ import GlobalVar from "@/core/global/GlobalVar";
 })
 export default class PlatBlockCoinsBody extends AbstractView {
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatBlockCoinsProxy = this.getProxy(PlatBlockCoinsProxy);
+    myProxy: PlatBlockCoinsProxy = this.getProxy(PlatBlockCoinsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page:number){
+    handlerPageSwitch(page:number){
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
 }
