@@ -225,6 +225,8 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         const data: any = JSON.parse(JSON.stringify(this.listQuery));
         data.plat_id = data.plat_id === "0" ? "" : data.plat_id;
         data.hideLoading = hideLoading;
+        console.log("data=====",data);
+        
         this.sendNotification(HttpType.admin_recharge_orders_index, objectRemoveNull(data));
     }
 
