@@ -143,7 +143,6 @@
                     <div>{{ tableColumns["fee_rate"].name }}：{{ row.fee_rate }}</div>
                     <div>{{ tableColumns["fee"].name }}：{{ row.fee }}</div>
                     <div>{{ tableColumns["money"].name }}：{{ row.money }}</div>
-                    <div>{{ tableColumns["currency_type"].options[row.currency_type] }}：{{ row.currency_num }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('common.orderTime')" align="left" min-width="150px">

@@ -90,25 +90,14 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column
-                prop="coin_name_unique"
-                :label="tableColumns['coin_name_unique'].name"
-                align="center"
-                width="70px"
-            >
-            </el-table-column>
-            <el-table-column
-                prop="block_network_id"
-                :label="tableColumns['block_network_id'].name"
-                align="center"
-                width="90px"
-            >
+
+            <el-table-column prop="coin_name_unique" :label="tableColumns['coin_name_unique'].name" min-width="100px" align="center">
                 <template slot-scope="{ row }">
-                    <div>
-                        {{ tableColumns["block_network_id"].options[row.block_network_id] }}
-                    </div>
+                    <div align="left">{{ tableColumns["coin_name_unique"].name }}：{{ row.coin_name_unique }}</div>
+                    <div align="left">{{ tableColumns["block_network_id"].name }}：{{ tableColumns["block_network_id"].options[row.block_network_id] }}</div>
                 </template>
             </el-table-column>
+
             <el-table-column
                 prop="paymethod_id"
                 :label="tableColumns['paymethod_id'].name"
