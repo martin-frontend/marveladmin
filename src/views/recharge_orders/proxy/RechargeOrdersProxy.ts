@@ -65,7 +65,10 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             fee: { name: "", options: {} },
             fee_rate: { name: "", options: {} },
             third_id: { name: "", options: {} },
-            third_name: { name: "", options: {} }
+            third_name: { name: "", options: {} },
+            block_network_id: { name: "链名", options: {}},
+            coin_name_unique: { name: "币种", options:{}},
+
         },
         list: <any>[],
         message: {
@@ -113,6 +116,8 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         vendor_id: "",
         "gold-{>=}": "",
         "gold-{<=}": "",
+        coin_name_unique: "",
+        block_network_id: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -186,6 +191,8 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             vendor_id: "",
             "gold-{>=}": "",
             "gold-{<=}": "",
+            coin_name_unique: "",
+            block_network_id: "",
         });
     }
 

@@ -57,13 +57,13 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column :label="$t('common.platMsg')" min-width="180px">
+            <el-table-column :label="$t('common.platMsg')" min-width="150px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns["plat_id"].name }}：{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
                     <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.userMsg')" min-width="180px">
+            <el-table-column :label="$t('common.userMsg')" min-width="130px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
                         {{ tableColumns["user_id"].name }}：{{ row.user_id }}
@@ -87,6 +87,25 @@
                 <template slot-scope="{ row }">
                     <div>
                         {{ tableColumns["status"].options[row.status] }}
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="coin_name_unique"
+                :label="tableColumns['coin_name_unique'].name"
+                align="center"
+                width="70px"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="block_network_id"
+                :label="tableColumns['block_network_id'].name"
+                align="center"
+                width="90px"
+            >
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["block_network_id"].options[row.block_network_id] }}
                     </div>
                 </template>
             </el-table-column>
