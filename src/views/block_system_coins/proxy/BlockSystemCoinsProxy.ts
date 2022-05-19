@@ -36,6 +36,8 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             remark: { name: "说明", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
+            icon: {name: "图片", options: []},
+            icon_url:{name: "图片", options: []},
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -54,6 +56,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             coin_name: "",
             coin_name_unique: "",
             remark: "",
+            icon: "",
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -106,6 +109,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             coin_name: "",
             coin_name_unique: "",
             remark: "",
+            icon: "",
         });
     }
 
@@ -120,6 +124,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             coin_name: form.coin_name,
             coin_name_unique: form.coin_name_unique,
             remark: form.remark,
+            icon: form.icon,
         };
         this.sendNotification(HttpType.admin_block_system_coins_store, objectRemoveNull(formCopy));
     }
