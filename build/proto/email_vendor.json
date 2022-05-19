@@ -1,0 +1,12 @@
+{
+    "name": "邮件厂商",
+    "description": "邮件厂商",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766268",
+    "list": [
+        "admin/email_vendor/table_columns",
+        "admin/email_vendor/index",
+        "admin/email_vendor/show/{email_vender_id}",
+        "admin/email_vendor/store",
+        "admin/email_vendor/update/{email_vender_id}"
+    ]
+}

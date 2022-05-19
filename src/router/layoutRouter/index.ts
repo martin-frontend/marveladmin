@@ -322,6 +322,10 @@ const layoutRouter = {
             name: "系统参数",
             component: () => import(/* webpackChunkName: "system_config" */"@/views/system_config/view/SystemConfig.vue")
         },        {
+            path: "email_vendor",
+            name: "邮件厂商",
+            component: () => import(/* webpackChunkName: "email_vendor" */"@/views/email_vendor/view/SystemEmail.vue")
+        },        {
             path: "system_fag",
             name: "系统常见问题配置",
             component: () => import(/* webpackChunkName: "system_fag" */"@/views/system_fag/view/SystemFag.vue")
