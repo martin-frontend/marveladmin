@@ -18,10 +18,10 @@
         <div class="desc" v-loading="net_status.loading">
             <p>{{ $t("user_detail.atMostDisplay",{"0": tableColumns.keep_time}) }}</p>
             <p>
-                {{ tableColumns.commission_history_num }}：<span>{{ tableData.commission_history_num }}</span>
+                {{ tableColumns.commission_history_num }}：<span v-html="getAccessInfo(tableData.commission_history_num)"></span>
             </p>
             <p>
-                {{ tableColumns.commission_received_num }}：<span>{{ tableData.commission_received_num }}</span>
+                {{ tableColumns.commission_received_num }}：<span v-html="getAccessInfo(tableData.commission_received_num)"></span>
             </p>
         </div>
     </div>
@@ -59,6 +59,18 @@ export default class TabCommissionHeader extends AbstractView {
     }
     private handlerReset() {
         this.myProxy.resetListQuery();
+    }
+
+    getAccessInfo(data: any) {
+        let infoStr = "";
+        if (data) {
+            const keys = Object.keys(data);
+            for (const key of keys) {
+                infoStr += key + "：";
+                infoStr += data[key] + "&nbsp;&nbsp;&nbsp;&nbsp;";
+            }
+        }
+        return infoStr;
     }
 }
 </script>

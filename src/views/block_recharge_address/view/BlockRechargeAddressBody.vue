@@ -42,8 +42,8 @@
                 </template>
             </el-table-column>
             <el-table-column
-                prop="gold"
-                :label="`${tableColumns.gold.name}`"
+                prop="amount"
+                :label="`${tableColumns.amount.name}`"
                 class-name="status-col"
                 min-width="30px"
                 sortable="custom"
