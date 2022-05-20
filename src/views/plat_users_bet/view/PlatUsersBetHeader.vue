@@ -44,6 +44,11 @@
                 v-model="listQuery.settlement_status"
                 :options="tableColumns.settlement_status.options"
             />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
+            />
             <SearchRange
                 :title="tableColumns.win_gold.name"
                 min="-9999999"
