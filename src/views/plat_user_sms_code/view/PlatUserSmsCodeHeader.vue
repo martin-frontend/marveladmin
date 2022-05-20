@@ -16,6 +16,12 @@
                 v-model="listQuery.status"
                 :options="tableColumns.status.options"
             />
+            <SearchSelect
+                :title="tableColumns.code_type.name"
+                v-model="listQuery.code_type"
+                :options="tableColumns.code_type.options"
+            />
+
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{ $t("common.search") }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{ $t("common.reset") }}</el-button>

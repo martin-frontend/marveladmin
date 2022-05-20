@@ -36,8 +36,9 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             remark: { name: "说明", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
-            icon: {name: "图片", options: []},
-            icon_url:{name: "图片", options: []},
+            icon: {name: "图片", options: {}},
+            icon_url:{name: "图片", options: {}},
+            coin_tag: { name: "三方游戏用户前缀", options: {}}
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },

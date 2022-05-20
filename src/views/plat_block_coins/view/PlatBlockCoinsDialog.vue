@@ -25,6 +25,14 @@
                     </el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item :label="tableColumns.scale.name" prop="scale">
+                <el-input-number
+                    v-model="form.scale"
+                    :min="0"
+                    :precision="3" 
+                    :step="0.001" 
+                ></el-input-number>
+            </el-form-item>
             <el-form-item :label="tableColumns.remark.name" prop="remark">
                 <el-input type="textarea" v-model="form.remark"></el-input>
             </el-form-item>
