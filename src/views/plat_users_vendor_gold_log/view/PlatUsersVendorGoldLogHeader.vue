@@ -32,6 +32,11 @@
                 v-model="listQuery.status"
                 :options="tableColumns.status.options"
             />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
+            />
         </div>
         <div class="btn-group">
             <div>
