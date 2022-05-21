@@ -3,15 +3,15 @@ import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/email_vendor/setting";
 import { Message } from "element-ui";
-import SystemEmailProxy from "../proxy/SystemEmailProxy";
+import EmailVendorProxy from "../proxy/EmailVendorProxy";
 
-interface ISystemEmail extends IEventDispatcher {
+interface IEmailVendor extends IEventDispatcher {
 
 }
 
-export default class SystemEmailMediator extends AbstractMediator {
+export default class EmailVendorMediator extends AbstractMediator {
 
-    private myProxy: SystemEmailProxy = <any>this.getProxy(SystemEmailProxy);
+    private myProxy: EmailVendorProxy = <any>this.getProxy(EmailVendorProxy);
 
     onRegister() {
         this.myProxy.enter();
@@ -22,7 +22,7 @@ export default class SystemEmailMediator extends AbstractMediator {
     }
 
     protected initViewData() {
-        const myView: ISystemEmail = this.viewComponent;
+        const myView: IEmailVendor = this.viewComponent;
     }
 
     listNotificationInterests(): string[] {
@@ -37,8 +37,8 @@ export default class SystemEmailMediator extends AbstractMediator {
     }
 
     handleNotification(notification: puremvc.INotification) {
-        const myProxy: SystemEmailProxy = <any>this.facade.retrieveProxy(SystemEmailProxy.NAME);
-        const myView: ISystemEmail = this.viewComponent;
+        const myProxy: EmailVendorProxy = <any>this.facade.retrieveProxy(EmailVendorProxy.NAME);
+        const myView: IEmailVendor = this.viewComponent;
         const body = notification.getBody();
         switch (notification.getName()) {
             case EventType.admin_email_vendor_table_columns:

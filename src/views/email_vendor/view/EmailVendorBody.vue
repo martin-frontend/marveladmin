@@ -67,7 +67,7 @@ import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
-import SystemEmailProxy from "../proxy/SystemEmailProxy";
+import EmailVendorProxy from "../proxy/EmailVendorProxy";
 
 @Component({
     components: {
@@ -83,14 +83,14 @@ import SystemEmailProxy from "../proxy/SystemEmailProxy";
         },
     },
 })
-export default class SystemEmailBody extends AbstractView {
+export default class EmailVendorBody extends AbstractView {
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: SystemEmailProxy = this.getProxy(SystemEmailProxy);
+    myProxy: EmailVendorProxy = this.getProxy(EmailVendorProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.tableData.list;
@@ -115,7 +115,7 @@ export default class SystemEmailBody extends AbstractView {
     }
 
     handlerDelete(data: any) {
-        this.myProxy.onDelete(data.sms_id);
+        this.myProxy.onDelete(data.email_vender_id);
     }
 }
 </script>

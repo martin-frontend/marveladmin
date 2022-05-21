@@ -11,15 +11,15 @@ import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
-import SystemEmailProxy from "../proxy/SystemEmailProxy";
+import EmailTemplateProxy from "../proxy/EmailTemplateProxy";
 
 @Component
-export default class SystemEmailHeader extends AbstractView {
+export default class EmailTemplateHeader extends AbstractView {
      //权限标识
     private unique = unique;
     private checkUnique = checkUnique;
     // proxy
-    private myProxy: SystemEmailProxy = this.getProxy(SystemEmailProxy);
+    private myProxy: EmailTemplateProxy = this.getProxy(EmailTemplateProxy);
 
     private handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);

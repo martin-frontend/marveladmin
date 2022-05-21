@@ -1,16 +1,16 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
-import { HttpType } from "@/views/email_vendor/setting";
+import { formCompared, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
 import { MessageBox } from "element-ui";
 import i18n from "@/lang";
-import ISystemEmailProxy from "./ISystemEmailProxy";
-export default class SystemEmailProxy extends AbstractProxy implements ISystemEmailProxy {
-    static NAME = "SystemEmailProxy";
+import IEmailTemplateProxy from "./IEmailTemplateProxy";
+import { HttpType } from "../setting";
+export default class EmailTemplateProxy extends AbstractProxy implements IEmailTemplateProxy {
+    static NAME = "EmailTemplateProxy";
 
     /**进入页面时调用 */
     enter() {
-        this.sendNotification(HttpType.admin_email_vendor_table_columns);
+        this.sendNotification(HttpType.admin_email_template_table_columns);
     }
 
     /**离开页面时调用 */
@@ -26,12 +26,12 @@ export default class SystemEmailProxy extends AbstractProxy implements ISystemEm
     /**表格相关数据 */
     tableData = {
         columns: {
-            email_vendor_id: { name: "", options: {} },
-            email_vendor_name: { name: "", options: {} },
-            email_vendor_name_unique: { name: "", options: {} },
-            status: { name: "", options: {} },
-            email_vendor_desc: { name: "", options: {} },
-            extends: { name: "", options: {} },
+            id: { name: "", options: {} },
+            name: { name: "", options: {} },
+            type: { name: "", options: {} },
+            subject: { name: "", options: {} },
+            content: { name: "", options: {} },
+            replaceable_text: { name: "", options: {} },
             created_by: { name: "", options: {} },
             created_at:{ name: "", options: {} },
             updated_by:{ name: "", options: {} },
@@ -51,12 +51,12 @@ export default class SystemEmailProxy extends AbstractProxy implements ISystemEm
         bShow: false,
         status: DialogStatus.create,
         form: {
-            email_vendor_id: "",
-            email_vendor_name: "",
-            email_vendor_name_unique: "",
-            status: 1,
-            email_vendor_desc: 1,
-            extends: {},
+            id:"",
+            name: "",
+            type: null,
+            subject: "",
+            content: "",
+            replaceable_text: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -75,7 +75,6 @@ export default class SystemEmailProxy extends AbstractProxy implements ISystemEm
     /**详细数据 */
     setDetail(data: any) {
         this.dialogData.formSource = data;
-        data.extends = jsonToObject(data.extends);
         Object.assign(this.dialogData.form, data);
     }
 
@@ -92,8 +91,9 @@ export default class SystemEmailProxy extends AbstractProxy implements ISystemEm
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
-            this.dialogData.form.email_vender_id = data.email_vendor_id;
-            Object.assign(this.dialogData.form, data);
+            this.dialogData.form.id = data.id;
+            Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+            this.dialogData.form.type = data.type.toString();
             //如果弹窗要展示的内容比较详细，列表中不全，需要获取详情信息，本模块不需要
             // this.sendNotification(HttpType.admin_email_vendor_show, { email_vender_id: data.email_vendor_id });
         } else {
@@ -108,29 +108,24 @@ export default class SystemEmailProxy extends AbstractProxy implements ISystemEm
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
-            email_vendor_id: "",
-            email_vendor_name: "",
-            email_vendor_name_unique: "",
-            status: 1,
-            email_vendor_desc: 1,
-            extends: {},
+            id: "",
+            name: "",
+            type: "",
+            subject: "",
+            content: "",
+            replaceable_text: "",
         });
     }
 
     /**查询 */
     onQuery() {
-        this.sendNotification(HttpType.admin_email_vendor_index, objectRemoveNull(this.listQuery));
+        this.sendNotification(HttpType.admin_email_template_index, objectRemoveNull(this.listQuery));
     }
     /**添加数据 */
     onAdd() {
-        const { name, status } = this.dialogData.form;
-        const formCopy: any = { name, status };
-        let extendsStr: any = "{}";
-            if (Object.keys(formCopy.extends).length > 0) {
-                extendsStr = JSON.stringify(JSON.parse(formCopy.extends));
-            }
-            formCopy.extends = extendsStr;
-        this.sendNotification(HttpType.admin_email_vendor_store, objectRemoveNull(formCopy));
+        const formCopy: any = this.dialogData.form;
+        
+        this.sendNotification(HttpType.admin_email_template_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
     onUpdate() {
@@ -145,10 +140,10 @@ export default class SystemEmailProxy extends AbstractProxy implements ISystemEm
         }
         // TODO
         // 添加主键
-        formCopy.email_vender_id = this.dialogData.form.email_vender_id;
-        formCopy.extends = JSON.parse(formCopy.extends);
+        formCopy.email_vender_id = this.dialogData.form.id;
+        
         // 发送消息
-        this.sendNotification(HttpType.admin_email_vendor_update, formCopy);
+        this.sendNotification(HttpType.admin_email_template_update, formCopy);
     }
     /**删除数据 */
     onDelete(id: any) {
@@ -158,7 +153,7 @@ export default class SystemEmailProxy extends AbstractProxy implements ISystemEm
             type: "warning",
         })
             .then(() => {
-                this.sendNotification(HttpType.admin_email_vendor_update, { system_email_id: id, is_delete: 1 });
+                this.sendNotification(HttpType.admin_email_template_update, { email_vender_id: id, is_delete: 1 });
             })
             .catch(() => { });
     }

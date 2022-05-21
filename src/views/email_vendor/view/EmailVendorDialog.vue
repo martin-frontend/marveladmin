@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="`${textMap[status]}` + $t('email_vender.title')" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="`${textMap[status]}`" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :model="form" label-width="130px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.email_vendor_name.name" prop="email_vendor_name">
                 <el-input
@@ -31,6 +31,9 @@
                 </div>
             </el-form-item>
             <el-form-item class="dialog-footer">
+                <el-button type="danger" size="mini" @click="handleDelete()">{{
+                    $t("common.delete")
+                }}</el-button>
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
                     $t("common.save")
                 }}</el-button>
@@ -45,7 +48,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import { unique, checkUnique } from "@/core/global/Permission";
-import SystemEmailProxy from "../proxy/SystemEmailProxy";
+import EmailVendorProxy from "../proxy/EmailVendorProxy";
 import JsonEditor from "@/components/JsonEditor/index.vue";
 
 @Component({
@@ -53,14 +56,14 @@ import JsonEditor from "@/components/JsonEditor/index.vue";
         JsonEditor,
     },
 })
-export default class SystemEmailDialog extends AbstractView {
+export default class EmailVendorDialog extends AbstractView {
     //权限标识
     private unique = unique;
     private checkUnique = checkUnique;
     //网络状态
     private net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: SystemEmailProxy = this.getProxy(SystemEmailProxy);
+    private myProxy: EmailVendorProxy = this.getProxy(EmailVendorProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private form = this.myProxy.dialogData.form;
