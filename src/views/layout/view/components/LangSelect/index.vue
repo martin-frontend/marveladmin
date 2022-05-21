@@ -14,6 +14,10 @@
                 <img :src="imageBox.vi" class="img" />
                 <a>Tiếng Việt</a>
             </el-dropdown-item>
+            <el-dropdown-item :disabled="language === 'en'" command="en" class="flex">
+                <img :src="imageBox.en" class="img" />
+                <a>English</a>
+            </el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
 </template>
@@ -26,6 +30,7 @@ export default {
             imageBox: {
                 zh: require("../../../../../assets/lang/china_logo.png"),
                 vi: require("../../../../../assets/lang/vi_logo.png"),
+                en: require("../../../../../assets/lang/en_logo.png"),
             },
         };
     },
@@ -40,6 +45,8 @@ export default {
             let str = "简体中文";
             if (Cookies.get("language") === "vi") {
                 str = "Tiếng Việt";
+            } else if (Cookies.get("language") === "en") {
+                str = "English";
             }
             return str;
         },

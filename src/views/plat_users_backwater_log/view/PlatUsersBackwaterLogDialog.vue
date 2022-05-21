@@ -14,7 +14,7 @@
                 {{ form.total_water }}
             </el-form-item>
             <el-form-item :label="tableColumns.total_backwater.name" prop="total_backwater" size="mini">
-                {{ form.total_backwater }}
+                <span v-html="getAccessInfo(form.total_backwater)"></span>
             </el-form-item>
             <el-form-item :label="tableColumns.created_at.name" prop="created_at"> {{ form.created_at }} </el-form-item>
 
@@ -24,7 +24,7 @@
             <el-table :data="form.detail" border fit highlight-current-row style="width: 100%" size="mini">
                 <el-table-column :label="$t('plat_users_backwater_log.settleName')" class-name="status-col">
                     <template slot-scope="{ row }">
-                        {{ `${tableColumns.backwater_config.options[row.vendor_type]}` }} {{ $t("common.settleWater") }}
+                        {{ row.coin_name_unique }} {{ $t("common.settleWater") }}
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('common.settleWater')" class-name="status-col">
@@ -83,6 +83,18 @@ export default class PlatUsersBackwaterLogDialog extends AbstractView {
 
     private handlerConfirm() {
         this.myProxy.hideDialog();
+    }
+
+    getAccessInfo(data: any) {
+        let infoStr = "";
+        if (data) {
+            const keys = Object.keys(data);
+            for (const key of keys) {
+                infoStr += key + "：";
+                infoStr += data[key] + "<br>";
+            }
+        }
+        return infoStr;
     }
 }
 </script>

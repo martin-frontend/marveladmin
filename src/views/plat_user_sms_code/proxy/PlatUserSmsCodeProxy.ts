@@ -36,6 +36,8 @@ export default class PlatUserSmsCodeProxy extends AbstractProxy implements IPlat
             status: { name: "", options: {} },
             plat_id: { name: "", options: {} },
             created_at: { name: "", options: {} },
+            area_code: { name: "手机区号", options: {}},
+            code_type: { name: "号码类型", options: {}},
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -48,6 +50,7 @@ export default class PlatUserSmsCodeProxy extends AbstractProxy implements IPlat
         status: "",
         page_count: 1,
         page_size: 20,
+        code_type: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -84,6 +87,7 @@ export default class PlatUserSmsCodeProxy extends AbstractProxy implements IPlat
             user_id: "",
             mobile: "",
             status: "",
+            code_type: "",
         });
     }
 

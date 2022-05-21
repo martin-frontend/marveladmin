@@ -40,6 +40,13 @@
                 </template>
             </el-table-column>
             <el-table-column
+                prop="coin_tag"
+                :label="`${tableColumns.coin_tag.name}`"
+                class-name="status-col"
+                width="150px"
+            >
+            </el-table-column>
+            <el-table-column
                 prop="remark"
                 :label="`${tableColumns.remark.name}`"
                 class-name="status-col"

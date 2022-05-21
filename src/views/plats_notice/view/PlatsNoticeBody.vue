@@ -48,6 +48,13 @@
                     {{ tableColumns["language"].options[row.language] }}
                 </template>
             </el-table-column>
+
+            <el-table-column :label="tableColumns['type_position'].name" align="center">
+                <template slot-scope="{ row }">
+                    {{ tableColumns["type_position"].options[row.type_position] }}
+                </template>
+            </el-table-column>
+
             <el-table-column
                 :label="tableColumns['start_time'].name"
                 prop="start_time"

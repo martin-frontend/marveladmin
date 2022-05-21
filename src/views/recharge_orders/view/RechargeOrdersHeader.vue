@@ -48,6 +48,16 @@
                 v-model="listQuery.vendor_id"
                 :options="tableColumns.vendor_id.options"
             />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
+            />
+            <SearchSelect
+                :title="tableColumns.block_network_id.name"
+                v-model="listQuery.block_network_id"
+                :options="tableColumns.block_network_id.options"
+            />
             <SearchRange
                 :title="tableColumns.gold.name"
                 min="0"

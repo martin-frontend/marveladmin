@@ -39,6 +39,13 @@
                 </template>
             </el-table-column>
             <el-table-column
+                prop="scale"
+                :label="`${tableColumns.scale.name}`"
+                class-name="status-col"
+                min-width="30px"
+            >
+            </el-table-column>
+            <el-table-column
                 prop="remark"
                 :label="`${tableColumns.remark.name}`"
                 class-name="status-col"

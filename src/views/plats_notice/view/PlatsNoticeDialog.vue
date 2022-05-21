@@ -28,6 +28,19 @@
             <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
                 <el-input v-model="form.name" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item>
+
+            <el-form-item size="mini" :label="tableColumns['type_position'].name" prop="type_position">
+                <el-select v-model="form.type_position" :placeholder="$t('common.pleaseChoose')" filterable style="width: 300px">
+                    <el-option
+                        v-for="(value, key) in tableColumns['type_position'].options"
+                        :key="key"
+                        :label="value"
+                        :value="key"
+                    >
+                    </el-option>
+                </el-select>
+            </el-form-item>
+
             <el-form-item size="mini" :label="tableColumns['start_time'].name" prop="start_time">
                 <el-date-picker
                     v-model="form.start_time"
@@ -245,8 +258,9 @@ export default class PlatsNoticeDialog extends AbstractView {
             type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             content: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             img_urls: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            thumbnail_urls: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            // thumbnail_urls: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             language: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            type_position: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
         };
     }
 

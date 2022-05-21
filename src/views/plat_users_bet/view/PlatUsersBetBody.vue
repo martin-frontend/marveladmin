@@ -71,6 +71,12 @@
                 min-width="80px"
                 class-name="status-col"
             ></el-table-column>
+            <el-table-column
+                :label="tableColumns['coin_name_unique'].name"
+                prop="coin_name_unique"
+                min-width="80px"
+                class-name="status-col"
+            ></el-table-column>
             <el-table-column :label="tableColumns['win_gold'].name" prop="win_gold" class-name="status-col">
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.win_gold" />

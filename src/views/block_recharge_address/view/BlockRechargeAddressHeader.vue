@@ -22,7 +22,7 @@
         </div>
         <div class="group">
             <div class="summary-text">
-                账号使用情况：{{ summary.total_used }}/{{ summary.total_record_count }} 账号USDT金额：{{ summary.gold }}
+                账号使用情况：{{ summary.total_used }}/{{ summary.total_record_count }}   账号USDT金额：{{ summary.amount }}
             </div>
             <el-button @click="handlerRefrush()" type="primary" icon="el-icon-refresh">刷新</el-button>
         </div>

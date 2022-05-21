@@ -34,6 +34,7 @@
                     <span>{{ tableColumns.type.options[row.type] }}</span>
                 </template>
             </el-table-column>
+            <el-table-column :label="tableColumns['coin_name_unique'].name" prop="coin_name_unique" min-width="110px"></el-table-column>
             <el-table-column :label="tableColumns['gold_before'].name" prop="gold_before" min-width="110px"></el-table-column>
             <el-table-column :label="tableColumns['gold'].name" prop="gold" min-width="100px"></el-table-column>
             <el-table-column :label="tableColumns['balance'].name" prop="balance" min-width="90px"></el-table-column>

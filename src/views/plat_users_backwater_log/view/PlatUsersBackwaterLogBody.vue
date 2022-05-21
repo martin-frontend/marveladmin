@@ -59,6 +59,11 @@
                 prop="total_backwater"
                 min-width="80px"
             >
+                <template slot-scope="{ row }">
+                    <div align="left">
+                        <span v-html="getAccessInfo(row.total_backwater)"></span>
+                    </div>
+                </template>
             </el-table-column>
             <el-table-column
                 :label="`${tableColumns.created_at.name}`"
@@ -125,6 +130,18 @@ export default class PlatUsersBackwaterLogBody extends AbstractView {
 
     private showUserDetail(user_id: number) {
         this.myProxy.showUserDetail(user_id);
+    }
+
+    getAccessInfo(data: any) {
+        let infoStr = "";
+        if (data) {
+            const keys = Object.keys(data);
+            for (const key of keys) {
+                infoStr += key + "：";
+                infoStr += data[key] + "<br>";
+            }
+        }
+        return infoStr;
     }
 }
 </script>
