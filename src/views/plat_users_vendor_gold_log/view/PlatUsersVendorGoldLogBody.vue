@@ -27,15 +27,23 @@
             </el-table-column>
             <el-table-column prop="order_at" :label="tableColumns['order_at'].name" width="150px" align="center">
             </el-table-column>
-            <el-table-column prop="user_id" :label="tableColumns['user_id'].name" align="center" width="100px">
+            <el-table-column :label="$t('common.userMsg')" min-width="150px" align="center">
                 <template slot-scope="{ row }">
-                    <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
-                        {{ row.user_id }}
+                    <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline" align="left">
+                        {{ tableColumns["user_id"].name }}：{{ row.user_id }}
                     </div>
+                    <div align="left">{{ tableColumns["nick_name"].name }}：{{ row.nick_name }}</div>
                 </template>
             </el-table-column>
-            <el-table-column prop="nick_name" :label="tableColumns['nick_name'].name" align="center" width="110px">
+
+            <el-table-column :label="tableColumns['coin_name_unique'].name" min-width="180px" align="center">
+                <template slot-scope="{ row }">
+                    <div align="left">{{ tableColumns["coin_name_unique"].name }}：{{ row.coin_name_unique }}</div>
+                    <div align="left">{{ tableColumns["scale"].name }}：{{ row.scale }}</div>
+                    <div align="left">{{ tableColumns["gold_scale"].name }}：{{ row.gold_scale }}</div>
+                </template>
             </el-table-column>
+
             <el-table-column prop="type" :label="tableColumns['type'].name" align="center" width="80">
                 <template slot-scope="{ row }">
                     <div>
@@ -43,6 +51,7 @@
                     </div>
                 </template>
             </el-table-column>
+
             <el-table-column prop="gold" :label="tableColumns['gold'].name" align="center" width="120px">
             </el-table-column>
             <el-table-column prop="status" :label="tableColumns['status'].name" align="center" width="65">

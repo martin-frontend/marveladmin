@@ -23,6 +23,30 @@
             >
             </el-table-column>
             <el-table-column
+                prop="icon"
+                :label="`${tableColumns.icon.name}`"
+                class-name="status-col"
+                width="120px"
+            >
+            </el-table-column>
+            <el-table-column prop="icon_url" :label="`${tableColumns.icon_url.name}`" class-name="status-col" width="120px">
+                <template slot-scope="{ row }">
+                    <img
+                        style="width: 40px; height: 40px; object-fit: contain"
+                        :src="row.icon_url"
+                        v-if="row.icon_url"
+                    />
+                    <span v-if="!row.icon_url">-</span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="coin_tag"
+                :label="`${tableColumns.coin_tag.name}`"
+                class-name="status-col"
+                width="150px"
+            >
+            </el-table-column>
+            <el-table-column
                 prop="remark"
                 :label="`${tableColumns.remark.name}`"
                 class-name="status-col"

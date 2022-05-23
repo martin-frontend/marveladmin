@@ -1,6 +1,6 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_email/setting";
 import { MessageBox } from "element-ui";
 import IPlatEmailProxy, { EmailTab, EmailAttachmentType, EmailType } from "./IPlatEmailProxy";
@@ -81,7 +81,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             is_mass_mailer: 0, //是否群发0-否|1-是
             bonus_multiple: 1, //提领流水倍数
             attachment_type: 1, //附件类型 1-无附件 | 11-奖励物件
-            attachment_content: <any>[], //附件内容
+            attachment_content: <any>[], //附件内容,attachment_content:{"USDT":"10000","BNB":"88"}
         },
         formSource: null, // 表单的原始数据
         readonly: false,  //是否唯讀
@@ -114,13 +114,13 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
     /**详细数据 */
     setDetail(data: any) {
 
-        let attachment_content = <any>[];
-        data.attachment_content.forEach((element: any) => {
-            Object.keys(element).forEach(key => {
-                attachment_content.push({ type: key, amount: element[key] })
-            });
-        });
-        data.attachment_content = attachment_content;
+        // let attachment_content = <any>[];
+        // data.attachment_content.forEach((element: any) => {
+        //     Object.keys(element).forEach(key => {
+        //         attachment_content.push({ type: key, amount: element[key] })
+        //     });
+        // });
+        // data.attachment_content = attachment_content;
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
     }
@@ -210,12 +210,19 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             attachment_type,
             attachment_content,
         };
-        let bonus = <any>[];
+        let attachment_content_copy = [];
+        let bonus = {};
         formCopy.attachment_content.forEach((element: any) => {
-            bonus.push({ [element.type]: element.amount });
+            if (bonus[element.type]) {
+                //防止有傻逼选择多个相同的币种
+                bonus[element.type] = String((Number(bonus[element.type]) + Number(element.amount)));
+            } else {
+                bonus[element.type] = element.amount;
+            }
+            
         });
         formCopy.attachment_content = JSON.stringify(bonus);
-        formCopy.attachment_type = bonus.length > 0
+        formCopy.attachment_type = bonus != {}
             ? EmailAttachmentType.BonusAttach
             : EmailAttachmentType.NoAttach;
         formCopy.is_mass_mailer = this.isGroupMail ? 1 : 0;

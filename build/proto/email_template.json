@@ -1,0 +1,12 @@
+{
+    "name": "邮件模版",
+    "description": "邮件模版",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766275",
+    "list": [
+        "admin/email_template/table_columns",
+        "admin/email_template/index",
+        "admin/email_template/show/{email_vender_id}",
+        "admin/email_template/store",
+        "admin/email_template/update/{email_vender_id}"
+    ]
+}

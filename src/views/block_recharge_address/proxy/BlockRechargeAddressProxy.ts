@@ -40,6 +40,7 @@ export default class BlockRechargeAddressProxy extends AbstractProxy implements 
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
             user_id: { name: "平台用户", options: {} },
+            amount: { name: "平台用户", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },

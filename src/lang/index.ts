@@ -6,10 +6,12 @@ import locale from 'element-ui/lib/locale'
 // element-ui built-in lang
 import elementViLocale from "element-ui/lib/locale/lang/vi";
 import elementZhLocale from "element-ui/lib/locale/lang/zh-CN";
+import elementEnLocale from "element-ui/lib/locale/lang/en";
 
 // User defined lang
 import viLocale from "./vi";
 import zhLocale from "./zh";
+import enLocale from "./en";
 import GlobalVar from "@/core/global/GlobalVar";
 
 Vue.use(VueI18n);
@@ -24,6 +26,10 @@ const messages = {
     zh: {
         ...zhLocale,
         ...elementZhLocale,
+    },
+    en: {
+        ...enLocale,
+        ...elementEnLocale,
     },
     // 这里如果有其它语言包继续按照规则添加即可
 };
@@ -40,6 +46,9 @@ export const getLocale = () => {
                     break;
                 case "vi":
                     GlobalVar.lang = "vi_VN";
+                    break;
+                case "en":
+                    GlobalVar.lang = "en_EN";
                     break;
             }
             return locale;

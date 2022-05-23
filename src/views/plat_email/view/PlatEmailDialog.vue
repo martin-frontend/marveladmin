@@ -134,7 +134,7 @@
             </el-form-item>
             <el-form-item size="mini" v-for="(item, index) in form.attachment_content" :key="index">
                 <template v-if="readonly">
-                    {{ tableColumns.attachment_content.options[item.type] }}：{{ item.amount }}
+                    {{ index }}：{{ item }}
                 </template>
                 <template v-if="!readonly">
                     <el-button style="margin-right: 8px" size="mini" @click="onDeleteBonus(item)" type="primary" icon=""
@@ -147,7 +147,7 @@
                         :placeholder="tableColumns.attachment_content.options.gold"
                     >
                         <el-option
-                            v-for="(key, value) in tableColumns.attachment_content.options"
+                            v-for="(key, value) in tableColumns.attachment_content.options[form.plat_id]"
                             :key="value"
                             :label="key"
                             :value="value"
@@ -247,7 +247,7 @@ export default class PlatEmailDialog extends AbstractView {
         return this.myProxy.isGroupMail;
     }
     get hasAttachmentContent() {
-        return this.form.attachment_content.length > 0;
+        return this.form.attachment_content != [];
     }
     get curTime() {
         return dateFormat(new Date(), "yyyy-MM-dd hh-mm-ss");

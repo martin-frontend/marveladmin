@@ -31,6 +31,11 @@
                 :placeholder="$t('common.pleaseEnter')"
                 v-model="listQuery.nick_name"
             />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
+            />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                     $t("common.search")

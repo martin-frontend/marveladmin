@@ -57,13 +57,13 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column :label="$t('common.platMsg')" min-width="180px">
+            <el-table-column :label="$t('common.platMsg')" min-width="150px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns["plat_id"].name }}：{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
                     <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.userMsg')" min-width="180px">
+            <el-table-column :label="$t('common.userMsg')" min-width="130px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
                         {{ tableColumns["user_id"].name }}：{{ row.user_id }}
@@ -90,6 +90,14 @@
                     </div>
                 </template>
             </el-table-column>
+
+            <el-table-column prop="coin_name_unique" :label="tableColumns['coin_name_unique'].name" min-width="100px" align="center">
+                <template slot-scope="{ row }">
+                    <div align="left">{{ tableColumns["coin_name_unique"].name }}：{{ row.coin_name_unique }}</div>
+                    <div align="left">{{ tableColumns["block_network_id"].name }}：{{ tableColumns["block_network_id"].options[row.block_network_id] }}</div>
+                </template>
+            </el-table-column>
+
             <el-table-column
                 prop="paymethod_id"
                 :label="tableColumns['paymethod_id'].name"

@@ -80,7 +80,8 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             open_mode_url: "",
             thumbnail_uris: "",
             thumbnail_urls: "",
-            language: ""
+            language: "",
+            type_position:"",
         },
         formSource: null, // 表单的原始数据
     };
@@ -165,7 +166,8 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             open_mode_url: "",
             thumbnail_uris: "",
             thumbnail_urls: "",
-            language: null
+            language: null,
+            type_position:"",
         });
     }
 
@@ -189,7 +191,8 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             open_mode_url,
             thumbnail_uris,
             thumbnail_urls,
-            language
+            language,
+            type_position,
         } = this.dialogData.form;
         app_types = JSON.stringify(app_types);
         img_uris = JSON.stringify(img_uris);
@@ -220,7 +223,8 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             open_mode_url,
             thumbnail_uris,
             thumbnail_urls,
-            language
+            language,
+            type_position,
         };
 
         this.sendNotification(HttpType.admin_plats_notice_store, objectRemoveNull(formCopy));

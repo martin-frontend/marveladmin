@@ -23,6 +23,7 @@
                     <span>{{ tableColumns["user_status"].options[row.user_status] }}</span>
                 </template>
             </el-table-column>
+            <el-table-column :label="tableColumns['coin_name_unique'].name" prop="coin_name_unique"></el-table-column>
             <el-table-column
                 :label="tableColumns['updated_at'].name"
                 min-width="155px"

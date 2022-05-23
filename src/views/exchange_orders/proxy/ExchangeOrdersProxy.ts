@@ -58,6 +58,8 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             is_coin_user_order: { name: "", options: {} },
             coin_user_id: { name: "", options: {} },
             coin_username: { name: "", options: {} },
+            coin_name_unique: { name: "", options: {}},
+            block_network_id: { name: "", options: {}},
         },
         list: <any>[],
         message: {},
@@ -87,6 +89,8 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         exchange_vendors_id: "",
         "gold-{>=}": "",
         "gold-{<=}": "",
+        coin_name_unique: "",
+        block_network_id: "",
     };
 
     /**平台币商代付相关数据 */
@@ -238,6 +242,8 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             exchange_vendors_id: "",
             "gold-{>=}": "",
             "gold-{<=}": "",
+            coin_name_unique: "",
+            block_network_id: "",
         });
     }
 

@@ -58,6 +58,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
             win_gold: { name: "", options: {} },
             water_type: { name: "", options: {} },
             water_rate: { name: "", options: {} },
+            coin_name_unique: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 10 },
@@ -87,6 +88,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
         "bet_at-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
         page_count: 1,
         page_size: 10,
+        coin_name_unique: "",
     }
     /**表单资料 */
     dialogData = {
@@ -109,7 +111,8 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
             water_type: "",
             water_rate: "",
             water: "",
-            game_info: ""
+            game_info: "",
+            coin_name_unique: "",
         },
     }
     /**显示弹窗 */
@@ -158,6 +161,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
             "settlement_at-{<=}": "",
             "bet_at-{>=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
             "bet_at-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
+            coin_name_unique: "",
         })
         this.tableData.winLoss = "";
     }

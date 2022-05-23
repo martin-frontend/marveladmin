@@ -16,7 +16,10 @@
             </el-table-column>
             <el-table-column :label="tableColumns.user_id.name" class-name="status-col" min-width="120px">
                 <template slot-scope="{ row }">
-                    <span @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">{{
+                    <span v-if="row.user_id.length > 4" @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">{{
+                        row.user_id
+                    }}</span>
+                    <span v-else style="cursor: pointer; text-decoration: underline">{{
                         row.user_id
                     }}</span>
                 </template>
@@ -24,6 +27,16 @@
             <el-table-column :label="tableColumns.mobile.name" class-name="status-col" min-width="120px">
                 <template slot-scope="{ row }">
                     {{ row.mobile }}
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns.area_code.name" class-name="status-col" min-width="80px">
+                <template slot-scope="{ row }">
+                    {{ row.area_code }}
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns.code_type.name" class-name="status-col" min-width="80px">
+                <template slot-scope="{ row }">
+                    {{ tableColumns.code_type.options[row.code_type] }}
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.plat_id.name" class-name="status-col" min-width="100px">

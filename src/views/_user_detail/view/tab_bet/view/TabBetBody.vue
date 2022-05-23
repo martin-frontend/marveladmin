@@ -37,7 +37,7 @@
                 :label="tableColumns['vendor_type'].name"
                 prop="vendor_type"
                 class-name="status-col"
-                min-width="80px"
+                min-width="70px"
             >
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.vendor_type.options[row.vendor_type] }}</div>
@@ -47,7 +47,7 @@
                 :label="tableColumns['vendor_product_name'].name"
                 prop="vendor_product_name"
                 class-name="status-col"
-                min-width="100px"
+                min-width="90px"
             >
                 <template slot-scope="{ row }">
                     <div>{{ row.vendor_product_name }}</div>
@@ -60,6 +60,12 @@
                 min-width="100px"
             ></el-table-column>
             <el-table-column
+                :label="tableColumns['coin_name_unique'].name"
+                prop="coin_name_unique"
+                class-name="status-col"
+                min-width="50px"
+            ></el-table-column>
+            <el-table-column
                 :label="tableColumns['win_gold'].name"
                 prop="win_gold"
                 class-name="status-col"
@@ -69,7 +75,7 @@
                     <WinLossDisplay :amount="row.win_gold" />
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.time')" align="left" min-width="155px">
+            <el-table-column :label="$t('common.time')" align="left" min-width="145px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["bet_at"].name }}：<br />{{ row.bet_at }}</p>
                     <p>{{ tableColumns["settlement_at"].name }}：<br />{{ row.settlement_at }}</p>
@@ -80,13 +86,13 @@
                 :label="tableColumns['bet_gold'].name"
                 prop="bet_gold"
                 class-name="status-col"
-                min-width="80px"
+                min-width="70px"
             ></el-table-column>
             <el-table-column
                 :label="tableColumns['valid_bet_gold'].name"
                 prop="valid_bet_gold"
                 class-name="status-col"
-                min-width="80px"
+                min-width="70px"
             ></el-table-column>
             <el-table-column
                 :label="$t('statistic_user_days.water')"
@@ -109,7 +115,7 @@
                 :label="tableColumns['settlement_status'].name"
                 prop="settlement_status"
                 class-name="status-col"
-                min-width="80px"
+                min-width="70px"
             >
                 <template slot-scope="{ row }">
                     <el-tag :type="row.status | statusFilter">

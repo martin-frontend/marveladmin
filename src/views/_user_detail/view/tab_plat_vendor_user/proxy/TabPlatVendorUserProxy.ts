@@ -36,6 +36,7 @@ export default class TabPlatVendorUserProxy extends AbstractProxy implements ITa
             vendor_id: { name: "产品厂商", options: {} },
             vendor_name: { name: "厂商名称", options: {} },
             vendor_user_id: { name: "平台厂商用户ID", options: {} },
+            coin_name_unique: { name: "平台厂商用户ID", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 10 },

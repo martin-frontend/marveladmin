@@ -13,6 +13,10 @@
             <el-form-item :label="tableColumns.coin_name_unique.name" prop="coin_name_unique">
                 <el-input v-model="form.coin_name_unique"></el-input>
             </el-form-item>
+            <el-form-item :label="tableColumns.icon.name" prop="icon">
+                <el-input v-model="form.icon"></el-input>
+            </el-form-item>
+
             <el-form-item :label="tableColumns.remark.name" prop="remark">
                 <el-input v-model="form.remark"></el-input>
             </el-form-item>
