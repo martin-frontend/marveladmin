@@ -415,7 +415,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             const langKeys = Object.keys(this.tableData.columns.language.options);
             const arr = [];
             for (const idx of formCopy.language) {
-                if (idx > 0) arr.push(langKeys[idx]);
+                arr.push(langKeys[idx]);
             }
             temp.language = JSON.stringify(arr);
 
