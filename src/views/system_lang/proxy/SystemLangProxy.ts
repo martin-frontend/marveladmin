@@ -37,6 +37,16 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             type: { name: "类型", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
+            plat_id:{name: "平台ID", options:{}},
+            key:{name: "键", options:{}},
+            ar_AR: {name: "键", options:{}},
+            en_EN: {name: "键", options:{}},
+            jp_JP: {name: "", options:{}},
+            ko_Kr: {name: "", options:{}},
+            th_TH: {name: "", options:{}},
+            vi_VN: {name: "", options:{}},
+            zh_CN: {name: "", options:{}},
+            zh_TW: {name: "", options:{}},
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -59,6 +69,16 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             language: "",
             module: "",
             type: "",
+            plat_id:"",
+            key:"",
+            ar_AR: "",
+            en_EN: "",
+            jp_JP: "",
+            ko_Kr: "",
+            th_TH: "",
+            vi_VN: "",
+            zh_CN: "",
+            zh_TW: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -120,6 +140,16 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             language: {},
             module: "",
             type: 1,
+            plat_id:"",
+            key:"",
+            ar_AR: "",
+            en_EN: "",
+            jp_JP: "",
+            ko_Kr: "",
+            th_TH: "",
+            vi_VN: "",
+            zh_CN: "",
+            zh_TW: "",
         });
     }
 
@@ -131,7 +161,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     onAdd() {
         let formCopy: any = Object.assign({}, this.dialogData.form);
         try {
-            let langStr: any = "{}";
+            let langStr: any = "";
             if (Object.keys(formCopy.language).length > 0) {
                 langStr = JSON.stringify(JSON.parse(formCopy.language));
             }

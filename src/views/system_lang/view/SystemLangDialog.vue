@@ -3,7 +3,21 @@
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <!-- 参数模组 -->
             <el-form-item :label="tableColumns.module.name" prop="module">
-                <el-input v-model="form.module"></el-input>
+                <template>
+                    <el-select
+                        v-model="form.module"
+                        filterable
+                        class="select"
+                        :placeholder="$t('common.pleaseChoose')"
+                    >
+                        <el-option
+                            v-for="(value, key) in tableColumns.module.options"
+                            :key="key"
+                            :label="value"
+                            :value="key"
+                        ></el-option>
+                    </el-select>
+                </template>
             </el-form-item>
             <!-- 参数类型 -->
             <el-form-item :label="tableColumns.type.name" prop="type">
@@ -17,12 +31,32 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item :label="tableColumns.key.name" prop="key">
+                <el-input
+                    maxlength="30"
+                    :placeholder="`${tableColumns.key.name}`"
+                    v-model="form.key"
+                    show-word-limit
+                ></el-input>
+            </el-form-item>
+
+            <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value">
+                <el-form-item :label="value" prop="value">
+                    <el-input
+                        maxlength="30"
+                        :placeholder="`${tableColumns[key].name}`"
+                        v-model="form[key]"
+                        show-word-limit
+                    ></el-input>
+                </el-form-item>
+            </div>
+
             <!-- 参数语言 -->
-            <el-form-item size="mini" :label="tableColumns.language.name" prop="language">
+            <!-- <el-form-item size="mini" :label="tableColumns.language.name" prop="language">
                 <div class="editor-container">
                     <json-editor ref="jsonEditor" v-model="form.language" />
                 </div>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item class="dialog-footer">
                 <el-button v-if="isStatusUpdate" type="danger" size="mini" @click="handleDelete(form)">{{ $t("common.delete") }}</el-button>
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()"
@@ -84,6 +118,7 @@ export default class SystemLangDialog extends AbstractView {
         return {
             module: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
             type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            key: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
         };
     }
 

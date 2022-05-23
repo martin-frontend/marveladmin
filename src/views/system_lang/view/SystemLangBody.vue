@@ -1,20 +1,92 @@
 <template>
     <div>
-        <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini" v-loading="net_status.loading">
-            <!-- 参数语言 -->
-            <el-table-column :label="tableColumns.language.name" align="center" min-width="400">
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
+            <el-table-column prop="plat_id" :label="tableColumns.plat_id.name" align="center" min-width="100">
                 <template slot-scope="{ row }">
-                   <p v-for="(value, key, index) in row.language" :key="key" class="align-left">
-                        {{ Object.keys(row.language)[index] }}：
-                        {{ Object.values(row.language)[index] }}
-                    </p>
+                    <div>
+                        {{ tableColumns.plat_id.options[row.plat_id] }}
+                    </div>
                 </template>
             </el-table-column>
+            <el-table-column prop="key" :label="tableColumns.key.name" align="center" min-width="120"></el-table-column>
+
+            <el-table-column
+                prop="zh_CN"
+                :label="tableColumns.zh_CN.name"
+                align="center"
+                min-width="120"
+            ></el-table-column>
+            <el-table-column
+                prop="zh_TW"
+                :label="tableColumns.zh_TW.name"
+                align="center"
+                min-width="120"
+            ></el-table-column>
+            <el-table-column
+                prop="en_EN"
+                :label="tableColumns.en_EN.name"
+                align="center"
+                min-width="120"
+            ></el-table-column>
+            <el-table-column
+                prop="th_TH"
+                :label="tableColumns.th_TH.name"
+                align="center"
+                min-width="120"
+            ></el-table-column>
+            <el-table-column
+                prop="vi_VN"
+                :label="tableColumns.vi_VN.name"
+                align="center"
+                min-width="120"
+            ></el-table-column>
+            <el-table-column
+                prop="jp_JP"
+                :label="tableColumns.jp_JP.name"
+                align="center"
+                min-width="120"
+            ></el-table-column>
+            <el-table-column
+                prop="ar_AR"
+                :label="tableColumns.ar_AR.name"
+                align="center"
+                min-width="120"
+            ></el-table-column>
+            <el-table-column
+                prop="ko_Kr"
+                :label="tableColumns.ko_Kr.name"
+                align="center"
+                min-width="120"
+            ></el-table-column>
+
+            <!-- 动态添加无效果 -->
+            <!-- <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value">
+                <el-table-column 
+                    :label="value" 
+                    prop = “key”
+                    align="center"
+                    min-width="120">
+                </el-table-column>
+            </div> -->
+
             <!-- 参数模组 -->
-            <el-table-column prop="module" :label="tableColumns.module.name" align="center" min-width="280">
+            <el-table-column prop="module" :label="tableColumns.module.name" align="center" min-width="120">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns.module.options[row.module] }}
+                    </div>
+                </template>
             </el-table-column>
             <!-- 参数类型 -->
-            <el-table-column prop="type" :label="tableColumns.type.name" align="center" min-width="130">
+            <el-table-column prop="type" :label="tableColumns.type.name" align="center" min-width="90">
                 <template slot-scope="{ row }">
                     <div>
                         {{ tableColumns.type.options[row.type] }}
@@ -42,7 +114,7 @@ import GlobalVar from "@/core/global/GlobalVar";
 @Component({
     components: {
         Pagination,
-    }
+    },
 })
 export default class SystemLangBody extends AbstractView {
     //权限标识
@@ -58,7 +130,7 @@ export default class SystemLangBody extends AbstractView {
     private pageInfo = this.myProxy.tableData.pageInfo;
     private listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page:number){
+    private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
@@ -75,7 +147,7 @@ export default class SystemLangBody extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
-.align-left{
+.align-left {
     text-align: left;
 }
 </style>
