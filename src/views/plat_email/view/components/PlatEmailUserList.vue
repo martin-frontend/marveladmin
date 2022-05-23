@@ -56,14 +56,16 @@
                         "2": statistic.total_attachment_read,
                     })
                 }}
+            </div>
+            <div>
                 {{ $t("plat_email.attachReward") }}
-                <span>{{ $t("plat_email.gold") }}X{{ statistic.total_attachment_gold }}</span
-                ><span>{{ $t("plat_email.score") }}X{{ statistic.total_attachment_score }}</span>
-                {{ $t("plat_email.receivedReward")
-                }}<span>{{ $t("plat_email.gold") }}X{{ statistic.total_attachment_gold_read }}</span
-                ><span style="margin: auto"
-                    >{{ $t("plat_email.score") }}X{{ statistic.total_attachment_score_read }}</span
-                >
+                <span>{{ $t("plat_email.gold") }}</span> 
+                <span v-html="getAccessInfo(statistic.total_attachment_content)"></span>
+            </div>
+            <div>
+                {{ $t("plat_email.receivedReward")}}
+                <span>{{ $t("plat_email.gold") }}</span>
+                <span v-html="getAccessInfo(statistic.total_attachment_content_read)"></span>
             </div>
         </div>
         <el-table
@@ -79,7 +81,7 @@
                 prop="content_id"
                 :label="tableColumns.content_id.name"
                 class-name="status-col"
-                min-width="80px"
+                min-width="50px"
             >
             </el-table-column>
             <el-table-column :label="tableColumns.plat_id.name" class-name="status-col" min-width="100px">
@@ -91,7 +93,7 @@
                 prop="user_id"
                 :label="`${tableColumns.user_id.name}`"
                 class-name="status-col"
-                min-width="100px"
+                min-width="80px"
             >
             </el-table-column>
             <el-table-column
@@ -120,12 +122,12 @@
                     {{ tableColumns.type.options[row.type] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.cate.name" class-name="status-col" min-width="80px">
+            <el-table-column :label="tableColumns.cate.name" class-name="status-col" min-width="70px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.cate.options[row.cate] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.is_read.name" class-name="status-col" min-width="80px">
+            <el-table-column :label="tableColumns.is_read.name" class-name="status-col" min-width="70px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.is_read.options[row.is_read] }}
                 </template>
@@ -144,14 +146,21 @@
                 min-width="120px"
             >
             </el-table-column>
+
             <el-table-column
-                prop="attachment_content"
                 :label="tableColumns.attachment_content.name"
+                prop="attachment_content"
                 class-name="status-col"
                 min-width="120px"
             >
+                <template slot-scope="{ row }">
+                    <div align="left">
+                        <span v-html="getAccessInfo1(row.attachment_content)"></span>
+                    </div>
+                </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.attachment_status.name" class-name="status-col" min-width="80px">
+
+            <el-table-column :label="tableColumns.attachment_status.name" class-name="status-col" min-width="60px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.attachment_status.options[row.attachment_status] }}
                 </template>
@@ -220,6 +229,30 @@ export default class PlatEmailUserList extends AbstractView {
 
     private handlerExport() {
         this.myProxy.onQueryAll();
+    }
+
+    getAccessInfo(data: any) {
+        let infoStr = "";
+        if (data) {
+            const keys = Object.keys(data);
+            for (const key of keys) {
+                infoStr += key + "：";
+                infoStr += data[key] + "&nbsp;&nbsp;&nbsp;&nbsp;";
+            }
+        }
+        return infoStr;
+    }
+
+    getAccessInfo1(data: any) {
+        let infoStr = "";
+        if (data) {
+            const keys = Object.keys(data);
+            for (const key of keys) {
+                infoStr += key + "：";
+                infoStr += data[key] + "<br>";
+            }
+        }
+        return infoStr;
     }
 }
 </script>

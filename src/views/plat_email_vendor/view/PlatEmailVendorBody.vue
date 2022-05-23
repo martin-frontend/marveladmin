@@ -21,8 +21,7 @@
             </el-table-column>
             <el-table-column :label="tableColumns.email_vendor_id.name" class-name="status-col" width="200px">
                 <template slot-scope="scope">
-                    <!-- {{ tableColumns.email_vendor_id.options[scope.row.email_vendor_id] }} -->
-                    {{ scope.row.email_vendor_id }}
+                    {{ tableColumns.email_vendor_id.options[scope.row.email_vendor_id] }}
                 </template>
             </el-table-column>
 
