@@ -40,4 +40,6 @@ export default interface ISystemLangProxy {
     onUpdate(): void;
     /**删除数据 */
     onDelete(id: any): void;
+    /**获取翻译内容 */
+    translate():void;
 }

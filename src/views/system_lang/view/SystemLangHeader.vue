@@ -1,7 +1,16 @@
 <template>
     <div class="header-content">
         <div class="group">
-            <SearchInput :title="tableColumns.module.name" v-model="listQuery.module" :width="400" />
+            <SearchSelect
+                :title="tableColumns.plat_id.name"
+                :options="tableColumns.plat_id.options"
+                v-model="listQuery.plat_id"
+            />
+            <SearchSelect
+                :title="tableColumns.module.name"
+                :options="tableColumns.module.options"
+                v-model="listQuery.module"
+            />
             <SearchSelect
                 :title="tableColumns.type.name"
                 :options="tableColumns.type.options"

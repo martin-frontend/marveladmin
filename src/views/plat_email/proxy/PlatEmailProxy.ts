@@ -214,6 +214,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         let attachment_content_copy = [];
         let bonus = {};
         formCopy.attachment_content.forEach((element: any) => {
+            
             if (bonus[element.type]) {
                 //防止有傻逼选择多个相同的币种
                 bonus[element.type] = String((Number(bonus[element.type]) + Number(element.amount)));
@@ -222,10 +223,15 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             }
             
         });
-        formCopy.attachment_content = JSON.stringify(bonus);
-        formCopy.attachment_type = bonus != {}
-            ? EmailAttachmentType.BonusAttach
-            : EmailAttachmentType.NoAttach;
+        if (Object.keys(bonus).length === 0) {
+            //没有奖励
+            formCopy.attachment_type = EmailAttachmentType.NoAttach;
+            formCopy.attachment_content = null;
+            formCopy.bonus_multiple = null;
+        } else {
+            formCopy.attachment_type = EmailAttachmentType.BonusAttach;
+            formCopy.attachment_content = JSON.stringify(bonus);
+        }
         formCopy.is_mass_mailer = this.isGroupMail ? 1 : 0;
         this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
     }

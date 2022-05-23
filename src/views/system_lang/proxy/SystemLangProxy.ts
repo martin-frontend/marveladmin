@@ -161,12 +161,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     onAdd() {
         let formCopy: any = Object.assign({}, this.dialogData.form);
         try {
-            let langStr: any = "";
-            if (Object.keys(formCopy.language).length > 0) {
-                langStr = JSON.stringify(JSON.parse(formCopy.language));
-            }
-
-            formCopy.language = langStr;
+            
             this.sendNotification(HttpType.admin_system_lang_store, objectRemoveNull(formCopy));
         } catch (error) {
             MessageBox.alert(<string> i18n.t("common.jsonError"));
@@ -177,7 +172,6 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         const formCopy: any = Object.assign({}, this.dialogData.form);
         try {
             const id = formCopy.id;
-            formCopy.language = jsonStringify(formCopy.language);
             const temp = formCompared(formCopy, this.dialogData.formSource);
             // 如果没有修改，就直接关闭弹窗
             if (Object.keys(temp).length == 0) {
@@ -185,15 +179,9 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
                 return false;
             }
 
-            let langStr: any = "{}";
-            if (temp.language) {
-                if (Object.keys(temp.language).length > 0) {
-                    langStr = JSON.stringify(JSON.parse(temp.language));
-                }
-                temp.language = langStr;
-            }
-
             temp.id = id;
+            temp.plat_id = formCopy.plat_id;
+            
             this.sendNotification(HttpType.admin_system_lang_update, temp);
         } catch (error) {
             MessageBox.alert(<string> i18n.t("common.jsonError"));
@@ -254,5 +242,10 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         let exportData = this.dataMatching(exportColumn, dataArray);
 
         exportJson2Excel(exportColumn, exportData, "language", undefined, undefined);
+    }
+
+    /**获取单条翻译 */
+    translate(): void {
+        
     }
 }

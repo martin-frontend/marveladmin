@@ -1,6 +1,23 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
+            <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
+                <template>
+                    <el-select
+                        v-model="form.plat_id"
+                        filterable
+                        class="select"
+                        :placeholder="$t('common.pleaseChoose')"
+                    >
+                        <el-option
+                            v-for="(value, key) in tableColumns.plat_id.options"
+                            :key="key"
+                            :label="value"
+                            :value="Number(key)"
+                        ></el-option>
+                    </el-select>
+                </template>
+            </el-form-item>
             <!-- 参数模组 -->
             <el-form-item :label="tableColumns.module.name" prop="module">
                 <template>
@@ -14,7 +31,7 @@
                             v-for="(value, key) in tableColumns.module.options"
                             :key="key"
                             :label="value"
-                            :value="key"
+                            :value="Number(key)"
                         ></el-option>
                     </el-select>
                 </template>
@@ -33,30 +50,25 @@
             </el-form-item>
             <el-form-item :label="tableColumns.key.name" prop="key">
                 <el-input
-                    maxlength="30"
                     :placeholder="`${tableColumns.key.name}`"
                     v-model="form.key"
-                    show-word-limit
                 ></el-input>
             </el-form-item>
 
             <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value">
                 <el-form-item :label="value" prop="value">
                     <el-input
-                        maxlength="30"
+                        type="textarea"
+                        filterable
+                        clearable
+                        class="select"
                         :placeholder="`${tableColumns[key].name}`"
                         v-model="form[key]"
-                        show-word-limit
                     ></el-input>
+                    <el-button type="primary" size="mini" @click="handleTranslate()">获取翻译</el-button>
                 </el-form-item>
             </div>
 
-            <!-- 参数语言 -->
-            <!-- <el-form-item size="mini" :label="tableColumns.language.name" prop="language">
-                <div class="editor-container">
-                    <json-editor ref="jsonEditor" v-model="form.language" />
-                </div>
-            </el-form-item> -->
             <el-form-item class="dialog-footer">
                 <el-button v-if="isStatusUpdate" type="danger" size="mini" @click="handleDelete(form)">{{ $t("common.delete") }}</el-button>
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()"
@@ -119,6 +131,7 @@ export default class SystemLangDialog extends AbstractView {
             module: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
             type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
             key: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            plat_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
         };
     }
 
@@ -140,6 +153,10 @@ export default class SystemLangDialog extends AbstractView {
 
     private handleDelete() {
         this.myProxy.onDelete(this.form.id);
+    }
+
+    handleTranslate() {
+        this.myProxy.translate();
     }
 }
 </script>

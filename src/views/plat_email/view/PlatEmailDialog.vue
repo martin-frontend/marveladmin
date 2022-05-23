@@ -247,7 +247,7 @@ export default class PlatEmailDialog extends AbstractView {
         return this.myProxy.isGroupMail;
     }
     get hasAttachmentContent() {
-        return this.form.attachment_content != [];
+        return this.form.attachment_content.length != 0;
     }
     get curTime() {
         return dateFormat(new Date(), "yyyy-MM-dd hh-mm-ss");
