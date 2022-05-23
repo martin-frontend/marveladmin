@@ -7,11 +7,13 @@ import locale from 'element-ui/lib/locale'
 import elementViLocale from "element-ui/lib/locale/lang/vi";
 import elementZhLocale from "element-ui/lib/locale/lang/zh-CN";
 import elementEnLocale from "element-ui/lib/locale/lang/en";
+import elementJpLocale from "element-ui/lib/locale/lang/ja";
 
 // User defined lang
 import viLocale from "./vi";
 import zhLocale from "./zh";
 import enLocale from "./en";
+import jpLocale from "./jp";
 import GlobalVar from "@/core/global/GlobalVar";
 
 Vue.use(VueI18n);
@@ -31,6 +33,10 @@ const messages = {
         ...enLocale,
         ...elementEnLocale,
     },
+    jp: {
+        ...jpLocale,
+        ...elementJpLocale,
+    },
     // 这里如果有其它语言包继续按照规则添加即可
 };
 
@@ -49,6 +55,9 @@ export const getLocale = () => {
                     break;
                 case "en":
                     GlobalVar.lang = "en_EN";
+                    break;
+                case "jp":
+                    GlobalVar.lang = "jp_JP";
                     break;
             }
             return locale;
