@@ -186,6 +186,10 @@ const layoutRouter = {
             name: "平台邮件",
             component: () => import("@/views/plat_email/view/PlatEmail.vue")
         },        {
+            path: "plat_email_vendor",
+            name: "邮件通道",
+            component: () => import("@/views/plat_email_vendor/view/PlatEmailVendor.vue")
+        },        {
             path: "plat_load_page_domain",
             name: "落地页域名配置",
             component: () => import("@/views/plat_load_page_domain/view/PlatLoadPageDomain.vue")
