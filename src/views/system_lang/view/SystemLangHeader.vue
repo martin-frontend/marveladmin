@@ -16,14 +16,16 @@
                 :options="tableColumns.type.options"
                 v-model="listQuery.type"
             />
+            <SearchInput :title="tableColumns.key.name" v-model="listQuery.key" />
             <div class="btn-group">
                 <div>
                     <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{ $t("common.search") }}</el-button>
                     <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{ $t("common.reset") }}</el-button>
                 </div>
-                <div>
+                <!-- 导出暂时用不上 -->
+                <!-- <div>
                     <el-button @click="heandlerExport()" type="primary">{{ $t("statistic_plat_days.export") }}</el-button>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="row">

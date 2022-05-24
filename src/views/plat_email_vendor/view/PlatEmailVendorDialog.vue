@@ -12,7 +12,7 @@
                         v-for="(value, key) in tableColumns.email_vendor_id.options"
                         :key="key"
                         :label="value"
-                        :value="key"
+                        :value="Number(key)"
                     ></el-option>
                 </el-select>
             </el-form-item>

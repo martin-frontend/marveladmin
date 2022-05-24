@@ -59,6 +59,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         page_size: 20,
         module: "",
         type: "",
+        key: "",
     };
     /**弹窗相关数据 */
     dialogData = {

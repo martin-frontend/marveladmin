@@ -35,7 +35,7 @@
                         v-for="(value, key) in tableColumns['type_position'].options"
                         :key="key"
                         :label="value"
-                        :value="key"
+                        :value="Number(key)"
                     >
                     </el-option>
                 </el-select>

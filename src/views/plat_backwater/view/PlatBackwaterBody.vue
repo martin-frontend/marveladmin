@@ -6,7 +6,7 @@
                     <el-row>
                         <el-input
                             style="width: 200px"
-                            v-for="(value, key) in myProxy.backWaterData.vendor_type_options"
+                            v-for="(value, key) in myProxy.tableData.columns.vip_config.options_key[1]"
                             :key="key"
                             class="input"
                             type="number"
