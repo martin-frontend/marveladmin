@@ -59,7 +59,7 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
             id: null,
             plat_id: "",
             name: "",
-            type: "",
+            type: null,
             address: null,
             status: null,
             remark: null,
@@ -94,8 +94,6 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
     setDetail(data: any) {
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-        this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
-        this.dialogData.form.type = this.dialogData.form.type.toString();
     }
 
     /**重置查询条件 */
@@ -128,7 +126,7 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
             id: null,
             plat_id: "",
             name: "",
-            type: "",
+            type: null,
             address: null,
             status: null,
             remark: null,

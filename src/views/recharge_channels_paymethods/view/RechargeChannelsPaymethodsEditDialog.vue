@@ -36,7 +36,13 @@
             </el-form-item>
             <!-- 提示信息 -->
             <el-form-item :label="`${tableColumns.notice.name}`">
-                <el-input v-model="addFrom.notice" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input 
+                        v-model="addFrom.notice" 
+                        :placeholder="$t('common.pleaseEnter')" 
+                        type="textarea"
+                        filterable
+                        clearable
+                        class="select"></el-input>
             </el-form-item>
             <!-- 充值最小额度 -->
             <el-form-item :label="`${tableColumns.min_gold.name}`" prop="min_gold">
