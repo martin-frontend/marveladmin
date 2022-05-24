@@ -244,8 +244,13 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         exportJson2Excel(exportColumn, exportData, "language", undefined, undefined);
     }
 
-    /**获取单条翻译 */
-    translate(): void {
+    /**获取翻译 */
+    translate(id: any): void {
+        this.sendNotification(HttpType.admin_system_lang_translate, { id });
+    }
+
+    updateForm(data: any):void {
+        Object.assign(this.dialogData.form, data);
         
     }
 }

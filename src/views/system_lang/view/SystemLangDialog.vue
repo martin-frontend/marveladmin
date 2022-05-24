@@ -65,12 +65,12 @@
                         :placeholder="`${tableColumns[key].name}`"
                         v-model="form[key]"
                     ></el-input>
-                    <el-button type="primary" size="mini" @click="handleTranslate()">获取翻译</el-button>
                 </el-form-item>
             </div>
 
             <el-form-item class="dialog-footer">
                 <el-button v-if="isStatusUpdate" type="danger" size="mini" @click="handleDelete(form)">{{ $t("common.delete") }}</el-button>
+                <el-button type="primary" size="mini" @click="handleTranslate()">一键获取翻译</el-button>
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()"
                     >{{ $t("common.save") }}</el-button
                 >
@@ -156,7 +156,7 @@ export default class SystemLangDialog extends AbstractView {
     }
 
     handleTranslate() {
-        this.myProxy.translate();
+        this.myProxy.translate(this.form.id);
     }
 }
 </script>

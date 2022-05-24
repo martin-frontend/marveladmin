@@ -7,6 +7,7 @@
         "admin/system_lang/index",
         "admin/system_lang/store",
         "admin/system_lang/update/{id}",
-        "admin/system_lang/delete/{id}"
+        "admin/system_lang/delete/{id}",
+        "admin/system_lang/translate/{id}"
     ]
 }
