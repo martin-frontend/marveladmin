@@ -1,0 +1,14 @@
+{
+    "name": "平台语言管理",
+    "description": "平台语言管理",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766368",
+    "list": [
+        "admin/plat_lang/table_columns",
+        "admin/plat_lang/index",
+        "admin/plat_lang/store",
+        "admin/plat_lang/update/{id}",
+        "admin/plat_lang/delete/{id}",
+        "admin/system_lang/translate",
+        "admin/plat_lang/import"
+    ]
+}

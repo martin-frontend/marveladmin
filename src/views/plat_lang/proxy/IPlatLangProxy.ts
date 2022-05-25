@@ -1,6 +1,6 @@
 import { PageInfoVO } from "@/core/vo/PageInfoVO";
 
-export default interface ISystemLangProxy {
+export default interface IPlatLangProxy {
     /**表格相关数据 */
     tableData: {
         columns: any,

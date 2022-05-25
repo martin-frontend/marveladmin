@@ -1,19 +1,19 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
-import { HttpType } from "@/views/system_lang/setting";
 import { FormItem, MessageBox } from "element-ui";
-import ISystemLangProxy from "./ISystemLangProxy";
 import { jsonStringify, jsonToObject } from "@/core/global/Functions";
 import { exportJson2Excel } from "@/core/global/Excel";
 import i18n from "@/lang";
+import { HttpType } from "../setting";
+import IPlatLangProxy from "./IPlatLangProxy";
 
-export default class SystemLangProxy extends AbstractProxy implements ISystemLangProxy {
-    static NAME = "SystemLangProxy";
+export default class PlatLangProxy extends AbstractProxy implements IPlatLangProxy {
+    static NAME = "PlatLangProxy";
 
     /**进入页面时调用 */
     enter() {
-        this.sendNotification(HttpType.admin_system_lang_table_columns);
+        this.sendNotification(HttpType.admin_plat_lang_table_columns);
     }
 
     /**离开页面时调用 */
@@ -59,6 +59,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         page_size: 20,
         type: "",
         key: "",
+        plat_id:"",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -86,7 +87,13 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        this.onQuery();
+        const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
+        if (plat_id_options_keys.length > 0) {
+            if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
+                this.listQuery.plat_id = plat_id_options_keys[0];
+            }
+            this.onQuery();
+        }
     }
     /**表格数据 */
     setTableData(data: any) {
@@ -112,6 +119,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         Object.assign(this.listQuery, {
             module: "",
             type: "",
+            plat_id:"",
         });
         console.log(this.listQuery);
     }
@@ -155,14 +163,14 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
 
     /**查询 */
     onQuery() {
-        this.sendNotification(HttpType.admin_system_lang_index, objectRemoveNull(this.listQuery));
+        this.sendNotification(HttpType.admin_plat_lang_index, objectRemoveNull(this.listQuery));
     }
     /**添加数据 */
     onAdd() {
         let formCopy: any = Object.assign({}, this.dialogData.form);
         try {
             
-            this.sendNotification(HttpType.admin_system_lang_store, objectRemoveNull(formCopy));
+            this.sendNotification(HttpType.admin_plat_lang_store, objectRemoveNull(formCopy));
         } catch (error) {
             MessageBox.alert(<string> i18n.t("common.jsonError"));
         }
@@ -182,7 +190,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             temp.id = id;
             temp.type = formCopy.type;
             temp.key = formCopy.key;
-            this.sendNotification(HttpType.admin_system_lang_update, objectRemoveNull(temp));
+            this.sendNotification(HttpType.admin_plat_lang_update, objectRemoveNull(temp));
         } catch (error) {
             MessageBox.alert(<string> i18n.t("common.jsonError"));
         }
@@ -195,7 +203,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             type: "warning",
         })
             .then(() => {
-                this.sendNotification(HttpType.admin_system_lang_delete, { id });
+                this.sendNotification(HttpType.admin_plat_lang_delete, { id });
             })
             .catch(() => {});
     }
@@ -207,7 +215,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
 
         queryCopy.page_size = this.tableData.excelPageSize;
         queryCopy.page_count = 1;
-        this.facade.sendNotification(HttpType.admin_system_lang_index, objectRemoveNull(queryCopy));
+        this.facade.sendNotification(HttpType.admin_plat_lang_index, objectRemoveNull(queryCopy));
     }
 
     /**导出资料合并 */
@@ -250,6 +258,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
      * source	string	源语言: en_EN   sentence	string	要翻译的语句
      */
     translate(data: any): void {
+        console.log("data=====",data);
+        
         this.sendNotification(HttpType.admin_system_lang_translate, data);
     }
 
@@ -261,6 +271,6 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
 
     /**语言包导入翻译 */
     languageImport(sentences: any): void {
-        this.sendNotification(HttpType.admin_system_lang_import, sentences);
+        this.sendNotification(HttpType.admin_plat_lang_import, sentences);
     }
 }

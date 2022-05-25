@@ -2,6 +2,11 @@
     <div class="header-content">
         <div class="group">
             <SearchSelect
+                :title="tableColumns.plat_id.name"
+                :options="tableColumns.plat_id.options"
+                v-model="listQuery.plat_id"
+            />
+            <SearchSelect
                 :title="tableColumns.type.name"
                 :options="tableColumns.type.options"
                 v-model="listQuery.type"
@@ -13,11 +18,7 @@
                 <div>
                     <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{ $t("common.search") }}</el-button>
                     <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{ $t("common.reset") }}</el-button>
-                </div>
-                <div>
                     <el-button @click="heandlerImport()" type="primary">导入</el-button>
-                </div>
-                <div>
                     <el-button @click="heandlerExport()" type="primary">{{ $t("statistic_plat_days.export") }}</el-button>
                 </div>
                 
@@ -32,7 +33,7 @@
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
-import SystemLangProxy from "../proxy/SystemLangProxy";
+import PlatLangProxy from "../proxy/PlatLangProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SearchSelect from "@/components/SearchSelect.vue";
@@ -44,12 +45,12 @@ import SearchInput from "@/components/SearchInput.vue";
         SearchInput,
     },
 })
-export default class SystemLangHeader extends AbstractView {
+export default class PlatLangHeader extends AbstractView {
     //权限标识
     private unique = unique;
     private checkUnique = checkUnique;
     // proxy
-    private myProxy: SystemLangProxy = this.getProxy(SystemLangProxy);
+    private myProxy: PlatLangProxy = this.getProxy(PlatLangProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private listQuery = this.myProxy.listQuery;

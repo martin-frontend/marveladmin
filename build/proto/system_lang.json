@@ -8,6 +8,8 @@
         "admin/system_lang/store",
         "admin/system_lang/update/{id}",
         "admin/system_lang/delete/{id}",
-        "admin/system_lang/translate/{id}"
+        "admin/system_lang/translate",
+        "admin/system_lang/translate_all",
+        "admin/system_lang/import"
     ]
 }
