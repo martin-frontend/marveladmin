@@ -52,7 +52,7 @@
                             :placeholder="`${tableColumns[key].name}`"
                             v-model="form[key]"
                         ></el-input>
-                        <el-button type="primary" size="mini" @click="handleTranslate(key, form[key])">一键翻译成其他语言</el-button>
+                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(key, form[key])">一键翻译成其他语言</el-button>
                     </div>
                 </el-form-item>
             </div>

@@ -50,6 +50,7 @@ export default class CommonLangMediator extends AbstractMediator {
                 myProxy.hideDialog();
                 break;
             case EventType.admin_plat_lang_update:
+            case EventType.admin_system_lang_update:
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 break;

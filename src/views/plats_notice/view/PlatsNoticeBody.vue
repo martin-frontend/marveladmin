@@ -43,11 +43,6 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns['language'].name" align="center">
-                <template slot-scope="{ row }">
-                    {{ tableColumns["language"].options[row.language] }}
-                </template>
-            </el-table-column>
 
             <el-table-column :label="tableColumns['type_position'].name" align="center">
                 <template slot-scope="{ row }">

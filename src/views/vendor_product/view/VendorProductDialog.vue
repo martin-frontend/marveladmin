@@ -38,7 +38,7 @@
                             :placeholder="$t('common.pleaseEnter')"
                             v-model="form.vendor_product_name"
                         ></el-input>
-                        <el-button type="primary" size="mini" @click="handleTranslate(form.vendor_product_name)">翻译</el-button>
+                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.vendor_product_name)">翻译</el-button>
                     </div>
 
             </el-form-item>

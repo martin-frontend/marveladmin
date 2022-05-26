@@ -21,31 +21,43 @@
                     </el-select>
                 </template>
             </el-form-item>
+
             <el-form-item :label="`${tableColumns.title.name}`" prop="title">
-                <el-input
-                    clearable
-                    maxlength="30"
-                    :placeholder="`${tableColumns.title.name}`"
-                    v-model="form.title"
-                    :readonly="readonly"
-                    show-word-limit
-                ></el-input>
+                <div class="flex d-flex">
+                        <el-input
+                            style="margin-right: 0.8rem"
+                            type="textarea"
+                            maxlength="30"
+                            filterable
+                            clearable
+                            show-word-limit
+                            :readonly="readonly"
+                            :placeholder="`${tableColumns.title.name}`"
+                            v-model="form.title"
+                        ></el-input>
+                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.title)">翻译</el-button>
+                    </div>
             </el-form-item>
 
             <el-form-item :label="`${tableColumns.content.name}`" prop="content">
-                <el-input
-                    maxlength="300"
-                    :rows="5"
-                    type="textarea"
-                    filterable
-                    clearable
-                    class="select"
-                    :placeholder="`${tableColumns.content.name}`"
-                    v-model="form.content"
-                    :readonly="readonly"
-                    show-word-limit
-                ></el-input>
+                <div class="flex d-flex">
+                        <el-input
+                            style="margin-right: 0.8rem"
+                            type="textarea"
+                            maxlength="300"
+                            :rows="5"
+                            filterable
+                            clearable
+                            show-word-limit
+                            :readonly="readonly"
+                            class="select"
+                            :placeholder="`${tableColumns.content.name}`"
+                            v-model="form.content"
+                        ></el-input>
+                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.content)">翻译</el-button>
+                    </div>
             </el-form-item>
+
             <el-form-item size="mini" :label="tableColumns.cate.name" prop="cate">
                 <template v-if="readonly">{{ tableColumns.cate.options[form.cate] }} </template>
                 <template v-else>
@@ -202,6 +214,8 @@ import { readerData } from "@/core/global/Excel";
 import { BaseInfo } from "@/components/vo/commonVo";
 import AlertDialog from "./components/AlertDialog.vue";
 import i18n from "@/lang";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component({
     components: { AlertDialog },
@@ -225,6 +239,7 @@ export default class PlatEmailDialog extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
+    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private form = this.myProxy.dialogData.form;
@@ -334,6 +349,13 @@ export default class PlatEmailDialog extends AbstractView {
     // 删除奖励
     onDeleteBonus(obj: any) {
         this.form.attachment_content = this.form.attachment_content.filter((item: any) => item !== obj);
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_EMAIL;
+        this.langProxy.showDialog(data);
     }
 }
 </script>

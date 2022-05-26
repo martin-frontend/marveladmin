@@ -25,8 +25,23 @@
                     </el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
-            <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
+            <!-- <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
                 <el-input v-model="form.name" :placeholder="$t('common.pleaseEnter')"></el-input>
+            </el-form-item> -->
+
+            <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
+                <div class="flex d-flex">
+                        <el-input
+                            style="margin-right: 0.8rem"
+                            type="textarea"
+                            filterable
+                            clearable
+                            :placeholder="$t('common.pleaseEnter')"
+                            v-model="form.name"
+                        ></el-input>
+                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)">翻译</el-button>
+                    </div>
+
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns['type_position'].name" prop="type_position">
@@ -91,26 +106,22 @@
                 </el-radio-group>
             </el-form-item>
 
-            <el-form-item size="mini" :label="tableColumns['language'].name" prop="language">
-                <el-select v-model="form.language" :placeholder="$t('common.pleaseChoose')" filterable style="width: 300px">
-                    <el-option
-                        v-for="(value, key) in tableColumns['language'].options"
-                        :key="key"
-                        :label="value"
-                        :value="key"
-                    >
-                    </el-option>
-                </el-select>
+            <el-form-item size="mini" :label="tableColumns['content'].name" prop="content" v-if="form.type == 1">
+                <div class="flex d-flex">
+                        <el-input
+                            style="margin-right: 0.8rem"
+                            type="textarea"
+                            filterable
+                            clearable
+                            rows="5"
+                            :placeholder="$t('common.pleaseEnter')"
+                            v-model="form.content"
+                        ></el-input>
+                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.content)">翻译</el-button>
+                    </div>
+
             </el-form-item>
 
-            <el-form-item size="mini" :label="tableColumns['content'].name" prop="content" v-if="form.type == 1">
-                <el-input
-                    type="textarea"
-                    rows="5"
-                    v-model="form.content"
-                    :placeholder="$t('common.pleaseEnter')"
-                ></el-input>
-            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['img_uris'].name" prop="img_urls" v-if="form.type == 2">
                 <el-tabs type="border-card" v-model="myProxy.appType">
                     <el-tab-pane
@@ -211,6 +222,8 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword, formatImageUrl } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class PlatsNoticeDialog extends AbstractView {
@@ -221,6 +234,7 @@ export default class PlatsNoticeDialog extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: PlatsNoticeProxy = this.getProxy(PlatsNoticeProxy);
+    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private form = this.myProxy.dialogData.form;
@@ -338,6 +352,13 @@ export default class PlatsNoticeDialog extends AbstractView {
     }
     handlePictureCardPreview1() {
         GlobalVar.preview_image.url = this.form.thumbnail_urls[this.myProxy.appType];
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_NOTICE;
+        this.langProxy.showDialog(data);
     }
 }
 </script>
