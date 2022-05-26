@@ -9,6 +9,7 @@
             <audio src="@/assets/sound/vi/withdraw.mp3" id="withdrawAudio"></audio>
         </div>
         <PreviewImageDialog />
+        <CommonLangDialog />
         <router-view></router-view>
     </div>
 </template>
@@ -21,11 +22,13 @@ import AppMediator from "@/AppMediator";
 import PreviewImageDialog from "@/components/PreviewImageDialog.vue";
 import i18n from "@/lang";
 import GlobalVar from "./core/global/GlobalVar";
+import CommonLangDialog from "./views/language_dialog/view/CommonLangDialog.vue";
 
 @Component({
     components: {
         MessagePanel,
         PreviewImageDialog,
+        CommonLangDialog,
     },
 })
 export default class App extends AbstractView {
