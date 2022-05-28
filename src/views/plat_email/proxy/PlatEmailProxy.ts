@@ -110,6 +110,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        
     }
     /**详细数据 */
     setDetail(data: any) {
@@ -213,6 +214,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         let attachment_content_copy = [];
         let bonus = {};
         formCopy.attachment_content.forEach((element: any) => {
+            
             if (bonus[element.type]) {
                 //防止有傻逼选择多个相同的币种
                 bonus[element.type] = String((Number(bonus[element.type]) + Number(element.amount)));
@@ -221,10 +223,15 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             }
             
         });
-        formCopy.attachment_content = JSON.stringify(bonus);
-        formCopy.attachment_type = bonus != {}
-            ? EmailAttachmentType.BonusAttach
-            : EmailAttachmentType.NoAttach;
+        if (Object.keys(bonus).length === 0) {
+            //没有奖励
+            formCopy.attachment_type = EmailAttachmentType.NoAttach;
+            formCopy.attachment_content = null;
+            formCopy.bonus_multiple = null;
+        } else {
+            formCopy.attachment_type = EmailAttachmentType.BonusAttach;
+            formCopy.attachment_content = JSON.stringify(bonus);
+        }
         formCopy.is_mass_mailer = this.isGroupMail ? 1 : 0;
         this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
     }
@@ -271,11 +278,9 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         read_num: 0,
         total_attachment: 0,
-        total_attachment_gold: "",
-        total_attachment_gold_read: "",
+        total_attachment_content: {},
+        total_attachment_content_read: {},
         total_attachment_read: 0,
-        total_attachment_score: 0,
-        total_attachment_score_read: 0,
         total_num: 0,
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -337,11 +342,9 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         Object.assign(this.platUserTableData, {
             read_num: data.read_num,
             total_attachment: data.total_attachment,
-            total_attachment_gold: data.total_attachment_gold,
-            total_attachment_gold_read: data.total_attachment_gold_read,
+            total_attachment_content: data.total_attachment_content,
+            total_attachment_content_read: data.total_attachment_content_read,
             total_attachment_read: data.total_attachment_read,
-            total_attachment_score: data.total_attachment_score,
-            total_attachment_score_read: data.total_attachment_score_read,
             total_num: data.total_num
         });
     }

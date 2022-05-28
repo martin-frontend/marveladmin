@@ -18,6 +18,10 @@
                 <img :src="imageBox.en" class="img" />
                 <a>English</a>
             </el-dropdown-item>
+            <el-dropdown-item :disabled="language === 'jp'" command="jp" class="flex">
+                <img :src="imageBox.jp" class="img" />
+                <a>Japanese</a>
+            </el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
 </template>
@@ -31,6 +35,7 @@ export default {
                 zh: require("../../../../../assets/lang/china_logo.png"),
                 vi: require("../../../../../assets/lang/vi_logo.png"),
                 en: require("../../../../../assets/lang/en_logo.png"),
+                jp: require("../../../../../assets/lang/jp_logo.png"),
             },
         };
     },
@@ -47,6 +52,8 @@ export default {
                 str = "Tiếng Việt";
             } else if (Cookies.get("language") === "en") {
                 str = "English";
+            } else if (Cookies.get("language") === "jp") {
+                str = "Japanese";
             }
             return str;
         },

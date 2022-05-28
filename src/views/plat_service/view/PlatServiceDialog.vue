@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="500px">
+    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="700px">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" label-position="left" v-loading="net_status.loading">
             <el-form-item :label="`${tableColumns.plat_id.name}`" prop="plat_id" label-width="100px">
                 <el-select
@@ -12,30 +12,40 @@
                     <el-option v-for="(value, key) in tableColumns.plat_id.options" :key="key" :label="value" :value="Number(key)"></el-option>
                 </el-select>
             </el-form-item>
+
             <el-form-item label-width="0" prop="name">
-                <el-input
-                    style="width: 100%"
-                    :value="``"
-                    :placeholder="$t('common.questionTitle')"
-                    v-model="form.name"
-                    maxlength="200"
-                    clearable
-                    show-word-limit
-                ></el-input>
+                <div class="flex d-flex">
+                        <el-input
+                            style="margin-right: 0.8rem"
+                            type="textarea"
+                            maxlength="200"
+                            filterable
+                            clearable
+                            show-word-limit
+                            :placeholder="$t('common.questionTitle')"
+                            v-model="form.name"
+                        ></el-input>
+                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)">翻译</el-button>
+                    </div>
             </el-form-item>
+
             <el-form-item label-width="0" prop="content">
-                <el-input
-                    maxlength="2000"
-                    :rows="6"
-                    type="textarea"
-                    filterable
-                    clearable
-                    class="select"
-                    :placeholder="$t('common.questionContent')"
-                    v-model="form.content"
-                    show-word-limit
-                ></el-input>
+                <div class="flex d-flex">
+                        <el-input
+                            style="margin-right: 0.8rem"
+                            type="textarea"
+                            maxlength="2000"
+                            filterable
+                            clearable
+                            show-word-limit
+                            :rows="6"
+                            :placeholder="$t('common.questionContent')"
+                            v-model="form.content"
+                        ></el-input>
+                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.content)">翻译</el-button>
+                    </div>
             </el-form-item>
+
             <el-form-item class="dialog-footer">
                 <el-button v-if="isStatusUpdate" type="danger" size="mini" @click="handleDelete()">{{ $t("common.delete") }}</el-button>
                 <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{ $t("common.save") }}</el-button>
@@ -52,6 +62,8 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class PlatServiceDialog extends AbstractView {
@@ -62,6 +74,7 @@ export default class PlatServiceDialog extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: PlatServiceProxy = this.getProxy(PlatServiceProxy);
+    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private form = this.myProxy.dialogData.form;
@@ -112,6 +125,13 @@ export default class PlatServiceDialog extends AbstractView {
 
     private handleDelete() {
         this.myProxy.onDelete(this.form.id);
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_QUESTION;
+        this.langProxy.showDialog(data);
     }
 }
 </script>

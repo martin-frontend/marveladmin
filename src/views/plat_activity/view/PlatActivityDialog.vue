@@ -18,8 +18,22 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item size="mini" :label="tableColumns['activity_name'].name" prop="activity_name">
-                    <el-input v-model="form.activity_name" :placeholder="$t('common.pleaseEnter')"></el-input>
+
+                <el-form-item :label="tableColumns['activity_name'].name" prop="activity_name">
+                    <div class="flex d-flex">
+                        <el-input
+                            style="margin-right: 0.8rem"
+                            :placeholder="$t('common.pleaseEnter')"
+                            v-model="form.activity_name"
+                        ></el-input>
+                        <el-button
+                            style="max-height: 35px"
+                            type="primary"
+                            size="mini"
+                            @click="handleTranslate(form.activity_name)"
+                            >翻译</el-button
+                        >
+                    </div>
                 </el-form-item>
 
                 <el-form-item size="mini" :label="$t('plat_activity.eventTemplate')">
@@ -333,6 +347,8 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword, formatImageUrl } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class PlatActivityDialog extends AbstractView {
@@ -343,6 +359,7 @@ export default class PlatActivityDialog extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
+    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     get form() {
@@ -525,6 +542,13 @@ export default class PlatActivityDialog extends AbstractView {
             return model.show_types;
         }
         return "";
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_ACTIVITY;
+        this.langProxy.showDialog(data);
     }
 }
 </script>

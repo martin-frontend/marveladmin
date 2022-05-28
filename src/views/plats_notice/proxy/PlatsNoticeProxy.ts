@@ -100,7 +100,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
     };
 
     /**应用平台 类型 */
-    appType = "1";
+    appType = "2";
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -126,7 +126,8 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.form.open_mode = this.dialogData.form.open_mode.toString();
-        this.appType = data.type.toString();
+        this.appType = data.app_types[0].toString();
+        
     }
 
     /**显示弹窗 */

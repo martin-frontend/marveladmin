@@ -1,0 +1,13 @@
+{
+    "name": "邮件通道",
+    "description": "邮件通道",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=36766278",
+    "list": [
+        "admin/plat_email_vendor/table_columns",
+        "admin/plat_email_vendor/index",
+        "admin/plat_email_vendor/show/{id}",
+        "admin/plat_email_vendor/store",
+        "admin/plat_email_vendor/update/{id}",
+        "admin/plat_email_vendor/test_send/{id}"
+    ]
+}

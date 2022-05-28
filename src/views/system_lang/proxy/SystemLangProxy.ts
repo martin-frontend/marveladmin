@@ -37,6 +37,16 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             type: { name: "类型", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
+            plat_id:{name: "平台ID", options:{}},
+            key:{name: "键", options:{}},
+            ar_AR: {name: "键", options:{}},
+            en_EN: {name: "键", options:{}},
+            jp_JP: {name: "", options:{}},
+            ko_Kr: {name: "", options:{}},
+            th_TH: {name: "", options:{}},
+            vi_VN: {name: "", options:{}},
+            zh_CN: {name: "", options:{}},
+            zh_TW: {name: "", options:{}},
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -47,18 +57,28 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     listQuery = {
         page_count: 1,
         page_size: 20,
-        module: "",
         type: "",
+        key: "",
     };
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
         form: {
-            id: null,
+            id: "",
             language: "",
             module: "",
             type: "",
+            plat_id:"",
+            key:"",
+            ar_AR: "",
+            en_EN: "",
+            jp_JP: "",
+            ko_Kr: "",
+            th_TH: "",
+            vi_VN: "",
+            zh_CN: "",
+            zh_TW: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -103,7 +123,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            // this.dialogData.form.language = jsonToObject(data.language);
+            
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -116,10 +136,20 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
-            id: null,
+            id: "",
             language: {},
             module: "",
             type: 1,
+            plat_id:"",
+            key:"",
+            ar_AR: "",
+            en_EN: "",
+            jp_JP: "",
+            ko_Kr: "",
+            th_TH: "",
+            vi_VN: "",
+            zh_CN: "",
+            zh_TW: "",
         });
     }
 
@@ -131,12 +161,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     onAdd() {
         let formCopy: any = Object.assign({}, this.dialogData.form);
         try {
-            let langStr: any = "{}";
-            if (Object.keys(formCopy.language).length > 0) {
-                langStr = JSON.stringify(JSON.parse(formCopy.language));
-            }
-
-            formCopy.language = langStr;
+            
             this.sendNotification(HttpType.admin_system_lang_store, objectRemoveNull(formCopy));
         } catch (error) {
             MessageBox.alert(<string> i18n.t("common.jsonError"));
@@ -147,7 +172,6 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         const formCopy: any = Object.assign({}, this.dialogData.form);
         try {
             const id = formCopy.id;
-            formCopy.language = jsonStringify(formCopy.language);
             const temp = formCompared(formCopy, this.dialogData.formSource);
             // 如果没有修改，就直接关闭弹窗
             if (Object.keys(temp).length == 0) {
@@ -155,16 +179,10 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
                 return false;
             }
 
-            let langStr: any = "{}";
-            if (temp.language) {
-                if (Object.keys(temp.language).length > 0) {
-                    langStr = JSON.stringify(JSON.parse(temp.language));
-                }
-                temp.language = langStr;
-            }
-
             temp.id = id;
-            this.sendNotification(HttpType.admin_system_lang_update, temp);
+            temp.type = formCopy.type;
+            temp.key = formCopy.key;
+            this.sendNotification(HttpType.admin_system_lang_update, objectRemoveNull(temp));
         } catch (error) {
             MessageBox.alert(<string> i18n.t("common.jsonError"));
         }
@@ -204,25 +222,41 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     exportExcel(data: any) {
         this.tableData.isExportExcel = false;
         const newData = JSON.parse(JSON.stringify(data.list));
-        //language 转物件
-        newData.forEach((item:any, index:any) => {
-            item.language = JSON.parse(item.language);
-        });
         console.log("newData", newData);
-        let exportColumn = ["module"];
+        let exportColumn = [];
         // 要导出的栏位
-        let langKeys = Object.keys(newData[0].language);
+        let langKeys = Object.keys(newData[0]);
         exportColumn = exportColumn.concat(langKeys);
         let dataArray: any = [];
 
         newData.forEach((item:any, index:any) => {
-            dataArray.push(({ langKeys } = item.language));
-            dataArray[index]["module"] = item.module;
+            dataArray.push(({ langKeys } = newData[index]));
         });
 
         // 导出资料
         let exportData = this.dataMatching(exportColumn, dataArray);
 
         exportJson2Excel(exportColumn, exportData, "language", undefined, undefined);
+    }
+
+    /**
+     * 获取全部翻译 
+     * @param data 
+     * source	string	源语言: en_EN   sentence	string	要翻译的语句
+     */
+    translate(data: any): void {
+        this.sendNotification(HttpType.admin_system_lang_translate, data);
+    }
+
+    /**获取全部翻译返回更新表单 */
+    updateForm(data: any):void {
+        Object.assign(this.dialogData.form, data);
+        
+    }
+
+    /**语言包导入翻译 */
+    languageImport(sentences: any): void {
+        const newData = JSON.stringify(sentences);
+        this.sendNotification(HttpType.admin_system_lang_import, {"sentences": newData});
     }
 }

@@ -63,7 +63,8 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
             updated_at: {name: "修改时间", options: {}},
             updated_by: {name: "修改人", options: {}},
             vendor_type: {name: "产品类型", options: {}, options_type: {}, options_rate: {}},
-            vip_config: {name: "VIP等级配置", options: {}},
+            //vip_config: {name: "VIP等级配置",options: ["等级{num}", "返水比率"],options_key: [{total_water: "有效流水", total_recharge: "总充值"}, {2: "主币", 3: "奖励币"}]
+            vip_config: {name: "VIP等级配置", options: {}, options_key: []},
             vip_model_id: {name: "VIP设定", options: {}},
             water_config: {name: "流水配置", options: {}},
         },

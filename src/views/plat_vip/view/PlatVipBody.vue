@@ -33,7 +33,7 @@
                     <el-row>
                         <el-input
                             style="width: 180px"
-                            v-for="(value, key) in tableColumns.vendor_type.options"
+                            v-for="(value, key) in tableColumns.vip_config.options_key[1]"
                             :key="key"
                             class="input"
                             type="number"

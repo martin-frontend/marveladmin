@@ -1,33 +1,53 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
-            <!-- 参数模组 -->
-            <el-form-item :label="tableColumns.module.name" prop="module">
-                <el-input v-model="form.module"></el-input>
-            </el-form-item>
             <!-- 参数类型 -->
             <el-form-item :label="tableColumns.type.name" prop="type">
-                <el-radio-group v-model="form.type">
-                    <el-radio
-                        v-for="(value, key) in tableColumns.type.options"
-                        :key="key"
-                        :label="Number(key)"
-                    >
-                        {{ tableColumns.type.options[key] }}
-                    </el-radio>
-                </el-radio-group>
+                <template v-if="!isStatusUpdate">
+                    <el-select v-model="form.type" filterable class="select" :placeholder="$t('common.pleaseChoose')">
+                        <el-option
+                            v-for="(value, key) in tableColumns.type.options"
+                            :key="key"
+                            :label="value"
+                            :value="Number(key)"
+                        ></el-option>
+                    </el-select>
+                </template>
+                <span v-else>
+                    {{ tableColumns.type.options[form.type] }}
+                </span>
             </el-form-item>
-            <!-- 参数语言 -->
-            <el-form-item size="mini" :label="tableColumns.language.name" prop="language">
-                <div class="editor-container">
-                    <json-editor ref="jsonEditor" v-model="form.language" />
-                </div>
+
+            <el-form-item :label="tableColumns.key.name" prop="key">
+                <el-input v-if="!isStatusUpdate" :placeholder="`${tableColumns.key.name}`" v-model="form.key"></el-input>
+                <span v-else>
+                    {{ form.key }}
+                </span>
             </el-form-item>
+
+            <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value">
+                <el-form-item :label="value" prop="value">
+                    <div class="flex d-flex">
+                        <el-input
+                            style="margin-right: 0.8rem"
+                            type="textarea"
+                            filterable
+                            clearable
+                            :placeholder="`${tableColumns[key].name}`"
+                            v-model="form[key]"
+                        ></el-input>
+                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(key, form[key])">一键翻译成其他语言</el-button>
+                    </div>
+                </el-form-item>
+            </div>
+
             <el-form-item class="dialog-footer">
-                <el-button v-if="isStatusUpdate" type="danger" size="mini" @click="handleDelete(form)">{{ $t("common.delete") }}</el-button>
-                <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()"
-                    >{{ $t("common.save") }}</el-button
-                >
+                <el-button v-if="isStatusUpdate" type="danger" size="mini" @click="handleDelete(form)">{{
+                    $t("common.delete")
+                }}</el-button>
+                <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
+                    $t("common.save")
+                }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -66,7 +86,7 @@ export default class SystemLangDialog extends AbstractView {
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow(){
+    private onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -84,6 +104,8 @@ export default class SystemLangDialog extends AbstractView {
         return {
             module: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
             type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            key: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            plat_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
         };
     }
 
@@ -105,6 +127,10 @@ export default class SystemLangDialog extends AbstractView {
 
     private handleDelete() {
         this.myProxy.onDelete(this.form.id);
+    }
+
+    handleTranslate(source: string, sentence: string) {
+        this.myProxy.translate({"source": source, "sentence": sentence, id: this.form.id});
     }
 }
 </script>

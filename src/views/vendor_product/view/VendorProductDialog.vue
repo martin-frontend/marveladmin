@@ -27,8 +27,22 @@
                 </el-select>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['vendor_product_name'].name" prop="vendor_product_name">
-                <el-input v-model="form.vendor_product_name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <!-- <el-input v-model="form.vendor_product_name" :placeholder="$t('common.pleaseEnter')"></el-input> -->
+
+                <div class="flex d-flex">
+                        <el-input
+                            style="margin-right: 0.8rem"
+                            type="textarea"
+                            filterable
+                            clearable
+                            :placeholder="$t('common.pleaseEnter')"
+                            v-model="form.vendor_product_name"
+                        ></el-input>
+                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.vendor_product_name)">翻译</el-button>
+                    </div>
+
             </el-form-item>
+
             <el-form-item size="mini" :label="tableColumns['ori_product_id'].name" prop="ori_product_id">
                 <el-input v-model="form.ori_product_id" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item>
@@ -76,6 +90,8 @@ import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import JsonEditor from "@/components/JsonEditor/index.vue";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
+import { LanguageType } from "@/core/enum/UserType";
 
 @Component({
     components: {
@@ -90,6 +106,7 @@ export default class VendorProductDialog extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: VendorProductProxy = this.getProxy(VendorProductProxy);
+    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private form = this.myProxy.dialogData.form;
@@ -155,6 +172,13 @@ export default class VendorProductDialog extends AbstractView {
     handlerVendorChange() {
         this.myProxy.dialogData.form.vendor_type = "";
         this.myProxy.getVendorTypes();
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_VENDER_GAME_LANGUAGE;
+        this.langProxy.showDialog(data);
     }
 }
 </script>
