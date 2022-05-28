@@ -20,64 +20,15 @@
                 </template>
             </el-table-column>
 
-            <el-table-column
-                prop="zh_CN"
-                :label="tableColumns.zh_CN.name"
-                align="center"
-                min-width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="zh_TW"
-                :label="tableColumns.zh_TW.name"
-                align="center"
-                min-width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="en_EN"
-                :label="tableColumns.en_EN.name"
-                align="center"
-                min-width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="th_TH"
-                :label="tableColumns.th_TH.name"
-                align="center"
-                min-width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="vi_VN"
-                :label="tableColumns.vi_VN.name"
-                align="center"
-                min-width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="jp_JP"
-                :label="tableColumns.jp_JP.name"
-                align="center"
-                min-width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="ar_AR"
-                :label="tableColumns.ar_AR.name"
-                align="center"
-                min-width="120"
-            ></el-table-column>
-            <el-table-column
-                prop="ko_Kr"
-                :label="tableColumns.ko_Kr.name"
-                align="center"
-                min-width="120"
-            ></el-table-column>
-
-            <!-- 动态添加无效果 -->
-            <!-- <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value">
+            <!-- 动态添加表头 -->
+            <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value">
                 <el-table-column 
                     :label="value" 
-                    prop = “key”
+                    :property="key"
                     align="center"
                     min-width="120">
                 </el-table-column>
-            </div> -->
+            </div>
 
             <el-table-column :label="$t('common.operating')" class-name="status-col" width="160px">
                 <template slot-scope="{ row }">

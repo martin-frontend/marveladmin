@@ -230,20 +230,15 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
     exportExcel(data: any) {
         this.tableData.isExportExcel = false;
         const newData = JSON.parse(JSON.stringify(data.list));
-        //language 转物件
-        newData.forEach((item:any, index:any) => {
-            item.language = JSON.parse(item.language);
-        });
         console.log("newData", newData);
-        let exportColumn = ["module"];
+        let exportColumn = [];
         // 要导出的栏位
-        let langKeys = Object.keys(newData[0].language);
+        let langKeys = Object.keys(newData[0]);
         exportColumn = exportColumn.concat(langKeys);
         let dataArray: any = [];
 
         newData.forEach((item:any, index:any) => {
-            dataArray.push(({ langKeys } = item.language));
-            dataArray[index]["module"] = item.module;
+            dataArray.push(({ langKeys } = newData[index]));
         });
 
         // 导出资料
@@ -271,6 +266,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
 
     /**语言包导入翻译 */
     languageImport(sentences: any): void {
-        this.sendNotification(HttpType.admin_plat_lang_import, sentences);
+        const newData = JSON.stringify(sentences);
+        this.sendNotification(HttpType.admin_plat_lang_import, {"sentences": newData, "plat_id": this.listQuery.plat_id});
     }
 }

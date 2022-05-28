@@ -72,7 +72,9 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
                 this.dialogData.form[key] = this.sentence;
             }
         }
-        this.translateLangCheck();
+        if (this.dialogData.bShow) {
+            this.translateLangCheck();
+        }
     }
 
     /**表格数据 */

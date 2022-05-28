@@ -71,7 +71,7 @@ export default class PlatLangMediator extends AbstractMediator {
                 break;
             case EventType.admin_plat_lang_import:
                 Message.success(SuccessMessage.update);
-                myProxy.updateForm(body);
+                myProxy.onQuery();
                 break;
             case EventType.admin_system_lang_translate:
                 Message.success(SuccessMessage.update);
