@@ -358,6 +358,7 @@ export default class PlatsNoticeDialog extends AbstractView {
         const data: any = {};
         data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_NOTICE;
+        data.plat_id = this.form.plat_id;
         this.langProxy.showDialog(data);
     }
 }

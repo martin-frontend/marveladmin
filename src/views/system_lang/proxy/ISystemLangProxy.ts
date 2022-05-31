@@ -46,4 +46,6 @@ export default interface ISystemLangProxy {
     translateAll():void;
     /**语言包导入 */
     languageImport():void;
+    /**生成语言包，添加了翻译语言，手动调用此方法生成.json文件上传cdn */
+    generate():void;
 }

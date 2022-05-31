@@ -548,6 +548,7 @@ export default class PlatActivityDialog extends AbstractView {
         const data: any = {};
         data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_ACTIVITY;
+        data.plat_id = this.form.plat_id;
         this.langProxy.showDialog(data);
     }
 }

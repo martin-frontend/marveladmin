@@ -127,6 +127,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
 
         this.sentence = data.sentence;
         this.type = data.type;
+        this.dialogData.form.plat_id = data.plat_id != undefined ? data.plat_id : 0;
         this.dialogData.bShow = true;
         this.enter();
     }
@@ -208,7 +209,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
      */
     translateLangCheck(): void{
         const data: any = {};
-        data.plat_id = 0;
+        data.plat_id = this.dialogData.form.plat_id;
         data.type = this.dialogData.form.type;
         data.key = this.dialogData.form.key;
         this.sendNotification(HttpType.admin_system_lang_check, data);

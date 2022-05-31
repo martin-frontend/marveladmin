@@ -355,6 +355,7 @@ export default class PlatEmailDialog extends AbstractView {
         const data: any = {};
         data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_EMAIL;
+        data.plat_id = this.form.plat_id;
         this.langProxy.showDialog(data);
     }
 }
