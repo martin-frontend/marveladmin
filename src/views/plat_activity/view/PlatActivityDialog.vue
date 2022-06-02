@@ -559,7 +559,7 @@ export default class PlatActivityDialog extends AbstractView {
     handleLangImg() {
         const data: any = {};
         data.plat_id = this.form.plat_id;
-        data.key = this.myProxy.dialogData.fileList[0].url;
+        data.key = this.myProxy.dialogData.form.link_url;
         if (!data.key) {
             Message.warning("请先上传默认图片");
             return;

@@ -161,7 +161,7 @@
                         </div>
                     </el-tab-pane>
                 </el-tabs>
-                <el-button style="max-height: 35px" type="primary" size="mini" @click="handleLangImg()">多语言图片</el-button>
+                <el-button style="max-height: 35px; margin-top: 10px" type="primary" size="mini" @click="handleLangImg()">多语言图片</el-button>
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns['thumbnail_uris'].name" prop="thumbnail_urls" v-if="form.type == 2">
@@ -203,7 +203,7 @@
                         </div>
                     </el-tab-pane>
                 </el-tabs>
-                <el-button style="max-height: 35px" type="primary" size="mini" @click="handleLangImg1()">多语言图片</el-button>
+                <el-button style="max-height: 35px; margin-top: 10px" type="primary" size="mini" @click="handleLangImg1()">多语言图片</el-button>
             </el-form-item>
 
 
@@ -370,10 +370,10 @@ export default class PlatsNoticeDialog extends AbstractView {
     handleLangImg() {
         const data: any = {};
         data.plat_id = this.form.plat_id;
-        for (const key in this.form.img_urls) {
-            if (Object.prototype.hasOwnProperty.call(this.form.img_urls, key)) {
+        for (const key in this.form.img_uris) {
+            if (Object.prototype.hasOwnProperty.call(this.form.img_uris, key)) {
                 if (this.form.app_types.find((item: any) => item == key)) {
-                     data.key = this.form.img_urls[key];
+                     data.key = this.form.img_uris[key];
                 }
             }
         }
@@ -388,10 +388,10 @@ export default class PlatsNoticeDialog extends AbstractView {
     handleLangImg1() {
         const data: any = {};
         data.plat_id = this.form.plat_id;
-        for (const key in this.form.img_uris) {
-            if (Object.prototype.hasOwnProperty.call(this.form.img_uris, key)) {
+        for (const key in this.form.thumbnail_uris) {
+            if (Object.prototype.hasOwnProperty.call(this.form.thumbnail_uris, key)) {
                 if (this.form.app_types.find((item: any) => item == key)) {
-                     data.key = this.form.img_uris[key];
+                     data.key = this.form.thumbnail_uris[key];
                 }
             }
         }
