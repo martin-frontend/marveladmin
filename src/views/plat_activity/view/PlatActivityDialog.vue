@@ -242,6 +242,7 @@
 
                             <img :src="formatImageUrl(myProxy.dialogData.fileList[0].url)" />
                         </div>
+                        <el-button style="max-height: 35px; margin-left: 10px" type="primary" size="mini" @click="handleLangImg()">多语言图片</el-button>
                     </div>
                 </el-form-item>
                 <el-form-item
@@ -349,6 +350,8 @@ import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import { LanguageType } from "@/core/enum/UserType";
 import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
+import { Message } from "element-ui";
+import CommonLangImgProxy from "@/views/lang_img_dialog/proxy/CommonLangImgProxy";
 
 @Component
 export default class PlatActivityDialog extends AbstractView {
@@ -360,6 +363,7 @@ export default class PlatActivityDialog extends AbstractView {
     // proxy
     private myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
     private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+    private langImgProxy: CommonLangImgProxy = this.getProxy(CommonLangImgProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     get form() {
@@ -550,6 +554,17 @@ export default class PlatActivityDialog extends AbstractView {
         data.type = LanguageType.TYPE_PLAT_ACTIVITY;
         data.plat_id = this.form.plat_id;
         this.langProxy.showDialog(data);
+    }
+
+    handleLangImg() {
+        const data: any = {};
+        data.plat_id = this.form.plat_id;
+        data.key = this.myProxy.dialogData.fileList[0].url;
+        if (!data.key) {
+            Message.warning("请先上传默认图片");
+            return;
+        }
+        this.langImgProxy.showDialog(data);
     }
 }
 </script>

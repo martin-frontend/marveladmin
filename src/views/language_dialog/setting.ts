@@ -1,5 +1,5 @@
 /**
- * description: 平台语言管理
+ * description: 设置多语言的弹窗
  * document: http://35.76.23.220:8080/pages/viewpage.action?pageId=36766368
  */
 import cmd_admin_plat_lang_table_columns from "@/views/language_dialog/command/cmd_admin_plat_lang_table_columns";
