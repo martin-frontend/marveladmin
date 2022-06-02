@@ -48,7 +48,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
         status: "",
         page_count: 1,
         page_size: 20,
-        currency_type: "CNY",
+        currency_type: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -100,7 +100,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             status: "",
             page_count: 1,
             page_size: 20,
-            currency_type: "CNY",
+            currency_type: "",
         });
     }
 

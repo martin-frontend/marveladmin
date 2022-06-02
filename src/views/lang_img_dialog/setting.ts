@@ -12,7 +12,7 @@ export var HttpType = {
     admin_system_lang_image_show_key: "admin/system_lang/image/show_key",
     admin_system_lang_image_store: "admin/system_lang/image/store",
     admin_system_lang_image_update: "admin/system_lang/image/update/{id}",
-    admin_system_lang_image_table_columns: "admin/plat_lang/table_columns",
+    admin_system_lang_image_table_columns: "admin/plat_lang/table_columns#",
     //由于此dialog注册的早，新页面注册的会把他覆盖掉，可以加个空格或者#来区分，不会被覆盖
     admin_resource_lang_upload: "admin/resource/upload ",
 };
