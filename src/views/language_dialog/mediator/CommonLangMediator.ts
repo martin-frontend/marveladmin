@@ -59,9 +59,8 @@ export default class CommonLangMediator extends AbstractMediator {
                 myProxy.updateForm(body);
                 break;
             case EventType.admin_system_lang_check:
-                console.log("body---===",body);
                 //查询到数据库有数据，标记，保存的时候使用更新接口
-                myProxy.dialogData.status = DialogStatus.update;
+                myProxy.dialogData.status = body.id != undefined ? DialogStatus.update : DialogStatus.create;
                 myProxy.updateForm(body);
                 break;
         }
