@@ -2,16 +2,16 @@ import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { DialogStatus, SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { Message } from "element-ui";
-import CommonLangProxy from "../proxy/CommonLangProxy";
+import CommonLangImgProxy from "../proxy/CommonLangImgProxy";
 import { EventType } from "../setting";
 
 interface IPlatLang extends IEventDispatcher {
 
 }
 
-export default class CommonLangMediator extends AbstractMediator {
+export default class CommonLangImgMediator extends AbstractMediator {
 
-    private myProxy: CommonLangProxy = <any>this.getProxy(CommonLangProxy);
+    private myProxy: CommonLangImgProxy = <any>this.getProxy(CommonLangImgProxy);
 
     onRegister() {
         this.myProxy.enter();
@@ -27,41 +27,37 @@ export default class CommonLangMediator extends AbstractMediator {
 
     listNotificationInterests(): string[] {
         return [
-            EventType.admin_plat_lang_table_columns,
-            EventType.admin_plat_lang_store,
-            EventType.admin_plat_lang_update,
-            EventType.admin_system_lang_translate,
-            EventType.admin_system_lang_check,
-            EventType.admin_system_lang_store,
+            EventType.admin_system_lang_image_table_columns,
+            EventType.admin_system_lang_image_store,
+            EventType.admin_system_lang_image_update,
+            EventType.admin_system_lang_image_show_key,
+            EventType.admin_resource_lang_upload,
         ];
     }
 
     handleNotification(notification: puremvc.INotification) {
-        const myProxy: CommonLangProxy = <any>this.facade.retrieveProxy(CommonLangProxy.NAME);
+        const myProxy: CommonLangImgProxy = <any>this.facade.retrieveProxy(CommonLangImgProxy.NAME);
         const myView: IPlatLang = this.viewComponent;
         const body = notification.getBody();
         switch (notification.getName()) {
-            case EventType.admin_plat_lang_table_columns:
+            case EventType.admin_system_lang_image_table_columns:
                 myProxy.setTableColumns(body);
                 break;
-            case EventType.admin_plat_lang_store:
-            case EventType.admin_system_lang_store:
+            case EventType.admin_system_lang_image_store:
                 Message.success(SuccessMessage.create);
                 myProxy.hideDialog();
                 break;
-            case EventType.admin_plat_lang_update:
-            case EventType.admin_system_lang_update:
+            case EventType.admin_system_lang_image_update:
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 break;
-            case EventType.admin_system_lang_translate:
-                Message.success(SuccessMessage.update);
+            case EventType.admin_system_lang_image_show_key:
+                //查询到数据库有数据，标记，保存的时候使用更新接口
+                myProxy.dialogData.status = DialogStatus.update;
                 myProxy.updateForm(body);
                 break;
-            case EventType.admin_system_lang_check:
-                //查询到数据库有数据，标记，保存的时候使用更新接口
-                myProxy.dialogData.status = body.id != undefined ? DialogStatus.update : DialogStatus.create;
-                myProxy.updateForm(body);
+            case EventType.admin_resource_lang_upload:
+                myProxy.setImageUrl(body);
                 break;
         }
     }

@@ -6,6 +6,8 @@ import ITabPlatVendorUserProxy from "./ITabPlatVendorUserProxy";
 export default class TabPlatVendorUserProxy extends AbstractProxy implements ITabPlatVendorUserProxy {
     static NAME = "TabPlatVendorUserProxy";
 
+    coin_name_unique: any = "";
+    
     private pageSetting = getPageSetting();
     /**进入页面时调用 */
     enter() {

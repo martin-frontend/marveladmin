@@ -44,11 +44,18 @@ export default class TabGoldProxy extends AbstractProxy implements ITabGoldProxy
         page_count: 1,
         page_size: 10,
         coin_name_unique:"",
+        plat_id: 0,
     }
 
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
+        const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
+        if (plat_id_options_keys.length > 0) {
+            if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
+                this.listQuery.plat_id = plat_id_options_keys[0];
+            }
+        }
     }
     /**設置表格数据 */
     setTableData(data: any) {
@@ -63,6 +70,7 @@ export default class TabGoldProxy extends AbstractProxy implements ITabGoldProxy
             "created_at-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
             type: "",
             coin_name_unique:"",
+            plat_id: "",
         })
     }
 

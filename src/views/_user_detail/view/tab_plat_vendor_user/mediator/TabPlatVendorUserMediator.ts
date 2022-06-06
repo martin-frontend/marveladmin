@@ -51,6 +51,7 @@ export default class TabPlatVendorUserMediator extends AbstractMediator {
                                 const data = {
                                     user_id: this.pageSetting.user_id,
                                     vendor_id: this.myProxy.select_vendor_id,
+                                    coin_name_unique: this.myProxy.coin_name_unique,
                                 };
                                 this.sendNotification(HttpType.admin_plat_user_vendor_withdraw, data);
                             });

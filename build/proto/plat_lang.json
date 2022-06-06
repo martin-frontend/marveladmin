@@ -9,6 +9,7 @@
         "admin/plat_lang/update/{id}",
         "admin/plat_lang/delete/{id}",
         "admin/system_lang/translate",
-        "admin/plat_lang/import"
+        "admin/plat_lang/import",
+        "admin/plat_lang/generate"
     ]
 }

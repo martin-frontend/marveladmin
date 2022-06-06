@@ -161,6 +161,7 @@
                         </div>
                     </el-tab-pane>
                 </el-tabs>
+                <el-button style="max-height: 35px; margin-top: 10px" type="primary" size="mini" @click="handleLangImg()">多语言图片</el-button>
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns['thumbnail_uris'].name" prop="thumbnail_urls" v-if="form.type == 2">
@@ -202,6 +203,7 @@
                         </div>
                     </el-tab-pane>
                 </el-tabs>
+                <el-button style="max-height: 35px; margin-top: 10px" type="primary" size="mini" @click="handleLangImg1()">多语言图片</el-button>
             </el-form-item>
 
 
@@ -224,6 +226,8 @@ import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import { LanguageType } from "@/core/enum/UserType";
 import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
+import CommonLangImgProxy from "@/views/lang_img_dialog/proxy/CommonLangImgProxy";
+import { Message } from "element-ui";
 
 @Component
 export default class PlatsNoticeDialog extends AbstractView {
@@ -235,6 +239,7 @@ export default class PlatsNoticeDialog extends AbstractView {
     // proxy
     private myProxy: PlatsNoticeProxy = this.getProxy(PlatsNoticeProxy);
     private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+    private langImgProxy: CommonLangImgProxy = this.getProxy(CommonLangImgProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private form = this.myProxy.dialogData.form;
@@ -358,7 +363,43 @@ export default class PlatsNoticeDialog extends AbstractView {
         const data: any = {};
         data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_NOTICE;
+        data.plat_id = this.form.plat_id;
         this.langProxy.showDialog(data);
+    }
+
+    handleLangImg() {
+        const data: any = {};
+        data.plat_id = this.form.plat_id;
+        for (const key in this.form.img_uris) {
+            if (Object.prototype.hasOwnProperty.call(this.form.img_uris, key)) {
+                if (this.form.app_types.find((item: any) => item == key)) {
+                     data.key = this.form.img_uris[key];
+                }
+            }
+        }
+        if (!data.key) {
+            Message.warning("请先上传默认图片");
+            return;
+        }
+        this.langImgProxy.showDialog(data);
+    }
+
+    //缩略图
+    handleLangImg1() {
+        const data: any = {};
+        data.plat_id = this.form.plat_id;
+        for (const key in this.form.thumbnail_uris) {
+            if (Object.prototype.hasOwnProperty.call(this.form.thumbnail_uris, key)) {
+                if (this.form.app_types.find((item: any) => item == key)) {
+                     data.key = this.form.thumbnail_uris[key];
+                }
+            }
+        }
+        if (!data.key) {
+            Message.warning("请先上传默认图片");
+            return;
+        }
+        this.langImgProxy.showDialog(data);
     }
 }
 </script>
