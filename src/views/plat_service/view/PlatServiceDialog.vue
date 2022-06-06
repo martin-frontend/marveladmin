@@ -13,6 +13,18 @@
                 </el-select>
             </el-form-item>
 
+            <el-form-item :label="`${tableColumns.module.name}`" prop="module" label-width="100px">
+                <el-select
+                    style="width:100%"
+                    v-model="form.module"
+                    filterable
+                    clearable
+                    :placeholder="$t('common.pleaseChoose')"
+                >
+                    <el-option v-for="(value, key) in tableColumns.module.options" :key="key" :label="value" :value="Number(key)"></el-option>
+                </el-select>
+            </el-form-item>
+
             <el-form-item label-width="0" prop="name">
                 <div class="flex d-flex">
                         <el-input
@@ -104,6 +116,7 @@ export default class PlatServiceDialog extends AbstractView {
             plat_id:[{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             content: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            module: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
         };
     }
 

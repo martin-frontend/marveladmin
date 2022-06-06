@@ -37,7 +37,7 @@
                 'text-align': 'left',
             }"
         >
-            <el-table-column :label="`${tableColumns.id.name}`" class-name="status-col" min-width="80px" prop="id">
+            <el-table-column :label="`${tableColumns.id.name}`" class-name="status-col" min-width="40px" prop="id">
             </el-table-column>
             <el-table-column :label="`${tableColumns.name.name}`" min-width="400px">
                 <template slot-scope="{ row }">
@@ -45,7 +45,13 @@
                     <div>【{{ tableColumns.content.name }}】:{{ row.content }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="150px">
+            <el-table-column :label="`${tableColumns.module.name}`" class-name="status-col" min-width="80px">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns.module.options[row.module] }}</div>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="100px">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
@@ -63,7 +69,7 @@
                     >
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.sort')" class-name="status-col" min-width="80px">
+            <el-table-column :label="$t('common.sort')" class-name="status-col" min-width="30px">
                 <div class="sort">
                     <i class="el-icon-rank"></i>
                 </div>
