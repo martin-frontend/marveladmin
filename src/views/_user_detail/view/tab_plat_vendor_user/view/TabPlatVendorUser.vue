@@ -80,6 +80,7 @@ export default class TabPlatVendorUser extends AbstractView {
 
     private handlerBalance(row:any){
         this.myProxy.admin_plat_vendor_user_money(row);
+        this.myProxy.coin_name_unique = row.coin_name_unique;
     }
 
     destroyed() {

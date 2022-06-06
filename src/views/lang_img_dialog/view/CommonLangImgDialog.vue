@@ -89,7 +89,7 @@ export default class CommonLangImgDialog extends AbstractView {
     private myProxy: CommonLangImgProxy = this.getProxy(CommonLangImgProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    private form: any = this.myProxy.dialogData.form;
 
     private showMask = false;
 
