@@ -49,7 +49,7 @@
                     </el-switch>
                 </template>
             </el-table-column>
-            <el-table-column align="left" min-width="160px">
+            <!-- <el-table-column align="left" min-width="160px">
                 <template slot="header">
                     <el-tooltip effect="dark" placement="top">
                         <div>
@@ -70,7 +70,7 @@
                     <div>{{ tableColumns["vendors_money"].name }}：{{ row.vendors_money }}</div>
                     <div>{{ tableColumns["safe_gold"].name }}：{{ row.safe_gold }}</div>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
                 :label="tableColumns['total_recharge'].name"
                 sortable="custom"
@@ -141,7 +141,7 @@
                             {{ $t("plat_user.refreshCoins") }}
                         </el-button>
                     </div>
-                    <div>
+                    <!-- <div>
                         <el-button
                             class="item op-btn"
                             size="mini"
@@ -151,7 +151,7 @@
                         >
                             {{ $t("user_detail.deduct") }}
                         </el-button>
-                    </div>
+                    </div> -->
                 </template>
             </el-table-column>
         </el-table>
