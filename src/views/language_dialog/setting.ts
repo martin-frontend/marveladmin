@@ -1,5 +1,5 @@
 /**
- * description: 平台语言管理
+ * description: 设置多语言的弹窗
  * document: http://35.76.23.220:8080/pages/viewpage.action?pageId=36766368
  */
 import cmd_admin_plat_lang_table_columns from "@/views/language_dialog/command/cmd_admin_plat_lang_table_columns";
@@ -13,7 +13,7 @@ import cmd_admin_system_lang_store from "@/views/language_dialog/command/cmd_adm
 import cmd_admin_system_lang_check from "@/views/language_dialog/command/cmd_admin_system_lang_check";
 /**协议*/
 export var HttpType = {
-    admin_plat_lang_table_columns: "admin/plat_lang/table_columns",
+    admin_plat_lang_table_columns: "admin/plat_lang/table_columns ",
     admin_plat_lang_index: "admin/plat_lang/index",
     admin_plat_lang_store: "admin/plat_lang/store",
     admin_plat_lang_update: "admin/plat_lang/update/{id}",

@@ -22,9 +22,11 @@
             </el-form-item>
             <div class="line"></div>
             <el-table :data="form.detail" border fit highlight-current-row style="width: 100%" size="mini">
+
+
                 <el-table-column :label="$t('plat_users_backwater_log.settleName')" class-name="status-col">
                     <template slot-scope="{ row }">
-                        {{ row.coin_name_unique }} {{ $t("common.settleWater") }}
+                        {{ tableColumns["water_"+row.vendor_type].name }}
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('common.settleWater')" class-name="status-col">
@@ -32,16 +34,28 @@
                         {{ row.water }}
                     </template>
                 </el-table-column>
-                <el-table-column :label="$t('plat_users_vip_model.backWater')" class-name="status-col">
+
+                <el-table-column :label="tableColumns.main_coin_name_unique.name+$t('plat_users_vip_model.backWater')" class-name="status-col">
                     <template slot-scope="{ row }">
-                        {{ row.backwater_rate }}
+                        {{ row.main_coin_name_unique }}：{{ row.main_coin_backwater_rate * 100 }}%
                     </template>
                 </el-table-column>
-                <el-table-column :label="$t('plat_users_backwater_log.rewardMoney')" class-name="status-col">
+                <el-table-column :label="tableColumns.main_coin_name_unique.name+$t('plat_users_backwater_log.rewardMoney')" class-name="status-col">
                     <template slot-scope="{ row }">
-                        {{ row.backwater }}
+                        {{ row.main_coin_name_unique }}：{{ row.main_coin_backwater }}
                     </template>
                 </el-table-column>
+                <el-table-column :label="tableColumns.reward_coin_name_unique.name+$t('plat_users_vip_model.backWater')" class-name="status-col">
+                    <template slot-scope="{ row }">
+                        {{ row.reward_coin_name_unique }}：{{ row.reward_coin_backwater_rate * 100 }}%
+                    </template>
+                </el-table-column>
+                <el-table-column :label="tableColumns.reward_coin_name_unique.name+$t('plat_users_backwater_log.rewardMoney')" class-name="status-col">
+                    <template slot-scope="{ row }">
+                        {{ row.reward_coin_name_unique }}：{{ row.reward_coin_backwater }}
+                    </template>
+                </el-table-column>
+
             </el-table>
             <div class="confirm">
                 <el-button style="width: 8rem" @click="handlerConfirm()" type="primary" icon="">{{

@@ -17,29 +17,26 @@
                     <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
                         $t("common.reset")
                     }}</el-button>
-
-                    <input
-                        style="margin-left: 8px"
-                        v-show="false"
-                        ref="excel-upload-input"
-                        class="excel-upload-input"
-                        type="file"
-                        accept=".xlsx, .xls"
-                        @change="handleClick"
-                    />
-
-                    <el-button style="margin-left: 8px" @click="heandlerImport()" type="primary" icon=""
-                        >导入</el-button
-                    >
-
-                    <el-button @click="heandlerExport()" type="primary">{{
-                        $t("statistic_plat_days.export")
-                    }}</el-button>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top: 8px">
             <el-button @click="handlerCreate" type="primary" class="item">{{ $t("common.create") }}</el-button>
+            <input
+                style="margin-left: 8px"
+                v-show="false"
+                ref="excel-upload-input"
+                class="excel-upload-input"
+                type="file"
+                accept=".xlsx, .xls"
+                @change="handleClick"
+            />
+
+            <el-button style="margin-left: 8px" @click="heandlerImport()" type="primary" icon="">导入</el-button>
+
+            <el-button @click="heandlerExport()" type="primary">{{ $t("statistic_plat_days.export") }}</el-button>
+
+            <el-button style="margin-left: 8px" @click="heandlerGenerate()" type="primary" icon="">生成语言包</el-button>
         </div>
     </div>
 </template>
@@ -98,6 +95,11 @@ export default class SystemLangHeader extends AbstractView {
     // 汇入用户excel
     private heandlerImport() {
         (this.$refs["excel-upload-input"] as any).click();
+    }
+
+    //生成语言包
+    heandlerGenerate() {
+        this.myProxy.generate();
     }
 }
 </script>

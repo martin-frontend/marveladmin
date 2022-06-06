@@ -8,6 +8,12 @@
             />
 
             <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
+            />
+
+            <SearchSelect
                 :title="tableColumns.type.name"
                 v-model="listQuery.type"
                 :options="tableColumns.type.options"

@@ -34,7 +34,7 @@ export default class PlatLangMediator extends AbstractMediator {
             EventType.admin_plat_lang_delete,
             EventType.admin_plat_lang_import,
             EventType.admin_system_lang_translate,
-
+            EventType.admin_plat_lang_generate,
         ];
     }
 
@@ -77,7 +77,9 @@ export default class PlatLangMediator extends AbstractMediator {
                 Message.success(SuccessMessage.update);
                 myProxy.updateForm(body);
                 break;
-
+            case EventType.admin_plat_lang_generate:
+                Message.success(SuccessMessage.update);
+                break;
         }
     }
 }

@@ -269,4 +269,8 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
         const newData = JSON.stringify(sentences);
         this.sendNotification(HttpType.admin_plat_lang_import, {"sentences": newData, "plat_id": this.listQuery.plat_id});
     }
+
+    generate():void {
+        this.sendNotification(HttpType.admin_plat_lang_generate, {"plat_id": this.listQuery.plat_id});
+    }
 }
