@@ -65,12 +65,16 @@ export default class PlatStakeMediator extends AbstractMediator {
             case EventType.admin_plat_stake_user_log_index:
                 break;
             case EventType.admin_plat_stake_pool_log_table_columns:
+                myProxy.setStakePoolTableColumns(body);
                 break;
             case EventType.admin_plat_stake_pool_log_index:
+                myProxy.setStakePoolTableData(body);
                 break;
             case EventType.admin_plat_stake_bonus_log_table_columns:
+                myProxy.setStakeBonusTableColumns(body);
                 break;
             case EventType.admin_plat_stake_bonus_log_index:
+                myProxy.setStakeBonusTableData(body);
                 break;
             case EventType.admin_plat_stake_bonus_user_log_table_columns:
                 break;

@@ -30,7 +30,7 @@ export default class PlatStakeDialog extends AbstractView {
     // proxy
     private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    private tableColumns = this.myProxy.stakeLogtableData.columns;
     private form = this.myProxy.dialogData.form;
 
     private textMap = {

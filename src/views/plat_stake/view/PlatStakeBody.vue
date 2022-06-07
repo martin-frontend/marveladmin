@@ -1,112 +1,33 @@
 <template>
     <div>
-        <el-table
-            :data="tableData"
-            border
-            fit
-            highlight-current-row
-            style="width: 100%"
-            size="mini"
-            v-loading="net_status.loading"
-        >
-            <el-table-column :label="tableColumns['plat_id'].name" min-width="80px" class-name="status-col">
-                <template slot-scope="{ row }">
-                    {{ tableColumns.plat_id.options[row.plat_id] }}
-                </template></el-table-column
-            >
-            <el-table-column
-                :label="tableColumns['start_date'].name"
-                prop="start_date"
-                min-width="90px"
-                class-name="status-col"
-            >
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns['end_date'].name"
-                prop="end_date"
-                min-width="90px"
-                class-name="status-col"
-            >
-            </el-table-column>
-            <el-table-column :label="tableColumns['status'].name" min-width="60px" class-name="status-col">
-                <template slot-scope="{ row }">
-                    <el-tag :type="row.status | statusFilter">
-                        {{ tableColumns.status.options[row.status] }}
-                    </el-tag>
-                </template></el-table-column
-            >
-            <el-table-column
-                :label="tableColumns['stake_count'].name"
-                prop="stake_count"
-                min-width="60px"
-                class-name="status-col"
-            >
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns['stake_coin_name_unique'].name"
-                prop="stake_coin_name_unique"
-                min-width="60px"
-                class-name="status-col"
-            >
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns['total_stake_amount'].name"
-                prop="total_stake_amount"
-                min-width="80px"
-                class-name="status-col"
-            >
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns['validate_stake_amount'].name"
-                prop="validate_stake_amount"
-                min-width="80px"
-                class-name="status-col"
-            >
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns['total_transfer_fee_amount'].name"
-                prop="total_transfer_fee_amount"
-                min-width="80px"
-                class-name="status-col"
-            >
-            </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="60px">
-                <template slot-scope="{ row }">
-                    <el-button
-                        size="mini"
-                        type="primary"
-                        @click="handleEdit(row)"
-                        v-if="checkUnique(unique.admin_user_show)"
-                        >{{ $t("common.detail") }}</el-button
-                    >
-                </template>
-            </el-table-column>
-        </el-table>
-        <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
+        <el-radio-group v-model="stakeType" class="stake_type">
+            <el-radio v-for="(value, key) in stakeOptions" :key="key" :label="Number(key)">
+                {{ value }}
+            </el-radio>
+        </el-radio-group>
+        <PlatStakeLog v-if="isStakeLog" />
+        <PlatStakePoolLog v-if="isStakePoolLog"/>
+        <PlatStakeBonusLog v-if="isStakeBonusLog"/>
     </div>
 </template>
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatStakeProxy from "../proxy/PlatStakeProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import PlatStakeLog from "./components/PlatStakeLog.vue";
+import PlatStakePoolLog from "./components/PlatStakePoolLog.vue";
+import PlatStakeBonusLog from "./components/PlatStakeBonusLog.vue";
 
 @Component({
     components: {
+        PlatStakeLog,
+        PlatStakePoolLog,
+        PlatStakeBonusLog,
         Pagination,
-    },
-    filters: {
-        statusFilter(status: any) {
-            const statusMap: any = {
-                1: "info",
-                2: "success",
-                3: "danger",
-            };
-            return statusMap[status];
-        },
     },
 })
 export default class PlatStakeBody extends AbstractView {
@@ -118,22 +39,52 @@ export default class PlatStakeBody extends AbstractView {
     // proxy
     private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
     private listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
-        this.listQuery.page_count = page;
-        this.myProxy.onQuery();
+    get isStakeLog() {
+        return this.stakeType == StakeType.StakeLog;
     }
+    get isStakePoolLog(){
+        return this.stakeType == StakeType.StakePool;
+    }
+    get isStakeBonusLog(){
+        return this.stakeType == StakeType.Bonus;
+    }
+    private stakeType = 0;
+    private stakeOptions: any = {
+        0: "质押",
+        1: "奖池",
+        2: "分红",
+    };
 
-    private handleEdit(data: any) {
-        this.myProxy.showDialog(DialogStatus.update, data);
+    @Watch("stakeType")
+    onWatchStakeTpye() {
+        this.listQuery.page_count = 1;
+        this.myProxy.resetData();
+        switch (this.stakeType) {
+            case StakeType.StakeLog:
+                this.myProxy.onQuery();
+                break;
+            case StakeType.StakePool:
+                this.myProxy.onStakePoolQuery();
+                break;
+            case StakeType.Bonus:
+                this.myProxy.onStakeBonusQuery();
+                break;
+        }
     }
+}
+enum StakeType {
+    StakeLog = 0,
+    StakePool = 1,
+    Bonus = 2,
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.stake_type {
+    margin-top: 16px;
+    margin-bottom: 12px;
+}
 </style>

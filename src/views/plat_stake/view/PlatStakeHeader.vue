@@ -23,24 +23,24 @@
             >
         </el-row>
         <el-row class="detail">
-            <el-col :span="6"
+            <el-col :span="span"
                 >每日输赢投放奖池比例<span>{{ stake_config.put_in_ratio | toPercent }}</span></el-col
             >
-            <el-col :span="6"
+            <el-col :span="span"
                 >每日分红比例<span>{{ stake_config.put_out_ratio | toPercent }}</span></el-col
             >
-            <el-col :span="6"
+            <el-col :span="span"
                 >质押系统手续费<span>{{ stake_config.auto_withdraw_stake_fee | toPercent }}</span></el-col
             >
         </el-row>
         <el-row class="detail">
-            <el-col :span="6"
+            <el-col :span="span"
                 >质押手动手续费<span>{{ stake_config.manual_withdraw_stake_fee | toPercent }}</span></el-col
             >
-            <el-col :span="6"
+            <el-col :span="span"
                 >最少质押数量<span>{{ stake_config.min_coin_count }}</span></el-col
             >
-            <el-col :span="6"
+            <el-col :span="span"
                 >质押开关<span>{{ stake_config.is_open_stake }}</span></el-col
             >
         </el-row>
@@ -76,11 +76,13 @@ export default class PlatStakeHeader extends AbstractView {
     // proxy
     private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private tableData = this.myProxy.tableData;
-    private tableColumns = this.myProxy.tableData.columns;
+    private tableData = this.myProxy.stakeLogtableData;
+    private tableColumns = this.myProxy.stakeLogtableData.columns;
     private listQuery = this.myProxy.listQuery;
+    private span: number = 6;
+
     get stake_config() {
-        return this.myProxy.tableData.stake_bonus_config;
+        return this.myProxy.stake_bonus_config;
     }
     private handlerSearch() {
         this.listQuery.page_count = 1;
@@ -95,7 +97,8 @@ export default class PlatStakeHeader extends AbstractView {
 <style scoped lang="scss">
 @import "@/styles/common.scss";
 .analystics {
-    font-size: 16px;
+    margin-left: 16px;
+    font-size: 14px;
     .stastics {
         color: red;
         .expect {
@@ -108,7 +111,9 @@ export default class PlatStakeHeader extends AbstractView {
     }
 }
 .detail {
-    margin-top: 16px;
+    margin-left: 16px;
+    font-size: 14px;
+    margin-bottom: 16px;
     span {
         margin-left: 16px;
     }
