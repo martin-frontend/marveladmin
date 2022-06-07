@@ -11,8 +11,11 @@
             <el-form-item size="mini" :label="tableColumns['nick_name'].name" prop="nick_name">
                 <el-input disabled v-model="userInfo.nick_name"></el-input>
             </el-form-item>
+            <el-form-item size="mini" label="币种" prop="coin_name_unique">
+                <el-input disabled v-model="dialogDeductGoldData.coin_name_unique"></el-input>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['gold'].name" prop="gold">
-                <el-input disabled v-model="userInfo.gold"></el-input>
+                <el-input disabled v-model="userInfo.gold_info[dialogDeductGoldData.coin_name_unique].plat_money"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="$t('user_detail.deductMoney')">
                 <el-input
@@ -60,9 +63,9 @@ export default class DeductGoldDialog extends AbstractView {
 
     private onDeductGold() {
         const deductGold = this.dialogDeductGoldData.gold == "" ? 0 : parseFloat(this.dialogDeductGoldData.gold);
-        if (deductGold > 0 && deductGold <= parseFloat(this.userInfo.gold)) {
+        if (deductGold > 0 && deductGold <= parseFloat(this.userInfo.gold_info[this.dialogDeductGoldData.coin_name_unique].plat_money)) {
             MessageBox.confirm(
-                this.$t("confirmDeductMoney.confirmDeductMoney", { "0": deductGold }),
+                this.$t("common.confirmDeductMoney", { "0": deductGold }),
                 this.$t("common.prompt"),
                 {
                     confirmButtonText: this.$t("common.determine"),
@@ -71,7 +74,7 @@ export default class DeductGoldDialog extends AbstractView {
                     center: true,
                 }
             ).then(() => {
-                this.myProxy.onUpdateGold(deductGold);
+                this.myProxy.onUpdateGold(deductGold, this.dialogDeductGoldData.coin_name_unique);
             });
         } else {
             let errorCode: any = this.$t("common.moneyInputError");
