@@ -13,7 +13,7 @@ export default interface ICommonLangImgProxy {
     resetDialogForm(): void;
 
     /**获取全部翻译内容 */
-    translate():void;
+    translate(data: any):void;
 
     /**根据key查询数据库是否有该key的翻译 */
     translateLangCheck(): void;
