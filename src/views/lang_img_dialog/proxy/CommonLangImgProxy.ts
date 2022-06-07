@@ -111,14 +111,10 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
 
     /**显示弹窗 */
     showDialog(data?: any) {
-        console.log("data=====",data);
         
         //清除数据
         this.resetDialogForm();
         this.dialogData.formSource = null;
-
-        this.sentence = data.sentence;
-        this.type = data.type;
         this.dialogData.form.key = data.key;
         this.dialogData.form.plat_id = data.plat_id != undefined ? data.plat_id : 0;
         this.dialogData.bShow = true;
@@ -230,7 +226,9 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
 
     /**图片上传 回传url，更新form数据*/
     setImageUrl(body: any) {
+        //@ts-ignore
         this.dialogData.form[this.source].uris = body.uri;
+        //@ts-ignore
         this.dialogData.form[this.source].urls = body.url;
     }
 }
