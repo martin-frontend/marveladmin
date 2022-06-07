@@ -32,6 +32,7 @@ export default class PlatServiceProxy extends AbstractProxy implements IPlatServ
             name: { name: "", options: {} },
             content: { name: "", options: {} },
             index_no: { name: "", options: {} },
+            module: {name: "", options: {}},
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -51,7 +52,8 @@ export default class PlatServiceProxy extends AbstractProxy implements IPlatServ
             id: "",
             plat_id: 0,
             name: "",
-            content: ""
+            content: "",
+            module: ""
         },
         formSource: null, // 表单的原始数据
     };
@@ -117,12 +119,14 @@ export default class PlatServiceProxy extends AbstractProxy implements IPlatServ
         const {
             plat_id,
             name,
-            content
+            content,
+            module
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
             name,
-            content
+            content,
+            module
         };
         this.sendNotification(HttpType.admin_plats_fag_store, objectRemoveNull(formCopy));
     }

@@ -259,4 +259,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         const newData = JSON.stringify(sentences);
         this.sendNotification(HttpType.admin_system_lang_import, {"sentences": newData});
     }
+
+    generate():void {
+        this.sendNotification(HttpType.admin_system_lang_generate);
+    }
 }

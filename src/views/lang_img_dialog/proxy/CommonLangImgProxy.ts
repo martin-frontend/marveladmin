@@ -6,21 +6,19 @@ import { jsonStringify, jsonToObject } from "@/core/global/Functions";
 import { exportJson2Excel } from "@/core/global/Excel";
 import i18n from "@/lang";
 import { HttpType } from "../setting";
-import ICommonLangProxy from "./ICommonLangProxy";
+import ICommonLangImgProxy from "./ICommonLangImgProxy";
 import GlobalVar from "@/core/global/GlobalVar";
+import Http from "@/core/net/Http";
 
-export default class CommonLangProxy extends AbstractProxy implements ICommonLangProxy {
-    static NAME = "CommonLangProxy";
+export default class CommonLangImgProxy extends AbstractProxy implements ICommonLangImgProxy {
+    static NAME = "CommonLangImgProxy";
 
-    //要翻译的原始文字
-    private sentence = "";
-    //管理类型，options: {1: '前端WEB皮肤1语言', 2: '后端管理语言', 3: '服务器数据语言', 4: '厂商游戏', 5: '平台公告', 6: '常见问题', 7: '平台邮件', 8: '平台活动'}
-    private type = "";
+    private source: string = "";
 
     /**进入页面时调用 */
     enter() {
         if (this.dialogData.bShow) {
-            this.sendNotification(HttpType.admin_plat_lang_table_columns);
+            this.sendNotification(HttpType.admin_system_lang_image_table_columns);
         }
     }
 
@@ -65,13 +63,6 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        this.dialogData.form.key = this.sentence;
-        this.dialogData.form.type = this.type;
-        if (this.tableData.columns.language.options ) {
-            for (let key in this.tableData.columns.language.options) {
-                this.dialogData.form[key] = this.sentence;
-            }
-        }
         if (this.dialogData.bShow) {
             this.translateLangCheck();
         }
@@ -84,7 +75,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
         let newTableData = this.tableData.list.map(({ language, ...data}) =>
         ({
             ...data,
-            language: jsonToObject(language)
+            // language: jsonToObject(language)
         }));
         Object.assign(this.tableData.pageInfo, data.pageInfo);
         Object.assign(this.tableData.list, newTableData);
@@ -92,7 +83,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     /**详细数据 */
     setDetail(data: any) {
         this.dialogData.formSource = data;
-        data.language = jsonToObject(data.language);
+        // data.language = jsonToObject(data.language);
         Object.assign(this.dialogData.form, data);
     }
 
@@ -102,31 +93,29 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
         status: DialogStatus.create,
         form: {
             id: "",
-            language: "",
             module: "",
             type: "",
             plat_id:"",
             key:"",
-            ar_AR: "",
-            en_EN: "",
-            jp_JP: "",
-            ko_Kr: "",
-            th_TH: "",
-            vi_VN: "",
-            zh_CN: "",
-            zh_TW: "",
+            ar_AR: {uris: "",urls: ""},
+            en_EN: {uris: "",urls: ""},
+            jp_JP: {uris: "",urls: ""},
+            ko_Kr: {uris: "",urls: ""},
+            th_TH: {uris: "",urls: ""},
+            vi_VN: {uris: "",urls: ""},
+            zh_CN: {uris: "",urls: ""},
+            zh_TW: {uris: "",urls: ""},
         },
         formSource: null, // 表单的原始数据
     };
 
     /**显示弹窗 */
     showDialog(data?: any) {
+        
         //清除数据
         this.resetDialogForm();
         this.dialogData.formSource = null;
-
-        this.sentence = data.sentence;
-        this.type = data.type;
+        this.dialogData.form.key = data.key;
         this.dialogData.form.plat_id = data.plat_id != undefined ? data.plat_id : 0;
         this.dialogData.bShow = true;
         this.enter();
@@ -139,32 +128,39 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
             id: "",
-            language: {},
+            // language: {},
             module: "",
             type: 1,
             plat_id:"",
             key:"",
-            ar_AR: "",
-            en_EN: "",
-            jp_JP: "",
-            ko_Kr: "",
-            th_TH: "",
-            vi_VN: "",
-            zh_CN: "",
-            zh_TW: "",
+            ar_AR: {uris: "",urls: ""},
+            en_EN: {uris: "",urls: ""},
+            jp_JP: {uris: "",urls: ""},
+            ko_Kr: {uris: "",urls: ""},
+            th_TH: {uris: "",urls: ""},
+            vi_VN: {uris: "",urls: ""},
+            zh_CN: {uris: "",urls: ""},
+            zh_TW: {uris: "",urls: ""},
         });
         this.dialogData.status = DialogStatus.create;
+        this.source = "";
     }
 
     /**添加平台的数据 */
     onAdd() {
         let formCopy: any = Object.assign({}, this.dialogData.form);
         try {
-            if (formCopy.plat_id) {
-                this.sendNotification(HttpType.admin_plat_lang_store, objectRemoveNull(formCopy));
-            } else {
-                this.sendNotification(HttpType.admin_system_lang_store, objectRemoveNull(formCopy));
+            let data: any = {};
+            for (var key in this.tableData.columns.language.options) {
+                if (formCopy[key].uris && formCopy[key].urls) {
+                    formCopy[key] = JSON.stringify(formCopy[key]);
+                } else {
+                    formCopy[key].uris = "";
+                    formCopy[key].urls = "";
+                    formCopy[key] = JSON.stringify(formCopy[key]);
+                }
             }
+            this.sendNotification(HttpType.admin_system_lang_image_store, objectRemoveNull(formCopy));
             
         } catch (error) {
             MessageBox.alert(<string> i18n.t("common.jsonError"));
@@ -175,14 +171,17 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     onUpdate() {
         const formCopy: any = Object.assign({}, this.dialogData.form);
         try {
-            if (formCopy.plat_id) {
-                console.log("admin_plat_lang_update========",formCopy);
-                this.sendNotification(HttpType.admin_plat_lang_update, objectRemoveNull(formCopy));
-            } else {
-                console.log("admin_system_lang_update========",formCopy);
-                
-                this.sendNotification(HttpType.admin_system_lang_update, objectRemoveNull(formCopy));
+            for (var key in this.tableData.columns.language.options) {
+                if (formCopy[key].uris && formCopy[key].urls) {
+                    formCopy[key] = JSON.stringify(formCopy[key]);
+                } else {
+                    formCopy[key].uris = "";
+                    formCopy[key].urls = "";
+                    formCopy[key] = JSON.stringify(formCopy[key]);
+                }
             }
+            
+            this.sendNotification(HttpType.admin_system_lang_image_update, objectRemoveNull(formCopy));
         } catch (error) {
             MessageBox.alert(<string> i18n.t("common.jsonError"));
         }
@@ -199,19 +198,37 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
 
     /**获取全部翻译返回更新表单 */
     updateForm(data: any):void {
+        this.dialogData.status = DialogStatus.create;
+        if (data.id != undefined) {
+            this.dialogData.status = DialogStatus.update;
+        }
         Object.assign(this.dialogData.form, data);
     }
 
     /**
-     * 根据key查询数据库是否有该key的翻译
+     * 根据key查询数据库是否有该key的图片
      * @param data 
      * plat_id , type, key
      */
     translateLangCheck(): void{
         const data: any = {};
         data.plat_id = this.dialogData.form.plat_id;
-        data.type = this.dialogData.form.type;
         data.key = this.dialogData.form.key;
-        this.sendNotification(HttpType.admin_system_lang_check, data);
+        this.sendNotification(HttpType.admin_system_lang_image_show_key, data);
+    }
+
+    /**图片上传 */
+    private isMin = false;
+    onUploadImage(data: any, isMin: boolean = false) {
+        this.source = data.source;
+        this.sendNotification(HttpType.admin_resource_lang_upload, data);
+    }
+
+    /**图片上传 回传url，更新form数据*/
+    setImageUrl(body: any) {
+        //@ts-ignore
+        this.dialogData.form[this.source].uris = body.uri;
+        //@ts-ignore
+        this.dialogData.form[this.source].urls = body.url;
     }
 }

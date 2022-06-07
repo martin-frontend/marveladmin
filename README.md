@@ -54,7 +54,14 @@ src     //代码
 ### 如何开始一个新的模块
 ```
 1、在build/proto目录下创建配置文件，模块名即文件名；
-2、执行npm run proto
+2、执行npm run proto2
 3、脚本自动在src/views/目录下创建该模块；同时生成新的路由：src/router/layoutRouter
 4、参考模块：vendor-managment
+```
+
+
+### 语言相关
+```
+language_dialog：多语言翻译
+lang_img_dialog：多语言图片
 ```

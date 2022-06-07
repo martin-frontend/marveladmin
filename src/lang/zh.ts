@@ -659,7 +659,7 @@ export default {
     },
     plat_users_backwater_log: {
         totalPeople: "总结算人数",
-        settleMoney: "结算金额",
+        settleMoney: "结算流水",
         rewardMoney: "派奖金额",
         userWaterDetail: "用户返水详情",
         settleDetail: "结算详情",

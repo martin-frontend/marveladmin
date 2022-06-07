@@ -156,7 +156,7 @@
                         style="margin-right: 8px; width: 120px"
                         v-model="item.type"
                         filterable
-                        :placeholder="tableColumns.attachment_content.options.gold"
+                        :placeholder="tableColumns.attachment_content.options[form.plat_id]"
                     >
                         <el-option
                             v-for="(key, value) in tableColumns.attachment_content.options[form.plat_id]"
@@ -342,7 +342,7 @@ export default class PlatEmailDialog extends AbstractView {
             return;
         }
         this.myProxy.dialogData.form.attachment_content.push({
-            type: BonusType.gold,
+            type: " ",
             amount: 0,
         });
     }
@@ -355,6 +355,7 @@ export default class PlatEmailDialog extends AbstractView {
         const data: any = {};
         data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_EMAIL;
+        data.plat_id = this.form.plat_id;
         this.langProxy.showDialog(data);
     }
 }

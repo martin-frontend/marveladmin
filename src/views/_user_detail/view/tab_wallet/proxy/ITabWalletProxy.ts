@@ -11,7 +11,7 @@ export default interface ITabWalletProxy {
         gold: string
     }
     /**打开扣款弹窗 */
-    showDialog(): void;
+    showDialog(coin_name_unique:string): void;
     /**设置表头数据 */
     setTableColumns(data: any): void;
     /**设置用户信息 */
@@ -19,9 +19,9 @@ export default interface ITabWalletProxy {
     /**获取金币详情 */
     getGoldInfo(user_id: number): void;
     /**扣除金币 */
-    onUpdateGold(gold: number): void;
+    onUpdateGold(gold: number, coin_name_unique:string): void;
     /**提取厂商金币 */
-    withdrawVendor(vendor_id?: number): void;
+    withdrawVendor(coin_name_unique:string, vendor_id?: number): void;
     /**提取保险箱 */
     withdrawSafeBox():void;
 }
