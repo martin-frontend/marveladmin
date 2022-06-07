@@ -6,7 +6,7 @@ import { Message } from "element-ui";
 import PlatStakeProxy from "../proxy/PlatStakeProxy";
 
 interface IPlatStake extends IEventDispatcher {
-    
+
 }
 
 export default class PlatStakeMediator extends AbstractMediator {
@@ -37,7 +37,7 @@ export default class PlatStakeMediator extends AbstractMediator {
             EventType.admin_plat_stake_bonus_log_index,
             EventType.admin_plat_stake_bonus_user_log_table_columns,
             EventType.admin_plat_stake_bonus_user_log_index,
-
+            EventType.admin_plat_show
         ];
     }
 
@@ -56,6 +56,9 @@ export default class PlatStakeMediator extends AbstractMediator {
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 myProxy.onQuery();
+                break;
+            case EventType.admin_plat_show:
+                myProxy.setStakeBonusConfig(body.stake_bonus_config)
                 break;
             case EventType.admin_plat_stake_user_log_table_columns:
                 break;

@@ -7,6 +7,43 @@
             @change="handlerSearch"
             :clearable="false"
         />
+        <el-row class="analystics">
+            <el-col :span="20" class="stastics"
+                ><span>当前总奖池 ${{ tableData.summary.bonus_pool_amount }}</span
+                ><span class="expect">今日预计奖池 ${{ tableData.summary.bonus_pool_amount_expect }}</span></el-col
+            >
+            <el-col :span="4" class="btn">
+                <el-button
+                    size="mini"
+                    type="primary"
+                    @click="handlerSetting()"
+                    v-if="checkUnique(unique.admin_user_show)"
+                    >{{ $t("common.setting") }}</el-button
+                ></el-col
+            >
+        </el-row>
+        <el-row class="detail">
+            <el-col :span="6"
+                >每日输赢投放奖池比例<span>{{ stake_config.put_in_ratio | toPercent }}</span></el-col
+            >
+            <el-col :span="6"
+                >每日分红比例<span>{{ stake_config.put_out_ratio | toPercent }}</span></el-col
+            >
+            <el-col :span="6"
+                >质押系统手续费<span>{{ stake_config.auto_withdraw_stake_fee | toPercent }}</span></el-col
+            >
+        </el-row>
+        <el-row class="detail">
+            <el-col :span="6"
+                >质押手动手续费<span>{{ stake_config.manual_withdraw_stake_fee | toPercent }}</span></el-col
+            >
+            <el-col :span="6"
+                >最少质押数量<span>{{ stake_config.min_coin_count }}</span></el-col
+            >
+            <el-col :span="6"
+                >质押开关<span>{{ stake_config.is_open_stake }}</span></el-col
+            >
+        </el-row>
     </div>
 </template>
 
@@ -22,9 +59,15 @@ import SearchRange from "@/components/SearchRange.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
-    components:{
-        SearchSelect
-    }
+    components: {
+        SearchSelect,
+    },
+    filters: {
+        toPercent(value: number) {
+            let dec = (value * 100).toFixed(2);
+            return parseFloat(dec).toString() + "%";
+        },
+    },
 })
 export default class PlatStakeHeader extends AbstractView {
     //权限标识
@@ -33,16 +76,41 @@ export default class PlatStakeHeader extends AbstractView {
     // proxy
     private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
+    private tableData = this.myProxy.tableData;
     private tableColumns = this.myProxy.tableData.columns;
     private listQuery = this.myProxy.listQuery;
-
+    get stake_config() {
+        return this.myProxy.tableData.stake_bonus_config;
+    }
     private handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
+    }
+    private handlerSetting() {
+        console.error("setting");
     }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.analystics {
+    font-size: 16px;
+    .stastics {
+        color: red;
+        .expect {
+            margin-left: 30px;
+        }
+    }
+    .btn {
+        display: flex;
+        justify-content: end;
+    }
+}
+.detail {
+    margin-top: 16px;
+    span {
+        margin-left: 16px;
+    }
+}
 </style>

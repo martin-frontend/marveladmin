@@ -56,26 +56,6 @@ export default class PlatStakeDialog extends AbstractView {
     get rules() {
         return {};
     }
-
-    private handleAdd() {
-        (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
-            if (valid) {
-                this.myProxy.onAdd();
-            }
-        });
-    }
-
-    private handleUpdate() {
-        (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
-            if (valid) {
-                this.myProxy.onUpdate();
-            }
-        });
-    }
-
-    private handleDelete() {
-        this.myProxy.onDelete(this.form.id);
-    }
 }
 </script>
 

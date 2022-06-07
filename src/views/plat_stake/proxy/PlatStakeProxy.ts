@@ -44,6 +44,20 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        summary: {
+            bonus_pool_amount: 0,
+            bonus_pool_amount_expect: 0
+        },
+        stake_bonus_config: {
+            min_coin_count: 0,         // 最小质押解质押金额
+            put_in_ratio: 0,             // 输赢金额放入奖池比例
+            manual_withdraw_stake_fee: 0, // 手动解质押费
+            auto_withdraw_stake_fee: 0,   // 自动解质押费
+            is_open_stake: 0,                // 是否允许质押
+            pool_type: 0,                    // 奖池分红类型 1-手动输入|2-百分比自动
+            put_out_amount: 0,     // 手动输入的分红金额,如果目前的奖池金额,分红的时候就使用奖池金额
+            put_out_ratio: 0            // 奖池分红比例
+        }
     };
     /**查询条件 */
     listQuery = {
@@ -70,6 +84,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
                 this.listQuery.plat_id = plat_id_options_keys[0];
             this.onQuery();
+            this.sendNotification(HttpType.admin_plat_show, { plat_id: plat_id_options_keys[0] });
         }
     }
     /**表格数据 */
@@ -77,6 +92,8 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        this.tableData.summary.bonus_pool_amount = data.summary.bonus_pool_amount;
+        this.tableData.summary.bonus_pool_amount_expect = data.summary.bonus_pool_amount_expect;
     }
     /**详细数据 */
     setDetail(data: any) {
@@ -113,5 +130,12 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             queryCopy.plat_id = "";
         }
         this.sendNotification(HttpType.admin_plat_stake_log_index, objectRemoveNull(this.listQuery));
+    }
+
+    /**设置质押配置 */
+    setStakeBonusConfig(data: any) {
+        Object.assign(this.tableData.stake_bonus_config, data)
+        console.error(this.tableData.stake_bonus_config);
+
     }
 }
