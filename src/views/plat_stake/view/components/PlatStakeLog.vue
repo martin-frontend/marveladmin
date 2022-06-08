@@ -128,7 +128,10 @@ export default class PlatStakeLog extends AbstractView {
         this.myProxy.onQuery();
     }
     private handleEdit(data: any) {
-        this.myProxy.showDialog(DialogStatus.update, data);
+        this.myProxy.showUserLogDialog({
+            plat_id: data.plat_id,
+            plat_stake_log_id: data.id,
+        });
     }
 }
 </script>

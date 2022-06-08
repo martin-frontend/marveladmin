@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-        <PlatStakeDialog v-if="myProxy.dialogData.bShow"/>
+        <PlatUserLogDialog v-if="myProxy.dialogData.bShow"/>
         <PlatStakeHeader/>
         <PlatStakeBody/>
     </div>
@@ -14,10 +14,11 @@ import { Component } from "vue-property-decorator";
 import PlatStakeDialog from "./PlatStakeDialog.vue";
 import PlatStakeHeader from "./PlatStakeHeader.vue";
 import PlatStakeBody from "./PlatStakeBody.vue";
+import PlatUserLogDialog  from "./components/PlatUserLogDialog.vue";
 
 @Component({
     components: {
-        PlatStakeDialog,
+        PlatUserLogDialog,
         PlatStakeHeader,
         PlatStakeBody,
     }

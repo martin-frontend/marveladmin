@@ -26,7 +26,7 @@ export default interface IPlatStakeProxy {
     resetListQuery(): void;
 
     /**显示弹窗 */
-    showDialog(status: string, data?: any): void;
+    showUserLogDialog(status: string, data?: any): void;
     /**隐藏弹窗 */
     hideDialog(): void;
     /**重置弹窗表单 */

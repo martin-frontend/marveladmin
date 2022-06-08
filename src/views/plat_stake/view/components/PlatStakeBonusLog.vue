@@ -118,7 +118,7 @@ export default class PlatStakeBonusLog extends AbstractView {
         this.myProxy.onStakeBonusQuery();
     }
     private handleEdit(data: any) {
-        this.myProxy.showDialog(DialogStatus.update, data);
+        // this.myProxy.showDialog(DialogStatus.update, data);
     }
 }
 </script>

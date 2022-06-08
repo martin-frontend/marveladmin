@@ -108,7 +108,7 @@ export default class PlatStakePoolLog extends AbstractView {
         this.myProxy.onStakePoolQuery();
     }
     private handleEdit(data: any) {
-        this.myProxy.showDialog(DialogStatus.update, data);
+        // this.myProxy.showDialog(DialogStatus.update, data);
     }
 }
 </script>

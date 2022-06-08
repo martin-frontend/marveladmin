@@ -13,6 +13,8 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         this.sendNotification(HttpType.admin_plat_stake_log_table_columns);
         this.sendNotification(HttpType.admin_plat_stake_pool_log_table_columns);
         this.sendNotification(HttpType.admin_plat_stake_bonus_log_table_columns);
+        this.sendNotification(HttpType.admin_plat_stake_user_log_table_columns);
+        this.sendNotification(HttpType.admin_plat_stake_bonus_user_log_table_columns);
     }
 
     /**离开页面时调用 */
@@ -61,6 +63,34 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             bonus_pool_amount_expect: 0
         },
     };
+    /**用户每周质押表格相关数据 */
+    stakeUserLogTableData = {
+        /**查询条件 */
+        listQuery : {
+            plat_id: "",
+            plat_stake_log_id:"",
+            page_count: 1,
+            page_size: 20,
+        },
+        columns: {
+            created_at: { name: '', options: [] },
+            created_by: { name: '', options: [] },
+            data_belong: { name: '', options: [] },
+            id: { name: '', options: [] },
+            nick_name: { name: '', options: [] },
+            plat_id: { name: '', options: [] },
+            plat_stake_log_id: { name: '', options: [] },
+            stake_coin_name_unique: { name: '', options: [] },
+            total_stake_amount: { name: '', options: [] },
+            total_transfer_fee_amount: { name: '', options: [] },
+            updated_at: { name: '', options: [] },
+            updated_by: { name: '', options: [] },
+            user_id: { name: '', options: [] },
+            validate_stake_amount: { name: '', options: [] },
+        },
+        list: <any>[],
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+    }
     /**查询条件 */
     listQuery = {
         plat_id: "",
@@ -110,9 +140,26 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         });
     }
 
-    /**显示弹窗 */
-    showDialog(status: string, data?: any) {
-
+    /**设置质押详情表头 */
+    setStakeUserLogTableColumns(data: any) {
+        Object.assign(this.stakeUserLogTableData.columns, data);
+    }
+    /**质押详情表格数据 */
+    setStakeUserLogTableData(data: any) {
+        this.stakeUserLogTableData.list.length = 0;
+        this.stakeUserLogTableData.list.push(...data.list);
+        Object.assign(this.stakeUserLogTableData.pageInfo, data.pageInfo);
+    }
+    /**质押详情查询 */
+    onStakeUserLogQuery() {
+        this.sendNotification(HttpType.admin_plat_stake_user_log_index, objectRemoveNull(this.stakeUserLogTableData.listQuery));
+    }
+    /**显示质押详情弹窗 */
+    showUserLogDialog(data: any) {
+        this.dialogData.bShow = true;
+        this.stakeUserLogTableData.listQuery.plat_id = data.plat_id;
+        this.stakeUserLogTableData.listQuery.plat_stake_log_id = data.plat_stake_log_id;
+        this.sendNotification(HttpType.admin_plat_stake_user_log_index, objectRemoveNull(this.stakeUserLogTableData.listQuery));
     }
     /**隐藏弹窗 */
     hideDialog() {
@@ -176,7 +223,6 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
                 this.listQuery.plat_id = plat_id_options_keys[0];
-            this.onStakePoolQuery();
         }
     }
     /**奖池表格数据 */
@@ -224,7 +270,6 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
                 this.listQuery.plat_id = plat_id_options_keys[0];
-            this.onStakeBonusQuery();
         }
     }
     /**奖池表格数据 */
