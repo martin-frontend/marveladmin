@@ -31,14 +31,12 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     dialogData = {
         bShow: false,
         form: {
-            min_coin_count: 0,         // 最小质押解质押金额
             put_in_ratio: 0,             // 输赢金额放入奖池比例
-            manual_withdraw_stake_fee: 0, // 手动解质押费
+            put_out_ratio: 0,            // 奖池分红比例
             auto_withdraw_stake_fee: 0,   // 自动解质押费
+            manual_withdraw_stake_fee: 0, // 手动解质押费
+            min_coin_count: 0,         // 最小质押解质押金额
             is_open_stake: 0,                // 是否允许质押
-            pool_type: 0,                    // 奖池分红类型 1-手动输入|2-百分比自动
-            put_out_amount: 0,     // 手动输入的分红金额,如果目前的奖池金额,分红的时候就使用奖池金额
-            put_out_ratio: 0            // 奖池分红比例
         }
     }
     /**质押分红配置 */
@@ -134,6 +132,10 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     /**显示质押配置弹窗 */
     showBonusConfigDialog() {
         Object.assign(this.dialogData.form, this.stake_bonus_config);
+        this.dialogData.form.put_in_ratio = this.stake_bonus_config.put_in_ratio * 100;
+        this.dialogData.form.put_out_ratio = this.stake_bonus_config.put_out_ratio * 100;
+        this.dialogData.form.auto_withdraw_stake_fee = this.stake_bonus_config.auto_withdraw_stake_fee * 100;
+        this.dialogData.form.manual_withdraw_stake_fee = this.stake_bonus_config.manual_withdraw_stake_fee * 100;
         this.dialogData.bShow = true;
     }
     /**隐藏质押配置弹窗 */
@@ -142,9 +144,17 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     }
     /**更新质押配置弹窗 */
     onUpdateStakeConfig() {
+        let config = {
+            put_in_ratio: this.dialogData.form.put_in_ratio * 0.01,
+            put_out_ratio: this.dialogData.form.put_out_ratio * 0.01,
+            auto_withdraw_stake_fee: this.dialogData.form.auto_withdraw_stake_fee * 0.01,
+            manual_withdraw_stake_fee: this.dialogData.form.manual_withdraw_stake_fee * 0.01,
+            min_coin_count: this.dialogData.form.min_coin_count,
+            is_open_stake: this.dialogData.form.is_open_stake,
+        }
         let copyForm = {
             plat_id: this.listQuery.plat_id,
-            stake_bonus_config: JSON.stringify(this.dialogData.form)
+            stake_bonus_config: JSON.stringify(config)
         };
         this.sendNotification(HttpType.admin_plat_update, copyForm);
     }
@@ -281,11 +291,11 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         Object.assign(this.stakePooltableData.dialogData.form, {
             pool_type: Number(data.bonus_config.pool_type),
             put_out_amount: data.bonus_config.put_out_amount.toString(),
-            put_out_ratio: data.bonus_config.put_out_ratio.toString(),
+            put_out_ratio: (data.bonus_config.put_out_ratio * 100).toString(),
         });
         Object.assign(this.stakePooltableData.dialogData.formSource, {
             put_out_amount: data.bonus_config.put_out_amount,
-            put_out_ratio: data.bonus_config.put_out_ratio
+            put_out_ratio: (data.bonus_config.put_out_ratio * 100)
         });
         this.stakePooltableData.dialogData.bShow = true;
     }
@@ -298,12 +308,12 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         let form = this.stakePooltableData.dialogData.form;
         let bonus_config = {
             pool_type: form.pool_type,
-            put_out_ratio: form.put_out_ratio,
+            put_out_ratio: Number(form.put_out_ratio) * 0.01,
             put_out_amount: form.put_out_amount
         }
         let pool_type = form.pool_type;
         if (pool_type == 1) {//手动
-            bonus_config.put_out_ratio = form.put_out_ratio;
+            bonus_config.put_out_ratio = Number(form.put_out_ratio) * 0.01;
         } else {
             bonus_config.put_out_amount = form.put_out_amount;
         }

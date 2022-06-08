@@ -2,16 +2,16 @@
     <el-dialog :title="title" :visible.sync="myProxy.dialogData.bShow" width="450px">
         <el-form ref="form" :rules="rules" :model="form" label-width="165px" v-loading="net_status.loading">
             <el-form-item :label="`${tableColumns.put_in_ratio.name}%`" prop="put_in_ratio">
-                <el-input-number v-model="form.put_in_ratio" :min="0" :max="1" :step="0.01"></el-input-number>
+                <el-input-number v-model="form.put_in_ratio" :min="0" :max="100" :step="0.01"></el-input-number>
             </el-form-item>
             <el-form-item :label="`${tableColumns.put_out_ratio.name}%`" prop="put_out_ratio">
-                <el-input-number v-model="form.put_out_ratio" :min="0" :max="1" :step="0.01"></el-input-number>
+                <el-input-number v-model="form.put_out_ratio" :min="0" :max="100" :step="0.01"></el-input-number>
             </el-form-item>
             <el-form-item :label="`${tableColumns.auto_withdraw_stake_fee.name}%`" prop="auto_withdraw_stake_fee">
                 <el-input-number
                     v-model="form.auto_withdraw_stake_fee"
                     :min="0"
-                    :max="1"
+                    :max="100"
                     :step="0.01"
                 ></el-input-number>
             </el-form-item>
@@ -19,7 +19,7 @@
                 <el-input-number
                     v-model="form.manual_withdraw_stake_fee"
                     :min="0"
-                    :max="1"
+                    :max="100"
                     :step="0.01"
                 ></el-input-number>
             </el-form-item>

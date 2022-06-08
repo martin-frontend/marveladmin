@@ -15,7 +15,7 @@
                 <el-input-number v-model="form.put_out_amount" :min="0" :max="9999999999" :step="0.1"></el-input-number>
             </el-form-item>
             <el-form-item :label="poolTypeMap[form.pool_type]" prop="put_out_ratio" v-else>
-                <el-input-number v-model="form.put_out_ratio" :min="0" :max="1" :step="0.01"></el-input-number>
+                <el-input-number v-model="form.put_out_ratio" :min="0" :max="100" :step="0.01"></el-input-number>
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button type="primary" size="mini" @click="save">{{ $t("common.save") }}</el-button>
