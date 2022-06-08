@@ -26,6 +26,8 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             pageCount: 1,
         });
     }
+
+    private page_size = 20;
     /**质押分红配置 */
     stake_bonus_config = {
         min_coin_count: 0,         // 最小质押解质押金额
@@ -63,14 +65,18 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             bonus_pool_amount_expect: 0
         },
     };
-    /**用户每周质押表格相关数据 */
+    /**质押详情表格相关数据 */
     stakeUserLogTableData = {
+        dialogData: {
+            bShow: false,
+        },
         /**查询条件 */
-        listQuery : {
+        listQuery: {
             plat_id: "",
-            plat_stake_log_id:"",
+            plat_stake_log_id: "",
+            order_by: "",
             page_count: 1,
-            page_size: 20,
+            page_size: this.page_size,
         },
         columns: {
             created_at: { name: '', options: [] },
@@ -95,19 +101,14 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     listQuery = {
         plat_id: "",
         page_count: 1,
-        page_size: 20,
-    };
-    /**弹窗相关数据 */
-    dialogData = {
-        bShow: false,
-        status: DialogStatus.create,
-        form: {
-            id: null
-            // TODO
-        },
-        formSource: null, // 表单的原始数据
+        page_size: this.page_size,
     };
 
+    /**设置质押配置 */
+    setStakeBonusConfig(data: any) {
+        Object.assign(this.stake_bonus_config, data)
+    }
+    
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.stakeLogtableData.columns, data);
@@ -127,20 +128,16 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         this.stakeLogtableData.summary.bonus_pool_amount = data.summary.bonus_pool_amount;
         this.stakeLogtableData.summary.bonus_pool_amount_expect = data.summary.bonus_pool_amount_expect;
     }
-    /**详细数据 */
-    setDetail(data: any) {
-        this.dialogData.formSource = data;
-        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+    /**查询 */
+    onQuery() {
+        const queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        if (queryCopy.plat_id == "0") {
+            queryCopy.plat_id = "";
+        }
+        this.sendNotification(HttpType.admin_plat_stake_log_index, objectRemoveNull(this.listQuery));
     }
 
-    /**重置查询条件 */
-    resetListQuery() {
-        Object.assign(this.listQuery, {
-            // TODO
-        });
-    }
-
-    /**设置质押详情表头 */
+    /**质押详情表头 */
     setStakeUserLogTableColumns(data: any) {
         Object.assign(this.stakeUserLogTableData.columns, data);
     }
@@ -156,34 +153,10 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     }
     /**显示质押详情弹窗 */
     showUserLogDialog(data: any) {
-        this.dialogData.bShow = true;
+        this.stakeUserLogTableData.dialogData.bShow = true;
         this.stakeUserLogTableData.listQuery.plat_id = data.plat_id;
         this.stakeUserLogTableData.listQuery.plat_stake_log_id = data.plat_stake_log_id;
         this.sendNotification(HttpType.admin_plat_stake_user_log_index, objectRemoveNull(this.stakeUserLogTableData.listQuery));
-    }
-    /**隐藏弹窗 */
-    hideDialog() {
-        this.dialogData.bShow = false;
-    }
-    /**重置弹窗表单 */
-    resetDialogForm() {
-        Object.assign(this.dialogData.form, {
-            // TODO
-        });
-    }
-
-    /**查询 */
-    onQuery() {
-        const queryCopy = JSON.parse(JSON.stringify(this.listQuery));
-        if (queryCopy.plat_id == "0") {
-            queryCopy.plat_id = "";
-        }
-        this.sendNotification(HttpType.admin_plat_stake_log_index, objectRemoveNull(this.listQuery));
-    }
-
-    /**设置质押配置 */
-    setStakeBonusConfig(data: any) {
-        Object.assign(this.stake_bonus_config, data)
     }
 
     /**奖池表格相关数据 */
@@ -263,7 +236,33 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
-    /**奖池设置表头数据 */
+    /**分红详情表格相关数据 */
+    stakeBonusUserLogtableData = {
+        dialogData: {
+            bShow: false,
+        },
+        /**查询条件 */
+        listQuery: {
+            plat_id: "",
+            date: "",
+            order_by: "",
+            page_count: 1,
+            page_size: this.page_size,
+        },
+        columns: {
+            id: { name: '', options: [] },
+            plat_id: { name: '', options: [] },
+            user_id: { name: '', options: [] },
+            stake_amount: { name: '', options: [] },
+            stake_ratio: { name: '', options: [] },
+            bonus_amount: { name: '', options: [] },
+            settlement_at: { name: '', options: [] },
+            nick_name: { name: '', options: [] },
+        },
+        list: <any>[],
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+    };
+    /**分红设置表头数据 */
     setStakeBonusTableColumns(data: any) {
         Object.assign(this.stakeBonustableData.columns, data);
         const plat_id_options_keys = Object.keys(this.stakeBonustableData.columns.plat_id.options);
@@ -272,7 +271,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
                 this.listQuery.plat_id = plat_id_options_keys[0];
         }
     }
-    /**奖池表格数据 */
+    /**分红表格数据 */
     setStakeBonusTableData(data: any) {
         this.stakeBonustableData.list.length = 0;
         this.stakeBonustableData.list.push(...data.list);
@@ -286,6 +285,30 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         }
         this.sendNotification(HttpType.admin_plat_stake_bonus_log_index, objectRemoveNull(this.listQuery));
     }
+    /**显示分红详情弹窗 */
+    showBonusUserLogDialog(data: any) {
+        this.stakeBonusUserLogtableData.list.length = 0;
+        this.stakeBonusUserLogtableData.pageInfo.pageCurrent = 1;
+        this.stakeBonusUserLogtableData.dialogData.bShow = true;
+        this.stakeBonusUserLogtableData.listQuery.plat_id = data.plat_id;
+        this.stakeBonusUserLogtableData.listQuery.date = data.date;
+        this.onStakeBonusUserLogQuery();
+    }
+    /**分红详情表头数去 */
+    setStakeBonusUserLogTableColumns(data: any) {
+        Object.assign(this.stakeBonusUserLogtableData.columns, data);
+    }
+    /**分紅詳情表格数据 */
+    setStakeBonusUserLogTableData(data: any) {
+        this.stakeBonusUserLogtableData.list.length = 0;
+        this.stakeBonusUserLogtableData.list.push(...data.list);
+        Object.assign(this.stakeBonusUserLogtableData.pageInfo, data.pageInfo);
+    }
+    /**分红详情查询 */
+    onStakeBonusUserLogQuery() {
+        this.sendNotification(HttpType.admin_plat_stake_bonus_user_log_index, objectRemoveNull(this.stakeBonusUserLogtableData.listQuery));
+    }
+
     /**清除数据 */
     public resetData() {
         this.stakeLogtableData.list.length = 0;

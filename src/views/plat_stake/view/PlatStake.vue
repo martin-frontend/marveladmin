@@ -1,8 +1,9 @@
 <template>
     <div class="content">
-        <PlatUserLogDialog v-if="myProxy.dialogData.bShow"/>
-        <PlatStakeHeader/>
-        <PlatStakeBody/>
+        <PlatUserLogDialog v-if="userLogDialogData.bShow" />
+        <PlatBonusUserLogDialog v-if="bonusUserLogDialogData.bShow" />
+        <PlatStakeHeader />
+        <PlatStakeBody />
     </div>
 </template>
 
@@ -14,17 +15,18 @@ import { Component } from "vue-property-decorator";
 import PlatStakeDialog from "./PlatStakeDialog.vue";
 import PlatStakeHeader from "./PlatStakeHeader.vue";
 import PlatStakeBody from "./PlatStakeBody.vue";
-import PlatUserLogDialog  from "./components/PlatUserLogDialog.vue";
+import PlatUserLogDialog  from "./components/dialog/PlatUserLogDialog.vue";
+import PlatBonusUserLogDialog from "./components/dialog/PlatBonusUserLogDialog.vue";
 
 @Component({
     components: {
         PlatUserLogDialog,
+        PlatBonusUserLogDialog,
         PlatStakeHeader,
         PlatStakeBody,
     }
 })
 export default class PlatStake extends AbstractView {
-
     constructor() {
         super(PlatStakeMediator);
     }
@@ -34,6 +36,9 @@ export default class PlatStake extends AbstractView {
     }
     // proxy
     private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
+    // proxy property
+    private userLogDialogData = this.myProxy.stakeUserLogTableData.dialogData;
+    private bonusUserLogDialogData = this.myProxy.stakeBonusUserLogtableData.dialogData;
 }
 </script>
 

@@ -63,7 +63,7 @@
                     <el-button
                         size="mini"
                         type="primary"
-                        @click="handleEdit(row)"
+                        @click="handlerDetail(row)"
                         v-if="checkUnique(unique.admin_user_show)"
                         >{{ $t("common.detail") }}</el-button
                     >
@@ -117,8 +117,8 @@ export default class PlatStakeBonusLog extends AbstractView {
         this.listQuery.page_count = page;
         this.myProxy.onStakeBonusQuery();
     }
-    private handleEdit(data: any) {
-        // this.myProxy.showDialog(DialogStatus.update, data);
+    private handlerDetail(data: any) {
+        this.myProxy.showBonusUserLogDialog({ plat_id: data.plat_id, date: data.date });
     }
 }
 </script>

@@ -53,9 +53,9 @@ export default class PlatStakeMediator extends AbstractMediator {
                 myProxy.setTableData(body);
                 break;
             case EventType.admin_plat_stake_pool_log_update:
-                Message.success(SuccessMessage.update);
-                myProxy.hideDialog();
-                myProxy.onQuery();
+                // Message.success(SuccessMessage.update);
+                // myProxy.hideDialog();
+                // myProxy.onQuery();
                 break;
             case EventType.admin_plat_show:
                 myProxy.setStakeBonusConfig(body.stake_bonus_config)
@@ -79,8 +79,10 @@ export default class PlatStakeMediator extends AbstractMediator {
                 myProxy.setStakeBonusTableData(body);
                 break;
             case EventType.admin_plat_stake_bonus_user_log_table_columns:
+                myProxy.setStakeBonusUserLogTableColumns(body);
                 break;
             case EventType.admin_plat_stake_bonus_user_log_index:
+                myProxy.setStakeBonusUserLogTableData(body);
                 break;
 
         }

@@ -79,7 +79,7 @@ export default class PlatStakeHeader extends AbstractView {
     private tableData = this.myProxy.stakeLogtableData;
     private tableColumns = this.myProxy.stakeLogtableData.columns;
     private listQuery = this.myProxy.listQuery;
-    private span: number = 6;
+    private span: number = 5;
 
     get stake_config() {
         return this.myProxy.stake_bonus_config;

@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="title" :visible.sync="myProxy.dialogData.bShow" width="800px">
+    <el-dialog :title="title" :visible.sync="bonusUserLogDialogData.bShow" width="900px">
         <el-table
             :data="tableData"
             border
@@ -29,22 +29,22 @@
             >
             </el-table-column>
             <el-table-column
-                :label="tableColumns['stake_coin_name_unique'].name"
-                prop="stake_coin_name_unique"
+                :label="tableColumns['stake_amount'].name"
+                prop="stake_amount"
                 min-width="80px"
                 class-name="status-col"
             >
             </el-table-column>
             <el-table-column
-                :label="tableColumns['total_stake_amount'].name"
-                prop="total_stake_amount"
+                :label="tableColumns['stake_ratio'].name"
+                prop="stake_ratio"
                 min-width="80px"
                 class-name="status-col"
             >
             </el-table-column>
             <el-table-column
-                :label="tableColumns['total_transfer_fee_amount'].name"
-                prop="total_transfer_fee_amount"
+                :label="tableColumns['bonus_amount'].name"
+                prop="bonus_amount"
                 min-width="80px"
                 class-name="status-col"
             >
@@ -59,7 +59,7 @@ import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import GlobalVar from "@/core/global/GlobalVar";
-import PlatStakeProxy from "../../proxy/PlatStakeProxy";
+import PlatStakeProxy from "../../../proxy/PlatStakeProxy";
 import Pagination from "@/components/Pagination.vue";
 
 @Component({
@@ -76,12 +76,15 @@ export default class PlatUserLogDialog extends AbstractView {
     // proxy
     private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private tableColumns = this.myProxy.stakeUserLogTableData.columns;
-    private tableData = this.myProxy.stakeUserLogTableData.list;
-    private listQuery = this.myProxy.stakeUserLogTableData.listQuery;
-    private pageInfo = this.myProxy.stakeUserLogTableData.pageInfo;
+    private tableColumns = this.myProxy.stakeBonusUserLogtableData.columns;
+    private tableData = this.myProxy.stakeBonusUserLogtableData.list;
+    private listQuery = this.myProxy.stakeBonusUserLogtableData.listQuery;
+    private pageInfo = this.myProxy.stakeBonusUserLogtableData.pageInfo;
+    get bonusUserLogDialogData() {
+        return this.myProxy.stakeBonusUserLogtableData.dialogData;
+    }
 
-    private title = "质押详情";
+    private title = "分红详情";
 
     get rules() {
         return {};
@@ -89,7 +92,7 @@ export default class PlatUserLogDialog extends AbstractView {
 
     private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
-        this.myProxy.onStakeUserLogQuery();
+        this.myProxy.onStakeBonusUserLogQuery();
     }
 }
 </script>
