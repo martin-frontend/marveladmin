@@ -26,7 +26,7 @@
 
                 <el-table-column :label="$t('plat_users_backwater_log.settleName')" class-name="status-col">
                     <template slot-scope="{ row }">
-                        {{ tableColumns["water_"+row.vendor_type].name }}
+                        {{ tableColumns["water_"+row.vendor_type] && tableColumns["water_"+row.vendor_type].name }}
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('common.settleWater')" class-name="status-col">
@@ -37,7 +37,7 @@
 
                 <el-table-column :label="tableColumns.main_coin_name_unique.name+$t('plat_users_vip_model.backWater')" class-name="status-col">
                     <template slot-scope="{ row }">
-                        {{ row.main_coin_name_unique }}：{{ row.main_coin_backwater_rate * 100 }}%
+                        {{ row.main_coin_name_unique }}：{{ row.main_coin_backwater_rate * 10000/100 }}%
                     </template>
                 </el-table-column>
                 <el-table-column :label="tableColumns.main_coin_name_unique.name+$t('plat_users_backwater_log.rewardMoney')" class-name="status-col">
@@ -47,7 +47,7 @@
                 </el-table-column>
                 <el-table-column :label="tableColumns.reward_coin_name_unique.name+$t('plat_users_vip_model.backWater')" class-name="status-col">
                     <template slot-scope="{ row }">
-                        {{ row.reward_coin_name_unique }}：{{ row.reward_coin_backwater_rate * 100 }}%
+                        {{ row.reward_coin_name_unique }}：{{ row.reward_coin_backwater_rate * 10000/100 }}%
                     </template>
                 </el-table-column>
                 <el-table-column :label="tableColumns.reward_coin_name_unique.name+$t('plat_users_backwater_log.rewardMoney')" class-name="status-col">
