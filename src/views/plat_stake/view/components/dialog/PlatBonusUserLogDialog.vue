@@ -1,6 +1,7 @@
 <template>
     <el-dialog :title="title" :visible.sync="bonusUserLogDialogData.bShow" width="900px">
         <el-table
+            @sort-change="tableSortChange"
             :data="tableData"
             border
             fit
@@ -29,6 +30,7 @@
             >
             </el-table-column>
             <el-table-column
+                sortable="custom"
                 :label="tableColumns['stake_amount'].name"
                 prop="stake_amount"
                 min-width="80px"
@@ -93,6 +95,23 @@ export default class PlatUserLogDialog extends AbstractView {
     private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onStakeBonusUserLogQuery();
+    }
+
+    // 排序
+    private tableSortChange(column: any) {
+        let order_by = {};
+        if (column.order === "descending") {
+            order_by = {
+                [column.prop]: "DESC",
+            };
+        } else {
+            order_by = {
+                [column.prop]: "ASC",
+            };
+        }
+
+        this.listQuery.page_count = 1;
+        this.myProxy.onStakeBonusUserLogQuery(order_by);
     }
 }
 </script>

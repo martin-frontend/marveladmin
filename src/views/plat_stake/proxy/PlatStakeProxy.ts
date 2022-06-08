@@ -148,8 +148,14 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         Object.assign(this.stakeUserLogTableData.pageInfo, data.pageInfo);
     }
     /**质押详情查询 */
-    onStakeUserLogQuery() {
-        this.sendNotification(HttpType.admin_plat_stake_user_log_index, objectRemoveNull(this.stakeUserLogTableData.listQuery));
+    onStakeUserLogQuery(data: any = null) {
+        this.stakeUserLogTableData.listQuery.order_by = "";
+        let copyQuery = JSON.parse(JSON.stringify(this.stakeUserLogTableData.listQuery));
+        if (data) {
+            Object.assign(copyQuery, { order_by: JSON.stringify(data) });
+        }
+
+        this.sendNotification(HttpType.admin_plat_stake_user_log_index, objectRemoveNull(copyQuery));
     }
     /**显示质押详情弹窗 */
     showUserLogDialog(data: any) {
@@ -165,7 +171,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             bShow: false,
             form: {
                 id: "",
-                plat_id:"",
+                plat_id: "",
                 pool_type: 0,
                 put_out_amount: "",
                 put_out_ratio: "",
@@ -308,7 +314,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         listQuery: {
             plat_id: "",
             date: "",
-            order_by: "",
+            order_by:"",
             page_count: 1,
             page_size: this.page_size,
         },
@@ -368,8 +374,14 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         Object.assign(this.stakeBonusUserLogtableData.pageInfo, data.pageInfo);
     }
     /**分红详情查询 */
-    onStakeBonusUserLogQuery() {
-        this.sendNotification(HttpType.admin_plat_stake_bonus_user_log_index, objectRemoveNull(this.stakeBonusUserLogtableData.listQuery));
+    onStakeBonusUserLogQuery(data:any = null) {
+        this.stakeBonusUserLogtableData.listQuery.order_by = "";
+        let copyQuery = JSON.parse(JSON.stringify(this.stakeBonusUserLogtableData.listQuery));
+        if (data) {
+            Object.assign(copyQuery, { order_by: JSON.stringify(data) });
+        }
+        
+        this.sendNotification(HttpType.admin_plat_stake_bonus_user_log_index, objectRemoveNull(copyQuery));
     }
 
     /**清除数据 */
