@@ -108,7 +108,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     setStakeBonusConfig(data: any) {
         Object.assign(this.stake_bonus_config, data)
     }
-    
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.stakeLogtableData.columns, data);
@@ -161,6 +161,20 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
 
     /**奖池表格相关数据 */
     stakePooltableData = {
+        dialogData: {
+            bShow: false,
+            form: {
+                id: "",
+                plat_id:"",
+                pool_type: 0,
+                put_out_amount: "",
+                put_out_ratio: "",
+            },
+            formSource: {
+                put_out_amount: "",
+                put_out_ratio: "",
+            }
+        },
         columns: {
             auto_withdraw_stake_fee: { name: '', options: [] },
             bonus_config: { name: '', options: [] },
@@ -211,6 +225,55 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             queryCopy.plat_id = "";
         }
         this.sendNotification(HttpType.admin_plat_stake_pool_log_index, objectRemoveNull(this.listQuery));
+    }
+    /**显示奖池设定 */
+    showPoolDialog(data: any) {
+        this.stakePooltableData.dialogData.form.id = data.id;
+        this.stakePooltableData.dialogData.form.plat_id = this.listQuery.plat_id;
+        Object.assign(this.stakePooltableData.dialogData.form, {
+            pool_type: Number(data.bonus_config.pool_type),
+            put_out_amount: data.bonus_config.put_out_amount.toString(),
+            put_out_ratio: data.bonus_config.put_out_ratio.toString(),
+        });
+        Object.assign(this.stakePooltableData.dialogData.formSource, {
+            put_out_amount: data.bonus_config.put_out_amount,
+            put_out_ratio: data.bonus_config.put_out_ratio
+        });
+        this.stakePooltableData.dialogData.bShow = true;
+    }
+    /**隐藏奖池设定 */
+    hidePoolDialog() {
+        this.stakePooltableData.dialogData.bShow = false;
+    }
+    /**更新奖池配置 */
+    updateStakeConfig() {
+        let form = this.stakePooltableData.dialogData.form;
+        let bonus_config = {
+            pool_type: form.pool_type,
+            put_out_ratio: form.put_out_ratio,
+            put_out_amount: form.put_out_amount
+        }
+        let pool_type = form.pool_type;
+        if (pool_type == 1) {//手动
+            bonus_config.put_out_ratio = form.put_out_ratio;
+        } else {
+            bonus_config.put_out_amount = form.put_out_amount;
+        }
+        const copyForm = {
+            id: form.id,
+            bonus_config: JSON.stringify(bonus_config)
+        };
+        this.sendNotification(HttpType.admin_plat_stake_pool_log_update, objectRemoveNull(copyForm))
+    }
+    /**重置奖池配置 */
+    resetPoolDialog(type: number) {
+        let form = this.stakePooltableData.dialogData.form;
+        let source = this.stakePooltableData.dialogData.formSource;
+        if (type == 1 && source && source.put_out_ratio) {
+            form.put_out_ratio = source.put_out_ratio;
+        } else {
+            form.put_out_amount = source.put_out_amount;
+        }
     }
 
     /**分红表格相关数据 */

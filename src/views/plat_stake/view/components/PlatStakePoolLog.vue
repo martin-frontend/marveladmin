@@ -51,16 +51,20 @@
             </el-table-column>
             <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="60px">
                 <template slot-scope="{ row }">
-                    <el-button
-                        size="mini"
-                        type="primary"
-                        @click="handleEdit(row)"
-                        v-if="checkUnique(unique.admin_user_show)"
-                        >{{ $t("common.setting") }}</el-button
-                    >
+                    <div v-if="row.status == 2">
+                        <el-button
+                            size="mini"
+                            type="primary"
+                            @click="handleEdit(row)"
+                            v-if="checkUnique(unique.admin_user_show)"
+                            >{{ $t("common.setting") }}</el-button
+                        >
+                    </div>
+                    <div v-else>-</div>
                 </template>
             </el-table-column>
         </el-table>
+        <PlatPoolDialog v-if="dialogData.bShow" />
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>
 </template>
@@ -72,9 +76,11 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import PlatStakeProxy from "../../proxy/PlatStakeProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import PlatPoolDialog from "./dialog/PlatPoolDialog.vue";
 
 @Component({
     components: {
+        PlatPoolDialog,
         Pagination,
     },
     filters: {
@@ -102,13 +108,14 @@ export default class PlatStakePoolLog extends AbstractView {
     private tableData = this.myProxy.stakePooltableData.list;
     private pageInfo = this.myProxy.stakePooltableData.pageInfo;
     private listQuery = this.myProxy.listQuery;
+    private dialogData = this.myProxy.stakePooltableData.dialogData;
 
     private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onStakePoolQuery();
     }
     private handleEdit(data: any) {
-        // this.myProxy.showDialog(DialogStatus.update, data);
+        this.myProxy.showPoolDialog(data);
     }
 }
 </script>

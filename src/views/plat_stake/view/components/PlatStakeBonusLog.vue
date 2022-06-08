@@ -71,6 +71,7 @@
             </el-table-column>
             -->
         </el-table>
+        <PlatBonusUserLogDialog v-if="dialogData.bShow" />
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>
 </template>
@@ -82,9 +83,11 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import PlatStakeProxy from "../../proxy/PlatStakeProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import PlatBonusUserLogDialog from "./dialog/PlatBonusUserLogDialog.vue";
 
 @Component({
     components: {
+        PlatBonusUserLogDialog,
         Pagination,
     },
     filters: {
@@ -112,6 +115,7 @@ export default class PlatStakeBonusLog extends AbstractView {
     private tableData = this.myProxy.stakeBonustableData.list;
     private pageInfo = this.myProxy.stakeBonustableData.pageInfo;
     private listQuery = this.myProxy.listQuery;
+    private dialogData = this.myProxy.stakeBonusUserLogtableData.dialogData;
 
     private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
