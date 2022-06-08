@@ -28,6 +28,19 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     }
 
     private page_size = 20;
+    dialogData = {
+        bShow: false,
+        form: {
+            min_coin_count: 0,         // 最小质押解质押金额
+            put_in_ratio: 0,             // 输赢金额放入奖池比例
+            manual_withdraw_stake_fee: 0, // 手动解质押费
+            auto_withdraw_stake_fee: 0,   // 自动解质押费
+            is_open_stake: 0,                // 是否允许质押
+            pool_type: 0,                    // 奖池分红类型 1-手动输入|2-百分比自动
+            put_out_amount: 0,     // 手动输入的分红金额,如果目前的奖池金额,分红的时候就使用奖池金额
+            put_out_ratio: 0            // 奖池分红比例
+        }
+    }
     /**质押分红配置 */
     stake_bonus_config = {
         min_coin_count: 0,         // 最小质押解质押金额
@@ -42,21 +55,31 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     /**质押表格相关数据 */
     stakeLogtableData = {
         columns: {
-            created_at: { name: '', options: {} },
-            created_by: { name: '', options: {} },
-            data_belong: { name: '', options: {} },
-            end_date: { name: '', options: {} },
-            id: { name: '', options: {} },
-            plat_id: { name: '', options: {} },
-            stake_coin_name_unique: { name: '', options: {} },
-            stake_count: { name: '', options: {} },
-            start_date: { name: '', options: {} },
-            status: { name: '', options: {} },
-            total_stake_amount: { name: '', options: {} },
-            total_transfer_fee_amount: { name: '', options: {} },
-            updated_at: { name: '', options: {} },
-            updated_by: { name: '', options: {} },
-            validate_stake_amount: { name: '', options: {} },
+            auto_withdraw_stake_fee: { name: '', options: [] },
+            created_at: { name: '', options: [] },
+            created_by: { name: '', options: [] },
+            data_belong: { name: '', options: [] },
+            end_date: { name: '', options: [] },
+            id: { name: '', options: [] },
+            is_open_stake: { name: '', options: [] },
+            manual_withdraw_stake_fee: { name: '', options: [] },
+            min_coin_count: { name: '', options: [] },
+            plat_id: { name: '', options: [] },
+            pool_type: { name: '', options: [] },
+            put_in_ratio: { name: '', options: [] },
+            put_out_amount: { name: '', options: [] },
+            put_out_ratio: { name: '', options: [] },
+            stake_coin_name_unique: { name: '', options: [] },
+            stake_count: { name: '', options: [] },
+            start_date: { name: '', options: [] },
+            status: { name: '', options: [] },
+            total_stake_amount: { name: '', options: [] },
+            total_transfer_fee_amount: { name: '', options: [] },
+            updated_at: { name: '', options: [] },
+            updated_by: { name: '', options: [] },
+            validate_stake_amount: { name: '', options: [] },
+            bonus_pool_amount: { name: '', options: [] },
+            bonus_pool_amount_expect: { name: '', options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -108,7 +131,23 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     setStakeBonusConfig(data: any) {
         Object.assign(this.stake_bonus_config, data)
     }
-
+    /**显示质押配置弹窗 */
+    showBonusConfigDialog() {
+        Object.assign(this.dialogData.form, this.stake_bonus_config);
+        this.dialogData.bShow = true;
+    }
+    /**隐藏质押配置弹窗 */
+    hideBonusConfigDialog() {
+        this.dialogData.bShow = false;
+    }
+    /**更新质押配置弹窗 */
+    onUpdateStakeConfig() {
+        let copyForm = {
+            plat_id: this.listQuery.plat_id,
+            stake_bonus_config: JSON.stringify(this.dialogData.form)
+        };
+        this.sendNotification(HttpType.admin_plat_update, copyForm);
+    }
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.stakeLogtableData.columns, data);
@@ -117,8 +156,12 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
                 this.listQuery.plat_id = plat_id_options_keys[0];
             this.onQuery();
-            this.sendNotification(HttpType.admin_plat_show, { plat_id: plat_id_options_keys[0] });
+            this.onPlatShow();
         }
+    }
+    /**获取平台资料 */
+    onPlatShow() {
+        this.sendNotification(HttpType.admin_plat_show, { plat_id: this.listQuery.plat_id });
     }
     /**表格数据 */
     setTableData(data: any) {
@@ -196,7 +239,6 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             plat_id: { name: '', options: [] },
             pool_type: { name: '', options: [] },
             put_in_ratio: { name: '', options: [] },
-            put_int_ratio: { name: '', options: [] },
             put_out_amount: { name: '', options: [] },
             put_out_ratio: { name: '', options: [] },
             stake_bonus_config: { name: '', options: [] },
@@ -314,7 +356,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         listQuery: {
             plat_id: "",
             date: "",
-            order_by:"",
+            order_by: "",
             page_count: 1,
             page_size: this.page_size,
         },
@@ -374,13 +416,13 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         Object.assign(this.stakeBonusUserLogtableData.pageInfo, data.pageInfo);
     }
     /**分红详情查询 */
-    onStakeBonusUserLogQuery(data:any = null) {
+    onStakeBonusUserLogQuery(data: any = null) {
         this.stakeBonusUserLogtableData.listQuery.order_by = "";
         let copyQuery = JSON.parse(JSON.stringify(this.stakeBonusUserLogtableData.listQuery));
         if (data) {
             Object.assign(copyQuery, { order_by: JSON.stringify(data) });
         }
-        
+
         this.sendNotification(HttpType.admin_plat_stake_bonus_user_log_index, objectRemoveNull(copyQuery));
     }
 

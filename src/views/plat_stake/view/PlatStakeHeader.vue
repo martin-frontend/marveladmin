@@ -9,8 +9,8 @@
         />
         <el-row class="analystics">
             <el-col :span="20" class="stastics"
-                ><span>当前总奖池 ${{ tableData.summary.bonus_pool_amount }}</span
-                ><span class="expect">今日预计奖池 ${{ tableData.summary.bonus_pool_amount_expect }}</span></el-col
+                ><span>{{ tableColumns.bonus_pool_amount.name }} {{ tableData.summary.bonus_pool_amount }}</span
+                ><span class="expect">{{ tableColumns.bonus_pool_amount_expect.name }} {{ tableData.summary.bonus_pool_amount_expect }}</span></el-col
             >
             <el-col :span="4" class="btn">
                 <el-button
@@ -24,24 +24,26 @@
         </el-row>
         <el-row class="detail">
             <el-col :span="span"
-                >每日输赢投放奖池比例<span>{{ stake_config.put_in_ratio | toPercent }}</span></el-col
+                >{{ tableColumns.put_in_ratio.name }}<span>{{ stake_config.put_in_ratio | toPercent }}</span></el-col
             >
             <el-col :span="span"
-                >每日分红比例<span>{{ stake_config.put_out_ratio | toPercent }}</span></el-col
+                >{{ tableColumns.put_out_ratio.name }}<span>{{ stake_config.put_out_ratio | toPercent }}</span></el-col
             >
-            <el-col :span="span"
-                >质押系统手续费<span>{{ stake_config.auto_withdraw_stake_fee | toPercent }}</span></el-col
+            <el-col :span="span">
+                {{ tableColumns.auto_withdraw_stake_fee.name}}<span>{{ stake_config.auto_withdraw_stake_fee | toPercent }}</span></el-col
             >
         </el-row>
         <el-row class="detail">
             <el-col :span="span"
-                >质押手动手续费<span>{{ stake_config.manual_withdraw_stake_fee | toPercent }}</span></el-col
+                >{{ tableColumns.manual_withdraw_stake_fee.name
+                }}<span>{{ stake_config.manual_withdraw_stake_fee | toPercent }}</span></el-col
             >
             <el-col :span="span"
-                >最少质押数量<span>{{ stake_config.min_coin_count }}</span></el-col
+                >{{ tableColumns.min_coin_count.name }}<span>{{ stake_config.min_coin_count }}</span></el-col
             >
             <el-col :span="span"
-                >质押开关<span>{{ stake_config.is_open_stake }}</span></el-col
+                >{{ tableColumns.is_open_stake.name
+                }}<span>{{ tableColumns.is_open_stake.options[stake_config.is_open_stake] }}</span></el-col
             >
         </el-row>
     </div>
@@ -89,7 +91,7 @@ export default class PlatStakeHeader extends AbstractView {
         this.myProxy.onQuery();
     }
     private handlerSetting() {
-        console.error("setting");
+        this.myProxy.showBonusConfigDialog();
     }
 }
 </script>
