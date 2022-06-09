@@ -126,6 +126,10 @@ const layoutRouter = {
             name: "平台管理",
             component: () => import(/* webpackChunkName: "plat" */"@/views/plat/view/Plat.vue")
         },        {
+            path: "plats_notice",
+            name: "平台公告管理",
+            component: () => import(/* webpackChunkName: "plats_notice" */"@/views/plats_notice/view/PlatsNotice.vue")
+        },        {
             path: "plat_activity",
             name: "活动管理",
             component: () => import(/* webpackChunkName: "plat_activity" */"@/views/plat_activity/view/PlatActivity.vue")
@@ -218,25 +222,13 @@ const layoutRouter = {
             name: "短信通道",
             component: () => import(/* webpackChunkName: "plat_sms" */"@/views/plat_sms/view/PlatSms.vue")
         },        {
+            path: "plat_stake",
+            name: "平台质押分红",
+            component: () => import(/* webpackChunkName: "plat_stake" */"@/views/plat_stake/view/PlatStake.vue")
+        },        {
             path: "plat_user",
             name: "平台用户",
             component: () => import(/* webpackChunkName: "plat_user" */"@/views/plat_user/view/PlatUser.vue")
-        },        {
-            path: "plat_user_login_log",
-            name: "平台厂商用户登录log",
-            component: () => import(/* webpackChunkName: "plat_user_login_log" */"@/views/plat_user_login_log/view/PlatUserLoginLog.vue")
-        },        {
-            path: "plat_user_sms_code",
-            name: "短信验证码查询",
-            component: () => import(/* webpackChunkName: "plat_user_sms_code" */"@/views/plat_user_sms_code/view/PlatUserSmsCode.vue")
-        },        {
-            path: "plat_user_statistic_days",
-            name: "用户排行统计",
-            component: () => import(/* webpackChunkName: "plat_user_statistic_days" */"@/views/plat_user_statistic_days/view/PlatUserStatisticDays.vue")
-        },        {
-            path: "plat_user_statistic_rank_days",
-            name: "用户排行汇总",
-            component: () => import(/* webpackChunkName: "plat_user_statistic_rank_days" */"@/views/plat_user_statistic_rank_days/view/PlatUserStatisticRankDays.vue")
         },        {
             path: "plat_users_backwater_log",
             name: "返水明细",
@@ -266,21 +258,33 @@ const layoutRouter = {
             name: "VIP模版配置",
             component: () => import(/* webpackChunkName: "plat_users_vip_model" */"@/views/plat_users_vip_model/view/PlatUsersVipModel.vue")
         },        {
-            path: "plat_vendor_user",
-            name: "平台厂商用户",
-            component: () => import(/* webpackChunkName: "plat_vendor_user" */"@/views/plat_vendor_user/view/PlatVendorUser.vue")
+            path: "plat_user_login_log",
+            name: "平台厂商用户登录log",
+            component: () => import(/* webpackChunkName: "plat_user_login_log" */"@/views/plat_user_login_log/view/PlatUserLoginLog.vue")
+        },        {
+            path: "plat_user_sms_code",
+            name: "短信验证码查询",
+            component: () => import(/* webpackChunkName: "plat_user_sms_code" */"@/views/plat_user_sms_code/view/PlatUserSmsCode.vue")
+        },        {
+            path: "plat_user_statistic_days",
+            name: "用户排行统计",
+            component: () => import(/* webpackChunkName: "plat_user_statistic_days" */"@/views/plat_user_statistic_days/view/PlatUserStatisticDays.vue")
+        },        {
+            path: "plat_user_statistic_rank_days",
+            name: "用户排行汇总",
+            component: () => import(/* webpackChunkName: "plat_user_statistic_rank_days" */"@/views/plat_user_statistic_rank_days/view/PlatUserStatisticRankDays.vue")
         },        {
             path: "plat_vendors_wallet",
             name: "平台钱包",
             component: () => import(/* webpackChunkName: "plat_vendors_wallet" */"@/views/plat_vendors_wallet/view/PlatVendorsWallet.vue")
         },        {
+            path: "plat_vendor_user",
+            name: "平台厂商用户",
+            component: () => import(/* webpackChunkName: "plat_vendor_user" */"@/views/plat_vendor_user/view/PlatVendorUser.vue")
+        },        {
             path: "plat_vip",
             name: "平台VIP",
             component: () => import(/* webpackChunkName: "plat_vip" */"@/views/plat_vip/view/PlatVip.vue")
-        },        {
-            path: "plats_notice",
-            name: "平台公告管理",
-            component: () => import(/* webpackChunkName: "plats_notice" */"@/views/plats_notice/view/PlatsNotice.vue")
         },        {
             path: "promotion_discount_index",
             name: "平台公告管理",
