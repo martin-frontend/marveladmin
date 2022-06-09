@@ -20,8 +20,6 @@ export default class WinLossDisplay extends Vue {
     @Prop({ type: String, default: "0" }) amount!: string;
 
     private checkWin(value: string) {
-        console.error(value);
-        
         let str = value.replace("$","");
         let amount = Number(str);
         if (amount > 0) return "green-color";
