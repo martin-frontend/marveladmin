@@ -645,6 +645,7 @@ export default {
         account: "账户",
         loginMsg: "登录信息",
         refreshCoins: "刷新金币",
+        refreshAsset:"刷新资产",
         minLevel: "最小等级",
         maxLevel: "最大等级",
     },

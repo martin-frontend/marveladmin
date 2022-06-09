@@ -6,7 +6,7 @@ import { Message } from "element-ui";
 import PlatUserProxy from "../proxy/PlatUserProxy";
 
 interface IPlatUser extends IEventDispatcher {
-    
+
 }
 
 export default class PlatUserMediator extends AbstractMediator {

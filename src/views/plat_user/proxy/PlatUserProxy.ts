@@ -6,6 +6,7 @@ import { HttpType } from "@/views/plat_user/setting";
 import { Message, MessageBox } from "element-ui";
 import IPlatUserProxy from "./IPlatUserProxy";
 import i18n from "@/lang";
+import ExchangeOrdersProxy from "@/views/exchange_orders/proxy/ExchangeOrdersProxy";
 
 export default class PlatUserProxy extends AbstractProxy implements IPlatUserProxy {
     static NAME = "PlatUserProxy";
@@ -24,7 +25,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             pageCount: 1,
         });
     }
-
+  
     /**表格相关数据 */
     tableData = {
         columns: {
@@ -102,7 +103,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         max_level: "",
         min_level: "",
         order_by: <any>null,
-        remark:'',
+        remark: '',
 
         page_count: 1,
         page_size: 20,
@@ -139,11 +140,10 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     setDetail(data: any) {
         const temp = [];
         for (const item of this.tableData.list) {
-            if (item.user_id == data.user_id) {
-                item.gold = data.gold_info.plat_money;
-                item.balance = data.gold_info.sum_money;
-                item.vendors_money = data.gold_info.vendors_money;
-                item.safe_gold = data.gold_info.safe_gold;
+            if (item.user_id == data.user_id && data.gold_info_summary) {
+                item.plat_money = data.gold_info_summary.plat_money;
+                item.sum_money = data.gold_info_summary.sum_money;
+                item.vendors_money = data.gold_info_summary.vendors_money
             }
             temp.push(item);
         }
@@ -159,7 +159,6 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             deductGold: "",
         });
     }
-
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
