@@ -734,6 +734,7 @@ export default {
         userDetail: "用户详情",
         userWallet: "用户钱包",
         goldDetail: "金币明细",
+        assetDetail: "资产明细",
         betDetail: "投注明细",
         water: "流水打码",
         backDetail: "返佣明细",
