@@ -100,7 +100,7 @@
                 min-width="110px"
             >
                 <template slot-scope="{ row }">
-                    <span :style="row.total_win >= 0 ? 'color:green' : 'color:red'">{{ row.total_win | hasPlus }}</span>
+                    <WinLossDisplay :amount="row.total_win"/>
                 </template>
             </el-table-column>
             <el-table-column
@@ -167,19 +167,13 @@ import PlatUserProxy from "../proxy/PlatUserProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import Cookies from "js-cookie";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
+        WinLossDisplay,
         Pagination,
-    },
-    filters: {
-        hasPlus(value: number) {
-            if (value >= 0) {
-                return `+${value.toString()}`;
-            }
-            return value;
-        },
-    },
+    }
 })
 export default class PlatUserBody extends AbstractView {
     //权限标识
