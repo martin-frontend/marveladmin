@@ -6,20 +6,26 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 @Component({
     filters: {
-        hasPlus(value: number) {
-            if (value > 0) {
-                return `+${value.toString()}`;
+        hasPlus(value: string) {
+            let  str = value.replace("$","");
+            let amount = Number(str);
+            if (amount > 0) {
+                return `+$${amount.toFixed(3)}`;
             }
-            return value;
+            return `$${amount.toFixed(3)}`;
         },
     },
 })
 export default class WinLossDisplay extends Vue {
     @Prop({ type: String, default: "0" }) amount!: string;
-    
-    private checkWin(value: number) {
-        if (value >= 0) return "green-color";
-        else return "red-color";
+
+    private checkWin(value: string) {
+        console.error(value);
+        
+        let str = value.replace("$","");
+        let amount = Number(str);
+        if (amount > 0) return "green-color";
+        else if (amount < 0) return "red-color";
     }
 }
 </script>
