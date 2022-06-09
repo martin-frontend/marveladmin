@@ -65,8 +65,8 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <div>{{ tableColumns["balance"].name }}：{{ row.balance }}</div>
-                    <div>{{ tableColumns["gold"].name }}：{{ row.gold }}</div>
+                    <div>{{ tableColumns["balance"].name }}：{{ row.sum_money }}</div>
+                    <div>{{ tableColumns["gold"].name }}：{{ row.plat_money }}</div>
                     <div>{{ tableColumns["vendors_money"].name }}：{{ row.vendors_money }}</div>
                     <div>{{ tableColumns["safe_gold"].name }}：{{ row.safe_gold }}</div>
                 </template>
