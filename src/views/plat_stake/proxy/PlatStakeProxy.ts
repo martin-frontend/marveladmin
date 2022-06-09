@@ -145,10 +145,10 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     /**更新质押配置弹窗 */
     onUpdateStakeConfig() {
         let config = {
-            put_in_ratio: this.dialogData.form.put_in_ratio * 0.01,
-            put_out_ratio: this.dialogData.form.put_out_ratio * 0.01,
-            auto_withdraw_stake_fee: this.dialogData.form.auto_withdraw_stake_fee * 0.01,
-            manual_withdraw_stake_fee: this.dialogData.form.manual_withdraw_stake_fee * 0.01,
+            put_in_ratio: (this.dialogData.form.put_in_ratio * 0.01).toFixed(2),
+            put_out_ratio: (this.dialogData.form.put_out_ratio * 0.01).toFixed(2),
+            auto_withdraw_stake_fee: (this.dialogData.form.auto_withdraw_stake_fee * 0.01).toFixed(2),
+            manual_withdraw_stake_fee: (this.dialogData.form.manual_withdraw_stake_fee * 0.01).toFixed(2),
             min_coin_count: this.dialogData.form.min_coin_count,
             is_open_stake: this.dialogData.form.is_open_stake,
         }
@@ -291,11 +291,11 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         Object.assign(this.stakePooltableData.dialogData.form, {
             pool_type: Number(data.bonus_config.pool_type),
             put_out_amount: data.bonus_config.put_out_amount.toString(),
-            put_out_ratio: (data.bonus_config.put_out_ratio * 100).toString(),
+            put_out_ratio: (data.bonus_config.put_out_ratio * 100).toFixed(2),
         });
         Object.assign(this.stakePooltableData.dialogData.formSource, {
             put_out_amount: data.bonus_config.put_out_amount,
-            put_out_ratio: (data.bonus_config.put_out_ratio * 100)
+            put_out_ratio: (data.bonus_config.put_out_ratio * 100).toFixed(2)
         });
         this.stakePooltableData.dialogData.bShow = true;
     }
@@ -308,12 +308,12 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         let form = this.stakePooltableData.dialogData.form;
         let bonus_config = {
             pool_type: form.pool_type,
-            put_out_ratio: Number(form.put_out_ratio) * 0.01,
+            put_out_ratio: (Number(form.put_out_ratio) * 0.01).toFixed(4),
             put_out_amount: form.put_out_amount
         }
         let pool_type = form.pool_type;
         if (pool_type == 1) {//手动
-            bonus_config.put_out_ratio = Number(form.put_out_ratio) * 0.01;
+            bonus_config.put_out_ratio = (Number(form.put_out_ratio) * 0.01).toFixed(4);
         } else {
             bonus_config.put_out_amount = form.put_out_amount;
         }
