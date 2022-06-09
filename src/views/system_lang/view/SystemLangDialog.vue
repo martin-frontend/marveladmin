@@ -19,10 +19,7 @@
             </el-form-item>
 
             <el-form-item :label="tableColumns.key.name" prop="key">
-                <el-input v-if="!isStatusUpdate" :placeholder="`${tableColumns.key.name}`" v-model="form.key"></el-input>
-                <span v-else>
-                    {{ form.key }}
-                </span>
+                <el-input :placeholder="`${tableColumns.key.name}`" v-model="form.key"></el-input>
             </el-form-item>
 
             <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value">
