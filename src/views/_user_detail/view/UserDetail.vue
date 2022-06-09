@@ -9,7 +9,7 @@
                     <TabWallet v-if="activeName == 'tab2'" />
                 </el-tab-pane>
                 <el-tab-pane
-                    :label="$t('user_detail.goldDetail')"
+                    :label="$t('user_detail.assetDetail')"
                     name="tab3"
                     v-if="checkUnique(unique.plat_users_gold_log)"
                 >
