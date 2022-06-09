@@ -132,6 +132,11 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     }
     /**表格数据 */
     setTableData(data: any) {
+        for(const item of data.list){
+            item.plat_money = "-";
+            item.sum_money = "-";
+            item.vendors_money = "-";
+        }
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
