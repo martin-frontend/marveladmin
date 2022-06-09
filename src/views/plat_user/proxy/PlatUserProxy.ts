@@ -25,11 +25,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             pageCount: 1,
         });
     }
-    /**是否点击刷新金币 */
-    private _isFreshAsset: boolean = false;
-    get isFreshAsset() {
-        return this._isFreshAsset;
-    }
+  
     /**表格相关数据 */
     tableData = {
         columns: {
@@ -226,7 +222,6 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     }
     // 刷新金币
     onRefrushGold(user_id: number) {
-        this._isFreshAsset = true;
         this.sendNotification(HttpType.admin_plat_user_show, { user_id, modules: "[1,2]" });
     }
     // 扣款
