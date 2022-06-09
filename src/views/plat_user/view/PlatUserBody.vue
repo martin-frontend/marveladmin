@@ -138,7 +138,7 @@
                             @click="refreshGold(row.user_id)"
                             v-if="checkUnique(unique.plat_user_refresh)"
                         >
-                            {{ $t("plat_user.refreshCoins") }}
+                            {{ $t("plat_user.refreshAsset") }}
                         </el-button>
                     </div>
                     <!-- <div>
