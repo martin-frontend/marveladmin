@@ -37,6 +37,8 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             manual_withdraw_stake_fee: 0, // 手动解质押费
             min_coin_count: 0,         // 最小质押解质押金额
             is_open_stake: 0,                // 是否允许质押
+            put_out_amount: 0,      // 手动输入的分红金额,如果目前的奖池金额,分红的时候就使用奖池金额
+            pool_type: 0 // 奖池分红类型 1-手动输入|2-百分比自动
         }
     }
     /**质押分红配置 */
@@ -132,10 +134,10 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     /**显示质押配置弹窗 */
     showBonusConfigDialog() {
         Object.assign(this.dialogData.form, this.stake_bonus_config);
-        this.dialogData.form.put_in_ratio = this.stake_bonus_config.put_in_ratio * 100;
-        this.dialogData.form.put_out_ratio = this.stake_bonus_config.put_out_ratio * 100;
-        this.dialogData.form.auto_withdraw_stake_fee = this.stake_bonus_config.auto_withdraw_stake_fee * 100;
-        this.dialogData.form.manual_withdraw_stake_fee = this.stake_bonus_config.manual_withdraw_stake_fee * 100;
+        this.dialogData.form.put_in_ratio = Math.floor(this.stake_bonus_config.put_in_ratio * 100);
+        this.dialogData.form.put_out_ratio = Math.floor(this.stake_bonus_config.put_out_ratio * 100);
+        this.dialogData.form.auto_withdraw_stake_fee = Math.floor(this.stake_bonus_config.auto_withdraw_stake_fee * 100);
+        this.dialogData.form.manual_withdraw_stake_fee = Math.floor(this.stake_bonus_config.manual_withdraw_stake_fee * 100);
         this.dialogData.bShow = true;
     }
     /**隐藏质押配置弹窗 */
@@ -145,12 +147,14 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     /**更新质押配置弹窗 */
     onUpdateStakeConfig() {
         let config = {
-            put_in_ratio: (this.dialogData.form.put_in_ratio * 0.01).toFixed(2),
-            put_out_ratio: (this.dialogData.form.put_out_ratio * 0.01).toFixed(2),
-            auto_withdraw_stake_fee: (this.dialogData.form.auto_withdraw_stake_fee * 0.01).toFixed(2),
-            manual_withdraw_stake_fee: (this.dialogData.form.manual_withdraw_stake_fee * 0.01).toFixed(2),
+            put_in_ratio: (this.dialogData.form.put_in_ratio * 0.01).toFixed(4),
+            put_out_ratio: (this.dialogData.form.put_out_ratio * 0.01).toFixed(4),
+            auto_withdraw_stake_fee: (this.dialogData.form.auto_withdraw_stake_fee * 0.01).toFixed(4),
+            manual_withdraw_stake_fee: (this.dialogData.form.manual_withdraw_stake_fee * 0.01).toFixed(4),
             min_coin_count: this.dialogData.form.min_coin_count,
+            put_out_amount: this.dialogData.form.put_out_amount,
             is_open_stake: this.dialogData.form.is_open_stake,
+            pool_type: this.dialogData.form.pool_type
         }
         let copyForm = {
             plat_id: this.listQuery.plat_id,
