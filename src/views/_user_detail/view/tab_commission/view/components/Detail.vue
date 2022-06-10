@@ -12,7 +12,17 @@
                     tableData.today_group_users
                 }})</span
             >
-            <span>{{ tableColumns.total_commission.name }}：{{ tableData.statistics_data.total_commission }}</span>
+            <span
+                >{{ tableColumns.total_commission.name }}：
+                <span
+                    v-for="(value, key) in tableData.statistics_data.total_commission"
+                    :key="key"
+                    :label="value.name"
+                    :value="key"
+                >
+                    {{ key }}:{{ value }}
+                </span></span
+            >
         </div>
         <el-table
             :data="infoList"
@@ -60,7 +70,12 @@
                 min-width="80px"
             >
                 <template slot-scope="{ row }">
-                    {{ row.commission_num }}
+                    <template v-if="row.commission_num">
+                        <div v-for="(value, key) in row.commission_num" :key="key" :label="value.name" :value="key">
+                            {{ key }}:{{ value }}
+                        </div>
+                    </template>
+                    <template v-else> -</template>
                     <template v-if="row.is_promotion_floor == 1">
                         <span class="red">({{ $t("user_detail.keep") }})</span>
                     </template>
@@ -71,7 +86,13 @@
                 prop="total_commission"
                 class-name="status-col"
                 min-width="80px"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <div v-for="(value, key) in row.total_commission" :key="key" :label="value.name" :value="key">
+                        {{ key }}:{{ value }}
+                    </div>
+                </template>
+            </el-table-column>
         </el-table>
     </div>
 </template>

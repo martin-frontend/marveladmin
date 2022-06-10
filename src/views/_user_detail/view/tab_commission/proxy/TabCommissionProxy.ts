@@ -20,18 +20,14 @@ export default class TabCommissionProxy extends AbstractProxy implements ITabCom
     tableData = {
         columns: {
             commission: {
-                2: "",
-                4: "",
-                8: "",
-                16: "",
-                32: "",
-                64: "",
-                128: "",
                 commission_history_num: "",
                 commission_received_num: "",
                 date: { name: "" },
-                keep_time: "",
+                direct_water: {name: ''},
+                group_water: {name: ''},
+                keep_time: { name: "" },
                 total_commission: { name: "" },
+                total_water: {name: ''}
             },
             commission_detail: {
                 commission_awaiting_num: { name: "" },
@@ -173,14 +169,10 @@ export default class TabCommissionProxy extends AbstractProxy implements ITabCom
         const total: any = {
             // 这里的合计不能翻 需要拿来判断
             date: "合计",
-            2: data.summary[2],
-            4: data.summary[4],
-            8: data.summary[8],
-            16: data.summary[16],
-            32: data.summary[32],
-            64: data.summary[64],
-            128: data.summary[128],
+            direct_water:data.summary.direct_water,
+            group_water:data.summary.group_water,
             total_commission: data.summary.total_commission,
+            total_water:data.summary.total_water
         };
         Object.assign(this.tableData, JSON.parse(JSON.stringify(data)));
         this.tableData.list.length = 0;
@@ -236,7 +228,7 @@ export default class TabCommissionProxy extends AbstractProxy implements ITabCom
             self_water: this.dialogData.detailData.tableData.statistics_data.self_water_summary,
             direct_water: this.dialogData.detailData.tableData.statistics_data.direct_water_summary,
             group_water: this.dialogData.detailData.tableData.statistics_data.group_water_summary,
-            commission_num: "-",
+            commission_num: "",
             total_commission: this.dialogData.detailData.tableData.statistics_data.agent_commission_summary,
             is_promotion_floor: "",
         });
