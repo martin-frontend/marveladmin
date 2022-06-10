@@ -37,20 +37,16 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             manual_withdraw_stake_fee: 0, // 手动解质押费
             min_coin_count: 0,         // 最小质押解质押金额
             is_open_stake: 0,                // 是否允许质押
-            put_out_amount: 0,      // 手动输入的分红金额,如果目前的奖池金额,分红的时候就使用奖池金额
-            pool_type: 0 // 奖池分红类型 1-手动输入|2-百分比自动
         }
     }
     /**质押分红配置 */
     stake_bonus_config = {
         min_coin_count: 0,         // 最小质押解质押金额
         put_in_ratio: 0,             // 输赢金额放入奖池比例
+        put_out_ratio: 0,            // 奖池分红比例
         manual_withdraw_stake_fee: 0, // 手动解质押费
         auto_withdraw_stake_fee: 0,   // 自动解质押费
         is_open_stake: 0,                // 是否允许质押
-        pool_type: 0,                    // 奖池分红类型 1-手动输入|2-百分比自动
-        put_out_amount: 0,     // 手动输入的分红金额,如果目前的奖池金额,分红的时候就使用奖池金额
-        put_out_ratio: 0            // 奖池分红比例
     }
     /**质押表格相关数据 */
     stakeLogtableData = {
@@ -152,10 +148,10 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             auto_withdraw_stake_fee: (this.dialogData.form.auto_withdraw_stake_fee * 0.01).toFixed(4),
             manual_withdraw_stake_fee: (this.dialogData.form.manual_withdraw_stake_fee * 0.01).toFixed(4),
             min_coin_count: this.dialogData.form.min_coin_count,
-            put_out_amount: this.dialogData.form.put_out_amount,
             is_open_stake: this.dialogData.form.is_open_stake,
-            pool_type: this.dialogData.form.pool_type
         }
+        console.error(config);
+        
         let copyForm = {
             plat_id: this.listQuery.plat_id,
             stake_bonus_config: JSON.stringify(config)
