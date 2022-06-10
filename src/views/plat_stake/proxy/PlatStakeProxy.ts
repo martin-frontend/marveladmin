@@ -230,12 +230,12 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
                 id: "",
                 plat_id: "",
                 pool_type: 0,
-                put_out_amount: "",
-                put_out_ratio: "",
+                put_in_amount: "",
+                put_in_ratio: "",
             },
             formSource: {
-                put_out_amount: "",
-                put_out_ratio: "",
+                put_in_amount: "",
+                put_in_ratio: "",
             }
         },
         columns: {
@@ -292,15 +292,29 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     showPoolDialog(data: any) {
         this.stakePooltableData.dialogData.form.id = data.id;
         this.stakePooltableData.dialogData.form.plat_id = this.listQuery.plat_id;
-        Object.assign(this.stakePooltableData.dialogData.form, {
-            pool_type: Number(data.bonus_config.pool_type),
-            put_out_amount: data.bonus_config.put_out_amount.toString(),
-            put_out_ratio: (data.bonus_config.put_out_ratio * 100).toFixed(2),
-        });
-        Object.assign(this.stakePooltableData.dialogData.formSource, {
-            put_out_amount: data.bonus_config.put_out_amount,
-            put_out_ratio: (data.bonus_config.put_out_ratio * 100).toFixed(2)
-        });
+        if (data.bonus_config.length == 0) {
+            Object.assign(this.stakePooltableData.dialogData.form, {
+                pool_type: 2,
+                put_in_amount: 0,
+                put_in_ratio: (this.stake_bonus_config.put_in_ratio * 100).toFixed(2),
+            });
+            Object.assign(this.stakePooltableData.dialogData.formSource, {
+                put_in_amount: 0,
+                put_in_ratio: (this.stake_bonus_config.put_in_ratio * 100).toFixed(2)
+            });
+        }
+        else {
+            Object.assign(this.stakePooltableData.dialogData.form, {
+                pool_type: Number(data.bonus_config.pool_type),
+                put_in_amount: data.bonus_config.put_in_amount.toString(),
+                put_in_ratio: (data.bonus_config.put_in_ratio * 100).toFixed(2),
+            });
+            Object.assign(this.stakePooltableData.dialogData.formSource, {
+                put_in_amount: data.bonus_config.put_in_amount,
+                put_in_ratio: (data.bonus_config.put_in_ratio * 100).toFixed(2)
+            });
+        }
+
         this.stakePooltableData.dialogData.bShow = true;
     }
     /**隐藏奖池设定 */
@@ -312,14 +326,14 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         let form = this.stakePooltableData.dialogData.form;
         let bonus_config = {
             pool_type: form.pool_type,
-            put_out_ratio: (Number(form.put_out_ratio) * 0.01).toFixed(4),
-            put_out_amount: form.put_out_amount
+            put_in_ratio: (Number(form.put_in_ratio) * 0.01).toFixed(4),
+            put_in_amount: form.put_in_amount
         }
         let pool_type = form.pool_type;
         if (pool_type == 1) {//手动
-            bonus_config.put_out_ratio = (Number(form.put_out_ratio) * 0.01).toFixed(4);
+            bonus_config.put_in_ratio = (Number(form.put_in_ratio) * 0.01).toFixed(4);
         } else {
-            bonus_config.put_out_amount = form.put_out_amount;
+            bonus_config.put_in_amount = form.put_in_amount;
         }
         const copyForm = {
             id: form.id,
@@ -331,10 +345,10 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     resetPoolDialog(type: number) {
         let form = this.stakePooltableData.dialogData.form;
         let source = this.stakePooltableData.dialogData.formSource;
-        if (type == 1 && source && source.put_out_ratio) {
-            form.put_out_ratio = source.put_out_ratio;
+        if (type == 1 && source && source.put_in_ratio) {
+            form.put_in_ratio = source.put_in_ratio;
         } else {
-            form.put_out_amount = source.put_out_amount;
+            form.put_in_amount = source.put_in_amount;
         }
     }
 
