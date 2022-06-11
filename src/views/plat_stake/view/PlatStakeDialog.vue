@@ -1,6 +1,6 @@
 <template>
-    <el-dialog :title="title" :visible.sync="myProxy.dialogData.bShow" width="450px">
-        <el-form ref="form" :rules="rules" :model="form" label-width="165px" v-loading="net_status.loading">
+    <el-dialog :title="title" :visible.sync="myProxy.dialogData.bShow" width="500px">
+        <el-form ref="form" :rules="rules" :model="form" label-width="180px" v-loading="net_status.loading">
             <el-form-item :label="`${tableColumns.put_in_ratio.name}%`" prop="put_in_ratio">
                 <el-input-number v-model="form.put_in_ratio" :min="0" :max="100" :step="1"></el-input-number>
             </el-form-item>
