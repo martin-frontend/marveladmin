@@ -23,7 +23,7 @@
             </el-table-column>
             <el-table-column
                 :label="tableColumns['end_time'].name"
-                prop="start_time"
+                prop="end_time"
                 min-width="90px"
                 class-name="status-col"
             >
