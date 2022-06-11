@@ -67,7 +67,7 @@ export function dateFormat(d: Date, fmt: string): string {
  * @offset 偏移天数
  * @offsetSecond 偏移秒
  */
-export function getTodayOffset(offset:number = 0, offsetSecond:number = 0): Date {
+export function getTodayOffset(offset: number = 0, offsetSecond: number = 0): Date {
     const d = new Date(new Date().toLocaleDateString());
     d.setTime(d.getTime() + 3600 * 1000 * 24 * offset - offsetSecond);
     return d;
@@ -313,7 +313,7 @@ export function formatDateByOffset(d: Date, fmt: string = "yyyy-MM-dd"): string 
 /**
  * 去掉空属性/空符串，并返回一个新对象
  */
-export function objectRemoveNull(obj: any, except:any[] = [undefined, null, ""]): any {
+export function objectRemoveNull(obj: any, except: any[] = [undefined, null, ""]): any {
     const result: any = {};
     for (const c of Object.keys(obj)) {
         if (!except.includes(obj[c])) {
@@ -327,15 +327,15 @@ export function objectRemoveNull(obj: any, except:any[] = [undefined, null, ""])
  * @param obj 表单数据
  * @param source 源数据
  */
-export function formCompared(obj:any, source:any, except:string[] = []):any {
+export function formCompared(obj: any, source: any, except: string[] = []): any {
     const result: any = {};
 
-    for(const c of Object.keys(obj)){
-        if(obj[c] && typeof obj[c] == "object"){
-            if(except.includes(c) || JSON.stringify(obj[c]) != JSON.stringify(source[c])){
+    for (const c of Object.keys(obj)) {
+        if (obj[c] && typeof obj[c] == "object") {
+            if (except.includes(c) || JSON.stringify(obj[c]) != JSON.stringify(source[c])) {
                 result[c] = JSON.stringify(obj[c]);
             }
-        }else if(except.includes(c) || obj[c] != source[c]){
+        } else if (except.includes(c) || obj[c] != source[c]) {
             result[c] = obj[c];
         }
     }
@@ -439,7 +439,7 @@ export function getFirstKey(options: { [index: string]: string }) {
  * 有时候图片地址没有协议头，给它加上
  */
 export function formatImageUrl(url: string): string {
-    if(url && url.indexOf("http") == 0) {
+    if (url && url.indexOf("http") == 0) {
         return url;
     }
     return window.location.protocol + url;
@@ -456,8 +456,12 @@ export function inputOnlyPositive(e: any) {
     return true;
 }
 // 首字大写
-String.prototype.firstUpperCase = function() {
-    return this.replace(/^\S/, function(s) {
+String.prototype.firstUpperCase = function () {
+    return this.replace(/^\S/, function (s) {
         return s.toUpperCase();
     })
+}
+/**將字串轉為數字 */
+export function convertToNum(value: string): number {
+    return parseFloat(value.replace("$", ""))
 }
