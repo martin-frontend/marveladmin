@@ -21,106 +21,39 @@
             >
             </el-table-column>
             <el-table-column
-                :label="tableColumns.commission[2].name"
-                prop="2"
+                :label="tableColumns.commission.direct_water.name"
+                prop="direct_water"
                 class-name="status-col"
                 min-width="80px"
             >
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.commission.group_water.name"
+                prop="group_water"
+                class-name="status-col"
+                min-width="80px"
+            >
+            </el-table-column>
+            <el-table-column :label="tableColumns.commission.total_commission.name" min-width="80px">
                 <template slot-scope="{ row }">
-                    <div align="left">
-                        <span v-html="getAccessInfo(row[2])"></span>
+                    <div v-for="(value, key) in row.total_commission" :key="key" :label="value.name" :value="key">
+                        {{ key }}:{{ value }}
                     </div>
                 </template>
             </el-table-column>
             <el-table-column
-                :label="tableColumns.commission[4].name"
-                prop="4"
+                :label="tableColumns.commission.total_water.name"
+                prop="total_water"
                 class-name="status-col"
                 min-width="80px"
             >
-                <template slot-scope="{ row }">
-                    <div align="left">
-                        <span v-html="getAccessInfo(row[4])"></span>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns.commission[8].name"
-                prop="8"
-                class-name="status-col"
-                min-width="80px"
-            >
-                <template slot-scope="{ row }">
-                    <div align="left">
-                        <span v-html="getAccessInfo(row[8])"></span>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns.commission[16].name"
-                prop="16"
-                class-name="status-col"
-                min-width="80px"
-            >
-                <template slot-scope="{ row }">
-                    <div align="left">
-                        <span v-html="getAccessInfo(row[16])"></span>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns.commission[32].name"
-                prop="32"
-                class-name="status-col"
-                min-width="80px"
-            >
-                <template slot-scope="{ row }">
-                    <div align="left">
-                        <span v-html="getAccessInfo(row[32])"></span>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns.commission[64].name"
-                prop="64"
-                class-name="status-col"
-                min-width="80px"
-            >
-                <template slot-scope="{ row }">
-                    <div align="left">
-                        <span v-html="getAccessInfo(row[64])"></span>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns.commission[128].name"
-                prop="128"
-                class-name="status-col"
-                min-width="80px"
-            >
-                <template slot-scope="{ row }">
-                    <div align="left">
-                        <span v-html="getAccessInfo(row[128])"></span>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns.commission.total_commission.name"
-                prop="total_commission"
-                class-name="status-col"
-                min-width="80px"
-            >
-                <template slot-scope="{ row }">
-                    <div align="left">
-                        <span v-html="getAccessInfo(row.total_commission)"></span>
-                    </div>
-                </template>
             </el-table-column>
             <el-table-column prop="date" :label="$t('common.operating')" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
                     <el-button v-if="row.date != `合计`" type="primary" @click="handlerDetail(row)" size="small">{{
                         $t("common.detail")
                     }}</el-button>
+                    <template v-else> - </template>
                 </template>
             </el-table-column>
         </el-table>
