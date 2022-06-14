@@ -57,6 +57,7 @@ export default class PlatStakeMediator extends AbstractMediator {
                 Message.success(SuccessMessage.update);
                 myProxy.hidePoolDialog();
                 myProxy.onStakePoolQuery();
+                myProxy.onQuery();
                 break;
             case EventType.admin_plat_show:
                 myProxy.setStakeBonusConfig(body.stake_bonus_config)
