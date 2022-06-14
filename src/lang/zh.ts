@@ -189,6 +189,7 @@ export default {
         disable: "禁用",
         info: "信息",
         time: "时间",
+        syncGame:"同步游戏",
     },
     vendor: {
         vendorId: "厂商ID",

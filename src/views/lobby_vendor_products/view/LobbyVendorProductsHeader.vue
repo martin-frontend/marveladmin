@@ -6,6 +6,9 @@
             :options="tableColumns.plat_id.options"
             @change="handlerSearch"
         />
+        <el-button @click="handlerSync()" class="header-button" type="primary" icon="el-icon-help">{{
+            $t("common.syncGame")
+        }}</el-button>
         <div class="group">
             <SearchInput
                 :title="tableColumns.lobby_vendor_product_id.name"
@@ -75,6 +78,9 @@ export default class VendorProductHeader extends AbstractView {
 
     private handlerReset() {
         this.myProxy.resetListQuery();
+    }
+     private handlerSync() {
+        this.myProxy.onSync();
     }
 }
 </script>

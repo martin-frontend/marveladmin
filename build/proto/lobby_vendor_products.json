@@ -5,6 +5,7 @@
     "list": [
         "admin/lobby_vendor_products/table_columns",
         "admin/lobby_vendor_products/index",
-        "admin/lobby_vendor_products/update/{lobby_vendor_product_id}"
+        "admin/lobby_vendor_products/update/{lobby_vendor_product_id}",
+        "admin/lobby_vendor_products/sync_data/{plat_id}"
     ]
 }

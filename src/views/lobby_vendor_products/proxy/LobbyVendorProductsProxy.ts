@@ -108,4 +108,10 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
     onUpdateWaterRate() {
         this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowData);
     }
+    /**同步游戏 */
+    onSync() {
+        this.sendNotification(HttpType.admin_lobby_vendor_products_sync_data, {
+            plat_id: this.listQuery.plat_id
+        })
+    }
 }
