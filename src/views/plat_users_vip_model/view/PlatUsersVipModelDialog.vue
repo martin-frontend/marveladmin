@@ -95,9 +95,9 @@
                                     v-model="item.backwater_config[citem].backwater_rate"
                                     controls-position="right"
                                     :min="0"
-                                    :max="0.9999"
-                                    :step="0.0001"
-                                    :precision="4"
+                                    :max="0.99999"
+                                    :step="0.00001"
+                                    :precision="5"
                                 ></el-input-number>
                             </el-form-item>
                         </el-form>
