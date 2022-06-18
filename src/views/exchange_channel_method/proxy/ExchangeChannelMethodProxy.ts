@@ -45,6 +45,7 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
             balance: { name: "", options: {} },
             subtitle: { name: "", options: {} },
             status: { name: "", options: {} },
+            explain: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -73,6 +74,7 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
             balance: "10",
             subtitle: "",
             status: "1",
+            explain:"",
         },
         formSource: null, // 表单的原始数据
     };
@@ -216,6 +218,6 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
                     is_delete: 1,
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 }

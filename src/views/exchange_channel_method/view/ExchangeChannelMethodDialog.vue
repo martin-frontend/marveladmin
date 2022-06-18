@@ -37,7 +37,15 @@
                     show-word-limit
                 ></el-input>
             </el-form-item>
-
+             <el-form-item size="mini" :label="columnInfo.explain.name" prop="explain">
+                <el-input
+                    v-model="form.explain"
+                    :placeholder="$t('common.pleaseEnter')"
+                    type="textarea"
+                    maxlength="100"
+                    show-word-limit
+                ></el-input>
+            </el-form-item>
             <el-form-item size="mini" :label="columnInfo.status.name" prop="status">
                 <el-radio-group v-model="form.status">
                     <el-radio v-for="(value, key) in columnInfo.status.options" :key="key" :label="key">{{
