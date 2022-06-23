@@ -6,26 +6,25 @@
                     <el-input
                         class="input"
                         clearable
-                        placeholder="$t('plat_vip.effectiveFlow')"
+                        :placeholder="$t('plat_vip.effectiveFlow')"
                         v-model="item.total_water"
                         :disabled="!myProxy.isEdit"
                         oninput="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')"
                         @keydown.native="inputLimit"
                     >
-                        <template slot="prepend">{{ $t("plat_vip.effectiveFlow") }}</template>
                     </el-input>
 
                     <el-input
+                        v-if="item.total_recharge"
                         class="input"
                         type="number"
                         clearable
-                        placeholder="$t('plat_vip.totalRecharge')"
+                        :placeholder="$t('plat_vip.totalRecharge')"
                         v-model="item.total_recharge"
                         :disabled="!myProxy.isEdit"
                         oninput="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')"
                         @keydown.native="inputLimit"
                     >
-                        <template slot="prepend">{{ $t("plat_vip.totalRecharge") }}</template>
                     </el-input>
                 </el-form-item>
 

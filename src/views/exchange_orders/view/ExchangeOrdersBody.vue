@@ -114,9 +114,7 @@
                             <p>{{ tableColumns["coin_username"].name }}：{{ row.coin_username }}</p>
                         </template>
 
-                        <div>
-                            {{ tableColumns["coin_name_unique"].name }}：{{ row.coin_name_unique }}
-                        </div>
+                        <div>{{ tableColumns["coin_name_unique"].name }}：{{ row.coin_name_unique }}</div>
                         <div>
                             {{ tableColumns["block_network_id"].name }}：{{
                                 tableColumns["block_network_id"].options[row.block_network_id]
@@ -125,13 +123,17 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="payment_method" :label="tableColumns['payment_method'].name" min-width="180px" align="center">
+            <el-table-column
+                prop="payment_method"
+                :label="tableColumns['payment_method'].name"
+                min-width="180px"
+                align="center"
+            >
                 <template slot-scope="{ row }">
                     <div align="left">
                         <div>
-                            {{ tableColumns["receive_payment_type"].name }}：{{
-                                tableColumns["receive_payment_type"].options[row.receive_payment_type]
-                            }}
+                            {{ tableColumns["receive_payment_type"].name
+                            }}：{{ tableColumns["receive_payment_type"].options[row.receive_payment_type] }}
                         </div>
                         <span v-html="getAccessInfo(row)"></span>
                     </div>
@@ -347,13 +349,6 @@ export default class ExchangeOrdersBody extends AbstractView {
     getAccessInfo(data: any) {
         const options: any = this.tableColumns.payment_method.options[data.receive_payment_type];
         let infoStr = "";
-        if (data.receive_payment_type == 3) {
-            infoStr += options["address"] + "：";
-            //不懂这里为什么options中定义的是address，在列表中要取account字段
-            infoStr += data.payment_method["account"] + "<br>";
-            console.log("");
-            return infoStr;
-        }
         if (options) {
             const keys = Object.keys(options);
             for (const key of keys) {

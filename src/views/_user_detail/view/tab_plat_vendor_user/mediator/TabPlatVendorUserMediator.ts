@@ -4,6 +4,7 @@ import TabPlatVendorUserProxy from "../proxy/TabPlatVendorUserProxy";
 import { getPageSetting, getProxy } from "@/views/_user_detail/PageSetting";
 import { Message, MessageBox } from "element-ui";
 import i18n from "@/lang";
+import { convertToNum } from "@/core/global/Functions";
 
 export default class TabPlatVendorUserMediator extends AbstractMediator {
     private myProxy: TabPlatVendorUserProxy = <any>getProxy(TabPlatVendorUserProxy);
@@ -43,7 +44,7 @@ export default class TabPlatVendorUserMediator extends AbstractMediator {
                 case EventType.admin_plat_vendor_user_money:
                     {
                         const msg = i18n.t("user_detail.vendorBalance") + "：" + body.gold;
-                        if (parseFloat(body.gold) > 0) {
+                        if (convertToNum(body.gold) > 0) {
                             MessageBox.confirm(msg, "", {
                                 confirmButtonText: <string>i18n.t("user_detail.withdraw"),
                                 cancelButtonText: <string>i18n.t("common.close"),

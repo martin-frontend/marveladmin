@@ -4,11 +4,7 @@
             {{ $t("plat_users_bet.stastisticList") }}
             <span>{{ $t("common.totalBet") }}:{{ summary.bet_gold }}</span>
             <span>{{ $t("common.validBet") }}:{{ summary.valid_bet_gold }}</span>
-            <span
-                >{{ $t("common.playerWinLoss") }}:<a :style="summary.win_gold >= 0 ? 'color:green' : 'color:red'">{{
-                    summary.win_gold >= 0 ? "+" + summary.win_gold : summary.win_gold
-                }}</a></span
-            >
+            <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="summary.win_gold" /></span>
             <span>{{ $t("common.settleWater") }}:{{ summary.settlement_water }}</span>
             <span>{{ $t("common.playerWater") }}:{{ summary.water }}</span>
         </div>
@@ -207,6 +203,9 @@ export default class PlatUsersBetBody extends AbstractView {
     margin-bottom: 16px;
     span {
         margin-left: 20px;
+        :nth-child(1) {
+            margin-left: 0;
+        }
     }
 }
 </style>

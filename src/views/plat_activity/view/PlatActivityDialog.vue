@@ -242,7 +242,13 @@
 
                             <img :src="formatImageUrl(myProxy.dialogData.fileList[0].url)" />
                         </div>
-                        <el-button style="max-height: 35px; margin-left: 10px" type="primary" size="mini" @click="handleLangImg()">多语言图片</el-button>
+                        <el-button
+                            style="max-height: 35px; margin-left: 10px"
+                            type="primary"
+                            size="mini"
+                            @click="handleLangImg()"
+                            >多语言图片</el-button
+                        >
                     </div>
                 </el-form-item>
                 <el-form-item
@@ -287,17 +293,44 @@
                                 <el-col :span="4">
                                     <div>{{ typeOptions[childRule.type] }}</div>
                                 </el-col>
-                                <el-col :span="8">
+                                <el-col :span="5">
                                     <div>{{ getRuleInfo(childRule).params_name }}</div>
                                 </el-col>
-                                <el-col :span="6">
+                                <el-col :span="15">
                                     <el-input
                                         size="small"
                                         v-if="childRule.params_type == '1'"
                                         v-model="childRule.params"
                                         :placeholder="$t('common.pleaseEnter')"
                                         :disabled="isStatusUpdate"
+                                        style="width: 80px"
                                     ></el-input>
+                                    <el-select
+                                        size="small"
+                                        v-if="childRule.type == 61 && childRule.params_type == 5"
+                                        v-model="childRule.coin_type"
+                                        filterable
+                                        :placeholder="$t('common.pleaseChoose')"
+                                        :disabled="isStatusUpdate"
+                                        style="margin-right: 5px"
+                                    >
+                                        <el-option
+                                            v-for="(value, key) in tableColumns.reward_coin.options[form.plat_id]"
+                                            :key="key"
+                                            :label="value"
+                                            :value="key"
+                                        ></el-option>
+                                    </el-select>
+                                    <el-input-number
+                                        size="small"
+                                        v-if="childRule.type == 61 && childRule.params_type == 5"
+                                        v-model="childRule.coin_amount"
+                                        :placeholder="$t('common.pleaseEnter')"
+                                        :disabled="isStatusUpdate"
+                                        :min="0"
+                                        :step="1"
+                                        controls-position="right"
+                                    ></el-input-number>
                                     <el-radio-group
                                         v-model="childRule.params"
                                         v-if="childRule.params_type == '2'"

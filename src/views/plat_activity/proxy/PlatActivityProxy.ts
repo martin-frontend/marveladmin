@@ -6,6 +6,7 @@ import { MessageBox, TableColumn } from "element-ui";
 import IPlatActivityProxy from "./IPlatActivityProxy";
 import i18n from "@/lang";
 import Cookies from "js-cookie";
+import ExchangeOrdersProxy from "@/views/exchange_orders/proxy/ExchangeOrdersProxy";
 
 export default class PlatActivityProxy extends AbstractProxy implements IPlatActivityProxy {
     static NAME = "PlatActivityProxy";
@@ -67,6 +68,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             start_time: { name: "开始时间", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
+            reward_coin: { name: "", options: {} }
         },
         orderData: {
             id: "",
@@ -307,7 +309,16 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_type,
             is_once,
         } = this.dialogData.form;
-
+        for (const item of rules) {
+            for (const child of item.list) {
+                for (const child_1 of child.list) {
+                    if (child_1.coin_type &&
+                        child_1.type == "61" && child_1.params_type == 5) {
+                        child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+                    }
+                }
+            }
+        }
         if (type === "1") {
             formCopy = {
                 plat_id,
@@ -362,7 +373,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_activity_store, objectRemoveNull(formCopy));
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**关闭该活动 */
@@ -389,7 +400,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 };
                 this.facade.sendNotification(HttpType.admin_plat_activity_update, copyForm);
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**更新活动*/
@@ -470,6 +481,19 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.dialogData.form.link_url = link_url;
             this.dialogData.form.is_once = is_once;
             this.dialogData.form.show_type = show_types[0];
+
+            for (const item of rules) {
+                for (const child of item.list) {
+                    for (const child_1 of child.list) {
+                        if (child_1.params_type && child_1.type) {
+                            if (child_1.type == 61 && child_1.params_type == 5) {
+                                child_1.coin_type = "USDT";
+                                child_1.coin_amount = 0;
+                            }
+                        }
+                    }
+                }
+            }
             this.dialogData.form.rules = rules;
             this.dialogData.update++;
 

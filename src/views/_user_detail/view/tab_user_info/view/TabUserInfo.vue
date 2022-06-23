@@ -108,7 +108,7 @@
                         {{ $t("common.update") }}
                     </el-button>
                 </el-form-item>
-                <el-form-item size="mini" :label="tableColumns['wechat'].name" prop="wechat">
+                <!-- <el-form-item size="mini" :label="tableColumns['wechat'].name" prop="wechat">
                     <el-input disabled v-model="userInfo.wechat" style="width: 200px"></el-input>
                     <el-button
                         class="item"
@@ -119,8 +119,8 @@
                     >
                         {{ $t("common.update") }}
                     </el-button>
-                </el-form-item>
-                <el-form-item size="mini" :label="tableColumns['qq'].name" prop="qq">
+                </el-form-item> -->
+                <!-- <el-form-item size="mini" :label="tableColumns['qq'].name" prop="qq">
                     <el-input disabled v-model="userInfo.qq" style="width: 200px"></el-input>
                     <el-button
                         class="item"
@@ -131,7 +131,7 @@
                     >
                         {{ $t("common.update") }}
                     </el-button>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item size="mini" :label="tableColumns['password'].name" prop="password">
                     <el-input disabled v-model="userInfo.password" type="password" style="width: 200px"></el-input>
                     <el-button
@@ -193,7 +193,7 @@
                         </el-button>
                     </el-form-item>
                 </div>
-                <div class="row_display">
+                <!-- <div class="row_display">
                     <el-form-item
                         size="mini"
                         :label="tableColumns['is_promotion_statistics_display'].name"
@@ -227,7 +227,7 @@
                             :inactive-value="0"
                         ></el-switch>
                     </el-form-item>
-                </div>
+                </div> -->
 
                 <div class="row_display">
                     <el-form-item

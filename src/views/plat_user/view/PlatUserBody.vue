@@ -65,8 +65,8 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <div>{{ tableColumns["balance"].name }}：{{ row.balance }}</div>
-                    <div>{{ tableColumns["gold"].name }}：{{ row.gold }}</div>
+                    <div>{{ tableColumns["balance"].name }}：{{ row.sum_money }}</div>
+                    <div>{{ tableColumns["gold"].name }}：{{ row.plat_money }}</div>
                     <div>{{ tableColumns["vendors_money"].name }}：{{ row.vendors_money }}</div>
                     <div>{{ tableColumns["safe_gold"].name }}：{{ row.safe_gold }}</div>
                 </template>
@@ -100,7 +100,7 @@
                 min-width="110px"
             >
                 <template slot-scope="{ row }">
-                    <span :style="row.total_win >= 0 ? 'color:green' : 'color:red'">{{ row.total_win | hasPlus }}</span>
+                    <WinLossDisplay :amount="row.total_win"/>
                 </template>
             </el-table-column>
             <el-table-column
@@ -138,7 +138,7 @@
                             @click="refreshGold(row.user_id)"
                             v-if="checkUnique(unique.plat_user_refresh)"
                         >
-                            {{ $t("plat_user.refreshCoins") }}
+                            {{ $t("plat_user.refreshAsset") }}
                         </el-button>
                     </div>
                     <!-- <div>
@@ -167,19 +167,13 @@ import PlatUserProxy from "../proxy/PlatUserProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import Cookies from "js-cookie";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
+        WinLossDisplay,
         Pagination,
-    },
-    filters: {
-        hasPlus(value: number) {
-            if (value >= 0) {
-                return `+${value.toString()}`;
-            }
-            return value;
-        },
-    },
+    }
 })
 export default class PlatUserBody extends AbstractView {
     //权限标识

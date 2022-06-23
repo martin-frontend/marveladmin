@@ -57,44 +57,32 @@
                 </el-form-item>
                 <!--流水配置 -->
                 <el-form-item size="mini" :label="tableColumns['water_config'].name" prop="water_config">
-                    <div class="grid">
-                        <div class="dropdown-item" style="width: 250px" v-for="(value, key) in waterData" :key="key">
-                            <div style="margin-right: 10px">{{ value }}</div>
-                            <template v-if="form.water_config[key]">
-                                <el-select
-                                    v-model="form.water_config[key].type"
-                                    filterable
-                                    class="select"
-                                    :placeholder="$t('common.pleaseChoose')"
-                                    style="margin-right: 10px"
-                                >
-                                    <el-option
-                                        v-for="(value, key) in tableColumns.vendor_type.options_type[0]"
-                                        :key="key"
-                                        :label="value"
-                                        :value="key"
-                                    ></el-option>
-                                </el-select>
-                                <el-input
-                                    style="width: 80px"
-                                    type="number"
-                                    :min="tableColumns.vendor_type.options_rate[0].min"
-                                    :max="tableColumns.vendor_type.options_rate[0].max"
-                                    step="0.01"
-                                    oninput="value = value.replace(/[^\d]+\./g, '');
-                                    if(value >9.99)value=9.99;
-                                    if(value.split('.').length > 1) {
-                                        if(value.split('.')[1].length > 2){
-                                            value = value.split('.')[0] + '.' + value.split('.')[1].substr(0, 2);
-                                        }
-                                        if(value.split('.')[1].length == 2 && value ==0){
-                                            value=0.01;
-                                        }
-                                    }"
-                                    v-model="form.water_config[key].rate"
-                                ></el-input>
-                            </template>
-                        </div>
+                    <div class="water_config_item" v-for="(value, key) in waterData" :key="key">
+                        <div class="title">{{ value }}</div>
+                        <template v-if="form.water_config[key]">
+                            <el-select
+                                v-model="form.water_config[key].type"
+                                filterable
+                                :placeholder="$t('common.pleaseChoose')"
+                            >
+                                <el-option
+                                    v-for="(value, key) in tableColumns.vendor_type.options_type[0]"
+                                    :key="key"
+                                    :label="value"
+                                    :value="key"
+                                ></el-option>
+                            </el-select>
+                            <el-input-number
+                                size="mini"
+                                :min="Number(tableColumns.vendor_type.options_rate[0].min)"
+                                :max="Number(tableColumns.vendor_type.options_rate[0].max)"
+                                :step="0.01"
+                                :precision="2"
+                                controls-position="right"
+                                v-model="form.water_config[key].rate"
+                            >
+                            </el-input-number>
+                        </template>
                     </div>
                 </el-form-item>
                 <!--代理保底 -->
@@ -582,10 +570,16 @@ export default class PlatDialog extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
-.grid {
+.water_config_item {
     display: flex;
-    flex-wrap: wrap;
-    width: 600px;
+    margin-bottom: 10px;
+    .title {
+        width: 60px;
+    }
+    .el-select {
+        margin-right: 10px;
+        width: 120px;
+    }
 }
 .switch_setting {
     .vendor_type {

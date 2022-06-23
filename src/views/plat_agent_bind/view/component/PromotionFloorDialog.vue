@@ -17,8 +17,7 @@
                     }}</span
                 >
             </el-form-item>
-            <!--  -->
-            <el-form-item size="mini" :label="tableColumns.vendor_type_2.name">
+            <!-- <el-form-item size="mini" :label="tableColumns.vendor_type_2.name">
                 <el-input
                     v-model="form.vendor_type_2"
                     :placeholder="$t('common.pleaseEnter')"
@@ -30,7 +29,6 @@
                     }}</span
                 >
             </el-form-item>
-            <!--  -->
             <el-form-item size="mini" :label="tableColumns['vendor_type_4'].name" prop="vendor_type_4">
                 <el-input
                     v-model="form.vendor_type_4"
@@ -43,7 +41,6 @@
                     }}</span
                 >
             </el-form-item>
-            <!--  -->
             <el-form-item size="mini" :label="tableColumns['vendor_type_8'].name" prop="vendor_type_8">
                 <el-input
                     v-model="form.vendor_type_8"
@@ -103,15 +100,15 @@
                         floorRange["128"].max
                     }}</span
                 >
-            </el-form-item>
+            </el-form-item> -->
             <div class="remarks">
-                <div>{{ $t("plat_agent_bind.note") }}：</div>
+                <div>{{ $t("plat_agent_bind.note") }}</div>
                 <ol>
-                    <li>{{ $t("plat_agent_bind.noteText1") }};</li>
-                    <li>{{ $t("plat_agent_bind.noteText2") }};</li>
-                    <li>{{ $t("plat_agent_bind.noteText3") }};</li>
-                    <li>{{ $t("plat_agent_bind.noteText4") }};</li>
-                    <li>{{ $t("plat_agent_bind.noteText5") }};</li>
+                    <li>{{ $t("plat_agent_bind.noteText1") }}</li>
+                    <li>{{ $t("plat_agent_bind.noteText2") }}</li>
+                    <li>{{ $t("plat_agent_bind.noteText3") }}</li>
+                    <li>{{ $t("plat_agent_bind.noteText4") }}</li>
+                    <li>{{ $t("plat_agent_bind.noteText5") }}</li>
                 </ol>
             </div>
             <div class="dialog-footer">

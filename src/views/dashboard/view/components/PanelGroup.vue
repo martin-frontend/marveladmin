@@ -3,7 +3,7 @@
         <el-col class="card-panel-col" v-for="(item, index) in panelData" :key="index">
             <div class="card-panel">
                 <div class="card-panel-icon-wrapper">
-                    <span class="icon-size" :class="item.icon" style="color:#34bfa3"></span>
+                    <span class="icon-size" :class="item.icon" style="color: #34bfa3"></span>
                 </div>
                 <div class="card-panel-description">
                     <div class="card-panel-text">
@@ -12,17 +12,11 @@
                     <span v-if="item.vary">
                         <div class="card-panel-num">
                             {{ $t("common.today") }}
-                            <span :style="{ color: item.today >= 0 ? 'green' : 'red' }">
-                                <span v-if="item.vary && item.today >= 0">+</span>
-                                <span>{{ item.today }}</span>
-                            </span>
+                            <WinLossDisplay :amount="item.today"/>
                         </div>
                         <div class="card-panel-num">
                             {{ $t("common.yesterday") }}
-                            <span :style="{ color: item.yesterday >= 0 ? 'green' : 'red' }">
-                                <span v-if="item.vary && item.yesterday >= 0">+</span>
-                                <span>{{ item.yesterday }}</span>
-                            </span>
+                            <WinLossDisplay :amount="item.yesterday"/>
                         </div>
                     </span>
                     <span v-if="!item.vary">
@@ -50,8 +44,13 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
-@Component
+@Component({
+    components: {
+        WinLossDisplay,
+    },
+})
 export default class DashboardDialog extends AbstractView {
     // 权限标识
     private unique = unique;

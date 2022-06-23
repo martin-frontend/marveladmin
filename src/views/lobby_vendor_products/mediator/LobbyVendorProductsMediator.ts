@@ -1,12 +1,13 @@
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
+import i18n from "@/lang";
 import { EventType, HttpType } from "@/views/lobby_vendor_products/setting";
 import { Message } from "element-ui";
 import LobbyVendorProductsProxy from "../proxy/LobbyVendorProductsProxy";
 
 interface ILobbyVendorProducts extends IEventDispatcher {
-    
+
 }
 
 export default class LobbyVendorProductsMediator extends AbstractMediator {
@@ -29,7 +30,7 @@ export default class LobbyVendorProductsMediator extends AbstractMediator {
             EventType.admin_lobby_vendor_products_table_columns,
             EventType.admin_lobby_vendor_products_index,
             EventType.admin_lobby_vendor_products_update,
-
+            EventType.admin_lobby_vendor_products_sync_data
         ];
     }
 
@@ -47,6 +48,9 @@ export default class LobbyVendorProductsMediator extends AbstractMediator {
             case EventType.admin_lobby_vendor_products_update:
                 Message.success(SuccessMessage.update);
                 myProxy.onQuery();
+                break;
+            case EventType.admin_lobby_vendor_products_sync_data:
+                Message.success(<string>i18n.t("successMessage.operation"));
                 break;
         }
     }
