@@ -126,7 +126,7 @@ export default class SystemResourceProxy extends AbstractProxy implements ISyste
             .then(() => {
                 this.sendNotification(HttpType.admin_system_resource_update, { id: id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**图片批次处理弹窗相关数据 */
@@ -163,6 +163,7 @@ export default class SystemResourceProxy extends AbstractProxy implements ISyste
         const item = this.imgBatchDialogData.fileList.shift();
         this.sendNotification(HttpType.admin_system_resource_store, {
             file: item.raw,
+            type: this.dialogData.form.type
         });
     }
     /**批次删除 */
