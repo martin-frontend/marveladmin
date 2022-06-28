@@ -1,6 +1,7 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import GlobalEventType from "@/core/global/GlobalEventType";
 import { HttpType } from "@/views/plat_stake/setting";
 import { MessageBox } from "element-ui";
 import IPlatStakeProxy from "./IPlatStakeProxy";
@@ -151,7 +152,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             is_open_stake: this.dialogData.form.is_open_stake,
         }
         console.error(config);
-        
+
         let copyForm = {
             plat_id: this.listQuery.plat_id,
             stake_bonus_config: JSON.stringify(config)
@@ -458,5 +459,10 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         this.stakeBonustableData.pageInfo.pageCurrent = 1;
         this.stakeLogtableData.pageInfo.pageCurrent = 1;
         this.stakePooltableData.pageInfo.pageCurrent = 1;
+    }
+
+    // 打开用户详情页
+    onShowDetail(user_id: number) {
+        this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
     }
 }

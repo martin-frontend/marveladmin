@@ -21,6 +21,9 @@
                 min-width="80px"
                 class-name="status-col"
             >
+                <template slot-scope="{ row }">
+                    <span @click="showUserDetail(row.user_id)" class="user_id">{{ row.user_id }}</span>
+                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns['nick_name'].name"
@@ -102,7 +105,10 @@ export default class PlatUserLogDialog extends AbstractView {
         this.listQuery.page_count = page;
         this.myProxy.onStakeUserLogQuery();
     }
-
+    // 打开用户详情
+    private showUserDetail(user_id: number) {
+        this.myProxy.onShowDetail(user_id);
+    }
     // 排序
     private tableSortChange(column: any) {
         let order_by = {};
