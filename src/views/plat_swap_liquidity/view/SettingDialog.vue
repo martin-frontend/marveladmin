@@ -10,10 +10,16 @@
             </el-form-item>
 
             <el-form-item size="mini" label="费率" prop="swap_fee_ratio">
-                <el-input
-                    v-model="form.swap_fee_ratio"
-                    onkeyup="this.value=(this.value.match(/\d+(.\d{0,6})?/)||[''])[0]"
-                ></el-input>
+                <el-row>
+                    <el-col :span="6" class="d-flex">
+                        <el-input
+                            v-model="form.swap_fee_ratio"
+                            onkeyup="this.value=(this.value.match(/\d+(.\d{0,6})?/)||[''])[0]"
+                        ></el-input>
+                        %
+                    </el-col>
+                </el-row>
+
                 <p>输入0-20数字，最多保留6位小数</p>
             </el-form-item>
 
