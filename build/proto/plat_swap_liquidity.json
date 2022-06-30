@@ -1,0 +1,11 @@
+{
+    "name": "Swap管理",
+    "description": "Swap管理",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766731",
+    "list": [
+        "admin/plat_swap_liquidity/table_columns",
+        "admin/plat_swap_liquidity/index",
+        "admin/plat_swap_liquidity/update/{plat_swap_pair_id}",
+        "admin/plat_swap_liquidity/update/liquidity/{plat_swap_pair_id}"
+    ]
+}

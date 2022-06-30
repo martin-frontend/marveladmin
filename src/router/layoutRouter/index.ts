@@ -226,6 +226,10 @@ const layoutRouter = {
             name: "平台质押分红",
             component: () => import(/* webpackChunkName: "plat_stake" */"@/views/plat_stake/view/PlatStake.vue")
         },        {
+            path: "plat_swap_liquidity",
+            name: "Swap管理",
+            component: () => import(/* webpackChunkName: "plat_swap_liquidity" */"@/views/plat_swap_liquidity/view/PlatSwapLiquidity.vue")
+        },        {
             path: "plat_user",
             name: "平台用户",
             component: () => import(/* webpackChunkName: "plat_user" */"@/views/plat_user/view/PlatUser.vue")
