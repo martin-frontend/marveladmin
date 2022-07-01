@@ -1,0 +1,11 @@
+{
+    "name": "币对管理",
+    "description": "币对管理",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766726",
+    "list": [
+        "admin/plat_swap_pairs/table_columns",
+        "admin/plat_swap_pairs/index",
+        "admin/plat_swap_pairs/store",
+        "admin/plat_swap_pairs/update/{plat_swap_pair_id}"
+    ]
+}
