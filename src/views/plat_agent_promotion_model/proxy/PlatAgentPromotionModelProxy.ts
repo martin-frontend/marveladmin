@@ -33,6 +33,7 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
             promotion_model_id: { name: "", options: {} },
             type: { name: "", options: {} },
             is_promotion_num_added: { name: "", options: {} },
+            promotion_reward_coin_ratio: {name: "", options: {}},
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -51,6 +52,7 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
             name: "",
             desc: "",
             type: "",
+            promotion_reward_coin_ratio: 0,
             is_promotion_num_added: 98,
             calc_type:'1',
             promotion_config: {
@@ -104,7 +106,7 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
                  //@ts-ignore
                 this.dialogData.form['promotion_config2'] = promotion_config2;
             }
-            
+
         }
     }
 
@@ -132,6 +134,7 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
             name: "",
             desc: "",
             type: "",
+            promotion_reward_coin_ratio: 0,
             calc_type:'1',
             is_promotion_num_added: 98,
             promotion_config: {
@@ -156,11 +159,12 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
     }
     /**添加数据 */
     onAdd() {
-        const { name, desc, type, promotion_config, promotion_config2, is_promotion_num_added,calc_type } = this.dialogData.form;
+        const { name, desc, type, promotion_reward_coin_ratio, promotion_config, promotion_config2, is_promotion_num_added,calc_type } = this.dialogData.form;
         const formCopy: any = {
             name,
             desc,
             type,
+            promotion_reward_coin_ratio,
             promotion_config,
             is_promotion_num_added,
             calc_type
@@ -168,15 +172,15 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
         if(calc_type == '2'){
             formCopy.promotion_config['0'] = promotion_config2['0']
         }
-       
+
         formCopy.promotion_config = JSON.stringify(formCopy.promotion_config);
         console.error(formCopy);
-        
+
         this.sendNotification(HttpType.admin_plat_agent_promotion_model_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
     onUpdate() {
-        
+
         const calc_type  = this.dialogData.form.calc_type
         let formCopy: any = null
         // 删除多余无法去除的参数
@@ -199,7 +203,7 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
             this.dialogData.bShow = false;
             return;
         }
-        
+
         // 添加必填参数
         formCopy.promotion_model_id = this.dialogData.form.promotion_model_id;
         this.sendNotification(HttpType.admin_plat_agent_promotion_model_update, formCopy);

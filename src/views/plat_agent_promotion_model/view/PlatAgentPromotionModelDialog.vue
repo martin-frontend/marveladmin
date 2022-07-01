@@ -17,6 +17,15 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
+
+            <el-form-item
+                size="mini"
+                :label="tableColumns['promotion_reward_coin_ratio'].name"
+                prop="promotion_reward_coin_ratio"
+            >
+                <el-input v-model="form.promotion_reward_coin_ratio" :placeholder="$t('common.pleaseEnter')"></el-input>
+            </el-form-item>
+
             <el-form-item :label="tableColumns.is_promotion_num_added.name" prop="promotion_model_id">
                 <el-switch
                     v-model="form.is_promotion_num_added"
@@ -247,6 +256,7 @@ export default class PlatAgentPromotionModelDialog extends AbstractView {
             name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             desc: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            promotion_reward_coin_ratio: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
         };
     }
 

@@ -108,6 +108,17 @@
                         {{ $t("common.update") }}
                     </el-button>
                 </el-form-item>
+                <el-form-item size="mini" :label="tableColumns['pretty_user_id'].name" prop="pretty_user_id">
+                    <el-input disabled v-model="userInfo.pretty_user_id" style="width: 200px"></el-input>
+                    <el-button
+                        class="item"
+                        type="primary"
+                        @click="handlerEdit('pretty_user_id')"
+                        style="margin-left: 20px"
+                    >
+                        {{ $t("common.update") }}
+                    </el-button>
+                </el-form-item>
                 <!-- <el-form-item size="mini" :label="tableColumns['wechat'].name" prop="wechat">
                     <el-input disabled v-model="userInfo.wechat" style="width: 200px"></el-input>
                     <el-button
