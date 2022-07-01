@@ -4,7 +4,7 @@
             :title="tableColumns.plat_id.name"
             v-model="listQuery.plat_id"
             :options="tableColumns.plat_id.options"
-            clearable
+            :clearable="false"
         />
 
         <div class="group">
@@ -14,12 +14,12 @@
                 :endDate.sync="listQuery['trade_time-{<=}']"
             />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
-            <!-- <SearchSelect
+            <SearchSelect
                 :title="tableColumns.plat_swap_pair_id.name"
                 v-model="listQuery.plat_swap_pair_id"
-                :options="tableColumns.plat_swap_pair_id.options"
+                :options="tableColumns.plat_swap_pair_id.options[listQuery.plat_id]"
                 clearable
-            /> -->
+            />
         </div>
         <div class="group">
             <div>

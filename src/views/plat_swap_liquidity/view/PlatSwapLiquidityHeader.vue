@@ -5,7 +5,7 @@
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
-                clearable
+                :clearable="false"
             />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">查询</el-button>

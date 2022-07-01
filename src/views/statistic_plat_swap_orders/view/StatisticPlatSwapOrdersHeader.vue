@@ -8,9 +8,9 @@
         />
         <div class="group">
             <SearchDatePicker
-                :title="tableColumns.created_at.name"
-                :startDate.sync="listQuery['created_at-{>=}']"
-                :endDate.sync="listQuery['created_at-{<=}']"
+                :title="tableColumns.created_date.name"
+                :startDate.sync="listQuery['created_date-{>=}']"
+                :endDate.sync="listQuery['created_date-{<=}']"
             />
             <SearchSelect
                 :title="tableColumns.plat_swap_pair_id.name"
@@ -31,12 +31,10 @@
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
-import PlatSwapLiquidityLogProxy from "../proxy/PlatSwapLiquidityLogProxy";
+import StatisticPlatSwapOrdersProxy from "../proxy/StatisticPlatSwapOrdersProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SearchSelect from "@/components/SearchSelect.vue";
-import SearchInput from "@/components/SearchInput.vue";
-import SearchRange from "@/components/SearchRange.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
@@ -45,12 +43,12 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
         SearchDatePicker,
     },
 })
-export default class PlatSwapLiquidityLogHeader extends AbstractView {
+export default class StatisticPlatSwapOrdersHeader extends AbstractView {
     //权限标识
     private unique = unique;
     private checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatSwapLiquidityLogProxy = this.getProxy(PlatSwapLiquidityLogProxy);
+    private myProxy: StatisticPlatSwapOrdersProxy = this.getProxy(StatisticPlatSwapOrdersProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private listQuery = this.myProxy.listQuery;

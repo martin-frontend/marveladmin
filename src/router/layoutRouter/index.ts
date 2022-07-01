@@ -338,6 +338,10 @@ const layoutRouter = {
             name: "平台出入款",
             component: () => import(/* webpackChunkName: "statistic_plat_funds_flow" */"@/views/statistic_plat_funds_flow/view/StatisticPlatFundsFlow.vue")
         },        {
+            path: "statistic_plat_swap_orders",
+            name: "交易统计",
+            component: () => import(/* webpackChunkName: "statistic_plat_swap_orders" */"@/views/statistic_plat_swap_orders/view/StatisticPlatSwapOrders.vue")
+        },        {
             path: "statistic_user_days",
             name: "用户统计",
             component: () => import(/* webpackChunkName: "statistic_user_days" */"@/views/statistic_user_days/view/StatisticUserDays.vue")

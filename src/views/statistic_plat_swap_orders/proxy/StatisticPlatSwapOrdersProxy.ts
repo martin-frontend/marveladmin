@@ -1,16 +1,16 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
-import { HttpType } from "@/views/plat_swap_liquidity_log/setting";
+import { HttpType } from "@/views/statistic_plat_swap_orders/setting";
 import { MessageBox } from "element-ui";
-import IPlatSwapLiquidityLogProxy from "./IPlatSwapLiquidityLogProxy";
+import IStatisticPlatSwapOrdersProxy from "./IStatisticPlatSwapOrdersProxy";
 
-export default class PlatSwapLiquidityLogProxy extends AbstractProxy implements IPlatSwapLiquidityLogProxy {
-    static NAME = "PlatSwapLiquidityLogProxy";
+export default class StatisticPlatSwapOrdersProxy extends AbstractProxy implements IStatisticPlatSwapOrdersProxy {
+    static NAME = "StatisticPlatSwapOrdersProxy";
 
     /**进入页面时调用 */
     enter() {
-        this.sendNotification(HttpType.admin_plat_swap_liquidity_log_table_columns);
+        this.sendNotification(HttpType.admin_statistic_plat_swap_orders_table_columns);
     }
 
     /**离开页面时调用 */
@@ -26,20 +26,20 @@ export default class PlatSwapLiquidityLogProxy extends AbstractProxy implements 
     /**表格相关数据 */
     tableData = {
         columns: {
-            coin_a_amount: { name: "币种A数量", options: {} },
-            coin_b_amount: { name: "币种B数量", options: {} },
+            coin_a: { name: "交易币种", options: {} },
+            coin_a_amount: { name: "交易币种数量", options: {} },
+            coin_b: { name: "兑换币种", options: {} },
+            coin_b_amount: { name: "兑换币种数量", options: {} },
             created_at: { name: "创建时间", options: {} },
-            created_by: { name: "创建人", options: {} },
+            created_date: { name: "日期", options: {} },
             data_belong: { name: "数据归属标记", options: {} },
             id: { name: "编号", options: {} },
-            nick_name: { name: "昵称" },
             plat_id: { name: "所属平台", options: {} },
-            plat_swap_pair: { name: "交易对" },
             plat_swap_pair_id: { name: "币对", options: {} },
-            type: { name: "类型", options: {} },
+            swap_coin: { name: "手续费币种", options: {} },
+            system_swap_coin_fee: { name: "手续费数量(系统)", options: {} },
             updated_at: { name: "修改时间", options: {} },
-            updated_by: { name: "更新人", options: {} },
-            user_id: { name: "用户ID", options: {} },
+            user_swap_coin_fee: { name: "手续费数量(用户)", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -49,9 +49,9 @@ export default class PlatSwapLiquidityLogProxy extends AbstractProxy implements 
         page_count: 1,
         page_size: 20,
         plat_id: "",
+        "created_date-{>=}": "",
+        "created_date-{<=}": "",
         plat_swap_pair_id: "",
-        "created_at-{>=}": "",
-        "created_at-{<=}": "",
     };
 
     /**设置表头数据 */
@@ -75,14 +75,14 @@ export default class PlatSwapLiquidityLogProxy extends AbstractProxy implements 
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
-            "created_at-{>=}": "",
-            "created_at-{<=}": "",
+            "created_date-{>=}": "",
+            "created_date-{<=}": "",
             plat_swap_pair_id: "",
         });
     }
 
     /**查询 */
     onQuery() {
-        this.sendNotification(HttpType.admin_plat_swap_liquidity_log_index, objectRemoveNull(this.listQuery));
+        this.sendNotification(HttpType.admin_statistic_plat_swap_orders_index, objectRemoveNull(this.listQuery));
     }
 }
