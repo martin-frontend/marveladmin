@@ -10,14 +10,14 @@
             </el-form-item>
 
             <div v-if="source.coin_a_amount == 0 && source.coin_b_amount == 0">
-                <el-form-item label="CF数量" prop="change_coin_a_amount">
+                <el-form-item :label="`${source.coin_a}数量`" prop="change_coin_a_amount">
                     <el-input
                         v-model="form.change_coin_a_amount"
                         onkeyup="this.value=(this.value.match(/\d+(.\d{0,2})?/)||[''])[0]"
                     ></el-input>
                     <p>输入数字，最多保留2位小数</p>
                 </el-form-item>
-                <el-form-item label="USDT数量" prop="change_coin_b_amount">
+                <el-form-item :label="`${source.coin_b}数量`" prop="change_coin_b_amount">
                     <el-input
                         v-model="form.change_coin_b_amount"
                         onkeyup="this.value=(this.value.match(/\d+(.\d{0,2})?/)||[''])[0]"
@@ -25,7 +25,7 @@
                     <p>输入数字，最多保留2位小数</p>
                 </el-form-item>
             </div>
-            <el-form-item v-else label="CF数量" prop="change_coin_a_amount">
+            <el-form-item v-else :label="`${source.coin_a}数量`" prop="change_coin_a_amount">
                 <el-input
                     v-model="form.change_coin_a_amount"
                     onkeyup="this.value=(this.value.match(/\d+(.\d{0,2})?/)||[''])[0]"

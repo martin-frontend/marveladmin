@@ -20,7 +20,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="交易币兑" class-name="status-col" min-width="90px">
+            <el-table-column label="交易币对" class-name="status-col" min-width="90px">
                 <template slot-scope="{ row }"> {{ row.coin_a }} / {{ row.coin_b }} </template>
             </el-table-column>
 
