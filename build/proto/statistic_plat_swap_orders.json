@@ -1,0 +1,9 @@
+{
+    "name": "交易统计",
+    "description": "交易统计",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766735",
+    "list": [
+        "admin/statistic_plat_swap_orders/table_columns",
+        "admin/statistic_plat_swap_orders/index"
+    ]
+}

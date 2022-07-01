@@ -1,6 +1,6 @@
 import { PageInfoVO } from "@/core/vo/PageInfoVO";
 
-export default interface IPlatSwapOrdersProxy {
+export default interface IPlatSwapLiquidityLogProxy {
     /**表格相关数据 */
     tableData: {
         columns: any;
@@ -20,5 +20,4 @@ export default interface IPlatSwapOrdersProxy {
 
     /**查询 */
     onQuery(): void;
-    /**添加数据 */
 }

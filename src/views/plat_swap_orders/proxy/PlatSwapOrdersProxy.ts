@@ -57,21 +57,10 @@ export default class PlatSwapOrdersProxy extends AbstractProxy implements IPlatS
         page_count: 1,
         page_size: 20,
         plat_id: "",
-
         "trade_time-{>=}": "",
         "trade_time-{<=}": "",
         user_id: "",
         plat_swap_pair_id: "",
-    };
-    /**弹窗相关数据 */
-    dialogData = {
-        bShow: false,
-        status: DialogStatus.create,
-        form: {
-            id: null,
-            // TODO
-        },
-        formSource: null, // 表单的原始数据
     };
 
     /**设置表头数据 */
@@ -97,11 +86,10 @@ export default class PlatSwapOrdersProxy extends AbstractProxy implements IPlatS
         Object.assign(this.listQuery, {
             page_count: 1,
             page_size: 20,
-            plat_id: "",
+            "trade_time-{>=}": "",
+            "trade_time-{<=}": "",
             user_id: "",
             plat_swap_pair_id: "",
-            "created_at-{>=}": "",
-            "created_at-{<=}": "",
         });
     }
 

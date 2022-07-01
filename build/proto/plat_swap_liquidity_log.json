@@ -1,0 +1,9 @@
+{
+    "name": "流动性日志",
+    "description": "流动性日志",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766737",
+    "list": [
+        "admin/plat_swap_liquidity_log/table_columns",
+        "admin/plat_swap_liquidity_log/index"
+    ]
+}
