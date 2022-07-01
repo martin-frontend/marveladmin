@@ -69,7 +69,7 @@ export default class PlatSwapLiquidityProxy extends AbstractProxy implements IPl
     };
 
     /**更新设置 数据 */
-    dialogSetting = {
+    dialogSetting: any = {
         bShow: false,
         source: null,
         form: <any>{
@@ -138,8 +138,6 @@ export default class PlatSwapLiquidityProxy extends AbstractProxy implements IPl
     showLiquidity(row: any, type: any) {
         const data = JSON.parse(JSON.stringify(row));
         console.warn(data);
-        // this.dialogLiquidity.form.change_coin_a_amount = data.coin_a_amount;
-        // this.dialogLiquidity.form.change_coin_b_amount = data.coin_b_amount;
         this.dialogLiquidity.form.plat_id = data.plat_id;
         this.dialogLiquidity.form.plat_swap_pair_id = data.plat_swap_pair_id;
         this.dialogLiquidity.form.type = type;
@@ -151,12 +149,6 @@ export default class PlatSwapLiquidityProxy extends AbstractProxy implements IPl
     hideDialog() {
         this.dialogSetting.bShow = false;
         this.dialogLiquidity.bShow = false;
-    }
-    /**重置弹窗表单 */
-    resetDialogForm() {
-        Object.assign(this.dialogData.form, {
-            // TODO
-        });
     }
 
     /**查询 */
@@ -179,17 +171,6 @@ export default class PlatSwapLiquidityProxy extends AbstractProxy implements IPl
 
     /**更新流动性 */
     onLiquidity() {
-        // const { plat_id, type, change_coin_a_amount, change_coin_b_amount } = this.dialogLiquidity.form;
-        // // plat_id: null,
-        // // type: 1, //流动性类型: 1-添加|2-移除|3-初始化
-        // // change_coin_a_amount: "",
-        // // change_coin_b_amount: "",
-        // const data = {
-        //     change_coin_a_amount,
-        //     change_coin_b_amount,
-        //     plat_id,
-        //     type,
-        // };
         this.sendNotification(HttpType.admin_plat_swap_liquidity_update_liquidity, this.dialogLiquidity.form);
     }
 }

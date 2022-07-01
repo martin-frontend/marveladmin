@@ -230,6 +230,10 @@ const layoutRouter = {
             name: "Swap管理",
             component: () => import(/* webpackChunkName: "plat_swap_liquidity" */"@/views/plat_swap_liquidity/view/PlatSwapLiquidity.vue")
         },        {
+            path: "plat_swap_orders",
+            name: "Swap交易",
+            component: () => import(/* webpackChunkName: "plat_swap_orders" */"@/views/plat_swap_orders/view/PlatSwapOrders.vue")
+        },        {
             path: "plat_user",
             name: "平台用户",
             component: () => import(/* webpackChunkName: "plat_user" */"@/views/plat_user/view/PlatUser.vue")
