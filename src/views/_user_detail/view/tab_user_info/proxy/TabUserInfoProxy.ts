@@ -79,6 +79,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_receive_reward: { name: "", options: {} },
         is_gold_transfer: { name: "", options: {} },
         water_config: { name: "", options: {} },
+        pretty_user_id: { name: "推广靓号", options: {} },
     };
     /**用户详情 */
     userInfo = {
@@ -146,7 +147,8 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_exchange_order_auto_check: "0",
         is_can_game: "0",
         is_receive_reward: "0",
-        is_gold_transfer: "0"
+        is_gold_transfer: "0",
+        pretty_user_id: "",
     };
     /**代理关系链 */
     relationChain: string[] = [];
@@ -216,9 +218,15 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     onEdit(filed: string, filedValue: string) {
         if (filed == "password") filedValue = MD5.createInstance().hex_md5(filedValue);
         if (filed == "base_recharge" || filed == "base_water") {
-            this.sendNotification(HttpType.admin_plat_user_update_level_exp, { user_id: this.userInfo.user_id, [filed]: filedValue });
+            this.sendNotification(HttpType.admin_plat_user_update_level_exp, {
+                user_id: this.userInfo.user_id,
+                [filed]: filedValue,
+            });
         } else {
-            this.sendNotification(HttpType.admin_plat_user_update, { user_id: this.userInfo.user_id, [filed]: filedValue });
+            this.sendNotification(HttpType.admin_plat_user_update, {
+                user_id: this.userInfo.user_id,
+                [filed]: filedValue,
+            });
         }
     }
     /**获取手机号 */
