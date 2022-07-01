@@ -342,6 +342,10 @@ const layoutRouter = {
             name: "交易统计",
             component: () => import(/* webpackChunkName: "statistic_plat_swap_orders" */"@/views/statistic_plat_swap_orders/view/StatisticPlatSwapOrders.vue")
         },        {
+            path: "statistic_plat_swap_price",
+            name: "行情统计",
+            component: () => import(/* webpackChunkName: "statistic_plat_swap_price" */"@/views/statistic_plat_swap_price/view/StatisticPlatSwapPrice.vue")
+        },        {
             path: "statistic_user_days",
             name: "用户统计",
             component: () => import(/* webpackChunkName: "statistic_user_days" */"@/views/statistic_user_days/view/StatisticUserDays.vue")

@@ -1,0 +1,9 @@
+{
+    "name": "行情统计",
+    "description": "行情统计",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766739",
+    "list": [
+        "admin/statistic_plat_swap_price/table_columns",
+        "admin/statistic_plat_swap_price/index"
+    ]
+}
