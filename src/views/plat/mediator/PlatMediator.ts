@@ -32,6 +32,7 @@ export default class PlatMediator extends AbstractMediator {
             EventType.admin_plat_agent_promotion_model_index,
             EventType.admin_plat_bonus_all_stock_model_index,
             EventType.admin_plat_clear_cache,
+            EventType.admin_plat_clear_stake_bonus,
         ];
     }
 
@@ -56,6 +57,7 @@ export default class PlatMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_update:
+            case EventType.admin_plat_clear_stake_bonus:
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 myProxy.hideVipModelDialog();

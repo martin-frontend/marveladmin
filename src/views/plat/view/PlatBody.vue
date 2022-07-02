@@ -77,25 +77,27 @@
                     </el-button>
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns['all_bonus_model_id'].name" min-width="160">
+            <!-- 质押分红 -->
+            <el-table-column label="质押分红" min-width="160">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
                         :type="tableColumns.all_bonus_model_id.options[row.all_bonus_model_id] ? 'success' : 'danger'"
                         @click="handleAllBonusModel(row)"
                     >
-                        {{
+                        <!-- {{
                             tableColumns.all_bonus_model_id.options[row.all_bonus_model_id]
                                 ? tableColumns.all_bonus_model_id.options[row.all_bonus_model_id]
                                 : $t("plat.noModule")
-                        }}
+                        }} -->
+                        分红初始化
                     </el-button>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns['language'].name" min-width="80px">
                 <template slot-scope="{ row }">
                     <div>
-                        <span v-for="lang of row.language" :key="lang">{{tableColumns.language.options[lang]}},</span>
+                        <span v-for="lang of row.language" :key="lang">{{ tableColumns.language.options[lang] }},</span>
                         <!-- {{ tableColumns.language.options[row.language] }} -->
                     </div>
                 </template>

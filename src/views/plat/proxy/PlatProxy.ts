@@ -82,6 +82,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_win_leaderboard_display: { name: "", options: {} },
             is_water_leaderboard_display: { name: "", options: {} },
             is_recharge_leaderboard_display: { name: "", options: {} },
+            validate_type: { name: "安全设置", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -134,6 +135,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_water_leaderboard_display: 0,
         is_recharge_leaderboard_display: 0,
         is_bind_phone_recharge: 0,
+        validate_type: [],
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -245,7 +247,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     /**设置配置初始数据 */
     setInitConfig() {
         let type = getFirstKey(this.tableData.columns.vendor_type.options_type[0]);
-        Object.keys(this.tableData.columns.vendor_type.options).forEach(element => {
+        Object.keys(this.tableData.columns.vendor_type.options).forEach((element) => {
             this.dialogData.initPromotion_floor[element] = 0;
             this.dialogData.initWater_config[element] = { type: type, rate: 1 };
         });
@@ -331,6 +333,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_water_leaderboard_display,
             is_recharge_leaderboard_display,
             is_bind_phone_recharge, //绑定手机充值
+            validate_type,
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -368,11 +371,13 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_water_leaderboard_display,
             is_recharge_leaderboard_display,
             is_bind_phone_recharge, //绑定手机充值
+            validate_type,
         };
 
         formCopy.app_types = JSON.stringify(formCopy.app_types);
         formCopy.water_config = JSON.stringify(formCopy.water_config);
         formCopy.promotion_floor = JSON.stringify(formCopy.promotion_floor);
+        formCopy.validate_type = JSON.stringify(formCopy.validate_type);
         try {
             let extendsStr: any = "{}";
             if (Object.keys(this.dialogData.form.extends).length > 0) {
@@ -639,19 +644,36 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     hideAllBonusModelDialog() {
         this.allBonusModelDialogData.bShow = false;
     }
-    /**更新All Bonus数据 */
-    onUpdateAllBonusModel() {
-        const formCopy: any = formCompared(this.allBonusModelDialogData.form, this.allBonusModelDialogData.formSource);
-        if (Object.keys(formCopy).length == 0) {
-            this.allBonusModelDialogData.bShow = false;
-            return;
-        }
-        const { plat_id, all_bonus_model_id } = this.allBonusModelDialogData.form;
-        this.sendNotification(HttpType.admin_plat_update, {
-            plat_id: plat_id,
-            all_bonus_model_id: all_bonus_model_id == "" ? 0 : all_bonus_model_id,
-        });
+    // /**更新All Bonus数据 */
+    // onUpdateAllBonusModel() {
+    //     const formCopy: any = formCompared(this.allBonusModelDialogData.form, this.allBonusModelDialogData.formSource);
+    //     if (Object.keys(formCopy).length == 0) {
+    //         this.allBonusModelDialogData.bShow = false;
+    //         return;
+    //     }
+    //     const { plat_id, all_bonus_model_id } = this.allBonusModelDialogData.form;
+    //     this.sendNotification(HttpType.admin_plat_update, {
+    //         plat_id: plat_id,
+    //         all_bonus_model_id: all_bonus_model_id == "" ? 0 : all_bonus_model_id,
+    //     });
+    // }
+
+    /**初始化基础设置 */
+    onInitSetting() {
+        const platName = this.allBonusModelDialogData.form.plat_name;
+        MessageBox.confirm(`【${platName}】质押分红是否初始化`, <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
+            type: "warning",
+        })
+            .then(() => {
+                this.sendNotification(HttpType.admin_plat_clear_stake_bonus, {
+                    plat_id: this.allBonusModelDialogData.form.plat_id,
+                });
+            })
+            .catch(() => {});
     }
+
     /**取得全盘分红配置 */
     getAllBonusModelById(id: any) {
         return this.allBonusModelDialogData.allBonusModelList.find((item: any) => item.all_bonus_model_id == id);

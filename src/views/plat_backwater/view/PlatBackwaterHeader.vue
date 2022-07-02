@@ -32,8 +32,8 @@
                                 v-if="checkUnique(unique.plat_backwater_update)"
                                 v-show="myProxy.backWaterData.isEdit"
                                 @click="handlerSave"
-                                >{{ $t("common.save") }}</el-button
-                            >
+                                >{{ $t("common.save") }}
+                            </el-button>
                             <el-button type="primary" @click="onEdit">{{
                                 myProxy.backWaterData.isEdit ? $t("common.unUpdate") : $t("common.update")
                             }}</el-button>

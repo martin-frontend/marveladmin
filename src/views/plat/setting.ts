@@ -10,6 +10,7 @@ import cmd_admin_plat_update from "@/views/plat/command/cmd_admin_plat_update";
 import cmd_admin_plat_agent_promotion_model_index from "@/views/plat/command/cmd_admin_plat_agent_promotion_model_index";
 import cmd_admin_plat_bonus_all_stock_model_index from "@/views/plat/command/cmd_admin_plat_bonus_all_stock_model_index";
 import cmd_admin_plat_clear_cache from "@/views/plat/command/cmd_admin_plat_clear_cache";
+import cmd_admin_plat_clear_stake_bonus from "@/views/plat/command/cmd_admin_plat_clear_stake_bonus";
 /**协议*/
 export var HttpType = {
     admin_plat_table_columns: "admin/plat/table_columns",
@@ -20,6 +21,7 @@ export var HttpType = {
     admin_plat_agent_promotion_model_index: "admin/plat_agent_promotion_model/index",
     admin_plat_bonus_all_stock_model_index: "admin/plat_bonus_all_stock_model/index",
     admin_plat_clear_cache: "admin/plat/clear_cache/{plat_id}",
+    admin_plat_clear_stake_bonus: "admin/plat/clear_stake_bonus/{plat_id}",
 };
 /**事件*/
 export var EventType = {
@@ -31,6 +33,7 @@ export var EventType = {
     admin_plat_agent_promotion_model_index: "admin_plat_agent_promotion_model_index",
     admin_plat_bonus_all_stock_model_index: "admin_plat_bonus_all_stock_model_index",
     admin_plat_clear_cache: "admin_plat_clear_cache",
+    admin_plat_clear_stake_bonus: "admin_plat_clear_stake_bonus",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -42,4 +45,5 @@ facade.registerCommand(HttpType.admin_plat_update, cmd_admin_plat_update);
 facade.registerCommand(HttpType.admin_plat_agent_promotion_model_index, cmd_admin_plat_agent_promotion_model_index);
 facade.registerCommand(HttpType.admin_plat_bonus_all_stock_model_index, cmd_admin_plat_bonus_all_stock_model_index);
 facade.registerCommand(HttpType.admin_plat_clear_cache, cmd_admin_plat_clear_cache);
+facade.registerCommand(HttpType.admin_plat_clear_stake_bonus, cmd_admin_plat_clear_stake_bonus);
 

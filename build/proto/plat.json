@@ -10,6 +10,7 @@
         "admin/plat/update/{plat_id}",
         "admin/plat_agent_promotion_model/index",
         "admin/plat_bonus_all_stock_model/index",
-        "admin/plat/clear_cache/{plat_id}"
+        "admin/plat/clear_cache/{plat_id}",
+        "admin/plat/clear_stake_bonus/{plat_id}"
     ]
 }

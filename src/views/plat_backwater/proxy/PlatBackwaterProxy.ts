@@ -15,7 +15,7 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
         this.sendNotification(HttpType.admin_plat_index, {
             page_count: 1,
             page_size: 1000,
-        })
+        });
     }
 
     /**离开页面时调用 */
@@ -31,42 +31,42 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
     /**表格相关数据 */
     tableData = {
         columns: {
-            app_types: {name: "运营平台", options: {}},
-            backwater_config: {name: "实时返水配置", options: {}},
-            backwater_model_id: {name: "实时返水设定", options: {}},
-            created_at: {name: "创建时间", options: {}},
-            created_by: {name: "创建人", options: {}},
-            data_belong: {name: "数据归属标记", options: {}},
-            extends: {name: "配置参数", options: {}},
-            gold: {name: "公共钱包", options: {}},
-            gold_transfer_fee: {name: "划转手续费", options: {}},
-            gold_transfer_water_multiple: {name: "划转流水", options: {}},
-            is_bet_water_display: {name: "投注流水展示", options: {}},
-            is_bind_phone_award: {name: "绑定手机-领取奖励", options: {}},
-            is_bind_phone_exchange: {name: "绑定手机-收款", options: {}},
-            is_bind_phone_transfer: {name: "绑定手机-金币划转", options: {}},
-            is_bind_real_name: {name: "兑换绑定真名", options: {}},
-            is_delete: {name: "是否删除", options: {}},
-            is_gold_transfer: {name: "划转开关", options: {}},
-            is_promotion_same: {name: "保底是否平级", options: {}},
-            is_promotion_statistics_display: {name: "推广统计展示", options: {}},
-            kf_url: {name: "客服链接", options: {}},
-            plat_id: {name: "平台ID", options: {}},
-            plat_name: {name: "平台名称", options: {}},
-            promotion_banner: {name: "推广图解", options: {}},
-            promotion_config: {name: "推广配置", options: {}},
-            promotion_config_version: {name: "推广配置版本", options: {}},
-            promotion_floor: {name: "代理保底", options: {}},
-            promotion_floor_unit: {name: "保底设定最小单位", options: {}},
-            promotion_model_id: {name: "推广配置", options: {}},
-            status: {name: "状态", options: {}},
-            updated_at: {name: "修改时间", options: {}},
-            updated_by: {name: "修改人", options: {}},
-            vendor_type: {name: "产品类型", options: {}, options_type: {}, options_rate: {}},
+            app_types: { name: "运营平台", options: {} },
+            backwater_config: { name: "实时返水配置", options: {} },
+            backwater_model_id: { name: "实时返水设定", options: {} },
+            created_at: { name: "创建时间", options: {} },
+            created_by: { name: "创建人", options: {} },
+            data_belong: { name: "数据归属标记", options: {} },
+            extends: { name: "配置参数", options: {} },
+            gold: { name: "公共钱包", options: {} },
+            gold_transfer_fee: { name: "划转手续费", options: {} },
+            gold_transfer_water_multiple: { name: "划转流水", options: {} },
+            is_bet_water_display: { name: "投注流水展示", options: {} },
+            is_bind_phone_award: { name: "绑定手机-领取奖励", options: {} },
+            is_bind_phone_exchange: { name: "绑定手机-收款", options: {} },
+            is_bind_phone_transfer: { name: "绑定手机-金币划转", options: {} },
+            is_bind_real_name: { name: "兑换绑定真名", options: {} },
+            is_delete: { name: "是否删除", options: {} },
+            is_gold_transfer: { name: "划转开关", options: {} },
+            is_promotion_same: { name: "保底是否平级", options: {} },
+            is_promotion_statistics_display: { name: "推广统计展示", options: {} },
+            kf_url: { name: "客服链接", options: {} },
+            plat_id: { name: "平台ID", options: {} },
+            plat_name: { name: "平台名称", options: {} },
+            promotion_banner: { name: "推广图解", options: {} },
+            promotion_config: { name: "推广配置", options: {} },
+            promotion_config_version: { name: "推广配置版本", options: {} },
+            promotion_floor: { name: "代理保底", options: {} },
+            promotion_floor_unit: { name: "保底设定最小单位", options: {} },
+            promotion_model_id: { name: "推广配置", options: {} },
+            status: { name: "状态", options: {} },
+            updated_at: { name: "修改时间", options: {} },
+            updated_by: { name: "修改人", options: {} },
+            vendor_type: { name: "产品类型", options: {}, options_type: {}, options_rate: {} },
             //vip_config: {name: "VIP等级配置",options: ["等级{num}", "返水比率"],options_key: [{total_water: "有效流水", total_recharge: "总充值"}, {2: "主币", 3: "奖励币"}]
-            vip_config: {name: "VIP等级配置", options: {}, options_key: []},
-            vip_model_id: {name: "VIP设定", options: {}},
-            water_config: {name: "流水配置", options: {}},
+            vip_config: { name: "VIP等级配置", options: {}, options_key: [] },
+            vip_model_id: { name: "VIP设定", options: {} },
+            water_config: { name: "流水配置", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -92,7 +92,7 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
         /**是否显示返水列表 */
         showBackWater: false,
         backWaterConfig: {},
-    }
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -138,9 +138,9 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
     /**更新数据 */
     onUpdate() {
         if (this.checkRate(this.backWaterData.backWaterConfig)) {
-            MessageBox.confirm(<string> i18n.t("plat_users_backwater_model.saveEdit"), <string> i18n.t("common.prompt"), {
-                confirmButtonText:<string> i18n.t("common.determine"),
-                cancelButtonText:<string> i18n.t("common.cancel"),
+            MessageBox.confirm(<string>i18n.t("plat_users_backwater_model.saveEdit"), <string>i18n.t("common.prompt"), {
+                confirmButtonText: <string>i18n.t("common.determine"),
+                cancelButtonText: <string>i18n.t("common.cancel"),
                 type: "warning",
             })
                 .then(() => {
@@ -153,7 +153,7 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
                 })
                 .catch(() => {});
         } else {
-            Message.info(<string> i18n.t("plat_users_backwater_model.betweenZeroToOne"));
+            Message.info(<string>i18n.t("plat_users_backwater_model.betweenZeroToOne"));
         }
     }
     updateSuccess() {
@@ -164,11 +164,15 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
 
     onEdit() {
         if (this.backWaterData.isEdit) {
-            MessageBox.confirm(<string> i18n.t("plat_users_backwater_model.cancelEdit"), <string> i18n.t("common.prompt"), {
-                confirmButtonText:<string> i18n.t("common.determine"),
-                cancelButtonText:<string> i18n.t("common.cancel"),
-                type: "warning",
-            })
+            MessageBox.confirm(
+                <string>i18n.t("plat_users_backwater_model.cancelEdit"),
+                <string>i18n.t("common.prompt"),
+                {
+                    confirmButtonText: <string>i18n.t("common.determine"),
+                    cancelButtonText: <string>i18n.t("common.cancel"),
+                    type: "warning",
+                }
+            )
                 .then(() => {
                     // this.initModel();
                     this.backWaterData.isEdit = false;
@@ -187,9 +191,9 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
     }
     /**初始化模版 */
     onInitModel() {
-        MessageBox.confirm(<string> i18n.t("common.initConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText:<string> i18n.t("common.determine"),
-            cancelButtonText:<string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>i18n.t("common.initConfirmStr"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {
@@ -199,12 +203,13 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
     }
 
     checkRate(obj: any): boolean {
+        let result = true;
         for (const key of Object.keys(obj)) {
             const backwater_rate = parseFloat(obj[key].backwater_rate);
-            if (isNaN(backwater_rate) || backwater_rate <= 0 || backwater_rate >= 1) {
-                return false;
+            if (isNaN(backwater_rate) || backwater_rate >= 1) {
+                result = false;
             }
         }
-        return true;
+        return result;
     }
 }

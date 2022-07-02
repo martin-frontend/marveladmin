@@ -55,6 +55,19 @@
                         </el-radio>
                     </el-radio-group>
                 </el-form-item>
+                <!-- 安全设置 -->
+                <el-form-item size="mini" :label="tableColumns['validate_type'].name" prop="validate_type">
+                    <el-checkbox-group v-model="form.validate_type">
+                        <el-checkbox
+                            v-for="(value, key) in tableColumns.validate_type.options"
+                            :key="key"
+                            :label="Number(key)"
+                        >
+                            {{ value }}
+                        </el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+
                 <!--流水配置 -->
                 <el-form-item size="mini" :label="tableColumns['water_config'].name" prop="water_config">
                     <div class="water_config_item" v-for="(value, key) in waterData" :key="key">
@@ -534,6 +547,7 @@ export default class PlatDialog extends AbstractView {
             currency_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             language: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             api_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            validate_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
         };
     }
 
