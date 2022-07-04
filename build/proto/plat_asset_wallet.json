@@ -1,0 +1,9 @@
+{
+    "name": "资产钱包",
+    "description": "资产钱包",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766755",
+    "list": [
+        "admin/plat_asset_wallet/table_columns",
+        "admin/plat_asset_wallet/index"
+    ]
+}

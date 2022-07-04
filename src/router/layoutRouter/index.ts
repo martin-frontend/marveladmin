@@ -162,6 +162,10 @@ const layoutRouter = {
             name: "推广配置",
             component: () => import(/* webpackChunkName: "plat_agent_promotion_model" */"@/views/plat_agent_promotion_model/view/PlatAgentPromotionModel.vue")
         },        {
+            path: "plat_asset_wallet",
+            name: "资产钱包",
+            component: () => import(/* webpackChunkName: "plat_asset_wallet" */"@/views/plat_asset_wallet/view/PlatAssetWallet.vue")
+        },        {
             path: "plat_backwater",
             name: "实时返水",
             component: () => import(/* webpackChunkName: "plat_backwater" */"@/views/plat_backwater/view/PlatBackwater.vue")
