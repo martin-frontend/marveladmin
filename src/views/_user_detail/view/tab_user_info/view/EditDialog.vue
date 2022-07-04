@@ -34,6 +34,17 @@
                 ></el-input>
             </template>
             <!--备注 end-->
+            <!-- 推广靓号  -->
+            <template v-else-if="dialogData.filed == `pretty_user_id`">
+                <el-input
+                    v-model="dialogData.filedValue"
+                    rows="2"
+                    maxlength="5"
+                    show-word-limit
+                    class="dialog_input"
+                    :placeholder="`${tableColumns.pretty_user_id.name}最多五位数`"
+                ></el-input>
+            </template>
 
             <template v-else>
                 <el-input class="dialog_input" v-model="dialogData.filedValue"></el-input>
@@ -71,7 +82,7 @@ export default class EditDialog extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: TabUserInfoProxy = getProxy(TabUserInfoProxy);
-    private tableColumns = this.myProxy.tableColumns;
+    private tableColumns: any = this.myProxy.tableColumns;
     private dialogData = this.myProxy.dialogData;
 
     private handlerSubmit() {
@@ -89,13 +100,13 @@ export default class EditDialog extends AbstractView {
                     this.$t("user_detail.errorCode2")
             );
         } else if (filed == "password" && filedValue != this.dialogData.filedValue1) {
-            Message.error(this.$t("user_detail.passwordError"));
+            const str: any = this.$t("user_detail.passwordError");
+            Message.error(str);
         } else if ((filed == "base_win" || filed == "base_water") && !this.checkBaseInput(filedValue)) {
-            Message.error(
-                this.$t("user_detail.errorCode1") +
-                    `${this.tableColumns[filed].name}` +
-                    this.$t("user_detail.errorCode3")
-            );
+            const str: any = `${this.$t("user_detail.errorCode1")}${this.tableColumns[filed].name}${this.$t(
+                "user_detail.errorCode3"
+            )}`;
+            Message.error(str);
         } else {
             this.myProxy.onEdit(this.dialogData.filed, this.dialogData.filedValue);
         }
@@ -132,5 +143,8 @@ export default class EditDialog extends AbstractView {
 .confirm {
     text-align: center;
     margin-top: 50px;
+}
+.ps {
+    color: red;
 }
 </style>
