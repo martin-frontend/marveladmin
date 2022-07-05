@@ -1,6 +1,14 @@
 <template>
     <div>
-        <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini" v-loading="net_status.loading">
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
             <el-table-column :label="`${tableColumns.id.name}`" class-name="status-col" width="60px">
                 <template slot-scope="{ row }">
                     {{ row.id }}
@@ -21,16 +29,11 @@
                     {{ row.vendor_name }}
                 </template>
             </el-table-column>
-            <el-table-column :label="`${tableColumns.payment_method_type.name}`" class-name="status-col" width="200px">
+
+            <el-table-column :label="$t('common.operating')" class-name="status-col" width="150px">
                 <template slot-scope="{ row }">
-                    <el-button
-                        v-for="(key, value) in row.payment_method_type"
-                        :key="value"
-                        :type="getBtnStatus(row, row.payment_method_type[value])"
-                        @click="handleEdit(row, key)"
-                        style="margin-bottom: 0.25rem"
-                    >
-                        {{ tableColumns.payment_method_type.options[row.payment_method_type[value]] }}
+                    <el-button type="primary" size="mini" @click="handleSetting(row)">
+                        兑换参数设置
                     </el-button>
                 </template>
             </el-table-column>
@@ -63,7 +66,7 @@ export default class ExchangeChannelMethodBody extends AbstractView {
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
+    private pageInfo = this.myProxy.methodTableData.pageInfo;
     private listQuery = this.myProxy.listQuery;
 
     private handlerQuery() {
@@ -75,40 +78,11 @@ export default class ExchangeChannelMethodBody extends AbstractView {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
-
-    private handleEdit(data: any, type: string) {
-        let detail = data.payment_method_detail.filter((item: { payment_method_type: string }) => {
-            return item.payment_method_type == type;
-        });
-        if (detail.length > 0) {
-            this.myProxy.showDialog(DialogStatus.update, detail[0]);
-        } else {
-            this.myProxy.resetDialogForm();
-            this.myProxy.dialogData.form.plat_id = data.plat_id;
-            this.myProxy.dialogData.form.exchange_channel_id = data.id;
-            this.myProxy.dialogData.form.payment_method_type = type;
-            this.myProxy.showDialog(DialogStatus.create, data);
-        }
-    }
-
-    private handlerDelete(data: any) {
-        this.myProxy.onDelete(data.id);
-    }
-
-    private getBtnStatus(row: any, type: string) {
-        let detail = row.payment_method_detail.filter((item: { payment_method_type: string }) => {
-            return item.payment_method_type == type;
-        });
-
-        if (detail.length > 0) {
-            if (detail[0].status == 1) {
-                return "success";
-            } else {
-                return "warning";
-            }
-        } else {
-            return "info";
-        }
+    // 兑换参数设置
+    handleSetting(row: any) {
+        Object.assign(this.myProxy.dialogDataChannelData.row, row);
+        this.myProxy.methodQuery.exchange_channel_id = row.exchange_channel_id;
+        this.myProxy.api_admin_exchange_channel_method_index();
     }
 }
 </script>

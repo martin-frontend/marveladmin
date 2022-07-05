@@ -12,6 +12,7 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
     /**进入页面时调用 */
     enter() {
         this.sendNotification(HttpType.admin_exchange_channel_table_columns);
+        this.sendNotification(HttpType.admin_exchange_channel_method_table_columns);
     }
 
     /**离开页面时调用 */
@@ -24,32 +25,64 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
         });
     }
 
-    /**表格相关数据 */
+    /**兑换渠道 数据 */
     tableData = {
         columns: {
-            id: { name: "", options: {} },
-            plat_id: { name: "", options: {} },
-            name: { name: "", options: {} },
-            vendor_name: { name: "", options: {} },
-            payment_method_type: { name: "", options: {} },
-        },
-        methodColumns: {
-            plat_id: { name: "", options: {} },
-            exchange_channel_id: { name: "", options: {} },
-            payment_method_type: { name: "", options: {} },
-            min_gold: { name: "", options: {} },
-            max_gold: { name: "", options: {} },
-            free_time: { name: "", options: {} },
-            fee: { name: "", options: {} },
-            min_fee: { name: "", options: {} },
-            balance: { name: "", options: {} },
-            subtitle: { name: "", options: {} },
-            status: { name: "", options: {} },
-            explain: { name: "", options: {} },
+            //exchange_channel/table_columns
+            account: { name: "兑换厂商账号", options: {} },
+            block_network_id: { name: "区块网络", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
+            coin_relations: { 30000: {} },
+            created_at: { name: "创建时间", options: {} },
+            created_by: { name: "创建人", options: {} },
+            data_belong: { name: "数据归属标记", options: {} },
+            exchange_vendors_id: { name: "兑换厂商ID", options: {} },
+            extend_params: { name: "扩展参数", options: {} },
+            id: { name: "主键", options: {} },
+            is_delete: { name: "是否删除", options: Array(2) },
+            name: { name: "兑换渠道名称", options: {} },
+            payment_method_detail: { name: "平台兑换方式", options: {} },
+            payment_method_type: { name: "支持兑换方式", options: {} },
+            plat_id: { name: "所属平台", options: {} },
+            secret: { name: "兑换厂商密钥", options: {} },
+            status: { name: "使用状态", options: {} },
+            updated_at: { name: "修改时间", options: {} },
+            updated_by: { name: "修改人", options: {} },
+            vendor_name: { name: "厂商名称", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
+
+    /**兑换参数设置 数据 */
+    methodTableData = {
+        columns: {
+            balance: { name: "最低保留余额", options: {} },
+            block_network_id: { name: "链", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
+            coin_network_map: { options: {} },
+            created_at: { name: "创建时间", options: {} },
+            created_by: { name: "创建人", options: {} },
+            data_belong: { name: "数据归属标记", options: {} },
+            exchange_channel_id: { name: "平台兑换厂商ID", options: {} },
+            explain: { name: "说明", options: {} },
+            fee: { name: "手续费(单位百分比)", options: {} },
+            free_time: { name: "每日免费次数", options: {} },
+            id: { name: "主键", options: {} },
+            max_gold: { name: "最高兑换额度", options: {} },
+            min_fee: { name: "最低手续费", options: {} },
+            min_gold: { name: "最低兑换额度", options: {} },
+            payment_method_type: { name: "兑换收款方式", options: {} },
+            plat_id: { name: "平台ID", options: {} },
+            status: { name: "使用状态", options: {} },
+            subtitle: { name: "标题", options: {} },
+            updated_at: { name: "修改时间", options: {} },
+            updated_by: { name: "修改人", options: {} },
+        },
+        list: <any>[],
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+    };
+
     /**查询条件 */
     listQuery = {
         plat_id: "",
@@ -57,24 +90,41 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
         page_count: 1,
         page_size: 20,
     };
+
+    /**兑换参数设置 查询条件*/
+    methodQuery = {
+        exchange_channel_id: "",
+        page_count: 1,
+        page_size: 20,
+    };
+
+    /**兑换参数设置弹窗 数据*/
+    dialogDataChannelData: any = {
+        row: {},
+        bShow: false,
+        list: <any>[],
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+    };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
         form: {
-            id: "",
-            exchange_channel_id: "",
+            id: null,
             plat_id: "",
-            payment_method_type: "",
-            min_gold: "100",
-            max_gold: "100000",
-            free_time: "3",
-            fee: "1",
-            min_fee: "1",
-            balance: "10",
-            subtitle: "",
+            balance: "",
+            exchange_channel_id: "",
+            coin_name_unique: "", //币种
+            block_network_id: "", //链
+            min_gold: "",
+            max_gold: "",
+            free_time: "",
+            fee: "",
+            explain: "",
             status: "1",
-            explain:"",
+            min_fee: "",
+            payment_method_type: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -89,10 +139,10 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
             }
             this.onQuery();
         }
-        this.sendNotification(HttpType.admin_exchange_channel_method_table_columns);
     }
+    /**写入兑换参数表头 */
     setMethodTableColumns(data: any) {
-        Object.assign(this.tableData.methodColumns, data);
+        Object.assign(this.methodTableData.columns, data);
     }
     /**表格数据 */
     setTableData(data: any) {
@@ -106,29 +156,13 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
         Object.assign(this.dialogData.form, data);
     }
 
-    /**重置查询条件 */
-    resetListQuery() {
-        Object.assign(this.listQuery, {
-            exchange_channel_id: "",
-            plat_id: "",
-            payment_method_type: "",
-            min_gold: "100",
-            max_gold: "100000",
-            free_time: "3",
-            fee: "1",
-            min_fee: "1",
-            balance: "10",
-            subtitle: "",
-            status: "1",
-        });
-    }
-
     /**显示弹窗 */
     showDialog(status: string, data?: any) {
         this.dialogData.bShow = true;
         this.dialogData.status = status;
-        data.status = data.status.toString();
+        this.resetDialogForm();
         if (status == DialogStatus.update) {
+            data.status = data.status.toString();
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, data);
             // this.sendNotification(HttpType.admin_exchange_channel_method_show, { id: data.id });
@@ -143,18 +177,20 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
-            id: "",
+            id: null,
             plat_id: "",
+            balance: "",
             exchange_channel_id: "",
-            payment_method_type: "",
-            min_gold: "100",
-            max_gold: "100000",
-            free_time: "3",
-            fee: "1",
-            min_fee: "1",
-            balance: "10",
-            subtitle: "",
+            coin_name_unique: "", //币种
+            block_network_id: "", //链
+            min_gold: "",
+            max_gold: "",
+            free_time: "",
+            fee: "",
+            explain: "",
             status: "1",
+            min_fee: "",
+            payment_method_type: "",
         });
     }
 
@@ -162,51 +198,51 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
     onQuery() {
         this.sendNotification(HttpType.admin_exchange_channel_index, objectRemoveNull(this.listQuery));
     }
+
     /**添加数据 */
     onAdd() {
         const {
             plat_id,
             exchange_channel_id,
-            payment_method_type,
             min_gold,
             max_gold,
             free_time,
             fee,
-            min_fee,
             balance,
-            subtitle,
+            coin_name_unique,
+            block_network_id,
+            explain,
             status,
+            min_fee,
         } = this.dialogData.form;
         const formCopy: any = {
-            plat_id,
+            plat_id: this.listQuery.plat_id,
+            balance,
             exchange_channel_id,
-            payment_method_type,
+            coin_name_unique,
+            block_network_id,
             min_gold,
             max_gold,
             free_time,
             fee,
-            min_fee,
-            balance,
-            subtitle,
+            explain,
             status,
+            payment_method_type: "4",
+            min_fee,
         };
+
         this.sendNotification(HttpType.admin_exchange_channel_method_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
     onUpdate() {
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
-        // 一些需要特殊处理的参数
-        // TODO
-        // 删除多余无法去除的参数
-        // TODO
         // 添加主键
         formCopy.id = this.dialogData.form.id;
-        // TODO
         // 发送消息
         this.sendNotification(HttpType.admin_exchange_channel_method_update, formCopy);
     }
     /**删除数据 */
-    onDelete(id: any) {
+    onDelete() {
         MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
             confirmButtonText: <string>i18n.t("common.determine"),
             cancelButtonText: <string>i18n.t("common.cancel"),
@@ -214,10 +250,21 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_exchange_channel_method_update, {
-                    exchange_channel_id: id,
+                    id: this.dialogData.form.id,
                     is_delete: 1,
                 });
             })
-            .catch(() => { });
+            .catch(() => {});
+    }
+    /**get 显示参数设置 */
+    api_admin_exchange_channel_method_index() {
+        this.sendNotification(HttpType.admin_exchange_channel_method_index, this.methodQuery);
+    }
+    /**显示参数设置 弹窗 */
+    set_exchange_channel_method_index(data: any) {
+        this.dialogDataChannelData.list.length = 0;
+        this.dialogDataChannelData.list.push(...data.list);
+        Object.assign(this.dialogDataChannelData.pageInfo, data.pageInfo);
+        this.dialogDataChannelData.bShow = true;
     }
 }

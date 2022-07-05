@@ -599,7 +599,6 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     showPromotionDiscountDialog(data: any) {
         this.promotionDiscountDialogData.form.plat_id = data.plat_id;
         Object.assign(this.promotionDiscountDialogData.form, JSON.parse(JSON.stringify(data)));
-        console.log(">>>>>>>>>");
         console.log(this.promotionDiscountDialogData.form);
         this.sendNotification(HttpType.admin_plat_show, { plat_id: data.plat_id });
         this.promotionDiscountDialogData.bShow = true;

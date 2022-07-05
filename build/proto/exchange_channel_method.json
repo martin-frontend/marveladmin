@@ -8,6 +8,7 @@
         "admin/exchange_channel_method/table_columns",
         "admin/exchange_channel_method/show/{id}",
         "admin/exchange_channel_method/store",
+        "admin/exchange_channel_method/index",
         "admin/exchange_channel_method/update/{id}"
     ]
 }

@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/exchange_channel_method/setting";
 import { Message } from "element-ui";
 import ExchangeChannelMethodProxy from "../proxy/ExchangeChannelMethodProxy";
 
-interface IExchangeChannelMethod extends IEventDispatcher {
-    
-}
+interface IExchangeChannelMethod extends IEventDispatcher {}
 
 export default class ExchangeChannelMethodMediator extends AbstractMediator {
     private myProxy: ExchangeChannelMethodProxy = <any>this.getProxy(ExchangeChannelMethodProxy);
@@ -32,7 +30,7 @@ export default class ExchangeChannelMethodMediator extends AbstractMediator {
             EventType.admin_exchange_channel_method_show,
             EventType.admin_exchange_channel_method_store,
             EventType.admin_exchange_channel_method_update,
-
+            EventType.admin_exchange_channel_method_index,
         ];
     }
 
@@ -46,7 +44,7 @@ export default class ExchangeChannelMethodMediator extends AbstractMediator {
                 break;
             case EventType.admin_exchange_channel_method_table_columns:
                 myProxy.setMethodTableColumns(body);
-            break;
+                break;
             case EventType.admin_exchange_channel_index:
                 myProxy.setTableData(body);
                 break;
@@ -57,11 +55,16 @@ export default class ExchangeChannelMethodMediator extends AbstractMediator {
                 Message.success(SuccessMessage.create);
                 myProxy.hideDialog();
                 myProxy.onQuery();
+                myProxy.api_admin_exchange_channel_method_index();
                 break;
             case EventType.admin_exchange_channel_method_update:
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 myProxy.onQuery();
+                myProxy.api_admin_exchange_channel_method_index();
+                break;
+            case EventType.admin_exchange_channel_method_index:
+                myProxy.set_exchange_channel_method_index(body);
                 break;
         }
     }

@@ -45,10 +45,6 @@ export default class ExchangeChannelMethodHeader extends AbstractView {
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
-        this.myProxy.resetListQuery();
-    }
-
     private handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }

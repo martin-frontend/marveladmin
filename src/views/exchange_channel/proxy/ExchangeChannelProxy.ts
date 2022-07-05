@@ -1,6 +1,6 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/exchange_channel/setting";
 import { MessageBox } from "element-ui";
 import IExchangeChannelProxy from "./IExchangeChannelProxy";
@@ -74,6 +74,7 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
             //以下数据在coin_relations
             coin_name_unique: null,
             block_network_id: <any>null,
+            extend_params: "{}",
         },
         formSource: null, // 表单的原始数据
         platAllOptions: {},
@@ -124,8 +125,11 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
+            data.extend_params = jsonToObject(data.extend_params);
+            data.status = data.status - 0;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            this.sendNotification(HttpType.admin_exchange_channel_show, { id: data.id });
+
+            // this.sendNotification(HttpType.admin_exchange_channel_show, { id: data.id });
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -150,6 +154,7 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
             //以下数据在coin_relations
             coin_name_unique: null,
             block_network_id: null,
+            extend_params: {},
         });
     }
 
@@ -161,7 +166,8 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
     }
     /**添加数据 */
     onAdd() {
-        const { plat_id, exchange_vendors_id, name, account, secret, status } = this.dialogData.form;
+        const form = Object.assign({}, this.dialogData.form);
+        const { plat_id, exchange_vendors_id, name, account, secret, status, extend_params } = form;
         const formCopy: any = {
             plat_id,
             exchange_vendors_id,
@@ -169,6 +175,7 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
             account,
             secret,
             status,
+            extend_params,
         };
         this.sendNotification(HttpType.admin_exchange_channel_store, objectRemoveNull(formCopy));
     }
