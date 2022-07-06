@@ -15,6 +15,35 @@
             class="demo-ruleForm"
             v-loading="net_status.loading"
         >
+            <!-- 币种 -->
+            <el-form-item size="mini" :label="tableColumns['coin_name_unique'].name" prop="coin_name_unique">
+                <el-select
+                    v-model="addFrom.coin_name_unique"
+                    filterable
+                    clearable
+                    class="select"
+                    placeholder="请选择"
+                    @change="getBlockNetworkOptions"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns['coin_network_map'].options[form.plat_id]"
+                        :key="key"
+                        :label="value.name"
+                        :value="key"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <!-- 链 -->
+            <el-form-item size="mini" :label="tableColumns['block_network_id'].name" prop="block_network_id">
+                <el-select v-model="addFrom.block_network_id" class="select" placeholder="请选择">
+                    <el-option
+                        v-for="(value, key) in blockNetworkOptions"
+                        :key="key"
+                        :label="value"
+                        :value="key"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
             <!-- 充值方式 -->
             <el-form-item :label="`${tableColumns['paymethod_id'].name}`" prop="paymethod_id">
                 <el-select v-model="addFrom.paymethod_id" filterable :placeholder="$t('common.pleaseChoose')">
@@ -36,13 +65,14 @@
             </el-form-item>
             <!-- 提示信息 -->
             <el-form-item :label="`${tableColumns.notice.name}`">
-                <el-input 
-                        v-model="addFrom.notice" 
-                        :placeholder="$t('common.pleaseEnter')" 
-                        type="textarea"
-                        filterable
-                        clearable
-                        class="select"></el-input>
+                <el-input
+                    v-model="addFrom.notice"
+                    :placeholder="$t('common.pleaseEnter')"
+                    type="textarea"
+                    filterable
+                    clearable
+                    class="select"
+                ></el-input>
             </el-form-item>
             <!-- 充值最小额度 -->
             <el-form-item :label="`${tableColumns.min_gold.name}`" prop="min_gold">
@@ -142,15 +172,31 @@ export default class RechargeChannelsPaymethodsEditDialog extends AbstractView {
     // proxy
     private myProxy: RechargeChannelsPaymethodsProxy = this.getProxy(RechargeChannelsPaymethodsProxy);
     // proxy property
-    private tableColumns = this.myProxy.dialogTableData.columns;
+    private tableColumns: any = this.myProxy.dialogTableData.columns;
     private list = this.myProxy.channelList;
-    private form = this.myProxy.dialogData.form;
+    private form: any = this.myProxy.dialogData.form;
     private addFrom = this.myProxy.addDialogData.form;
+    //练 下拉选单
+    private blockNetworkOptions: any = [];
 
     private textMap = {
         update: this.$t("common.update"),
         create: this.$t("common.create"),
     };
+
+    /**二级联动 链 */
+    getBlockNetworkOptions() {
+        this.blockNetworkOptions = this.tableColumns.coin_network_map.options[this.form.plat_id][
+            this.addFrom.coin_name_unique
+        ].options;
+    }
+
+    @Watch("addFrom.coin_name_unique")
+    private onWatchCoinNameUnique() {
+        if (this.isStatusUpdate) {
+            this.getBlockNetworkOptions();
+        }
+    }
 
     @Watch("myProxy.addDialogData.bShow")
     private onWatchShow() {
@@ -169,6 +215,8 @@ export default class RechargeChannelsPaymethodsEditDialog extends AbstractView {
 
     get rules() {
         return {
+            block_network_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "blur" }],
+            coin_name_unique: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "blur" }],
             paymethod_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
             title: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
             min_gold: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],

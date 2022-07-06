@@ -8,11 +8,11 @@
             <div class="title-group">
                 <div class="title-item">
                     <span>{{ $t("common.belongingPlat") }}</span>
-                    <p>{{ form["plat_id"] }}</p>
+                    <p>{{ channelsColumns.plat_id.options[form["plat_id"]] }}</p>
                 </div>
                 <div class="title-item">
                     <span>{{ $t("recharge_channels_paymethods.vendorId") }}</span>
-                    <p>{{ form["vendor_id"] }}</p>
+                    <p>{{ channelsColumns.vendor_id.options[form["vendor_id"]] }}</p>
                 </div>
                 <div class="title-item">
                     <span>{{ $t("recharge_channels_paymethods.channelName") }}</span>
@@ -29,6 +29,24 @@
             >
             <div class="table">
                 <el-table :data="list.list" border style="width: 100%" v-loading="net_status.loading">
+                    <el-table-column
+                        prop="coin_name_unique"
+                        :label="tableColumns['coin_name_unique'].name"
+                        align="center"
+                    ></el-table-column>
+
+                    <el-table-column
+                        prop="block_network_id"
+                        :label="tableColumns['block_network_id'].name"
+                        align="center"
+                    >
+                        <template slot-scope="{ row }">
+                            <div>
+                                {{ tableColumns.block_network_id.options[row.block_network_id] }}
+                            </div>
+                        </template>
+                    </el-table-column>
+
                     <el-table-column prop="paymethod_id" :label="tableColumns['paymethod_id'].name" align="center">
                         <template slot-scope="{ row }">
                             <div>
@@ -104,6 +122,7 @@ export default class RechargeChannelsPaymethodsDialog extends AbstractView {
     private myProxy: RechargeChannelsPaymethodsProxy = this.getProxy(RechargeChannelsPaymethodsProxy);
     // proxy property
     private tableColumns = this.myProxy.dialogTableData.columns;
+    private channelsColumns = this.myProxy.tableData.columns;
     private list = this.myProxy.channelList;
     private form = this.myProxy.dialogData.form;
 

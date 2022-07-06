@@ -23,8 +23,6 @@
             <el-form-item size="mini" :label="methodTableColumns['coin_name_unique'].name" prop="coin_name_unique">
                 <el-select
                     v-model="form.coin_name_unique"
-                    filterable
-                    clearable
                     class="select"
                     placeholder="请选择"
                     @change="getBlockNetworkOptions"
@@ -39,7 +37,7 @@
             </el-form-item>
             <!-- 链 -->
             <el-form-item size="mini" :label="methodTableColumns['block_network_id'].name" prop="block_network_id">
-                <el-select v-model="form.block_network_id" filterable clearable class="select" placeholder="请选择">
+                <el-select v-model="form.block_network_id" class="select" placeholder="请选择">
                     <el-option
                         v-for="(value, key) in blockNetworkOptions"
                         :key="key"
@@ -140,6 +138,12 @@ export default class ExchangeChannelMethodDialog extends AbstractView {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
+    }
+
+    mounted() {
+        if (this.isStatusUpdate) {
+            this.getBlockNetworkOptions();
+        }
     }
 
     get status() {

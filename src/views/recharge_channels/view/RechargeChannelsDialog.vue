@@ -29,14 +29,14 @@
                     v-model="form.name"
                 ></el-input>
             </el-form-item>
-            <!-- <el-form-item v-if="form.support_paymethods != 1" :label="`${tableColumns.account.name}`" prop="account">
+            <el-form-item v-if="form.support_paymethods != 1" :label="`${tableColumns.account.name}`" prop="account">
                 <el-input
                     clearable
                     maxlength="50"
                     :placeholder="$t('common.pleaseEnter')"
                     v-model="form.account"
                 ></el-input>
-            </el-form-item> -->
+            </el-form-item>
             <el-form-item :label="`${tableColumns.secret.name}`" prop="secret">
                 <el-input clearable :placeholder="$t('common.pleaseEnter')" v-model="form.secret"></el-input>
             </el-form-item>
@@ -57,8 +57,17 @@
                 </template>
             </el-form-item>
 
-            <el-form-item v-if="form.support_paymethods == 1" :label="`${tableColumns.coin_name_unique.name}`" prop="coin_name_unique">
-                <el-select v-model="form.coin_name_unique" filterable class="select" :placeholder="$t('common.pleaseChoose')">
+            <el-form-item
+                v-if="form.support_paymethods == 1"
+                :label="`${tableColumns.coin_name_unique.name}`"
+                prop="coin_name_unique"
+            >
+                <el-select
+                    v-model="form.coin_name_unique"
+                    filterable
+                    class="select"
+                    :placeholder="$t('common.pleaseChoose')"
+                >
                     <el-option
                         v-for="(value, key) in tableColumns.coin_relations[form.plat_id]"
                         :key="key"
@@ -67,20 +76,41 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item v-if="form.support_paymethods == 1 && form.coin_name_unique" :label="`${tableColumns.block_network_id.name}`" prop="block_network_id">
-                <el-select v-model="form.block_network_id" filterable class="select" :placeholder="$t('common.pleaseChoose')">
+            <el-form-item
+                v-if="form.support_paymethods == 1 && form.coin_name_unique"
+                :label="`${tableColumns.block_network_id.name}`"
+                prop="block_network_id"
+            >
+                <el-select
+                    v-model="form.block_network_id"
+                    filterable
+                    class="select"
+                    :placeholder="$t('common.pleaseChoose')"
+                >
                     <el-option
-                        v-for="(value, key) in tableColumns.coin_relations[form.plat_id][form.coin_name_unique].block_network_id"
+                        v-for="(value, key) in tableColumns.coin_relations[form.plat_id][form.coin_name_unique]
+                            .block_network_id"
                         :key="key"
                         :label="value.name"
                         :value="key"
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item v-if="form.support_paymethods == 1 && form.coin_name_unique && form.block_network_id" :label="`${tableColumns.account.name}`" prop="account">
-                <el-select v-model="form.account" filterable class="select" :placeholder="$t('common.pleaseChoose')" width="100%">
+            <el-form-item
+                v-if="form.support_paymethods == 1 && form.coin_name_unique && form.block_network_id"
+                :label="`${tableColumns.account.name}`"
+                prop="account"
+            >
+                <el-select
+                    v-model="form.account"
+                    filterable
+                    class="select"
+                    :placeholder="$t('common.pleaseChoose')"
+                    width="100%"
+                >
                     <el-option
-                        v-for="(value, key) in tableColumns.coin_relations[form.plat_id][form.coin_name_unique].block_network_id[form.block_network_id].account"
+                        v-for="(value, key) in tableColumns.coin_relations[form.plat_id][form.coin_name_unique]
+                            .block_network_id[form.block_network_id].account"
                         :key="key"
                         :label="value"
                         :value="value"

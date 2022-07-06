@@ -72,8 +72,8 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
             secret: "",
             status: 1,
             //以下数据在coin_relations
-            coin_name_unique: null,
-            block_network_id: <any>null,
+            coin_name_unique: "",
+            block_network_id: "",
             extend_params: "{}",
         },
         formSource: null, // 表单的原始数据
@@ -124,10 +124,11 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
         this.dialogData.bShow = true;
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
-            this.dialogData.formSource = data;
-            data.extend_params = jsonToObject(data.extend_params);
-            data.status = data.status - 0;
-            Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+            const copyData = JSON.parse(JSON.stringify(data));
+            this.dialogData.formSource = copyData;
+            copyData.extend_params = jsonToObject(copyData.extend_params);
+            copyData.status = copyData.status - 0;
+            Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(copyData)));
 
             // this.sendNotification(HttpType.admin_exchange_channel_show, { id: data.id });
         } else {
@@ -152,8 +153,8 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
             secret: "",
             status: 1,
             //以下数据在coin_relations
-            coin_name_unique: null,
-            block_network_id: null,
+            coin_name_unique: "",
+            block_network_id: "",
             extend_params: {},
         });
     }
@@ -181,6 +182,7 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
     }
     /**更新数据 */
     onUpdate() {
+        const copyExtendParams = JSON.parse(JSON.stringify(this.dialogData.form.extend_params));
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
         delete formCopy.english_name;
         delete formCopy.payment_method_type;
@@ -190,6 +192,7 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
         // TODO
         // 如果没有修改，就直接关闭弹窗
         if (Object.keys(formCopy).length == 0) {
+            this.dialogData.form.extend_params = copyExtendParams;
             this.dialogData.bShow = false;
             return;
         }

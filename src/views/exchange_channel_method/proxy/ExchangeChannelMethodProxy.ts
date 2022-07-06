@@ -160,13 +160,15 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
     showDialog(status: string, data?: any) {
         this.dialogData.bShow = true;
         this.dialogData.status = status;
-        this.resetDialogForm();
+
         if (status == DialogStatus.update) {
             data.status = data.status.toString();
             this.dialogData.formSource = data;
+            data.block_network_id = data.block_network_id.toString();
             Object.assign(this.dialogData.form, data);
             // this.sendNotification(HttpType.admin_exchange_channel_method_show, { id: data.id });
         } else {
+            this.resetDialogForm();
             this.dialogData.formSource = null;
         }
     }

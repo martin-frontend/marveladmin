@@ -110,9 +110,9 @@
             <el-form-item size="mini" :label="tableColumns.name.name" prop="name">
                 <el-input v-model="form.name" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item>
-            <!-- <el-form-item size="mini" :label="tableColumns.account.name" prop="account">
+            <el-form-item size="mini" :label="tableColumns.account.name" prop="account">
                 <el-input v-model="form.account" :placeholder="$t('common.pleaseEnter')"></el-input>
-            </el-form-item> -->
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns.secret.name" prop="secret">
                 <el-input v-model="form.secret" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item>

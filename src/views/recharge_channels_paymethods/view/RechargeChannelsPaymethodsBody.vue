@@ -1,7 +1,7 @@
 <template>
     <div class="recharge_channel_component table_list_component">
         <el-table :data="tableData" border style="width: 100%" v-loading="net_status.loading">
-            <el-table-column prop="id" label="ID" width="50px" align="center"> </el-table-column>
+            <el-table-column prop="id" :label="tableColumns['id'].name" width="50px" align="center"> </el-table-column>
             <el-table-column prop="plat_id" :label="tableColumns['plat_id'].name" align="center">
                 <template slot-scope="{ row }">
                     <div>

@@ -26,25 +26,25 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
     /**表格相关数据 */
     tableData = {
         columns: {
-            account: { name: "", options: {} },
-            created_at: { name: "", options: {} },
-            created_by: { name: "", options: {} },
-            data_belong: { name: "", options: {} },
-            id: { name: "", options: {} },
-            is_delete: { name: "", options: {} },
-            name: { name: "", options: {} },
-            plat_id: {
-                name: "",
-                options: {},
-            },
-            secret: { name: "", options: {} },
-            status: { name: "", options: {} },
-            support_paymethods: { name: "", options: {} },
-            type: { name: "", options: {} },
-            updated_at: { name: "", options: {} },
-            updated_by: { name: "", options: {} },
+            account: { name: "APPID账号", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
+            block_network_id: { name: "区块网络", options: {} },
+            coin_relations: { 30000: {} },
+            created_at: { name: "创建时间", options: {} },
+            created_by: { name: "创建人", options: {} },
+            data_belong: { name: "数据归属标记", options: {} },
+            id: { name: "编号", options: {} },
+            is_delete: { name: "是否删除", options: {} },
+            name: { name: "充值渠道名称", options: {} },
+            plat_id: { name: "所属平台", options: {} },
+            secret: { name: "APPKEY密钥", options: {} },
+            status: { name: "状态", options: {} },
+            support_paymethods: { name: "充值支付方式", options: {} },
+            type: { name: "厂商类型", options: {} },
+            updated_at: { name: "修改时间", options: {} },
+            updated_by: { name: "修改人", options: {} },
             vendor_id: {
-                name: "",
+                name: "充值厂商",
                 options: {
                     4: "",
                     94: "",
@@ -103,19 +103,24 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             diy_paytype: "",
             status: "1",
             fixed_gold_list: [],
+            block_network_id: "",
+            coin_name_unique: "",
         },
         formSource: null, // 表单的原始数据
     };
 
-    /**弹窗表格相关数据 */
+    /**弹窗表格相关数据 recharge_channels_paymethods*/
     dialogTableData = {
         columns: {
+            coin_name_unique: { name: "币种", options: {} },
+            block_network_id: { name: "链", options: {} },
+            coin_network_map: { options: {} },
             created_at: { name: "创建时间", options: {} },
             created_by: { name: "创建人", options: {} },
             data_belong: { name: "数据归属标记", options: {} },
             diy_paytype: { name: "自定义支付类型", options: {} },
             fixed_gold_list: { name: "固定金额列表", options: {} },
-            id: { name: "ID", options: {} },
+            id: { name: "编号", options: {} },
             is_delete: { name: "是否删除", options: {} },
             is_fixed_gold: { name: "是否固定金额", options: {} },
             max_gold: { name: "最大充值金额", options: {} },
@@ -196,6 +201,8 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             data.paymethod_id = data.paymethod_id.toString();
             data.status = data.status.toString();
             data.is_fixed_gold = data.is_fixed_gold.toString();
+            data.block_network_id = data.block_network_id.toString();
+
             Object.assign(this.addDialogData.form, data);
         } else {
             this.resetDialogForm();
@@ -228,6 +235,8 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             diy_paytype: "",
             status: "1",
             fixed_gold_list: [],
+            block_network_id: "",
+            coin_name_unique: "",
         });
     }
 
@@ -250,6 +259,8 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             status,
             subtitle,
             title,
+            block_network_id,
+            coin_name_unique,
         } = this.addDialogData.form;
         const formCopy: any = {
             // TODO
@@ -264,6 +275,8 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             status,
             subtitle,
             title,
+            block_network_id,
+            coin_name_unique,
         };
         formCopy.fixed_gold_list = formCopy.fixed_gold_list.filter((el: any) => {
             return el != null;
@@ -296,9 +309,9 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
 
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText:<string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {
