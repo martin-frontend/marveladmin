@@ -92,17 +92,16 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
         status: DialogStatus.create,
         form: {
             id: "",
-            paychannel_id: "",
+            paychannel_id: "4", //4 数字货币
             paymethod_id: "",
-            title: "",
+            title: "-", //不显示
             subtitle: "",
             notice: "",
             min_gold: "",
             max_gold: "",
-            is_fixed_gold: "1",
-            diy_paytype: "",
+            diy_paytype: "-",
             status: "1",
-            fixed_gold_list: [],
+            fixed_gold_list: "-",
             block_network_id: "",
             coin_name_unique: "",
         },
@@ -200,7 +199,6 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             this.addDialogData.formSource = JSON.parse(JSON.stringify(data));
             data.paymethod_id = data.paymethod_id.toString();
             data.status = data.status.toString();
-            data.is_fixed_gold = data.is_fixed_gold.toString();
             data.block_network_id = data.block_network_id.toString();
 
             Object.assign(this.addDialogData.form, data);
@@ -225,18 +223,17 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
     resetDialogForm() {
         Object.assign(this.addDialogData.form, {
             paychannel_id: "",
-            paymethod_id: "",
-            title: "",
+            paymethod_id: "4",
+            title: "-",
             subtitle: "",
             notice: "",
             min_gold: "",
             max_gold: "",
-            is_fixed_gold: "1",
-            diy_paytype: "",
             status: "1",
-            fixed_gold_list: [],
             block_network_id: "",
             coin_name_unique: "",
+            fixed_gold_list: "-",
+            diy_paytype: "-",
         });
     }
 
@@ -248,9 +245,6 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
     /**添加数据 */
     onAdd() {
         const {
-            diy_paytype,
-            fixed_gold_list,
-            is_fixed_gold,
             max_gold,
             min_gold,
             notice,
@@ -261,12 +255,11 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             title,
             block_network_id,
             coin_name_unique,
+            fixed_gold_list,
+            diy_paytype,
         } = this.addDialogData.form;
         const formCopy: any = {
             // TODO
-            diy_paytype,
-            fixed_gold_list,
-            is_fixed_gold,
             max_gold,
             min_gold,
             notice,
@@ -277,11 +270,10 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             title,
             block_network_id,
             coin_name_unique,
+            fixed_gold_list,
+            diy_paytype,
         };
-        formCopy.fixed_gold_list = formCopy.fixed_gold_list.filter((el: any) => {
-            return el != null;
-        });
-        formCopy.fixed_gold_list = JSON.stringify(formCopy.fixed_gold_list);
+
         formCopy.paychannel_id = this.paychannel_id;
         this.sendNotification(HttpType.admin_recharge_channels_paymethods_store, formCopy);
     }

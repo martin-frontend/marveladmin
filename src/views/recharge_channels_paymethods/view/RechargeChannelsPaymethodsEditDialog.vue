@@ -15,6 +15,10 @@
             class="demo-ruleForm"
             v-loading="net_status.loading"
         >
+            <!-- 充值方式 -->
+            <!-- <el-form-item :label="tableColumns['paymethod_id'].name" prop="paymethod_id">
+                <span>{{ tableColumns["paymethod_id"].options[addFrom.paymethod_id] }}</span>
+            </el-form-item> -->
             <!-- 币种 -->
             <el-form-item size="mini" :label="tableColumns['coin_name_unique'].name" prop="coin_name_unique">
                 <el-select
@@ -44,21 +48,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <!-- 充值方式 -->
-            <el-form-item :label="`${tableColumns['paymethod_id'].name}`" prop="paymethod_id">
-                <el-select v-model="addFrom.paymethod_id" filterable :placeholder="$t('common.pleaseChoose')">
-                    <el-option
-                        v-for="(item, key) of tableColumns['paymethod_id'].options"
-                        :key="key"
-                        :label="item"
-                        :value="key"
-                    ></el-option>
-                </el-select>
-            </el-form-item>
-            <!-- 充值标签 -->
-            <el-form-item :label="`${tableColumns.title.name}`" prop="title">
-                <el-input v-model="addFrom.title" :placeholder="$t('common.pleaseEnter')"></el-input>
-            </el-form-item>
+
             <!-- 充值说明 -->
             <el-form-item :label="`${tableColumns.subtitle.name}`">
                 <el-input v-model="addFrom.subtitle" :placeholder="$t('common.pleaseEnter')"></el-input>
@@ -78,7 +68,8 @@
             <el-form-item :label="`${tableColumns.min_gold.name}`" prop="min_gold">
                 <el-input
                     v-model="addFrom.min_gold"
-                    oninput="value=value.replace(/[^\d]/g,'')"
+                    type="number"
+                    min="0"
                     :placeholder="$t('common.pleaseEnter')"
                 ></el-input>
             </el-form-item>
@@ -86,42 +77,12 @@
             <el-form-item :label="`${tableColumns.max_gold.name}`" prop="max_gold">
                 <el-input
                     v-model="addFrom.max_gold"
-                    oninput="value=value.replace(/[^\d]/g,'')"
+                    type="number"
+                    min="0"
                     :placeholder="$t('common.pleaseEnter')"
                 ></el-input>
             </el-form-item>
-            <!-- 是否固定充值额度 -->
-            <el-form-item :label="`${tableColumns.is_fixed_gold.name}`">
-                <el-radio v-model="addFrom.is_fixed_gold" label="1">{{ $t("common.yes") }}</el-radio>
-                <el-radio v-model="addFrom.is_fixed_gold" label="0">{{ $t("common.no") }}</el-radio>
-            </el-form-item>
-            <!-- 充值金额 -->
-            <div class="recharge_amount">
-                <el-form-item :label="`${tableColumns.fixed_gold_list.name}`" prop="fixed_gold_list">
-                    <div class="item-group">
-                        <el-input
-                            v-for="n in 4"
-                            :key="n"
-                            v-model="addFrom.fixed_gold_list[n - 1]"
-                            oninput="value=value.replace(/[^\d]/g,'')"
-                            :placeholder="$t('common.money') + `${n}`"
-                        ></el-input>
-                    </div>
-                    <div class="item-group">
-                        <el-input
-                            v-for="n in 4"
-                            :key="n"
-                            v-model="addFrom.fixed_gold_list[n + 3]"
-                            oninput="value=value.replace(/[^\d]/g,'')"
-                            :placeholder="$t('common.money') + `${n + 4}`"
-                        ></el-input>
-                    </div>
-                </el-form-item>
-            </div>
-            <!-- 自定义支付宝类型 -->
-            <el-form-item :label="`${tableColumns.diy_paytype.name}`">
-                <el-input v-model="addFrom.diy_paytype" :placeholder="$t('common.pleaseEnter')"></el-input>
-            </el-form-item>
+
             <!-- 状态 -->
             <el-form-item :label="`${tableColumns.status.name}`">
                 <el-radio v-model="addFrom.status" label="1">{{ $t("common.normal") }}</el-radio>

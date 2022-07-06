@@ -54,9 +54,9 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="diy_paytype" :label="tableColumns['diy_paytype'].name" align="center">
-                    </el-table-column>
-                    <el-table-column prop="title" :label="tableColumns['title'].name" align="center"> </el-table-column>
+                    <!-- <el-table-column prop="diy_paytype" :label="tableColumns['diy_paytype'].name" align="center">
+                    </el-table-column> -->
+                    <!-- <el-table-column prop="title" :label="tableColumns['title'].name" align="center"> </el-table-column> -->
                     <el-table-column prop="subtitle" :label="tableColumns['subtitle'].name" align="center">
                     </el-table-column>
                     <el-table-column prop="notice" :label="tableColumns['notice'].name" align="center">
@@ -65,7 +65,7 @@
                     </el-table-column>
                     <el-table-column prop="max_gold" :label="tableColumns['max_gold'].name" align="center">
                     </el-table-column>
-                    <el-table-column
+                    <!-- <el-table-column
                         prop="fixed_gold_list"
                         :label="tableColumns['fixed_gold_list'].name"
                         align="center"
@@ -75,9 +75,9 @@
                                 {{ row.fixed_gold_list.join() }}
                             </div>
                         </template>
-                    </el-table-column>
-                    <el-table-column prop="diy_paytype" :label="tableColumns['diy_paytype'].name" align="center">
-                    </el-table-column>
+                    </el-table-column> -->
+                    <!-- <el-table-column prop="diy_paytype" :label="tableColumns['diy_paytype'].name" align="center">
+                    </el-table-column> -->
                     <el-table-column :label="tableColumns['status'].name" align="center">
                         <template slot-scope="scope">
                             <el-switch
