@@ -1,6 +1,6 @@
 <template>
     <el-dialog :title="`${textMap[status]}`" :visible.sync="myProxy.dialogData.bShow">
-        <el-form ref="form" :model="form" label-width="110px" v-loading="net_status.loading">
+        <el-form ref="form" :rules="rules" :model="form" label-width="110px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
                 <el-select v-model="form.plat_id" filterable :placeholder="$t('common.pleaseChoose')">
                     <el-option
@@ -95,8 +95,8 @@ export default class PlatEmailVendorDialog extends AbstractView {
 
     get rules() {
         return {
-            name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            area_code: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            email_vendor_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            plat_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
         };
     }
 
