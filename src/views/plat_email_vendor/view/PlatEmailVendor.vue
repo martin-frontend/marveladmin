@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatEmailVendorHeader/>
-        <PlatEmailVendorBody/>
-        <PlatEmailVendorDialog/>
+        <PlatEmailVendorHeader />
+        <PlatEmailVendorBody />
+        <PlatEmailVendorDialog v-if="myProxy.dialogData.bShow" />
     </div>
 </template>
 
@@ -13,21 +13,23 @@ import { Component } from "vue-property-decorator";
 import PlatEmailVendorHeader from "./PlatEmailVendorHeader.vue";
 import PlatEmailVendorBody from "./PlatEmailVendorBody.vue";
 import PlatEmailVendorDialog from "./PlatEmailVendorDialog.vue";
+import PlatEmailVendorProxy from "../proxy/PlatEmailVendorProxy";
 
 @Component({
     components: {
         PlatEmailVendorHeader,
         PlatEmailVendorBody,
-        PlatEmailVendorDialog
+        PlatEmailVendorDialog,
     },
 })
 export default class PlatEmailVendor extends AbstractView {
-
     constructor() {
         super(PlatEmailVendorMediator);
     }
+    // proxy
+    myProxy: PlatEmailVendorProxy = this.getProxy(PlatEmailVendorProxy);
 
-    destroyed(){
+    destroyed() {
         super.destroyed();
     }
 }

@@ -44,13 +44,13 @@
                     {{ scope.row.updated_by }}
                 </template>
             </el-table-column>
-            
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="300px">
+
+            <el-table-column :label="$t('common.operating')" class-name="status-col" width="200px">
                 <template slot-scope="{ row }">
-                    <el-button class="item" type="primary" icon="el-icon-edit" @click="handleEdit(row)">{{
+                    <el-button class="item" size="mini" type="primary" icon="el-icon-edit" @click="handleEdit(row)">{{
                         $t("common.update")
                     }}</el-button>
-                    <el-button class="item" type="danger" icon="" @click="handlerDelete(row)">{{
+                    <el-button class="item" size="mini" type="danger" icon="" @click="handlerDelete(row)">{{
                         $t("common.delete")
                     }}</el-button>
                 </template>
@@ -107,8 +107,6 @@ export default class PlatEmailVendorBody extends AbstractView {
     }
 
     handleEdit(data: any) {
-        console.log("data=====",data);
-        
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 

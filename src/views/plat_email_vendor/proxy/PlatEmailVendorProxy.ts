@@ -55,7 +55,7 @@ export default class PlatEmailVendorProxy extends AbstractProxy implements IPlat
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        form: {
+        form: <any>{
             id: "",
             data_belong: "",
             plat_id: "",
@@ -150,15 +150,22 @@ export default class PlatEmailVendorProxy extends AbstractProxy implements IPlat
     }
     /**添加数据 */
     onAdd() {
-        const formCopy: any = this.dialogData.form;
-        formCopy.extends = JSON.stringify(JSON.parse(formCopy.extends));
+        const formCopy = Object.assign({}, this.dialogData.form);
+
+        if (Object.keys(formCopy.extends).length > 0) {
+            formCopy.extends = JSON.stringify(JSON.parse(formCopy.extends));
+        } else {
+            formCopy.extends = "{}";
+        }
+
+        formCopy.plat_id = this.listQuery.plat_id;
         this.sendNotification(HttpType.admin_plat_email_vendor_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
     onUpdate() {
-        const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
         // 删除多余无法去除的参数
-        // TODO
+        const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
+
         // 如果没有修改，就直接关闭弹窗
         if (Object.keys(formCopy).length == 0) {
             this.dialogData.bShow = false;
@@ -166,6 +173,7 @@ export default class PlatEmailVendorProxy extends AbstractProxy implements IPlat
         }
         // 添加必填参数
         formCopy.id = this.dialogData.form.id;
+        formCopy.plat_id = this.listQuery.plat_id;
         // 发送消息
         this.sendNotification(HttpType.admin_plat_email_vendor_update, formCopy);
     }
@@ -177,7 +185,11 @@ export default class PlatEmailVendorProxy extends AbstractProxy implements IPlat
             type: "warning",
         })
             .then(() => {
-                this.sendNotification(HttpType.admin_plat_email_vendor_update, { id, is_delete: 1 });
+                this.sendNotification(HttpType.admin_plat_email_vendor_update, {
+                    id,
+                    is_delete: 1,
+                    plat_id: this.listQuery.plat_id,
+                });
             })
             .catch(() => {});
     }
@@ -205,11 +217,17 @@ export default class PlatEmailVendorProxy extends AbstractProxy implements IPlat
     }
     /**启用 */
     onActivate(id: number) {
-        this.facade.sendNotification(HttpType.admin_plat_email_vendor_update, { id: id, status: SmsStatusType.Activate });
+        this.facade.sendNotification(HttpType.admin_plat_email_vendor_update, {
+            id: id,
+            status: SmsStatusType.Activate,
+        });
     }
     /**停用 */
     onDisactivate(id: number) {
-        this.facade.sendNotification(HttpType.admin_plat_email_vendor_update, { id: id, status: SmsStatusType.Disactivate });
+        this.facade.sendNotification(HttpType.admin_plat_email_vendor_update, {
+            id: id,
+            status: SmsStatusType.Disactivate,
+        });
     }
     /**查看短信余量 */
     getBalance(id: number) {

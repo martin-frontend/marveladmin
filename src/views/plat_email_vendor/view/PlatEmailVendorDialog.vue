@@ -1,13 +1,8 @@
 <template>
     <el-dialog :title="`${textMap[status]}`" :visible.sync="myProxy.dialogData.bShow">
-        <el-form ref="form" :model="form" label-width="90px" v-loading="net_status.loading">
-
+        <el-form ref="form" :model="form" label-width="110px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.email_vendor_id.name" prop="email_vendor_id">
-                <el-select
-                    v-model="form.email_vendor_id"
-                    filterable
-                    :placeholder="$t('common.pleaseChoose')"
-                >
+                <el-select v-model="form.email_vendor_id" filterable :placeholder="$t('common.pleaseChoose')">
                     <el-option
                         v-for="(value, key) in tableColumns.email_vendor_id.options"
                         :key="key"
@@ -30,11 +25,9 @@
                     <json-editor ref="jsonEditor" v-model="form.extends" />
                 </div>
             </el-form-item>
-            
+
             <el-form-item class="dialog-footer">
-                <el-button type="danger" size="mini" @click="handleDelete()">{{
-                    $t("common.delete")
-                }}</el-button>
+                <el-button type="danger" size="mini" @click="handleDelete()">{{ $t("common.delete") }}</el-button>
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
                     $t("common.save")
                 }}</el-button>
