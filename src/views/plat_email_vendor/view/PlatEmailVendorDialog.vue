@@ -106,7 +106,7 @@ export default class PlatEmailVendorDialog extends AbstractView {
     }
 
     private handleDelete() {
-        this.myProxy.onDelete(this.form.email_vendor_id);
+        this.myProxy.onDelete(this.form.id);
     }
 }
 </script>
