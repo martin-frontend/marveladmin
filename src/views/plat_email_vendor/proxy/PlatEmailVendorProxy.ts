@@ -158,7 +158,6 @@ export default class PlatEmailVendorProxy extends AbstractProxy implements IPlat
             formCopy.extends = "{}";
         }
 
-        formCopy.plat_id = this.listQuery.plat_id;
         this.sendNotification(HttpType.admin_plat_email_vendor_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
@@ -173,7 +172,7 @@ export default class PlatEmailVendorProxy extends AbstractProxy implements IPlat
         }
         // 添加必填参数
         formCopy.id = this.dialogData.form.id;
-        formCopy.plat_id = this.listQuery.plat_id;
+
         // 发送消息
         this.sendNotification(HttpType.admin_plat_email_vendor_update, formCopy);
     }

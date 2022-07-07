@@ -1,6 +1,17 @@
 <template>
     <el-dialog :title="`${textMap[status]}`" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :model="form" label-width="110px" v-loading="net_status.loading">
+            <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
+                <el-select v-model="form.plat_id" filterable :placeholder="$t('common.pleaseChoose')">
+                    <el-option
+                        v-for="(value, key) in tableColumns.plat_id.options"
+                        :key="key"
+                        :label="value"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+
             <el-form-item :label="tableColumns.email_vendor_id.name" prop="email_vendor_id">
                 <el-select v-model="form.email_vendor_id" filterable :placeholder="$t('common.pleaseChoose')">
                     <el-option
