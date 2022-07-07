@@ -83,6 +83,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_water_leaderboard_display: { name: "", options: {} },
             is_recharge_leaderboard_display: { name: "", options: {} },
             validate_type: { name: "安全设置", options: {} },
+            register_types: { name: "注册方式", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -136,6 +137,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_recharge_leaderboard_display: 0,
         is_bind_phone_recharge: 0,
         validate_type: [],
+        register_types: [],
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -334,6 +336,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_recharge_leaderboard_display,
             is_bind_phone_recharge, //绑定手机充值
             validate_type,
+            register_types, //注册方式
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -372,12 +375,14 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_recharge_leaderboard_display,
             is_bind_phone_recharge, //绑定手机充值
             validate_type,
+            register_types,
         };
 
         formCopy.app_types = JSON.stringify(formCopy.app_types);
         formCopy.water_config = JSON.stringify(formCopy.water_config);
         formCopy.promotion_floor = JSON.stringify(formCopy.promotion_floor);
         formCopy.validate_type = JSON.stringify(formCopy.validate_type);
+        formCopy.register_types = JSON.stringify(formCopy.register_types);
         try {
             let extendsStr: any = "{}";
             if (Object.keys(this.dialogData.form.extends).length > 0) {

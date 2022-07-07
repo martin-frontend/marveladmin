@@ -23,12 +23,20 @@
                         </el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item size="mini" :label="tableColumns['language'].name" prop="language">
-                    <!-- <el-radio-group v-model="form.language">
-                        <el-radio v-for="(value, key) in tableColumns.language.options" :key="key" :label="key">
+                <!-- "注册方式" -->
+                <el-form-item size="mini" :label="tableColumns['register_types'].name" prop="register_types">
+                    <el-checkbox-group v-model="form.register_types">
+                        <el-checkbox
+                            v-for="(value, key) in tableColumns.register_types.options"
+                            :key="key"
+                            :label="Number(key)"
+                        >
                             {{ value }}
-                        </el-radio>
-                    </el-radio-group> -->
+                        </el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+
+                <el-form-item size="mini" :label="tableColumns['language'].name" prop="language">
                     <el-checkbox-group v-model="form.language">
                         <el-checkbox
                             v-for="(value, key) in Object.values(tableColumns.language.options)"
@@ -541,6 +549,7 @@ export default class PlatDialog extends AbstractView {
 
     get rules() {
         return {
+            register_types: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             plat_name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             app_types: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             status: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
