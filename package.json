@@ -5,8 +5,10 @@
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
     "dev": "vue-cli-service serve",
-    "lint": "eslint --ext .js,.vue src",
     "build:prod": "vue-cli-service build",
+    "build:dev": "vue-cli-service build --mode dev",
+    "build:test": "vue-cli-service build --mode test",
+    "lint": "eslint --ext .js,.vue src",
     "build:stage": "vue-cli-service build --mode staging",
     "build:h5": "vue-cli-service build --mode h5",
     "build:demo": "vue-cli-service build --mode demo",
