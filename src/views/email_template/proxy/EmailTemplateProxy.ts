@@ -33,10 +33,10 @@ export default class EmailTemplateProxy extends AbstractProxy implements IEmailT
             content: { name: "", options: {} },
             replaceable_text: { name: "", options: {} },
             created_by: { name: "", options: {} },
-            created_at:{ name: "", options: {} },
-            updated_by:{ name: "", options: {} },
-            updated_at:{ name: "", options: {} },
-
+            created_at: { name: "", options: {} },
+            updated_by: { name: "", options: {} },
+            updated_at: { name: "", options: {} },
+            plat_id: { name: "所属平台", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -51,12 +51,13 @@ export default class EmailTemplateProxy extends AbstractProxy implements IEmailT
         bShow: false,
         status: DialogStatus.create,
         form: {
-            id:"",
+            id: "",
             name: "",
             type: null,
             subject: "",
             content: "",
             replaceable_text: "",
+            plat_id: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -114,6 +115,7 @@ export default class EmailTemplateProxy extends AbstractProxy implements IEmailT
             subject: "",
             content: "",
             replaceable_text: "",
+            plat_id: "",
         });
     }
 
@@ -124,7 +126,7 @@ export default class EmailTemplateProxy extends AbstractProxy implements IEmailT
     /**添加数据 */
     onAdd() {
         const formCopy: any = this.dialogData.form;
-        
+
         this.sendNotification(HttpType.admin_email_template_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
@@ -141,7 +143,7 @@ export default class EmailTemplateProxy extends AbstractProxy implements IEmailT
         // TODO
         // 添加主键
         formCopy.email_vender_id = this.dialogData.form.id;
-        
+
         // 发送消息
         this.sendNotification(HttpType.admin_email_template_update, formCopy);
     }
@@ -155,6 +157,6 @@ export default class EmailTemplateProxy extends AbstractProxy implements IEmailT
             .then(() => {
                 this.sendNotification(HttpType.admin_email_template_update, { email_vender_id: id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

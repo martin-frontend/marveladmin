@@ -14,6 +14,11 @@
                     {{ scope.row.id }}
                 </template>
             </el-table-column>
+            <el-table-column :label="tableColumns.plat_id.name" class-name="status-col" width="60px">
+                <template slot-scope="scope">
+                    {{ tableColumns.plat_id.options[scope.row.plat_id] }}
+                </template>
+            </el-table-column>
             <el-table-column :label="tableColumns.name.name" class-name="status-col" width="120px">
                 <template slot-scope="scope">
                     {{ scope.row.name }}
@@ -36,7 +41,7 @@
             </el-table-column>
             <el-table-column :label="tableColumns.replaceable_text.name" class-name="status-col" width="150px">
                 <template slot-scope="scope">
-                    {{ scope.row.replaceable_text}}
+                    {{ scope.row.replaceable_text }}
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.updated_at.name" class-name="status-col" width="150px">
@@ -111,8 +116,8 @@ export default class EmailTemplateBody extends AbstractView {
     }
 
     handleEdit(data: any) {
-        console.log("data=====",data);
-        
+        console.log("data=====", data);
+
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 

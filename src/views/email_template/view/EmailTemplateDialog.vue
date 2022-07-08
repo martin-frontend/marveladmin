@@ -1,6 +1,21 @@
 <template>
     <el-dialog :title="`${textMap[status]}`" :visible.sync="myProxy.dialogData.bShow">
-        <el-form ref="form" :model="form" label-width="90px" v-loading="net_status.loading">
+        <el-form ref="form" :rules="rules" :model="form" label-width="100px" v-loading="net_status.loading">
+            <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
+                <el-select
+                    v-model="form.plat_id"
+                    :disabled="isStatusUpdate"
+                    filterable
+                    :placeholder="$t('common.pleaseChoose')"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns.plat_id.options"
+                        :key="key"
+                        :label="value"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
 
             <el-form-item :label="tableColumns.name.name" prop="name">
                 <el-input
@@ -12,11 +27,7 @@
             </el-form-item>
 
             <el-form-item :label="tableColumns.type.name" prop="type">
-                <el-select
-                    v-model="form.type"
-                    filterable
-                    :placeholder="$t('common.pleaseChoose')"
-                >
+                <el-select v-model="form.type" filterable :placeholder="$t('common.pleaseChoose')">
                     <el-option
                         v-for="(value, key) in tableColumns.type.options"
                         :key="key"
@@ -50,17 +61,11 @@
             </el-form-item>
 
             <el-form-item :label="tableColumns.replaceable_text.name" prop="replaceable_text">
-                <el-input
-                    clearable
-                    :placeholder="$t('common.pleaseEnter')"
-                    v-model="form.replaceable_text"
-                ></el-input>
+                <el-input clearable :placeholder="$t('common.pleaseEnter')" v-model="form.replaceable_text"></el-input>
             </el-form-item>
-            
+
             <el-form-item class="dialog-footer">
-                <el-button type="danger" size="mini" @click="handleDelete()">{{
-                    $t("common.delete")
-                }}</el-button>
+                <el-button type="danger" size="mini" @click="handleDelete()">{{ $t("common.delete") }}</el-button>
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
                     $t("common.save")
                 }}</el-button>
@@ -117,8 +122,13 @@ export default class EmailTemplateDialog extends AbstractView {
 
     get rules() {
         return {
+            type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            plat_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            content: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             area_code: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            subject: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            replaceable_text: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
         };
     }
 
