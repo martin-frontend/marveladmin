@@ -56,18 +56,28 @@
                 prop="group_users"
                 width="110px"
             ></el-table-column>
+            <!-- 当前可领取佣金 -->
             <el-table-column
                 :label="tableColumns.commission_awaiting_num.name"
                 prop="commission_awaiting_num"
                 width="120px"
-                align="center"
-            ></el-table-column>
+                align="left"
+            >
+                <template slot-scope="{ row }">
+                    <div v-html="formatObject(row.commission_awaiting_num)"></div>
+                </template>
+            </el-table-column>
+            <!-- 已领取佣金总额 -->
             <el-table-column
                 :label="tableColumns.commission_received_num.name"
                 prop="commission_received_num"
                 width="120px"
-                align="center"
-            ></el-table-column>
+                align="left"
+            >
+                <template slot-scope="{ row }">
+                    <div v-html="formatObject(row.commission_received_num)"></div>
+                </template>
+            </el-table-column>
 
             <el-table-column
                 align="left"
@@ -200,6 +210,15 @@ export default class PlatAgentBindBody extends AbstractView {
             _w = "220px";
         }
         return _w;
+    }
+
+    /**物件解析 */
+    private formatObject(obj: any) {
+        let result = "";
+        Object.keys(obj).forEach((key: any) => {
+            result += `<div>${key}: ${obj[key]}</div>`;
+        });
+        return result;
     }
 }
 </script>
