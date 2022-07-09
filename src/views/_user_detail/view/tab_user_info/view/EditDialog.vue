@@ -39,10 +39,10 @@
                 <el-input
                     v-model="dialogData.filedValue"
                     rows="2"
-                    maxlength="5"
+                    maxlength="6"
                     show-word-limit
                     class="dialog_input"
-                    :placeholder="`${tableColumns.pretty_user_id.name}最多五位数`"
+                    :placeholder="`${tableColumns.pretty_user_id.name}最多六位数`"
                 ></el-input>
             </template>
 
