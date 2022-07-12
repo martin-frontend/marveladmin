@@ -2,6 +2,7 @@ import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, getUrl, objectRemoveNull } from "@/core/global/Functions";
 import Http from "@/core/net/Http";
+import i18n from "@/lang";
 import { HttpType } from "@/views/block_transfer_account/setting";
 import { MessageBox } from "element-ui";
 import IBlockTransferAccountProxy from "./IBlockTransferAccountProxy";
@@ -64,16 +65,16 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
             status: null,
             remark: null,
             token_balance: "",
-            block_network_id:null,
-            private_key:null
+            block_network_id: null,
+            private_key: null,
         },
         formSource: <any>null, // 表单的原始数据
     };
     /**弹窗显示余额 */
     dialogBalance = {
         bShow: false,
-        data: <any>{}
-    }
+        data: <any>{},
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -131,8 +132,8 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
             status: null,
             remark: null,
             token_balance: "",
-            block_network_id:null,
-            private_key:null
+            block_network_id: null,
+            private_key: null,
         });
     }
 
@@ -151,7 +152,7 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
             status: form.status,
             remark: form.remark,
             block_network_id: form.block_network_id,
-            private_key: form.private_key
+            private_key: form.private_key,
         };
         this.sendNotification(HttpType.admin_block_transfer_account_store, objectRemoveNull(formCopy));
     }
@@ -172,9 +173,9 @@ export default class BlockTransferAccountProxy extends AbstractProxy implements 
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm("您是否删除该记录", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
+        MessageBox.confirm(<string>i18n.t("admin_role.confirmText1"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {

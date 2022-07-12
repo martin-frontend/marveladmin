@@ -1,6 +1,7 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import i18n from "@/lang";
 import { HttpType } from "@/views/block_contract/setting";
 import { MessageBox } from "element-ui";
 import IBlockContractProxy from "./IBlockContractProxy";
@@ -145,7 +146,7 @@ export default class BlockContractProxy extends AbstractProxy implements IBlockC
             extends: form.extends,
             remark: form.remark,
             type: form.type,
-            coin_name_unique: form.coin_name_unique
+            coin_name_unique: form.coin_name_unique,
         };
         this.sendNotification(HttpType.admin_block_contract_store, objectRemoveNull(formCopy));
     }
@@ -166,9 +167,9 @@ export default class BlockContractProxy extends AbstractProxy implements IBlockC
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm("您是否删除该记录", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
+        MessageBox.confirm(<string>i18n.t("admin_role.confirmText1"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {

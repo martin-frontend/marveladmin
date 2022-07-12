@@ -1,6 +1,7 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import i18n from "@/lang";
 import { HttpType } from "@/views/block_network/setting";
 import { MessageBox } from "element-ui";
 import IBlockNetworkProxy from "./IBlockNetworkProxy";
@@ -43,7 +44,7 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
             status: { name: "状态", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
-            main_coin_name: {name: '主币名称', options: {}},
+            main_coin_name: { name: "主币名称", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -60,15 +61,15 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
         form: {
             id: null,
             name: null,
-            name_unique:null,
-            rpc_url:null,
-            scan_url:null,
-            chain_id:null,
-            gas:null,
-            gas_price:null,
-            block_confirm_number:null,
-            extends:null,
-            status:null,
+            name_unique: null,
+            rpc_url: null,
+            scan_url: null,
+            chain_id: null,
+            gas: null,
+            gas_price: null,
+            block_confirm_number: null,
+            extends: null,
+            status: null,
             main_coin_name: null,
         },
         formSource: <any>null, // 表单的原始数据
@@ -120,16 +121,16 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
         Object.assign(this.dialogData.form, {
             id: null,
             name: null,
-            name_unique:null,
-            rpc_url:null,
-            scan_url:null,
-            chain_id:null,
-            gas:null,
-            gas_price:null,
-            block_confirm_number:null,
-            extends:null,
-            status:null,
-            main_coin_name:null,
+            name_unique: null,
+            rpc_url: null,
+            scan_url: null,
+            chain_id: null,
+            gas: null,
+            gas_price: null,
+            block_confirm_number: null,
+            extends: null,
+            status: null,
+            main_coin_name: null,
         });
     }
 
@@ -151,7 +152,7 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
             block_confirm_number: form.block_confirm_number,
             extends: form.extends,
             status: form.status,
-            main_coin_name: form.main_coin_name
+            main_coin_name: form.main_coin_name,
         };
         this.sendNotification(HttpType.admin_block_network_store, objectRemoveNull(formCopy));
     }
@@ -172,9 +173,9 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm("您是否删除该记录", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
+        MessageBox.confirm(<string>i18n.t("admin_role.confirmText1"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {

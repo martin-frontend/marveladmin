@@ -1,6 +1,7 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import i18n from "@/lang";
 import { HttpType } from "@/views/plat_block_coins/setting";
 import { MessageBox } from "element-ui";
 import IPlatBlockCoinsProxy from "./IPlatBlockCoinsProxy";
@@ -166,9 +167,9 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm("您是否删除该记录", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
+        MessageBox.confirm(<string>i18n.t("admin_role.confirmText1"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {

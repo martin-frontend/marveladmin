@@ -1,6 +1,7 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import i18n from "@/lang";
 import { HttpType } from "@/views/block_system_coins/setting";
 import { MessageBox } from "element-ui";
 import IBlockSystemCoinsProxy from "./IBlockSystemCoinsProxy";
@@ -36,9 +37,9 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             remark: { name: "说明", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
-            icon: {name: "图片", options: {}},
-            icon_url:{name: "图片", options: {}},
-            coin_tag: { name: "三方游戏用户前缀", options: {}}
+            icon: { name: "图片", options: {} },
+            icon_url: { name: "图片", options: {} },
+            coin_tag: { name: "三方游戏用户前缀", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -146,9 +147,9 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm("您是否删除该记录", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
+        MessageBox.confirm(<string>i18n.t("admin_role.confirmText1"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {
