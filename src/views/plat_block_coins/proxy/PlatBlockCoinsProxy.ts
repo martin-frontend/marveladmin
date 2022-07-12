@@ -39,8 +39,8 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
             remark: { name: "描述", options: {} },
-            type: {name: "类型", options: {}},
-            scale: { name: "比例", options: {}},
+            type: { name: "类型", options: {} },
+            scale: { name: "比例", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -63,9 +63,15 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             remark: null,
             game_scale: 1,
             type: null,
-            scale:0,
+            scale: 0,
         },
         formSource: <any>null, // 表单的原始数据
+    };
+
+    /**排序数据 */
+    sortData = {
+        id: null,
+        opt: "1", //0-更新标签|1-置底|2-置顶|3-上调|4-下调
     };
 
     /**设置表头数据 */
@@ -121,7 +127,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             remark: null,
             game_scale: 1,
             type: null,
-            scale:null,
+            scale: null,
         });
     }
 
@@ -169,5 +175,10 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
                 this.sendNotification(HttpType.admin_plat_block_coins_update, { id, is_delete: 1 });
             })
             .catch(() => {});
+    }
+
+    /**排序 */
+    onSort() {
+        this.sendNotification(HttpType.admin_plat_block_coins_update, this.sortData);
     }
 }

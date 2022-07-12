@@ -1,12 +1,15 @@
 <template>
     <div>
-        <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini" v-loading="net_status.loading">
-            <el-table-column
-                prop="id"
-                :label="`${tableColumns.id.name}`"
-                class-name="status-col"
-                min-width="30px"
-            >
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
+            <el-table-column prop="id" :label="`${tableColumns.id.name}`" class-name="status-col" min-width="30px">
             </el-table-column>
             <el-table-column
                 prop="plat_id"
@@ -28,12 +31,7 @@
                     {{ tableColumns.coin_name_unique.options[row.coin_name_unique] }}
                 </template>
             </el-table-column>
-            <el-table-column
-                prop="type"
-                :label="`${tableColumns.type.name}`"
-                class-name="status-col"
-                min-width="30px"
-            >
+            <el-table-column prop="type" :label="`${tableColumns.type.name}`" class-name="status-col" min-width="30px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.type.options[row.type] }}
                 </template>
@@ -62,14 +60,23 @@
                     {{ tableColumns.can_play_game.options[row.can_play_game] }}
                 </template>
             </el-table-column>
+            <el-table-column :label="$t('common.sort')" class-name="status-col" width="280px">
+                <template slot-scope="{ row }">
+                    <div>
+                        <el-button size="mini" @click="handlerSort(row, 2)">
+                            {{ $t("common.setTop") }}
+                        </el-button>
+                        <el-button size="mini" @click="handlerSort(row, 1)">
+                            {{ $t("common.setBottom") }}
+                        </el-button>
+                        <el-button size="mini" icon="el-icon-top" @click="handlerSort(row, 3)"></el-button>
+                        <el-button size="mini" icon="el-icon-bottom" @click="handlerSort(row, 4)"></el-button>
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column label="操作" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
-                    <el-button
-                        size="mini"
-                        type="primary"
-                        @click="handleEdit(row)"
-                        >{{ $t("common.update") }}</el-button
-                    >
+                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -88,7 +95,7 @@ import GlobalVar from "@/core/global/GlobalVar";
 @Component({
     components: {
         Pagination,
-    }
+    },
 })
 export default class PlatBlockCoinsBody extends AbstractView {
     //权限标识
@@ -104,7 +111,7 @@ export default class PlatBlockCoinsBody extends AbstractView {
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
 
-    handlerPageSwitch(page:number){
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
@@ -115,6 +122,13 @@ export default class PlatBlockCoinsBody extends AbstractView {
 
     handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
+    }
+
+    /**排序 */
+    private handlerSort(row: any, opt: any) {
+        this.myProxy.sortData.id = row.id;
+        this.myProxy.sortData.opt = opt;
+        this.myProxy.onSort();
     }
 }
 </script>
