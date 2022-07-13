@@ -10,7 +10,10 @@
         <el-row class="analystics">
             <el-col :span="20" class="stastics"
                 ><span>{{ tableColumns.bonus_pool_amount.name }} {{ tableData.summary.bonus_pool_amount }}</span
-                ><span class="expect">{{ tableColumns.bonus_pool_amount_expect.name }} {{ tableData.summary.bonus_pool_amount_expect }}</span></el-col
+                ><span class="expect"
+                    >{{ tableColumns.bonus_pool_amount_expect.name }}
+                    {{ tableData.summary.bonus_pool_amount_expect }}</span
+                ></el-col
             >
             <el-col :span="4" class="btn">
                 <el-button
@@ -24,13 +27,14 @@
         </el-row>
         <el-row class="detail">
             <el-col :span="span"
-                >{{ tableColumns.put_in_ratio.name }}<span>{{ stake_config.put_in_ratio | toPercent }}</span></el-col
-            >
+                >{{ tableColumns.put_in_ratio.name }}<span>{{ stake_config.put_in_ratio | toPercent }} </span>
+            </el-col>
             <el-col :span="span"
                 >{{ tableColumns.put_out_ratio.name }}<span>{{ stake_config.put_out_ratio | toPercent }}</span></el-col
             >
             <el-col :span="span">
-                {{ tableColumns.auto_withdraw_stake_fee.name}}<span>{{ stake_config.auto_withdraw_stake_fee | toPercent }}</span></el-col
+                {{ tableColumns.auto_withdraw_stake_fee.name
+                }}<span>{{ stake_config.auto_withdraw_stake_fee | toPercent }}</span></el-col
             >
         </el-row>
         <el-row class="detail">

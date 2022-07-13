@@ -32,57 +32,57 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     dialogData = {
         bShow: false,
         form: {
-            put_in_ratio: 0,             // 输赢金额放入奖池比例
-            put_out_ratio: 0,            // 奖池分红比例
-            auto_withdraw_stake_fee: 0,   // 自动解质押费
+            put_in_ratio: 0, // 输赢金额放入奖池比例
+            put_out_ratio: 0, // 奖池分红比例
+            auto_withdraw_stake_fee: 0, // 自动解质押费
             manual_withdraw_stake_fee: 0, // 手动解质押费
-            min_coin_count: 0,         // 最小质押解质押金额
-            is_open_stake: 0,                // 是否允许质押
-        }
-    }
+            min_coin_count: 0, // 最小质押解质押金额
+            is_open_stake: 0, // 是否允许质押
+        },
+    };
     /**质押分红配置 */
     stake_bonus_config = {
-        min_coin_count: 0,         // 最小质押解质押金额
-        put_in_ratio: 0,             // 输赢金额放入奖池比例
-        put_out_ratio: 0,            // 奖池分红比例
+        min_coin_count: 0, // 最小质押解质押金额
+        put_in_ratio: 0, // 输赢金额放入奖池比例
+        put_out_ratio: 0, // 奖池分红比例
         manual_withdraw_stake_fee: 0, // 手动解质押费
-        auto_withdraw_stake_fee: 0,   // 自动解质押费
-        is_open_stake: 0,                // 是否允许质押
-    }
+        auto_withdraw_stake_fee: 0, // 自动解质押费
+        is_open_stake: 0, // 是否允许质押
+    };
     /**质押表格相关数据 */
     stakeLogtableData = {
         columns: {
-            auto_withdraw_stake_fee: { name: '', options: [] },
-            created_at: { name: '', options: [] },
-            created_by: { name: '', options: [] },
-            data_belong: { name: '', options: [] },
-            end_date: { name: '', options: [] },
-            id: { name: '', options: [] },
-            is_open_stake: { name: '', options: [] },
-            manual_withdraw_stake_fee: { name: '', options: [] },
-            min_coin_count: { name: '', options: [] },
-            plat_id: { name: '', options: [] },
-            pool_type: { name: '', options: [] },
-            put_in_ratio: { name: '', options: [] },
-            put_out_amount: { name: '', options: [] },
-            put_out_ratio: { name: '', options: [] },
-            stake_coin_name_unique: { name: '', options: [] },
-            stake_count: { name: '', options: [] },
-            start_date: { name: '', options: [] },
-            status: { name: '', options: [] },
-            total_stake_amount: { name: '', options: [] },
-            total_transfer_fee_amount: { name: '', options: [] },
-            updated_at: { name: '', options: [] },
-            updated_by: { name: '', options: [] },
-            validate_stake_amount: { name: '', options: [] },
-            bonus_pool_amount: { name: '', options: [] },
-            bonus_pool_amount_expect: { name: '', options: [] },
+            auto_withdraw_stake_fee: { name: "", options: [] },
+            created_at: { name: "", options: [] },
+            created_by: { name: "", options: [] },
+            data_belong: { name: "", options: [] },
+            end_date: { name: "", options: [] },
+            id: { name: "", options: [] },
+            is_open_stake: { name: "", options: [] },
+            manual_withdraw_stake_fee: { name: "", options: [] },
+            min_coin_count: { name: "", options: [] },
+            plat_id: { name: "", options: [] },
+            pool_type: { name: "", options: [] },
+            put_in_ratio: { name: "", options: [] },
+            put_out_amount: { name: "", options: [] },
+            put_out_ratio: { name: "", options: [] },
+            stake_coin_name_unique: { name: "", options: [] },
+            stake_count: { name: "", options: [] },
+            start_date: { name: "", options: [] },
+            status: { name: "", options: [] },
+            total_stake_amount: { name: "", options: [] },
+            total_transfer_fee_amount: { name: "", options: [] },
+            updated_at: { name: "", options: [] },
+            updated_by: { name: "", options: [] },
+            validate_stake_amount: { name: "", options: [] },
+            bonus_pool_amount: { name: "", options: [] },
+            bonus_pool_amount_expect: { name: "", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         summary: {
             bonus_pool_amount: 0,
-            bonus_pool_amount_expect: 0
+            bonus_pool_amount_expect: 0,
         },
     };
     /**质押详情表格相关数据 */
@@ -99,24 +99,24 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             page_size: this.page_size,
         },
         columns: {
-            created_at: { name: '', options: [] },
-            created_by: { name: '', options: [] },
-            data_belong: { name: '', options: [] },
-            id: { name: '', options: [] },
-            nick_name: { name: '', options: [] },
-            plat_id: { name: '', options: [] },
-            plat_stake_log_id: { name: '', options: [] },
-            stake_coin_name_unique: { name: '', options: [] },
-            total_stake_amount: { name: '', options: [] },
-            total_transfer_fee_amount: { name: '', options: [] },
-            updated_at: { name: '', options: [] },
-            updated_by: { name: '', options: [] },
-            user_id: { name: '', options: [] },
-            validate_stake_amount: { name: '', options: [] },
+            created_at: { name: "", options: [] },
+            created_by: { name: "", options: [] },
+            data_belong: { name: "", options: [] },
+            id: { name: "", options: [] },
+            nick_name: { name: "", options: [] },
+            plat_id: { name: "", options: [] },
+            plat_stake_log_id: { name: "", options: [] },
+            stake_coin_name_unique: { name: "", options: [] },
+            total_stake_amount: { name: "", options: [] },
+            total_transfer_fee_amount: { name: "", options: [] },
+            updated_at: { name: "", options: [] },
+            updated_by: { name: "", options: [] },
+            user_id: { name: "", options: [] },
+            validate_stake_amount: { name: "", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
-    }
+    };
     /**查询条件 */
     listQuery = {
         plat_id: "",
@@ -126,15 +126,20 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
 
     /**设置质押配置 */
     setStakeBonusConfig(data: any) {
-        Object.assign(this.stake_bonus_config, data)
+        console.log("GGGGG", data);
+        Object.assign(this.stake_bonus_config, data);
     }
     /**显示质押配置弹窗 */
     showBonusConfigDialog() {
         Object.assign(this.dialogData.form, this.stake_bonus_config);
         this.dialogData.form.put_in_ratio = Math.floor(this.stake_bonus_config.put_in_ratio * 100);
         this.dialogData.form.put_out_ratio = Math.floor(this.stake_bonus_config.put_out_ratio * 100);
-        this.dialogData.form.auto_withdraw_stake_fee = Math.floor(this.stake_bonus_config.auto_withdraw_stake_fee * 100);
-        this.dialogData.form.manual_withdraw_stake_fee = Math.floor(this.stake_bonus_config.manual_withdraw_stake_fee * 100);
+        this.dialogData.form.auto_withdraw_stake_fee = Math.floor(
+            this.stake_bonus_config.auto_withdraw_stake_fee * 100
+        );
+        this.dialogData.form.manual_withdraw_stake_fee = Math.floor(
+            this.stake_bonus_config.manual_withdraw_stake_fee * 100
+        );
         this.dialogData.bShow = true;
     }
     /**隐藏质押配置弹窗 */
@@ -150,12 +155,12 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             manual_withdraw_stake_fee: (this.dialogData.form.manual_withdraw_stake_fee * 0.01).toFixed(4),
             min_coin_count: this.dialogData.form.min_coin_count,
             is_open_stake: this.dialogData.form.is_open_stake,
-        }
-        console.error(config);
+        };
+        // console.error(config);
 
         let copyForm = {
             plat_id: this.listQuery.plat_id,
-            stake_bonus_config: JSON.stringify(config)
+            stake_bonus_config: JSON.stringify(config),
         };
         this.sendNotification(HttpType.admin_plat_update, copyForm);
     }
@@ -167,7 +172,6 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
                 this.listQuery.plat_id = plat_id_options_keys[0];
             this.onQuery();
-            this.onPlatShow();
         }
     }
     /**获取平台资料 */
@@ -189,6 +193,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             queryCopy.plat_id = "";
         }
         this.sendNotification(HttpType.admin_plat_stake_log_index, objectRemoveNull(this.listQuery));
+        this.onPlatShow();
     }
 
     /**质押详情表头 */
@@ -216,7 +221,10 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         this.stakeUserLogTableData.dialogData.bShow = true;
         this.stakeUserLogTableData.listQuery.plat_id = data.plat_id;
         this.stakeUserLogTableData.listQuery.plat_stake_log_id = data.plat_stake_log_id;
-        this.sendNotification(HttpType.admin_plat_stake_user_log_index, objectRemoveNull(this.stakeUserLogTableData.listQuery));
+        this.sendNotification(
+            HttpType.admin_plat_stake_user_log_index,
+            objectRemoveNull(this.stakeUserLogTableData.listQuery)
+        );
     }
 
     /**奖池表格相关数据 */
@@ -233,31 +241,31 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             formSource: {
                 put_in_amount: "",
                 put_in_ratio: "",
-            }
+            },
         },
         columns: {
-            auto_withdraw_stake_fee: { name: '', options: [] },
-            bonus_config: { name: '', options: [] },
-            created_at: { name: '', options: [] },
-            created_by: { name: '', options: [] },
-            data_belong: { name: '', options: [] },
-            date: { name: '', options: [] },
-            end_time: { name: '', options: [] },
-            id: { name: '', options: [] },
-            is_open_stake: { name: '', options: [] },
-            manual_withdraw_stake_fee: { name: '', options: [] },
-            min_coin_count: { name: '', options: [] },
-            plat_id: { name: '', options: [] },
-            pool_type: { name: '', options: [] },
-            put_in_ratio: { name: '', options: [] },
-            put_out_amount: { name: '', options: [] },
-            put_out_ratio: { name: '', options: [] },
-            stake_bonus_config: { name: '', options: [] },
-            start_time: { name: '', options: [] },
-            status: { name: '', options: [] },
-            total_bonus_amount: { name: '', options: [] },
-            updated_at: { name: '', options: [] },
-            updated_by: { name: '', options: [] },
+            auto_withdraw_stake_fee: { name: "", options: [] },
+            bonus_config: { name: "", options: [] },
+            created_at: { name: "", options: [] },
+            created_by: { name: "", options: [] },
+            data_belong: { name: "", options: [] },
+            date: { name: "", options: [] },
+            end_time: { name: "", options: [] },
+            id: { name: "", options: [] },
+            is_open_stake: { name: "", options: [] },
+            manual_withdraw_stake_fee: { name: "", options: [] },
+            min_coin_count: { name: "", options: [] },
+            plat_id: { name: "", options: [] },
+            pool_type: { name: "", options: [] },
+            put_in_ratio: { name: "", options: [] },
+            put_out_amount: { name: "", options: [] },
+            put_out_ratio: { name: "", options: [] },
+            stake_bonus_config: { name: "", options: [] },
+            start_time: { name: "", options: [] },
+            status: { name: "", options: [] },
+            total_bonus_amount: { name: "", options: [] },
+            updated_at: { name: "", options: [] },
+            updated_by: { name: "", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -297,10 +305,9 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             });
             Object.assign(this.stakePooltableData.dialogData.formSource, {
                 put_in_amount: 0,
-                put_in_ratio: (this.stake_bonus_config.put_in_ratio * 100).toFixed(2)
+                put_in_ratio: (this.stake_bonus_config.put_in_ratio * 100).toFixed(2),
             });
-        }
-        else {
+        } else {
             Object.assign(this.stakePooltableData.dialogData.form, {
                 pool_type: Number(data.bonus_config.pool_type),
                 put_in_amount: data.bonus_config.put_in_amount.toString(),
@@ -308,7 +315,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             });
             Object.assign(this.stakePooltableData.dialogData.formSource, {
                 put_in_amount: data.bonus_config.put_in_amount,
-                put_in_ratio: (data.bonus_config.put_in_ratio * 100).toFixed(2)
+                put_in_ratio: (data.bonus_config.put_in_ratio * 100).toFixed(2),
             });
         }
 
@@ -324,19 +331,20 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         let bonus_config = {
             pool_type: form.pool_type,
             put_in_ratio: (Number(form.put_in_ratio) * 0.01).toFixed(4),
-            put_in_amount: form.put_in_amount
-        }
+            put_in_amount: form.put_in_amount,
+        };
         let pool_type = form.pool_type;
-        if (pool_type == 1) {//手动
+        if (pool_type == 1) {
+            //手动
             bonus_config.put_in_ratio = (Number(form.put_in_ratio) * 0.01).toFixed(4);
         } else {
             bonus_config.put_in_amount = form.put_in_amount;
         }
         const copyForm = {
             id: form.id,
-            bonus_config: JSON.stringify(bonus_config)
+            bonus_config: JSON.stringify(bonus_config),
         };
-        this.sendNotification(HttpType.admin_plat_stake_pool_log_update, objectRemoveNull(copyForm))
+        this.sendNotification(HttpType.admin_plat_stake_pool_log_update, objectRemoveNull(copyForm));
     }
     /**重置奖池配置 */
     resetPoolDialog(type: number) {
@@ -352,22 +360,22 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     /**分红表格相关数据 */
     stakeBonustableData = {
         columns: {
-            bonus_coin_name_unique: { name: '', options: [] },
-            bonus_pool_amount: { name: '', options: [] },
-            created_at: { name: '', options: [] },
-            created_by: { name: '', options: [] },
-            data_belong: { name: '', options: [] },
-            date: { name: '', options: [] },
-            hundred_bonus: { name: '', options: [] },
-            id: { name: '', options: [] },
-            plat_id: { name: '', options: [] },
-            put_out_ratio: { name: '', options: [] },
-            stake_bonus_config: { name: '', options: [] },
-            stake_count: { name: '', options: [] },
-            total_bonus_amount: { name: '', options: [] },
-            total_stake_amount: { name: '', options: [] },
-            updated_at: { name: '', options: [] },
-            updated_by: { name: '', options: [] },
+            bonus_coin_name_unique: { name: "", options: [] },
+            bonus_pool_amount: { name: "", options: [] },
+            created_at: { name: "", options: [] },
+            created_by: { name: "", options: [] },
+            data_belong: { name: "", options: [] },
+            date: { name: "", options: [] },
+            hundred_bonus: { name: "", options: [] },
+            id: { name: "", options: [] },
+            plat_id: { name: "", options: [] },
+            put_out_ratio: { name: "", options: [] },
+            stake_bonus_config: { name: "", options: [] },
+            stake_count: { name: "", options: [] },
+            total_bonus_amount: { name: "", options: [] },
+            total_stake_amount: { name: "", options: [] },
+            updated_at: { name: "", options: [] },
+            updated_by: { name: "", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -386,14 +394,14 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             page_size: this.page_size,
         },
         columns: {
-            id: { name: '', options: [] },
-            plat_id: { name: '', options: [] },
-            user_id: { name: '', options: [] },
-            stake_amount: { name: '', options: [] },
-            stake_ratio: { name: '', options: [] },
-            bonus_amount: { name: '', options: [] },
-            settlement_at: { name: '', options: [] },
-            nick_name: { name: '', options: [] },
+            id: { name: "", options: [] },
+            plat_id: { name: "", options: [] },
+            user_id: { name: "", options: [] },
+            stake_amount: { name: "", options: [] },
+            stake_ratio: { name: "", options: [] },
+            bonus_amount: { name: "", options: [] },
+            settlement_at: { name: "", options: [] },
+            nick_name: { name: "", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
