@@ -80,8 +80,10 @@ export default class ExchangeChannelMethodBody extends AbstractView {
     }
     // 兑换参数设置
     handleSetting(row: any) {
+        console.log("兑换参数设置 >>", row);
         Object.assign(this.myProxy.dialogDataChannelData.row, row);
-        this.myProxy.methodQuery.exchange_channel_id = row.exchange_channel_id;
+        this.myProxy.methodQuery.exchange_channel_id = row.id;
+        console.log("this.myProxy.methodQuery", this.myProxy.methodQuery);
         this.myProxy.api_admin_exchange_channel_method_index();
     }
 }

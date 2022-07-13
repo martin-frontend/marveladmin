@@ -110,7 +110,7 @@ export default {
                 }
 
                 const data = {
-                    path: path.resolve(basePath, router.path?router.path:""),
+                    path: path.resolve(basePath, router.path ? router.path : ""),
                     title: [...prefixTitle],
                 };
 
@@ -138,13 +138,12 @@ export default {
             if (query !== "") {
                 this.options = [];
                 const op = this.fuse.search(query);
-                for(const item of op){
-                    if(item.path != "/layout"){
+                for (const item of op) {
+                    if (item.path != "/layout") {
                         this.options.push(item);
                     }
                 }
                 // this.options = this.fuse.search(query);
-
             } else {
                 this.options = [];
             }

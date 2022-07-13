@@ -232,7 +232,7 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
             payment_method_type: "4",
             min_fee,
         };
-
+        formCopy.exchange_channel_id = this.methodQuery.exchange_channel_id;
         this.sendNotification(HttpType.admin_exchange_channel_method_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
