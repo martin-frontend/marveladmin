@@ -194,6 +194,8 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         }
         this.sendNotification(HttpType.admin_plat_stake_log_index, objectRemoveNull(this.listQuery));
         this.onPlatShow();
+        this.onStakePoolQuery();
+        this.onStakeBonusQuery();
     }
 
     /**质押详情表头 */
@@ -287,6 +289,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     }
     /**奖池查询 */
     onStakePoolQuery() {
+        console.warn(" /**奖池查询 */");
         const queryCopy = JSON.parse(JSON.stringify(this.listQuery));
         if (queryCopy.plat_id == "0") {
             queryCopy.plat_id = "";
