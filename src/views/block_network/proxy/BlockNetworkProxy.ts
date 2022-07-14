@@ -1,6 +1,6 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
 import i18n from "@/lang";
 import { HttpType } from "@/views/block_network/setting";
 import { MessageBox } from "element-ui";
@@ -34,17 +34,18 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
             data_belong: { name: "数据归属标记", options: {} },
             extends: { name: "扩展参数", options: {} },
             gas: { name: "油量(预设)", options: {} },
-            gas_price: { name: "单位油价", options: {} },
-            id: { name: "ID", options: {} },
-            is_delete: { name: "是否删除", options: {} },
+            gas_price: { name: "单位油价(wei)", options: {} },
+            id: { name: "编号", options: {} },
+            is_delete: { name: "是否删除", options: Array(2) },
+            main_coin_name: { name: "主币名称", options: {} },
             name: { name: "名称", options: {} },
             name_unique: { name: "区块标识", options: {} },
             rpc_url: { name: "区块RPC地址", options: {} },
+            scan_token_url: { name: "区块合约查看地址", options: {} },
             scan_url: { name: "区块查看地址", options: {} },
             status: { name: "状态", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
-            main_coin_name: { name: "主币名称", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -68,9 +69,10 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
             gas: null,
             gas_price: null,
             block_confirm_number: null,
-            extends: null,
-            status: null,
+            extends: {},
+            status: 1,
             main_coin_name: null,
+            scan_token_url: "",
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -90,6 +92,7 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
     setDetail(data: any) {
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        this.dialogData.form.extends = jsonToObject(data.extends);
     }
 
     /**重置查询条件 */
@@ -128,9 +131,10 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
             gas: null,
             gas_price: null,
             block_confirm_number: null,
-            extends: null,
-            status: null,
+            extends: {},
+            status: 1,
             main_coin_name: null,
+            scan_token_url: "",
         });
     }
 
@@ -140,20 +144,13 @@ export default class BlockNetworkProxy extends AbstractProxy implements IBlockNe
     }
     /**添加数据 */
     onAdd() {
-        const form = this.dialogData.form;
-        const formCopy: any = {
-            name: form.name,
-            name_unique: form.name_unique,
-            rpc_url: form.rpc_url,
-            scan_url: form.scan_url,
-            chain_id: form.chain_id,
-            gas: form.gas,
-            gas_price: form.gas_price,
-            block_confirm_number: form.block_confirm_number,
-            extends: form.extends,
-            status: form.status,
-            main_coin_name: form.main_coin_name,
-        };
+        const formCopy: any = Object.assign({}, this.dialogData.form);
+
+        if (Object.keys(formCopy.extends).length > 0) {
+            formCopy.extends = JSON.stringify(JSON.parse(formCopy.extends));
+        } else {
+            formCopy.extends = "{}";
+        }
         this.sendNotification(HttpType.admin_block_network_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */

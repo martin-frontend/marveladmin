@@ -1,51 +1,52 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
-        <el-form
-            ref="form"
-            :rules="rules"
-            :model="form"
-            label-width="115px"
-            v-loading="net_status.loading"
-        >
-            <el-form-item :label="tableColumns.name.name" prop="name">
-                <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item :label="tableColumns.main_coin_name.name" prop="main_coin_name">
-                <el-input v-model="form.main_coin_name"></el-input>
-            </el-form-item>
-            <el-form-item :label="tableColumns.name_unique.name" prop="name_unique">
-                <el-input v-model="form.name_unique"></el-input>
-            </el-form-item>
-            <el-form-item :label="tableColumns.rpc_url.name" prop="rpc_url">
-                <el-input v-model="form.rpc_url"></el-input>
-            </el-form-item>
-            <el-form-item :label="tableColumns.scan_url.name" prop="scan_url">
-                <el-input v-model="form.scan_url"></el-input>
-            </el-form-item>
-            <el-form-item :label="tableColumns.chain_id.name" prop="chain_id">
-                <el-input v-model="form.chain_id"></el-input>
-            </el-form-item>
+        <el-scrollbar style="height:550px;">
+            <el-form ref="form" :rules="rules" :model="form" label-width="125px" v-loading="net_status.loading">
+                <el-form-item :label="tableColumns.name.name" prop="name">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item :label="tableColumns.main_coin_name.name" prop="main_coin_name">
+                    <el-input v-model="form.main_coin_name"></el-input>
+                </el-form-item>
+                <el-form-item :label="tableColumns.name_unique.name" prop="name_unique">
+                    <el-input v-model="form.name_unique"></el-input>
+                </el-form-item>
+                <el-form-item :label="tableColumns.rpc_url.name" prop="rpc_url">
+                    <el-input v-model="form.rpc_url"></el-input>
+                </el-form-item>
+                <el-form-item :label="tableColumns.scan_url.name" prop="scan_url">
+                    <el-input v-model="form.scan_url"></el-input>
+                </el-form-item>
+                <el-form-item :label="tableColumns.chain_id.name" prop="chain_id">
+                    <el-input type="number" v-model="form.chain_id"></el-input>
+                </el-form-item>
 
-            <el-form-item :label="tableColumns.gas.name" prop="gas">
-                <el-input v-model="form.gas"></el-input>
-            </el-form-item>
-            <el-form-item :label="tableColumns.gas_price.name" prop="gas_price">
-                <el-input v-model="form.gas_price"></el-input>
-            </el-form-item>
-            <el-form-item :label="tableColumns.block_confirm_number.name" prop="block_confirm_number">
-                <el-input v-model="form.block_confirm_number"></el-input>
-            </el-form-item>
-            <el-form-item :label="tableColumns.extends.name" prop="extends">
-                <el-input type="textarea" v-model="form.extends"></el-input>
-            </el-form-item>
-            <el-form-item :label="tableColumns.status.name" prop="status">
-                <el-radio-group v-model="form.status">
-                    <el-radio v-for="(value, key) in tableColumns.status.options" :key="key" :label="Number(key)">
-                        {{ value }}
-                    </el-radio>
-                </el-radio-group>
-            </el-form-item>
-        </el-form>
+                <el-form-item :label="tableColumns.gas.name" prop="gas">
+                    <el-input type="number" v-model="form.gas"></el-input>
+                </el-form-item>
+                <el-form-item :label="tableColumns.gas_price.name" prop="gas_price">
+                    <el-input type="number" v-model="form.gas_price"></el-input>
+                </el-form-item>
+                <el-form-item :label="tableColumns.block_confirm_number.name" prop="block_confirm_number">
+                    <el-input type="number" v-model="form.block_confirm_number"></el-input>
+                </el-form-item>
+                <el-form-item :label="tableColumns.scan_token_url.name" prop="scan_token_url">
+                    <el-input v-model="form.scan_token_url"></el-input>
+                </el-form-item>
+                <el-form-item :label="tableColumns.extends.name" prop="extends">
+                    <div class="editor-container">
+                        <JsonEditor ref="jsonEditor" v-model="form.extends" />
+                    </div>
+                </el-form-item>
+                <el-form-item :label="tableColumns.status.name" prop="status">
+                    <el-radio-group v-model="form.status">
+                        <el-radio v-for="(value, key) in tableColumns.status.options" :key="key" :label="Number(key)">
+                            {{ value }}
+                        </el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-form>
+        </el-scrollbar>
         <div class="btn_group">
             <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ $t("common.delete") }}</el-button>
             <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
@@ -63,8 +64,13 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import JsonEditor from "@/components/JsonEditor/index.vue";
 
-@Component
+@Component({
+    components: {
+        JsonEditor,
+    },
+})
 export default class BlockNetworkDialog extends AbstractView {
     // 权限标识
     private unique = unique;
@@ -83,7 +89,7 @@ export default class BlockNetworkDialog extends AbstractView {
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow(){
+    private onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -98,7 +104,18 @@ export default class BlockNetworkDialog extends AbstractView {
     }
 
     get rules() {
-        return {};
+        return {
+            name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            name_unique: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            main_coin_name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            rpc_url: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            scan_url: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            chain_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            gas: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            gas_price: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            block_confirm_number: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            status: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+        };
     }
 
     private handleAdd() {
@@ -129,5 +146,6 @@ export default class BlockNetworkDialog extends AbstractView {
     display: flex;
     justify-content: flex-end;
     position: relative;
+    padding-top: 30px;
 }
 </style>

@@ -1,20 +1,17 @@
 <template>
     <div>
-        <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini" v-loading="net_status.loading">
-
-            <el-table-column
-                prop="id"
-                :label="`${tableColumns.id.name}`"
-                class-name="status-col"
-                width="60px"
-            >
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
+            <el-table-column prop="id" :label="`${tableColumns.id.name}`" class-name="status-col" width="60px">
             </el-table-column>
-            <el-table-column
-                prop="name"
-                :label="`${tableColumns.name.name}`"
-                class-name="status-col"
-                min-width="30px"
-            >
+            <el-table-column prop="name" :label="`${tableColumns.name.name}`" class-name="status-col" min-width="30px">
             </el-table-column>
             <el-table-column
                 prop="main_coin_name"
@@ -51,12 +48,7 @@
                 width="60px"
             >
             </el-table-column>
-            <el-table-column
-                prop="gas"
-                :label="`${tableColumns.gas.name}`"
-                class-name="status-col"
-                min-width="30px"
-            >
+            <el-table-column prop="gas" :label="`${tableColumns.gas.name}`" class-name="status-col" min-width="30px">
             </el-table-column>
             <el-table-column
                 prop="gas_price"
@@ -73,11 +65,12 @@
             >
             </el-table-column>
             <el-table-column
-                prop="type"
-                :label="`${tableColumns.status.name}`"
+                prop="scan_token_url"
+                :label="`${tableColumns.scan_token_url.name}`"
                 class-name="status-col"
-                width="90px"
             >
+            </el-table-column>
+            <el-table-column prop="type" :label="`${tableColumns.status.name}`" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.status.options[row.status] }}
                 </template>
@@ -85,12 +78,7 @@
 
             <el-table-column label="操作" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
-                    <el-button
-                        size="mini"
-                        type="primary"
-                        @click="handleEdit(row)"
-                        >{{ $t("common.update") }}</el-button
-                    >
+                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -109,7 +97,7 @@ import GlobalVar from "@/core/global/GlobalVar";
 @Component({
     components: {
         Pagination,
-    }
+    },
 })
 export default class BlockNetworkBody extends AbstractView {
     //权限标识
@@ -125,7 +113,7 @@ export default class BlockNetworkBody extends AbstractView {
     private pageInfo = this.myProxy.tableData.pageInfo;
     private listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page:number){
+    private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
