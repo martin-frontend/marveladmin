@@ -189,7 +189,7 @@ export default {
         disable: "禁用",
         info: "信息",
         time: "时间",
-        syncGame:"同步游戏",
+        syncGame: "同步游戏",
     },
     vendor: {
         vendorId: "厂商ID",
@@ -756,7 +756,10 @@ export default {
         relatedCoin: "数字收款地址关联",
         water_config: "流水配置",
         waterRateDesc: "给该玩家单独设置投注流水比例",
-        vendor_user: "用户厂商"
+        vendor_user: "用户厂商",
+        block_name: "链名",
+        address: "充值地址",
+        userRechargeAddress: "用户充值地址",
     },
     admin_permission: {
         node: "节点",

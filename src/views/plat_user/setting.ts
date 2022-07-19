@@ -10,6 +10,7 @@ import cmd_admin_plat_user_update from "@/views/plat_user/command/cmd_admin_plat
 import cmd_admin_plat_user_vendor_withdraw from "@/views/plat_user/command/cmd_admin_plat_user_vendor_withdraw";
 import cmd_admin_plat_user_update_safe_gold from "@/views/plat_user/command/cmd_admin_plat_user_update_safe_gold";
 import cmd_admin_plat_user_update_user_gold from "@/views/plat_user/command/cmd_admin_plat_user_update_user_gold";
+import cmd_admin_plat_user_recharge_address from "@/views/plat_user/command/cmd_admin_plat_user_recharge_address";
 /**协议*/
 export var HttpType = {
     admin_plat_user_table_columns: "admin/plat_user/table_columns",
@@ -20,6 +21,7 @@ export var HttpType = {
     admin_plat_user_vendor_withdraw: "admin/plat_user/{user_id}/vendor/withdraw",
     admin_plat_user_update_safe_gold: "admin/plat_user/update_safe_gold/{user_id}",
     admin_plat_user_update_user_gold: "admin/plat_user/update_user_gold/{user_id}",
+    admin_plat_user_recharge_address: "admin/plat_user/recharge_address/{user_id}",
 };
 /**事件*/
 export var EventType = {
@@ -31,6 +33,7 @@ export var EventType = {
     admin_plat_user_vendor_withdraw: "admin_plat_user_vendor_withdraw",
     admin_plat_user_update_safe_gold: "admin_plat_user_update_safe_gold",
     admin_plat_user_update_user_gold: "admin_plat_user_update_user_gold",
+    admin_plat_user_recharge_address: "admin_plat_user_recharge_address",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -42,4 +45,5 @@ facade.registerCommand(HttpType.admin_plat_user_update, cmd_admin_plat_user_upda
 facade.registerCommand(HttpType.admin_plat_user_vendor_withdraw, cmd_admin_plat_user_vendor_withdraw);
 facade.registerCommand(HttpType.admin_plat_user_update_safe_gold, cmd_admin_plat_user_update_safe_gold);
 facade.registerCommand(HttpType.admin_plat_user_update_user_gold, cmd_admin_plat_user_update_user_gold);
+facade.registerCommand(HttpType.admin_plat_user_recharge_address, cmd_admin_plat_user_recharge_address);
 

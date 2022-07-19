@@ -22,6 +22,7 @@ export default class TabWalletMediator extends AbstractMediator {
             EventType.admin_plat_user_vendor_withdraw,
             // EventType.admin_plat_user_update_safe_gold,
             EventType.admin_plat_user_update_user_gold,
+            EventType.admin_plat_user_recharge_address,
         ];
     }
 
@@ -45,6 +46,11 @@ export default class TabWalletMediator extends AbstractMediator {
                 case EventType.admin_plat_user_update_user_gold:
                     this.myProxy.dialogDeductGoldData.bShow = false;
                     this.myProxy.getGoldInfo(this.myProxy.userInfo.user_id);
+                    break;
+                case EventType.admin_plat_user_recharge_address:
+                    this.myProxy.refreshing = false;
+                    this.myProxy.dialogRechargeAddress.bShow = true;
+                    this.myProxy.setRechargeAddress(body);
                     break;
             }
         }

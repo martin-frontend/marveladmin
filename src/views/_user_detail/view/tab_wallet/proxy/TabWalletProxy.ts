@@ -12,7 +12,7 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
     }
 
     /**离开页面时调用 */
-    leave() {}
+    leave() { }
 
     /**表头信息 */
     tableColumns = {
@@ -137,11 +137,32 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
         gold: "",
         coin_name_unique: "",
     };
+    /**用户充值地址数据 */
+    dialogRechargeAddress = {
+        bShow: false,
+        coin_name_unique: "",
+        addressList: <any>[],
+    };
     /**打开扣款弹窗 */
-    showDialog(coin_name_unique:string) {
+    showDialog(coin_name_unique: string) {
         this.dialogDeductGoldData.coin_name_unique = coin_name_unique;
         this.dialogDeductGoldData.gold = "";
         this.dialogDeductGoldData.bShow = true;
+    }
+    /**打开用户充值地址弹窗 */
+    showRechargeAddressDialog(coin_name_unique: string) {
+        this.dialogRechargeAddress.coin_name_unique = coin_name_unique;
+        this.getAddressDetail(coin_name_unique);
+    }
+
+    /**取得用户充值地址 */
+    getAddressDetail(coin_name_unique: string) {
+        this.sendNotification(
+            HttpType.admin_plat_user_recharge_address, { user_id: this.userInfo.user_id, coin_name_unique: coin_name_unique });
+    }
+
+    setRechargeAddress(data: any) {
+        this.dialogRechargeAddress.addressList = data;
     }
 
     /**设置表头数据 */
@@ -184,11 +205,11 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
         this.sendNotification(HttpType.admin_plat_user_show, { user_id, modules: "[1,2]" });
     }
     /**扣除金币 */
-    onUpdateGold(gold: number, coin_name_unique:string) {
+    onUpdateGold(gold: number, coin_name_unique: string) {
         this.sendNotification(HttpType.admin_plat_user_update_user_gold, { user_id: this.userInfo.user_id, gold, coin_name_unique });
     }
     /**提取厂商金币 */
-    withdrawVendor(coin_name_unique:string, vendor_id?: number) {
+    withdrawVendor(coin_name_unique: string, vendor_id?: number) {
         const data = { user_id: this.userInfo.user_id, vendor_id, coin_name_unique };
         this.sendNotification(HttpType.admin_plat_user_vendor_withdraw, objectRemoveNull(data));
     }

@@ -27,6 +27,9 @@
                         <el-button class="item" type="primary" @click="handlerDeductGold(row)">
                             扣款
                         </el-button>
+                        <el-button class="item" type="primary" @click="handlerRechargeAddress(row)">
+                            充值地址
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -59,7 +62,8 @@
             </el-table>
         </div>
         <!-- 扣款页面 -->
-        <DeductGoldDialog v-if="dialogDeductGoldData.bShow"/>
+        <DeductGoldDialog v-if="dialogDeductGoldData.bShow" />
+        <RechargeAddressDialog v-if="dialogRechargeAddress.bShow" />
     </div>
 </template>
 
@@ -72,10 +76,12 @@ import TabWalletProxy from "../proxy/TabWalletProxy";
 import { getProxy } from "@/views/_user_detail/PageSetting";
 import GlobalVar from "@/core/global/GlobalVar";
 import DeductGoldDialog from "./DeductGoldDialog.vue";
+import RechargeAddressDialog from "./RechargeAddressDialog.vue";
 
 @Component({
     components: {
         DeductGoldDialog,
+        RechargeAddressDialog,
     },
 })
 export default class TabWallet extends AbstractView {
@@ -89,13 +95,18 @@ export default class TabWallet extends AbstractView {
     private tableColumns = this.myProxy.tableColumns;
     private userInfo = this.myProxy.userInfo;
     private dialogDeductGoldData = this.myProxy.dialogDeductGoldData;
+    private dialogRechargeAddress = this.myProxy.dialogRechargeAddress;
 
     constructor() {
         super(TabWalletMediator);
     }
 
-    private handlerDeductGold(row:any) {
+    private handlerDeductGold(row: any) {
         this.myProxy.showDialog(row.coin_name_unique);
+    }
+
+    private handlerRechargeAddress(row: any) {
+        this.myProxy.showRechargeAddressDialog(row.coin_name_unique);
     }
 
     private refreshMoney() {
@@ -125,8 +136,8 @@ export default class TabWallet extends AbstractView {
     font-weight: bold;
     margin-right: 10px;
 }
-.title-btn{
-    float:right;
+.title-btn {
+    float: right;
     margin-top: -10px;
 }
 </style>

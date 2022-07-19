@@ -10,6 +10,7 @@
         "admin/plat_user/update/{user_id}",
         "admin/plat_user/{user_id}/vendor/withdraw",
         "admin/plat_user/update_safe_gold/{user_id}",
-        "admin/plat_user/update_user_gold/{user_id}"
+        "admin/plat_user/update_user_gold/{user_id}",
+        "admin/plat_user/recharge_address/{user_id}"
     ]
 }

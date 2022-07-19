@@ -13,6 +13,7 @@ import cmd_admin_plat_user_clear_cache from "@/views/_user_detail/command/cmd_ad
 import cmd_admin_plat_user_vendor_withdraw from "@/views/_user_detail/command/cmd_admin_plat_user_vendor_withdraw";
 import cmd_admin_plat_user_update_safe_gold from "@/views/_user_detail/command/cmd_admin_plat_user_update_safe_gold";
 import cmd_admin_plat_user_update_user_gold from "@/views/_user_detail/command/cmd_admin_plat_user_update_user_gold";
+import cmd_admin_plat_user_recharge_address from "@/views/_user_detail/command/cmd_admin_plat_user_recharge_address";
 // --金币明细&gold
 import cmd_admin_plat_users_gold_log_table_columns from "@/views/_user_detail/command/cmd_admin_plat_users_gold_log_table_columns";
 import cmd_admin_plat_users_gold_log_index from "@/views/_user_detail/command/cmd_admin_plat_users_gold_log_index";
@@ -54,6 +55,7 @@ export var HttpType = {
     admin_plat_user_vendor_withdraw: "admin/plat_user/{user_id}/vendor/withdraw ",
     admin_plat_user_update_safe_gold: "admin/plat_user/update_safe_gold/{user_id} ",
     admin_plat_user_update_user_gold: "admin/plat_user/update_user_gold/{user_id} ",
+    admin_plat_user_recharge_address: "admin/plat_user/recharge_address/{user_id} ",
 // --金币明细&gold
     admin_plat_users_gold_log_table_columns: "admin/plat_users_gold_log/table_columns ",
     admin_plat_users_gold_log_index: "admin/plat_users_gold_log/index ",
@@ -96,6 +98,7 @@ export var EventType = {
     admin_plat_user_vendor_withdraw: "_admin_plat_user_vendor_withdraw",
     admin_plat_user_update_safe_gold: "_admin_plat_user_update_safe_gold",
     admin_plat_user_update_user_gold: "_admin_plat_user_update_user_gold",
+    admin_plat_user_recharge_address: "_admin_plat_user_recharge_address",
 // --金币明细&gold
     admin_plat_users_gold_log_table_columns: "_admin_plat_users_gold_log_table_columns",
     admin_plat_users_gold_log_index: "_admin_plat_users_gold_log_index",
@@ -138,6 +141,7 @@ facade.registerCommand(HttpType.admin_plat_user_clear_cache, cmd_admin_plat_user
 facade.registerCommand(HttpType.admin_plat_user_vendor_withdraw, cmd_admin_plat_user_vendor_withdraw);
 facade.registerCommand(HttpType.admin_plat_user_update_safe_gold, cmd_admin_plat_user_update_safe_gold);
 facade.registerCommand(HttpType.admin_plat_user_update_user_gold, cmd_admin_plat_user_update_user_gold);
+facade.registerCommand(HttpType.admin_plat_user_recharge_address, cmd_admin_plat_user_recharge_address);
 // --金币明细&gold
 facade.registerCommand(HttpType.admin_plat_users_gold_log_table_columns, cmd_admin_plat_users_gold_log_table_columns);
 facade.registerCommand(HttpType.admin_plat_users_gold_log_index, cmd_admin_plat_users_gold_log_index);

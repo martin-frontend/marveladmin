@@ -1,19 +1,27 @@
 ### 启动服务
+
 ```
 npm run dev
 ```
+
 ### 发布到测试服
+
 ```
 npm run build:stage
 ```
+
 ### 发布到正式服
+
 ```
 npm run build:prod
 ```
+
 ### 自动生成协议相关代码
+
 ```
 npm run proto
 ```
+
 ### 其它
 
 ```bash
@@ -31,6 +39,7 @@ npm run lint -- --fix
 ```
 
 ### 主要目录结构
+
 ```
 build   //工具脚本
     -proto           //协议配置文件
@@ -44,7 +53,7 @@ src     //代码
     -view            //页面模块
         -module1
             -command        //命令，自动成生的协议cmd会放在这里
-            -mediator       
+            -mediator
             -view
             -setting.ts     //配置 自动生成的代码
         -module2
@@ -52,6 +61,7 @@ src     //代码
 ```
 
 ### 如何开始一个新的模块
+
 ```
 1、在build/proto目录下创建配置文件，模块名即文件名；
 2、执行npm run proto2
@@ -59,8 +69,10 @@ src     //代码
 4、参考模块：vendor-managment
 ```
 
+PS: \_user_detail 执行 npm run proto1
 
 ### 语言相关
+
 ```
 language_dialog：多语言翻译
 lang_img_dialog：多语言图片
