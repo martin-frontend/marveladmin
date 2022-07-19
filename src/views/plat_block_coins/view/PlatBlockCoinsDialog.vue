@@ -1,21 +1,25 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
-        <el-form
-            ref="form"
-            :rules="rules"
-            :model="form"
-            label-width="105px"
-            v-loading="net_status.loading"
-        >
+        <el-form ref="form" :rules="rules" :model="form" label-width="105px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
                 <el-select filterable v-model="form.plat_id" :placeholder="$t('common.pleaseChoose')">
-                    <el-option v-for="(item, key) of tableColumns.plat_id.options" :label="item" :value="key" :key="key">
+                    <el-option
+                        v-for="(item, key) of tableColumns.plat_id.options"
+                        :label="item"
+                        :value="key"
+                        :key="key"
+                    >
                     </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.coin_name_unique.name" prop="coin_name_unique">
                 <el-select filterable v-model="form.coin_name_unique" :placeholder="$t('common.pleaseChoose')">
-                    <el-option v-for="(item, key) of tableColumns.coin_name_unique.options" :label="item" :value="key" :key="key">
+                    <el-option
+                        v-for="(item, key) of tableColumns.coin_name_unique.options"
+                        :label="item"
+                        :value="key"
+                        :key="key"
+                    >
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -26,19 +30,18 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.scale.name" prop="scale">
-                <el-input-number
-                    v-model="form.scale"
-                    :min="0"
-                    :precision="3" 
-                    :step="0.001" 
-                ></el-input-number>
+                <el-input-number v-model="form.scale" :min="0" :precision="10" :step="0.001"></el-input-number>
             </el-form-item>
             <el-form-item :label="tableColumns.remark.name" prop="remark">
                 <el-input type="textarea" v-model="form.remark"></el-input>
             </el-form-item>
             <el-form-item :label="tableColumns.can_play_game.name" prop="can_play_game">
                 <el-radio-group v-model="form.can_play_game">
-                    <el-radio v-for="(value, key) in tableColumns.can_play_game.options" :key="key" :label="Number(key)">
+                    <el-radio
+                        v-for="(value, key) in tableColumns.can_play_game.options"
+                        :key="key"
+                        :label="Number(key)"
+                    >
                         {{ value }}
                     </el-radio>
                 </el-radio-group>
@@ -77,11 +80,11 @@ export default class PlatBlockCoinsDialog extends AbstractView {
 
     private textMap = {
         update: "编辑",
-        create: "新增"
+        create: "新增",
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow(){
+    private onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
