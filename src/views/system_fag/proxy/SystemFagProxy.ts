@@ -31,6 +31,7 @@ export default class SystemFagProxy extends AbstractProxy implements ISystemFagP
             name: { name: "", options: {} },
             content: { name: "", options: {} },
             index_no: { name: "", options: {} },
+            module: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -44,7 +45,7 @@ export default class SystemFagProxy extends AbstractProxy implements ISystemFagP
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        form: { name: "", content: "", id: "" },
+        form: { name: "", content: "", id: "", module: "" },
         formSource: null, // 表单的原始数据
     };
 
@@ -117,9 +118,9 @@ export default class SystemFagProxy extends AbstractProxy implements ISystemFagP
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {

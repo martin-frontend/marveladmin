@@ -1,38 +1,62 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
+            <el-form-item :label="`${tableColumns.module.name}`" prop="module" label-width="100px">
+                <el-select
+                    style="width:100%"
+                    v-model="form.module"
+                    filterable
+                    clearable
+                    :placeholder="$t('common.pleaseChoose')"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns.module.options"
+                        :key="key"
+                        :label="value"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
 
             <el-form-item label-width="0" prop="name">
                 <div class="flex d-flex">
-                        <el-input
-                            style="margin-right: 0.8rem"
-                            type="textarea"
-                            maxlength="200"
-                            filterable
-                            clearable
-                            show-word-limit
-                            :placeholder="$t('system_fag.questionTitle')"
-                            v-model="form.name"
-                        ></el-input>
-                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)">翻译</el-button>
-                    </div>
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        type="textarea"
+                        maxlength="200"
+                        filterable
+                        clearable
+                        show-word-limit
+                        :placeholder="$t('system_fag.questionTitle')"
+                        v-model="form.name"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <el-form-item label-width="0" prop="content">
                 <div class="flex d-flex">
-                        <el-input
-                            style="margin-right: 0.8rem"
-                            type="textarea"
-                            :maxlength="contentRemnant"
-                            filterable
-                            clearable
-                            show-word-limit
-                            :rows="6"
-                            :placeholder="$t('system_fag.questionContent')"
-                            v-model="form.content"
-                        ></el-input>
-                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.content)">翻译</el-button>
-                    </div>
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        type="textarea"
+                        :maxlength="contentRemnant"
+                        filterable
+                        clearable
+                        show-word-limit
+                        :rows="6"
+                        :placeholder="$t('system_fag.questionContent')"
+                        v-model="form.content"
+                    ></el-input>
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.content)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <el-form-item class="dialog-footer">
