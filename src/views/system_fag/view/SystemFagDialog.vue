@@ -1,6 +1,13 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
-        <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
+    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="700px">
+        <el-form
+            ref="form"
+            :rules="rules"
+            :model="form"
+            label-width="115px"
+            v-loading="net_status.loading"
+            label-position="left"
+        >
             <el-form-item :label="`${tableColumns.module.name}`" prop="module" label-width="100px">
                 <el-select
                     style="width:100%"
