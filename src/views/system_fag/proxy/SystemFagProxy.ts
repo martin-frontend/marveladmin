@@ -86,7 +86,7 @@ export default class SystemFagProxy extends AbstractProxy implements ISystemFagP
     }
     /**重置弹窗表单 */
     resetDialogForm() {
-        Object.assign(this.dialogData.form, { name: "", content: "", id: "" });
+        Object.assign(this.dialogData.form, { name: "", content: "", id: "", module: "" });
     }
 
     /**查询 */
@@ -95,9 +95,9 @@ export default class SystemFagProxy extends AbstractProxy implements ISystemFagP
     }
     /**添加数据 */
     onAdd() {
-        const { name, content, id } = this.dialogData.form;
+        const { name, content, id, module } = this.dialogData.form;
         const formCopy: any = {
-            name, content, id
+            name, content, id, module
         };
         this.sendNotification(HttpType.admin_system_fag_store, objectRemoveNull(formCopy));
     }

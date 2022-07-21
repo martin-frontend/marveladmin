@@ -14,12 +14,17 @@
         >
             <el-table-column :label="`${tableColumns.id.name}`" class-name="status-col" width="100px" prop="id">
             </el-table-column>
-            <el-table-column :label="`${tableColumns.name.name}`">
+            <el-table-column :label="`${tableColumns.name.name}`" min-width="400px">
                 <template slot-scope="scope">
                     <div class="table_style">
                         <div>{{ tableColumns.name.name }}:{{ scope.row.name }}</div>
                         <div>{{ tableColumns.content.name }}:{{ scope.row.content }}</div>
                     </div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="`${tableColumns.module.name}`" class-name="status-col" min-width="80px">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns.module.options[row.module] }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('common.operating')" class-name="status-col" width="180px">
