@@ -233,6 +233,7 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             status: "1",
             block_network_id: "",
             coin_name_unique: "",
+            is_fixed_gold: "",
             fixed_gold_list: "-",
             diy_paytype: "-",
         });
@@ -256,6 +257,7 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             title,
             block_network_id,
             coin_name_unique,
+            is_fixed_gold,
             fixed_gold_list,
             diy_paytype,
         } = this.addDialogData.form;
@@ -271,6 +273,7 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             title,
             block_network_id,
             coin_name_unique,
+            is_fixed_gold,
             fixed_gold_list,
             diy_paytype,
         };
