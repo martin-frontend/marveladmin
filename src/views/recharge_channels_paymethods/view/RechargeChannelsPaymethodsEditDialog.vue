@@ -83,6 +83,35 @@
                 ></el-input>
             </el-form-item>
 
+            <!-- 是否固定充值额度 -->
+            <el-form-item :label="`${tableColumns.is_fixed_gold.name}`">
+                <el-radio v-model="addFrom.is_fixed_gold" label="1">{{ $t("common.yes") }}</el-radio>
+                <el-radio v-model="addFrom.is_fixed_gold" label="0">{{ $t("common.no") }}</el-radio>
+            </el-form-item>
+            <!-- 充值金额 -->
+            <div class="recharge_amount">
+                <el-form-item :label="`${tableColumns.fixed_gold_list.name}`" prop="fixed_gold_list">
+                    <div class="item-group">
+                        <el-input
+                            v-for="n in 4"
+                            :key="n"
+                            v-model="addFrom.fixed_gold_list[n - 1]"
+                            oninput="value=value.replace(/[^\d]/g,'')"
+                            :placeholder="$t('common.money') + `${n}`"
+                        ></el-input>
+                    </div>
+                    <div class="item-group">
+                        <el-input
+                            v-for="n in 4"
+                            :key="n"
+                            v-model="addFrom.fixed_gold_list[n + 3]"
+                            oninput="value=value.replace(/[^\d]/g,'')"
+                            :placeholder="$t('common.money') + `${n + 4}`"
+                        ></el-input>
+                    </div>
+                </el-form-item>
+            </div>
+
             <!-- 状态 -->
             <el-form-item :label="`${tableColumns.status.name}`">
                 <el-radio v-model="addFrom.status" label="1">{{ $t("common.normal") }}</el-radio>

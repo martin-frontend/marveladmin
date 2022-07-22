@@ -101,6 +101,7 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             max_gold: "",
             diy_paytype: "-",
             status: "1",
+            is_fixed_gold: "1",
             fixed_gold_list: "-",
             block_network_id: "",
             coin_name_unique: "",
