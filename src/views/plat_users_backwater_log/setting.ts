@@ -9,7 +9,7 @@ import cmd_admin_plat_users_backwater_log_show from "@/views/plat_users_backwate
 export var HttpType = {
     admin_plat_users_backwater_log_table_columns: "admin/plat_users_backwater_log/table_columns",
     admin_plat_users_backwater_log_index: "admin/plat_users_backwater_log/index",
-    admin_plat_users_backwater_log_show: "admin/plat_users_backwater_log/show/{plat_id}/{backwater_id}",
+    admin_plat_users_backwater_log_show: "admin/plat_users_backwater_log/show/{plat_id}/{id}",
 };
 /**事件*/
 export var EventType = {

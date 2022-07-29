@@ -338,6 +338,10 @@ const layoutRouter = {
             name: "每日输赢统计",
             component: () => import(/* webpackChunkName: "statistic_bet_plat_days" */"@/views/statistic_bet_plat_days/view/StatisticBetPlatDays.vue")
         },        {
+            path: "statistic_plat_coin_days",
+            name: "每日币种统计",
+            component: () => import(/* webpackChunkName: "statistic_plat_coin_days" */"@/views/statistic_plat_coin_days/view/StatisticPlatCoinDays.vue")
+        },        {
             path: "statistic_plat_days",
             name: "平台统计",
             component: () => import(/* webpackChunkName: "statistic_plat_days" */"@/views/statistic_plat_days/view/StatisticPlatDays.vue")

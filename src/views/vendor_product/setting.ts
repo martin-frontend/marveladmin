@@ -8,7 +8,7 @@ import cmd_admin_vendor_product_store from "@/views/vendor_product/command/cmd_a
 import cmd_admin_vendor_product_show from "@/views/vendor_product/command/cmd_admin_vendor_product_show";
 import cmd_admin_vendor_product_update from "@/views/vendor_product/command/cmd_admin_vendor_product_update";
 import cmd_admin_vendor_show from "@/views/vendor_product/command/cmd_admin_vendor_show";
-import cmd_admin_vendor_index from "@/views/lobby_model_product/command/cmd_admin_vendor_index";
+import cmd_admin_vendor_index from "@/views/vendor_product/command/cmd_admin_vendor_index";
 /**协议*/
 export var HttpType = {
     admin_vendor_product_table_columns: "admin/vendor_product/table_columns",
@@ -38,3 +38,4 @@ facade.registerCommand(HttpType.admin_vendor_product_show, cmd_admin_vendor_prod
 facade.registerCommand(HttpType.admin_vendor_product_update, cmd_admin_vendor_product_update);
 facade.registerCommand(HttpType.admin_vendor_show, cmd_admin_vendor_show);
 facade.registerCommand(HttpType.admin_vendor_index, cmd_admin_vendor_index);
+
