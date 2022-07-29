@@ -133,6 +133,9 @@
                 :label="tableColumns['win_loss'].name"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.win_loss" />
+                </template>
             </el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
