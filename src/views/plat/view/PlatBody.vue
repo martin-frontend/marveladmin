@@ -82,7 +82,7 @@
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
-                        :type="tableColumns.all_bonus_model_id.options[row.all_bonus_model_id] ? 'success' : 'danger'"
+                        :type="row.all_bonus_model_id ? 'success' : 'danger'"
                         @click="handleAllBonusModel(row)"
                     >
                         <!-- {{
