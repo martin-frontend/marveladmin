@@ -99,6 +99,14 @@
             >
             </el-table-column>
             <el-table-column
+                v-if="tableColumns.commission_received_amount.display"
+                prop="commission_received_amount"
+                :label="tableColumns['commission_received_amount'].name"
+                align="center"
+                min-width="130px"
+            >
+            </el-table-column>
+            <el-table-column
                 v-if="tableColumns.backwater_amount.display"
                 prop="backwater_amount"
                 :label="tableColumns['backwater_amount'].name"
@@ -113,11 +121,35 @@
             >
             </el-table-column>
             <el-table-column
+                v-if="tableColumns.stake_bonus_fee_amount.display"
+                prop="stake_bonus_fee_amount"
+                :label="tableColumns['stake_bonus_fee_amount'].name"
+                align="center"
+                min-width="130px"
+            >
+            </el-table-column>
+            <el-table-column
+                v-if="tableColumns.stake_bonus_received_amount.display"
+                prop="stake_bonus_received_amount"
+                :label="tableColumns['stake_bonus_received_amount'].name"
+                align="center"
+                min-width="130px"
+            >
+            </el-table-column>
+            <el-table-column
                 v-if="tableColumns.mail_awards_amount.display"
                 prop="mail_awards_amount"
                 :label="tableColumns['mail_awards_amount'].name"
                 align="center"
                 min-width="130px"
+            >
+            </el-table-column>
+            <el-table-column
+                v-if="tableColumns.mail_awards_received_amount.display"
+                prop="mail_awards_received_amount"
+                :label="tableColumns['mail_awards_received_amount'].name"
+                align="center"
+                min-width="140px"
             >
             </el-table-column>
 
@@ -126,6 +158,15 @@
                 prop="activity_awards_amount"
                 :label="tableColumns['activity_awards_amount'].name"
                 align="center"
+            >
+            </el-table-column>
+
+            <el-table-column
+                v-if="tableColumns.activity_awards_received_amount.display"
+                prop="activity_awards_received_amount"
+                :label="tableColumns['activity_awards_received_amount'].name"
+                align="center"
+                min-width="130px"
             >
             </el-table-column>
             <el-table-column
