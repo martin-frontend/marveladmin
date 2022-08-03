@@ -78,11 +78,11 @@
                 </template>
             </el-table-column>
             <!-- 质押分红 -->
-            <el-table-column label="质押分红" min-width="160">
+            <el-table-column :label="tableColumns['stake_bonus_model_id'].name" min-width="160">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
-                        :type="tableColumns.all_bonus_model_id.options[row.all_bonus_model_id] ? 'success' : 'danger'"
+                        :type="row.stake_bonus_model_id ? 'success' : 'danger'"
                         @click="handleAllBonusModel(row)"
                     >
                         <!-- {{

@@ -84,6 +84,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_recharge_leaderboard_display: { name: "", options: {} },
             validate_type: { name: "安全设置", options: {} },
             register_types: { name: "注册方式", options: {} },
+            stake_bonus_model_id: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -445,7 +446,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_update, { plat_id: id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**Vip Model弹窗相关数据 */
@@ -597,7 +598,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                     plat_id: plat_id,
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**显示折扣返佣弹窗 */
@@ -675,7 +676,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                     plat_id: this.allBonusModelDialogData.form.plat_id,
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**取得全盘分红配置 */
