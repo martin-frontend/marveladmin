@@ -11,6 +11,7 @@
                 'text-align': 'center',
             }"
             v-loading="net_status.loading"
+            :span-method="mergeRowMethod"
         >
             <el-table-column
                 prop="created_date"
@@ -44,97 +45,97 @@
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.recharge.display"
-                prop="recharge"
-                :label="tableColumns['recharge'].name"
+                v-if="tableColumns.recharge_amount.display"
+                prop="recharge_amount"
+                :label="tableColumns['recharge_amount'].name"
                 align="center"
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.recharge_fee.display"
-                prop="recharge_fee"
-                :label="tableColumns['recharge_fee'].name"
+                v-if="tableColumns.recharge_fee_amount.display"
+                prop="recharge_fee_amount"
+                :label="tableColumns['recharge_fee_amount'].name"
                 min-width="110px"
                 align="center"
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.exchange.display"
-                prop="exchange"
-                :label="tableColumns['exchange'].name"
+                v-if="tableColumns.exchange_amount.display"
+                prop="exchange_amount"
+                :label="tableColumns['exchange_amount'].name"
                 align="center"
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.exchange_fee.display"
-                prop="exchange_fee"
-                :label="tableColumns['exchange_fee'].name"
+                v-if="tableColumns.exchange_fee_amount.display"
+                prop="exchange_fee_amount"
+                :label="tableColumns['exchange_fee_amount'].name"
                 min-width="110px"
                 align="center"
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.swap.display"
-                prop="swap"
-                :label="tableColumns['swap'].name"
+                v-if="tableColumns.swap_amount.display"
+                prop="swap_amount"
+                :label="tableColumns['swap_amount'].name"
                 min-width="110px"
                 align="center"
             >
             </el-table-column>
 
             <el-table-column
-                v-if="tableColumns.swap_fee.display"
-                prop="swap_fee"
-                :label="tableColumns['swap_fee'].name"
+                v-if="tableColumns.swap_fee_amount.display"
+                prop="swap_fee_amount"
+                :label="tableColumns['swap_fee_amount'].name"
                 min-width="130px"
                 align="center"
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.commission_gold.display"
-                prop="commission_gold"
-                :label="tableColumns['commission_gold'].name"
+                v-if="tableColumns.commission_amount.display"
+                prop="commission_amount"
+                :label="tableColumns['commission_amount'].name"
                 align="center"
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.backwater_gold.display"
-                prop="backwater_gold"
-                :label="tableColumns['backwater_gold'].name"
+                v-if="tableColumns.backwater_amount.display"
+                prop="backwater_amount"
+                :label="tableColumns['backwater_amount'].name"
                 align="center"
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.stake_bonus.display"
-                prop="stake_bonus"
-                :label="tableColumns['stake_bonus'].name"
+                v-if="tableColumns.stake_bonus_amount.display"
+                prop="stake_bonus_amount"
+                :label="tableColumns['stake_bonus_amount'].name"
                 align="center"
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.mail_awards.display"
-                prop="mail_awards"
-                :label="tableColumns['mail_awards'].name"
+                v-if="tableColumns.mail_awards_amount.display"
+                prop="mail_awards_amount"
+                :label="tableColumns['mail_awards_amount'].name"
                 align="center"
                 min-width="130px"
             >
             </el-table-column>
 
             <el-table-column
-                v-if="tableColumns.activity_awards.display"
-                prop="activity_awards"
-                :label="tableColumns['activity_awards'].name"
+                v-if="tableColumns.activity_awards_amount.display"
+                prop="activity_awards_amount"
+                :label="tableColumns['activity_awards_amount'].name"
                 align="center"
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.win_loss.display"
-                prop="win_loss"
-                :label="tableColumns['win_loss'].name"
+                v-if="tableColumns.win_loss_amount.display"
+                prop="win_loss_amount"
+                :label="tableColumns['win_loss_amount'].name"
                 align="center"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.win_loss" />
+                    <WinLossDisplay :amount="row.win_loss_amount" />
                 </template>
             </el-table-column>
         </el-table>
@@ -183,21 +184,21 @@ export default class StatisticPlatCoinDaysBody extends AbstractView {
         this.myProxy.onQuery();
     }
 
-    private objectSpanMethod(options: { row: any; column: any; rowIndex: any; columnIndex: any }) {
-        const { columnIndex, rowIndex } = options;
-        // console.log(options);
-        if (columnIndex === 0) {
-            if (rowIndex > 0) {
-                return {
-                    rowspan: 3,
-                    colspan: 1,
-                };
-            } else {
-                return {
-                    rowspan: 0,
-                    colspan: 0,
-                };
-            }
+    // 合并行
+    private mergeRowMethod(options: { row: any; column: any; rowIndex: any; columnIndex: any }) {
+        const { columnIndex, row, rowIndex } = options;
+
+        // columnIndex 代表列数，从0开始计数,我们要合并的字段属于第一列，取0
+        if (columnIndex == 0 && row.plat_id != "合计") {
+            return {
+                rowspan: row.rowNum, // 待合并行数 -- 合并的行数长度就等于之前赋值的子数据的长度；未赋值的即表示0，不显示
+                colspan: row.rowNum > 0 ? 1 : 0, // 待合并列数 -- 合并的列数自身占一列，被合并的要返回0，表示不显示
+            };
+        } else if ((columnIndex == 0 && row.plat_id == "合计") || (columnIndex == 1 && row.plat_id == "合计")) {
+            return {
+                rowspan: row.rowNum, // 待合并行数 -- 合并的行数长度就等于之前赋值的子数据的长度；未赋值的即表示0，不显示
+                colspan: row.rowNum > 0 ? 1 : 0, // 待合并列数 -- 合并的列数自身占一列，被合并的要返回0，表示不显示
+            };
         }
     }
 }
@@ -217,7 +218,7 @@ export default class StatisticPlatCoinDaysBody extends AbstractView {
 }
 @for $i from 1 through 1 {
     ::v-deep .el-table__body .el-table__row:first-child {
-        background-color: #f6f7fa;
+        // background-color: #f6f7fa;
         td:nth-child(#{$i}) {
             border-right: 0;
         }

@@ -32,18 +32,25 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
             created_date: { name: "日期", options: {}, display: true },
             plat_id: { name: "所属平台", options: {}, display: true },
             coin_name_unique: { name: "币种", options: {}, display: true },
-            recharge: { name: "充值", options: {}, display: true },
-            recharge_fee: { name: "充值手续费", options: {}, display: true },
-            exchange: { name: "提现", options: {}, display: true },
-            exchange_fee: { name: "提现手续费", options: {}, display: true },
-            swap: { name: "SWAP交易", options: {}, display: true },
-            swap_fee: { name: "SWAP交易手续费", options: {}, display: true },
-            commission_gold: { name: "推广返佣", options: {}, display: true },
-            backwater_gold: { name: "游戏挖矿", options: {}, display: true },
-            stake_bonus: { name: "质押分红", options: {}, display: true },
-            mail_awards: { name: "邮件奖励（人工）", options: {}, display: true },
-            activity_awards: { name: "活动奖励", options: {}, display: true },
-            win_loss: { name: "win_loss", options: {}, display: true },
+            recharge_amount: { name: "充值", options: {}, display: true },
+            recharge_fee_amount: { name: "充值手续费", options: {}, display: true },
+            exchange_amount: { name: "提现", options: {}, display: true },
+            exchange_fee_amount: { name: "提现手续费", options: {}, display: true },
+            swap_amount: { name: "SWAP交易", options: {}, display: true },
+            swap_fee_amount: { name: "SWAP交易手续费", options: {}, display: true },
+            commission_amount: { name: "推广返佣", options: {}, display: true },
+            backwater_amount: { name: "游戏挖矿", options: {}, display: true },
+            stake_bonus_amount: { name: "质押分红", options: {}, display: true },
+            mail_awards_amount: { name: "邮件奖励（人工）", options: {}, display: true },
+            activity_awards_amount: { name: "活动奖励", options: {}, display: true },
+            win_loss_amount: { name: "游戏输赢", options: {}, display: true },
+
+            commission_received_amount: {name: '推广赚钱已领', options: {}, display: true },
+            data_belong: {name: '数据归属标记', options: {}, display: true },
+            mail_awards_received_amount: {name: '邮件奖励(人工)已领', options: {}, display: true },
+            stake_bonus_fee_amount: {name: '解质押手续费', options: {}, display: true },
+            stake_bonus_received_amount: {name: '质押分红已领', options: {}, display: true },
+
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -63,43 +70,26 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
     };
 
     /**合计 相关数据 */
-    summaryData = {
-        plat_id:"合计",
-        coin_name_unique:"",
-        recharge:"",
-        recharge_fee:"",
-        exchange:"",
-        exchange_fee:"",
-        swap:"",
-        swap_fee:"",
-        commission_gold:"",
-        backwater_gold:"",
-        stake_bonus:"",
-        mail_awards:"",
-        activity_awards:"",
-        win_loss:"",
-    };
+    summaryData = <any>[];
 
     /**导出 相关数据 */
     exportData = {
         fieldOrder: [
             "created_date",
             "plat_id",
-            "channel_id",
-            "new_user",
-            "new_register",
-            "active_user",
-            "recharge",
-            "recharge_user",
-            "new_recharge_user",
-            "exchange",
-            "exchange_user",
-            "new_exchange_user",
-            "gift_gold",
-            "backwater_gold",
-            "commission_gold",
-            "win_loss",
-            "water",
+            "coin_name_unique",
+            "recharge_amount",
+            "recharge_fee_amount",
+            "exchange_amount",
+            "exchange_fee_amount",
+            "swap_amount",
+            "swap_fee_amount",
+            "commission_amount",
+            "backwater_amount",
+            "stake_bonus_amount",
+            "mail_awards_amount",
+            "activity_awards_amount",
+            "win_loss_amount",
         ],
     };
 
@@ -125,20 +115,36 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
+        this.summaryData.length = 0;
+        const newTableData = <any>[];
 
         data.list.forEach((listData: any) => {
-            this.tableData.list.push(...listData)
-        });
-        
-        Object.assign(this.tableData.pageInfo, data.pageInfo);
-        Object.keys(this.summaryData).forEach(key => {
-            if(key === 'created_date' || key === 'plat_id') return;
-            // @ts-ignore
-            this.summaryData[key] = data.summary[key] ?? '-'
-        })
+            listData.detail.forEach((detailData: any, index: number) => {
+                const newData = { rowNum: 0 , ...detailData  };
 
-        // 把summaryData 插入第一笔
-        this.tableData.list.splice(0, 0, this.summaryData);
+                // 合并的行数数值，只需要取子循环的第一个数赋值待合并的行数即可
+                if(index == 0) {
+                    newData.rowNum = listData.detail.length;
+                }
+    
+                newTableData.push(newData);
+            })
+        });
+
+        Object.assign(this.tableData.pageInfo, data.pageInfo);
+
+        data.summary.forEach((sumData: any, index: number) => {
+            const newData = { plat_id: '合计', rowNum: 0, ...sumData };
+
+            if(index == 0) {
+                newData.rowNum = data.summary.length;
+            }
+
+            this.summaryData.push(newData)
+        });
+
+        // 把summaryData 插入
+        this.tableData.list.push(...this.summaryData, ...newTableData);
     }
 
     /**重置查询条件 */
@@ -150,6 +156,7 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
             coin_name_unique: "",
             "created_date-{>=}": this.lastWeekDate,
             "created_date-{<=}": this.defaultDate,
+            plat_id: ""
         });
     }
 
@@ -195,11 +202,15 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
     /**导出 Excel */
     onSetExcelData(body: any) {
         let data = JSON.parse(JSON.stringify(body));
-        // 删除不需要的栏位
-        data.list.forEach((list: any) => {
-            delete data.list.id;
-            delete data.list.data_belong;
-        });
+
+        const excelData = <any>[];
+
+        excelData.push(...data.summary)
+
+        data.list.forEach((listData: any)=> {
+            excelData.push(...listData.detail)
+        })
+
         // 要导出的栏位
         let exportColumn = this.getArrDifference(this.exportData.fieldOrder, this.tableData.hideColumns);
         // 栏位中文名称
@@ -208,10 +219,8 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
             exportHeader.push(this.tableData.columns[column].name);
         });
         // 导出资料
-        let exportData = this.dataMatching(exportColumn, data.list);
-        // 合计
-        let summary: any = this.getExportSummary(exportColumn, this.summaryData);
-        exportData.splice(0, 0, summary);
+        let exportData = this.dataMatching(exportColumn, excelData);
+
         exportJson2Excel(exportHeader, exportData, this.getFileName, undefined, undefined);
         // 改回来page size
         this.listQuery.page_size = 20;
@@ -229,24 +238,11 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
         return listData.map((data: any) =>
             filterKeys.map((key: string) => {
                 if (key === "plat_id") {
-                    return this.tableData.columns["plat_id"].options[data.plat_id];
+                    return data.plat_id? this.tableData.columns["plat_id"].options[data.plat_id] : '合计';
                 }
                 return data[key];
             })
         );
-    }
-
-    /**导出合计 */
-    getExportSummary(filterKeys: any, summary: any) {
-        let result: any = ["", ""];
-        filterKeys.forEach((key: any) => {
-            if (summary[key] !== undefined) {
-                result.push(summary[key]);
-            } else {
-                console.log("key", key);
-            }
-        });
-        return result;
     }
 
     // 导出挡案名

@@ -39,7 +39,11 @@ export default class StatisticPlatCoinDaysMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_statistic_plat_coin_days_index:
-                myProxy.setTableData(body);
+                if (this.myProxy.listQuery.page_size == 100000) {
+                    myProxy.onSetExcelData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
 
         }

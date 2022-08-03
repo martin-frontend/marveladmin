@@ -5,7 +5,7 @@
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
-                :clearable="false"
+                :clearable="true"
                 @change="handlerSearch"
             />
         </div>
