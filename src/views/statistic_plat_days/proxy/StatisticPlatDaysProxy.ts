@@ -192,7 +192,6 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        console.log(this.tableData.columns);
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         this.tableData.columnKeys = Object.keys(this.tableData.columns);
         if (plat_id_options_keys.length > 0 && this.tableData.columnKeys.length > 0) {
