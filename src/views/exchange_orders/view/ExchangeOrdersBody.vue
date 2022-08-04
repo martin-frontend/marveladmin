@@ -226,17 +226,17 @@
                             >
                         </div>
                         <!--更换兑换渠道 -->
-                        <div>
+                        <div v-if="checkUnique(unique.exchange_orders_update_channel)">
                             <el-button class="item" size="small" @click="handleEdit({ type: '5', row })">{{
                                 ctrlStr[5]
                             }}</el-button>
                         </div>
                         <!--平台币商代付 -->
-                        <div>
+                        <!-- <div>
                             <el-button class="item" type="primary" size="small" @click="handleDispatch(row)">{{
                                 $t(`exchange_orders.coin_user_pay`)
                             }}</el-button>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- 冲正-->
                     <div v-else-if="(row.status === 4 || row.status === 9) && checkUnique(unique.exchange_orders_rush)">

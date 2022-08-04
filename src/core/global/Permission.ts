@@ -284,4 +284,5 @@
      plat_email_store: "plat_email_store", //添加邮件
      plat_email_update: "plat_email_update", //撤销邮件
      plat_email_show: "plat_email_show", //查看邮件
+     plat_email_store_attachment: "plat_email_store_attachment",
  };
