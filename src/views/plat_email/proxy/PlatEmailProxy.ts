@@ -6,6 +6,7 @@ import { MessageBox } from "element-ui";
 import IPlatEmailProxy, { EmailTab, EmailAttachmentType, EmailType } from "./IPlatEmailProxy";
 import i18n from "@/lang";
 import { BaseInfo } from "@/components/vo/commonVo";
+import { checkUnique, unique } from "@/core/global/Permission";
 
 export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailProxy {
     static NAME = "PlatEmailProxy";
@@ -110,7 +111,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
-        
+
     }
     /**详细数据 */
     setDetail(data: any) {
@@ -214,14 +215,14 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         let attachment_content_copy = [];
         let bonus = {};
         formCopy.attachment_content.forEach((element: any) => {
-            
+
             if (bonus[element.type]) {
                 //防止有傻逼选择多个相同的币种
                 bonus[element.type] = String((Number(bonus[element.type]) + Number(element.amount)));
             } else {
                 bonus[element.type] = element.amount;
             }
-            
+
         });
         if (Object.keys(bonus).length === 0) {
             //没有奖励
@@ -233,7 +234,11 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             formCopy.attachment_content = JSON.stringify(bonus);
         }
         formCopy.is_mass_mailer = this.isGroupMail ? 1 : 0;
-        this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
+        if(checkUnique(unique.plat_email_store_attachment)){
+            this.sendNotification(HttpType.admin_plat_email_store_attachment_store, objectRemoveNull(formCopy));
+        }else{
+            this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
+        }
     }
     /**删除数据 */
     onDelete(id: any) {

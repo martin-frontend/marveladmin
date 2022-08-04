@@ -114,7 +114,7 @@
                     <div class="mark_font">{{ $t("plat_email.userRule") }}</div>
                 </el-form-item>
             </template>
-            <template v-if="!readonly">
+            <template v-if="!readonly && checkUnique(unique.plat_email_store_attachment)">
                 <el-form-item size="mini" :label="tableColumns.attachment_content.name" class="additional-bonus">
                     <el-button @click="onAddBonus()" type="success">{{ $t("plat_email.addReward") }}</el-button>
                     <span class="mark_font">{{ $t("plat_email.atMost") }}</span>
