@@ -32,15 +32,9 @@ export default interface IStatisticPlatCoinDaysProxy {
     /**查询 */
     onQuery(): void;
 
-    /**字段配置筛选 */
-    filterTable(): any;
-
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any): void;
 
     /**导出资料合并 */
     dataMatching(filterKeys: any, listData: any): void;
-
-    // 导出合计
-    getExportSummary(filterKeys: any, summary: any): void;
 }

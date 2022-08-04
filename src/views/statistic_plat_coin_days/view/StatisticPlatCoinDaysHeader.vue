@@ -5,8 +5,8 @@
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
-                :clearable="true"
-                @change="handlerSearch"
+                :clearable="false"
+                @change="handlerSearch(true)"
             />
         </div>
         <div class="group">
@@ -15,7 +15,12 @@
                 :startDate.sync="listQuery['created_date-{>=}']"
                 :endDate.sync="listQuery['created_date-{<=}']"
             />
-            <SearchInput :title="tableColumns.coin_name_unique.name" v-model="listQuery.coin_name_unique" />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
+                :clearable="false"
+            />
             <div class="btn-group">
                 <div>
                     <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
@@ -62,8 +67,13 @@ export default class StatisticPlatCoinDaysHeader extends AbstractView {
     private tableColumns = this.myProxy.tableData.columns;
     private listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    private handlerSearch(resetCoinNameUnique: boolean = false) {
         this.listQuery.page_count = 1;
+
+        if (resetCoinNameUnique) {
+            this.listQuery.coin_name_unique = this.myProxy.coin_name_unique_keys[0];
+        }
+
         this.myProxy.onQuery();
     }
 

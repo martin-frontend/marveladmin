@@ -1,8 +1,6 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
-import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/statistic_plat_coin_days/setting";
-import { MessageBox } from "element-ui";
 import IStatisticPlatCoinDaysProxy from "./IStatisticPlatCoinDaysProxy";
 import { exportJson2Excel } from "@/core/global/Excel";
 import i18n from "@/lang";
@@ -29,27 +27,27 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
     tableData = {
         columns: <any>{
             // TODO
-            created_date: { name: "日期", options: {}, display: true },
-            plat_id: { name: "所属平台", options: {}, display: true },
-            coin_name_unique: { name: "币种", options: {}, display: true },
-            recharge_amount: { name: "充值", options: {}, display: true },
-            recharge_fee_amount: { name: "充值手续费", options: {}, display: true },
-            exchange_amount: { name: "提现", options: {}, display: true },
-            exchange_fee_amount: { name: "提现手续费", options: {}, display: true },
-            swap_amount: { name: "SWAP交易", options: {}, display: true },
-            swap_fee_amount: { name: "SWAP交易手续费", options: {}, display: true },
-            commission_amount: { name: "推广返佣", options: {}, display: true },
-            commission_received_amount: {name: '推广赚钱已领', options: {}, display: true },
-            backwater_amount: { name: "游戏挖矿", options: {}, display: true },
-            stake_bonus_amount: { name: "质押分红", options: {}, display: true },
-            stake_bonus_fee_amount: {name: '解质押手续费', options: {}, display: true },
-            stake_bonus_received_amount: {name: '质押分红已领', options: {}, display: true },
-            mail_awards_amount: { name: "邮件奖励（人工）", options: {}, display: true },
-            mail_awards_received_amount: {name: '邮件奖励(人工)已领', options: {}, display: true },
-            activity_awards_amount: { name: "活动奖励", options: {}, display: true },
-            activity_awards_received_amount: {name: '活动奖励已领', options: {}, display: true },
-            win_loss_amount: { name: "游戏输赢", options: {}, display: true },
-            // data_belong: {name: '数据归属标记', options: {}, display: true },
+            created_date: { name: "日期", options: {} },
+            plat_id: { name: "所属平台", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
+            recharge_amount: { name: "充值", options: {} },
+            recharge_fee_amount: { name: "充值手续费", options: {} },
+            exchange_amount: { name: "提现", options: {} },
+            exchange_fee_amount: { name: "提现手续费", options: {} },
+            swap_amount: { name: "SWAP交易", options: {} },
+            swap_fee_amount: { name: "SWAP交易手续费", options: {} },
+            commission_amount: { name: "推广返佣", options: {} },
+            commission_received_amount: {name: '推广赚钱已领', options: {} },
+            backwater_amount: { name: "游戏挖矿", options: {} },
+            stake_bonus_amount: { name: "质押分红", options: {} },
+            stake_bonus_fee_amount: {name: '解质押手续费', options: {} },
+            stake_bonus_received_amount: {name: '质押分红已领', options: {} },
+            mail_awards_amount: { name: "邮件奖励（人工）", options: {} },
+            mail_awards_received_amount: {name: '邮件奖励(人工)已领', options: {} },
+            activity_awards_amount: { name: "活动奖励", options: {} },
+            activity_awards_received_amount: {name: '活动奖励已领', options: {} },
+            win_loss_amount: { name: "游戏输赢", options: {} },
+            // data_belong: {name: '数据归属标记', options: {} },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -104,13 +102,10 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
         this.tableData.columnKeys = Object.keys(this.tableData.columns);
         if (plat_id_options_keys.length > 0 && this.tableData.columnKeys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
-                // this.listQuery.plat_id = plat_id_options_keys[0];
-            }
+                this.listQuery.plat_id = plat_id_options_keys[0];
 
-            // 预设栏位都显示
-            this.tableData.columnKeys.forEach((key: any) => {
-                this.tableData.columns[key]["display"] = true;
-            });
+                this.listQuery.coin_name_unique = this.coin_name_unique_keys[0];
+            }
 
             this.onQuery();
         }
@@ -157,10 +152,9 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
             // TODO
             page_count: 1,
             page_size: 20,
-            coin_name_unique: "",
+            coin_name_unique: this.coin_name_unique_keys[0],
             "created_date-{>=}": this.lastWeekDate,
             "created_date-{<=}": this.defaultDate,
-            plat_id: ""
         });
     }
 
@@ -179,22 +173,6 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
         let d1 = new Date();
         d1.setTime(d1.getTime() - 24 * 60 * 60 * 1000);
         return d1.getFullYear() + "-" + (d1.getMonth() + 1) + "-" + d1.getDate();
-    }
-
-    /**字段配置筛选 */
-    filterTable() {
-        this.tableData.columnKeys.forEach((key: any) => {
-            this.tableData.columns[key].display = true;
-        });
-        this.tableData.hideColumns = [];
-
-        if (this.tableData.hideColumns.length > 0) {
-            this.tableData.hideColumns.forEach((item: any) => {
-                this.tableData.columns[item].display = false;
-            });
-        }
-        // 强制刷新
-        this.tableData.updateNum++;
     }
 
     /**取导出资料 */
@@ -268,5 +246,9 @@ export default class StatisticPlatCoinDaysProxy extends AbstractProxy implements
             fileFirstName = i18n.t("statistic_plat_days.exportFileName");
         }
         return `${fileFirstName}${fileLastName}`;
+    }
+
+    get coin_name_unique_keys() {
+        return Object.keys(this.tableData.columns.coin_name_unique.options[this.listQuery.plat_id]);
     }
 }

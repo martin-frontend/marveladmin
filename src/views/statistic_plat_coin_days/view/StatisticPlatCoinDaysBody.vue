@@ -20,12 +20,7 @@
                 min-width="110px"
             >
             </el-table-column>
-            <el-table-column
-                v-if="tableColumns.plat_id.display"
-                :label="tableColumns['plat_id'].name"
-                align="center"
-                min-width="130px"
-            >
+            <el-table-column :label="tableColumns['plat_id'].name" align="center" min-width="130px">
                 <template slot-scope="{ row }">
                     <div>
                         <div v-if="row.plat_id === '合计' || row.plat_id === $t('common.total')">
@@ -37,37 +32,20 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column
-                v-if="tableColumns.coin_name_unique.display"
-                prop="coin_name_unique"
-                :label="tableColumns['coin_name_unique'].name"
-                align="center"
-            >
+            <el-table-column prop="coin_name_unique" :label="tableColumns['coin_name_unique'].name" align="center">
+            </el-table-column>
+            <el-table-column prop="recharge_amount" :label="tableColumns['recharge_amount'].name" align="center">
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.recharge_amount.display"
-                prop="recharge_amount"
-                :label="tableColumns['recharge_amount'].name"
-                align="center"
-            >
-            </el-table-column>
-            <el-table-column
-                v-if="tableColumns.recharge_fee_amount.display"
                 prop="recharge_fee_amount"
                 :label="tableColumns['recharge_fee_amount'].name"
                 min-width="110px"
                 align="center"
             >
             </el-table-column>
-            <el-table-column
-                v-if="tableColumns.exchange_amount.display"
-                prop="exchange_amount"
-                :label="tableColumns['exchange_amount'].name"
-                align="center"
-            >
+            <el-table-column prop="exchange_amount" :label="tableColumns['exchange_amount'].name" align="center">
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.exchange_fee_amount.display"
                 prop="exchange_fee_amount"
                 :label="tableColumns['exchange_fee_amount'].name"
                 min-width="110px"
@@ -75,7 +53,6 @@
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.swap_amount.display"
                 prop="swap_amount"
                 :label="tableColumns['swap_amount'].name"
                 min-width="110px"
@@ -84,44 +61,26 @@
             </el-table-column>
 
             <el-table-column
-                v-if="tableColumns.swap_fee_amount.display"
                 prop="swap_fee_amount"
                 :label="tableColumns['swap_fee_amount'].name"
                 min-width="130px"
                 align="center"
             >
             </el-table-column>
-            <el-table-column
-                v-if="tableColumns.commission_amount.display"
-                prop="commission_amount"
-                :label="tableColumns['commission_amount'].name"
-                align="center"
-            >
+            <el-table-column prop="commission_amount" :label="tableColumns['commission_amount'].name" align="center">
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.commission_received_amount.display"
                 prop="commission_received_amount"
                 :label="tableColumns['commission_received_amount'].name"
                 align="center"
                 min-width="130px"
             >
             </el-table-column>
-            <el-table-column
-                v-if="tableColumns.backwater_amount.display"
-                prop="backwater_amount"
-                :label="tableColumns['backwater_amount'].name"
-                align="center"
-            >
+            <el-table-column prop="backwater_amount" :label="tableColumns['backwater_amount'].name" align="center">
+            </el-table-column>
+            <el-table-column prop="stake_bonus_amount" :label="tableColumns['stake_bonus_amount'].name" align="center">
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.stake_bonus_amount.display"
-                prop="stake_bonus_amount"
-                :label="tableColumns['stake_bonus_amount'].name"
-                align="center"
-            >
-            </el-table-column>
-            <el-table-column
-                v-if="tableColumns.stake_bonus_fee_amount.display"
                 prop="stake_bonus_fee_amount"
                 :label="tableColumns['stake_bonus_fee_amount'].name"
                 align="center"
@@ -129,7 +88,6 @@
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.stake_bonus_received_amount.display"
                 prop="stake_bonus_received_amount"
                 :label="tableColumns['stake_bonus_received_amount'].name"
                 align="center"
@@ -137,7 +95,6 @@
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.mail_awards_amount.display"
                 prop="mail_awards_amount"
                 :label="tableColumns['mail_awards_amount'].name"
                 align="center"
@@ -145,7 +102,6 @@
             >
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.mail_awards_received_amount.display"
                 prop="mail_awards_received_amount"
                 :label="tableColumns['mail_awards_received_amount'].name"
                 align="center"
@@ -154,7 +110,6 @@
             </el-table-column>
 
             <el-table-column
-                v-if="tableColumns.activity_awards_amount.display"
                 prop="activity_awards_amount"
                 :label="tableColumns['activity_awards_amount'].name"
                 align="center"
@@ -162,19 +117,13 @@
             </el-table-column>
 
             <el-table-column
-                v-if="tableColumns.activity_awards_received_amount.display"
                 prop="activity_awards_received_amount"
                 :label="tableColumns['activity_awards_received_amount'].name"
                 align="center"
                 min-width="130px"
             >
             </el-table-column>
-            <el-table-column
-                v-if="tableColumns.win_loss_amount.display"
-                prop="win_loss_amount"
-                :label="tableColumns['win_loss_amount'].name"
-                align="center"
-            >
+            <el-table-column prop="win_loss_amount" :label="tableColumns['win_loss_amount'].name" align="center">
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.win_loss_amount" />
                 </template>
