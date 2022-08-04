@@ -31,6 +31,7 @@ export default class PlatEmailMediator extends AbstractMediator {
             EventType.admin_plat_mail_content_index,
             EventType.admin_plat_mail_content_show,
             EventType.admin_plat_mail_content_store,
+            EventType.admin_plat_email_store_attachment_store,
             EventType.admin_plat_mail_content_update,
             EventType.admin_plat_users_mail_table_columns,
             EventType.admin_plat_users_mail_index,
@@ -53,6 +54,7 @@ export default class PlatEmailMediator extends AbstractMediator {
                 myProxy.setDetail(body);
                 break;
             case EventType.admin_plat_mail_content_store:
+            case EventType.admin_plat_email_store_attachment_store:
                 Message.success(SuccessMessage.create);
                 myProxy.hideDialog();
                 myProxy.listQuery.page_count = 1;
