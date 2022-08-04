@@ -15,7 +15,7 @@
                 class="item"
                 type="primary"
                 icon="el-icon-circle-plus-outline"
-                v-if="checkUnique(unique.plat_email_store)"
+                v-if="checkUnique(unique.plat_email_store) || checkUnique(unique.plat_email_store_attachment)"
                 >{{ $t("common.create") }}</el-button
             >
         </div>
