@@ -61,15 +61,15 @@
             <el-table-column prop="stake_bonus_amount" :label="tableColumns['stake_bonus_amount'].name" align="center">
             </el-table-column>
             <el-table-column
-                prop="stake_bonus_fee_amount"
-                :label="tableColumns['stake_bonus_fee_amount'].name"
+                prop="stake_bonus_received_amount"
+                :label="tableColumns['stake_bonus_received_amount'].name"
                 align="center"
                 min-width="130px"
             >
             </el-table-column>
             <el-table-column
-                prop="stake_bonus_received_amount"
-                :label="tableColumns['stake_bonus_received_amount'].name"
+                prop="stake_bonus_fee_amount"
+                :label="tableColumns['stake_bonus_fee_amount'].name"
                 align="center"
                 min-width="130px"
             >

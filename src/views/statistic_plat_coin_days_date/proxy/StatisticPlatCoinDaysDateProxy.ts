@@ -141,14 +141,6 @@ export default class StatisticPlatCoinDaysDateProxy extends AbstractProxy implem
     onSetExcelData(body: any) {
         let data = JSON.parse(JSON.stringify(body));
 
-        const excelData = <any>[];
-
-        excelData.push(...data.summary)
-
-        data.list.forEach((listData: any) => {
-            excelData.push(...listData.detail)
-        })
-
         // 要导出的栏位
         let exportColumn = this.getArrDifference(this.exportData.fieldOrder, this.tableData.hideColumns);
         // 栏位中文名称
@@ -157,7 +149,7 @@ export default class StatisticPlatCoinDaysDateProxy extends AbstractProxy implem
             exportHeader.push(this.tableData.columns[column].name);
         });
         // 导出资料
-        let exportData = this.dataMatching(exportColumn, excelData);
+        let exportData = this.dataMatching(exportColumn, data);
 
         exportJson2Excel(exportHeader, exportData, this.getFileName, undefined, undefined);
         // 改回来page size
