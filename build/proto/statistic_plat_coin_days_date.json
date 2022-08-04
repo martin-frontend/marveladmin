@@ -1,0 +1,9 @@
+{
+    "name": "当日币种统计",
+    "description": "当日币种统计",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47775811",
+    "list": [
+        "admin/statistic_plat_coin_days/table_columns",
+        "admin/statistic_plat_coin_days/statistic_by_date"
+    ]
+}
