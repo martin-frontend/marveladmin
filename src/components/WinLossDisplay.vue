@@ -1,12 +1,14 @@
 <template>
-    <span :class="checkWin(amount)">{{ amount | hasPlus }}</span>
+    <span :class="checkWin(amount)">{{ amount | hasPlus(isShowDollar) }}</span>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 @Component({
     filters: {
-        hasPlus(value: string) {
+        hasPlus(value: string, isShowDollar: boolean) {
+            if (!isShowDollar) return value;
+
             let str = value.replace("$", "");
             let amount = Number(str);
             if (amount > 0) {
@@ -18,10 +20,13 @@ import { Component, Prop, Vue } from "vue-property-decorator";
                 return `$${amount.toFixed(3)}`;
             }
         },
+
+        showDollar(type: boolean) {},
     },
 })
 export default class WinLossDisplay extends Vue {
     @Prop({ type: String, default: "0" }) amount!: string;
+    @Prop({ type: Boolean, default: true }) isShowDollar!: boolean;
 
     private checkWin(value: string) {
         let str = value.replace("$", "");
