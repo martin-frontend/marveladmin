@@ -23,7 +23,7 @@ export default class TabTeamProxy extends AbstractProxy implements ITabTeamProxy
     }
     /**取得根节点 */
     getRoot() {
-        this.sendNotification(HttpType.admin_plat_agent_bind_show, { user_id: getPageSetting().user_id });
+        this.sendNotification(HttpType.admin_plat_user_agent_bind_show, { user_id: getPageSetting().user_id });
     }
     /**设置根节点 */
     setRoot(data: any) {
@@ -32,7 +32,7 @@ export default class TabTeamProxy extends AbstractProxy implements ITabTeamProxy
     }
     /**取得更多成员 */
     getMoreMember({ invite_user_id, page_count }: { [key: string]: number }) {
-        this.sendNotification(HttpType.admin_plat_agent_bind_index, {
+        this.sendNotification(HttpType.admin_plat_user_agent_bind_index, {
             invite_user_id: invite_user_id,
             page_count: page_count,
             page_size: 10

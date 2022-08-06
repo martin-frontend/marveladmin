@@ -16,17 +16,17 @@ export default class TabTeamMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [EventType.admin_plat_agent_bind_index, EventType.admin_plat_agent_bind_show];
+        return [EventType.admin_plat_user_agent_bind_index, EventType.admin_plat_user_agent_bind_show];
     }
 
     handleNotification(notification: puremvc.INotification) {
         if (this.pageSetting == getPageSetting()) {
             const body = notification.getBody();
             switch (notification.getName()) {
-                case EventType.admin_plat_agent_bind_index:
+                case EventType.admin_plat_user_agent_bind_index:
                     this.myProxy.addTree(body);
                     break;
-                case EventType.admin_plat_agent_bind_show:
+                case EventType.admin_plat_user_agent_bind_show:
                     this.myProxy.setRoot(body);
                     break;
             }

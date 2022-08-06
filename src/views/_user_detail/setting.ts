@@ -25,8 +25,8 @@ import cmd_admin_plat_users_bet_show from "@/views/_user_detail/command/cmd_admi
 import cmd_admin_statistic_user_days_table_columns from "@/views/_user_detail/command/cmd_admin_statistic_user_days_table_columns";
 import cmd_admin_statistic_user_days_index from "@/views/_user_detail/command/cmd_admin_statistic_user_days_index";
 // --团队成员&team
-import cmd_admin_plat_agent_bind_index from "@/views/_user_detail/command/cmd_admin_plat_agent_bind_index";
-import cmd_admin_plat_agent_bind_show from "@/views/_user_detail/command/cmd_admin_plat_agent_bind_show";
+import cmd_admin_plat_user_agent_bind_index from "@/views/_user_detail/command/cmd_admin_plat_user_agent_bind_index";
+import cmd_admin_plat_user_agent_bind_show from "@/views/_user_detail/command/cmd_admin_plat_user_agent_bind_show";
 // --返佣明细&commission
 import cmd_admin_plat_user_commission_table_columns from "@/views/_user_detail/command/cmd_admin_plat_user_commission_table_columns";
 import cmd_admin_plat_user_commission_index from "@/views/_user_detail/command/cmd_admin_plat_user_commission_index";
@@ -67,8 +67,8 @@ export var HttpType = {
     admin_statistic_user_days_table_columns: "admin/statistic_user_days/table_columns ",
     admin_statistic_user_days_index: "admin/statistic_user_days/index ",
 // --团队成员&team
-    admin_plat_agent_bind_index: "admin/plat_agent_bind/index ",
-    admin_plat_agent_bind_show: "admin/plat_agent_bind/show/{user_id} ",
+    admin_plat_user_agent_bind_index: "admin/plat_user/agent_bind/index ",
+    admin_plat_user_agent_bind_show: "admin/plat_user/agent_bind/show/{user_id} ",
 // --返佣明细&commission
     admin_plat_user_commission_table_columns: "admin/plat_user/commission/table_columns ",
     admin_plat_user_commission_index: "admin/plat_user/commission/index ",
@@ -110,8 +110,8 @@ export var EventType = {
     admin_statistic_user_days_table_columns: "_admin_statistic_user_days_table_columns",
     admin_statistic_user_days_index: "_admin_statistic_user_days_index",
 // --团队成员&team
-    admin_plat_agent_bind_index: "_admin_plat_agent_bind_index",
-    admin_plat_agent_bind_show: "_admin_plat_agent_bind_show",
+    admin_plat_user_agent_bind_index: "_admin_plat_user_agent_bind_index",
+    admin_plat_user_agent_bind_show: "_admin_plat_user_agent_bind_show",
 // --返佣明细&commission
     admin_plat_user_commission_table_columns: "_admin_plat_user_commission_table_columns",
     admin_plat_user_commission_index: "_admin_plat_user_commission_index",
@@ -153,8 +153,8 @@ facade.registerCommand(HttpType.admin_plat_users_bet_show, cmd_admin_plat_users_
 facade.registerCommand(HttpType.admin_statistic_user_days_table_columns, cmd_admin_statistic_user_days_table_columns);
 facade.registerCommand(HttpType.admin_statistic_user_days_index, cmd_admin_statistic_user_days_index);
 // --团队成员&team
-facade.registerCommand(HttpType.admin_plat_agent_bind_index, cmd_admin_plat_agent_bind_index);
-facade.registerCommand(HttpType.admin_plat_agent_bind_show, cmd_admin_plat_agent_bind_show);
+facade.registerCommand(HttpType.admin_plat_user_agent_bind_index, cmd_admin_plat_user_agent_bind_index);
+facade.registerCommand(HttpType.admin_plat_user_agent_bind_show, cmd_admin_plat_user_agent_bind_show);
 // --返佣明细&commission
 facade.registerCommand(HttpType.admin_plat_user_commission_table_columns, cmd_admin_plat_user_commission_table_columns);
 facade.registerCommand(HttpType.admin_plat_user_commission_index, cmd_admin_plat_user_commission_index);

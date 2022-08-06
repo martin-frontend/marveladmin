@@ -24,7 +24,7 @@ export default class TabUserUnfoMediator extends AbstractMediator {
             EventType.admin_plat_user_show,
             EventType.admin_plat_user_update,
             EventType.admin_plat_user_phone,
-            EventType.admin_plat_agent_bind_show,
+            EventType.admin_plat_user_agent_bind_show,
             EventType.admin_plat_user_update_level_exp,
             EventType.admin_plat_user_clear_cache,
             GlobalEventType.REFRESH_PAGE,
@@ -54,7 +54,7 @@ export default class TabUserUnfoMediator extends AbstractMediator {
                 case EventType.admin_plat_user_phone:
                     MessageBox.alert(<any>i18n.t("successMessage.operation") + ":" + body);
                     break;
-                case EventType.admin_plat_agent_bind_show:
+                case EventType.admin_plat_user_agent_bind_show:
                     this.myProxy.setRelationChain(body);
                     break;
                 case EventType.admin_plat_user_update_level_exp:

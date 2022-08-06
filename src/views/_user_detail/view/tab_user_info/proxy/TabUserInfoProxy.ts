@@ -212,7 +212,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     /**获取用户详情及关系链 */
     getUserDetail(user_id: any) {
         this.sendNotification(HttpType.admin_plat_user_show, { user_id });
-        this.sendNotification(HttpType.admin_plat_agent_bind_show, { user_id, hideLoading: true });
+        this.sendNotification(HttpType.admin_plat_user_agent_bind_show, { user_id, hideLoading: true });
     }
     /**修改 */
     onEdit(filed: string, filedValue: string) {
