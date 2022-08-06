@@ -23,11 +23,25 @@
                 align="center"
             >
             </el-table-column>
+            <el-table-column
+                prop="recharge_third_fee_amount"
+                :label="tableColumns['recharge_third_fee_amount'].name"
+                min-width="110px"
+                align="center"
+            >
+            </el-table-column>
             <el-table-column prop="exchange_amount" :label="tableColumns['exchange_amount'].name" align="center">
             </el-table-column>
             <el-table-column
                 prop="exchange_fee_amount"
                 :label="tableColumns['exchange_fee_amount'].name"
+                min-width="110px"
+                align="center"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="exchange_third_fee_amount"
+                :label="tableColumns['exchange_third_fee_amount'].name"
                 min-width="110px"
                 align="center"
             >
@@ -75,6 +89,13 @@
             >
             </el-table-column>
             <el-table-column
+                prop="stake_bonus_pool_amount"
+                :label="tableColumns['stake_bonus_pool_amount'].name"
+                align="center"
+                min-width="130px"
+            >
+            </el-table-column>
+            <el-table-column
                 prop="mail_awards_amount"
                 :label="tableColumns['mail_awards_amount'].name"
                 align="center"
@@ -101,6 +122,12 @@
                 :label="tableColumns['activity_awards_received_amount'].name"
                 align="center"
                 min-width="130px"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="manual_deduct_amount"
+                :label="tableColumns['manual_deduct_amount'].name"
+                align="center"
             >
             </el-table-column>
             <el-table-column prop="win_loss_amount" :label="tableColumns['win_loss_amount'].name" align="center">
