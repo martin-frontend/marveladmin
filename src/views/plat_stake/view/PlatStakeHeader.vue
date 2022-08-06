@@ -20,7 +20,7 @@
                     size="mini"
                     type="primary"
                     @click="handlerSetting()"
-                    v-if="checkUnique(unique.admin_user_show)"
+                    v-if="checkUnique(unique.plat_stake_config_update)"
                     >{{ $t("common.setting") }}</el-button
                 ></el-col
             >
