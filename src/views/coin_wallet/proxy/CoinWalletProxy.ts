@@ -2,6 +2,7 @@ import { BaseInfo } from "@/components/vo/commonVo";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { checkUnique, unique } from "@/core/global/Permission";
 import router from "@/router";
 import CoinReceivePaymentChannelMediator from "@/views/coin_receive_payment_channel/mediator/CoinReceivePaymentChannelMediator";
 import { HttpType } from "@/views/coin_wallet/setting";
@@ -13,8 +14,10 @@ export default class CoinWalletProxy extends AbstractProxy implements ICoinWalle
 
     /**进入页面时调用 */
     enter() {
-        this.sendNotification(HttpType.admin_coin_wallet_table_columns);
-        this.sendNotification(HttpType.admin_coin_wallet_log_table_columns);
+        if (checkUnique(unique.coin_wallet_log)) {
+            this.sendNotification(HttpType.admin_coin_wallet_table_columns);
+            this.sendNotification(HttpType.admin_coin_wallet_log_table_columns);
+        }
     }
 
     /**离开页面时调用 */

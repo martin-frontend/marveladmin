@@ -11,7 +11,8 @@ export default class ExchangeAutoCheckProxy extends AbstractProxy implements IEx
 
     /**进入页面时调用 */
     enter() {
-        this.sendNotification(HttpType.admin_exchange_auto_check_setting_table_columns);
+        // 先注释掉 暂时没有此功能，不然会报权限错误
+        // this.sendNotification(HttpType.admin_exchange_auto_check_setting_table_columns);
     }
 
     /**离开页面时调用 */
