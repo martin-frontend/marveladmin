@@ -285,4 +285,6 @@
      plat_email_update: "plat_email_update", //撤销邮件
      plat_email_show: "plat_email_show", //查看邮件
      plat_email_store_attachment: "plat_email_store_attachment",
+     //平台质押分红
+     plat_stake_config_update: "plat_stake_config_update", //平台质押分红配置
  };
