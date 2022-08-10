@@ -25,6 +25,18 @@
                 prop="vendor_product_name"
                 min-width="150px"
             ></el-table-column>
+            <el-table-column
+                :label="tableColumns['languages'].name"
+                prop="languages"
+                class-name="status-col"
+                width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <span v-for="type in row.languages" :key="type" style="margin-right: 5px">
+                        {{ tableColumns["languages"].options[type] }}
+                    </span>
+                </template>
+            </el-table-column>
             <el-table-column :label="tableColumns['vendor_type'].name" min-width="80px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.vendor_type.options[row.vendor_type] }}</div>

@@ -22,16 +22,29 @@
                 width="150px"
             ></el-table-column>
             <el-table-column
+                :label="tableColumns['vendor_desc'].name"
+                prop="vendor_desc"
+                min-width="150"
+                class-name="status-col"
+            ></el-table-column>
+            <el-table-column
                 :label="tableColumns['vendor_name_unique'].name"
                 prop="vendor_name_unique"
                 class-name="status-col"
                 width="150px"
             ></el-table-column>
             <el-table-column
-                :label="tableColumns['vendor_desc'].name"
-                min-width="150"
-                prop="vendor_desc"
-            ></el-table-column>
+                :label="tableColumns['languages'].name"
+                prop="languages"
+                class-name="status-col"
+                width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <span v-for="type in row.languages" :key="type" style="margin-right: 5px">
+                        {{ tableColumns["languages"].options[type] }}
+                    </span>
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns['currency_type'].name"
                 prop="currency_type"
@@ -39,12 +52,6 @@
                 align="center"
             >
             </el-table-column>
-            <el-table-column
-                :label="tableColumns['vendor_name_unique'].name"
-                prop="vendor_name_unique"
-                class-name="status-col"
-                width="150px"
-            ></el-table-column>
             <el-table-column
                 :label="tableColumns['proxy_key'].name"
                 prop="proxy_key"
@@ -55,7 +62,12 @@
                     {{ tableColumns.proxy_key.options[row.proxy_key] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns['time_region_hour_interval'].name" class-name="status-col" prop="time_region_hour_interval" width="100px">
+            <el-table-column
+                :label="tableColumns['time_region_hour_interval'].name"
+                class-name="status-col"
+                prop="time_region_hour_interval"
+                width="100px"
+            >
             </el-table-column>
             <el-table-column :label="tableColumns['status'].name" class-name="status-col" width="100px">
                 <template slot-scope="{ row }">
@@ -66,8 +78,20 @@
             </el-table-column>
             <el-table-column :label="$t('common.operating')" class-name="status-col" width="150px">
                 <template slot-scope="{ row }">
-                    <el-button v-if="checkUnique(unique.test_vendor)" size="mini" type="danger" @click="handleTest(row)">{{ $t("plat_sms.test") }}</el-button>
-                    <el-button v-if="checkUnique(unique.vendor_update)" size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
+                    <el-button
+                        v-if="checkUnique(unique.test_vendor)"
+                        size="mini"
+                        type="danger"
+                        @click="handleTest(row)"
+                        >{{ $t("plat_sms.test") }}</el-button
+                    >
+                    <el-button
+                        v-if="checkUnique(unique.vendor_update)"
+                        size="mini"
+                        type="primary"
+                        @click="handleEdit(row)"
+                        >{{ $t("common.update") }}</el-button
+                    >
                 </template>
             </el-table-column>
         </el-table>
