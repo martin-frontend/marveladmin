@@ -35,6 +35,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             ori_vendor_extend: { name: "", options: {} },
             orientation: { name: "", options: {} },
             currency_type: { name: "", options: {} },
+            languages: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -49,6 +50,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
         page_count: 1,
         page_size: 20,
         currency_type: "",
+        languages: ""
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -63,6 +65,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             icon: "",
             status: 1,
             ori_vendor_extend: {},
+            languages: ""
         },
         formSource: null, // 表单的原始数据
         update: 1,
@@ -101,6 +104,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             page_count: 1,
             page_size: 20,
             currency_type: "",
+            languages: ""
         });
     }
 
@@ -133,6 +137,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             icon: "",
             status: 1,
             ori_vendor_extend: {},
+            languages: ""
         });
     }
 
@@ -151,6 +156,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             icon,
             status,
             ori_vendor_extend,
+            languages
         } = this.dialogData.form;
         const formCopy: any = {
             vendor_id,
@@ -161,6 +167,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             icon,
             status,
             ori_vendor_extend,
+            languages
         };
         try {
             let extendsStr: any = "{}";
@@ -202,7 +209,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             .then(() => {
                 this.sendNotification(HttpType.admin_vendor_product_update, { vendor_product_id: id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**更改方向数据 */

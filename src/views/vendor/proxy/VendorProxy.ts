@@ -47,6 +47,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             currency_type: { name: "", options: {} },
             proxy_key: { name: "", options: {} },
             time_region_hour_interval: { name: "", options: {} },
+            languages: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -72,7 +73,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             is_save_bet_info: 1,
             currency_type: "CNY",
             proxy_key: "",
-            time_region_hour_interval: 0
+            time_region_hour_interval: 0,
+            languages: [],
         },
         formSource: null, // 表单的原始数据
         // 扩展数据
@@ -146,6 +148,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             is_save_bet_info: 1,
             proxy_key: "",
             time_region_hour_interval: 0,
+            languages: [],
         });
         this.dialogData.extendsData = {};
     }
@@ -165,7 +168,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             vendor_desc,
             currency_type,
             proxy_key,
-            time_region_hour_interval
+            time_region_hour_interval,
+            languages
         } = this.dialogData.form;
         const formCopy: any = {
             vendor_id,
@@ -176,9 +180,11 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             vendor_desc,
             currency_type,
             proxy_key,
-            time_region_hour_interval
+            time_region_hour_interval,
+            languages
         };
         formCopy.vendor_types = JSON.stringify(formCopy.vendor_types);
+        formCopy.languages = JSON.stringify(formCopy.languages);
         formCopy.extends = jsonStringify(this.dialogData.extendsData);
         this.sendNotification(HttpType.admin_vendor_store, objectRemoveNull(formCopy));
     }

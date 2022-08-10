@@ -32,7 +32,13 @@
                     </el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
-
+            <el-form-item size="mini" :label="tableColumns['languages'].name" prop="languages">
+                <el-checkbox-group v-model="form.languages">
+                    <el-checkbox v-for="(value, key) in tableColumns.languages.options" :key="key" :label="key">
+                        {{ value }}
+                    </el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['is_save_bet_info'].name" prop="is_save_bet_info">
                 <el-switch v-model="form.is_save_bet_info" :active-value="1" :inactive-value="98"></el-switch>
             </el-form-item>
@@ -95,12 +101,20 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button v-if="isStatusUpdate && checkUnique(unique.vendor_delete)" type="danger" size="mini" @click="handleDelete">{{
-                    $t("common.delete")
-                }}</el-button>
-                <el-button v-if="checkUnique(unique.vendor_update)" type="primary" size="mini" @click="!isStatusUpdate ? handleAdd() : handleUpdate()">{{
-                    $t("common.save")
-                }}</el-button>
+                <el-button
+                    v-if="isStatusUpdate && checkUnique(unique.vendor_delete)"
+                    type="danger"
+                    size="mini"
+                    @click="handleDelete"
+                    >{{ $t("common.delete") }}</el-button
+                >
+                <el-button
+                    v-if="checkUnique(unique.vendor_update)"
+                    type="primary"
+                    size="mini"
+                    @click="!isStatusUpdate ? handleAdd() : handleUpdate()"
+                    >{{ $t("common.save") }}</el-button
+                >
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -160,6 +174,7 @@ export default class VendorDialog extends AbstractView {
             vendor_types: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             extends: [{ required: false, message: this.$t("common.requiredInput"), trigger: "change" }],
             currency_type: [{ required: true }],
+            // languages: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
         };
     }
 

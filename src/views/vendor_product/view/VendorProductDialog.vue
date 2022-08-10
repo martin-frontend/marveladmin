@@ -30,19 +30,30 @@
                 <!-- <el-input v-model="form.vendor_product_name" :placeholder="$t('common.pleaseEnter')"></el-input> -->
 
                 <div class="flex d-flex">
-                        <el-input
-                            style="margin-right: 0.8rem"
-                            type="textarea"
-                            filterable
-                            clearable
-                            :placeholder="$t('common.pleaseEnter')"
-                            v-model="form.vendor_product_name"
-                        ></el-input>
-                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.vendor_product_name)">翻译</el-button>
-                    </div>
-
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        type="textarea"
+                        filterable
+                        clearable
+                        :placeholder="$t('common.pleaseEnter')"
+                        v-model="form.vendor_product_name"
+                    ></el-input>
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.vendor_product_name)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
-
+            <el-form-item size="mini" :label="tableColumns['languages'].name" prop="languages" v-if="isStatusUpdate">
+                <el-checkbox-group v-model="form.languages">
+                    <el-checkbox v-for="(value, key) in tableColumns.languages.options" :key="key" :label="key">
+                        {{ value }}
+                    </el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['ori_product_id'].name" prop="ori_product_id">
                 <el-input v-model="form.ori_product_id" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item>
