@@ -37,11 +37,12 @@
                 :label="tableColumns['languages'].name"
                 prop="languages"
                 class-name="status-col"
-                width="150px"
+                width="300px"
             >
                 <template slot-scope="{ row }">
-                    <span v-for="type in row.languages" :key="type" style="margin-right: 5px">
+                    <span v-for="(type, index) in row.languages" :key="type">
                         {{ tableColumns["languages"].options[type] }}
+                        <span v-if="index < row.languages.length - 1">,</span>
                     </span>
                 </template>
             </el-table-column>

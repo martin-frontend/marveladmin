@@ -157,6 +157,7 @@ export default class VendorProductDialog extends AbstractView {
             vendor_product_name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             ori_product_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             icon: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            languages: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
         };
     }
 

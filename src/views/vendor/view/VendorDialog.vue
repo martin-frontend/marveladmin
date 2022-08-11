@@ -174,7 +174,7 @@ export default class VendorDialog extends AbstractView {
             vendor_types: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             extends: [{ required: false, message: this.$t("common.requiredInput"), trigger: "change" }],
             currency_type: [{ required: true }],
-            // languages: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            languages: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
         };
     }
 
