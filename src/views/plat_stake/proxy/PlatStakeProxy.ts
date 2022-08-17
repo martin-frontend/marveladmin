@@ -126,7 +126,6 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
 
     /**设置质押配置 */
     setStakeBonusConfig(data: any) {
-        console.log("GGGGG", data);
         Object.assign(this.stake_bonus_config, data);
     }
     /**显示质押配置弹窗 */
@@ -162,7 +161,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             plat_id: this.listQuery.plat_id,
             stake_bonus_config: JSON.stringify(config),
         };
-        this.sendNotification(HttpType.admin_plat_update, copyForm);
+        this.sendNotification(HttpType.admin_plat_stake_config_update, copyForm);
     }
     /**设置表头数据 */
     setTableColumns(data: any) {

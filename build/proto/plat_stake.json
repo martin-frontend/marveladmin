@@ -15,6 +15,7 @@
         "admin/plat_stake_bonus_user_log/table_columns",
         "admin/plat_stake_bonus_user_log/index",
         "admin/plat/show/{plat_id}",
-        "admin/plat/update/{plat_id}"
+        "admin/plat/update/{plat_id}",
+        "admin/plat_stake_config/update/{plat_id}"
     ]
 }
