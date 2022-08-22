@@ -4,7 +4,7 @@ import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/game_domain/setting";
 import { MessageBox } from "element-ui";
 import IGameDomainProxy from "./IGameDomainProxy";
-
+import i18n from "@/lang";
 export default class GameDomainProxy extends AbstractProxy implements IGameDomainProxy {
     static NAME = "GameDomainProxy";
 
@@ -27,6 +27,8 @@ export default class GameDomainProxy extends AbstractProxy implements IGameDomai
     tableData = {
         columns: {
             // TODO
+            api_domain: { name: "API地址", options: {} },
+            cdn_domain: { name: "CDN地址", options: {} },
             channel_id: { name: "所属渠道", options: {} },
             created_at: { name: "创建人", options: {} },
             created_by: { name: "创建时间", options: {} },
@@ -59,6 +61,8 @@ export default class GameDomainProxy extends AbstractProxy implements IGameDomai
             plat_id: "",
             channel_id: "",
             domain: "",
+            api_domain: "",
+            cdn_domain: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -108,6 +112,8 @@ export default class GameDomainProxy extends AbstractProxy implements IGameDomai
             plat_id: "",
             channel_id: "",
             domain: "",
+            api_domain: "",
+            cdn_domain: "",
         });
     }
 
@@ -117,12 +123,14 @@ export default class GameDomainProxy extends AbstractProxy implements IGameDomai
     }
     /**添加数据 */
     onAdd() {
-        const { plat_id, channel_id, domain } = this.dialogData.form;
+        const { plat_id, channel_id, domain, api_domain, cdn_domain } = this.dialogData.form;
         const formCopy: any = {
             // TODO
             plat_id,
             channel_id,
             domain,
+            api_domain,
+            cdn_domain,
         };
         this.sendNotification(HttpType.admin_game_domain_store, objectRemoveNull(formCopy));
     }
@@ -140,5 +148,18 @@ export default class GameDomainProxy extends AbstractProxy implements IGameDomai
         formCopy.id = this.dialogData.form.id;
         // 发送消息
         this.sendNotification(HttpType.admin_game_domain_update, formCopy);
+    }
+
+    /**删除数据 */
+    onDelete(id: any) {
+        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
+            type: "warning",
+        })
+            .then(() => {
+                this.sendNotification(HttpType.admin_game_domain_update, { id, is_delete: 1 });
+            })
+            .catch(() => { });
     }
 }

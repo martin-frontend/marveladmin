@@ -22,6 +22,8 @@
             <el-table-column prop="channel_id" :label="tableColumns.channel_id.name" width="110" align="center">
             </el-table-column>
             <el-table-column prop="domain" :label="tableColumns.domain.name" align="center"> </el-table-column>
+            <el-table-column prop="api_domain" :label="tableColumns.api_domain.name" align="center"> </el-table-column>
+            <el-table-column prop="cdn_domain" :label="tableColumns.cdn_domain.name" align="center"> </el-table-column>
             <el-table-column :label="$t('common.operating')" class-name="status-col" width="160px">
                 <template slot-scope="{ row }">
                     <el-button

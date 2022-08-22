@@ -17,7 +17,14 @@
             <el-form-item :label="tableColumns.domain.name" prop="domain">
                 <el-input v-model.number="form.domain" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item>
+            <el-form-item :label="tableColumns.api_domain.name" prop="api_domain">
+                <el-input v-model.number="form.api_domain" :placeholder="$t('common.pleaseEnter')"></el-input>
+            </el-form-item>
+            <el-form-item :label="tableColumns.cdn_domain.name" prop="cdn_domain">
+                <el-input v-model.number="form.cdn_domain" :placeholder="$t('common.pleaseEnter')"></el-input>
+            </el-form-item>
             <el-form-item class="dialog-footer">
+                <el-button type="danger" @click="handleDelete">{{ $t("common.delete") }}</el-button>
                 <el-button
                     type="primary"
                     v-if="checkUnique(unique.game_domain_update)"
@@ -94,6 +101,10 @@ export default class GameDomainDialog extends AbstractView {
                 this.myProxy.onUpdate();
             }
         });
+    }
+
+    private handleDelete() {
+        this.myProxy.onDelete(this.form.id);
     }
 }
 </script>
