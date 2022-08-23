@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="720px">
+    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="800px">
         <el-form ref="form" :rules="rules" :model="form" label-width="135px" v-loading="net_status.loading">
             <el-form-item size="mini" :label="tableColumns.plat_id.name" prop="plat_id">
                 <el-select v-model="form.plat_id" filterable clearable :placeholder="$t('common.pleaseChoose')">
@@ -42,16 +42,26 @@
                 </el-checkbox>
             </el-form-item>
             <el-form-item size="mini" :label="`${tableColumns.content.name}`" prop="content">
-                <el-input
-                    :rows="3"
-                    type="textarea"
-                    filterable
-                    clearable
-                    class="select"
-                    maxlength="100"
-                    :placeholder="$t('common.pleaseEnter')"
-                    v-model="form.content"
-                ></el-input>
+                <div class="flex d-flex">
+                    <el-input
+                        :rows="3"
+                        type="textarea"
+                        filterable
+                        clearable
+                        class="select"
+                        maxlength="100"
+                        :placeholder="$t('common.pleaseEnter')"
+                        v-model="form.content"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.content)"
+                        >翻译</el-button
+                    >
+                </div>
                 <div class="contentDesc">
                     {{ $t("plat_marquee.contentDesc1")
                     }}<span>{{ myProxy.dialogData.contetnMaxLength - form.content.length }}</span
@@ -90,6 +100,8 @@ import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import { TimeType, StatusType } from "../proxy/IPlatMarqueeProxy";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component({
     components: {
@@ -104,6 +116,7 @@ export default class PlatMarqueeDialog extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: PlatMarqueeProxy = this.getProxy(PlatMarqueeProxy);
+    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private form = this.myProxy.dialogData.form;
@@ -170,6 +183,14 @@ export default class PlatMarqueeDialog extends AbstractView {
 
     private handleDelete() {
         this.myProxy.onDelete(this.form.id);
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_MARQUEE;
+        data.plat_id = this.form.plat_id;
+        this.langProxy.showDialog(data);
     }
 }
 </script>
