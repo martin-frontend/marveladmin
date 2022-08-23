@@ -37,6 +37,7 @@ export default class GameDomainProxy extends AbstractProxy implements IGameDomai
             id: { name: "主键", options: {} },
             md5_tag: { name: "cdn文件标识", options: {} },
             plat_id: { name: "平台ID", options: {} },
+            remark: { name: "备注", options: {} },
             updated_at: { name: "修改人", options: {} },
             updated_by: { name: "修改时间", options: {} },
         },
@@ -63,6 +64,7 @@ export default class GameDomainProxy extends AbstractProxy implements IGameDomai
             domain: "",
             api_domain: "",
             cdn_domain: "",
+            remark: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -114,6 +116,7 @@ export default class GameDomainProxy extends AbstractProxy implements IGameDomai
             domain: "",
             api_domain: "",
             cdn_domain: "",
+            remark: "",
         });
     }
 
@@ -123,7 +126,7 @@ export default class GameDomainProxy extends AbstractProxy implements IGameDomai
     }
     /**添加数据 */
     onAdd() {
-        const { plat_id, channel_id, domain, api_domain, cdn_domain } = this.dialogData.form;
+        const { plat_id, channel_id, domain, api_domain, cdn_domain, remark } = this.dialogData.form;
         const formCopy: any = {
             // TODO
             plat_id,
@@ -131,6 +134,7 @@ export default class GameDomainProxy extends AbstractProxy implements IGameDomai
             domain,
             api_domain,
             cdn_domain,
+            remark,
         };
         this.sendNotification(HttpType.admin_game_domain_store, objectRemoveNull(formCopy));
     }

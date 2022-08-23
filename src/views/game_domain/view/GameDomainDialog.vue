@@ -23,6 +23,15 @@
             <el-form-item :label="tableColumns.cdn_domain.name" prop="cdn_domain">
                 <el-input v-model.number="form.cdn_domain" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item>
+            <el-form-item :label="tableColumns.remark.name" prop="remark">
+                <el-input
+                    type="textarea"
+                    maxlength="100"
+                    show-word-limit
+                    v-model="form.remark"
+                    :placeholder="$t('common.pleaseEnter')"
+                ></el-input>
+            </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button type="danger" @click="handleDelete">{{ $t("common.delete") }}</el-button>
                 <el-button
