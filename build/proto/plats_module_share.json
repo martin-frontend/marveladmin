@@ -1,0 +1,11 @@
+{
+    "name": "平台共享",
+    "description": "平台共享",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766406",
+    "list": [
+        "admin/plats_module_share/table_columns",
+        "admin/plats_module_share/index",
+        "admin/plats_module_share/store",
+        "admin/plats_module_share/update/{id}"
+    ]
+}
