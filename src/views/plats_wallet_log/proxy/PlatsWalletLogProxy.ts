@@ -5,6 +5,8 @@ import { HttpType } from "@/views/plats_wallet_log/setting";
 import { MessageBox } from "element-ui";
 import IPlatsWalletLogProxy from "./IPlatsWalletLogProxy";
 import i18n from "@/lang";
+import { dateFormat, getTodayOffset } from "@/core/global/Functions";
+
 export default class PlatsWalletLogProxy extends AbstractProxy implements IPlatsWalletLogProxy {
     static NAME = "PlatsWalletLogProxy";
 
@@ -52,8 +54,8 @@ export default class PlatsWalletLogProxy extends AbstractProxy implements IPlats
         id: "",
         admin_username: "",
         type: "",
-        "created_at-{>=}": this.defaultDate,
-        "created_at-{<=}": this.defaultDate,
+        "created_at-{>=}": dateFormat(getTodayOffset(0), "yyyy-MM-dd hh:mm:ss"),
+        "created_at-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
     };
 
     get defaultDate() {
@@ -93,8 +95,8 @@ export default class PlatsWalletLogProxy extends AbstractProxy implements IPlats
             coin_name_unique: "",
             id: "",
             admin_username: "",
-            "created_at-{>=}": this.defaultDate,
-            "created_at-{<=}": this.defaultDate,
+            "created_at-{>=}": dateFormat(getTodayOffset(0), "yyyy-MM-dd hh:mm:ss"),
+            "created_at-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
         });
     }
 }
