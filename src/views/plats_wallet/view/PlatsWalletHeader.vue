@@ -11,7 +11,7 @@
             <SearchSelect
                 :title="tableColumns.coin_name_unique.name"
                 v-model="listQuery.coin_name_unique"
-                :options="tableColumns.coin_name_unique.options"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
             />
             <el-button @click="handlerSearch" type="primary" class="item" icon="el-icon-search">{{
                 $t("common.search")
