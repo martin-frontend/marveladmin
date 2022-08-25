@@ -1,5 +1,5 @@
 import Http from "@/core/net/Http";
-import { EventType, HttpType } from "@/views/plats_wallet/setting";
+import { EventType, HttpType } from "@/views/plats_wallet_log/setting";
 import { ResponseVO } from "@/core/vo/ResponseVO";
 import { getUrl } from "@/core/global/Functions";
 

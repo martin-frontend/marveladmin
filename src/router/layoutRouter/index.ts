@@ -138,6 +138,10 @@ const layoutRouter = {
             name: "平台资产",
             component: () => import("@/views/plats_wallet/view/PlatsWallet.vue")
         },        {
+            path: "plats_wallet_log",
+            name: "平台资产明细",
+            component: () => import("@/views/plats_wallet_log/view/PlatsWalletLog.vue")
+        },        {
             path: "plat_activity",
             name: "活动管理",
             component: () => import("@/views/plat_activity/view/PlatActivity.vue")

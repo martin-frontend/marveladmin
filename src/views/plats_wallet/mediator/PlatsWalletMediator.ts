@@ -28,8 +28,6 @@ export default class PlatsWalletMediator extends AbstractMediator {
         return [
             EventType.admin_plats_wallet_table_columns,
             EventType.admin_plats_wallet_index,
-            EventType.admin_plats_wallet_log_table_columns,
-            EventType.admin_plats_wallet_log_index,
         ];
     }
 
@@ -44,15 +42,6 @@ export default class PlatsWalletMediator extends AbstractMediator {
             case EventType.admin_plats_wallet_index:
                 myProxy.setTableData(body);
                 break;
-            case EventType.admin_plats_wallet_log_table_columns:
-                Message.success(SuccessMessage.update);
-                myProxy.hideDialog();
-                break;
-            case EventType.admin_plats_wallet_log_index:
-                Message.success(SuccessMessage.update);
-                myProxy.hideDialog();
-                break;
-
         }
     }
 }

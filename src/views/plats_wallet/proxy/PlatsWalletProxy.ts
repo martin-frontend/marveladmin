@@ -84,12 +84,7 @@ export default class PlatsWalletProxy extends AbstractProxy implements IPlatsWal
 
     /**查询 */
     onQuery() {
-        const newQuery = { ...this.listQuery };
-        if(newQuery.coin_name_unique === "") {
-            //@ts-ignore
-            delete newQuery.coin_name_unique;
-        }
-        this.facade.sendNotification(HttpType.admin_plats_wallet_index, newQuery);
+        this.facade.sendNotification(HttpType.admin_plats_wallet_index, objectRemoveNull(this.listQuery));
     }
 
     /**重置查询条件 */

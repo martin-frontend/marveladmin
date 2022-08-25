@@ -80,7 +80,7 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
 
     /**查询 */
     onQuery() {
-        this.facade.sendNotification(HttpType.admin_plats_module_share_index, this.listQuery);
+        this.facade.sendNotification(HttpType.admin_plats_module_share_index, objectRemoveNull(this.listQuery));
     }
 
     /**显示弹窗 */
