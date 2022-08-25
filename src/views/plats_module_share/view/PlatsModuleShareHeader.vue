@@ -12,6 +12,11 @@
         <el-button @click="handlerRefresh" type="primary" class="item">{{
             $t("coin_receive_payment_channel.refresh")
         }}</el-button>
+        <el-row>
+            <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handlerCreate">{{
+                $t("common.create")
+            }}</el-button>
+        </el-row>
     </div>
 </template>
 
@@ -45,6 +50,10 @@ export default class PlatsModuleShareHeader extends AbstractView {
 
     private handlerRefresh() {
         this.myProxy.onQuery();
+    }
+
+    private handlerCreate() {
+        this.myProxy.showDialog();
     }
 }
 </script>

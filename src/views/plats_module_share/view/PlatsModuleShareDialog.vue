@@ -2,7 +2,13 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="110px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.to_plat_id.name" prop="to_plat_id">
-                <el-select filterable clearable v-model="form.to_plat_id" :placeholder="$t('common.pleaseChoose')">
+                <el-select
+                    style="width:100%"
+                    filterable
+                    clearable
+                    v-model="form.to_plat_id"
+                    :placeholder="$t('common.pleaseChoose')"
+                >
                     <el-option
                         v-for="(item, key) of tableColumns.to_plat_id.options"
                         :key="item"
@@ -13,7 +19,13 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.module.name" prop="module">
-                <el-select filterable clearable v-model="form.module" :placeholder="$t('common.pleaseChoose')">
+                <el-select
+                    style="width:100%"
+                    filterable
+                    clearable
+                    v-model="form.module"
+                    :placeholder="$t('common.pleaseChoose')"
+                >
                     <el-option
                         v-for="(item, key) of tableColumns.module.options"
                         :key="item"
@@ -23,14 +35,20 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
-                <el-select filterable clearable v-model="form.plat_id" :placeholder="$t('common.pleaseChoose')">
+                <el-select
+                    style="width:100%"
+                    filterable
+                    clearable
+                    v-model="form.plat_id"
+                    :placeholder="$t('common.pleaseChoose')"
+                >
                     <template v-for="(item, key) of tableColumns.plat_id.options">
                         <el-option v-if="key != 0" :key="item" :label="item" :value="Number(key)"></el-option>
                     </template>
                 </el-select>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="danger" @click="handleDelete">{{ $t("common.delete") }}</el-button>
+                <el-button v-if="isUpdate" type="danger" @click="handleDelete">{{ $t("common.delete") }}</el-button>
                 <el-button type="primary" @click="handleUpdate">{{ $t("common.save") }}</el-button>
             </el-form-item>
         </el-form>
@@ -76,6 +94,10 @@ export default class PlatsModuleShareDialog extends AbstractView {
             to_plat_id: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "blur" }],
             module: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "blur" }],
         };
+    }
+
+    get isUpdate() {
+        return this.myProxy.dialogData.status == DialogStatus.update;
     }
 
     private handleUpdate() {

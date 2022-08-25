@@ -46,6 +46,8 @@ export default class PlatsModuleShareMediator extends AbstractMediator {
                 myProxy.setTableData(body);
                 break;
             case EventType.admin_plats_module_share_store:
+                Message.success(SuccessMessage.update);
+                myProxy.hideDialog();
                 break;
             case EventType.admin_plats_module_share_update:
                 Message.success(SuccessMessage.update);

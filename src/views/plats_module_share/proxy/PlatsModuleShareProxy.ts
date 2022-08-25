@@ -50,7 +50,7 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
     /**表单资料 */
     dialogData = {
         bShow: false,
-        form: { 
+        form: {
             module : '',
             plat_id : '',
             to_plat_id : '',
@@ -109,10 +109,21 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
     }
 
     /**显示弹窗 */
-    showDialog(data: any) {
+    showDialog(data?: any) {
         this.dialogData.bShow = true;
-        this.dialogData.formSource = { ...data };
-        Object.assign(this.dialogData.form, { ...data });
+
+        if(data) {
+            this.dialogData.formSource = { ...data };
+            Object.assign(this.dialogData.form, { ...data });
+            this.dialogData.status = DialogStatus.update;
+        } else {
+            Object.assign(this.dialogData.form, {
+                module : '',
+                plat_id : '',
+                to_plat_id : '',
+            });
+            this.dialogData.status = DialogStatus.create;
+        }
     }
 
     /**更新数据 */
@@ -124,9 +135,15 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
         this.sendNotification(HttpType.admin_plats_module_share_update, formCopy);
     }
 
+    /**刪除数据 */
     onDelete() {
-        let id = this.dialogData.form.plat_id;
+        let id = this.dialogData.form.to_plat_id;
         this.sendNotification(HttpType.admin_plats_module_share_update, { id, is_delete: 1 });
+    }
+
+    /**新增數據 */
+    onCreate() {
+        this.sendNotification(HttpType.admin_plats_module_share_store, this.dialogData.form);
     }
 
     /**隐藏弹窗 */
