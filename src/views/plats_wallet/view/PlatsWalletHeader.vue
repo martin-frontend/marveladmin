@@ -5,7 +5,7 @@
             v-model="listQuery.plat_id"
             :clearable="false"
             :options="tableColumns.plat_id.options"
-            @change="handlerSearch"
+            @change="changePlatId"
         />
         <el-row>
             <SearchSelect
@@ -46,6 +46,12 @@ export default class PlatsWalletHeader extends AbstractView {
 
     private handlerSearch() {
         this.listQuery.page_count = 1;
+        this.myProxy.onQuery();
+    }
+
+    private changePlatId() {
+        this.listQuery.page_count = 1;
+        this.listQuery.coin_name_unique = "";
         this.myProxy.onQuery();
     }
 
