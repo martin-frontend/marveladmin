@@ -1,8 +1,8 @@
 <template>
     <div>
-        <PlatsModuleShareDialog />
         <PlatsModuleShareHeader />
         <PlatsModuleShareBody />
+        <PlatsModuleShareDialog />
     </div>
 </template>
 
@@ -10,15 +10,15 @@
 import AbstractView from "../../../core/abstract/AbstractView";
 import PlatsModuleShareMediator from "@/views/plats_module_share/mediator/PlatsModuleShareMediator";
 import { Component } from "vue-property-decorator";
-import PlatsModuleShareDialog from "./PlatsModuleShareDialog.vue";
 import PlatsModuleShareHeader from "./PlatsModuleShareHeader.vue";
 import PlatsModuleShareBody from "./PlatsModuleShareBody.vue";
+import PlatsModuleShareDialog from "./PlatsModuleShareDialog.vue";
 
 @Component({
     components: {
-        PlatsModuleShareDialog,
         PlatsModuleShareHeader,
         PlatsModuleShareBody,
+        PlatsModuleShareDialog,
     },
 })
 export default class PlatsModuleShare extends AbstractView {

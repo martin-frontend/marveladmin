@@ -61,14 +61,14 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import i18n from "@/lang";
-import PlatsModuleShareProxy from "../proxy/PlatsModuleShareProxy";
+import PlatsWalletProxy from "../proxy/PlatsWalletProxy";
 
 @Component
-export default class PlatsModuleShareDialog extends AbstractView {
+export default class PlatsWalletDialog extends AbstractView {
     //网络状态
     private net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatsModuleShareProxy = this.getProxy(PlatsModuleShareProxy);
+    private myProxy: PlatsWalletProxy = this.getProxy(PlatsWalletProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private form = this.myProxy.dialogData.form;
@@ -103,13 +103,13 @@ export default class PlatsModuleShareDialog extends AbstractView {
     private handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
-                this.isUpdate ? this.myProxy.onUpdate() : this.myProxy.onCreate();
+                this.myProxy.onUpdate();
             }
         });
     }
 
     private handleDelete() {
-        this.myProxy.onDelete();
+        this.myProxy.onDelete(this.form.id);
     }
 }
 </script>

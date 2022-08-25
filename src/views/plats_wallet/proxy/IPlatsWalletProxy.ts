@@ -1,6 +1,6 @@
 import { PageInfoVO } from "@/core/vo/PageInfoVO";
 
-export default interface IPlatsModuleShareProxy {
+export default interface IPlatsWalletProxy {
     /**表格相关数据 */
     tableData: {
         columns: any;

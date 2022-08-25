@@ -54,34 +54,11 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
             module : '',
             plat_id : '',
             to_plat_id : '',
+            id: ''
         },
         status: DialogStatus.update,
-        formSource: null, // 表单的原始数据
+        formSource: {} // 表单的原始数据
     }
-
-    /**平台下拉选单 */
-    selectOptions = <any>{};
-
-    /**vip 叙述 */
-    vipModeDesc = {};
-
-    /**vip 数据 */
-    vipData = <any>[];
-
-    /**备份 初始化vip */
-    copyVipData = [];
-
-    /**数据编辑 */
-    isEdit = false;
-
-    /**最高等级 options */
-    levelOptions = <any>[];
-
-    /**最高等级 */
-    maxLevel = "";
-
-    /**存党用id */
-    saveId = "";
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -103,20 +80,17 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
 
     /**查询 */
     onQuery() {
-        this.facade.sendNotification(HttpType.admin_plats_module_share_index, {
-            plat_id: this.listQuery.plat_id,
-        });
+        this.facade.sendNotification(HttpType.admin_plats_module_share_index, this.listQuery);
     }
 
     /**显示弹窗 */
     showDialog(data?: any) {
         this.dialogData.bShow = true;
-
         if(data) {
             this.dialogData.formSource = { ...data };
             Object.assign(this.dialogData.form, { ...data });
             this.dialogData.status = DialogStatus.update;
-        } else {
+        } else {            
             Object.assign(this.dialogData.form, {
                 module : '',
                 plat_id : '',
@@ -130,18 +104,20 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
     onUpdate() {
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
 
-        formCopy.id = this.dialogData.form.plat_id;
+        formCopy.id = this.dialogData.form.id;
+        console.warn('formCopy',formCopy);
+        
         // 发送消息
         this.sendNotification(HttpType.admin_plats_module_share_update, formCopy);
     }
 
     /**刪除数据 */
     onDelete() {
-        let id = this.dialogData.form.to_plat_id;
-        this.sendNotification(HttpType.admin_plats_module_share_update, { id, is_delete: 1 });
+        let id = this.dialogData.form.id;
+        // this.sendNotification(HttpType.admin_plats_module_share_update, { id, is_delete: 1 });
     }
 
-    /**新增數據 */
+    /**新增数据 */
     onCreate() {
         this.sendNotification(HttpType.admin_plats_module_share_store, this.dialogData.form);
     }
