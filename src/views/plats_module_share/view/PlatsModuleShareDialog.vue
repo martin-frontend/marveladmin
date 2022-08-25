@@ -1,21 +1,17 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="110px" v-loading="net_status.loading">
-            <el-form-item :label="tableColumns.to_plat_id.name" prop="to_plat_id">
+            <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
                 <el-select
                     style="width:100%"
                     filterable
                     clearable
-                    v-model="form.to_plat_id"
+                    v-model="form.plat_id"
                     :placeholder="$t('common.pleaseChoose')"
                 >
-                    <el-option
-                        v-for="(item, key) of tableColumns.to_plat_id.options"
-                        :key="item"
-                        :label="item"
-                        :value="Number(key)"
-                    >
-                    </el-option>
+                    <template v-for="(item, key) of tableColumns.plat_id.options">
+                        <el-option v-if="key != 0" :key="item" :label="item" :value="Number(key)"></el-option>
+                    </template>
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.module.name" prop="module">
@@ -34,17 +30,21 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
+            <el-form-item :label="tableColumns.to_plat_id.name" prop="to_plat_id">
                 <el-select
                     style="width:100%"
                     filterable
                     clearable
-                    v-model="form.plat_id"
+                    v-model="form.to_plat_id"
                     :placeholder="$t('common.pleaseChoose')"
                 >
-                    <template v-for="(item, key) of tableColumns.plat_id.options">
-                        <el-option v-if="key != 0" :key="item" :label="item" :value="Number(key)"></el-option>
-                    </template>
+                    <el-option
+                        v-for="(item, key) of tableColumns.to_plat_id.options"
+                        :key="item"
+                        :label="item"
+                        :value="Number(key)"
+                    >
+                    </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item class="dialog-footer">

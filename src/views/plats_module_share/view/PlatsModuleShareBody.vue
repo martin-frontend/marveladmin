@@ -9,10 +9,10 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column prop="to_plat_id" :label="tableColumns.to_plat_id.name" align="center">
+            <el-table-column prop="plat_id" :label="tableColumns.plat_id.name" align="center">
                 <template slot-scope="{ row }">
                     <p>
-                        {{ tableColumns.to_plat_id.options[row.to_plat_id] }}
+                        {{ tableColumns.plat_id.options[row.plat_id] }}
                     </p>
                 </template>
             </el-table-column>
@@ -23,10 +23,10 @@
                     </p>
                 </template>
             </el-table-column>
-            <el-table-column prop="plat_id" :label="tableColumns.plat_id.name" align="center">
+            <el-table-column prop="to_plat_id" :label="tableColumns.to_plat_id.name" align="center">
                 <template slot-scope="{ row }">
                     <p>
-                        {{ tableColumns.plat_id.options[row.plat_id] }}
+                        {{ tableColumns.to_plat_id.options[row.to_plat_id] }}
                     </p>
                 </template>
             </el-table-column>
