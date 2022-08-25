@@ -23,14 +23,7 @@
                     </p>
                 </template>
             </el-table-column>
-            <el-table-column prop="plat_total_exchange" :label="tableColumns.plat_total_exchange.name" align="center">
-            </el-table-column>
-            <el-table-column prop="plat_total_recharge" :label="tableColumns.plat_total_recharge.name" align="center">
-            </el-table-column>
-            <el-table-column prop="user_total_exchange" :label="tableColumns.user_total_exchange.name" align="center">
-            </el-table-column>
-            <el-table-column prop="user_total_recharge" :label="tableColumns.user_total_recharge.name" align="center">
-            </el-table-column>
+            <el-table-column prop="amount" :label="tableColumns.amount.name" align="center"> </el-table-column>
             <!-- <el-table-column :label="$t('common.operating')" class-name="status-col">
                 <template slot-scope="{ row }">
                     <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
