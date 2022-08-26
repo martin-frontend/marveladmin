@@ -31,6 +31,7 @@ export default class PlatsWalletLogProxy extends AbstractProxy implements IPlats
             admin_username: {name: "账户名称", options: []},
             amount: {name: "资产变化的值", options: []},
             amount_before: {name: "资产变化前的值", options: []},
+            balance: {name: "账户余额", options: []},
             coin_name_unique: {name: "币种", options: {}},
             created_at: {name: "创建时间", options: []},
             created_by: {name: "创建人", options: []},
