@@ -27,6 +27,7 @@
             <el-table-column prop="amount_before" :label="tableColumns.amount_before.name" align="center">
             </el-table-column>
             <el-table-column prop="amount" :label="tableColumns.amount.name" align="center"> </el-table-column>
+            <el-table-column prop="balance" :label="tableColumns.balance.name" align="center"> </el-table-column>
             <el-table-column prop="type" :label="tableColumns.type.name" align="center">
                 <template slot-scope="{ row }">
                     <p>
@@ -34,7 +35,6 @@
                     </p>
                 </template></el-table-column
             >
-            <el-table-column prop="balance" :label="tableColumns.balance.name" align="center"> </el-table-column>
             <el-table-column prop="remark" :label="tableColumns.remark.name" align="center"> </el-table-column>
             <el-table-column prop="created_at" :label="tableColumns.created_at.name" align="center"> </el-table-column>
             <!-- <el-table-column :label="$t('common.operating')" class-name="status-col">
