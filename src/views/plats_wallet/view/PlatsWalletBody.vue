@@ -19,7 +19,7 @@
             <el-table-column prop="module" :label="tableColumns.coin_name_unique.name" align="center">
                 <template slot-scope="{ row }">
                     <p>
-                        {{ tableColumns.coin_name_unique.options[row.coin_name_unique] }}
+                        {{ tableColumns.coin_name_unique.options[row.plat_id][row.coin_name_unique] }}
                     </p>
                 </template>
             </el-table-column>
