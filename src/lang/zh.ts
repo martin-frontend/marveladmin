@@ -450,6 +450,7 @@ export default {
         setUp: "设定",
         guaranteedAmount: "保底金额",
         guaranteedSetting: "保底设定",
+        bonusStatistics: "分红统计",
         note: "备注",
         btnBind: "绑定",
         agent_bonus_warning: "该操作会清空所有直属分红比例，确认关闭总代分红吗？",

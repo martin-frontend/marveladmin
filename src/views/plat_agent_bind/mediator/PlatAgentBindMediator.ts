@@ -30,6 +30,9 @@ export default class PlatAgentBindMediator extends AbstractMediator {
             EventType.admin_plat_agent_bind_show_floor_range,
             EventType.admin_plat_agent_bind_update,
             EventType.admin_plat_user_change_bind,
+            EventType.admin_plat_agent_bonus_config_table_columns,
+            EventType.admin_plat_agent_bonus_config_show,
+            EventType.admin_plat_agent_bonus_config_update,
         ];
     }
 
@@ -61,6 +64,12 @@ export default class PlatAgentBindMediator extends AbstractMediator {
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
-        }
+            case EventType.admin_plat_agent_bonus_config_table_columns:
+                myProxy.setBonusConfigTableColumns(body);
+                break;
+            case EventType.admin_plat_agent_bonus_config_show:
+                myProxy.setBonusConfigTableData(body);
+                break;
+    }
     }
 }

@@ -4,12 +4,13 @@
         <PlatAgentBindBody />
         <PromotionFloorDialog v-if="myProxy.promotionFloorDialogData.bShow" />
         <BindDialog v-if="myProxy.bindDialogData.bShow" />
-        <AgentBonusDialog v-if="myProxy.agentBonusDialogData.bShow"/>
+        <AgentBonusDialog v-if="myProxy.agentBonusDialogData.bShow" />
+        <BonusConfigDialog v-if="myProxy.bonusConfigDialogData.bShow" />
     </div>
 </template>
 
 <script lang="ts">
-import AbstractView from "../../../core/abstract/AbstractView";
+import AbstractView from "@/core/abstract/AbstractView";
 import PlatAgentBindMediator from "@/views/plat_agent_bind/mediator/PlatAgentBindMediator";
 import PlatAgentBindProxy from "@/views/plat_agent_bind/proxy/PlatAgentBindProxy";
 import { Component } from "vue-property-decorator";
@@ -18,6 +19,7 @@ import PlatAgentBindBody from "./PlatAgentBindBody.vue";
 import PromotionFloorDialog from "./component/PromotionFloorDialog.vue";
 import BindDialog from "./component/BindDialog.vue";
 import AgentBonusDialog from "./component/AgentBonusDialog.vue";
+import BonusConfigDialog from "./component/BonusConfigDialog.vue";
 
 @Component({
     components: {
@@ -25,7 +27,8 @@ import AgentBonusDialog from "./component/AgentBonusDialog.vue";
         PlatAgentBindBody,
         PromotionFloorDialog,
         BindDialog,
-        AgentBonusDialog
+        AgentBonusDialog,
+        BonusConfigDialog,
     },
 })
 export default class PlatAgentBind extends AbstractView {

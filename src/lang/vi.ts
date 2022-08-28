@@ -454,6 +454,7 @@ export default {
         setUp: "Thiết lập",
         guaranteedAmount: "Số tiền đảm bảo",
         guaranteedSetting: "Cài đặt đảm bảo",
+        bonusStatistics: "Bonus",
         note: "Note",
         btnBind: "Liên kết",
         agent_bonus_warning: "该操作会清空所有直属分红比例，确认关闭总代分红吗？",

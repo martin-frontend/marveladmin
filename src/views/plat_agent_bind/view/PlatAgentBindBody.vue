@@ -79,6 +79,8 @@
                 </template>
             </el-table-column>
 
+            <el-table-column align="center" width="120px" :label="tableColumns.bonus_ratio.name" prop="bonus_ratio">
+            </el-table-column>
             <el-table-column
                 align="left"
                 :label="tableColumns.promotion_floor.name"
@@ -106,6 +108,9 @@
             </el-table-column>
             <el-table-column :label="$t('common.operating')" :min-width="width" align="center">
                 <template slot-scope="{ row }">
+                    <el-button size="mini" type="primary" @click="showBonusConifgDialog(row)">
+                        {{ $t("plat_agent_bind.bonusStatistics") }}
+                    </el-button>
                     <el-button size="mini" type="primary" @click="handlerPromotionFloor(row)">
                         {{ $t("plat_agent_bind.guaranteedSetting") }}
                     </el-button>
@@ -141,38 +146,38 @@ import { MessageBox } from "element-ui";
 })
 export default class PlatAgentBindBody extends AbstractView {
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
+    myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
-    private agentBonusData = this.myProxy.agentBonusDialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
+    agentBonusData = this.myProxy.agentBonusDialogData.form;
 
     get show_is_agent_bonus() {
         return this.myProxy.tableData.extra_info.show_is_agent_bonus;
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handlerPromotionFloor(row: any) {
+    handlerPromotionFloor(row: any) {
         this.myProxy.promotionFloorDialogData.user_id = row.user_id;
         this.myProxy.showSettingDialog(DialogStatus.create);
     }
 
-    private handlerBind(row: any) {
+    handlerBind(row: any) {
         this.myProxy.showBindDialog(row);
     }
 
-    private onSwitchAgentBonus(row: any) {
+    onSwitchAgentBonus(row: any) {
         if (row.is_agent_bonus == 98) {
             MessageBox.confirm("该操作会清空所有直属分红比例，确认关闭总代分红吗？")
                 .then(() => {
@@ -186,34 +191,41 @@ export default class PlatAgentBindBody extends AbstractView {
         }
     }
 
-    private updateAgentBonus(row: any) {
+    updateAgentBonus(row: any) {
         this.myProxy.agentBonusDialogData.form.user_id = row.user_id;
         this.myProxy.agentBonusDialogData.form.is_agent_bonus = row.is_agent_bonus;
         this.myProxy.updateAgentBonus();
     }
 
     // 分红比例弹窗
-    private showAgentBonusDialog(row: any) {
+    showAgentBonusDialog(row: any) {
         this.myProxy.agentBonusDialogData.form.user_id = row.user_id;
         this.myProxy.agentBonusDialogData.form.agent_bonus_rate = row.agent_bonus_rate;
         this.myProxy.agentBonusDialogData.bShow = true;
     }
 
+    // 分红统计弹窗
+    showBonusConifgDialog(row: any) {
+        this.myProxy.bonusConfigDialogData.bShow = true;
+        this.myProxy.api_admin_plat_agent_bonus_config_table_columns();
+        this.myProxy.api_admin_plat_agent_bonus_config_show(row.user_id);
+    }
+
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.onShowUserDetail(user_id);
     }
 
     get width() {
-        let _w: string = "200px";
+        let _w: string = "300px";
         if (Cookies.get("language") === "vi") {
-            _w = "220px";
+            _w = "320px";
         }
         return _w;
     }
 
     /**物件解析 */
-    private formatObject(obj: any) {
+    formatObject(obj: any) {
         let result = "";
         Object.keys(obj).forEach((key: any) => {
             result += `<div>${key}: ${obj[key]}</div>`;

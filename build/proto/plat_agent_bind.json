@@ -8,6 +8,9 @@
         "admin/plat_agent_bind/show/{user_id}",
         "admin/plat_agent_bind/show/{user_id}/floor_range",
         "admin/plat_agent_bind/update/{user_id}",
-        "admin/plat_user/change_bind/{user_id}"
+        "admin/plat_user/change_bind/{user_id}",
+        "admin/plat_agent_bonus_config/table_columns",
+        "admin/plat_agent_bonus_config/show/{user_id}",
+        "admin/plat_agent_bonus_config/update/{user_id}"
     ]
 }
