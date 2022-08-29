@@ -1,4 +1,5 @@
 import { PageInfoVO } from "@/core/vo/PageInfoVO";
+import { BooleanOrNumber } from "./PlatAgentBindProxy";
 
 export default interface IPlatAgentBindProxy {
     /**表格相关数据 */
@@ -28,6 +29,15 @@ export default interface IPlatAgentBindProxy {
         user_id: any;
         formSource: any;
     };
+
+    /**代理分红配置相关数据 */
+    bonusConfigDialogData: {
+        bShow: any;
+        formSource: any;
+        user_id: any;
+        form: any;
+        tableData: any;
+    }
 
     /**设置表头数据 */
     setTableColumns(data: any): void;
@@ -64,4 +74,28 @@ export default interface IPlatAgentBindProxy {
 
     /**打开用户详情 */
     onShowUserDetail(user_id: any): void;
+
+    /**获取分红统计表头数据 */
+    api_admin_plat_agent_bonus_config_table_columns(): void;
+
+    /**获取分红统计表格数据 */
+    api_admin_plat_agent_bonus_config_show(user_id: number): void;
+
+    /**设置代理分红配置表头数据 */
+    setBonusConfigTableColumns(data: any): void;
+
+    /**设置代理分红配置表格数据 */
+    setBonusConfigTableData(data: any): void;
+
+    /**更新代理分红配置数据 */
+    updateBonusConfig(data: any): void;
+
+    /**转化config数据 */
+    convertBonusConfigValue(config: any, converToNumberOrBoolean: BooleanOrNumber): void;
+
+    /**boolen转换number */
+    convertBooleanToNumber(data: any): void;
+
+    /**number转化boolean */
+    convertNumberToBoolean(data: any): void;
 }

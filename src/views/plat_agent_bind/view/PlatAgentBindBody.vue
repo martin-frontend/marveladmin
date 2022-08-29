@@ -108,7 +108,12 @@
             </el-table-column>
             <el-table-column :label="$t('common.operating')" :min-width="width" align="center">
                 <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="showBonusConifgDialog(row)">
+                    <el-button
+                        v-if="checkUnique(unique.plat_agent_bonus_config_show)"
+                        size="mini"
+                        type="primary"
+                        @click="showBonusConifgDialog(row)"
+                    >
                         {{ $t("plat_agent_bind.bonusStatistics") }}
                     </el-button>
                     <el-button size="mini" type="primary" @click="handlerPromotionFloor(row)">

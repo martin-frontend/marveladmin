@@ -156,7 +156,12 @@
                 </el-form-item>
             </el-form-item>
             <div class="dialog-footer">
-                <el-button type="primary" @click="handleSave()">{{ $t("common.save") }}</el-button>
+                <el-button
+                    v-if="checkUnique(unique.plat_agent_bonus_config_update)"
+                    type="primary"
+                    @click="handleSave()"
+                    >{{ $t("common.save") }}</el-button
+                >
             </div>
         </el-form>
     </el-dialog>
@@ -166,12 +171,9 @@
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatAgentBindProxy from "@/views/plat_agent_bind/proxy/PlatAgentBindProxy";
-import { Component, Vue, Watch } from "vue-property-decorator";
-import { checkUserName, checkUserPassword } from "@/core/global/Functions";
+import { Component, Vue } from "vue-property-decorator";
 import GlobalVar from "@/core/global/GlobalVar";
-import i18n from "@/lang";
 import { inputOnlyPositive } from "@/core/global/Functions";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 
 @Component
 export default class BonusConfigDialog extends AbstractView {

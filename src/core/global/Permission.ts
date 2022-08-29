@@ -205,6 +205,8 @@
      plat_users_bet: "plat_users_bet",
      //代理用户
      plat_agent_bind: "plat_agent_bind",
+     plat_agent_bonus_config_show: "plat_agent_bonus_config_show", //显示分红统计数据
+     plat_agent_bonus_config_update: "plat_agent_bonus_config_update", //更新分红统计数据
      //用户兑换订音
      exchange_orders: "exchange_orders",
      //币商充值订单
