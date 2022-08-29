@@ -39,7 +39,11 @@
                 prop="user_id"
                 class-name="status-col"
                 min-width="100px"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <div @click="showUserDetail(row.user_id)" class="user_id">{{ row.user_id }}</div>
+                </template>
+            </el-table-column>
 
             <el-table-column
                 :label="tableColumns['nick_name'].name"
@@ -109,6 +113,7 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import PlatSwapOrdersProxy from "../proxy/PlatSwapOrdersProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import PlatUserProxy from "@/views/plat_user/proxy/PlatUserProxy";
 
 @Component({
     components: {
@@ -132,6 +137,7 @@ export default class PlatSwapOrdersBody extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: PlatSwapOrdersProxy = this.getProxy(PlatSwapOrdersProxy);
+    private userProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private tableData = this.myProxy.tableData.list;
@@ -141,6 +147,11 @@ export default class PlatSwapOrdersBody extends AbstractView {
     private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
+    }
+
+    // 打开用户详情
+    private showUserDetail(user_id: number) {
+        this.userProxy.onShowDetail(user_id);
     }
 }
 </script>
