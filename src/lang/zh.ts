@@ -82,6 +82,7 @@ export default {
         normal: "正常",
         all: "全部",
         pleaseEnter: "请输入",
+        pleaseEnterNumber: "请输入數字",
         pleaseChoose: "请选择",
         status: "状态",
         requiredInput: "必须填写",
@@ -460,6 +461,13 @@ export default {
         noteText4: "如果保底金设置为0，则该游戏类型不进行保底。(适用第三条规则，既不能设置0);",
         noteText5: "设置保底的用户，如果未绑定上级，则该用户不能进行绑定用户;",
         errorCode: "，取值范围错误",
+        bonusConfig: "分红统计筛选",
+        winLoss: "玩家输赢",
+        commission: "推广佣金",
+        backwater: "挖矿返水",
+        vendor: "厂商游戏费用",
+        else: "其它",
+        configSetting: "分红参数配置"
     },
     statistic_plat_funds_flow: {
         income: "收入",

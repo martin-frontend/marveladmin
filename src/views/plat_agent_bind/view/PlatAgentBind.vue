@@ -40,7 +40,7 @@ export default class PlatAgentBind extends AbstractView {
         super.destroyed();
     }
     // proxy
-    private myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
+    myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
 }
 </script>
 

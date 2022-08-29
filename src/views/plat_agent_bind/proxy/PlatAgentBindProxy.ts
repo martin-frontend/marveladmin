@@ -1,11 +1,12 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_agent_bind/setting";
 import { MessageBox } from "element-ui";
 import IPlatAgentBindProxy from "./IPlatAgentBindProxy";
 import GlobalEventType from "@/core/global/GlobalEventType";
 
+type BooleanOrNumber = 'boolean' | 'number';
 export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAgentBindProxy {
     static NAME = "PlatAgentBindProxy";
 
@@ -141,7 +142,56 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     /**代理分红配置相关数据 */
     bonusConfigDialogData = {
         bShow: false,
-        form: <any>{},
+        formSource: <any>{},
+        user_id: <any>null,
+        form: <any>{
+            bonus_ratio: 0,
+            bonus_pool_ratio: 0,
+            exchange_fee_ratio: 0,
+            recharge_fee_ratio: 0,
+            vendor_fee_ratio: 0,
+            is_show: 0,
+            bonus_config: {
+                activity_bonus: 0,
+                backwater_2: 0,
+                backwater_4: 0,
+                backwater_8: 0,
+                backwater_16: 0,
+                backwater_32: 0,
+                backwater_64: 0,
+                backwater_128: 0,
+                bonus_pool_2: 0,
+                bonus_pool_4: 0,
+                bonus_pool_8: 0,
+                bonus_pool_16: 0,
+                bonus_pool_32: 0,
+                bonus_pool_64: 0,
+                bonus_pool_128: 0,
+                commission_2: 0,
+                commission_4: 0,
+                commission_8: 0,
+                commission_16: 0,
+                commission_32: 0,
+                commission_64: 0,
+                commission_128: 0,
+                exchange_fee: 0,
+                recharge_fee: 0,
+                vendor_fee_2: 0,
+                vendor_fee_4: 0,
+                vendor_fee_8: 0,
+                vendor_fee_16: 0,
+                vendor_fee_32: 0,
+                vendor_fee_64: 0,
+                vendor_fee_128: 0,
+                win_loss_2: 0,
+                win_loss_4: 0,
+                win_loss_8: 0,
+                win_loss_16: 0,
+                win_loss_32: 0,
+                win_loss_64: 0,
+                win_loss_128: 0,
+            }
+        },
         tableData: {
             columns: <any>{
                 activity_bonus: {name: "活动红利", options:[]},
@@ -277,6 +327,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     hideDialog() {
         this.promotionFloorDialogData.bShow = false;
         this.bindDialogData.bShow = false;
+        this.bonusConfigDialogData.bShow = false;
     }
 
     /**重置弹窗表单 */
@@ -382,6 +433,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     }
 
     api_admin_plat_agent_bonus_config_show(user_id: number) {
+        this.bonusConfigDialogData.user_id = user_id,
         this.sendNotification(HttpType.admin_plat_agent_bonus_config_show, { user_id });
     }
 
@@ -393,5 +445,51 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     /**设置代理分红配置表格数据 */
     setBonusConfigTableData(data: any) {
         Object.assign(this.bonusConfigDialogData.form, data);
+        Object.assign(this.bonusConfigDialogData.form.bonus_config, this.convertBonusConfigValue(data.bonus_config, 'boolean'));        
+        this.bonusConfigDialogData.formSource = JSON.parse(JSON.stringify(this.bonusConfigDialogData.form));
+    }
+
+    /**更新代理分红配置数据 */
+    updateBonusConfig() {
+        const formCopy: any = formCompared(
+            this.bonusConfigDialogData.form,
+            this.bonusConfigDialogData.formSource
+        );
+
+        const formConfigCopy: any = formCompared(
+            this.bonusConfigDialogData.form.bonus_config,
+            this.bonusConfigDialogData.formSource.bonus_config
+        );
+
+        if(Object.keys(formConfigCopy).length > 0) {
+            const newConfig = this.convertBonusConfigValue(formConfigCopy, 'number');
+            formCopy.bonus_config = jsonStringify(newConfig);
+        } else {
+            delete formCopy.bonus_config;
+        }
+
+        const { user_id } = this.bonusConfigDialogData;
+        this.sendNotification(HttpType.admin_plat_agent_bonus_config_update, { ...formCopy ,user_id });
+    }
+
+    convertBonusConfigValue(config: any, converToNumberOrBoolean: BooleanOrNumber) {
+        const keysArr = Object.keys(config);
+        const converFunction = converToNumberOrBoolean === 'number' ? this.convertBooleanToNumber : this.convertNumberToBoolean;
+        if(keysArr.length > 0) {
+            const newObject = <any>{};
+            keysArr.forEach((key)=> {
+                newObject[key] = converFunction(config[key]);
+            })
+            return newObject
+        }
+        return config;
+    }
+
+    convertBooleanToNumber(data: any) {
+        return data ? 1 : 0;
+    }
+
+    convertNumberToBoolean(data: any) {
+        return Number(data) === 0 ? false : true;
     }
 }

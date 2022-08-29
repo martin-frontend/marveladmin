@@ -70,6 +70,11 @@ export default class PlatAgentBindMediator extends AbstractMediator {
             case EventType.admin_plat_agent_bonus_config_show:
                 myProxy.setBonusConfigTableData(body);
                 break;
-    }
+            case EventType.admin_plat_agent_bonus_config_update:
+                Message.success(SuccessMessage.update);
+                myProxy.hideDialog();
+                myProxy.onQuery();
+                break;
+        }
     }
 }
