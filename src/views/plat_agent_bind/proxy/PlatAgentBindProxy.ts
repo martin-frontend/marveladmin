@@ -6,7 +6,7 @@ import { MessageBox } from "element-ui";
 import IPlatAgentBindProxy from "./IPlatAgentBindProxy";
 import GlobalEventType from "@/core/global/GlobalEventType";
 
-type BooleanOrNumber = 'boolean' | 'number';
+export type BooleanOrNumber = 'boolean' | 'number';
 export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAgentBindProxy {
     static NAME = "PlatAgentBindProxy";
 
