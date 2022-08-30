@@ -249,7 +249,8 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 win_loss_64: {name: "体育电竞输赢", options:[]},
                 win_loss_128: {name: "链游输赢", options:[]},
             }
-        }
+        },
+        isCanEditConfig: 1, //0-可编辑 1-不可编辑
     };
 
     /**绑定 弹窗相关数据 */
@@ -447,6 +448,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         Object.assign(this.bonusConfigDialogData.form, data);
         Object.assign(this.bonusConfigDialogData.form.bonus_config, this.convertBonusConfigValue(data.bonus_config, 'boolean'));        
         this.bonusConfigDialogData.formSource = JSON.parse(JSON.stringify(this.bonusConfigDialogData.form));
+        this.bonusConfigDialogData.isCanEditConfig = data.can_edit_config;
     }
 
     /**更新代理分红配置数据 */
