@@ -65,7 +65,7 @@ export default class PlatUsersVendorGoldLogMediator extends AbstractMediator {
                                 "plat_users_vendor_gold_log.tradeSuccess",
                                 "plat_users_vendor_gold_log.tradeUnknown",
                                 "plat_users_vendor_gold_log.tradeFail",
-                            ][body.status]
+                            ][body.status - 1]
                         )
                     )
                 );
