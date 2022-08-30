@@ -33,7 +33,7 @@
             <el-form-item :label="tableColumns.is_show.name" prop="is_show">
                 <el-switch v-model="form.is_show" :active-value="1" :inactive-value="0"></el-switch>
             </el-form-item>
-            <template v-if="myProxy.bonusConfigDialogData.isCanEditConfig == 0">
+            <template v-if="myProxy.bonusConfigDialogData.isCanEditConfig == 1">
                 <el-form-item :label="$t('plat_agent_bind.bonusConfig')">
                     <span style="width: 120px">{{ $t("plat_agent_bind.winLoss") }}</span>
                 </el-form-item>

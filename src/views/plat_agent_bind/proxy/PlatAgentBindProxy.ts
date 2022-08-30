@@ -250,7 +250,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 win_loss_128: {name: "链游输赢", options:[]},
             }
         },
-        isCanEditConfig: 1, //0-可编辑 1-不可编辑
+        isCanEditConfig: 0, //1-可编辑 0-不可编辑
     };
 
     /**绑定 弹窗相关数据 */
