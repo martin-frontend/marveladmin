@@ -59,11 +59,11 @@
             </div>
             <div>
                 {{ $t("plat_email.attachReward") }}
-                <span>{{ $t("plat_email.gold") }}</span> 
+                <span>{{ $t("plat_email.gold") }}</span>
                 <span v-html="getAccessInfo(statistic.total_attachment_content)"></span>
             </div>
             <div>
-                {{ $t("plat_email.receivedReward")}}
+                {{ $t("plat_email.receivedReward") }}
                 <span>{{ $t("plat_email.gold") }}</span>
                 <span v-html="getAccessInfo(statistic.total_attachment_content_read)"></span>
             </div>
@@ -95,6 +95,9 @@
                 class-name="status-col"
                 min-width="80px"
             >
+                <template slot-scope="{ row }">
+                    <div @click="showUserDetail(row.user_id)" class="user_id">{{ row.user_id }}</div>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="nick_name"
@@ -177,7 +180,7 @@
     </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -189,6 +192,7 @@ import SearchInput from "@/components/SearchInput.vue";
 import SearchSelect from "@/components/SearchSelect.vue";
 import SearchRange from "@/components/SearchRange.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
+import PlatUserProxy from "@/views/plat_user/proxy/PlatUserProxy";
 
 @Component({
     components: {
@@ -206,6 +210,7 @@ export default class PlatEmailUserList extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
+    private userProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
     // proxy property
     private tableColumns = this.myProxy.platUserTableData.columns;
     private tableData = this.myProxy.platUserTableData.list;
@@ -229,6 +234,11 @@ export default class PlatEmailUserList extends AbstractView {
 
     private handlerExport() {
         this.myProxy.onQueryAll();
+    }
+
+    // 打开用户详情
+    private showUserDetail(user_id: number) {
+        this.userProxy.onShowDetail(user_id);
     }
 
     getAccessInfo(data: any) {
@@ -256,7 +266,7 @@ export default class PlatEmailUserList extends AbstractView {
     }
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 .statistics {
     margin-bottom: 16px;

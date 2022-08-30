@@ -1,6 +1,14 @@
 <template>
     <div>
-        <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini" v-loading="net_status.loading">
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
             <el-table-column
                 prop="plat_id"
                 :label="`${tableColumns.plat_id.name}`"
@@ -24,6 +32,9 @@
                 class-name="status-col"
                 width="90px"
             >
+                <template slot-scope="{ row }">
+                    <div @click="showUserDetail(row.user_id)" class="user_id">{{ row.user_id }}</div>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="from_address"
@@ -46,12 +57,7 @@
                 width="90px"
             >
             </el-table-column>
-            <el-table-column
-                prop="amount"
-                :label="`${tableColumns.amount.name}`"
-                class-name="status-col"
-                width="100px"
-            >
+            <el-table-column prop="amount" :label="`${tableColumns.amount.name}`" class-name="status-col" width="100px">
             </el-table-column>
             <el-table-column
                 prop="txn_hash"
@@ -106,11 +112,12 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import BlockTransferInOrderProxy from "../proxy/BlockTransferInOrderProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import PlatUserProxy from "@/views/plat_user/proxy/PlatUserProxy";
 
 @Component({
     components: {
         Pagination,
-    }
+    },
 })
 export default class BlockTransferInOrderBody extends AbstractView {
     //权限标识
@@ -120,15 +127,21 @@ export default class BlockTransferInOrderBody extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: BlockTransferInOrderProxy = this.getProxy(BlockTransferInOrderProxy);
+    private userProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private tableData = this.myProxy.tableData.list;
     private pageInfo = this.myProxy.tableData.pageInfo;
     private listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page:number){
+    private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
+    }
+
+    // 打开用户详情
+    private showUserDetail(user_id: number) {
+        this.userProxy.onShowDetail(user_id);
     }
 
     // private handleEdit(data: any) {
