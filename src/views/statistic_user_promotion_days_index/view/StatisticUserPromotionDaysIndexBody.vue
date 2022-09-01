@@ -106,7 +106,14 @@
                         :prop="`${activeName}_commission`"
                         :label="tableColumns[`${activeName}_commission`].name"
                         align="center"
+                        min-width="140px"
                     >
+                        <template slot-scope="{ row }">
+                            <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
+                                <span>{{ tableColumns[`${activeName}_commission_${i}`].name }}:</span>
+                                <span>{{ row[`${activeName}_commission_${i}`] }}</span>
+                            </div>
+                        </template>
                     </el-table-column>
                     <!-- 平台赠送 -->
                     <el-table-column
@@ -133,25 +140,41 @@
                         :prop="`${activeName}_backwater_gold`"
                         :label="tableColumns[`${activeName}_backwater_gold`].name"
                         align="center"
+                        min-width="140px"
                     >
+                        <template slot-scope="{ row }">
+                            <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
+                                <span>{{ tableColumns[`${activeName}_backwater_${i}`].name }}:</span>
+                                <span>{{ row[`${activeName}_backwater_${i}`] }}</span>
+                            </div>
+                        </template>
                     </el-table-column>
                     <!-- 游戏总投注 -->
                     <el-table-column
                         :prop="`${activeName}_total_bet`"
                         :label="tableColumns[`${activeName}_total_bet`].name"
                         align="center"
-                        min-width="100px"
+                        min-width="140px"
                     >
+                        <template slot-scope="{ row }">
+                            <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
+                                <span>{{ tableColumns[`${activeName}_bet_${i}`].name }}:</span>
+                                <span>{{ row[`${activeName}_bet_${i}`] }}</span>
+                            </div>
+                        </template>
                     </el-table-column>
                     <!-- 游戏总输赢 -->
                     <el-table-column
                         :prop="`${activeName}_total_win_loss`"
                         :label="tableColumns[`${activeName}_total_win_loss`].name"
                         align="center"
-                        min-width="100px"
+                        min-width="140px"
                     >
                         <template slot-scope="{ row }">
-                            <WinLossDisplay :amount="row[activeName + `_total_win_loss`]" />
+                            <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
+                                <span>{{ tableColumns[`${activeName}_win_loss_${i}`].name }}:</span>
+                                <span>{{ row[`${activeName}_win_loss_${i}`] }}</span>
+                            </div>
                         </template>
                     </el-table-column>
                     <!-- 游戏总流水 -->
@@ -159,11 +182,44 @@
                         :prop="`${activeName}_total_water`"
                         :label="tableColumns[`${activeName}_total_water`].name"
                         align="center"
-                        min-width="100px"
+                        min-width="140px"
                     >
                         <template slot-scope="{ row }">
-                            <WinLossDisplay :amount="row[activeName + `_total_water`]" />
+                            <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
+                                <span>{{ tableColumns[`${activeName}_water_${i}`].name }}:</span>
+                                <span>{{ row[`${activeName}_water_${i}`] }}</span>
+                            </div>
                         </template>
+                    </el-table-column>
+                    <!-- 游戏总流水 -->
+                    <el-table-column
+                        :prop="`${activeName}_bonus_pool`"
+                        :label="tableColumns[`${activeName}_bonus_pool`].name"
+                        align="center"
+                        min-width="140px"
+                    >
+                        <template slot-scope="{ row }">
+                            <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
+                                <span>{{ tableColumns[`${activeName}_bonus_pool_${i}`].name }}:</span>
+                                <span>{{ row[`${activeName}_bonus_pool_${i}`] }}</span>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <!-- 充值手续费 -->
+                    <el-table-column
+                        :prop="`${activeName}_recharge_fee`"
+                        :label="tableColumns[`${activeName}_recharge_fee`].name"
+                        align="center"
+                        min-width="100px"
+                    >
+                    </el-table-column>
+                    <!-- 兑换手续费 -->
+                    <el-table-column
+                        :prop="`${activeName}_exchange_fee`"
+                        :label="tableColumns[`${activeName}_exchange_fee`].name"
+                        align="center"
+                        min-width="100px"
+                    >
                     </el-table-column>
                 </el-table>
             </div>
@@ -232,8 +288,11 @@ export default class StatisticUserPromotionDaysIndexBody extends AbstractView {
 .note {
     color: rgb(180, 3, 3);
 }
-::v-deep .el-table__body .el-table__row:first-child .cell {
+::v-deep .el-table__body .el-table__row:first-child {
     background-color: #f6f7fa;
-    padding: 16px 0 !important;
+}
+
+.text-left {
+    text-align: left;
 }
 </style>
