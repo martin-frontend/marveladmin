@@ -54,6 +54,25 @@
                     </el-checkbox>
                 </el-form-item>
                 <el-form-item>
+                    <span style="width: 120px">{{ $t("plat_agent_bind.bonus_pool") }}</span>
+                </el-form-item>
+                <el-form-item>
+                    <el-checkbox :label="tableColumns.bonus_pool_2.name" v-model="form.bonus_config.bonus_pool_2">
+                    </el-checkbox>
+                    <el-checkbox :label="tableColumns.bonus_pool_4.name" v-model="form.bonus_config.bonus_pool_4">
+                    </el-checkbox>
+                    <el-checkbox :label="tableColumns.bonus_pool_8.name" v-model="form.bonus_config.bonus_pool_8">
+                    </el-checkbox>
+                    <el-checkbox :label="tableColumns.bonus_pool_16.name" v-model="form.bonus_config.bonus_pool_16">
+                    </el-checkbox>
+                    <el-checkbox :label="tableColumns.bonus_pool_32.name" v-model="form.bonus_config.bonus_pool_32">
+                    </el-checkbox>
+                    <el-checkbox :label="tableColumns.bonus_pool_64.name" v-model="form.bonus_config.bonus_pool_64">
+                    </el-checkbox>
+                    <el-checkbox :label="tableColumns.bonus_pool_128.name" v-model="form.bonus_config.bonus_pool_128">
+                    </el-checkbox>
+                </el-form-item>
+                <el-form-item>
                     <span style="width: 120px">{{ $t("plat_agent_bind.commission") }}</span>
                 </el-form-item>
                 <el-form-item>

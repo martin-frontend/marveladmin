@@ -467,7 +467,8 @@ export default {
         backwater: "挖矿返水",
         vendor: "厂商游戏费用",
         else: "其它",
-        configSetting: "分红参数配置"
+        configSetting: "分红参数配置",
+        bonus_pool: "奖池分红",
     },
     statistic_plat_funds_flow: {
         income: "收入",
