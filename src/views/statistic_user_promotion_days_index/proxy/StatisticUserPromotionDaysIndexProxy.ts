@@ -176,7 +176,7 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
         "created_date-{>=}": "",
         "created_date-{<=}": "",
         username: "",
-        user_id: "30000024",
+        user_id: "",
     };
 
     /**tabs 數據 */
