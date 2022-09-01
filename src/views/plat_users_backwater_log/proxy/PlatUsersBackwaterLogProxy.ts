@@ -80,7 +80,8 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
                 vendor_type: 0,
                 water: "",
                 backwater_rate: 0,
-                backwater: ""
+                backwater: "",
+                gold_scale: ''
             }],
         },
         formSource: null, // 表单的原始数据
