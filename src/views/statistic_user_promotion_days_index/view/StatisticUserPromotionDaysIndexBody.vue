@@ -109,6 +109,10 @@
                         min-width="140px"
                     >
                         <template slot-scope="{ row }">
+                            <div class="text-left">
+                                <span>{{ tableColumns[`${activeName}_commission`].name }}:</span>
+                                <span>{{ row[`${activeName}_commission`] }}</span>
+                            </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_commission_${i}`].name }}:</span>
                                 <span>{{ row[`${activeName}_commission_${i}`] }}</span>
@@ -143,6 +147,10 @@
                         min-width="140px"
                     >
                         <template slot-scope="{ row }">
+                            <div class="text-left">
+                                <span>{{ tableColumns[`${activeName}_backwater_gold`].name }}:</span>
+                                <span>{{ row[`${activeName}_backwater_gold`] }}</span>
+                            </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_backwater_${i}`].name }}:</span>
                                 <span>{{ row[`${activeName}_backwater_${i}`] }}</span>
@@ -157,6 +165,10 @@
                         min-width="140px"
                     >
                         <template slot-scope="{ row }">
+                            <div class="text-left">
+                                <span>{{ tableColumns[`${activeName}_total_bet`].name }}:</span>
+                                <span>{{ row[`${activeName}_total_bet`] }}</span>
+                            </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_bet_${i}`].name }}:</span>
                                 <span>{{ row[`${activeName}_bet_${i}`] }}</span>
@@ -171,6 +183,10 @@
                         min-width="140px"
                     >
                         <template slot-scope="{ row }">
+                            <div class="text-left">
+                                <span>{{ tableColumns[`${activeName}_total_win_loss`].name }}:</span>
+                                <span>{{ row[`${activeName}_total_win_loss`] }}</span>
+                            </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_win_loss_${i}`].name }}:</span>
                                 <span>{{ row[`${activeName}_win_loss_${i}`] }}</span>
@@ -185,6 +201,10 @@
                         min-width="140px"
                     >
                         <template slot-scope="{ row }">
+                            <div class="text-left">
+                                <span>{{ tableColumns[`${activeName}_total_water`].name }}:</span>
+                                <span>{{ row[`${activeName}_total_water`] }}</span>
+                            </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_water_${i}`].name }}:</span>
                                 <span>{{ row[`${activeName}_water_${i}`] }}</span>
@@ -199,6 +219,10 @@
                         min-width="140px"
                     >
                         <template slot-scope="{ row }">
+                            <div class="text-left">
+                                <span>{{ tableColumns[`${activeName}_bonus_pool`].name }}:</span>
+                                <span>{{ row[`${activeName}_bonus_pool`] }}</span>
+                            </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_bonus_pool_${i}`].name }}:</span>
                                 <span>{{ row[`${activeName}_bonus_pool_${i}`] }}</span>
