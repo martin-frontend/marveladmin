@@ -60,7 +60,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('statistic_user_days.recharge')" align="center" width="160">
+            <el-table-column :label="$t('statistic_user_days.exchange')" align="center" width="160">
                 <template slot-scope="{ row }">
                     <div>
                         <div>
@@ -74,7 +74,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('statistic_user_days.promote')" align="center" width="160">
+            <el-table-column :label="$t('statistic_user_days.promote')" width="160">
                 <template slot-scope="{ row }">
                     <div>
                         <div>
@@ -85,10 +85,38 @@
                             <span>{{ tableColumns["commission"].name }}:</span>
                             <span>{{ row.commission }}</span>
                         </div>
+                        <div>
+                            <span>{{ tableColumns["commission_2"].name }}:</span>
+                            <span>{{ row.commission_2 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["commission_4"].name }}:</span>
+                            <span>{{ row.commission_4 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["commission_8"].name }}:</span>
+                            <span>{{ row.commission_8 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["commission_16"].name }}:</span>
+                            <span>{{ row.commission_16 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["commission_32"].name }}:</span>
+                            <span>{{ row.commission_32 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["commission_64"].name }}:</span>
+                            <span>{{ row.commission_64 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["commission_128"].name }}:</span>
+                            <span>{{ row.commission_128 }}</span>
+                        </div>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('statistic_user_days.bonus')" align="center" min-width="180">
+            <el-table-column :label="$t('statistic_user_days.bonus')" min-width="180">
                 <template slot="header">
                     <el-tooltip
                         class="item"
@@ -111,6 +139,34 @@
                         <div>
                             <span>{{ tableColumns["backwater_gold"].name }}:</span>
                             <span>{{ row.backwater_gold }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["backwater_2"].name }}:</span>
+                            <span>{{ row.backwater_2 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["backwater_4"].name }}:</span>
+                            <span>{{ row.backwater_4 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["backwater_8"].name }}:</span>
+                            <span>{{ row.backwater_8 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["backwater_16"].name }}:</span>
+                            <span>{{ row.backwater_16 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["backwater_32"].name }}:</span>
+                            <span>{{ row.backwater_32 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["backwater_64"].name }}:</span>
+                            <span>{{ row.backwater_64 }}</span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["backwater_128"].name }}:</span>
+                            <span>{{ row.backwater_128 }}</span>
                         </div>
                     </div>
                 </template>
