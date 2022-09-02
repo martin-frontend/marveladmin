@@ -419,6 +419,7 @@ export default {
     },
     statistic_user_promotion_days_index: {
         group: "团队统计",
+        groupAll: "总团队统计",
         directly: "直属统计",
         userName: "用户账号",
         channelId: "所属渠道",

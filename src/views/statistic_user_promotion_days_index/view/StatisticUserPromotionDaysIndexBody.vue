@@ -3,6 +3,7 @@
         <div v-if="tableData.length > 0">
             <el-tabs v-model="myProxy.tabData.activeName" @tab-click="handleClick">
                 <el-tab-pane :label="$t('statistic_user_promotion_days_index.group')" name="group"></el-tab-pane>
+                <el-tab-pane :label="$t('statistic_user_promotion_days_index.groupAll')" name="group_all"></el-tab-pane>
                 <el-tab-pane :label="$t('statistic_user_promotion_days_index.directly')" name="directly"></el-tab-pane>
             </el-tabs>
             <div>
@@ -106,7 +107,7 @@
                         :prop="`${activeName}_commission`"
                         :label="tableColumns[`${activeName}_commission`].name"
                         align="center"
-                        min-width="140px"
+                        min-width="160px"
                     >
                         <template slot-scope="{ row }">
                             <div class="text-left">
@@ -144,7 +145,7 @@
                         :prop="`${activeName}_backwater_gold`"
                         :label="tableColumns[`${activeName}_backwater_gold`].name"
                         align="center"
-                        min-width="140px"
+                        min-width="160px"
                     >
                         <template slot-scope="{ row }">
                             <div class="text-left">
@@ -162,7 +163,7 @@
                         :prop="`${activeName}_total_bet`"
                         :label="tableColumns[`${activeName}_total_bet`].name"
                         align="center"
-                        min-width="140px"
+                        min-width="160px"
                     >
                         <template slot-scope="{ row }">
                             <div class="text-left">
@@ -180,7 +181,7 @@
                         :prop="`${activeName}_total_win_loss`"
                         :label="tableColumns[`${activeName}_total_win_loss`].name"
                         align="center"
-                        min-width="140px"
+                        min-width="160px"
                     >
                         <template slot-scope="{ row }">
                             <div class="text-left">
@@ -198,7 +199,7 @@
                         :prop="`${activeName}_total_water`"
                         :label="tableColumns[`${activeName}_total_water`].name"
                         align="center"
-                        min-width="140px"
+                        min-width="160px"
                     >
                         <template slot-scope="{ row }">
                             <div class="text-left">
@@ -216,7 +217,7 @@
                         :prop="`${activeName}_bonus_pool`"
                         :label="tableColumns[`${activeName}_bonus_pool`].name"
                         align="center"
-                        min-width="140px"
+                        min-width="160px"
                     >
                         <template slot-scope="{ row }">
                             <div class="text-left">
