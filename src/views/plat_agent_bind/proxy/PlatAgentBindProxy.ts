@@ -1,11 +1,12 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_agent_bind/setting";
 import { MessageBox } from "element-ui";
 import IPlatAgentBindProxy from "./IPlatAgentBindProxy";
 import GlobalEventType from "@/core/global/GlobalEventType";
 
+export type BooleanOrNumber = 'boolean' | 'number';
 export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAgentBindProxy {
     static NAME = "PlatAgentBindProxy";
 
@@ -29,6 +30,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         columns: <any>{
             // TODO
             binded_at: { name: "绑定时间", options: {} },
+            bonus_ratio: {name: '分红统计比例'},
             channel_id: <any>{ name: "所属渠道", options: {} },
             commission_awaiting_num: { name: "当前可领取佣金", options: {} },
             commission_received_num: { name: "已领取佣金总额", options: {} },
@@ -137,6 +139,120 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         },
     };
 
+    /**代理分红配置相关数据 */
+    bonusConfigDialogData = {
+        bShow: false,
+        formSource: <any>{},
+        user_id: <any>null,
+        form: <any>{
+            bonus_ratio: 0,
+            bonus_pool_ratio: 0,
+            exchange_fee_ratio: 0,
+            recharge_fee_ratio: 0,
+            vendor_fee_ratio: 0,
+            is_show: 0,
+            bonus_config: {
+                activity_bonus: 0,
+                backwater_2: 0,
+                backwater_4: 0,
+                backwater_8: 0,
+                backwater_16: 0,
+                backwater_32: 0,
+                backwater_64: 0,
+                backwater_128: 0,
+                bonus_pool_2: 0,
+                bonus_pool_4: 0,
+                bonus_pool_8: 0,
+                bonus_pool_16: 0,
+                bonus_pool_32: 0,
+                bonus_pool_64: 0,
+                bonus_pool_128: 0,
+                commission_2: 0,
+                commission_4: 0,
+                commission_8: 0,
+                commission_16: 0,
+                commission_32: 0,
+                commission_64: 0,
+                commission_128: 0,
+                exchange_fee: 0,
+                recharge_fee: 0,
+                vendor_fee_2: 0,
+                vendor_fee_4: 0,
+                vendor_fee_8: 0,
+                vendor_fee_16: 0,
+                vendor_fee_32: 0,
+                vendor_fee_64: 0,
+                vendor_fee_128: 0,
+                win_loss_2: 0,
+                win_loss_4: 0,
+                win_loss_8: 0,
+                win_loss_16: 0,
+                win_loss_32: 0,
+                win_loss_64: 0,
+                win_loss_128: 0,
+            }
+        },
+        tableData: {
+            columns: <any>{
+                activity_bonus: {name: "活动红利", options:[]},
+                backwater_2: {name: "棋牌挖矿", options:[]},
+                backwater_4: {name: "彩票挖矿", options:[]},
+                backwater_8: {name: "捕鱼挖矿", options:[]},
+                backwater_16: {name: "电子挖矿", options:[]},
+                backwater_32: {name: "真人挖矿", options:[]},
+                backwater_64: {name: "体育电竞挖矿", options:[]},
+                backwater_128: {name: "链游挖矿", options:[]},
+                bonus_config: {name: "配置", options: []},
+                bonus_pool_2: {name: "棋牌分红奖池", options:[]},
+                bonus_pool_4: {name: "彩票分红奖池", options:[]},
+                bonus_pool_8: {name: "捕鱼分红奖池", options:[]},
+                bonus_pool_16: {name: "电子分红奖池", options:[]},
+                bonus_pool_32: {name: "真人分红奖池", options:[]},
+                bonus_pool_64: {name: "体育电竞分红奖池", options:[]},
+                bonus_pool_128: {name: "链游分红奖池", options:[]},
+                bonus_pool_ratio: {name: "奖池分红比例", options: []},
+                bonus_ratio: {name: "分红统计比例", options: []},
+                commission_2: {name: "棋牌返佣", options:[]},
+                commission_4: {name: "彩票返佣", options:[]},
+                commission_8: {name: "捕鱼返佣", options:[]},
+                commission_16: {name: "电子返佣", options:[]},
+                commission_32: {name: "真人返佣", options:[]},
+                commission_64: {name: "体育电竞返佣", options:[]},
+                commission_128: {name: "链游返佣", options:[]},
+                created_at: {name: "创建时间", options: []},
+                created_by: {name: "创建人", options: []},
+                exchange_fee: {name: "提现手续费", options:[]},
+                exchange_fee_ratio: {name: "提现手续费比例", options: []},
+                invite_bonus_ratio: {name: "上级代理分红统计比例"},
+                invite_nick_name: {name: "上级代理昵称"},
+                invite_user_id: {name: "上级编号"},
+                is_show: {name: "统计开关", options:[]},
+                nick_name: {name: "昵称"},
+                recharge_fee: {name: "充值手续费", options:[]},
+                recharge_fee_ratio: {name: "充值手续费比例", options: []},
+                updated_at: {name: "修改时间", options: []},
+                updated_by: {name: "更新人", options: []},
+                user_id: {name: "用户ID", options: []},
+                vendor_fee_2: {name: "棋牌厂商费用", options:[]},
+                vendor_fee_4: {name: "彩票厂商费用", options:[]},
+                vendor_fee_8: {name: "捕鱼厂商费用", options:[]},
+                vendor_fee_16: {name: "电子厂商费用", options:[]},
+                vendor_fee_32: {name: "真人厂商费用", options:[]},
+                vendor_fee_64: {name: "体育电竞厂商费用", options:[]},
+                vendor_fee_128: {name: "链游厂商费用", options:[]},
+                vendor_fee_ratio: {name: "产商游戏费用比例", options: []},
+                win_loss_2: {name: "棋牌输赢", options:[]},
+                win_loss_4: {name: "彩票输赢", options:[]},
+                win_loss_8: {name: "捕鱼输赢", options:[]},
+                win_loss_16: {name: "电子输赢", options:[]},
+                win_loss_32: {name: "真人输赢", options:[]},
+                win_loss_64: {name: "体育电竞输赢", options:[]},
+                win_loss_128: {name: "链游输赢", options:[]},
+            }
+        },
+        isCanEditConfig: 0, //1-可编辑 0-不可编辑
+    };
+
     /**绑定 弹窗相关数据 */
     bindDialogData = {
         bShow: false,
@@ -212,6 +328,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     hideDialog() {
         this.promotionFloorDialogData.bShow = false;
         this.bindDialogData.bShow = false;
+        this.bonusConfigDialogData.bShow = false;
     }
 
     /**重置弹窗表单 */
@@ -310,5 +427,71 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
 
     hideAgentBonus() {
         this.agentBonusDialogData.bShow = false;
+    }
+
+    api_admin_plat_agent_bonus_config_table_columns() {
+        this.sendNotification(HttpType.admin_plat_agent_bonus_config_table_columns);
+    }
+
+    api_admin_plat_agent_bonus_config_show(user_id: number) {
+        this.bonusConfigDialogData.user_id = user_id,
+        this.sendNotification(HttpType.admin_plat_agent_bonus_config_show, { user_id });
+    }
+
+    /**设置代理分红配置表头数据 */
+    setBonusConfigTableColumns(data: any) {
+        Object.assign(this.bonusConfigDialogData.tableData.columns, data);
+    }
+
+    /**设置代理分红配置表格数据 */
+    setBonusConfigTableData(data: any) {
+        Object.assign(this.bonusConfigDialogData.form, data);
+        Object.assign(this.bonusConfigDialogData.form.bonus_config, this.convertBonusConfigValue(data.bonus_config, 'boolean'));        
+        this.bonusConfigDialogData.formSource = JSON.parse(JSON.stringify(this.bonusConfigDialogData.form));
+        this.bonusConfigDialogData.isCanEditConfig = data.can_edit_config;
+    }
+
+    /**更新代理分红配置数据 */
+    updateBonusConfig() {
+        const formCopy: any = formCompared(
+            this.bonusConfigDialogData.form,
+            this.bonusConfigDialogData.formSource
+        );
+
+        const formConfigCopy: any = formCompared(
+            this.bonusConfigDialogData.form.bonus_config,
+            this.bonusConfigDialogData.formSource.bonus_config
+        );
+
+        if(Object.keys(formConfigCopy).length > 0) {
+            const newConfig = this.convertBonusConfigValue(formConfigCopy, 'number');
+            formCopy.bonus_config = jsonStringify(newConfig);
+        } else {
+            delete formCopy.bonus_config;
+        }
+
+        const { user_id } = this.bonusConfigDialogData;
+        this.sendNotification(HttpType.admin_plat_agent_bonus_config_update, { ...formCopy ,user_id });
+    }
+
+    convertBonusConfigValue(config: any, converToNumberOrBoolean: BooleanOrNumber) {
+        const keysArr = Object.keys(config);
+        const converFunction = converToNumberOrBoolean === 'number' ? this.convertBooleanToNumber : this.convertNumberToBoolean;
+        if(keysArr.length > 0) {
+            const newObject = <any>{};
+            keysArr.forEach((key)=> {
+                newObject[key] = converFunction(config[key]);
+            })
+            return newObject
+        }
+        return config;
+    }
+
+    convertBooleanToNumber(data: any) {
+        return data ? 1 : 0;
+    }
+
+    convertNumberToBoolean(data: any) {
+        return Number(data) === 0 ? false : true;
     }
 }
