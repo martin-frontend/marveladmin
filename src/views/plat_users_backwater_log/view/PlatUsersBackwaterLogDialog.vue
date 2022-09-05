@@ -1,5 +1,9 @@
 <template>
-    <el-dialog :title="$t('plat_users_backwater_log.userWaterDetail')" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog
+        :title="$t('plat_users_backwater_log.userWaterDetail')"
+        width="1000px"
+        :visible.sync="myProxy.dialogData.bShow"
+    >
         <el-form ref="form" :model="form" label-width="135px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.user_id.name" prop="user_id" size="mini">
                 {{ form.user_id }}
@@ -22,11 +26,9 @@
             </el-form-item>
             <div class="line"></div>
             <el-table :data="form.detail" border fit highlight-current-row style="width: 100%" size="mini">
-
-
                 <el-table-column :label="$t('plat_users_backwater_log.settleName')" class-name="status-col">
                     <template slot-scope="{ row }">
-                        {{ tableColumns["water_"+row.vendor_type] && tableColumns["water_"+row.vendor_type].name }}
+                        {{ tableColumns["water_" + row.vendor_type] && tableColumns["water_" + row.vendor_type].name }}
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('common.settleWater')" class-name="status-col">
@@ -35,27 +37,51 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column :label="tableColumns.main_coin_name_unique.name+$t('plat_users_vip_model.backWater')" class-name="status-col">
+                <el-table-column
+                    :label="tableColumns.main_coin_name_unique.name + $t('plat_users_vip_model.backWater')"
+                    class-name="status-col"
+                    min-width="120px"
+                >
                     <template slot-scope="{ row }">
-                        {{ row.main_coin_name_unique }}：{{ row.main_coin_backwater_rate * 10000/100 }}%
+                        {{ row.main_coin_name_unique }}：{{ (row.main_coin_backwater_rate * 10000) / 100 }}%
                     </template>
                 </el-table-column>
-                <el-table-column :label="tableColumns.main_coin_name_unique.name+$t('plat_users_backwater_log.rewardMoney')" class-name="status-col">
+                <el-table-column
+                    :label="tableColumns.main_coin_name_unique.name + $t('plat_users_backwater_log.rewardMoney')"
+                    class-name="status-col"
+                    min-width="120px"
+                >
                     <template slot-scope="{ row }">
                         {{ row.main_coin_name_unique }}：{{ row.main_coin_backwater }}
                     </template>
                 </el-table-column>
-                <el-table-column :label="tableColumns.reward_coin_name_unique.name+$t('plat_users_vip_model.backWater')" class-name="status-col">
+                <el-table-column
+                    :label="tableColumns.reward_coin_name_unique.name + $t('plat_users_vip_model.backWater')"
+                    class-name="status-col"
+                    min-width="200px"
+                >
                     <template slot-scope="{ row }">
-                        {{ row.reward_coin_name_unique }}：{{ row.reward_coin_backwater_rate * 10000/100 }}%
+                        {{ row.reward_coin_name_unique }}：{{ (row.reward_coin_backwater_rate * 10000) / 100 }}%
                     </template>
                 </el-table-column>
-                <el-table-column :label="tableColumns.reward_coin_name_unique.name+$t('plat_users_backwater_log.rewardMoney')" class-name="status-col">
+                <el-table-column
+                    :label="tableColumns.reward_coin_name_unique.name + $t('plat_users_backwater_log.rewardMoney')"
+                    class-name="status-col"
+                    min-width="120px"
+                >
                     <template slot-scope="{ row }">
                         {{ row.reward_coin_name_unique }}：{{ row.reward_coin_backwater }}
                     </template>
                 </el-table-column>
-
+                <el-table-column
+                    :label="$t('plat_users_backwater_log.gold_scale')"
+                    class-name="status-col"
+                    min-width="120px"
+                >
+                    <template slot-scope="{ row }">
+                        {{ row.gold_scale }}
+                    </template>
+                </el-table-column>
             </el-table>
             <div class="confirm">
                 <el-button style="width: 8rem" @click="handlerConfirm()" type="primary" icon="">{{

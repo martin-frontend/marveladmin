@@ -80,7 +80,8 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
                 vendor_type: 0,
                 water: "",
                 backwater_rate: 0,
-                backwater: ""
+                backwater: "",
+                gold_scale: ''
             }],
         },
         formSource: null, // 表单的原始数据
@@ -134,7 +135,7 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            this.sendNotification(HttpType.admin_plat_users_backwater_log_show, { plat_id: data.plat_id, backwater_id: data.backwater_id });
+            this.sendNotification(HttpType.admin_plat_users_backwater_log_show, { plat_id: data.plat_id, backwater_id: data.backwater_id, id: data.backwater_id});
         } else {
             this.dialogData.formSource = null;
         }

@@ -674,10 +674,11 @@ export default {
     plat_users_backwater_log: {
         totalPeople: "总结算人数",
         settleMoney: "结算流水",
-        rewardMoney: "派奖金额",
+        rewardMoney: "派奖数量",
         userWaterDetail: "用户返水详情",
         settleDetail: "结算详情",
         settleName: "结算名称",
+        gold_scale: "奖励金额"
     },
     // 平台统计
     statistic_user_keep_days: {},
