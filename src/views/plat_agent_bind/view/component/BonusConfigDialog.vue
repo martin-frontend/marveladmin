@@ -185,15 +185,15 @@
                         <span style="margin-left: 10px">%</span>
                     </el-form-item>
                 </el-form-item>
-                <div class="dialog-footer">
-                    <el-button
-                        v-if="checkUnique(unique.plat_agent_bonus_config_update)"
-                        type="primary"
-                        @click="handleSave()"
-                        >{{ $t("common.save") }}</el-button
-                    >
-                </div>
             </template>
+            <div class="dialog-footer">
+                <el-button
+                    v-if="checkUnique(unique.plat_agent_bonus_config_update)"
+                    type="primary"
+                    @click="handleSave()"
+                    >{{ $t("common.save") }}</el-button
+                >
+            </div>
         </el-form>
     </el-dialog>
 </template>
