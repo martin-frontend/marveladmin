@@ -175,7 +175,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
     }
     /**获取平台资料 */
     onPlatShow() {
-        this.sendNotification(HttpType.admin_plat_show, { plat_id: this.listQuery.plat_id });
+        this.sendNotification(HttpType.admin_plat_stake_config_show, { plat_id: this.listQuery.plat_id });
     }
     /**表格数据 */
     setTableData(data: any) {

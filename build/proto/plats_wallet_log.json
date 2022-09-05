@@ -1,0 +1,9 @@
+{
+    "name": "平台资产明细",
+    "description": "平台资产明细",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766406",
+    "list": [
+        "admin/plats_wallet_log/table_columns",
+        "admin/plats_wallet_log/index"
+    ]
+}

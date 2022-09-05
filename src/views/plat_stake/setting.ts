@@ -13,7 +13,7 @@ import cmd_admin_plat_stake_bonus_log_table_columns from "@/views/plat_stake/com
 import cmd_admin_plat_stake_bonus_log_index from "@/views/plat_stake/command/cmd_admin_plat_stake_bonus_log_index";
 import cmd_admin_plat_stake_bonus_user_log_table_columns from "@/views/plat_stake/command/cmd_admin_plat_stake_bonus_user_log_table_columns";
 import cmd_admin_plat_stake_bonus_user_log_index from "@/views/plat_stake/command/cmd_admin_plat_stake_bonus_user_log_index";
-import cmd_admin_plat_show from "@/views/plat_stake/command/cmd_admin_plat_show";
+import cmd_admin_plat_stake_config_show from "@/views/plat_stake/command/cmd_admin_plat_stake_config_show";
 import cmd_admin_plat_update from "@/views/plat_stake/command/cmd_admin_plat_update";
 import cmd_admin_plat_stake_config_update from "@/views/plat_stake/command/cmd_admin_plat_stake_config_update";
 /**协议*/
@@ -29,7 +29,7 @@ export var HttpType = {
     admin_plat_stake_bonus_log_index: "admin/plat_stake_bonus_log/index",
     admin_plat_stake_bonus_user_log_table_columns: "admin/plat_stake_bonus_user_log/table_columns",
     admin_plat_stake_bonus_user_log_index: "admin/plat_stake_bonus_user_log/index",
-    admin_plat_show: "admin/plat/show/{plat_id}",
+    admin_plat_stake_config_show: "admin/plat_stake_config/show/{plat_id}",
     admin_plat_update: "admin/plat/update/{plat_id}",
     admin_plat_stake_config_update: "admin/plat_stake_config/update/{plat_id}",
 };
@@ -46,7 +46,7 @@ export var EventType = {
     admin_plat_stake_bonus_log_index: "admin_plat_stake_bonus_log_index",
     admin_plat_stake_bonus_user_log_table_columns: "admin_plat_stake_bonus_user_log_table_columns",
     admin_plat_stake_bonus_user_log_index: "admin_plat_stake_bonus_user_log_index",
-    admin_plat_show: "admin_plat_show",
+    admin_plat_stake_config_show: "admin_plat_stake_config_show",
     admin_plat_update: "admin_plat_update",
     admin_plat_stake_config_update: "admin_plat_stake_config_update",
 };
@@ -63,7 +63,7 @@ facade.registerCommand(HttpType.admin_plat_stake_bonus_log_table_columns, cmd_ad
 facade.registerCommand(HttpType.admin_plat_stake_bonus_log_index, cmd_admin_plat_stake_bonus_log_index);
 facade.registerCommand(HttpType.admin_plat_stake_bonus_user_log_table_columns, cmd_admin_plat_stake_bonus_user_log_table_columns);
 facade.registerCommand(HttpType.admin_plat_stake_bonus_user_log_index, cmd_admin_plat_stake_bonus_user_log_index);
-facade.registerCommand(HttpType.admin_plat_show, cmd_admin_plat_show);
+facade.registerCommand(HttpType.admin_plat_stake_config_show, cmd_admin_plat_stake_config_show);
 facade.registerCommand(HttpType.admin_plat_update, cmd_admin_plat_update);
 facade.registerCommand(HttpType.admin_plat_stake_config_update, cmd_admin_plat_stake_config_update);
 
