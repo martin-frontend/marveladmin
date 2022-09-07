@@ -35,7 +35,14 @@
                     </p>
                 </template></el-table-column
             >
-            <el-table-column prop="remark" :label="tableColumns.remark.name" align="center"> </el-table-column>
+            <el-table-column prop="remark" :label="tableColumns.remark.name" align="center">
+                <template slot-scope="{ row }">
+                    <div>
+                        <span v-if="row.type >= 200">{{ row.remark }}</span>
+                        <span v-else @click="showUserDetail(row.remark)" class="user_id">{{ row.remark }}</span>
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column prop="created_at" :label="tableColumns.created_at.name" align="center"> </el-table-column>
             <!-- <el-table-column :label="$t('common.operating')" class-name="status-col">
                 <template slot-scope="{ row }">
@@ -75,9 +82,13 @@ export default class PlatsWalletLogProxyBody extends AbstractView {
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
-        this.myProxy.showDialog(data);
+    // 打开用户详情
+    private showUserDetail(user_id: number) {
+        this.myProxy.onShowDetail(user_id);
     }
+    // private handleEdit(data: any) {
+    //     this.myProxy.showDialog(data);
+    // }
 }
 </script>
 
