@@ -3,7 +3,12 @@
         <el-form ref="form" :rules="rules" :model="form" label-width="120px" v-loading="net_status.loading">
             <!--  -->
             <el-form-item size="mini" :label="$t('plats_notice.release')" prop="plat_id">
-                <el-select v-model="form.plat_id" :placeholder="$t('common.pleaseChoose')" filterable style="width: 300px">
+                <el-select
+                    v-model="form.plat_id"
+                    :placeholder="$t('common.pleaseChoose')"
+                    filterable
+                    style="width: 300px"
+                >
                     <el-option
                         v-for="(value, key) in tableColumns['plat_id'].options"
                         :key="key"
@@ -25,27 +30,41 @@
                     </el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
+
+            <el-form-item size="mini" :label="tableColumns['languages'].name" prop="languages">
+                <el-checkbox-group v-model="form.languages">
+                    <el-checkbox v-for="(value, key) in tableColumns['languages'].options" :key="key" :label="key">
+                        {{ value }}
+                    </el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
             <!-- <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
                 <el-input v-model="form.name" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item> -->
 
             <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
                 <div class="flex d-flex">
-                        <el-input
-                            style="margin-right: 0.8rem"
-                            type="textarea"
-                            filterable
-                            clearable
-                            :placeholder="$t('common.pleaseEnter')"
-                            v-model="form.name"
-                        ></el-input>
-                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)">翻译</el-button>
-                    </div>
-
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        type="textarea"
+                        filterable
+                        clearable
+                        :placeholder="$t('common.pleaseEnter')"
+                        v-model="form.name"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns['type_position'].name" prop="type_position">
-                <el-select v-model="form.type_position" :placeholder="$t('common.pleaseChoose')" filterable style="width: 300px">
+                <el-select
+                    v-model="form.type_position"
+                    :placeholder="$t('common.pleaseChoose')"
+                    filterable
+                    style="width: 300px"
+                >
                     <el-option
                         v-for="(value, key) in tableColumns['type_position'].options"
                         :key="key"
@@ -108,18 +127,23 @@
 
             <el-form-item size="mini" :label="tableColumns['content'].name" prop="content" v-if="form.type == 1">
                 <div class="flex d-flex">
-                        <el-input
-                            style="margin-right: 0.8rem"
-                            type="textarea"
-                            filterable
-                            clearable
-                            rows="5"
-                            :placeholder="$t('common.pleaseEnter')"
-                            v-model="form.content"
-                        ></el-input>
-                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.content)">翻译</el-button>
-                    </div>
-
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        type="textarea"
+                        filterable
+                        clearable
+                        rows="5"
+                        :placeholder="$t('common.pleaseEnter')"
+                        v-model="form.content"
+                    ></el-input>
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.content)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns['img_uris'].name" prop="img_urls" v-if="form.type == 2">
@@ -161,10 +185,21 @@
                         </div>
                     </el-tab-pane>
                 </el-tabs>
-                <el-button style="max-height: 35px; margin-top: 10px" type="primary" size="mini" @click="handleLangImg()">多语言图片</el-button>
+                <el-button
+                    style="max-height: 35px; margin-top: 10px"
+                    type="primary"
+                    size="mini"
+                    @click="handleLangImg()"
+                    >多语言图片</el-button
+                >
             </el-form-item>
 
-            <el-form-item size="mini" :label="tableColumns['thumbnail_uris'].name" prop="thumbnail_urls" v-if="form.type == 2">
+            <el-form-item
+                size="mini"
+                :label="tableColumns['thumbnail_uris'].name"
+                prop="thumbnail_urls"
+                v-if="form.type == 2"
+            >
                 <el-tabs type="border-card" v-model="myProxy.appType">
                     <el-tab-pane
                         :label="tableColumns['app_types'].options[item]"
@@ -203,9 +238,14 @@
                         </div>
                     </el-tab-pane>
                 </el-tabs>
-                <el-button style="max-height: 35px; margin-top: 10px" type="primary" size="mini" @click="handleLangImg1()">多语言图片</el-button>
+                <el-button
+                    style="max-height: 35px; margin-top: 10px"
+                    type="primary"
+                    size="mini"
+                    @click="handleLangImg1()"
+                    >多语言图片</el-button
+                >
             </el-form-item>
-
 
             <el-form-item class="dialog-footer">
                 <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
@@ -278,7 +318,7 @@ export default class PlatsNoticeDialog extends AbstractView {
             content: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             img_urls: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             // thumbnail_urls: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            language: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            languages: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             type_position: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
         };
     }
@@ -336,10 +376,13 @@ export default class PlatsNoticeDialog extends AbstractView {
     }
     handleChange1(file: any) {
         // this.myProxy.appType = this.myProxy.appType;
-        this.myProxy.onUploadImage({
-            type: 2,
-            file: file.raw,
-        }, true);
+        this.myProxy.onUploadImage(
+            {
+                type: 2,
+                file: file.raw,
+            },
+            true
+        );
     }
     handleRemove() {
         this.form.img_urls[this.myProxy.appType] = "";
@@ -373,7 +416,7 @@ export default class PlatsNoticeDialog extends AbstractView {
         for (const key in this.form.img_uris) {
             if (Object.prototype.hasOwnProperty.call(this.form.img_uris, key)) {
                 if (this.form.app_types.find((item: any) => item == key)) {
-                     data.key = this.form.img_uris[key];
+                    data.key = this.form.img_uris[key];
                 }
             }
         }
@@ -391,7 +434,7 @@ export default class PlatsNoticeDialog extends AbstractView {
         for (const key in this.form.thumbnail_uris) {
             if (Object.prototype.hasOwnProperty.call(this.form.thumbnail_uris, key)) {
                 if (this.form.app_types.find((item: any) => item == key)) {
-                     data.key = this.form.thumbnail_uris[key];
+                    data.key = this.form.thumbnail_uris[key];
                 }
             }
         }

@@ -42,6 +42,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             remark: { name: "描述", options: {} },
             type: { name: "类型", options: {} },
             scale: { name: "比例", options: {} },
+            languages: { name: "语言", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -65,6 +66,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             game_scale: 1,
             type: null,
             scale: 0,
+            languages: [],
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -162,6 +164,8 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
         }
         // 添加必填参数
         formCopy.id = this.dialogData.formSource.id;
+        console.warn(this.dialogData.form);
+
         // 发送消息
         this.sendNotification(HttpType.admin_plat_block_coins_update, formCopy);
     }

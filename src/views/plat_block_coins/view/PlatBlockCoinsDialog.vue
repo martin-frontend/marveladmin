@@ -46,6 +46,13 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['languages'].name" prop="languages">
+                <el-checkbox-group v-model="form.languages">
+                    <el-checkbox v-for="(value, key) in tableColumns['languages'].options" :key="key" :label="key">
+                        {{ value }}
+                    </el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
         </el-form>
         <div class="btn_group">
             <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ $t("common.delete") }}</el-button>
