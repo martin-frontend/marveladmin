@@ -394,6 +394,10 @@ const layoutRouter = {
             name: "系统常见问题配置",
             component: () => import("@/views/system_fag/view/SystemFag.vue")
         },        {
+            path: "system_sms_area_code",
+            name: "区号管理",
+            component: () => import("@/views/system_sms_area_code/view/SystemSmsAreaCode.vue")
+        },        {
             path: "system_lang",
             name: "语言管理",
             component: () => import("@/views/system_lang/view/SystemLang.vue")
