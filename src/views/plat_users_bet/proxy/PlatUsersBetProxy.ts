@@ -77,6 +77,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             valid_bet_gold: "",
             water: "",
             win_gold: "",
+            water_accelerate: "",
         },
     };
     /**查询条件 */
@@ -140,7 +141,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
-        const { bet_gold, valid_bet_gold, water, win_gold } = data.summary;
+        const { bet_gold, valid_bet_gold, water, win_gold, water_accelerate } = data.summary;
         Object.assign(this.tableData.summary, data.summary);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }

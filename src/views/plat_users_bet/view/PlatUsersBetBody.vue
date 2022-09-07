@@ -7,6 +7,7 @@
             <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="summary.win_gold"/></span>
             <span>{{ $t("common.settleWater") }}:{{ summary.settlement_water }}</span>
             <span>{{ $t("common.playerWater") }}:{{ summary.water }}</span>
+            <span>{{ tableColumns["water_accelerate"].name }}:{{ summary.water_accelerate }}</span>
         </div>
         <el-table
             :data="tableData"
