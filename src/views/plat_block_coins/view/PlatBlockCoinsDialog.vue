@@ -106,7 +106,9 @@ export default class PlatBlockCoinsDialog extends AbstractView {
     }
 
     get rules() {
-        return {};
+        return {
+            languages: [{ type: "array", required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+        };
     }
 
     private handleAdd() {

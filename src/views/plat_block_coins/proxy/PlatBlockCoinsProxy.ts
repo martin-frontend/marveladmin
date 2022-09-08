@@ -66,7 +66,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             game_scale: 1,
             type: null,
             scale: 0,
-            languages: [],
+            languages: <any>[],
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -149,6 +149,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             game_scale: form.game_scale,
             type: form.type,
             scale: form.scale,
+            languages: form.languages,
         };
         this.sendNotification(HttpType.admin_plat_block_coins_store, objectRemoveNull(formCopy));
     }
