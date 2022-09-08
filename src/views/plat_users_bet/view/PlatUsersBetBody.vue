@@ -113,7 +113,7 @@
                         <div>{{ $t("common.settleRatio") }}：{{ row.water_rate }}</div>
                         <div>{{ $t("common.userWater") }}：{{ row.water }}</div>
                         <div>{{ tableColumns["water_accelerate"].name }}：{{ row.water_accelerate }}</div>
-                        <div>{{ $t("common.water_rate_accelerate") }}：{{ row.water_rate_accelerate }}</div>
+                        <div>{{ $t("common.water_rate_accelerate") }}：{{ row.water_rate_accelerate * 100 }}%</div>
                     </div>
                 </template>
             </el-table-column>
