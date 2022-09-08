@@ -168,6 +168,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             thumbnail_urls: "",
             language: null,
             type_position: "",
+            languages: [],
         });
     }
 

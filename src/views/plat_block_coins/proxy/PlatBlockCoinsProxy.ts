@@ -131,6 +131,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             game_scale: 1,
             type: null,
             scale: null,
+            languages: <any>[],
         });
     }
 
@@ -165,7 +166,6 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
         }
         // 添加必填参数
         formCopy.id = this.dialogData.formSource.id;
-        console.warn(this.dialogData.form);
 
         // 发送消息
         this.sendNotification(HttpType.admin_plat_block_coins_update, formCopy);
