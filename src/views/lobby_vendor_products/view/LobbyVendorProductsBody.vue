@@ -11,36 +11,41 @@
             :header-cell-style="{
                 'text-align': 'center',
             }"
-            :cell-style="{
-                'text-align': 'center',
-            }"
         >
             <el-table-column
+                align="center"
                 :label="tableColumns['lobby_vendor_product_id'].name"
                 prop="lobby_vendor_product_id"
                 min-width="80px"
             ></el-table-column>
-            <el-table-column :label="tableColumns['vendor_id'].name" prop="vendor_id" min-width="120px">
+            <el-table-column align="center" :label="tableColumns['vendor_id'].name" prop="vendor_id" min-width="120px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.vendor_id.options[row.vendor_id] }}</div>
                 </template>
             </el-table-column>
             <el-table-column
+                align="center"
                 :label="tableColumns['vendor_product_name'].name"
                 prop="vendor_product_name"
                 min-width="120px"
             ></el-table-column>
-            <el-table-column :label="tableColumns['vendor_type'].name" min-width="80px">
+            <el-table-column align="center" :label="tableColumns['vendor_type'].name" min-width="80px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.vendor_type.options[row.vendor_type] }}</div>
                 </template>
             </el-table-column>
             <el-table-column
+                align="center"
                 :label="tableColumns['ori_product_id'].name"
                 prop="ori_product_id"
                 min-width="100px"
             ></el-table-column>
-            <el-table-column prop="water_rate" :label="tableColumns['water_rate'].name" min-width="220px" align="center">
+            <el-table-column
+                align="center"
+                prop="water_rate"
+                :label="tableColumns['water_rate'].name"
+                min-width="220px"
+            >
                 <template slot-scope="{ row }">
                     <div v-if="editWaterRateID == row.lobby_vendor_product_id">
                         <el-input
@@ -68,6 +73,28 @@
                             >{{ $t("common.update") }}</el-button
                         >
                     </div>
+                </template>
+            </el-table-column>
+            <el-table-column aling="left" :label="tableColumns['languages'].name" prop="languages" min-width="250px">
+                <template slot-scope="{ row }">
+                    <el-tag class="mr-1" v-for="item of row.languages" :key="item">{{ item }}</el-tag>
+                    <el-button
+                        class="item"
+                        type="primary"
+                        size="mini"
+                        @click="onUpdateLanguages(row)"
+                        >{{ $t("common.update") }}</el-button
+                    >
+                </template>
+            </el-table-column>
+            <el-table-column
+                align="left"
+                :label="tableColumns['vendor_languages'].name"
+                prop="vendor_languages"
+                min-width="250px"
+            >
+                <template slot-scope="{ row }">
+                    <el-tag class="mr-1" v-for="item of row.vendor_languages" :key="item">{{ item }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('common.status')" class-name="status-col" width="240px">
@@ -157,6 +184,10 @@ export default class VendorProductBody extends AbstractView {
         this.editWaterRateID = null;
         this.myProxy.onUpdateWaterRate();
     }
+
+    onUpdateLanguages(row: any) {
+        this.myProxy.showDialog(DialogStatus.update, row);
+    }
 }
 </script>
 
@@ -165,5 +196,9 @@ export default class VendorProductBody extends AbstractView {
 
 .row_status {
     display: flex;
+}
+
+.mr-1 {
+    margin-right: 12px;
 }
 </style>

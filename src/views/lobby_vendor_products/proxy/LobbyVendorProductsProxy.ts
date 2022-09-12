@@ -41,6 +41,8 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
             vendor_product_name: { name: "", options: {} },
             vendor_type: { name: "", options: {} },
             water_rate: { name: "", options: {} },
+            languages: { name: "", options: {} },
+            vendor_languages: { name: "", options: {} },
         },
         ctrlData: {
             lobby_vendor_product_id: "",
@@ -59,12 +61,24 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         status: "",
         page_count: 1,
         page_size: 20,
+        languages: "",
+        vendor_languages: "",
     };
 
     /**更新列表資料 */
     rowData = {
         lobby_vendor_product_id: "",
         water_rate: 0,
+    };
+
+    /**弹窗相关数据 */
+    dialogData = {
+        bShow: false,
+        status: DialogStatus.update,
+        form: <any>{
+            languages: [],
+        },
+        formSource: <any>null, // 表单的原始数据
     };
 
     /**设置表头数据 */
@@ -84,6 +98,24 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
 
+    /**显示弹窗 */
+    showDialog(status: string, data?: any) {
+        this.dialogData.bShow = true;
+
+        if (status == DialogStatus.update) {
+            this.dialogData.formSource = data;
+            Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        } else {
+            this.dialogData.form.languages = [];
+            this.dialogData.formSource = null;
+        }
+    }
+
+    /**隐藏弹窗 */
+    hideDialog() {
+        this.dialogData.bShow = false;
+    }
+
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
@@ -91,6 +123,8 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
             vendor_type: "",
             lobby_vendor_product_id: "",
             status: "",
+            languages: "",
+            vendor_languages: "",
         });
     }
 
@@ -104,6 +138,16 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         formCopy = objectRemoveNull(this.tableData.ctrlData);
         this.sendNotification(HttpType.admin_lobby_vendor_products_update, formCopy);
     }
+    /**更新数据 */
+    onUpdateLanguages() {        
+        const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
+        if (Object.keys(formCopy).length == 0) {
+            this.dialogData.bShow = false;
+            return false;
+        }
+        formCopy.lobby_vendor_product_id = this.dialogData.form.lobby_vendor_product_id;
+        this.sendNotification(HttpType.admin_lobby_vendor_products_update, formCopy);
+    }
     /**更新刘水配置 */
     onUpdateWaterRate() {
         this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowData);
@@ -111,7 +155,7 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
     /**同步游戏 */
     onSync() {
         this.sendNotification(HttpType.admin_lobby_vendor_products_sync_data, {
-            plat_id: this.listQuery.plat_id
-        })
+            plat_id: this.listQuery.plat_id,
+        });
     }
 }

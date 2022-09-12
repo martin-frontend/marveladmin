@@ -45,6 +45,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             vendor_product_name: { name: "产品名称", options: {} },
             vendor_type: { name: "产品类型", options: {} },
             currency_type: { name: "结算方式", options: {} },
+            languages: { name: "语言类别", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -74,6 +75,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             icon: "",
             list_type: "",
             currency_type: "",
+            languages: [],
         },
         formSource: null, // 表单的原始数据
     };
@@ -122,6 +124,9 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
 
             this.dialogData.form.list_type = String(this.dialogData.form.list_type);
             this.onGetVendor(true);
+            this.sendNotification(HttpType.admin_lobby_model_product_show, {
+                lobby_model_product_id: data.lobby_model_product_id,
+            });
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -149,6 +154,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             icon: "",
             currency_type: "",
             list_type: 0,
+            languages: [],
         });
     }
 
@@ -172,6 +178,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             vendor_product_name,
             vendor_type,
             currency_type,
+            languages,
         } = this.dialogData.form;
 
         const formCopy: any = {
@@ -188,6 +195,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             vendor_product_name,
             vendor_type,
             currency_type,
+            languages,
         };
 
         this.sendNotification(HttpType.admin_lobby_model_product_store, objectRemoveNull(formCopy));
@@ -242,8 +250,9 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             options[type] = this.vendorTypeOptions[type];
         }
         this.tableData.columns.vendor_type.options = options;
+        this.dialogData.form.currency_type = value.currency_type;
+        // Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(value)));
     }
-
     /**依照货币类型 取vendor id */
     getVendorId() {
         this.sendNotification(HttpType.admin_vendor_index, {

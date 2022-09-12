@@ -2,6 +2,7 @@
     <div class="content">
         <LobbyVendorProductsHeader />
         <LobbyVendorProductsBody />
+        <LobbyVendorProductsDialog />
     </div>
 </template>
 
@@ -12,11 +13,13 @@ import LobbyVendorProductsProxy from "@/views/lobby_vendor_products/proxy/LobbyV
 import { Component } from "vue-property-decorator";
 import LobbyVendorProductsHeader from "./LobbyVendorProductsHeader.vue";
 import LobbyVendorProductsBody from "./LobbyVendorProductsBody.vue";
+import LobbyVendorProductsDialog from "./LobbyVendorProductsDialog.vue";
 
 @Component({
     components: {
         LobbyVendorProductsHeader,
         LobbyVendorProductsBody,
+        LobbyVendorProductsDialog
     },
 })
 export default class LobbyVendorProducts extends AbstractView {

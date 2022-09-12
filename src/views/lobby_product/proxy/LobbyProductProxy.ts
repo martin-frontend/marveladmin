@@ -46,6 +46,7 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
             vendor_id: { name: "", options: {} },
             vendor_product_name: { name: "", options: {} },
             vendor_type: { name: "", options: {} },
+            languages: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -53,6 +54,7 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
         listFilter: {// 筛选
             app_type: null,
             category: null,
+            languages: null,
         }
     };
     /**查询条件 */
@@ -198,6 +200,9 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
                 return false;
             }
             if (this.tableData.listFilter.category && value.category != this.tableData.listFilter.category) {
+                return false;
+            }
+            if (this.tableData.listFilter.languages && value.languages != this.tableData.listFilter.languages) {
                 return false;
             }
             return true;
