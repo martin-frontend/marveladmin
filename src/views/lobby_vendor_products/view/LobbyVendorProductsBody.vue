@@ -75,26 +75,26 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column aling="left" :label="tableColumns['languages'].name" prop="languages" min-width="250px">
+            <el-table-column aling="left" :label="tableColumns['languages'].name" prop="languages" min-width="260px">
                 <template slot-scope="{ row }">
-                    <el-tag class="mr-1" v-for="item of row.languages" :key="item">{{ item }}</el-tag>
-                    <el-button
-                        class="item"
-                        type="primary"
-                        size="mini"
-                        @click="onUpdateLanguages(row)"
-                        >{{ $t("common.update") }}</el-button
-                    >
+                    <el-tag v-for="item of row.languages" :key="item">{{
+                        tableColumns["languages"].options[item]
+                    }}</el-tag>
+                    <el-button class="item ml-1" type="primary" size="mini" @click="onUpdateLanguages(row)">{{
+                        $t("common.update")
+                    }}</el-button>
                 </template>
             </el-table-column>
             <el-table-column
                 align="left"
                 :label="tableColumns['vendor_languages'].name"
                 prop="vendor_languages"
-                min-width="250px"
+                min-width="260px"
             >
                 <template slot-scope="{ row }">
-                    <el-tag class="mr-1" v-for="item of row.vendor_languages" :key="item">{{ item }}</el-tag>
+                    <el-tag v-for="item of row.vendor_languages" :key="item">{{
+                        tableColumns["vendor_languages"].options[item]
+                    }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('common.status')" class-name="status-col" width="240px">
@@ -198,7 +198,7 @@ export default class VendorProductBody extends AbstractView {
     display: flex;
 }
 
-.mr-1 {
-    margin-right: 12px;
+.ml-1 {
+    margin-left: 12px;
 }
 </style>

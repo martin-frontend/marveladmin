@@ -72,6 +72,13 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['open_mode'].name" prop="open_mode">
+                <el-radio-group v-model="form.open_mode">
+                    <el-radio v-for="(value, key) in tableColumns.open_mode.options" :key="key" :label="Number(key)">
+                        {{ value }}
+                    </el-radio>
+                </el-radio-group>
+            </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button
                     v-if="isStatusUpdate && checkUnique(unique.vendor_product_delete)"

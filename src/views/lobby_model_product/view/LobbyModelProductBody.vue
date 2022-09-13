@@ -57,8 +57,32 @@
 
             <el-table-column :label="tableColumns['vendor_product_name'].name" prop="vendor_product_name">
             </el-table-column>
+            <el-table-column
+                align="left"
+                :label="tableColumns['languages'].name"
+                prop="languages"
+                min-width="260px"
+            >
+                <template slot-scope="{ row }">
+                    <el-tag v-for="item of row.languages" :key="item">{{
+                        tableColumns["languages"].options[item]
+                    }}</el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column
+                align="left"
+                :label="tableColumns['vendor_languages'].name"
+                prop="vendor_languages"
+                min-width="260px"
+            >
+                <template slot-scope="{ row }">
+                    <el-tag v-for="item of row.vendor_languages" :key="item">{{
+                        tableColumns["vendor_languages"].options[item]
+                    }}</el-tag>
+                </template>
+            </el-table-column>
 
-            <el-table-column :label="tableColumns['list_type'].name" prop="list_type">
+            <el-table-column min-width="100" :label="tableColumns['list_type'].name" prop="list_type">
                 <template slot-scope="{ row }">
                     {{
                         tableColumns.list_type.options[row.list_type]
@@ -66,14 +90,6 @@
                             : "-"
                     }}
                 </template>
-            </el-table-column>
-
-            <el-table-column
-                :label="tableColumns['currency_type'].name"
-                prop="currency_type"
-                width="150px"
-                align="center"
-            >
             </el-table-column>
 
             <el-table-column :label="tableColumns['status'].name" class-name="status-col" width="80px">

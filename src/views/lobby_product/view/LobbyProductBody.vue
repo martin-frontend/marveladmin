@@ -49,16 +49,13 @@
             :header-cell-style="{
                 'text-align': 'center',
             }"
-            :cell-style="{
-                'text-align': 'center',
-            }"
         >
-            <el-table-column :label="tableColumns['vendor_id'].name" prop="vendor_id" min-width="120px">
+            <el-table-column align="center" :label="tableColumns['vendor_id'].name" prop="vendor_id" min-width="120px">
                 <template slot-scope="{ row }">
                     {{ tableColumns["vendor_id"].options[row.vendor_id] }}
                 </template>
             </el-table-column>
-            <el-table-column
+            <el-table-column align="center"
                 :label="tableColumns['app_type'].name"
                 class-name="status-col"
                 prop="app_type"
@@ -70,29 +67,29 @@
                     </el-tag>
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns['show_type'].name" prop="show_type" min-width="80px">
+            <el-table-column align="center" :label="tableColumns['show_type'].name" prop="show_type" min-width="80px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.show_type.options[row.show_type] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns['category'].name" prop="category" min-width="120px">
+            <el-table-column align="center" :label="tableColumns['category'].name" prop="category" min-width="120px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.category.options[row.category] }}
                 </template>
             </el-table-column>
 
-            <el-table-column
+            <el-table-column align="center"
                 :label="tableColumns['vendor_product_name'].name"
                 prop="vendor_product_name"
                 min-width="120px"
             ></el-table-column>
-            <el-table-column :label="tableColumns['icon'].name" prop="icon" min-width="140px"></el-table-column>
-            <el-table-column :label="tableColumns.status.name" class-name="status-col" min-width="70px">
+            <el-table-column align="center" :label="tableColumns['icon'].name" prop="icon" min-width="140px"></el-table-column>
+            <el-table-column align="center" :label="tableColumns.status.name" class-name="status-col" min-width="70px">
                 <template slot-scope="{ row }">
                     <el-tag :type="row.status | statusFilter">{{ tableColumns.status.options[row.status] }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns['tags'].name" prop="tags" class-name="status-col" min-width="140px">
+            <el-table-column align="center" :label="tableColumns['tags'].name" prop="tags" class-name="status-col" min-width="140px">
                 <template slot-scope="{ row }">
                     <el-checkbox-group v-model="row.tags" @change="handlerTags(row)">
                         <el-checkbox v-for="(value, key) in tableColumns.tags.options" :key="key" :label="Number(key)"
@@ -102,7 +99,13 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="350px">
+            <el-table-column aling="left" :label="tableColumns['languages'].name" prop="languages" min-width="200px">
+                <template slot-scope="{ row }">
+                    <el-tag class="mr-1" v-for="item of row.languages" :key="item">{{ tableColumns['languages'].options[item] }}</el-tag>
+                </template>
+            </el-table-column>
+
+            <el-table-column align="center" :label="$t('common.operating')" class-name="status-col" width="350px">
                 <template slot-scope="{ row }">
                     <el-button
                         v-if="checkUnique(unique.lobby_product_order)"
@@ -206,6 +209,6 @@ export default class LobbyProductBody extends AbstractView {
 @import "@/styles/common.scss";
 
 .radio {
-    width: 55px;
+    width: 65px;
 }
 </style>
