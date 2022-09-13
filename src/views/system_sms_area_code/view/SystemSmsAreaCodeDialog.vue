@@ -63,7 +63,11 @@ export default class SystemSmsAreaCodeDialog extends AbstractView {
     }
 
     get rules() {
-        return {};
+        return {
+            icon: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            name: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            area_code: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+        };
     }
 
     private handleAdd() {

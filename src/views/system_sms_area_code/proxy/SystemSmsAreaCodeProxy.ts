@@ -51,8 +51,10 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
         bShow: false,
         status: DialogStatus.create,
         form: {
-            id: null
-            // TODO
+            id: null,
+            icon: "",
+            name: "",
+            area_code: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -100,7 +102,10 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
-            // TODO
+            id: null,
+            icon: "",
+            name: "",
+            area_code: "",
         });
     }
 
@@ -126,7 +131,7 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
             return;
         }
         // 添加必填参数
-        // TODO
+        formCopy.id = this.dialogData.form.id;
         // 发送消息
         this.sendNotification(HttpType.admin_system_sms_area_code_update, formCopy);
     }
@@ -140,6 +145,6 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
             .then(() => {
                 this.sendNotification(HttpType.admin_system_sms_area_code_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

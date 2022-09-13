@@ -5,12 +5,12 @@
                 <el-button @click="handlerCreate()" type="primary" icon="el-icon-circle-plus-outline">
                     {{ $t("common.create") }}
                 </el-button>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                <!-- <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
                     {{ $t("common.search") }}
                 </el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
                     {{ $t("common.reset") }}
-                </el-button>
+                </el-button> -->
             </div>
         </div>
     </div>
