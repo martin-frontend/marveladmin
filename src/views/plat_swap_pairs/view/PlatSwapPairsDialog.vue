@@ -2,7 +2,12 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item size="mini" :label="tableColumns['plat_id'].name" prop="plat_id">
-                <el-select v-model="form.plat_id" filterable :placeholder="$t('common.pleaseChoose')">
+                <el-select
+                    v-model="form.plat_id"
+                    filterable
+                    :placeholder="$t('common.pleaseChoose')"
+                    @change="resetForm"
+                >
                     <el-option
                         v-for="(value, key) in tableColumns.plat_id.options"
                         :key="Number(key)"
@@ -14,7 +19,7 @@
             <el-form-item size="mini" :label="tableColumns['coin_a'].name" prop="coin_a">
                 <el-select v-model="form.coin_a" filterable :placeholder="$t('common.pleaseChoose')">
                     <el-option
-                        v-for="(value, key) in tableColumns.coin_a.options[listQuery.plat_id]"
+                        v-for="(value, key) in tableColumns.coin_a.options[form.plat_id]"
                         :key="key"
                         :label="value"
                         :value="key"
@@ -25,7 +30,7 @@
             <el-form-item size="mini" :label="tableColumns['coin_b'].name" prop="coin_b">
                 <el-select v-model="form.coin_b" filterable :placeholder="$t('common.pleaseChoose')">
                     <el-option
-                        v-for="(value, key) in tableColumns.coin_b.options[listQuery.plat_id]"
+                        v-for="(value, key) in tableColumns.coin_b.options[form.plat_id]"
                         :key="key"
                         :label="value"
                         :value="key"
@@ -130,6 +135,11 @@ export default class PlatSwapPairsDialog extends AbstractView {
 
     private handleDelete() {
         this.myProxy.onDelete();
+    }
+
+    resetForm() {
+        this.form.coin_a = "";
+        this.form.coin_b = "";
     }
 }
 </script>
