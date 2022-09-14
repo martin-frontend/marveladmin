@@ -112,11 +112,14 @@
                 prop="languages"
                 v-if="form.show_type == 2 && form.vendor_product_id"
             >
-                <el-checkbox-group v-model="form.languages">
+                <!-- <el-checkbox-group v-model="form.languages">
                     <el-checkbox v-for="(value, key) in vendorProductLanguageOptions" :key="key" :label="value">
                         {{ tableColumns["languages"].options[value] }}
                     </el-checkbox>
-                </el-checkbox-group>
+                </el-checkbox-group> -->
+                <el-tag v-for="(value, key) in vendorProductLanguageOptions" :key="key">
+                    {{ tableColumns["languages"].options[value] }}
+                </el-tag>
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button
@@ -169,7 +172,7 @@ export default class LobbyModelProductDialog extends AbstractView {
     }
 
     get vendorProductLanguageOptions() {
-        return this.myProxy.vendorProductLanguageOptions;
+        return this.myProxy.dialogData.form.languages;
     }
 
     private textMap = {
@@ -221,7 +224,6 @@ export default class LobbyModelProductDialog extends AbstractView {
             category: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             vendor_product_id: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             // icon: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
-            languages: [{ type: "array", required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
         };
         return { rules, rules1 };
     }
