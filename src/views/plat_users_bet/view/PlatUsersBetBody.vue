@@ -76,7 +76,8 @@
             ></el-table-column>
             <el-table-column :label="tableColumns['win_gold'].name" prop="win_gold" class-name="status-col">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.win_gold" />
+                    <div v-if="row.win_gold == '-'">{{ row.win_gold }}</div>
+                    <WinLossDisplay v-else :amount="row.win_gold" />
                 </template>
             </el-table-column>
             <el-table-column :label="$t('common.time')" header-align="center" align="left" min-width="215px">
