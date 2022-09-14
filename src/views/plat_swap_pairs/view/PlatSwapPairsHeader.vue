@@ -5,6 +5,7 @@
             v-model="listQuery.plat_id"
             :options="tableColumns.plat_id.options"
             :clearable="false"
+            @change="handlerSearch"
         />
         <div class="group">
             <div>

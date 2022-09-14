@@ -59,6 +59,8 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
             water_type: { name: "", options: {} },
             water_rate: { name: "", options: {} },
             coin_name_unique: { name: "", options: {} },
+            water_accelerate: { name: "", options: {} },
+            water_rate_accelerate: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 10 },

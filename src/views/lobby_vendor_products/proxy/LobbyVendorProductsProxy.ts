@@ -41,6 +41,7 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
             vendor_product_name: { name: "", options: {} },
             vendor_type: { name: "", options: {} },
             water_rate: { name: "", options: {} },
+            water_rate_accelerate: { name: "", options: {} },
             languages: { name: "", options: {} },
             vendor_languages: { name: "", options: {} },
         },
@@ -66,9 +67,14 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
     };
 
     /**更新列表資料 */
-    rowData = {
+    rowRateData = {
         lobby_vendor_product_id: "",
         water_rate: 0,
+    };
+
+    rowRateAccelerateData = {
+        lobby_vendor_product_id: "",
+        water_rate_accelerate: 0,
     };
 
     /**弹窗相关数据 */
@@ -148,9 +154,13 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         formCopy.lobby_vendor_product_id = this.dialogData.form.lobby_vendor_product_id;
         this.sendNotification(HttpType.admin_lobby_vendor_products_update, formCopy);
     }
-    /**更新刘水配置 */
+    /**更新流水配置 */
     onUpdateWaterRate() {
-        this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowData);
+        this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowRateData);
+    }
+    /**更新流水加速配置 */
+    onUpdateWaterRateAccelerate() {
+        this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowRateAccelerateData);
     }
     /**同步游戏 */
     onSync() {
