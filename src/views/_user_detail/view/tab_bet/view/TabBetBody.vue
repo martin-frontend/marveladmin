@@ -94,7 +94,7 @@
                 :label="$t('statistic_user_days.water')"
                 prop="water"
                 class-name="status-col"
-                min-width="140px"
+                min-width="150px"
             >
                 <template slot-scope="{ row }">
                     <div align="left">
@@ -104,6 +104,8 @@
                         </div>
                         <div>{{ $t("common.settleRatio") }}：{{ row.water_rate }}</div>
                         <div>{{ $t("common.userWater") }}：{{ row.water }}</div>
+                        <div>{{ tableColumns["water_accelerate"].name }}：{{ row.water_accelerate }}</div>
+                        <div>{{ $t("common.water_rate_accelerate") }}：{{ row.water_rate_accelerate }}</div>
                     </div>
                 </template>
             </el-table-column>

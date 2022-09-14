@@ -60,6 +60,13 @@
                     {{ tableColumns.can_play_game.options[row.can_play_game] }}
                 </template>
             </el-table-column>
+            <el-table-column aling="left" :label="tableColumns['languages'].name" prop="languages" min-width="180px">
+                <template slot-scope="{ row }">
+                    <el-tag class="mr-1" v-for="item of row.languages" :key="item">{{
+                        tableColumns["languages"].options[item]
+                    }}</el-tag>
+                </template>
+            </el-table-column>
             <el-table-column :label="$t('common.sort')" class-name="status-col" width="280px">
                 <template slot-scope="{ row }">
                     <div>

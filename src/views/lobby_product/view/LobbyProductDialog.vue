@@ -16,6 +16,20 @@
                     >
                 </el-radio-group>
             </el-form-item>
+
+            <el-form-item size="mini" :label="tableColumns['languages'].name" prop="languages">
+                <el-radio-group v-model="form.languages" filterable clearable @change="handleChange">
+                    <el-radio class="radio" :label="null" style="width: 60px">{{ $t("common.all") }}</el-radio>
+                    <el-radio
+                        class="radio"
+                        v-for="(value, key) in tableColumns.languages.options"
+                        :key="key"
+                        :label="key"
+                        >{{ value }}</el-radio
+                    >
+                </el-radio-group>
+            </el-form-item>
+
             <el-form-item size="mini" :label="tableColumns['category'].name">
                 <el-radio-group v-model="form.category" filterable @change="handleChange">
                     <el-radio class="radio" :label="null" style="width: 60px">{{ $t("common.all") }}</el-radio>
@@ -126,7 +140,11 @@ export default class LobbyProductDialog extends AbstractView {
         return {
             app_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             lobby_model_product_ids: [
-                { required: this.form.lobby_model_product_ids.length > 0, message: this.$t("common.requiredSelect"), trigger: "change" },
+                {
+                    required: this.form.lobby_model_product_ids.length > 0,
+                    message: this.$t("common.requiredSelect"),
+                    trigger: "change",
+                },
             ],
         };
     }

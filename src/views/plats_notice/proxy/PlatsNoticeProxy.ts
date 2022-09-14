@@ -1,6 +1,6 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plats_notice/setting";
 import { MessageBox } from "element-ui";
 import IPlatsNoticeProxy from "./IPlatsNoticeProxy";
@@ -36,7 +36,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             img_uris: { name: "公告图片", options: {} },
             index_no: { name: "排序序号", options: {} },
             is_delete: { name: "是否删除", options: {} },
-            language: { name: "语言", options: {} },
+            languages: { name: "语言", options: {} },
             name: { name: "公告标题", options: {} },
             open_mode: { name: "打开模块", options: {} },
             open_mode_url: { name: "模块跳转网页", options: {} },
@@ -80,8 +80,8 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             open_mode_url: "",
             thumbnail_uris: "",
             thumbnail_urls: "",
-            language: "",
-            type_position:"",
+            languages: [],
+            type_position: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -127,7 +127,6 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.form.open_mode = this.dialogData.form.open_mode.toString();
         this.appType = data.app_types[0].toString();
-        
     }
 
     /**显示弹窗 */
@@ -168,7 +167,8 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             thumbnail_uris: "",
             thumbnail_urls: "",
             language: null,
-            type_position:"",
+            type_position: "",
+            languages: [],
         });
     }
 
@@ -192,14 +192,14 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             open_mode_url,
             thumbnail_uris,
             thumbnail_urls,
-            language,
+            languages,
             type_position,
         } = this.dialogData.form;
         app_types = JSON.stringify(app_types);
         img_uris = JSON.stringify(img_uris);
         img_urls = JSON.stringify(img_urls);
-        thumbnail_uris = JSON.stringify(thumbnail_uris)
-        thumbnail_urls = JSON.stringify(thumbnail_urls)
+        thumbnail_uris = JSON.stringify(thumbnail_uris);
+        thumbnail_urls = JSON.stringify(thumbnail_urls);
         if (type == 1) {
             img_uris = "";
             img_urls = "";
@@ -224,7 +224,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             open_mode_url,
             thumbnail_uris,
             thumbnail_urls,
-            language,
+            languages: jsonStringify(languages),
             type_position,
         };
 
@@ -255,6 +255,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
 
             formCopy.id = this.dialogData.form.id;
         }
+        console.warn(formCopy);
 
         this.sendNotification(HttpType.admin_plats_notice_update, formCopy);
     }

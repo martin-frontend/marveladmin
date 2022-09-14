@@ -45,6 +45,8 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             vendor_product_name: { name: "产品名称", options: {} },
             vendor_type: { name: "产品类型", options: {} },
             currency_type: { name: "结算方式", options: {} },
+            languages: { name: "语言类别", options: {} },
+            vendor_languages: { name: "游戏语言", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },

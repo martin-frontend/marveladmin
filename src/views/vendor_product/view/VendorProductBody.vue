@@ -87,6 +87,11 @@
                     </el-tag>
                 </template>
             </el-table-column>
+            <el-table-column :label="tableColumns['open_mode'].name" prop="open_mode" min-width="100px">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns.open_mode.options[row.open_mode] }}</div>
+                </template>
+            </el-table-column>
             <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
                     <el-button

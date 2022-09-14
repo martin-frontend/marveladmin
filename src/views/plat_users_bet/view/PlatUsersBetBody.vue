@@ -4,9 +4,10 @@
             {{ $t("plat_users_bet.stastisticList") }}
             <span>{{ $t("common.totalBet") }}:{{ summary.bet_gold }}</span>
             <span>{{ $t("common.validBet") }}:{{ summary.valid_bet_gold }}</span>
-            <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="summary.win_gold" /></span>
+            <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="summary.win_gold"/></span>
             <span>{{ $t("common.settleWater") }}:{{ summary.settlement_water }}</span>
             <span>{{ $t("common.playerWater") }}:{{ summary.water }}</span>
+            <span>{{ tableColumns["water_accelerate"].name }}:{{ summary.water_accelerate }}</span>
         </div>
         <el-table
             :data="tableData"
@@ -109,8 +110,10 @@
                         <div>
                             {{ $t("common.settleType") }}：{{ tableColumns["water_type"].options[row.water_type] }}
                         </div>
-                        <div>{{ $t("common.settleRatio") }}：{{ row.water_rate }}</div>
+                        <div>{{ $t("common.settleRatio") }}：{{ row.water_rate * 100 }}%</div>
                         <div>{{ $t("common.userWater") }}：{{ row.water }}</div>
+                        <div>{{ tableColumns["water_accelerate"].name }}：{{ row.water_accelerate }}</div>
+                        <div>{{ $t("common.water_rate_accelerate") }}：{{ row.water_rate_accelerate * 100 }}%</div>
                     </div>
                 </template>
             </el-table-column>
