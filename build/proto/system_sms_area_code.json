@@ -1,0 +1,11 @@
+{
+    "name": "区号管理",
+    "description": "区号管理",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=36766261",
+    "list": [
+        "admin/system_sms_area_code/table_columns",
+        "admin/system_sms_area_code/index",
+        "admin/system_sms_area_code/store",
+        "admin/system_sms_area_code/update/{id}"
+    ]
+}
