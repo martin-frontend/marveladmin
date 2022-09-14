@@ -77,6 +77,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             list_type: <any>"",
             currency_type: "",
             languages: [],
+            vendor_languages: [],
         },
         formSource: null, // 表单的原始数据
     };
@@ -153,6 +154,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             icon: "",
             currency_type: "",
             list_type: 0,
+            languages: [],
         });
     }
 
@@ -176,6 +178,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             vendor_product_name,
             vendor_type,
             currency_type,
+            languages,
         } = this.dialogData.form;
 
         const formCopy: any = {
@@ -192,8 +195,8 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             vendor_product_name,
             vendor_type,
             currency_type,
+            languages: JSON.stringify(languages),
         };
-        console.warn(formCopy);
 
         this.sendNotification(HttpType.admin_lobby_model_product_store, objectRemoveNull(formCopy));
     }
@@ -276,7 +279,8 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
     }
 
     setVendorProduct(value: any) {
-        this.dialogData.form.languages = value.languages;
+        // this.dialogData.form.languages = value.languages;
+        this.dialogData.form.vendor_languages = value.languages;
     }
 
     /** 筛选显示表格类型*/

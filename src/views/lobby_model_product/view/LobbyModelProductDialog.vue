@@ -108,18 +108,26 @@
 
             <el-form-item
                 size="mini"
+                :label="tableColumns['vendor_languages'].name"
+                prop="vendor_languages"
+                v-if="form.show_type == 2 && form.vendor_product_id"
+            >
+                <el-tag v-for="(value, key) in vendorProductVendorLanguageOptions" :key="key" :label="value">
+                    {{ tableColumns["vendor_languages"].options[value] }}
+                </el-tag>
+            </el-form-item>
+
+            <el-form-item
+                size="mini"
                 :label="tableColumns['languages'].name"
                 prop="languages"
                 v-if="form.show_type == 2 && form.vendor_product_id"
             >
-                <!-- <el-checkbox-group v-model="form.languages">
-                    <el-checkbox v-for="(value, key) in vendorProductLanguageOptions" :key="key" :label="value">
-                        {{ tableColumns["languages"].options[value] }}
+                <el-checkbox-group v-model="form.languages">
+                    <el-checkbox v-for="(value, key) in vendorProductLanguageOptions" :key="key" :label="key">
+                        {{ value }}
                     </el-checkbox>
-                </el-checkbox-group> -->
-                <el-tag v-for="(value, key) in vendorProductLanguageOptions" :key="key">
-                    {{ tableColumns["languages"].options[value] }}
-                </el-tag>
+                </el-checkbox-group>
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button
@@ -172,7 +180,11 @@ export default class LobbyModelProductDialog extends AbstractView {
     }
 
     get vendorProductLanguageOptions() {
-        return this.myProxy.dialogData.form.languages;
+        return this.myProxy.tableData.columns.languages.options;
+    }
+
+    get vendorProductVendorLanguageOptions() {
+        return this.myProxy.dialogData.form.vendor_languages;
     }
 
     private textMap = {
@@ -223,6 +235,7 @@ export default class LobbyModelProductDialog extends AbstractView {
             show_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             category: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             vendor_product_id: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
+            languages: [{ type: "array", required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             // icon: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
         };
         return { rules, rules1 };
