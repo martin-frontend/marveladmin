@@ -86,6 +86,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
         show_type: null,
         category: null,
         currency_type: null,
+        languages: null,
     };
 
     /**数据筛选 */
@@ -271,6 +272,9 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
                 return false;
             }
             if (this.listFilter.category && value.category != this.listFilter.category) {
+                return false;
+            }
+            if (this.listFilter.languages && !value.languages.includes(this.listFilter.languages)) {
                 return false;
             }
             if (this.listFilter.currency_type && value.currency_type != this.listFilter.currency_type) {

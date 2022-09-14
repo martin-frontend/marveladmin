@@ -51,6 +51,18 @@
                         >
                     </el-radio-group>
                 </el-form-item>
+                <el-form-item size="mini" :label="tableColumns['languages'].name">
+                    <el-radio-group v-model="listFilter.languages" filterable @change="onFilterChange">
+                        <el-radio class="radio" :label="null">{{ $t("common.all") }}</el-radio>
+                        <el-radio
+                            class="radio"
+                            v-for="(value, key) in tableColumns.languages.options"
+                            :key="key"
+                            :label="key"
+                            >{{ value }}</el-radio
+                        >
+                    </el-radio-group>
+                </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['category'].name">
                     <el-radio-group
                         v-model="listFilter.category"
@@ -89,7 +101,12 @@
         </div>
 
         <div class="row">
-            <el-button v-if="checkUnique(unique.lobby_model_product_store)" class="item" type="primary" icon="el-icon-circle-plus-outline" @click="handlerCreate"
+            <el-button
+                v-if="checkUnique(unique.lobby_model_product_store)"
+                class="item"
+                type="primary"
+                icon="el-icon-circle-plus-outline"
+                @click="handlerCreate"
                 >{{ $t("common.create") }}
             </el-button>
         </div>
