@@ -30,6 +30,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             vendor_product_name: { name: "", options: {} },
             vendor_type: { name: "", options: <any>{} },
             ori_product_id: { name: "", options: {} },
+            open_mode: { name: "", options: {} },
             icon: { name: "", options: {} },
             status: { name: "", options: {} },
             ori_vendor_extend: { name: "", options: {} },
@@ -50,7 +51,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
         page_count: 1,
         page_size: 20,
         currency_type: "",
-        languages: ""
+        languages: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -65,7 +66,8 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             icon: "",
             status: 1,
             ori_vendor_extend: {},
-            languages: ""
+            languages: "",
+            open_mode: 1,
         },
         formSource: null, // 表单的原始数据
         update: 1,
@@ -104,7 +106,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             page_count: 1,
             page_size: 20,
             currency_type: "",
-            languages: ""
+            languages: "",
         });
     }
 
@@ -137,7 +139,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             icon: "",
             status: 1,
             ori_vendor_extend: {},
-            languages: ""
+            languages: "",
         });
     }
 
@@ -156,7 +158,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             icon,
             status,
             ori_vendor_extend,
-            languages
+            languages,
         } = this.dialogData.form;
         const formCopy: any = {
             vendor_id,
@@ -167,7 +169,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             icon,
             status,
             ori_vendor_extend,
-            languages
+            languages,
         };
         try {
             let extendsStr: any = "{}";
@@ -209,7 +211,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             .then(() => {
                 this.sendNotification(HttpType.admin_vendor_product_update, { vendor_product_id: id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**更改方向数据 */

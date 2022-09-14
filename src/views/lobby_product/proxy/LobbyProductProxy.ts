@@ -46,14 +46,17 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
             vendor_id: { name: "", options: {} },
             vendor_product_name: { name: "", options: {} },
             vendor_type: { name: "", options: {} },
+            languages: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
-        tableDataFilter: <any>[],// 表格资料筛选
-        listFilter: {// 筛选
+        tableDataFilter: <any>[], // 表格资料筛选
+        listFilter: {
+            // 筛选
             app_type: null,
             category: null,
-        }
+            languages: null,
+        },
     };
     /**查询条件 */
     listQuery = {
@@ -70,10 +73,11 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
             app_type: null || "",
             category: null,
             lobby_model_product_ids: <any>[],
+            languages: null,
         },
         formSource: null, // 表单的原始数据
         productList: <any>[], // 表单产品列表
-        productFilterList: <any>[]   // 表单产品筛选列表
+        productFilterList: <any>[], // 表单产品筛选列表
     };
 
     /**设置表头数据 */
@@ -137,6 +141,7 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
             app_type: null,
             category: null,
             lobby_model_product_ids: [],
+            languages: null,
         });
     }
 
@@ -146,38 +151,44 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
     }
     /**添加数据 */
     onAdd() {
-        const {
-            plat_id,
-            app_type,
-            category,
-            lobby_model_product_ids,
-        } = this.dialogData.form;
+        const { plat_id, app_type, category, lobby_model_product_ids, languages } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
             app_type,
             category,
+            languages,
         };
         formCopy.lobby_model_product_ids = JSON.stringify(lobby_model_product_ids);
         this.sendNotification(HttpType.admin_lobby_product_store, objectRemoveNull(formCopy));
     }
     /**删除数据 */
     onDelete(data: any) {
-        MessageBox.confirm(<string> i18n.t("lobby_product.deleteConfirmStr") + data.vendor_product_name, <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
-            type: "warning",
-        })
+        MessageBox.confirm(
+            <string>i18n.t("lobby_product.deleteConfirmStr") + data.vendor_product_name,
+            <string>i18n.t("common.prompt"),
+            {
+                confirmButtonText: <string>i18n.t("common.determine"),
+                cancelButtonText: <string>i18n.t("common.cancel"),
+                type: "warning",
+            }
+        )
             .then(() => {
-                this.sendNotification(HttpType.admin_lobby_product_update, { lobby_product_id: data.lobby_product_id, is_delete: 1 });
+                this.sendNotification(HttpType.admin_lobby_product_update, {
+                    lobby_product_id: data.lobby_product_id,
+                    is_delete: 1,
+                });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**更新标签数据 */
     onUpdateTags(data: any) {
         const { lobby_product_id } = data;
         data.tags = JSON.stringify(data.tags);
-        this.sendNotification(HttpType.admin_lobby_product_update, { lobby_product_id: lobby_product_id, tags: data.tags });
+        this.sendNotification(HttpType.admin_lobby_product_update, {
+            lobby_product_id: lobby_product_id,
+            tags: data.tags,
+        });
     }
     /**更新排序 */
     onUpdateOpt(data: any) {
@@ -200,6 +211,9 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
             if (this.tableData.listFilter.category && value.category != this.tableData.listFilter.category) {
                 return false;
             }
+            if (this.tableData.listFilter.languages && !value.languages.includes(this.tableData.listFilter.languages)) {
+                return false;
+            }
             return true;
         });
     }
@@ -208,7 +222,9 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
         this.dialogData.productFilterList = this.dialogData.productList.filter((value: any) => {
             if (
                 this.tableData.list.find(
-                    (v: any) => v.lobby_model_product_id == value.lobby_model_product_id && v.app_type == this.dialogData.form.app_type
+                    (v: any) =>
+                        v.lobby_model_product_id == value.lobby_model_product_id &&
+                        v.app_type == this.dialogData.form.app_type
                 )
             ) {
                 return false;
@@ -217,6 +233,9 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
                 return false;
             }
             if (this.dialogData.form.category && value.category != this.dialogData.form.category) {
+                return false;
+            }
+            if (this.dialogData.form.languages && !value.languages.includes(this.dialogData.form.languages)) {
                 return false;
             }
             return true;

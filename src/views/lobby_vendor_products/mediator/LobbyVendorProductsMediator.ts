@@ -47,6 +47,7 @@ export default class LobbyVendorProductsMediator extends AbstractMediator {
                 break;
             case EventType.admin_lobby_vendor_products_update:
                 Message.success(SuccessMessage.update);
+                myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
             case EventType.admin_lobby_vendor_products_sync_data:

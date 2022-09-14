@@ -66,6 +66,8 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             water_type: { name: "", options: {} },
             water_rate: { name: "", options: {} },
             coin_name_unique: { name: "币种", options: {} },
+            water_accelerate: { name: "", options: {} },
+            water_rate_accelerate: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -75,6 +77,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             valid_bet_gold: "",
             water: "",
             win_gold: "",
+            water_accelerate: "",
         },
     };
     /**查询条件 */
@@ -138,7 +141,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
-        const { bet_gold, valid_bet_gold, water, win_gold } = data.summary;
+        const { bet_gold, valid_bet_gold, water, win_gold, water_accelerate } = data.summary;
         Object.assign(this.tableData.summary, data.summary);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }

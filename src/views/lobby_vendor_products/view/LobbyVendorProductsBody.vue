@@ -11,46 +11,58 @@
             :header-cell-style="{
                 'text-align': 'center',
             }"
-            :cell-style="{
-                'text-align': 'center',
-            }"
         >
             <el-table-column
+                align="center"
                 :label="tableColumns['lobby_vendor_product_id'].name"
                 prop="lobby_vendor_product_id"
                 min-width="80px"
             ></el-table-column>
-            <el-table-column :label="tableColumns['vendor_id'].name" prop="vendor_id" min-width="120px">
+            <el-table-column align="center" :label="tableColumns['vendor_id'].name" prop="vendor_id" min-width="120px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.vendor_id.options[row.vendor_id] }}</div>
                 </template>
             </el-table-column>
             <el-table-column
+                align="center"
                 :label="tableColumns['vendor_product_name'].name"
                 prop="vendor_product_name"
                 min-width="120px"
             ></el-table-column>
-            <el-table-column :label="tableColumns['vendor_type'].name" min-width="80px">
+            <el-table-column align="center" :label="tableColumns['vendor_type'].name" min-width="80px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.vendor_type.options[row.vendor_type] }}</div>
                 </template>
             </el-table-column>
             <el-table-column
+                align="center"
                 :label="tableColumns['ori_product_id'].name"
                 prop="ori_product_id"
                 min-width="100px"
             ></el-table-column>
-            <el-table-column prop="water_rate" :label="tableColumns['water_rate'].name" min-width="220px" align="center">
+            <el-table-column
+                align="center"
+                prop="water_rate"
+                :label="tableColumns['water_rate'].name"
+                min-width="220px"
+            >
                 <template slot-scope="{ row }">
-                    <div v-if="editWaterRateID == row.lobby_vendor_product_id">
+                    <div v-if="isWaterRate && editWaterRateID == row.lobby_vendor_product_id">
                         <el-input
                             v-model="editWaterRateValue"
                             style="width: 60px; margin-right: 10px"
                             oninput="value=value.replace(/[^\d]/g,'');if(value>100) value=100"
                         ></el-input>
-                        <el-button class="item" type="warning" size="mini" @click="editWaterRateID = null">{{
-                            $t("common.cancel")
-                        }}</el-button>
+                        <el-button
+                            class="item"
+                            type="warning"
+                            size="mini"
+                            @click="
+                                editWaterRateID = null;
+                                isWaterRate = false;
+                            "
+                            >{{ $t("common.cancel") }}</el-button
+                        >
                         <el-button class="item" type="success" size="mini" @click="onEditWaterRate(row)">{{
                             $t("common.determine")
                         }}</el-button>
@@ -63,11 +75,81 @@
                             size="mini"
                             @click="
                                 editWaterRateID = row.lobby_vendor_product_id;
+                                isWaterRate = true;
                                 editWaterRateValue = (row.water_rate * 100) >> 0;
                             "
                             >{{ $t("common.update") }}</el-button
                         >
                     </div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="water_rate_accelerate"
+                :label="tableColumns['water_rate_accelerate'].name"
+                min-width="220px"
+                align="center"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="isWaterRateAccelerate && editWaterRateID == row.lobby_vendor_product_id">
+                        <el-input
+                            v-model="editWaterRateAccelerateValue"
+                            style="width: 60px; margin-right: 10px"
+                            oninput="value=value.replace(/[^\d]/g,'');if(value>100) value=100"
+                        ></el-input>
+                        <el-button
+                            class="item"
+                            type="warning"
+                            size="mini"
+                            @click="
+                                editWaterRateID = null;
+                                isWaterRateAccelerate = false;
+                            "
+                            >{{ $t("common.cancel") }}</el-button
+                        >
+                        <el-button
+                            class="item"
+                            type="success"
+                            size="mini"
+                            @click="onEditWaterRateAccelerateValue(row)"
+                            >{{ $t("common.determine") }}</el-button
+                        >
+                    </div>
+                    <div v-else>
+                        <span style="margin-right: 10px">{{ (row.water_rate_accelerate * 100) >> 0 }}%</span>
+                        <el-button
+                            class="item"
+                            type="primary"
+                            size="mini"
+                            @click="
+                                editWaterRateID = row.lobby_vendor_product_id;
+                                isWaterRateAccelerate = true;
+                                editWaterRateAccelerateValue = (row.water_rate_accelerate * 100) >> 0;
+                            "
+                            >{{ $t("common.update") }}</el-button
+                        >
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column aling="left" :label="tableColumns['languages'].name" prop="languages" min-width="260px">
+                <template slot-scope="{ row }">
+                    <el-tag v-for="item of row.languages" :key="item">{{
+                        tableColumns["languages"].options[item]
+                    }}</el-tag>
+                    <el-button class="item ml-1" type="primary" size="mini" @click="onUpdateLanguages(row)">{{
+                        $t("common.update")
+                    }}</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column
+                align="left"
+                :label="tableColumns['vendor_languages'].name"
+                prop="vendor_languages"
+                min-width="260px"
+            >
+                <template slot-scope="{ row }">
+                    <el-tag v-for="item of row.vendor_languages" :key="item">{{
+                        tableColumns["vendor_languages"].options[item]
+                    }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('common.status')" class-name="status-col" width="240px">
@@ -130,7 +212,10 @@ export default class VendorProductBody extends AbstractView {
     private listQuery = this.myProxy.listQuery;
 
     private editWaterRateID: any = null;
+    private isWaterRate = false;
+    private isWaterRateAccelerate = false;
     private editWaterRateValue = "";
+    private editWaterRateAccelerateValue = "";
 
     private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
@@ -152,10 +237,23 @@ export default class VendorProductBody extends AbstractView {
     }
 
     private onEditWaterRate(row: any) {
-        this.myProxy.rowData.lobby_vendor_product_id = row.lobby_vendor_product_id;
-        this.myProxy.rowData.water_rate = parseInt(this.editWaterRateValue) / 100;
+        this.myProxy.rowRateData.lobby_vendor_product_id = row.lobby_vendor_product_id;
+        this.myProxy.rowRateData.water_rate = parseInt(this.editWaterRateValue) / 100;
         this.editWaterRateID = null;
+        this.isWaterRate = false;
         this.myProxy.onUpdateWaterRate();
+    }
+
+    private onEditWaterRateAccelerateValue(row: any) {
+        this.myProxy.rowRateAccelerateData.lobby_vendor_product_id = row.lobby_vendor_product_id;
+        this.myProxy.rowRateAccelerateData.water_rate_accelerate = parseInt(this.editWaterRateAccelerateValue) / 100;
+        this.editWaterRateID = null;
+        this.isWaterRateAccelerate = false;
+        this.myProxy.onUpdateWaterRateAccelerate();
+    }
+
+    onUpdateLanguages(row: any) {
+        this.myProxy.showDialog(DialogStatus.update, row);
     }
 }
 </script>
@@ -165,5 +263,9 @@ export default class VendorProductBody extends AbstractView {
 
 .row_status {
     display: flex;
+}
+
+.ml-1 {
+    margin-left: 12px;
 }
 </style>

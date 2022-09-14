@@ -191,6 +191,7 @@ export default {
         info: "信息",
         time: "时间",
         syncGame: "同步游戏",
+        water_rate_accelerate: "加速流水比例",
     },
     vendor: {
         vendorId: "厂商ID",

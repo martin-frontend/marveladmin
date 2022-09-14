@@ -27,6 +27,18 @@
                 :options="tableColumns.vendor_type.options"
                 clearable
             />
+            <SearchSelect
+                :title="tableColumns.languages.name"
+                v-model="listQuery.languages"
+                :options="tableColumns.languages.options"
+                clearable
+            />
+            <SearchSelect
+                :title="tableColumns.vendor_languages.name"
+                v-model="listQuery.vendor_languages"
+                :options="tableColumns.vendor_languages.options"
+                clearable
+            />
             <SearchInput :title="tableColumns.ori_product_id.name" v-model="listQuery.ori_product_id" />
             <SearchSelect
                 :title="tableColumns.status.name"
