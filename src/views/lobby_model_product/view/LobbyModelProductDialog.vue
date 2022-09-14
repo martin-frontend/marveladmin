@@ -65,7 +65,7 @@
                 :label="tableColumns['vendor_product_id'].name"
                 prop="vendor_product_id"
             >
-                <el-select v-model="form.vendor_product_id" filterable>
+                <el-select v-model="form.vendor_product_id" filterable @change="handlerDialogVendorProductChange">
                     <el-option
                         v-for="(value, key) in venderProductData"
                         :key="key"
@@ -105,13 +105,34 @@
                     }}</el-radio>
                 </el-radio-group>
             </el-form-item>
+
+            <el-form-item
+                size="mini"
+                :label="tableColumns['languages'].name"
+                prop="languages"
+                v-if="form.show_type == 2 && form.vendor_product_id"
+            >
+                <el-checkbox-group v-model="form.languages">
+                    <el-checkbox v-for="(value, key) in vendorProductLanguageOptions" :key="key" :label="value">
+                        {{ tableColumns["languages"].options[value] }}
+                    </el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button v-if="isStatusUpdate && checkUnique(unique.lobby_model_product_delete)" type="danger" size="mini" @click="handleDelete()">{{
-                    $t("common.delete")
-                }}</el-button>
-                <el-button type="primary" @click="isStatusUpdate && checkUnique(unique.lobby_model_product_update) ? handleUpdate() : handleAdd()">{{
-                    $t("common.save")
-                }}</el-button>
+                <el-button
+                    v-if="isStatusUpdate && checkUnique(unique.lobby_model_product_delete)"
+                    type="danger"
+                    size="mini"
+                    @click="handleDelete()"
+                    >{{ $t("common.delete") }}</el-button
+                >
+                <el-button
+                    type="primary"
+                    @click="
+                        isStatusUpdate && checkUnique(unique.lobby_model_product_update) ? handleUpdate() : handleAdd()
+                    "
+                    >{{ $t("common.save") }}</el-button
+                >
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -147,6 +168,10 @@ export default class LobbyModelProductDialog extends AbstractView {
         return this.myProxy.vendorIdOptions;
     }
 
+    get vendorProductLanguageOptions() {
+        return this.myProxy.vendorProductLanguageOptions;
+    }
+
     private textMap = {
         update: i18n.t("common.update"),
         create: i18n.t("common.create"),
@@ -164,7 +189,7 @@ export default class LobbyModelProductDialog extends AbstractView {
     }
 
     get venderProductData() {
-        if(this.form.vendor_id && this.form.vendor_type){
+        if (this.form.vendor_id && this.form.vendor_type) {
             return this.tableColumns.vendor_product_id.options_key[this.form.vendor_id][this.form.vendor_type];
             // return this.tableColumns.vendor_product_id.options_key[this.form.vendor_id];
         }
@@ -196,6 +221,7 @@ export default class LobbyModelProductDialog extends AbstractView {
             category: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             vendor_product_id: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
             // icon: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
+            languages: [{ type: "array", required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
         };
         return { rules, rules1 };
     }
@@ -226,6 +252,10 @@ export default class LobbyModelProductDialog extends AbstractView {
 
     private handleDelete() {
         this.myProxy.onDelete(this.form.lobby_model_product_id);
+    }
+
+    handlerDialogVendorProductChange() {
+        this.myProxy.getVendorProduct();
     }
 }
 </script>

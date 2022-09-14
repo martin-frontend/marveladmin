@@ -31,6 +31,7 @@ export default class LobbyModelProductMediator extends AbstractMediator {
             EventType.admin_lobby_model_product_update,
             EventType.admin_vendor_show,
             EventType.admin_vendor_index,
+            EventType.admin_vendor_product_show,
         ];
     }
 
@@ -61,6 +62,9 @@ export default class LobbyModelProductMediator extends AbstractMediator {
                 break;
             case EventType.admin_vendor_index:
                 myProxy.setVendorId(body);
+                break;
+            case EventType.admin_vendor_product_show:
+                myProxy.setVendorProduct(body);
                 break;
         }
     }

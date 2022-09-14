@@ -74,8 +74,9 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             vendor_product_id: "",
             vendor_product_name: "",
             icon: "",
-            list_type: "",
+            list_type: <any>"",
             currency_type: "",
+            languages: [],
         },
         formSource: null, // 表单的原始数据
     };
@@ -97,6 +98,9 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
 
     /**产品厂商 copy */
     vendorIdOptions = <any>{};
+
+    /**产品支持语言 */
+    vendorProductLanguageOptions = <any>{};
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -121,10 +125,11 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            this.getVendorId();
+            // this.getVendorId();
 
             this.dialogData.form.list_type = String(this.dialogData.form.list_type);
             this.onGetVendor(true);
+            this.getVendorProduct();
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -152,6 +157,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             icon: "",
             currency_type: "",
             list_type: 0,
+            languages: [],
         });
     }
 
@@ -175,6 +181,7 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             vendor_product_name,
             vendor_type,
             currency_type,
+            languages,
         } = this.dialogData.form;
 
         const formCopy: any = {
@@ -191,7 +198,9 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             vendor_product_name,
             vendor_type,
             currency_type,
+            languages: JSON.stringify(languages),
         };
+        console.warn(formCopy);
 
         this.sendNotification(HttpType.admin_lobby_model_product_store, objectRemoveNull(formCopy));
     }
@@ -245,6 +254,8 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
             options[type] = this.vendorTypeOptions[type];
         }
         this.tableData.columns.vendor_type.options = options;
+        this.dialogData.form.currency_type = value.currency_type;
+        this.getVendorId();
     }
 
     /**依照货币类型 取vendor id */
@@ -260,6 +271,19 @@ export default class LobbyModelProductProxy extends AbstractProxy implements ILo
         list.forEach((ele: any) => {
             this.vendorIdOptions[ele.vendor_id] = ele.vendor_name;
         });
+    }
+
+    getVendorProduct() {
+        if(this.dialogData.form.show_type == 2 && this.dialogData.form.vendor_product_id) {
+            this.sendNotification(HttpType.admin_vendor_product_show, {
+                vendor_product_id: this.dialogData.form.vendor_product_id,
+                page_size: 10000,
+            })
+        }
+    }
+
+    setVendorProduct(body: any) {
+        this.vendorProductLanguageOptions = body.languages;
     }
 
     /** 筛选显示表格类型*/

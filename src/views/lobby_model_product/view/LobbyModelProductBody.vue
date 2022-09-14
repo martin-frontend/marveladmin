@@ -37,12 +37,6 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['vendor_id'].name" prop="vendor_id">
-                <template slot-scope="{ row }">
-                    {{ tableColumns.vendor_id.options[row.vendor_id] }}
-                </template>
-            </el-table-column>
-
             <el-table-column :label="tableColumns['show_type'].name" prop="show_type">
                 <template slot-scope="{ row }">
                     {{ tableColumns.show_type.options[row.show_type] }}
@@ -57,12 +51,7 @@
 
             <el-table-column :label="tableColumns['vendor_product_name'].name" prop="vendor_product_name">
             </el-table-column>
-            <el-table-column
-                align="left"
-                :label="tableColumns['languages'].name"
-                prop="languages"
-                min-width="260px"
-            >
+            <el-table-column align="left" :label="tableColumns['languages'].name" prop="languages" min-width="260px">
                 <template slot-scope="{ row }">
                     <el-tag v-for="item of row.languages" :key="item">{{
                         tableColumns["languages"].options[item]
@@ -102,7 +91,11 @@
 
             <el-table-column :label="$t('common.operating')" class-name="status-col" width="160px">
                 <template slot-scope="{ row }">
-                    <el-button v-if="checkUnique(unique.lobby_model_product_update)" size="mini" type="primary" @click="handleEdit(row)"
+                    <el-button
+                        v-if="checkUnique(unique.lobby_model_product_update)"
+                        size="mini"
+                        type="primary"
+                        @click="handleEdit(row)"
                         >{{ $t("common.update") }}
                     </el-button>
                     <!--                    <el-button size="mini" type="danger" @click="onDelete(scope.$index, scope.row)"> 删除 </el-button>-->

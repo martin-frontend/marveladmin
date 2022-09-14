@@ -9,6 +9,7 @@
         "admin/lobby_model_product/show/{lobby_model_product_id}",
         "admin/lobby_model_product/update/{lobby_model_product_id}",
         "admin/vendor/show/{vendor_id}",
-        "admin/vendor/index"
+        "admin/vendor/index",
+        "admin/vendor_product/show/{vendor_product_id}"
     ]
 }
