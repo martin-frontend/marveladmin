@@ -44,7 +44,8 @@
                         {{ data.data["valid_bet_gold"] }}
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['win_gold'].name" prop="win_gold">
-                        <WinLossDisplay :amount="data.data[`win_gold`]" />
+                        <div v-if="data.data.win_gold == '-'">{{ data.data.win_gold }}</div>
+                        <WinLossDisplay v-else :amount="data.data.win_gold" />
                     </el-form-item>
 
                     <el-form-item size="mini" :label="tableColumns['settlement_water'].name" prop="settlement_water">
