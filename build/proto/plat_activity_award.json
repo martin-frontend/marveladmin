@@ -7,6 +7,7 @@
         "admin/plat_activity_award/index",
         "admin/plat_activity_award/show/{id}",
         "admin/plat_activity_award/send_by_hand",
-        "admin/plat/index"
+        "admin/plat/index",
+        "admin/plat_activity_award/cancel"
     ]
 }
