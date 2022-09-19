@@ -36,9 +36,13 @@
                     <!-- 总盈利 -->
                     <el-table-column :label="tableColumns[activeName + '_profit'].name" align="center" width="160px">
                         <template slot="header">
-                            <el-tooltip effect="dark" :content="tableColumns['group_profit'].tips" placement="top">
+                            <el-tooltip
+                                effect="dark"
+                                :content="tableColumns[activeName + '_profit'].tips"
+                                placement="top"
+                            >
                                 <div>
-                                    <span>{{ tableColumns["group_profit"].name }}</span>
+                                    <span>{{ tableColumns[activeName + "_profit"].name }}</span>
                                     <i class="el-icon-question"></i>
                                 </div>
                             </el-tooltip>
