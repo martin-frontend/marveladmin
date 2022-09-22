@@ -33,6 +33,8 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         invite_user_id: { name: "邀请码人ID", options: {} },
         is_channel_statistic_display: { name: "渠道统计展示", options: {} },
         is_promotion_statistics_display: { name: "推广统计展示", options: {} },
+        is_google_scan: { name: "是扫描过二维码", options: {} },
+        is_login_need_google: { name: "登录是否需要谷歌验证码", options: {} },
         last_login_app_type: { name: "最近登陆应用平台", options: {} },
         last_login_at: { name: "最近登入时间", options: {} },
         last_login_device: { name: "最近登录设备号", options: {} },
@@ -149,6 +151,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_receive_reward: "0",
         is_gold_transfer: "0",
         pretty_user_id: "",
+        is_login_need_google: "0"
     };
     /**代理关系链 */
     relationChain: string[] = [];
