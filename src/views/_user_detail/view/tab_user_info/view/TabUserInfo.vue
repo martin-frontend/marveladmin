@@ -336,8 +336,8 @@
                         <el-switch
                             @change="onSwitchLogin_need_google()"
                             v-model="userInfo.is_login_need_google"
-                            :active-value="0"
-                            :inactive-value="1"
+                            :active-value="1"
+                            :inactive-value="0"
                         ></el-switch>
                     </el-form-item>
                     <el-form-item
