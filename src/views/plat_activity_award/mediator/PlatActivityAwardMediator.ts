@@ -32,6 +32,7 @@ export default class PlatActivityAwardMediator extends AbstractMediator {
             EventType.admin_plat_activity_award_send_by_hand,
             EventType.admin_plat_index,
             GlobalEventType.REFRESH_PAGE,
+            EventType.admin_plat_activity_award_cancel,
         ];
     }
 
@@ -58,6 +59,11 @@ export default class PlatActivityAwardMediator extends AbstractMediator {
                 break;
             case GlobalEventType.REFRESH_PAGE:
                 myProxy.onQuery();
+                break;
+            case EventType.admin_plat_activity_award_cancel:
+                Message.success(<any>i18n.t("successMessage.operation"));
+                myProxy.onQuery();
+                myProxy.hideDialog();
                 break;
         }
     }

@@ -49,9 +49,9 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         summary: {
             award_num: "",
-            award_yes_num: ""
+            award_yes_num: "",
         },
-        multipleSelection: []
+        multipleSelection: [],
     };
     /**查询条件 */
     listQuery = {
@@ -72,7 +72,7 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
         bShow: false,
         status: DialogStatus.create,
         form: {
-            id: null
+            id: null,
             // TODO
         },
         formSource: null, // 表单的原始数据
@@ -93,7 +93,6 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.summary, data.summary);
-        console.error(this.tableData.summary);
 
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
@@ -144,6 +143,11 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
 
     /**派送奖励 */
     onSendAward(data: any) {
-        this.sendNotification(HttpType.admin_plat_activity_award_send_by_hand, data)
+        this.sendNotification(HttpType.admin_plat_activity_award_send_by_hand, data);
+    }
+
+    /**取消派獎 */
+    onCancelAward(data: any) {
+        this.sendNotification(HttpType.admin_plat_activity_award_cancel, data);
     }
 }

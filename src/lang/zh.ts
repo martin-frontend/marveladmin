@@ -41,7 +41,7 @@ export default {
         user: "普通用户",
         channelUser: "渠道用户",
         coinUser: "币商代收",
-        coinUserExchange: "币商代付"
+        coinUserExchange: "币商代付",
     },
     error_page: {
         back: "返回",
@@ -349,7 +349,7 @@ export default {
         confirmStr2: "是否{0}",
         coin_user_pay: "平台币商代付",
         coin_assigned: "指定币商",
-        coin_random: "币商随机"
+        coin_random: "币商随机",
     },
     plat_users_payment_method: {
         beneficiaryAccount: "收款人账号",
@@ -392,12 +392,17 @@ export default {
     },
     plat_activity_award: {
         batchAward: "批量派奖",
+        batchCancel: "批量取消",
         rewards: "派发奖励",
+        cancelRewards: "取消派奖",
         dialogTitle: "奖励详情",
         award: "派奖",
         confirmError: "请勾选玩家派奖",
+        confirmError1: "请勾选玩家取消派奖",
         batchConfirm: "是否给当前勾选玩家进行派奖?",
+        batchConfirm1: "是否给当前勾选玩家取消派奖?",
         confirmOnce: "是否给该玩家派奖?",
+        confirmOnce1: "是否取消派奖?",
     },
     statistic_plat_days: {
         player: "玩家数据",
@@ -638,7 +643,7 @@ export default {
     },
     // 平台兑换订单
     coin_exchange_orders: {
-        orders_operation: "订单操作"
+        orders_operation: "订单操作",
     },
     vip_recharge: {
         noLimit: "无限制",
@@ -680,7 +685,7 @@ export default {
         userWaterDetail: "用户返水详情",
         settleDetail: "结算详情",
         settleName: "结算名称",
-        gold_scale: "奖励金额"
+        gold_scale: "奖励金额",
     },
     // 平台统计
     statistic_user_keep_days: {},

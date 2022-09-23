@@ -1,11 +1,26 @@
 <template>
     <div>
         <div class="multi_btn">
-            <el-button type="primary" size="mini" @click="multiSendAward()">{{
-                $t("plat_activity_award.batchAward")
-            }}</el-button>
-            <span>{{ tableColumns.award_num.name }}：{{ myProxy.tableData.summary.award_num }},</span>
-            <span>{{ tableColumns.award_yes_num.name }}：{{ myProxy.tableData.summary.award_yes_num }}</span>
+            <el-button
+                type="primary"
+                size="mini"
+                @click="multiType == 'rewards' ? multiSendAward() : multiCancelAward()"
+                style="margin-right: 10px; margin-bottom: 5px"
+                >{{
+                    multiType == "rewards"
+                        ? $t("plat_activity_award.batchAward")
+                        : $t("plat_activity_award.batchCancel")
+                }}</el-button
+            >
+
+            <el-radio-group v-model="multiType" @change="clearSelection">
+                <el-radio label="rewards">{{ $t("plat_activity_award.award") }}</el-radio>
+                <el-radio label="cancel">{{ $t("common.cancel") }}</el-radio>
+            </el-radio-group>
+            <div>
+                <span>{{ tableColumns.award_num.name }}：{{ myProxy.tableData.summary.award_num }},</span>
+                <span>{{ tableColumns.award_yes_num.name }}：{{ myProxy.tableData.summary.award_yes_num }}</span>
+            </div>
         </div>
         <el-table
             :data="tableData"
@@ -22,6 +37,7 @@
             :cell-style="{
                 'text-align': 'center',
             }"
+            ref="multipleTable"
         >
             <el-table-column type="selection" :selectable="checkSelectable" min-width="20px"> </el-table-column>
             <el-table-column :label="tableColumns['id'].name" prop="id" min-width="60px"></el-table-column>
@@ -82,7 +98,7 @@
                     {{ tableColumns.plat_id.options[row.plat_id] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" min-width="150px">
+            <el-table-column :label="$t('common.operating')" min-width="300px">
                 <template slot-scope="{ row }">
                     <el-button-group>
                         <el-button
@@ -101,6 +117,14 @@
                         >
                             {{ $t("plat_activity_award.rewards") }}
                         </el-button>
+                        <el-button
+                            size="mini"
+                            type="primary"
+                            v-if="row.award_status == 11"
+                            @click="handlerCancelAward(row)"
+                        >
+                            {{ $t("plat_activity_award.cancelRewards") }}
+                        </el-button>
                     </el-button-group>
                 </template>
             </el-table-column>
@@ -116,6 +140,8 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import PlatActivityAwardProxy from "../proxy/PlatActivityAwardProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+
+type MultiType = "rewards" | "cancel";
 
 @Component({
     components: {
@@ -136,6 +162,8 @@ export default class PlatActivityAwardBody extends AbstractView {
     private pageInfo = this.myProxy.tableData.pageInfo;
     private listQuery = this.myProxy.listQuery;
 
+    multiType: MultiType = "rewards";
+
     private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
@@ -146,6 +174,7 @@ export default class PlatActivityAwardBody extends AbstractView {
     }
 
     private handleSelectionChange(val: any) {
+        this.myProxy.tableData.multipleSelection.length = 0;
         Object.assign(this.myProxy.tableData.multipleSelection, val);
     }
 
@@ -185,6 +214,44 @@ export default class PlatActivityAwardBody extends AbstractView {
                 this.myProxy.onSendAward({ ids: JSON.stringify([data.id]) });
             })
             .catch(() => {});
+    }
+
+    /**批量取消 */
+    multiCancelAward() {
+        if (this.myProxy.tableData.multipleSelection.length === 0) {
+            this.$message(this.$t("plat_activity_award.confirmError1"));
+            return;
+        }
+        this.$confirm(this.$t("plat_activity_award.batchConfirm1"), this.$t("common.prompt"), {
+            confirmButtonText: this.$t("common.determine"),
+            cancelButtonText: this.$t("common.cancel"),
+            type: "warning",
+        })
+            .then(() => {
+                const ids = this.myProxy.tableData.multipleSelection.map((item: any) => item.id);
+                this.myProxy.onCancelAward({ ids: JSON.stringify(ids) });
+                this.clearSelection();
+            })
+            .catch(() => {});
+    }
+
+    /**单次取消派獎 */
+    handlerCancelAward(data: any) {
+        this.$confirm(this.$t("plat_activity_award.confirmOnce1"), this.$t("common.prompt"), {
+            confirmButtonText: this.$t("common.determine"),
+            cancelButtonText: this.$t("common.cancel"),
+            type: "warning",
+        })
+            .then(() => {
+                this.myProxy.onCancelAward({ ids: JSON.stringify([data.id]) });
+                this.clearSelection();
+            })
+            .catch(() => {});
+    }
+
+    clearSelection() {
+        this.myProxy.tableData.multipleSelection.length = 0;
+        this.$refs.multipleTable.clearSelection();
     }
 }
 </script>
