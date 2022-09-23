@@ -43,11 +43,17 @@ export default class TabUserUnfoMediator extends AbstractMediator {
                     break;
                 case EventType.admin_plat_user_update:
                     this.myProxy.getUserDetail(body);
-                    // @ts-ignore
-                    Message.success(
-                        `${this.myProxy.tableColumns[this.myProxy.dialogData.filed].name}` +
-                        <any>i18n.t("successMessage.modified")
-                    );
+                    if (this.myProxy.dialogData.filed != "") {
+                        // @ts-ignore
+                        Message.success(
+                            `${this.myProxy.tableColumns[this.myProxy.dialogData.filed].name}` +
+                            <any>i18n.t("successMessage.modified")
+                        );
+                    } else {
+                        // 清除谷歌验证码
+                        Message.success(<any>i18n.t("successMessage.operation"));
+                    }
+                    this.myProxy.dialogData.filed = "";
                     this.sendNotification(GlobalEventType.REFRESH_PAGE);
                     this.myProxy.hideDialog();
                     break;

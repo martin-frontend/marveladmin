@@ -546,6 +546,7 @@ export default {
         goldTransfer: "金币划转",
         clearCache: "清除缓存",
         confirmClearCache: "确定要清除缓存",
+        clearGoogle: "清除谷歌验证码",
     },
     recharge_channels: {
         rechargeVendorSelect: "请先选择充值厂商",

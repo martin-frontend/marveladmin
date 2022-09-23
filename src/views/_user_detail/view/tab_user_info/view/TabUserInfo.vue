@@ -327,17 +327,31 @@
                     </el-form-item>
                 </div>
 
-                <el-form-item
-                    size="mini"
-                    :label="tableColumns['is_login_need_google'].name"
-                    prop="is_login_need_google"
-                >
-                    <el-switch
-                        v-model="userInfo.is_login_need_google"
-                        :active-value="0"
-                        :inactive-value="1"
-                    ></el-switch>
-                </el-form-item>
+                <div class="row_display">
+                    <el-form-item
+                        size="mini"
+                        :label="tableColumns['is_login_need_google'].name"
+                        prop="is_login_need_google"
+                    >
+                        <el-switch
+                            @change="onSwitchLogin_need_google()"
+                            v-model="userInfo.is_login_need_google"
+                            :active-value="0"
+                            :inactive-value="1"
+                        ></el-switch>
+                    </el-form-item>
+                    <el-form-item
+                        size="mini"
+                        label-width="120px"
+                        :label="$t(`plat.clearGoogle`)"
+                        prop="status"
+                        class="btn"
+                    >
+                        <el-button type="primary" @click="handlerGoogleClear()">
+                            {{ $t("admin_user.clear") }}
+                        </el-button>
+                    </el-form-item>
+                </div>
 
                 <el-form-item size="mini" :label="tableColumns.gold_columns_disable.name" prop="gold_columns_disable">
                     <label slot="label">
@@ -468,6 +482,11 @@ export default class TabUserInfo extends AbstractView {
         this.myProxy.onEdit("is_gold_transfer", this.userInfo.is_gold_transfer);
     }
 
+    private onSwitchLogin_need_google() {
+        this.myProxy.dialogData.filed = "is_login_need_google";
+        this.myProxy.onEdit("is_login_need_google", this.userInfo.is_login_need_google);
+    }
+
     private showUserDetail(user_id: number) {
         this.myProxy.onShowDetail(user_id);
     }
@@ -478,6 +497,10 @@ export default class TabUserInfo extends AbstractView {
 
     private handlerClear() {
         this.myProxy.clearCache(this.userInfo.user_id);
+    }
+
+    private handlerGoogleClear() {
+        this.myProxy.clearGoogle(this.userInfo.user_id, this.userInfo.google_key);
     }
 
     destroyed() {

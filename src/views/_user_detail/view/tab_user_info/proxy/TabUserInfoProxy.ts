@@ -30,6 +30,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         gender: { name: "性别", options: {} },
         gold: { name: "平台余额", options: {}, tips: "" },
         gold_columns_disable: { name: "金币明细列屏蔽", options: <any>{} },
+        google_key: { name: '谷歌验证码KEY', options: <any>{} },
         invite_user_id: { name: "邀请码人ID", options: {} },
         is_channel_statistic_display: { name: "渠道统计展示", options: {} },
         is_promotion_statistics_display: { name: "推广统计展示", options: {} },
@@ -95,6 +96,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         email: null,
         gender: 0,
         gold: "0.000",
+        google_key: "",
         invite_user_id: 0,
         last_login_app_type: 2,
         last_login_at: "",
@@ -243,5 +245,10 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     /**清除緩存 */
     clearCache(user_id: number) {
         this.sendNotification(HttpType.admin_plat_user_clear_cache, { user_id: user_id });
+    }
+
+    /**清除谷歌验证码 */
+    clearGoogle(user_id: number, google_key: string) {
+        this.sendNotification(HttpType.admin_plat_user_update, { user_id: user_id, google_key: google_key });
     }
 }
