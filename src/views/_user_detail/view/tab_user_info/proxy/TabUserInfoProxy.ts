@@ -248,7 +248,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     }
 
     /**清除谷歌验证码 */
-    clearGoogle(user_id: number, google_key: string) {
-        this.sendNotification(HttpType.admin_plat_user_update, { user_id: user_id, google_key: google_key });
+    clearGoogle(user_id: number) {
+        this.sendNotification(HttpType.admin_plat_user_update, { user_id: user_id, google_key: "" });
     }
 }

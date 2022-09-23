@@ -500,7 +500,7 @@ export default class TabUserInfo extends AbstractView {
     }
 
     private handlerGoogleClear() {
-        this.myProxy.clearGoogle(this.userInfo.user_id, this.userInfo.google_key);
+        this.myProxy.clearGoogle(this.userInfo.user_id);
     }
 
     destroyed() {
