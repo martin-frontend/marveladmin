@@ -115,8 +115,11 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
     }
     /**添加数据 */
     onAdd() {
+        const { icon, name, area_code } = this.dialogData.form;
         const formCopy: any = {
-            // TODO
+            icon,
+            name,
+            area_code,
         };
         this.sendNotification(HttpType.admin_system_sms_area_code_store, objectRemoveNull(formCopy));
     }
