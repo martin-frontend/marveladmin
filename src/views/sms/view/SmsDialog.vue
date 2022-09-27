@@ -9,7 +9,7 @@
                     v-model="form.name"
                 ></el-input>
             </el-form-item>
-            <el-form-item :label="tableColumns.area_code.name" prop="area_code">
+            <!-- <el-form-item :label="tableColumns.area_code.name" prop="area_code">
                 <el-input
                     class="area_code"
                     type="number"
@@ -19,7 +19,7 @@
                     v-model="form.area_code"
                     oninput="if(value.length > 5) value=value.slice(0,5);value=value.replace(/[^\d]/g,'');"
                 ></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item :label="tableColumns.status.name" prop="status">
                 <el-radio-group v-model="form.status">
                     <el-radio v-for="(value, key) in tableColumns.status.options" :key="key" :label="Number(key)">{{
@@ -29,6 +29,11 @@
             </el-form-item>
             <el-form-item :label="tableColumns.proxy_status.name" prop="proxy_status">
                 <el-switch v-model="form.proxy_status" :active-value="1" :inactive-value="0"></el-switch>
+            </el-form-item>
+            <el-form-item :label="tableColumns.extends.name">
+                <div class="editor-container">
+                    <JsonEditor v-model="form.extends" />
+                </div>
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button v-if="isStatusUpdate && checkUnique(unique.sms_delete)" type="danger" size="mini" @click="handleDelete(form)">{{
@@ -49,8 +54,13 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import { unique, checkUnique } from "@/core/global/Permission";
+import JsonEditor from "@/components/JsonEditor/index.vue";
 
-@Component
+@Component({
+    components: {
+        JsonEditor,
+    },
+})
 export default class SmsDialog extends AbstractView {
     //权限标识
     private unique = unique;
@@ -86,7 +96,7 @@ export default class SmsDialog extends AbstractView {
     get rules() {
         return {
             name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            area_code: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            // area_code: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
         };
     }
 
@@ -114,7 +124,7 @@ export default class SmsDialog extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
-.area_code {
-    width: 120px;
-}
+// .area_code {
+//     width: 120px;
+// }
 </style>

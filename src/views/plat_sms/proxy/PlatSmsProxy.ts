@@ -35,6 +35,7 @@ export default class PlatSmsProxy extends AbstractProxy implements IPlatSmsProxy
             sms_api_key: { name: "", options: {} },
             sms_api_uname: { name: "", options: {} },
             tpl_id: { name: "", options: {} },
+            template: { name: "", options: {} },
             type: { name: "", options: {} },
             updated_at: { name: "", options: {} },
             platAll: { name: "", options: <any>{} },
@@ -65,6 +66,7 @@ export default class PlatSmsProxy extends AbstractProxy implements IPlatSmsProxy
             status: 1,
             tpl_id: "",
             head_sign: "",
+            template: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -131,6 +133,7 @@ export default class PlatSmsProxy extends AbstractProxy implements IPlatSmsProxy
             status: 1,
             tpl_id: "",
             head_sign: "",
+            template: "",
         });
     }
 
@@ -144,7 +147,7 @@ export default class PlatSmsProxy extends AbstractProxy implements IPlatSmsProxy
     }
     /**添加数据 */
     onAdd() {
-        const { plat_id, type, sms_api_key, sms_api_uname, sms_id, status, tpl_id, head_sign } = this.dialogData.form;
+        const { plat_id, type, sms_api_key, sms_api_uname, sms_id, status, tpl_id, head_sign, template } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
             type,
@@ -154,6 +157,7 @@ export default class PlatSmsProxy extends AbstractProxy implements IPlatSmsProxy
             status,
             tpl_id,
             head_sign,
+            template,
         };
         this.sendNotification(HttpType.admin_plat_sms_store, objectRemoveNull(formCopy));
     }

@@ -33,7 +33,8 @@ export default class SmsProxy extends AbstractProxy implements ISmsProxy {
             created_by: { name: "", options: {} },
             updated_at: { name: "", options: {} },
             proxy_status: { name: "", options: {} },
-            area_code:{ name: "", options: {} },
+            extends: { name: "", options: {} },
+            // area_code:{ name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -52,7 +53,8 @@ export default class SmsProxy extends AbstractProxy implements ISmsProxy {
             name: "",
             status: 1,
             proxy_status: 1,
-            area_code:""
+            // area_code:"",
+            extends: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -105,6 +107,7 @@ export default class SmsProxy extends AbstractProxy implements ISmsProxy {
             name: "",
             status: 1,
             proxy_status: 1,
+            extends: {},
         });
     }
 
@@ -114,8 +117,8 @@ export default class SmsProxy extends AbstractProxy implements ISmsProxy {
     }
     /**添加数据 */
     onAdd() {
-        const { name, status } = this.dialogData.form;
-        const formCopy: any = { name, status };
+        const { name, status, extends: formExtends } = this.dialogData.form;
+        const formCopy: any = { name, status, extends: formExtends };
         this.sendNotification(HttpType.admin_sms_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */

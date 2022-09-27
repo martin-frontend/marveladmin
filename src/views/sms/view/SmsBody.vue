@@ -19,11 +19,11 @@
                     {{ scope.row.name }}
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.area_code.name" class-name="status-col" width="100px">
+            <!-- <el-table-column :label="tableColumns.area_code.name" class-name="status-col" width="100px">
                 <template slot-scope="{ row }">
                     {{ row.area_code }}
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column :label="tableColumns.status.name" class-name="status-col" width="100px">
                 <template slot-scope="scope">
                     <el-tag :type="scope.row.status | statusFilter">
