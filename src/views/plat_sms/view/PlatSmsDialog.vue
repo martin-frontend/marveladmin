@@ -29,12 +29,18 @@
                 <el-input clearable :placeholder="$t('common.pleaseEnter')" v-model="form.sms_api_key"></el-input>
             </el-form-item>
             <el-form-item :label="`${tableColumns.tpl_id.name}`" prop="tpl_id">
-                <el-input
-                    clearable
-                    maxlength="30"
-                    :placeholder="$t('common.pleaseEnter')"
-                    v-model="form.tpl_id"
-                ></el-input>
+                <div class="flex d-flex">
+                    <el-input
+                        clearable
+                        maxlength="30"
+                        :placeholder="$t('common.pleaseEnter')"
+                        v-model="form.tpl_id"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.tpl_id)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
             <el-form-item :label="`${tableColumns.type.name}`" prop="type">
                 <el-select
@@ -53,20 +59,40 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="`${tableColumns.head_sign.name}`" prop="head_sign">
-                <el-input
-                    clearable
-                    maxlength="30"
-                    :placeholder="$t('common.pleaseEnter')"
-                    v-model="form.head_sign"
-                ></el-input>
+                <div class="flex d-flex">
+                    <el-input
+                        clearable
+                        maxlength="30"
+                        :placeholder="$t('common.pleaseEnter')"
+                        v-model="form.head_sign"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.head_sign)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
             <el-form-item :label="`${tableColumns.template.name}`" prop="template">
-                <el-input
-                    clearable
-                    maxlength="30"
-                    :placeholder="$t('common.pleaseEnter')"
-                    v-model="form.template"
-                ></el-input>
+                <div class="flex d-flex">
+                    <el-input
+                        clearable
+                        maxlength="30"
+                        :placeholder="$t('common.pleaseEnter')"
+                        v-model="form.template"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.template)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
             <el-form-item :label="`${tableColumns.status.name}`" prop="status">
                 <el-radio-group v-model="form.status">
@@ -95,6 +121,8 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class PlatSmsDialog extends AbstractView {
@@ -105,6 +133,7 @@ export default class PlatSmsDialog extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: PlatSmsProxy = this.getProxy(PlatSmsProxy);
+    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private form = this.myProxy.dialogData.form;
@@ -161,6 +190,14 @@ export default class PlatSmsDialog extends AbstractView {
 
     private handleDelete() {
         this.myProxy.onDelete(this.form.id);
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_SMS;
+        data.plat_id = this.form.plat_id;
+        this.langProxy.showDialog(data);
     }
 }
 </script>
