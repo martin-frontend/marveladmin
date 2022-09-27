@@ -623,7 +623,7 @@ export default {
         phoneNumberInput: "输入接受测试短信手机号码",
         requirePhoneNumber: "手机号码未填写",
         inputCorrectNumber: "请输入正确的手机号码",
-        smsRemain: "短信余量",
+        smsRemain: "短信余额",
         smsBalance: "此短信通道余额",
         test: "测试",
         active: "启用",

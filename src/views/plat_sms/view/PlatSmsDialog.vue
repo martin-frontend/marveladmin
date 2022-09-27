@@ -48,7 +48,7 @@
                         v-for="(value, key) in tableColumns.type.options"
                         :key="key"
                         :label="value"
-                        :value="key"
+                        :value="Number(key)"
                     ></el-option>
                 </el-select>
             </el-form-item>
@@ -58,6 +58,14 @@
                     maxlength="30"
                     :placeholder="$t('common.pleaseEnter')"
                     v-model="form.head_sign"
+                ></el-input>
+            </el-form-item>
+            <el-form-item :label="`${tableColumns.template.name}`" prop="template">
+                <el-input
+                    clearable
+                    maxlength="30"
+                    :placeholder="$t('common.pleaseEnter')"
+                    v-model="form.template"
                 ></el-input>
             </el-form-item>
             <el-form-item :label="`${tableColumns.status.name}`" prop="status">
