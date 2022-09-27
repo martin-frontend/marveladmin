@@ -4,6 +4,16 @@
             ><el-form-item :label="tableColumns.name.name" prop="name">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
+            <el-form-item :label="tableColumns['area_region'].name" prop="area_region">
+                <el-select v-model="form.area_region" clearable class="select" placeholder="请选择">
+                    <el-option
+                        v-for="(value, key) in tableColumns['area_region'].options"
+                        :key="key"
+                        :label="value"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item :label="tableColumns.area_code.name" prop="area_code">
                 <el-input v-model="form.area_code"></el-input>
             </el-form-item>
@@ -67,6 +77,7 @@ export default class SystemSmsAreaCodeDialog extends AbstractView {
             icon: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             name: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
             area_code: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            area_region: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
         };
     }
 

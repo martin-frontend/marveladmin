@@ -14,6 +14,18 @@
             <el-table-column :label="tableColumns['name'].name" prop="name" class-name="status-col" min-width="80px">
             </el-table-column>
             <el-table-column
+                :label="tableColumns['area_region'].name"
+                prop="area_region"
+                class-name="status-col"
+                min-width="80px"
+            >
+                <template slot-scope="{ row }">
+                    <span>
+                        {{ tableColumns["area_region"].options[row.area_region] }}
+                    </span>
+                </template>
+            </el-table-column>
+            <el-table-column
                 :label="tableColumns['area_code'].name"
                 prop="area_code"
                 class-name="status-col"
