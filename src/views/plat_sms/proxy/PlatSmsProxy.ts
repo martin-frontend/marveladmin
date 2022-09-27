@@ -147,7 +147,7 @@ export default class PlatSmsProxy extends AbstractProxy implements IPlatSmsProxy
     }
     /**添加数据 */
     onAdd() {
-        const { plat_id, type, sms_api_key, sms_api_uname, sms_id, status, tpl_id, head_sign } = this.dialogData.form;
+        const { plat_id, type, sms_api_key, sms_api_uname, sms_id, status, tpl_id, head_sign, template } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
             type,
@@ -157,6 +157,7 @@ export default class PlatSmsProxy extends AbstractProxy implements IPlatSmsProxy
             status,
             tpl_id,
             head_sign,
+            template,
         };
         this.sendNotification(HttpType.admin_plat_sms_store, objectRemoveNull(formCopy));
     }

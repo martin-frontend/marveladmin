@@ -139,6 +139,7 @@ export default class PlatSmsDialog extends AbstractView {
             sms_api_key: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             sms_api_uname: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
             type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            template: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
         };
     }
 
