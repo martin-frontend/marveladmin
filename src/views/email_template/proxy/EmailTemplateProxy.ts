@@ -36,7 +36,7 @@ export default class EmailTemplateProxy extends AbstractProxy implements IEmailT
             created_at: { name: "", options: {} },
             updated_by: { name: "", options: {} },
             updated_at: { name: "", options: {} },
-            plat_id: { name: "所属平台", options: {} },
+            plat_id: { name: "平台ID", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -45,6 +45,7 @@ export default class EmailTemplateProxy extends AbstractProxy implements IEmailT
     listQuery = {
         page_count: 1,
         page_size: 20,
+        plat_id: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -65,7 +66,13 @@ export default class EmailTemplateProxy extends AbstractProxy implements IEmailT
     /**设置表头数据 */
     setTableCoulmns(data: any) {
         Object.assign(this.tableData.columns, data);
-        this.onQuery();
+        const PLAT_ID_OPTIONS_KEY = Object.keys(this.tableData.columns["plat_id"].options);
+        if (PLAT_ID_OPTIONS_KEY.length > 0) {
+            if (!PLAT_ID_OPTIONS_KEY.includes(this.listQuery.plat_id)) {
+                this.listQuery.plat_id = PLAT_ID_OPTIONS_KEY[0];
+            }
+            this.onQuery();
+        }
     }
     /**表格数据 */
     setTableData(data: any) {
