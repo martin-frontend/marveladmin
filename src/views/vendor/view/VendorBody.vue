@@ -71,20 +71,6 @@
             >
             </el-table-column>
             <el-table-column
-                :label="tableColumns['url_get_balance'].name"
-                prop="url_get_balance"
-                width="150px"
-                align="center"
-            >
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns['url_update_balance'].name"
-                prop="url_update_balance"
-                width="150px"
-                align="center"
-            >
-            </el-table-column>
-            <el-table-column
                 :label="tableColumns['vendor_wallet_type'].name"
                 prop="vendor_wallet_type"
                 class-name="status-col"
