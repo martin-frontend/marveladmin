@@ -37,6 +37,7 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
             name: { name: "", options: {} },
             updated_at: { name: "", options: {} },
             updated_by: { name: "", options: {} },
+            area_region: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -55,6 +56,7 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
             icon: "",
             name: "",
             area_code: "",
+            area_region: null,
         },
         formSource: null, // 表单的原始数据
     };
@@ -106,6 +108,7 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
             icon: "",
             name: "",
             area_code: "",
+            area_region: null,
         });
     }
 

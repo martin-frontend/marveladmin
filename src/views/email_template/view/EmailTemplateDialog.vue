@@ -18,12 +18,18 @@
             </el-form-item>
 
             <el-form-item :label="tableColumns.name.name" prop="name">
-                <el-input
-                    clearable
-                    maxlength="30"
-                    :placeholder="$t('common.pleaseEnter')"
-                    v-model="form.name"
-                ></el-input>
+                <div class="flex d-flex">
+                    <el-input
+                        clearable
+                        maxlength="30"
+                        :placeholder="$t('common.pleaseEnter')"
+                        v-model="form.name"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <el-form-item :label="tableColumns.type.name" prop="type">
@@ -38,26 +44,46 @@
             </el-form-item>
 
             <el-form-item :label="tableColumns.subject.name" prop="subject">
-                <el-input
-                    clearable
-                    maxlength="30"
-                    :placeholder="$t('common.pleaseEnter')"
-                    v-model="form.subject"
-                ></el-input>
+                <div class="flex d-flex">
+                    <el-input
+                        clearable
+                        maxlength="30"
+                        :placeholder="$t('common.pleaseEnter')"
+                        v-model="form.subject"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.subject)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <el-form-item :label="`${tableColumns.content.name}`" prop="content">
-                <el-input
-                    maxlength="300"
-                    :rows="6"
-                    type="textarea"
-                    filterable
-                    clearable
-                    class="select"
-                    :placeholder="`${tableColumns.content.name}`"
-                    v-model="form.content"
-                    show-word-limit
-                ></el-input>
+                <div class="flex d-flex">
+                    <el-input
+                        maxlength="300"
+                        :rows="6"
+                        type="textarea"
+                        filterable
+                        clearable
+                        class="select"
+                        :placeholder="`${tableColumns.content.name}`"
+                        v-model="form.content"
+                        show-word-limit
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.content)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <el-form-item :label="tableColumns.replaceable_text.name" prop="replaceable_text">
@@ -82,6 +108,8 @@ import GlobalVar from "@/core/global/GlobalVar";
 import { unique, checkUnique } from "@/core/global/Permission";
 import JsonEditor from "@/components/JsonEditor/index.vue";
 import EmailTemplateProxy from "../proxy/EmailTemplateProxy";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component({
     components: {
@@ -96,6 +124,7 @@ export default class EmailTemplateDialog extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: EmailTemplateProxy = this.getProxy(EmailTemplateProxy);
+    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     private tableColumns = this.myProxy.tableData.columns;
     private form = this.myProxy.dialogData.form;
@@ -150,6 +179,14 @@ export default class EmailTemplateDialog extends AbstractView {
 
     private handleDelete() {
         this.myProxy.onDelete(this.form.id);
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_SYSTEM_EMAIL_MODEl;
+        data.plat_id = this.form.plat_id;
+        this.langProxy.showDialog(data);
     }
 }
 </script>

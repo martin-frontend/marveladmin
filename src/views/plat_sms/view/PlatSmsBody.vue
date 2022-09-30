@@ -63,6 +63,11 @@
                     {{ row.tpl_id }}
                 </template>
             </el-table-column>
+            <el-table-column :label="`${tableColumns.template.name}`" class-name="status-col" min-width="100px">
+                <template slot-scope="{ row }">
+                    {{ row.template }}
+                </template>
+            </el-table-column>
             <el-table-column :label="`${tableColumns.status.name}`" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
                     <el-tag :type="row.status | statusFilter">
