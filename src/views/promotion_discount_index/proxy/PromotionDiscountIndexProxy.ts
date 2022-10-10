@@ -1,6 +1,7 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { dateFormat, formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
+import GlobalEventType from "@/core/global/GlobalEventType";
 import i18n from "@/lang";
 import { HttpType } from "@/views/promotion_discount_index/setting";
 import { MessageBox } from "element-ui";
@@ -188,6 +189,12 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
     showDialog() {
         this.dialogData.bShow = true;
     }
+
+    // 打开用户详情页
+    onShowDetail(user_id: number) {
+        this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
+    }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.resetDialogForm();

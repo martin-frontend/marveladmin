@@ -161,6 +161,11 @@ export default class PromotionDiscountIndexBody extends AbstractView {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
+
+    // 打开用户详情
+    private showUserDetail(user_id: number) {
+        this.myProxy.onShowDetail(user_id);
+    }
 }
 </script>
 
