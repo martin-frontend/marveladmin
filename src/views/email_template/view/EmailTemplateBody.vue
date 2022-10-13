@@ -14,7 +14,7 @@
                     {{ scope.row.id }}
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.plat_id.name" class-name="status-col" width="60px">
+            <el-table-column :label="tableColumns.plat_id.name" class-name="status-col" width="120px">
                 <template slot-scope="scope">
                     {{ tableColumns.plat_id.options[scope.row.plat_id] }}
                 </template>
