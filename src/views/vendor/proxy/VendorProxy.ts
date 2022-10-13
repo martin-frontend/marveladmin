@@ -48,6 +48,9 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             proxy_key: { name: "", options: {} },
             time_region_hour_interval: { name: "", options: {} },
             languages: { name: "", options: {} },
+            url_get_balance: { name: "", options: {} },
+            url_update_balance: { name: "", options: {} },
+            vendor_wallet_type: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -75,6 +78,9 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             proxy_key: "",
             time_region_hour_interval: 0,
             languages: [],
+            url_get_balance: "",
+            url_update_balance: "",
+            vendor_wallet_type: "",
         },
         formSource: null, // 表单的原始数据
         // 扩展数据
@@ -124,6 +130,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             this.dialogData.extendsData = jsonToObject(data.extends);
+
             Object.assign(this.dialogData.form, data);
             this.sendNotification(HttpType.admin_vendor_show, { vendor_id: data.vendor_id });
         } else {
@@ -149,6 +156,9 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             proxy_key: "",
             time_region_hour_interval: 0,
             languages: [],
+            url_get_balance: "",
+            url_update_balance: "",
+            vendor_wallet_type: 1,
         });
         this.dialogData.extendsData = {};
     }
@@ -169,7 +179,10 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             currency_type,
             proxy_key,
             time_region_hour_interval,
-            languages
+            languages,
+            url_get_balance,
+            url_update_balance,
+            vendor_wallet_type,
         } = this.dialogData.form;
         const formCopy: any = {
             vendor_id,
@@ -181,7 +194,10 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             currency_type,
             proxy_key,
             time_region_hour_interval,
-            languages
+            languages,
+            url_get_balance,
+            url_update_balance,
+            vendor_wallet_type,
         };
         formCopy.vendor_types = JSON.stringify(formCopy.vendor_types);
         formCopy.languages = JSON.stringify(formCopy.languages);
