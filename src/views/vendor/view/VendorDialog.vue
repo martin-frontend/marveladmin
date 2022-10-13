@@ -87,6 +87,30 @@
                     :placeholder="$t('common.pleaseEnter')"
                 ></el-input>
             </el-form-item>
+            <!-- 获取用户余额地址 -->
+            <el-form-item size="mini" :label="tableColumns['url_get_balance'].name" prop="url_get_balance">
+                <el-input v-model="form.url_get_balance" :placeholder="$t('common.pleaseEnter')"></el-input>
+            </el-form-item>
+            <!-- 更新用户余额地址 -->
+            <el-form-item size="mini" :label="tableColumns['url_update_balance'].name" prop="url_update_balance">
+                <el-input v-model="form.url_update_balance" :placeholder="$t('common.pleaseEnter')"></el-input>
+            </el-form-item>
+            <!-- 钱包类型 -->
+            <el-form-item :label="tableColumns.vendor_wallet_type.name" prop="vendor_wallet_type">
+                <el-select
+                    v-model="form.vendor_wallet_type"
+                    filterable
+                    class="select"
+                    :placeholder="$t('common.requiredSelect')"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns.vendor_wallet_type.options"
+                        :key="key"
+                        :label="value"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['extends'].name" prop="extends">
                 <!-- <el-input type="textarea" v-model="form.extends" placeholder="接入厂商所需配置"></el-input> -->
                 <div class="editor-container">
