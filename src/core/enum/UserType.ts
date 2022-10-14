@@ -13,7 +13,8 @@ export enum UserType {
 
 /**
  * 语言管理里面的管理类型
- * options: {1: '前端WEB皮肤1语言', 2: '后端管理语言', 3: '服务器数据语言', 4: '厂商游戏', 5: '平台公告', 6: '常见问题', 7: '平台邮件', 8: '平台活动',11:‘跑马灯’,12:'系统邮件模版','13':'平台短信通道'}
+ * options: {1: '前端WEB皮肤1语言', 2: '后端管理语言', 3: '服务器数据语言', 4: '厂商游戏', 5: '平台公告', 6: '常见问题', 7: '平台邮件', 
+ * 8: '平台活动',11:‘跑马灯’,12:'系统邮件模版','13':'平台短信通道'，‘14’:'充值兑换'}
  */
 export enum LanguageType {
     TYPE_WEB_SKIN_LANGUAGE = 1,
@@ -27,4 +28,5 @@ export enum LanguageType {
     TYPE_PLAT_MARQUEE = 11,
     TYPE_SYSTEM_EMAIL_MODEl = 12,
     TYPE_PLAT_SMS = 13,
+    TYPE_PLAT_RECHARGE_EXCHANGE = 14,
 }

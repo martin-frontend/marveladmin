@@ -72,7 +72,16 @@
             </el-form-item>
 
             <el-form-item size="mini" :label="methodTableColumns['explain'].name" prop="explain">
-                <el-input type="textarea" v-model="form.explain"></el-input>
+                <div class="flex d-flex">
+                <el-input type="textarea" v-model="form.explain" style="margin-right: 0.8rem"></el-input>
+                <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.explain)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <el-form-item size="mini" :label="methodTableColumns.status.name" prop="status">
@@ -105,6 +114,8 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import { checkUnique, unique } from "@/core/global/Permission";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class ExchangeChannelMethodDialog extends AbstractView {
@@ -113,6 +124,7 @@ export default class ExchangeChannelMethodDialog extends AbstractView {
     private checkUnique = checkUnique;
     // proxy
     private myProxy: ExchangeChannelMethodProxy = this.getProxy(ExchangeChannelMethodProxy);
+    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
 
     // columns
     private tableColumns = this.myProxy.tableData.columns;
@@ -195,6 +207,14 @@ export default class ExchangeChannelMethodDialog extends AbstractView {
 
     private handleDelete() {
         this.myProxy.onDelete();
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_RECHARGE_EXCHANGE;
+        data.plat_id = this.form.plat_id;
+        this.langProxy.showDialog(data);
     }
 }
 </script>

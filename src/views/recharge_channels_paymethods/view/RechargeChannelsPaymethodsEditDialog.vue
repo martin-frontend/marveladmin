@@ -1,7 +1,7 @@
 <template>
     <!-- 添加/编辑 充值通道编辑 -->
     <el-dialog
-        width="650px"
+        width="850px"
         :title="textMap[status]"
         :visible.sync="myProxy.addDialogData.bShow"
         append-to-body
@@ -51,10 +51,20 @@
 
             <!-- 充值说明 -->
             <el-form-item :label="`${tableColumns.subtitle.name}`">
-                <el-input v-model="addFrom.subtitle" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <div class="flex d-flex">
+                <el-input v-model="addFrom.subtitle" :placeholder="$t('common.pleaseEnter')" style="margin-right: 0.8rem"></el-input>
+                <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(addFrom.subtitle)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
             <!-- 提示信息 -->
             <el-form-item :label="`${tableColumns.notice.name}`">
+                <div class="flex d-flex">
                 <el-input
                     v-model="addFrom.notice"
                     :placeholder="$t('common.pleaseEnter')"
@@ -62,7 +72,16 @@
                     filterable
                     clearable
                     class="select"
+                    style="margin-right: 0.8rem"
                 ></el-input>
+                <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(addFrom.notice)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
             <!-- 充值最小额度 -->
             <el-form-item :label="`${tableColumns.min_gold.name}`" prop="min_gold">
@@ -151,6 +170,8 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class RechargeChannelsPaymethodsEditDialog extends AbstractView {
@@ -161,6 +182,7 @@ export default class RechargeChannelsPaymethodsEditDialog extends AbstractView {
     private net_status = GlobalVar.net_status;
     // proxy
     private myProxy: RechargeChannelsPaymethodsProxy = this.getProxy(RechargeChannelsPaymethodsProxy);
+    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     private tableColumns: any = this.myProxy.dialogTableData.columns;
     private list = this.myProxy.channelList;
@@ -236,6 +258,14 @@ export default class RechargeChannelsPaymethodsEditDialog extends AbstractView {
 
     private handleDelete() {
         this.myProxy.onDelete(this.addFrom.id);
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_RECHARGE_EXCHANGE;
+        data.plat_id = this.form.plat_id;
+        this.langProxy.showDialog(data);
     }
 }
 </script>
