@@ -1,6 +1,7 @@
 <template>
     <div class="content lobby_product">
         <LobbyProductDialog v-if="myProxy.dialogData.bShow"/>
+        <LobbyProductIconDialog v-if="myProxy.iconDialogData.bShow"/>
         <LobbyProductHeader/>
         <LobbyProductBody/>
     </div>
@@ -14,12 +15,14 @@ import { Component } from "vue-property-decorator";
 import LobbyProductDialog from "./LobbyProductDialog.vue";
 import LobbyProductHeader from "./LobbyProductHeader.vue";
 import LobbyProductBody from "./LobbyProductBody.vue";
+import LobbyProductIconDialog from "./LobbyProductIconDialog.vue";
 
 @Component({
     components: {
         LobbyProductDialog,
         LobbyProductHeader,
         LobbyProductBody,
+        LobbyProductIconDialog,
     }
 })
 export default class LobbyProduct extends AbstractView {
