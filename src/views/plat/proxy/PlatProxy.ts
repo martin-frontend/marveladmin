@@ -85,6 +85,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             validate_type: { name: "安全设置", options: {} },
             register_types: { name: "注册方式", options: {} },
             stake_bonus_model_id: { name: "", options: {} },
+            is_show_commission: { name: "显示推广赚钱", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -139,6 +140,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_bind_phone_recharge: 0,
         validate_type: [],
         register_types: [],
+        is_show_commission: 1,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -338,6 +340,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_bind_phone_recharge, //绑定手机充值
             validate_type,
             register_types, //注册方式
+            is_show_commission,
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -377,6 +380,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_bind_phone_recharge, //绑定手机充值
             validate_type,
             register_types,
+            is_show_commission,
         };
 
         formCopy.app_types = JSON.stringify(formCopy.app_types);

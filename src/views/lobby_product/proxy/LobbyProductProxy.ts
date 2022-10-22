@@ -80,6 +80,15 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
         productFilterList: <any>[], // 表单产品筛选列表
     };
 
+    iconDialogData = {
+        bShow: false,
+        status: DialogStatus.update,
+        form: <any>{
+            icon: "",
+        },
+        formSource: null, // 表单的原始数据
+    }
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -133,6 +142,7 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
+        this.iconDialogData.bShow = false;
     }
     /**重置弹窗表单 */
     resetDialogForm() {
@@ -239,6 +249,20 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
                 return false;
             }
             return true;
+        });
+    }
+
+    showIconDialog(data: any) {
+        this.iconDialogData.bShow = true;
+        Object.assign(this.iconDialogData.form, data);
+    }
+
+    /**更新icon数据 */
+    onUpdateIcon() {
+        const { icon, lobby_product_id } = this.iconDialogData.form;
+        this.sendNotification(HttpType.admin_lobby_product_update, {
+            lobby_product_id,
+            icon,
         });
     }
 }

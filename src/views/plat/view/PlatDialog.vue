@@ -433,6 +433,17 @@
                                 ></el-option>
                             </el-select>
                         </div>
+                        <div>
+                            <span class="title_1">{{ tableColumns["is_show_commission"].name }}</span>
+                            <el-select v-model="form.is_show_commission" class="select">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_show_commission.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
                     </div>
                 </el-form-item>
                 <el-form-item size="mini" :label="$t('plat.goldTransfer')" prop="">

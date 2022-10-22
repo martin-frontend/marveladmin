@@ -55,7 +55,8 @@
                     {{ tableColumns["vendor_id"].options[row.vendor_id] }}
                 </template>
             </el-table-column>
-            <el-table-column align="center"
+            <el-table-column
+                align="center"
                 :label="tableColumns['app_type'].name"
                 class-name="status-col"
                 prop="app_type"
@@ -78,18 +79,35 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center"
+            <el-table-column
+                align="center"
                 :label="tableColumns['vendor_product_name'].name"
                 prop="vendor_product_name"
                 min-width="120px"
             ></el-table-column>
-            <el-table-column align="center" :label="tableColumns['icon'].name" prop="icon" min-width="140px"></el-table-column>
+            <el-table-column align="center" :label="tableColumns['icon'].name" prop="icon" min-width="140px">
+                <template slot-scope="{ row }">
+                    <div v-if="row.icon" style="margin-bottom: 5px">{{ row.icon }}</div>
+                    <el-button
+                        size="mini"
+                        type="primary"
+                        @click="handlerUpdate(row)"
+                        >{{ $t("common.update") }}</el-button
+                    >
+                </template>
+            </el-table-column>
             <el-table-column align="center" :label="tableColumns.status.name" class-name="status-col" min-width="70px">
                 <template slot-scope="{ row }">
                     <el-tag :type="row.status | statusFilter">{{ tableColumns.status.options[row.status] }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column align="center" :label="tableColumns['tags'].name" prop="tags" class-name="status-col" min-width="140px">
+            <el-table-column
+                align="center"
+                :label="tableColumns['tags'].name"
+                prop="tags"
+                class-name="status-col"
+                min-width="140px"
+            >
                 <template slot-scope="{ row }">
                     <el-checkbox-group v-model="row.tags" @change="handlerTags(row)">
                         <el-checkbox v-for="(value, key) in tableColumns.tags.options" :key="key" :label="Number(key)"
@@ -101,7 +119,9 @@
 
             <el-table-column aling="left" :label="tableColumns['languages'].name" prop="languages" min-width="200px">
                 <template slot-scope="{ row }">
-                    <el-tag class="mr-1" v-for="item of row.languages" :key="item">{{ tableColumns['languages'].options[item] }}</el-tag>
+                    <el-tag class="mr-1" v-for="item of row.languages" :key="item">{{
+                        tableColumns["languages"].options[item]
+                    }}</el-tag>
                 </template>
             </el-table-column>
 
@@ -201,6 +221,10 @@ export default class LobbyProductBody extends AbstractView {
         const { lobby_product_id } = row;
         const { opt } = value;
         this.myProxy.onUpdateOpt({ lobby_product_id: lobby_product_id, opt: opt });
+    }
+
+    handlerUpdate(row: any) {
+        this.myProxy.showIconDialog(row);
     }
 }
 </script>
