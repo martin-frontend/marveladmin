@@ -5,7 +5,10 @@
                 :title="tableColumns.plat_id.name"
                 :options="tableColumns.plat_id.options"
                 v-model="listQuery.plat_id"
-                @change="handlerSearch"
+                @change="
+                    changePlat();
+                    handlerSearch();
+                "
                 :clearable="false"
             />
         </div>
@@ -17,7 +20,7 @@
             />
             <SearchSelect
                 :title="tableColumns.channel_id.name"
-                :options="tableColumns.channel_id.options"
+                :options="tableColumns.channel_id_options"
                 v-model="listQuery.channel_id"
             />
             <SearchInput :title="tableColumns.nick_name.name" v-model="listQuery.nick_name" />
@@ -73,6 +76,12 @@ export default class PlatAgentBindHeader extends AbstractView {
     private handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
+    }
+
+    //更换平台切换对应渠道
+    private changePlat() {
+        this.listQuery.channel_id = "";
+        this.tableColumns.channel_id_options = this.tableColumns.channel_id.options[this.listQuery.plat_id];
     }
 
     private handlerReset() {
