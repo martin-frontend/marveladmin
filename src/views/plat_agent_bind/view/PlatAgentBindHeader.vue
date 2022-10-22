@@ -82,6 +82,10 @@ export default class PlatAgentBindHeader extends AbstractView {
     private changePlat() {
         this.listQuery.channel_id = "";
         this.tableColumns.channel_id_options = this.tableColumns.channel_id.options[this.listQuery.plat_id];
+        const channel_id_keys = Object.keys(this.tableColumns.channel_id_options);
+        channel_id_keys.forEach((key: any) => {
+            this.tableColumns.channel_id_options[key] = key;
+        });
     }
 
     private handlerReset() {

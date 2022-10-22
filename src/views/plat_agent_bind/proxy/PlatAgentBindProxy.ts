@@ -279,11 +279,12 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 //设定选取平台第一个
                 this.listQuery.plat_id = plat_id_options_keys[0];
             }
-            // channel_id_options_keys.forEach((key: any) => {
-            //     this.tableData.columns.channel_id.options[key] = key;
-            // });
             if (this.listQuery.plat_id) {
                 this.tableData.columns.channel_id_options = this.tableData.columns.channel_id.options[this.listQuery.plat_id]
+                const channel_id_keys = Object.keys(this.tableData.columns.channel_id_options);
+                channel_id_keys.forEach((key: any) => {
+                    this.tableData.columns.channel_id_options[key] = key;
+                });
             }
             this.onQuery();
         }
