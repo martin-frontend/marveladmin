@@ -1,0 +1,12 @@
+{
+    "name": "平台地区管理",
+    "description": "平台地区管理",
+    "document": "",
+    "list": [
+        "admin/plat_area_region/table_columns",
+        "admin/plat_area_region/index",
+        "admin/plat_area_region/store",
+        "admin/plat_area_region/update/{id}",
+        "admin/plat_area_region/delete/{id}"
+    ]
+}
