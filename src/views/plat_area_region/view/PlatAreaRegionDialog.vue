@@ -1,12 +1,46 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
-        <el-form
-            ref="form"
-            :rules="rules"
-            :model="form"
-            label-width="115px"
-            v-loading="net_status.loading"
-        >
+    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="700px">
+        <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
+            <el-form-item :label="`${tableColumns.plat_id.name}`" prop="plat_id" label-width="100px">
+                <el-select
+                    style="width:100%"
+                    v-model="form.plat_id"
+                    filterable
+                    clearable
+                    :placeholder="$t('common.pleaseChoose')"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns.plat_id.options"
+                        :key="key"
+                        :label="value"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item :label="`${tableColumns.area_region.name}`" prop="area_region" label-width="100px">
+                <el-select
+                    style="width:100%"
+                    v-model="form.area_region"
+                    filterable
+                    clearable
+                    :placeholder="$t('common.pleaseChoose')"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns.area_region.options"
+                        :key="key"
+                        :label="value"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item class="dialog-footer">
+                <el-button v-if="isStatusUpdate" type="danger" size="mini" @click="handleDelete()">{{
+                    $t("common.delete")
+                }}</el-button>
+                <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
+                    $t("common.save")
+                }}</el-button>
+            </el-form-item>
         </el-form>
     </el-dialog>
 </template>
@@ -34,12 +68,12 @@ export default class PlatAreaRegionDialog extends AbstractView {
     private form = this.myProxy.dialogData.form;
 
     private textMap = {
-        update: "编辑",
-        create: "新增"
+        update: this.$t("common.update"),
+        create: this.$t("common.create"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow(){
+    private onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -54,7 +88,10 @@ export default class PlatAreaRegionDialog extends AbstractView {
     }
 
     get rules() {
-        return {};
+        return {
+            plat_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            area_region: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+        };
     }
 
     private handleAdd() {

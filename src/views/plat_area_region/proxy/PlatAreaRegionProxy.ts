@@ -4,6 +4,7 @@ import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_area_region/setting";
 import { MessageBox } from "element-ui";
 import IPlatAreaRegionProxy from "./IPlatAreaRegionProxy";
+import i18n from "@/lang";
 
 export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatAreaRegionProxy {
     static NAME = "PlatAreaRegionProxy";
@@ -37,9 +38,11 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        isResort: false,    // 是否重新排序
     };
     /**查询条件 */
     listQuery = {
+        plat_id: "",
         page_count: 1,
         page_size: 20,
     };
@@ -48,8 +51,9 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
         bShow: false,
         status: DialogStatus.create,
         form: {
-            id: null
-            // TODO
+            id: null,
+            area_region: "",
+            plat_id: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -57,13 +61,20 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        this.onQuery();
+        const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
+        if (plat_id_options_keys.length > 0) {
+            if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
+                this.listQuery.plat_id = plat_id_options_keys[0];
+            }
+            this.onQuery();
+        }
     }
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        this.tableData.isResort = true;
     }
     /**详细数据 */
     setDetail(data: any) {
@@ -74,7 +85,8 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
-            // TODO
+            plat_id: "",
+            area_region: "",
         });
     }
 
@@ -85,7 +97,6 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            // this.sendNotification(HttpType.undefined, { id: data.id });
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -98,7 +109,8 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
-            // TODO
+            plat_id: "",
+            area_region: "",
         });
     }
 
@@ -108,8 +120,13 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
     }
     /**添加数据 */
     onAdd() {
+        const {
+            plat_id,
+            area_region,
+        } = this.dialogData.form;
         const formCopy: any = {
-            // TODO
+            area_region,
+            plat_id,
         };
         this.sendNotification(HttpType.admin_plat_area_region_store, objectRemoveNull(formCopy));
     }
@@ -124,20 +141,25 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
             return;
         }
         // 添加必填参数
-        // TODO
+        formCopy.id = this.dialogData.form.id;
         // 发送消息
         this.sendNotification(HttpType.admin_plat_area_region_update, formCopy);
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm("您是否删除该记录", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
+        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {
-                this.sendNotification(HttpType.admin_plat_area_region_update, { id, is_delete: 1 });
+                this.sendNotification(HttpType.admin_plat_area_region_delete, { id });
             })
             .catch(() => { });
+    }
+
+    /**重新排序 */
+    onResort({ id, next_id }: { [key: string]: number }) {
+        this.facade.sendNotification(HttpType.admin_plat_area_region_update, { id: id, next_id: next_id, opt: 11 });
     }
 }

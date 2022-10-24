@@ -58,6 +58,8 @@ export default class PlatAreaRegionMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_area_region_delete:
+                Message.success(SuccessMessage.update);
+                myProxy.onQuery();
                 break;
 
         }

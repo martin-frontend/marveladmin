@@ -1,9 +1,21 @@
 <template>
     <div class="header-content">
         <div class="group">
+            <SearchSelect
+                :title="tableColumns.plat_id.name"
+                v-model="listQuery.plat_id"
+                :options="tableColumns.plat_id.options"
+                @change="handlerSearch"
+                :clearable="false"
+            />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">查询</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">重置</el-button>
+                <el-button
+                    @click="handlerCreate()"
+                    class="header-button"
+                    type="primary"
+                    icon="el-icon-circle-plus-outline"
+                    >{{ $t("common.create") }}</el-button
+                >
             </div>
         </div>
     </div>
@@ -20,7 +32,11 @@ import SearchInput from "@/components/SearchInput.vue";
 import SearchRange from "@/components/SearchRange.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
-@Component
+@Component({
+    components: {
+        SearchSelect,
+    },
+})
 export default class PlatAreaRegionHeader extends AbstractView {
     //权限标识
     private unique = unique;
