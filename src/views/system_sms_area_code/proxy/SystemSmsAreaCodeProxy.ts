@@ -41,6 +41,7 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        isResort: false,    // 是否重新排序
     };
     /**查询条件 */
     listQuery = {
@@ -71,6 +72,7 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        this.tableData.isResort = true;
     }
     /**详细数据 */
     setDetail(data: any) {
@@ -151,6 +153,11 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
             .then(() => {
                 this.sendNotification(HttpType.admin_system_sms_area_code_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
+    }
+
+    /**重新排序 */
+    onResort({ id, next_id }: { [key: string]: number }) {
+        this.facade.sendNotification(HttpType.admin_system_sms_area_code_update, { id: id, next_id: next_id, opt: 11 });
     }
 }
