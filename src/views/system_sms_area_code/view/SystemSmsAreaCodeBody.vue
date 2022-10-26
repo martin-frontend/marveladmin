@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-table
-            :data="tableData"
+            :data="data"
             border
             fit
             highlight-current-row
@@ -104,6 +104,7 @@ export default class SystemSmsAreaCodeBody extends AbstractView {
 
     @Watch("myProxy.tableData.isResort")
     resort() {
+        console.log(this.myProxy.tableData.isResort);
         if (this.myProxy.tableData.isResort) {
             this.data = [];
             this.$nextTick(() => {
