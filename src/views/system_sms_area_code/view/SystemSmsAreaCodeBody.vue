@@ -104,7 +104,6 @@ export default class SystemSmsAreaCodeBody extends AbstractView {
 
     @Watch("myProxy.tableData.isResort")
     resort() {
-        console.log(this.myProxy.tableData.isResort);
         if (this.myProxy.tableData.isResort) {
             this.data = [];
             this.$nextTick(() => {
