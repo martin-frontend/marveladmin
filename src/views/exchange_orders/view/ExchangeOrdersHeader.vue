@@ -121,7 +121,7 @@ export default class ExchangeOrdersHeader extends AbstractView {
         this.autoProxy.listQuery.plat_id = this.listQuery.plat_id;
 
         this.myProxy.onQuery();
-        this.autoProxy.checkVerify();
+        // this.autoProxy.checkVerify();
     }
 
     private handlerReset() {
