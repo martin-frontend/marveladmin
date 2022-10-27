@@ -47,6 +47,7 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
             water_32: { name: "真人流水", options: [] },
             water_64: { name: "体育流水", options: [] },
             water_128: { name: "电竞流水", options: [] },
+            username: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -64,6 +65,7 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
         "created_at-{<=}": dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
         page_count: 1,
         page_size: 20,
+        username: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -125,6 +127,7 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
         Object.assign(this.listQuery, {
             user_id: "",
             nick_name: "",
+            username: "",
         });
     }
 
@@ -135,7 +138,7 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            this.sendNotification(HttpType.admin_plat_users_backwater_log_show, { plat_id: data.plat_id, backwater_id: data.backwater_id, id: data.backwater_id});
+            this.sendNotification(HttpType.admin_plat_users_backwater_log_show, { plat_id: data.plat_id, backwater_id: data.backwater_id, id: data.backwater_id });
         } else {
             this.dialogData.formSource = null;
         }

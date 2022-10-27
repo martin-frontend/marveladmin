@@ -37,7 +37,7 @@
                 v-model="listQuery.vendor_type"
                 :options="tableColumns.vendor_type.options"
             />
-             <SearchInput :title="tableColumns.vendor_product_name.name" v-model="listQuery.vendor_product_name" />
+            <SearchInput :title="tableColumns.vendor_product_name.name" v-model="listQuery.vendor_product_name" />
             <SearchInput :title="tableColumns.ori_product_id.name" v-model="listQuery.ori_product_id" />
             <SearchSelect
                 :title="tableColumns.settlement_status.name"
@@ -62,6 +62,7 @@
                     <el-radio :label="1">{{ $t("plat_users_bet.win") }}</el-radio>
                 </el-radio-group>
             </SearchRange>
+            <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                     $t("common.search")

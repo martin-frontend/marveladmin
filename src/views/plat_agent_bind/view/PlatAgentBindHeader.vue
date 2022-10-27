@@ -29,6 +29,7 @@
                 :maxValue.sync="listQuery['max_promotion_floor']"
                 :placeholders="[$t('common.minMoney'), $t('common.maxMoney')]"
             />
+            <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                     $t("common.search")

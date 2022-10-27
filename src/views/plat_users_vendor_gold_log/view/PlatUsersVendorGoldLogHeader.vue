@@ -37,6 +37,7 @@
                 v-model="listQuery.coin_name_unique"
                 :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
             />
+            <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
         </div>
         <div class="btn-group">
             <div>

@@ -30,7 +30,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         columns: <any>{
             // TODO
             binded_at: { name: "绑定时间", options: {} },
-            bonus_ratio: {name: '分红统计比例'},
+            bonus_ratio: { name: '分红统计比例' },
             channel_id: <any>{ name: "所属渠道", options: {} },
             commission_awaiting_num: { name: "当前可领取佣金", options: {} },
             commission_received_num: { name: "已领取佣金总额", options: {} },
@@ -53,6 +53,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             version: { name: "推广配置版本", options: {} },
             is_agent_bonus: { name: "", options: {} },
             agent_bonus_rate: { name: "", options: {} },
+            username: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -74,6 +75,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         invite_user_id: "",
         max_promotion_floor: "",
         min_promotion_floor: "",
+        username: "",
     };
 
     /**保底 弹窗相关数据 */
@@ -194,60 +196,60 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         },
         tableData: {
             columns: <any>{
-                activity_bonus: {name: "活动红利", options:[]},
-                backwater_2: {name: "棋牌挖矿", options:[]},
-                backwater_4: {name: "彩票挖矿", options:[]},
-                backwater_8: {name: "捕鱼挖矿", options:[]},
-                backwater_16: {name: "电子挖矿", options:[]},
-                backwater_32: {name: "真人挖矿", options:[]},
-                backwater_64: {name: "体育电竞挖矿", options:[]},
-                backwater_128: {name: "链游挖矿", options:[]},
-                bonus_config: {name: "配置", options: []},
-                bonus_pool_2: {name: "棋牌分红奖池", options:[]},
-                bonus_pool_4: {name: "彩票分红奖池", options:[]},
-                bonus_pool_8: {name: "捕鱼分红奖池", options:[]},
-                bonus_pool_16: {name: "电子分红奖池", options:[]},
-                bonus_pool_32: {name: "真人分红奖池", options:[]},
-                bonus_pool_64: {name: "体育电竞分红奖池", options:[]},
-                bonus_pool_128: {name: "链游分红奖池", options:[]},
-                bonus_pool_ratio: {name: "奖池分红比例", options: []},
-                bonus_ratio: {name: "分红统计比例", options: []},
-                commission_2: {name: "棋牌返佣", options:[]},
-                commission_4: {name: "彩票返佣", options:[]},
-                commission_8: {name: "捕鱼返佣", options:[]},
-                commission_16: {name: "电子返佣", options:[]},
-                commission_32: {name: "真人返佣", options:[]},
-                commission_64: {name: "体育电竞返佣", options:[]},
-                commission_128: {name: "链游返佣", options:[]},
-                created_at: {name: "创建时间", options: []},
-                created_by: {name: "创建人", options: []},
-                exchange_fee: {name: "提现手续费", options:[]},
-                exchange_fee_ratio: {name: "提现手续费比例", options: []},
-                invite_bonus_ratio: {name: "上级代理分红统计比例"},
-                invite_nick_name: {name: "上级代理昵称"},
-                invite_user_id: {name: "上级编号"},
-                is_show: {name: "统计开关", options:[]},
-                nick_name: {name: "昵称"},
-                recharge_fee: {name: "充值手续费", options:[]},
-                recharge_fee_ratio: {name: "充值手续费比例", options: []},
-                updated_at: {name: "修改时间", options: []},
-                updated_by: {name: "更新人", options: []},
-                user_id: {name: "用户ID", options: []},
-                vendor_fee_2: {name: "棋牌厂商费用", options:[]},
-                vendor_fee_4: {name: "彩票厂商费用", options:[]},
-                vendor_fee_8: {name: "捕鱼厂商费用", options:[]},
-                vendor_fee_16: {name: "电子厂商费用", options:[]},
-                vendor_fee_32: {name: "真人厂商费用", options:[]},
-                vendor_fee_64: {name: "体育电竞厂商费用", options:[]},
-                vendor_fee_128: {name: "链游厂商费用", options:[]},
-                vendor_fee_ratio: {name: "产商游戏费用比例", options: []},
-                win_loss_2: {name: "棋牌输赢", options:[]},
-                win_loss_4: {name: "彩票输赢", options:[]},
-                win_loss_8: {name: "捕鱼输赢", options:[]},
-                win_loss_16: {name: "电子输赢", options:[]},
-                win_loss_32: {name: "真人输赢", options:[]},
-                win_loss_64: {name: "体育电竞输赢", options:[]},
-                win_loss_128: {name: "链游输赢", options:[]},
+                activity_bonus: { name: "活动红利", options: [] },
+                backwater_2: { name: "棋牌挖矿", options: [] },
+                backwater_4: { name: "彩票挖矿", options: [] },
+                backwater_8: { name: "捕鱼挖矿", options: [] },
+                backwater_16: { name: "电子挖矿", options: [] },
+                backwater_32: { name: "真人挖矿", options: [] },
+                backwater_64: { name: "体育电竞挖矿", options: [] },
+                backwater_128: { name: "链游挖矿", options: [] },
+                bonus_config: { name: "配置", options: [] },
+                bonus_pool_2: { name: "棋牌分红奖池", options: [] },
+                bonus_pool_4: { name: "彩票分红奖池", options: [] },
+                bonus_pool_8: { name: "捕鱼分红奖池", options: [] },
+                bonus_pool_16: { name: "电子分红奖池", options: [] },
+                bonus_pool_32: { name: "真人分红奖池", options: [] },
+                bonus_pool_64: { name: "体育电竞分红奖池", options: [] },
+                bonus_pool_128: { name: "链游分红奖池", options: [] },
+                bonus_pool_ratio: { name: "奖池分红比例", options: [] },
+                bonus_ratio: { name: "分红统计比例", options: [] },
+                commission_2: { name: "棋牌返佣", options: [] },
+                commission_4: { name: "彩票返佣", options: [] },
+                commission_8: { name: "捕鱼返佣", options: [] },
+                commission_16: { name: "电子返佣", options: [] },
+                commission_32: { name: "真人返佣", options: [] },
+                commission_64: { name: "体育电竞返佣", options: [] },
+                commission_128: { name: "链游返佣", options: [] },
+                created_at: { name: "创建时间", options: [] },
+                created_by: { name: "创建人", options: [] },
+                exchange_fee: { name: "提现手续费", options: [] },
+                exchange_fee_ratio: { name: "提现手续费比例", options: [] },
+                invite_bonus_ratio: { name: "上级代理分红统计比例" },
+                invite_nick_name: { name: "上级代理昵称" },
+                invite_user_id: { name: "上级编号" },
+                is_show: { name: "统计开关", options: [] },
+                nick_name: { name: "昵称" },
+                recharge_fee: { name: "充值手续费", options: [] },
+                recharge_fee_ratio: { name: "充值手续费比例", options: [] },
+                updated_at: { name: "修改时间", options: [] },
+                updated_by: { name: "更新人", options: [] },
+                user_id: { name: "用户ID", options: [] },
+                vendor_fee_2: { name: "棋牌厂商费用", options: [] },
+                vendor_fee_4: { name: "彩票厂商费用", options: [] },
+                vendor_fee_8: { name: "捕鱼厂商费用", options: [] },
+                vendor_fee_16: { name: "电子厂商费用", options: [] },
+                vendor_fee_32: { name: "真人厂商费用", options: [] },
+                vendor_fee_64: { name: "体育电竞厂商费用", options: [] },
+                vendor_fee_128: { name: "链游厂商费用", options: [] },
+                vendor_fee_ratio: { name: "产商游戏费用比例", options: [] },
+                win_loss_2: { name: "棋牌输赢", options: [] },
+                win_loss_4: { name: "彩票输赢", options: [] },
+                win_loss_8: { name: "捕鱼输赢", options: [] },
+                win_loss_16: { name: "电子输赢", options: [] },
+                win_loss_32: { name: "真人输赢", options: [] },
+                win_loss_64: { name: "体育电竞输赢", options: [] },
+                win_loss_128: { name: "链游输赢", options: [] },
             }
         },
         isCanEditConfig: 0, //1-可编辑 0-不可编辑
@@ -321,6 +323,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             promotion_floor: "",
             max_promotion_floor: "",
             min_promotion_floor: "",
+            username: "",
         });
     }
 
@@ -435,7 +438,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
 
     api_admin_plat_agent_bonus_config_show(user_id: number) {
         this.bonusConfigDialogData.user_id = user_id,
-        this.sendNotification(HttpType.admin_plat_agent_bonus_config_show, { user_id });
+            this.sendNotification(HttpType.admin_plat_agent_bonus_config_show, { user_id });
     }
 
     /**设置代理分红配置表头数据 */
@@ -446,7 +449,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     /**设置代理分红配置表格数据 */
     setBonusConfigTableData(data: any) {
         Object.assign(this.bonusConfigDialogData.form, data);
-        Object.assign(this.bonusConfigDialogData.form.bonus_config, this.convertBonusConfigValue(data.bonus_config, 'boolean'));        
+        Object.assign(this.bonusConfigDialogData.form.bonus_config, this.convertBonusConfigValue(data.bonus_config, 'boolean'));
         this.bonusConfigDialogData.formSource = JSON.parse(JSON.stringify(this.bonusConfigDialogData.form));
         this.bonusConfigDialogData.isCanEditConfig = data.can_edit_config;
     }
@@ -463,7 +466,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             this.bonusConfigDialogData.formSource.bonus_config
         );
 
-        if(Object.keys(formConfigCopy).length > 0) {
+        if (Object.keys(formConfigCopy).length > 0) {
             const newConfig = this.convertBonusConfigValue(formConfigCopy, 'number');
             formCopy.bonus_config = jsonStringify(newConfig);
         } else {
@@ -471,15 +474,15 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         }
 
         const { user_id } = this.bonusConfigDialogData;
-        this.sendNotification(HttpType.admin_plat_agent_bonus_config_update, { ...formCopy ,user_id });
+        this.sendNotification(HttpType.admin_plat_agent_bonus_config_update, { ...formCopy, user_id });
     }
 
     convertBonusConfigValue(config: any, converToNumberOrBoolean: BooleanOrNumber) {
         const keysArr = Object.keys(config);
         const converFunction = converToNumberOrBoolean === 'number' ? this.convertBooleanToNumber : this.convertNumberToBoolean;
-        if(keysArr.length > 0) {
+        if (keysArr.length > 0) {
             const newObject = <any>{};
-            keysArr.forEach((key)=> {
+            keysArr.forEach((key) => {
                 newObject[key] = converFunction(config[key]);
             })
             return newObject
