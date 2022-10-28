@@ -37,7 +37,8 @@ export default class PlatUsersGoldLogProxy extends AbstractProxy implements IPla
             balance: { name: "", options: {} },
             remark: { name: "", options: {} },
             created_at: { name: "", options: {} },
-            coin_name_unique: { name: "", options: {}},
+            coin_name_unique: { name: "", options: {} },
+            username: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -53,6 +54,7 @@ export default class PlatUsersGoldLogProxy extends AbstractProxy implements IPla
         page_count: 1,
         page_size: 20,
         coin_name_unique: "",
+        username: "",
     };
 
     /**设置表头数据 */
@@ -82,16 +84,17 @@ export default class PlatUsersGoldLogProxy extends AbstractProxy implements IPla
             user_id: "",
             nick_name: "",
             coin_name_unique: "",
+            username: "",
         });
     }
 
     /**查询 */
     onQuery() {
-        console.log("coin_name_unique===   ",this.listQuery);
-        
+        console.log("coin_name_unique===   ", this.listQuery);
+
         this.sendNotification(HttpType.admin_plat_users_gold_log_index, objectRemoveNull(this.listQuery));
     }
-    
+
     /**显示用户详情 */
     showUserDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);

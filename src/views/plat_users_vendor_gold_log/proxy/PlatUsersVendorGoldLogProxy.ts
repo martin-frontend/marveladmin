@@ -49,9 +49,10 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
             vendor_gold_log_id: { name: "ID", options: {} },
             vendor_id: { name: "产品厂商", options: {} },
             wallet_type: { name: "使用钱包类型", options: {} },
-            coin_name_unique: { name: "币种", options: {}},
-            scale: { name: "游戏比率", options: {}},
-            gold_scale: { name: "金额[乘比率后]", options: {}},
+            coin_name_unique: { name: "币种", options: {} },
+            scale: { name: "游戏比率", options: {} },
+            gold_scale: { name: "金额[乘比率后]", options: {} },
+            username: { name: "用户账号", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -74,6 +75,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
         status: "",
         plat_id: "",
         coin_name_unique: "",
+        username: "",
     };
 
     /**操作数据 */
@@ -121,6 +123,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
             user_id: "",
             status: "",
             coin_name_unique: "",
+            username: "",
         });
     }
 
@@ -147,7 +150,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
                     status,
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**用户详情 */
@@ -172,6 +175,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
         "order_at",
         "user_id",
         "nick_name",
+        "username",
         "type",
         "gold",
         "status",

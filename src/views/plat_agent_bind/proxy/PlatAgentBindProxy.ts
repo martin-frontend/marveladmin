@@ -54,6 +54,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             is_agent_bonus: { name: "", options: {} },
             agent_bonus_rate: { name: "", options: {} },
             channel_id_option: {},
+            username: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -75,6 +76,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         invite_user_id: "",
         max_promotion_floor: "",
         min_promotion_floor: "",
+        username: "",
     };
 
     /**保底 弹窗相关数据 */
@@ -325,6 +327,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             promotion_floor: "",
             max_promotion_floor: "",
             min_promotion_floor: "",
+            username: "",
         });
     }
 

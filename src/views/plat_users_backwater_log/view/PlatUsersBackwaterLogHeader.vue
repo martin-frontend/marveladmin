@@ -16,6 +16,7 @@
             />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <SearchInput :title="tableColumns.nick_name.name" v-model="listQuery.nick_name" />
+            <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                     $t("common.search")

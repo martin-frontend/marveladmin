@@ -68,6 +68,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             coin_name_unique: { name: "币种", options: {} },
             water_accelerate: { name: "", options: {} },
             water_rate_accelerate: { name: "", options: {} },
+            username: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -100,6 +101,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         "win_gold-{>=}": <any>"",
         "win_gold-{<}": <any>"",
         coin_name_unique: "",
+        username: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -174,6 +176,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             "win_gold-{>=}": "",
             "win_gold-{<}": "",
             coin_name_unique: "",
+            username: "",
         });
     }
 
