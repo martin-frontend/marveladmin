@@ -3,6 +3,7 @@
     "description": "VIP充值中心",
     "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707668",
     "list": [
+        "admin/vip_recharge/table_columns",
         "admin/vip_recharge/recharge",
         "admin/coin_wallet/wallet",
         "admin/plat_user/table_columns",

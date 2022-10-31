@@ -15,10 +15,11 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
     /**进入页面时调用 */
     enter() {
         this.sendNotification(HttpType.admin_plat_user_table_columns);
+        this.sendNotification(HttpType.admin_vip_recharge_table_columns);
     }
 
     /**离开页面时调用 */
-    leave() {}
+    leave() { }
 
     /**表格相关数据 */
     tableData = {
@@ -28,6 +29,17 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
             username: { name: "", options: {} },
             nick_name: { name: "", options: {} },
         },
+        plat_columns: {
+            plat_id: { name: "", options: {} },
+            coin_name_unique: { name: "", options: {} },
+            coin_name_unique_option: {},
+        },
+    };
+
+    /**查询条件 */
+    listQuery = {
+        plat_id: "",
+        coin_name_unique: "",
     };
 
     /**弹窗相关数据 */
@@ -47,15 +59,32 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
         form: {
             user_id: "",
             amount: "",
+            coin_name_unique: "",
         },
         isRechargeSuccess: +new Date(),
     };
     /**设置表头数据 */
     setTableColumns(data: any) {
-        console.log('data',data);
-        
         Object.assign(this.tableData.columns, data);
         this.setUserInfo();
+    }
+    /**设置表头数据 */
+    setPlatTableColumns(data: any) {
+        Object.assign(this.tableData.plat_columns, data);
+        const plat_id_options_keys = Object.keys(this.tableData.plat_columns.plat_id.options);
+        const coin_name_unique_options_keys = Object.keys(this.tableData.plat_columns.coin_name_unique.options);
+        if (plat_id_options_keys.length > 0 && coin_name_unique_options_keys.length > 0) {
+            if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
+                //设定选取平台第一个
+                this.listQuery.plat_id = plat_id_options_keys[0];
+            }
+            if (this.listQuery.plat_id) {
+                //@ts-ignore
+                this.tableData.plat_columns.coin_name_unique_option = this.tableData.plat_columns.coin_name_unique.options[this.listQuery.plat_id]
+                const coin_name_unique_options_keys = Object.keys(this.tableData.plat_columns.coin_name_unique_option);
+                this.listQuery.coin_name_unique = coin_name_unique_options_keys[0];
+            }
+        }
     }
     /**详细数据 */
     setDetail(data: any) {
@@ -70,6 +99,8 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
     }
     /**提交充值 */
     onTopup() {
+        const { coin_name_unique } = this.listQuery;
+        this.bodyData.form.coin_name_unique = coin_name_unique;
         this.sendNotification(HttpType.admin_vip_recharge_recharge, objectRemoveNull(this.bodyData.form));
     }
     /**重置页面表单 */
@@ -77,6 +108,10 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
         Object.assign(this.bodyData.form, {
             user_id: "",
             amount: "",
+        });
+        Object.assign(this.listQuery, {
+            plat_id: "",
+            coin_name_unique: "",
         });
     }
     /**取得玩家金币 */

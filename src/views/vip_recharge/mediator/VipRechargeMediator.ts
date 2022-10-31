@@ -6,7 +6,7 @@ import { Message } from "element-ui";
 import VipRechargeProxy from "../proxy/VipRechargeProxy";
 import i18n from "@/lang";
 
-export interface IVipRecharge extends IEventDispatcher {}
+export interface IVipRecharge extends IEventDispatcher { }
 
 export default class VipRechargeMediator extends AbstractMediator {
     private myProxy: VipRechargeProxy = <any>this.getProxy(VipRechargeProxy);
@@ -29,6 +29,7 @@ export default class VipRechargeMediator extends AbstractMediator {
             EventType.admin_coin_wallet_wallet,
             EventType.admin_plat_user_table_columns,
             EventType.admin_plat_user_show,
+            EventType.admin_vip_recharge_table_columns,
         ];
     }
     private str: any = "";
@@ -39,6 +40,9 @@ export default class VipRechargeMediator extends AbstractMediator {
         switch (notification.getName()) {
             case EventType.admin_plat_user_table_columns:
                 myProxy.setTableColumns(body);
+                break;
+            case EventType.admin_vip_recharge_table_columns:
+                myProxy.setPlatTableColumns(body);
                 break;
             case EventType.admin_plat_user_show:
                 myProxy.setDetail(body);
