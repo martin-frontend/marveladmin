@@ -51,6 +51,7 @@ export default class VipRechargeMediator extends AbstractMediator {
                 this.str = i18n.t("vip_recharge.success", {
                     "0": myProxy.bodyData.form.user_id,
                     "1": myProxy.bodyData.form.amount,
+                    "2": myProxy.bodyData.form.coin_name_unique,
                 });
                 Message.success(this.str);
                 myProxy.resetForm();
