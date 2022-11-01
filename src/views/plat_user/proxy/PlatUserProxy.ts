@@ -189,6 +189,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             max_level: "",
             min_level: "",
             order_by: <any>null,
+            is_credit_user: '',
         });
     }
 
