@@ -55,32 +55,26 @@
                     ></el-switch>
                 </el-form-item>
                 
-                <!-- <el-form-item size="mini" :label="tableColumns['xinyongtongji'].name" prop="is_xingyong">
+                <el-form-item size="mini" :label="tableColumns['show_credit_statistic'].name" prop="show_credit_statistic">
                     <el-switch
-                            @change="onSwitchXingYong()"
-                            v-model="userInfo.is_xingyong"
+                            @change="onSwitchCreditStatistic()"
+                            v-model="userInfo.show_credit_statistic"
                             :active-value="1"   
                             :inactive-value="98"
                     ></el-switch>
-                </el-form-item> -->
+                </el-form-item>
 
-                <!-- <el-form-item size="mini" :label="tableColumns['xinyongfencheng'].name" prop="xinyongfencheng" 
-                v-if="userInfo.is_xingyong == '1'">
-                    {{ userInfo.xingyongNub }}
-                </el-form-item> -->
-
-                
-
-                <!-- <el-form-item size="mini" :label="tableColumns['xinyongfencheng'].name" prop="xinyongfencheng">
-
-                    <el-input
-                        placeholder={{userInfo.xingyongNub}}
-                        v-model="userInfo.xingyongNub"
-                        :disabled="userInfo.is_xingyong == '1'">
-                    </el-input>
-                    <el-input v-model="userInfo.xingyongNub" placeholder="userInfo.xingyongNub" style="width: 200px" ></el-input>
-            
-                </el-form-item> -->
+                <el-form-item size="mini" :label="tableColumns['credit_rate'].name" prop="credit_rate">
+                    <el-input disabled v-model="userInfo.credit_rate" style="width: 100px"></el-input>%
+                    <el-button
+                        class="item"
+                        type="primary"
+                        @click="handlerEdit('credit_rate')"
+                        style="margin-left: 20px"
+                    >
+                        {{ $t("common.update") }}
+                    </el-button>
+                </el-form-item>
 
             </el-form>
 
@@ -474,21 +468,19 @@ export default class TabUserInfo extends AbstractView {
      handlerEdit(filed: string) {
         this.myProxy.showDialog(filed);
     }
-
+    
      onSwitch() {
         this.myProxy.dialogData.filed = "status";
         this.myProxy.onEdit("status", this.userInfo.status);
     }
 
-    onSwitchXingYong() {
-        // this.myProxy.dialogData.filed = "xinyongtongji";
-        // this.myProxy.onEdit("is_xingyong", this.userInfo.is_xingyong);
-        if (this.userInfo.is_xingyong == '1')
-        {
-            this.userInfo.xingyongNub = this.userInfo.xingyongNub + 10;
-        }
-         console.log(">>>>>>>>",this.userInfo.is_xingyong )
+    onSwitchCreditStatistic() {
+        this.myProxy.dialogData.filed = "show_credit_statistic";
+        this.myProxy.onEdit("show_credit_statistic", this.userInfo.show_credit_statistic);
+
+         console.log(">>>>>>>>",this.userInfo.show_credit_statistic )
     }
+
     onSwitchCreditUser() {
         this.myProxy.dialogData.filed = "is_credit_user";
         this.myProxy.onEdit("is_credit_user", this.userInfo.is_credit_user);

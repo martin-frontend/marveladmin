@@ -83,8 +83,10 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_gold_transfer: { name: "", options: {} },
         water_config: { name: "", options: {} },
         pretty_user_id: { name: "推广靓号", options: {} },
-        xinyongtongji: { name: "信用统计", options: {} },
-        xinyongfencheng: { name: "信用占比", options: {} },
+
+        credit_rate: {name: '信用占比', options:{}},
+        show_credit_statistic:{name: '"显示信用统计"', options:{}},
+        
         is_credit_user: { name: "信用用户", options: {} },
 
     };
@@ -158,8 +160,8 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_gold_transfer: "0",
         pretty_user_id: "",
 
-        is_xingyong:"0",
-        xingyongNub:60,
+        show_credit_statistic:"0",
+        credit_rate:60,
         is_credit_user:"98",
 
         is_login_need_google: "0"
