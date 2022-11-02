@@ -1,0 +1,9 @@
+{
+    "name": "信用统计",
+    "description": "信用统计",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47776270",
+    "list": [
+        "admin/statistic_credit/table_columns",
+        "admin/statistic_credit/index"
+    ]
+}
