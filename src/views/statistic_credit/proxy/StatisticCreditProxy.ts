@@ -42,7 +42,20 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        summary :{
+            plat_id: "",
+            record_count: null,
+            bet_gold: "",
+            win_gold: "",
+            water: "",
+            back_water: "",
+            agent_amount: "",
+            plat_amount: "",
+            credit_rate: "",
+            user_id: "-"
+        }
     };
+    
     /**查询条件 */
     listQuery = {
         plat_id: "",
@@ -62,6 +75,22 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         formSource: null, // 表单的原始数据
     };
 
+    setSummaryData(data:any)
+    {
+        let sumData = JSON.parse( JSON.stringify(this.tableData.columns));
+        sumData.plat_id = data.plat_id;
+        sumData.user_id = <string>i18n.t("common.total");
+        sumData.username = "-";
+        sumData.record_count = data.record_count;
+        sumData.bet_gold = data.bet_gold;
+        sumData.win_gold = data.win_gold;
+        sumData.water = data.water;
+        sumData.back_water = data.back_water;
+        sumData.agent_amount = data.agent_amount;
+        sumData.plat_amount = data.plat_amount;
+        sumData.credit_rate = data.credit_rate;
+        return sumData;
+    }
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -75,6 +104,12 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
+        if (data.list.length > 0)
+        {
+            //console.log("有数据，需要加表头");
+            let sumdata = this.setSummaryData(data.summary)
+            data.list.unshift(sumdata);
+        }
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }

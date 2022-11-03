@@ -107,16 +107,20 @@ export default class NicoTestHeader extends AbstractView {
         }
         else
         {
-            if (!( this.searchInfo.plat_id == this.listQuery.plat_id && 
+            if ( this.searchInfo.plat_id == this.listQuery.plat_id && 
             this.searchInfo.user_id == this.listQuery.user_id && 
             this.searchInfo.username == this.listQuery.username && 
             this.searchInfo.page_count == this.listQuery.page_count && 
             this.searchInfo.page_size == this.listQuery.page_size && 
             this.searchInfo["created_date-{>=}"] == this.listQuery["created_date-{>=}"] && 
             this.searchInfo["created_date-{<=}"] == this.listQuery["created_date-{<=}"]
-            ) )
+            ) 
             {
                 isNeedUpdata = false;
+            }
+            else
+            {
+                //console.log("两个文件不同" , this.searchInfo,this.listQuery);
             }
         }
         if (isNeedUpdata)
@@ -137,7 +141,6 @@ export default class NicoTestHeader extends AbstractView {
     handlerSearch() {
         this.listQuery.page_count = 1;
         //objectRemoveNull(this.myProxy.tableData)
-        console.log("搜索----");
         this.updataSearchInfo();
         this.myProxy.setTableData(this.errorData );
         this.myProxy.onQuery();
