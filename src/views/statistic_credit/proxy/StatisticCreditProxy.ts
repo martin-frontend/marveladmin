@@ -43,6 +43,11 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        info_head:{
+            end_date: "",
+            start_date: "",
+            user_id: null
+        },
         summary :{
             plat_id: "",
             record_count: null,
@@ -113,6 +118,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         }
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        Object.assign(this.tableData.info_head, data.info_head);
     }
     /**详细数据 */
     setDetail(data: any) {

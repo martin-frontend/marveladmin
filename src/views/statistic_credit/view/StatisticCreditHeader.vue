@@ -80,7 +80,8 @@ export default class NicoTestHeader extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
     
-    private searchInfo = JSON.parse( JSON.stringify( this.listQuery));
+    //private searchInfo = JSON.parse( JSON.stringify( this.listQuery));
+    private searchInfo =  this.myProxy.tableData.info_head;
 
     public get timeObj() : object {
         return {
@@ -98,37 +99,6 @@ export default class NicoTestHeader extends AbstractView {
         return false;
     }
 
-    private updataSearchInfo()
-    {
-        let isNeedUpdata = true;
-        if (this.searchInfo == this.listQuery)
-        {
-            isNeedUpdata = false;
-        }
-        else
-        {
-            if ( this.searchInfo.plat_id == this.listQuery.plat_id && 
-            this.searchInfo.user_id == this.listQuery.user_id && 
-            this.searchInfo.username == this.listQuery.username && 
-            this.searchInfo.page_count == this.listQuery.page_count && 
-            this.searchInfo.page_size == this.listQuery.page_size && 
-            this.searchInfo.start_date == this.listQuery.start_date && 
-            this.searchInfo.end_date == this.listQuery.end_date
-            ) 
-            {
-                isNeedUpdata = false;
-            }
-            else
-            {
-                //console.log("两个文件不同" , this.searchInfo,this.listQuery);
-            }
-        }
-        if (isNeedUpdata)
-        {
-            this.searchInfo = JSON.parse( JSON.stringify( this.listQuery));
-        }
-        return isNeedUpdata
-    }
     private errorData ={
         list:[],
         pageInfo:{
@@ -141,8 +111,10 @@ export default class NicoTestHeader extends AbstractView {
     handlerSearch() {
         this.listQuery.page_count = 1;
         //objectRemoveNull(this.myProxy.tableData)
-        this.updataSearchInfo();
-        this.myProxy.setTableData(this.errorData );
+
+        // this.updataSearchInfo();
+        // this.myProxy.setTableData(this.errorData );
+        
         this.myProxy.onQuery();
     }
 
