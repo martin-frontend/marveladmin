@@ -28,7 +28,7 @@
                 <!-- 结算时间 -->
                 <div class="item_group">
                     <SearchDatePicker :title="tableColumns.searchtime.name"
-                        :startDate.sync="listQuery['created_date-{>=}']" :endDate.sync="listQuery['created_date-{<=}']"
+                        :startDate.sync="listQuery.start_date" :endDate.sync="listQuery.end_date"
                         :showTime="true" :tip="$t('plat_users_bet.defaultTime')"
                         :pickerOptions="myProxy.pickerOptions" />
                 </div>
@@ -80,13 +80,14 @@ export default class NicoTestHeader extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
     
-    private searchInfo = JSON.parse( JSON.stringify( this.listQuery));
+    //private searchInfo = JSON.parse( JSON.stringify( this.listQuery));
+    private searchInfo =  this.myProxy.tableData.info_head;
 
     public get timeObj() : object {
         return {
                 0:this.searchInfo.user_id,
-                1: this.searchInfo['created_date-{>=}'],
-                2:this.searchInfo['created_date-{<=}']
+                1: this.searchInfo.start_date,
+                2:this.searchInfo.end_date
             }
     }
     
@@ -98,37 +99,6 @@ export default class NicoTestHeader extends AbstractView {
         return false;
     }
 
-    private updataSearchInfo()
-    {
-        let isNeedUpdata = true;
-        if (this.searchInfo == this.listQuery)
-        {
-            isNeedUpdata = false;
-        }
-        else
-        {
-            if ( this.searchInfo.plat_id == this.listQuery.plat_id && 
-            this.searchInfo.user_id == this.listQuery.user_id && 
-            this.searchInfo.username == this.listQuery.username && 
-            this.searchInfo.page_count == this.listQuery.page_count && 
-            this.searchInfo.page_size == this.listQuery.page_size && 
-            this.searchInfo["created_date-{>=}"] == this.listQuery["created_date-{>=}"] && 
-            this.searchInfo["created_date-{<=}"] == this.listQuery["created_date-{<=}"]
-            ) 
-            {
-                isNeedUpdata = false;
-            }
-            else
-            {
-                //console.log("两个文件不同" , this.searchInfo,this.listQuery);
-            }
-        }
-        if (isNeedUpdata)
-        {
-            this.searchInfo = JSON.parse( JSON.stringify( this.listQuery));
-        }
-        return isNeedUpdata
-    }
     private errorData ={
         list:[],
         pageInfo:{
@@ -141,8 +111,10 @@ export default class NicoTestHeader extends AbstractView {
     handlerSearch() {
         this.listQuery.page_count = 1;
         //objectRemoveNull(this.myProxy.tableData)
-        this.updataSearchInfo();
-        this.myProxy.setTableData(this.errorData );
+
+        // this.updataSearchInfo();
+        // this.myProxy.setTableData(this.errorData );
+        
         this.myProxy.onQuery();
     }
 
