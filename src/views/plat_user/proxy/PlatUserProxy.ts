@@ -77,6 +77,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             vip_level: { name: "VIP等级", options: {} },
             wechat: { name: "微信", options: {} },
             is_credit_user: { name: "信用用户", options: {} },
+            is_gold_exchange: { name: "是否货币互转", options: {} },
+
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -106,6 +108,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         order_by: <any>null,
         remark: '',
         is_credit_user: '',
+        is_gold_exchange: '',
 
         page_count: 1,
         page_size: 20,
@@ -190,6 +193,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             min_level: "",
             order_by: <any>null,
             is_credit_user: '',
+            
         });
     }
 

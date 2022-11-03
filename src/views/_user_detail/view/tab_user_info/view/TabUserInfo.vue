@@ -45,6 +45,15 @@
                     {{ userInfo.total_win }}
                 </el-form-item>
 
+                <el-form-item size="mini" :label="tableColumns['is_gold_exchange'].name" prop="is_gold_exchange">
+                    <el-switch
+                            @change="onSwitchGoldExchange()"
+                            v-model="userInfo.is_gold_exchange"
+                            :active-value="1"   
+                            :inactive-value="98"
+                    ></el-switch>
+                </el-form-item>
+
 
                 <el-form-item size="mini" :label="tableColumns['is_credit_user'].options[1]" prop="is_credit_user">
                     <el-switch
@@ -485,6 +494,12 @@ export default class TabUserInfo extends AbstractView {
         this.myProxy.dialogData.filed = "is_credit_user";
         this.myProxy.onEdit("is_credit_user", this.userInfo.is_credit_user);
          console.log(">>>>>>>>切换信用用户<<",this.userInfo.is_credit_user )
+    }
+
+    onSwitchGoldExchange() {
+        this.myProxy.dialogData.filed = "is_gold_exchange";
+        this.myProxy.onEdit("is_gold_exchange", this.userInfo.is_gold_exchange);
+         console.log(">>>>>>>>切换 转换<<",this.userInfo.is_gold_exchange )
     }
 
     onEditXinYongFenBi(filed: number)
