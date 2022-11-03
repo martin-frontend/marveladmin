@@ -23,6 +23,12 @@
             <SearchInput :title="tableColumns.last_login_device.name" v-model="listQuery.last_login_device" />
             <SearchInput :title="tableColumns.phone.name" v-model="listQuery.phone" />
             <SearchInput :title="tableColumns.remark.name" v-model="listQuery.remark" :tip="tableColumns.remark.tips" />
+            <SearchSelect
+                :title="tableColumns.is_credit_user.name"
+                v-model="listQuery.is_credit_user"
+                :options="tableColumns.is_credit_user.options"
+            />
+
         </div>
         <div class="group">
             <SearchRange

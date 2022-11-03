@@ -193,6 +193,7 @@ export default {
         syncGame: "同步游戏",
         water_rate_accelerate: "加速流水比例",
         coin_name: "币种",
+        credit_tips:"用户{0} 统计时间{1}至{2}",
     },
     vendor: {
         vendorId: "厂商ID",

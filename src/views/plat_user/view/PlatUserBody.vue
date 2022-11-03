@@ -30,6 +30,9 @@
                         {{ $t("plat_agent_bind.note") }}：<span class="user_remark">{{ row.remark }}</span>
                     </div>
                     <div>VIP：{{ row.vip_level }}</div>
+
+                    <div>{{tableColumns.is_credit_user.name}}：{{tableColumns.is_credit_user.options[row.is_credit_user]}}</div>
+
                 </template>
             </el-table-column>
             <el-table-column

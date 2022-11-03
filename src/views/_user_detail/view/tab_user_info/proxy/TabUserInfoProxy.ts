@@ -18,7 +18,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     }
 
     /**表头信息 */
-    tableColumns = {
+    tableColumns:any = {
         area_code: { name: "手机区号", options: {} },
         avatar: { name: "头像", options: {} },
         balance: { name: "账户余额", options: {}, tips: "账户余额=平台余额+厂商钱包金币总和" },
@@ -83,6 +83,13 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_gold_transfer: { name: "", options: {} },
         water_config: { name: "", options: {} },
         pretty_user_id: { name: "推广靓号", options: {} },
+
+        credit_rate: {name: '信用占比', options:{}},
+        show_credit_statistic:{name: '"显示信用统计"', options:{}},
+        
+        is_credit_user: { name: "信用用户", options: {} },
+        is_gold_exchange: { name: "是否货币互转", options: {} },
+
     };
     /**用户详情 */
     userInfo = {
@@ -153,6 +160,12 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_receive_reward: "0",
         is_gold_transfer: "0",
         pretty_user_id: "",
+
+        show_credit_statistic:"0",
+        credit_rate:60,
+        is_credit_user:"98",
+        is_gold_exchange:"98",
+
         is_login_need_google: "0"
     };
     /**代理关系链 */
