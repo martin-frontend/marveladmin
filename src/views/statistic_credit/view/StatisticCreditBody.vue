@@ -4,37 +4,46 @@
             v-loading="net_status.loading">
             <el-table-column :label="tableColumns['plat_id'].name" prop="plat_id" class-name="status-col" width="100px">
             </el-table-column>
-            <el-table-column :label="tableColumns['user_id'].name" prop="user_id" class-name="status-col" >
+            <el-table-column :label="tableColumns['user_id'].name" prop="user_id" class-name="status-col">
             </el-table-column>
 
-            <el-table-column :label="tableColumns['username'].name" prop="username" class-name="status-col"
-                ></el-table-column>
-
-            <el-table-column :label="tableColumns['record_count'].name" prop="record_count" class-name="status-col"
-                ></el-table-column>
-
-            <el-table-column :label="tableColumns['bet_gold'].name" prop="bet_gold" class-name="status-col"
-                ></el-table-column>
-
-            <el-table-column :label="tableColumns['win_gold'].name" prop="win_gold" class-name="status-col"
-                ></el-table-column>
-
-            <el-table-column :label="tableColumns['water'].name" prop="water" class-name="status-col" >
+            <el-table-column :label="tableColumns['username'].name" prop="username" class-name="status-col">
             </el-table-column>
 
-            <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col"
-                ></el-table-column>
+            <el-table-column :label="tableColumns['record_count'].name" prop="record_count" class-name="status-col">
+            </el-table-column>
 
-            <el-table-column :label="tableColumns['agent_amount'].name" prop="agent_amount" class-name="status-col"
-                ></el-table-column>
+            <el-table-column :label="tableColumns['bet_gold'].name" prop="bet_gold" class-name="status-col">
+            </el-table-column>
 
-            <el-table-column :label="tableColumns['plat_amount'].name" prop="plat_amount" class-name="status-col"
-                ></el-table-column>
-
-            <el-table-column :label="tableColumns['credit_rate'].name" prop="credit_rate" class-name="status-col"
-                >
+            <el-table-column prop="win_gold" :label="tableColumns['win_gold'].name" align="center">
                 <template slot-scope="{ row }">
-                    <div>{{row.credit_rate }}%</div>
+                    <WinLossDisplay :amount="row.win_gold"></WinLossDisplay>
+                </template>
+            </el-table-column>
+
+
+            <el-table-column :label="tableColumns['water'].name" prop="water" class-name="status-col">
+            </el-table-column>
+
+            <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col">
+            </el-table-column>
+
+            <el-table-column prop="agent_amount" :label="tableColumns['agent_amount'].name" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.agent_amount"></WinLossDisplay>
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="plat_amount" :label="tableColumns['plat_amount'].name" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.plat_amount"></WinLossDisplay>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="tableColumns['credit_rate'].name" prop="credit_rate" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div>{{ row.credit_rate }}%</div>
                 </template>
             </el-table-column>
 
@@ -51,10 +60,12 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import StatisticCreditProxy from "../proxy/StatisticCreditProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
         Pagination,
+        WinLossDisplay,
     },
     filters: {
         statusFilter(status: any) {
