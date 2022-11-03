@@ -4,8 +4,22 @@
             v-loading="net_status.loading">
             <el-table-column :label="tableColumns['plat_id'].name" prop="plat_id" class-name="status-col" width="100px">
             </el-table-column>
+
             <el-table-column :label="tableColumns['user_id'].name" prop="user_id" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div>
+                        <div v-if="row.user_id === '合计' || row.user_id === $t('common.total')">
+                            {{ row.user_id }}
+                        </div>
+                        <div v-else @click="showUserDetail(row.user_id)"
+                            style="cursor: pointer; text-decoration: underline">
+                            <div>{{ row.user_id }}</div>
+                        </div>
+                    </div>
+
+                </template>
             </el-table-column>
+
 
             <el-table-column :label="tableColumns['username'].name" prop="username" class-name="status-col">
             </el-table-column>
@@ -94,6 +108,10 @@ export default class StatisticCreditBody extends AbstractView {
 
     private handlerQuery() {
         this.myProxy.onQuery();
+    }
+
+    showUserDetail(user_id: number) {
+        this.myProxy.showUserDetail(user_id);
     }
 
     handlerPageSwitch(page: number) {

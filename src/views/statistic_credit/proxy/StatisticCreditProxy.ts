@@ -5,6 +5,7 @@ import { HttpType } from "@/views/statistic_credit/setting";
 import { MessageBox } from "element-ui";
 import IStatisticCreditProxy from "./IStatisticCreditProxy";
 import i18n from "@/lang";
+import GlobalEventType from "@/core/global/GlobalEventType";
 
 export default class StatisticCreditProxy extends AbstractProxy implements IStatisticCreditProxy {
     static NAME = "StatisticCreditProxy";
@@ -226,5 +227,9 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
     /**删除数据 */
     onDelete(admin_user_id: any) {
         
+    }
+     /**显示用户详情 */
+     showUserDetail(user_id: number) {
+        this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
     }
 }
