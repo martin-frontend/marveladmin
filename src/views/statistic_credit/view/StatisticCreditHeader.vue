@@ -28,7 +28,7 @@
                 <!-- 结算时间 -->
                 <div class="item_group">
                     <SearchDatePicker :title="tableColumns.searchtime.name"
-                        :startDate.sync="listQuery['created_date-{>=}']" :endDate.sync="listQuery['created_date-{<=}']"
+                        :startDate.sync="listQuery.start_date" :endDate.sync="listQuery.end_date"
                         :showTime="true" :tip="$t('plat_users_bet.defaultTime')"
                         :pickerOptions="myProxy.pickerOptions" />
                 </div>
@@ -85,8 +85,8 @@ export default class NicoTestHeader extends AbstractView {
     public get timeObj() : object {
         return {
                 0:this.searchInfo.user_id,
-                1: this.searchInfo['created_date-{>=}'],
-                2:this.searchInfo['created_date-{<=}']
+                1: this.searchInfo.start_date,
+                2:this.searchInfo.end_date
             }
     }
     
@@ -112,8 +112,8 @@ export default class NicoTestHeader extends AbstractView {
             this.searchInfo.username == this.listQuery.username && 
             this.searchInfo.page_count == this.listQuery.page_count && 
             this.searchInfo.page_size == this.listQuery.page_size && 
-            this.searchInfo["created_date-{>=}"] == this.listQuery["created_date-{>=}"] && 
-            this.searchInfo["created_date-{<=}"] == this.listQuery["created_date-{<=}"]
+            this.searchInfo.start_date == this.listQuery.start_date && 
+            this.searchInfo.end_date == this.listQuery.end_date
             ) 
             {
                 isNeedUpdata = false;

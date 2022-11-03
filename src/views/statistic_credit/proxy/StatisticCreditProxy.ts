@@ -64,8 +64,8 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         username: null,
         page_count: 1,
         page_size: 20,
-        "created_date-{>=}": dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
-        "created_date-{<=}": dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
+        start_date: dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
+        end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -131,8 +131,8 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             username: null,
             page_count: 1,
             page_size: 20,
-            "created_date-{>=}": dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
-            "created_date-{<=}": dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
+            start_date: dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
+            end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
         });
     }
 
