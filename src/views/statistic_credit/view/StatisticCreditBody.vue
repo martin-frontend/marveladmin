@@ -2,7 +2,11 @@
     <div>
         <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini"
             v-loading="net_status.loading">
-            <el-table-column :label="tableColumns['plat_id'].name" prop="plat_id" class-name="status-col" width="100px">
+
+            <el-table-column :label="tableColumns['plat_id'].name" prop="plat_id" class-name="status-col" width="130">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
+                </template>
             </el-table-column>
 
             <el-table-column :label="tableColumns['user_id'].name" prop="user_id" class-name="status-col">
