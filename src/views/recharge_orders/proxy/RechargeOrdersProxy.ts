@@ -132,7 +132,34 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         },
         formSource: null, // 表单的原始数据
     };
-
+    /**备注弹窗相关数据 */
+    remarkDialogData = {
+        bShow: false,
+        status: "",
+        form: {
+            id: "",
+            type: "",
+            remark: "",
+            desc: ""
+        },
+        formSource: null
+    }
+    /**显示备注弹窗 */
+    showRemarkDialog() {
+        this.remarkDialogData.bShow = true;
+    }
+    /**隐藏备注弹窗 */
+    hideRemarkDialog() {
+        this.remarkDialogData.bShow = false;
+    }
+    /**更新備註 */
+    onUpdateReamrk() {
+        this.sendNotification(HttpType.admin_recharge_orders_update_remark,
+            {
+                id: this.remarkDialogData.form.id,
+                remark: this.remarkDialogData.form.remark
+            });
+    }
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -231,13 +258,20 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
     }
 
     /**更新数据 */
-    onUpdate() {
-        const data = {
-            id: this.dialogData.form.id,
-            actual_gold: this.dialogData.form.actual_gold,
-        };
-        // 发送消息
-        this.sendNotification(HttpType.admin_recharge_orders_update_complete, data);
+    onUpdate({ type, row }: any) {
+        if(type && row)
+        {
+            console.log("更新 传入了 新的值")
+        }
+        else
+        {
+            const data = {
+                id: this.dialogData.form.id,
+                actual_gold: this.dialogData.form.actual_gold,
+            };
+            // 发送消息
+            this.sendNotification(HttpType.admin_recharge_orders_update_complete, data);
+        }
     }
 
     /**自动刷新 */

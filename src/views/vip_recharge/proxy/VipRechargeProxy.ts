@@ -60,6 +60,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
             user_id: "",
             amount: "",
             coin_name_unique: "",
+            remark :"",
         },
         isRechargeSuccess: +new Date(),
     };
@@ -108,6 +109,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
         Object.assign(this.bodyData.form, {
             user_id: "",
             amount: "",
+            remark:"",
         });
         Object.assign(this.listQuery, {
             plat_id: "",

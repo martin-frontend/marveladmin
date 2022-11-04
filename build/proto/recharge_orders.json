@@ -5,6 +5,7 @@
     "list": [
         "admin/recharge_orders/table_columns",
         "admin/recharge_orders/index",
+        "admin/recharge_orders/update_remark/{id}",
         "admin/recharge_orders/update/{id}/complete"
     ]
 }

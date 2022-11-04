@@ -3,6 +3,7 @@
         <RechargeOrdersDialog />
         <RechargeOrdersHeader />
         <RechargeOrdersBody />
+        <RemarkDialog />
     </div>
 </template>
 
@@ -13,11 +14,13 @@ import { Component } from "vue-property-decorator";
 import RechargeOrdersDialog from "./RechargeOrdersDialog.vue";
 import RechargeOrdersHeader from "./RechargeOrdersHeader.vue";
 import RechargeOrdersBody from "./RechargeOrdersBody.vue";
+import RemarkDialog from "./components/RemarkDialog.vue";
 
 @Component({
     components: {
         RechargeOrdersDialog,
         RechargeOrdersHeader,
+        RemarkDialog,
         RechargeOrdersBody,
     },
 })

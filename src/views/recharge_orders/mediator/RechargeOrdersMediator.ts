@@ -4,6 +4,7 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/recharge_orders/setting";
 import { Message } from "element-ui";
 import RechargeOrdersProxy from "../proxy/RechargeOrdersProxy";
+import i18n from "@/lang";
 
 interface IRechargeOrders extends IEventDispatcher { }
 
@@ -26,6 +27,7 @@ export default class RechargeOrdersMediator extends AbstractMediator {
         return [
             EventType.admin_recharge_orders_table_columns,
             EventType.admin_recharge_orders_index,
+            EventType.admin_recharge_orders_update_remark,
             EventType.admin_recharge_orders_update_complete,
         ];
     }
@@ -48,6 +50,11 @@ export default class RechargeOrdersMediator extends AbstractMediator {
             case EventType.admin_recharge_orders_update_complete:
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
+                myProxy.onQuery();
+                break;
+            case EventType.admin_recharge_orders_update_remark:
+                Message.success(<any>i18n.t("successMessage.operation"));
+                myProxy.hideRemarkDialog();
                 myProxy.onQuery();
                 break;
         }

@@ -175,8 +175,23 @@
                     </p>
                 </template>
             </el-table-column>
-            <el-table-column prop="remark" :label="tableColumns['remark'].name" align="center" width="100px">
+            <el-table-column prop="remark" :label="tableColumns['remark'].name" align="center" min-width="100px">
+                <template slot-scope="{ row }">
+                    <div class="remark">
+                        <div>
+                            <p>{{ row.remark }}</p>
+                            <el-button
+                                type="primary"
+                                size="mini"
+                                icon="el-icon-edit"
+                                @click="handerEditRemark(row)"
+                                
+                            ></el-button>
+                        </div>
+                    </div>
+                </template>
             </el-table-column>
+
             <el-table-column prop="address" :label="$t('common.operating')" width="100px" align="center">
                 <template slot-scope="scope">
                     <el-button
@@ -246,6 +261,17 @@ export default class RechargeOrdersBody extends AbstractView {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
+    /**编辑备注 */
+    private handerEditRemark(row: any) {
+        this.myProxy.remarkDialogData.status = DialogStatus.update;
+        Object.assign(this.myProxy.remarkDialogData.form, {
+            id: row.id,
+            remark: row.remark,
+            type: "",
+            desc: "",
+        });
+        this.myProxy.showRemarkDialog();
+    }
     // 自动刷新
     private handlerAutoReload(o: any) {
         this.myProxy.IntervalObj.default = o;

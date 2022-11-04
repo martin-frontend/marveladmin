@@ -48,6 +48,16 @@
                     style="width: 200px"
                 ></el-input>
             </el-form-item>
+
+            <el-form-item :label="$t('plat_agent_bind.note')" prop="remark">
+                <el-input
+                    v-model="form.remark"
+                    :placeholder="$t('common.pleaseEnter')"
+                    oninput="value=value;"
+                    style="width: 237px"
+                ></el-input>
+            </el-form-item>
+
             <el-form-item>
                 <el-button
                     type="primary"
