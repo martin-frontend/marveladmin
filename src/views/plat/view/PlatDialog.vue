@@ -445,6 +445,21 @@
                             </el-select>
                         </div>
                     </div>
+
+                    <div class="el_select_group">
+                        <div>
+                            <span class="title">{{ tableColumns["is_gold_exchange"].name }}</span>
+                            <el-select class="select" v-model="form.is_gold_exchange">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_gold_exchange.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
+                    </div>
+
                 </el-form-item>
                 <el-form-item size="mini" :label="$t('plat.goldTransfer')" prop="">
                     <div class="item-content">
