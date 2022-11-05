@@ -47,6 +47,9 @@
             <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col">
             </el-table-column>
 
+            <el-table-column :label="tableColumns['back_water_except_user'].name" prop="back_water_except_user" class-name="status-col">
+            </el-table-column>
+
             <el-table-column prop="agent_amount" :label="tableColumns['agent_amount'].name" align="center">
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.agent_amount"></WinLossDisplay>

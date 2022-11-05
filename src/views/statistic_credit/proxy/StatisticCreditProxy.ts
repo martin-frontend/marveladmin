@@ -34,6 +34,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             win_gold: { name: "", options: {} },
             water: { name: "", options: {} },
             back_water: { name: "", options: {} },
+            back_water_except_user: { name: "", options: {} },
             agent_amount: { name: "", options: {} },
             plat_amount: { name: "", options: {} },
             credit_rate: { name: "", options: {} },
@@ -55,6 +56,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             win_gold: "",
             water: "",
             back_water: "",
+            back_water_except_user:"",
             agent_amount: "",
             plat_amount: "",
             credit_rate: "",
@@ -91,7 +93,8 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         sumData.bet_gold = data.bet_gold;
         sumData.win_gold = data.win_gold;
         sumData.water = data.water;
-        sumData.back_water = data.back_water;
+        sumData.back_water = data.back_water; //back_water_except_user
+        sumData.back_water_except_user = data.back_water_except_user;
         sumData.agent_amount = data.agent_amount;
         sumData.plat_amount = data.plat_amount;
         sumData.credit_rate = data.credit_rate;
