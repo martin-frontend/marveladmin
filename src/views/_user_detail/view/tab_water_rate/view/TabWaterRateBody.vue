@@ -3,6 +3,9 @@
         <div class="notice">
             {{ $t("user_detail.waterRateDesc") }}
         </div>
+        <div class="notice red">
+            {{ $t("user_detail.settingDesc") }}
+        </div>
         <el-table
             :data="tableData"
             border
@@ -95,5 +98,8 @@ export default class TabWaterRateBody extends AbstractView {
 .notice {
     font-size: 18px;
     margin-bottom: 10px;
+}
+.red {
+    color: red;
 }
 </style>

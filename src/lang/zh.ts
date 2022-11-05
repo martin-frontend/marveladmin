@@ -193,7 +193,7 @@ export default {
         syncGame: "同步游戏",
         water_rate_accelerate: "加速流水比例",
         coin_name: "币种",
-        credit_tips:"用户{0} 统计时间{1}至{2}",
+        credit_tips: "用户{0} 统计时间{1}至{2}",
     },
     vendor: {
         vendorId: "厂商ID",
@@ -781,6 +781,7 @@ export default {
         block_name: "链名",
         address: "充值地址",
         userRechargeAddress: "用户充值地址",
+        settingDesc: "注意：如有修改流水配置要1个多小时后才生效，需要记录更改时间"
     },
     admin_permission: {
         node: "节点",
