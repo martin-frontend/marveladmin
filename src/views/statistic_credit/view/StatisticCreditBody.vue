@@ -41,7 +41,7 @@
             </el-table-column>
 
 
-            <el-table-column :label="tableColumns['water'].name" prop="water" class-name="status-col">
+            <el-table-column :label="tableColumns['backwater_game'].name" prop="backwater_game" class-name="status-col">
             </el-table-column>
 
             <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col">
