@@ -94,8 +94,8 @@
                 min-width="80px"
             ></el-table-column>
             <el-table-column
-                :label="tableColumns['valid_bet_gold'].name"
-                prop="valid_bet_gold"
+                :label="tableColumns['backwater_game'].name"
+                prop="backwater_game"
                 class-name="status-col"
                 min-width="80px"
             ></el-table-column>
