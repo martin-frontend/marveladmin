@@ -3,6 +3,9 @@
         <div class="notice">
             {{ $t("user_detail.waterRateDesc") }}
         </div>
+        <div class="notice red">
+            {{ $t("user_detail.settingDesc") }}
+        </div>
         <el-table
             :data="tableData"
             border
@@ -28,8 +31,8 @@
                     <div v-if="editWaterRateID == row.type">
                         <el-input
                             v-model="editWaterRateValue"
-                            style="width: 60px; margin-right: 10px"
-                            oninput="value=value.replace(/[^\d]/g,'');if(value>100)value =100;"
+                            style="width: 80px; margin-right: 10px"
+                            @input="ChangeNumValue"
                         ></el-input>
                         <el-button class="item" type="warning" size="mini" @click="editWaterRateID = null">{{
                             $t("common.cancel")
@@ -39,14 +42,14 @@
                         }}</el-button>
                     </div>
                     <div v-else>
-                        <span style="margin-right: 10px">{{ (row.water_rate * 100) >> 0 }}%</span>
+                        <span style="margin-right: 10px">{{ (row.water_rate * 100).toFixed(2) }}%</span>
                         <el-button
                             class="item"
                             type="primary"
                             size="mini"
                             @click="
                                 editWaterRateID = row.type;
-                                editWaterRateValue = (row.water_rate * 100) >> 0;
+                                editWaterRateValue = (row.water_rate * 100).toFixed(2);
                             "
                             >{{ $t("common.update") }}</el-button
                         >
@@ -83,9 +86,37 @@ export default class TabWaterRateBody extends AbstractView {
     private editWaterRateID = null;
     private editWaterRateValue = "";
 
+    private ChangeNumValue() {
+        if (this.editWaterRateValue) {
+            this.editWaterRateValue = this.editWaterRateValue.replace(/[^\d\.]/g, "");
+            var reg = /^(0|([1-9]\d*))(\.\d{1,2})?$/; //正则验证保留 最多允许后输入两位小数
+            if (!reg.test(this.editWaterRateValue)) {
+                this.editWaterRateValue = this.editWaterRateValue + "";
+                this.editWaterRateValue = this.editWaterRateValue.substring(
+                    0,
+                    this.editWaterRateValue.indexOf(".") + 3
+                );
+                var n = this.editWaterRateValue.split(".").length - 1;
+                if (n > 1) {
+                    this.editWaterRateValue = this.editWaterRateValue.substring(
+                        0,
+                        this.editWaterRateValue.indexOf(".")
+                    );
+                }
+            }
+            if (parseFloat(this.editWaterRateValue) > 100) {
+                this.editWaterRateValue = "100";
+            }
+            return this.editWaterRateValue;
+        } else {
+            return "";
+        }
+    }
+
     private onEditWaterRate(row: any) {
         this.editWaterRateID = null;
-        this.myProxy.water_config[row.type] = parseInt(this.editWaterRateValue) / 100;
+        this.myProxy.water_config[row.type] = parseFloat((parseFloat(this.editWaterRateValue) / 100).toFixed(4));
+
         this.myProxy.onUpdateWaterRate();
     }
 }
@@ -95,5 +126,8 @@ export default class TabWaterRateBody extends AbstractView {
 .notice {
     font-size: 18px;
     margin-bottom: 10px;
+}
+.red {
+    color: red;
 }
 </style>
