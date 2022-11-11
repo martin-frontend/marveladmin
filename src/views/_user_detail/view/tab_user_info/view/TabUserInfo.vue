@@ -47,29 +47,32 @@
 
                 <el-form-item size="mini" :label="tableColumns['is_gold_exchange'].name" prop="is_gold_exchange">
                     <el-switch
-                            @change="onSwitchGoldExchange()"
-                            v-model="userInfo.is_gold_exchange"
-                            :active-value="1"   
-                            :inactive-value="98"
+                        @change="onSwitchGoldExchange()"
+                        v-model="userInfo.is_gold_exchange"
+                        :active-value="1"
+                        :inactive-value="98"
                     ></el-switch>
                 </el-form-item>
-
 
                 <el-form-item size="mini" :label="tableColumns['is_credit_user'].options[1]" prop="is_credit_user">
                     <el-switch
-                            @change="onSwitchCreditUser()"
-                            v-model="userInfo.is_credit_user"
-                            :active-value="1"   
-                            :inactive-value="98"
+                        @change="onSwitchCreditUser()"
+                        v-model="userInfo.is_credit_user"
+                        :active-value="1"
+                        :inactive-value="98"
                     ></el-switch>
                 </el-form-item>
-                
-                <el-form-item size="mini" :label="tableColumns['show_credit_statistic'].name" prop="show_credit_statistic">
+
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['show_credit_statistic'].name"
+                    prop="show_credit_statistic"
+                >
                     <el-switch
-                            @change="onSwitchCreditStatistic()"
-                            v-model="userInfo.show_credit_statistic"
-                            :active-value="1"   
-                            :inactive-value="98"
+                        @change="onSwitchCreditStatistic()"
+                        v-model="userInfo.show_credit_statistic"
+                        :active-value="1"
+                        :inactive-value="98"
                     ></el-switch>
                 </el-form-item>
 
@@ -85,6 +88,14 @@
                     </el-button>
                 </el-form-item>
 
+                <el-form-item size="mini" :label="tableColumns['show_credit_report'].name" prop="show_credit_report">
+                    <el-switch
+                        @change="onSwitchCreditReport()"
+                        v-model="userInfo.show_credit_report"
+                        :active-value="1"
+                        :inactive-value="98"
+                    ></el-switch>
+                </el-form-item>
             </el-form>
 
             <el-form ref="form" label-position="left" label-width="130px" :model="userInfo">
@@ -460,120 +471,120 @@ import EditDialog from "./EditDialog.vue";
 })
 export default class TabUserInfo extends AbstractView {
     //权限标识
-     unique = unique;
-     checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-     net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-     myProxy: TabUserInfoProxy = getProxy(TabUserInfoProxy);
-     tableColumns = this.myProxy.tableColumns;
-     userInfo = this.myProxy.userInfo;
-     relationChain = this.myProxy.relationChain;
+    myProxy: TabUserInfoProxy = getProxy(TabUserInfoProxy);
+    tableColumns = this.myProxy.tableColumns;
+    userInfo = this.myProxy.userInfo;
+    relationChain = this.myProxy.relationChain;
 
     constructor() {
         super(TabUserUnfoMediator);
     }
 
-     handlerEdit(filed: string) {
+    handlerEdit(filed: string) {
         this.myProxy.showDialog(filed);
     }
-    
-     onSwitch() {
+
+    onSwitch() {
         this.myProxy.dialogData.filed = "status";
         this.myProxy.onEdit("status", this.userInfo.status);
+    }
+
+    onSwitchCreditReport() {
+        this.myProxy.dialogData.filed = "show_credit_report";
+        this.myProxy.onEdit("show_credit_report", this.userInfo.show_credit_report);
     }
 
     onSwitchCreditStatistic() {
         this.myProxy.dialogData.filed = "show_credit_statistic";
         this.myProxy.onEdit("show_credit_statistic", this.userInfo.show_credit_statistic);
 
-         console.log(">>>>>>>>",this.userInfo.show_credit_statistic )
+        console.log(">>>>>>>>", this.userInfo.show_credit_statistic);
     }
 
     onSwitchCreditUser() {
         this.myProxy.dialogData.filed = "is_credit_user";
         this.myProxy.onEdit("is_credit_user", this.userInfo.is_credit_user);
-         console.log(">>>>>>>>切换信用用户<<",this.userInfo.is_credit_user )
+        console.log(">>>>>>>>切换信用用户<<", this.userInfo.is_credit_user);
     }
 
     onSwitchGoldExchange() {
         this.myProxy.dialogData.filed = "is_gold_exchange";
         this.myProxy.onEdit("is_gold_exchange", this.userInfo.is_gold_exchange);
-         console.log(">>>>>>>>切换 转换<<",this.userInfo.is_gold_exchange )
+        console.log(">>>>>>>>切换 转换<<", this.userInfo.is_gold_exchange);
     }
 
-    onEditXinYongFenBi(filed: number)
-    {
-        if (filed<0 || filed > 100)
-        {
-            console.log(" 无效输入")
-            return
+    onEditXinYongFenBi(filed: number) {
+        if (filed < 0 || filed > 100) {
+            console.log(" 无效输入");
+            return;
         }
-   
-        console.log(">>>>>>>>",filed )
-        
 
-       
+        console.log(">>>>>>>>", filed);
     }
 
-     onSwitchPromotion() {
+    onSwitchPromotion() {
         this.myProxy.dialogData.filed = "is_promotion_statistics_display";
         this.myProxy.onEdit("is_promotion_statistics_display", this.userInfo.is_promotion_statistics_display);
     }
 
-     onSwitchChannel() {
+    onSwitchChannel() {
         this.myProxy.dialogData.filed = "is_channel_statistic_display";
         this.myProxy.onEdit("is_channel_statistic_display", this.userInfo.is_channel_statistic_display);
     }
 
-     onSwitchCommission() {
+    onSwitchCommission() {
         this.myProxy.dialogData.filed = "is_receive_commission";
         this.myProxy.onEdit("is_receive_commission", this.userInfo.is_receive_commission);
     }
 
-     onSwitchGold_water() {
+    onSwitchGold_water() {
         this.myProxy.dialogData.filed = "is_check_gold_water";
         this.myProxy.onEdit("is_check_gold_water", this.userInfo.is_check_gold_water);
     }
 
-     onSwitchExchange_order_auto_check() {
+    onSwitchExchange_order_auto_check() {
         this.myProxy.dialogData.filed = "is_exchange_order_auto_check";
         this.myProxy.onEdit("is_exchange_order_auto_check", this.userInfo.is_exchange_order_auto_check);
     }
 
-     onSwitchCan_game() {
+    onSwitchCan_game() {
         this.myProxy.dialogData.filed = "is_can_game";
         this.myProxy.onEdit("is_can_game", this.userInfo.is_can_game);
     }
 
-     onSwitchReceive_reward() {
+    onSwitchReceive_reward() {
         this.myProxy.dialogData.filed = "is_receive_reward";
         this.myProxy.onEdit("is_receive_reward", this.userInfo.is_receive_reward);
     }
 
-     onSwitchGold_transfer() {
+    onSwitchGold_transfer() {
         this.myProxy.dialogData.filed = "is_gold_transfer";
         this.myProxy.onEdit("is_gold_transfer", this.userInfo.is_gold_transfer);
     }
 
-     onSwitchLogin_need_google() {
+    onSwitchLogin_need_google() {
         this.myProxy.dialogData.filed = "is_login_need_google";
         this.myProxy.onEdit("is_login_need_google", this.userInfo.is_login_need_google);
     }
 
-     showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.onShowDetail(user_id);
     }
 
-     handlerLookPhone() {
+    handlerLookPhone() {
         this.myProxy.onGetPhone();
     }
 
-     handlerClear() {
+    handlerClear() {
         this.myProxy.clearCache(this.userInfo.user_id);
     }
 
-     handlerGoogleClear() {
+    handlerGoogleClear() {
         this.myProxy.clearGoogle(this.userInfo.user_id);
     }
 

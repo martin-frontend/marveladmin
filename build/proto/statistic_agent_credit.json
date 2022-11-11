@@ -1,0 +1,9 @@
+{
+    "name": "代理总报表",
+    "description": "代理总报表",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47776426",
+    "list": [
+        "admin/statistic_credit/table_columns",
+        "admin/statistic_agent_credit/index"
+    ]
+}
