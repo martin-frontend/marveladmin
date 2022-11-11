@@ -49,6 +49,11 @@
                 v-model="listQuery.coin_name_unique"
                 :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
             />
+            <SearchSelect
+                :title="tableColumns.is_credit_user.name"
+                v-model="listQuery.is_credit_user"
+                :options="tableColumns.is_credit_user.options"
+            />
             <SearchRange
                 :title="tableColumns.win_gold.name"
                 min="-9999999"

@@ -12,6 +12,9 @@
                     <el-form-item size="mini" :label="tableColumns['user_id'].name" prop="user_id">
                         {{ data.data["user_id"] }}
                     </el-form-item>
+                    <el-form-item size="mini" :label="tableColumns['is_credit_user'].name" prop="is_credit_user">
+                        {{ tableColumns['is_credit_user'].options[data.data["is_credit_user"]] }}
+                    </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['vendor_id'].name" prop="vendor_id">
                         {{ tableColumns["vendor_id"].options[data.data["vendor_id"]] }}
                     </el-form-item>

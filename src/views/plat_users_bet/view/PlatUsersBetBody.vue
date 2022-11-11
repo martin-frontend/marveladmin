@@ -41,6 +41,16 @@
                 </template>
             </el-table-column>
             <el-table-column
+                :label="tableColumns['is_credit_user'].name"
+                prop="is_credit_user"
+                class-name="status-col"
+                min-width="80px"
+            >
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns.is_credit_user.options[row.is_credit_user] }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column
                 :label="tableColumns['nick_name'].name"
                 prop="nick_name"
                 class-name="status-col"
