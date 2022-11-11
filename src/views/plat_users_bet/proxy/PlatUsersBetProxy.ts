@@ -69,6 +69,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             water_accelerate: { name: "", options: {} },
             water_rate_accelerate: { name: "", options: {} },
             username: { name: "", options: {} },
+            backwater_game: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
