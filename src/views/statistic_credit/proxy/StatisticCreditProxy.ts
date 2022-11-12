@@ -1,6 +1,6 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull,getTodayOffset, dateFormat } from "@/core/global/Functions";
+import { formCompared, objectRemoveNull, getTodayOffset, dateFormat } from "@/core/global/Functions";
 import { HttpType } from "@/views/statistic_credit/setting";
 import { MessageBox } from "element-ui";
 import IStatisticCreditProxy from "./IStatisticCreditProxy";
@@ -44,26 +44,26 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
-        info_head:{
+        info_head: {
             end_date: "",
             start_date: "",
-            user_id: null
+            user_id: null,
         },
-        summary :{
+        summary: {
             plat_id: "",
             record_count: null,
             bet_gold: "",
             win_gold: "",
             backwater_game: "",
             back_water: "",
-            back_water_except_user:"",
+            back_water_except_user: "",
             agent_amount: "",
             plat_amount: "",
             credit_rate: "",
-            user_id: "-"
-        }
+            user_id: "-",
+        },
     };
-    
+
     /**查询条件 */
     listQuery = {
         plat_id: "",
@@ -78,14 +78,12 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        form: {
-        },
+        form: {},
         formSource: null, // 表单的原始数据
     };
 
-    setSummaryData(data:any)
-    {
-        let sumData = JSON.parse( JSON.stringify(this.tableData.columns));
+    setSummaryData(data: any) {
+        let sumData = JSON.parse(JSON.stringify(this.tableData.columns));
         sumData.plat_id = data.plat_id;
         sumData.user_id = <string>i18n.t("common.total");
         sumData.username = "-";
@@ -113,10 +111,11 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
-        if (data.list.length > 0)
+        // if (data.list.length > 0)
         {
             //console.log("有数据，需要加表头");
-            let sumdata = this.setSummaryData(data.summary)
+            if (data.pageInfo.pageCurrent == 1) data.list.unshift(data.agent);
+            let sumdata = this.setSummaryData(data.summary);
             data.list.unshift(sumdata);
         }
         this.tableData.list.push(...data.list);
@@ -166,13 +165,9 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         this.dialogData.bShow = false;
     }
     /**重置弹窗表单 */
-    resetDialogForm() {
-
-    }
+    resetDialogForm() {}
     /**筛选渠道列表 */
-    channelListFilter() {
-
-    }
+    channelListFilter() {}
 
     /**日期快捷 */
     pickerOptions = {
@@ -226,19 +221,13 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
     }
 
     /**添加数据 */
-    onAdd() {
-        
-    }
+    onAdd() {}
     /**更新数据 */
-    onUpdate() {
-       
-    }
+    onUpdate() {}
     /**删除数据 */
-    onDelete(admin_user_id: any) {
-        
-    }
-     /**显示用户详情 */
-     showUserDetail(user_id: number) {
+    onDelete(admin_user_id: any) {}
+    /**显示用户详情 */
+    showUserDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
     }
 }

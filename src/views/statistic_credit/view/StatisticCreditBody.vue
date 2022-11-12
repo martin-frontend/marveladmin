@@ -17,7 +17,7 @@
                         </div>
                         <div v-else @click="showUserDetail(row.user_id)"
                             style="cursor: pointer; text-decoration: underline">
-                            <div>{{ row.user_id }}</div>
+                            <div :class="row.user_id == listQuery.user_id ? 'selfid' : '' ">{{ row.user_id }}</div>
                         </div>
                     </div>
 
@@ -138,4 +138,7 @@ export default class StatisticCreditBody extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.selfid{
+    font-weight: bold;
+}
 </style>
