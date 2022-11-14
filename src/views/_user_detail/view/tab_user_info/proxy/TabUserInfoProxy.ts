@@ -89,7 +89,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         show_credit_report: { name: '信用报表', options: {} },
         is_credit_user: { name: "信用用户", options: {} },
         is_gold_exchange: { name: "是否货币互转", options: {} },
-
+        show_credit_set: { name: '允许多层', options: {} },
     };
     /**用户详情 */
     userInfo = {
@@ -160,13 +160,12 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_receive_reward: "0",
         is_gold_transfer: "0",
         pretty_user_id: "",
-
         show_credit_statistic: "0",
         show_credit_report: "0",
+        show_credit_set: "0",
         credit_rate: 60,
         is_credit_user: "98",
         is_gold_exchange: "98",
-
         is_login_need_google: "0"
     };
     /**代理关系链 */

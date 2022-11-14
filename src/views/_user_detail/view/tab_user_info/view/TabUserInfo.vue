@@ -96,6 +96,15 @@
                         :inactive-value="98"
                     ></el-switch>
                 </el-form-item>
+
+                <el-form-item size="mini" :label="tableColumns['show_credit_set'].name" prop="show_credit_set">
+                    <el-switch
+                        @change="onSwitchCreditSet()"
+                        v-model="userInfo.show_credit_set"
+                        :active-value="1"
+                        :inactive-value="98"
+                    ></el-switch>
+                </el-form-item>
             </el-form>
 
             <el-form ref="form" label-position="left" label-width="130px" :model="userInfo">
@@ -497,6 +506,11 @@ export default class TabUserInfo extends AbstractView {
     onSwitchCreditReport() {
         this.myProxy.dialogData.filed = "show_credit_report";
         this.myProxy.onEdit("show_credit_report", this.userInfo.show_credit_report);
+    }
+
+    onSwitchCreditSet() {
+        this.myProxy.dialogData.filed = "show_credit_set";
+        this.myProxy.onEdit("show_credit_set", this.userInfo.show_credit_set);
     }
 
     onSwitchCreditStatistic() {
