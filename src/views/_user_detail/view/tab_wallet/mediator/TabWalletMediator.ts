@@ -2,7 +2,8 @@ import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { EventType, HttpType } from "@/views/_user_detail/setting";
 import TabWalletProxy from "../proxy/TabWalletProxy";
 import { getPageSetting, getProxy } from "@/views/_user_detail/PageSetting";
-
+import { Message } from "element-ui";
+import i18n from "@/lang";
 export default class TabWalletMediator extends AbstractMediator {
     private myProxy: TabWalletProxy = <any>getProxy(TabWalletProxy);
     private pageSetting = getPageSetting();
@@ -23,6 +24,7 @@ export default class TabWalletMediator extends AbstractMediator {
             // EventType.admin_plat_user_update_safe_gold,
             EventType.admin_plat_user_update_user_gold,
             EventType.admin_plat_user_recharge_address,
+            EventType.admin_plat_user_transfer_user_gold,
         ];
     }
 
@@ -51,6 +53,11 @@ export default class TabWalletMediator extends AbstractMediator {
                     this.myProxy.refreshing = false;
                     this.myProxy.dialogRechargeAddress.bShow = true;
                     this.myProxy.setRechargeAddress(body);
+                    break;
+                case EventType.admin_plat_user_transfer_user_gold:
+                    Message.success(<any>i18n.t("successMessage.operation"));
+                    this.myProxy.dialogTransferData.bShow = false;
+                    this.myProxy.getGoldInfo(this.myProxy.userInfo.user_id);
                     break;
             }
         }

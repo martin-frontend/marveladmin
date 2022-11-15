@@ -29,6 +29,7 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
         gold_columns_disable: { name: "金币明细列屏蔽", options: {} },
         invite_user_id: { name: "邀请码人ID", options: {} },
         is_channel_statistic_display: { name: "渠道统计展示", options: {} },
+        is_credit_user: { name: '用户类型', options: {} },
         is_promotion_statistics_display: { name: "推广统计展示", options: {} },
         last_login_app_type: { name: "最近登陆应用平台", options: {} },
         last_login_at: { name: "最近登入时间", options: {} },
@@ -76,6 +77,7 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
         channel_id: 0,
         created_at: "",
         created_by: "",
+        child_users: [],
         data_belong: "",
         email: null,
         gender: 0,
@@ -123,6 +125,7 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
             // vendors_detail: [],
         },
         is_promotion_statistics_display: 0,
+        is_credit_user: 0,
     };
     /**平台资产 */
     platMoney = <any>[];
@@ -130,7 +133,16 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
     vendorMoney = <any>[];
     /**是否正在刷新 */
     refreshing = false;
+    /**直属下级 */
+    child_users = <any>[];
 
+    /**划转页面数据 */
+    dialogTransferData = {
+        bShow: false,
+        gold: "",
+        coin_name_unique: "",
+        to_user_id: "",
+    };
     /**扣款页面数据 */
     dialogDeductGoldData = {
         bShow: false,
@@ -143,6 +155,13 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
         coin_name_unique: "",
         addressList: <any>[],
     };
+    /**打开划转弹窗 */
+    showTransferDialog(coin_name_unique: string) {
+        this.dialogTransferData.coin_name_unique = coin_name_unique;
+        this.dialogTransferData.gold = "";
+        this.dialogTransferData.bShow = true;
+        this.dialogTransferData.to_user_id = "";
+    }
     /**打开扣款弹窗 */
     showDialog(coin_name_unique: string) {
         this.dialogDeductGoldData.coin_name_unique = coin_name_unique;
@@ -203,6 +222,10 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
     getGoldInfo(user_id: number) {
         this.refreshing = true;
         this.sendNotification(HttpType.admin_plat_user_show, { user_id, modules: "[1,2]" });
+    }
+    /**金币划转 */
+    onTransferGold(gold: number, coin_name_unique: string) {
+        this.sendNotification(HttpType.admin_plat_user_transfer_user_gold, { user_id: this.userInfo.user_id, to_user_id: this.dialogTransferData.to_user_id, gold, coin_name_unique });
     }
     /**扣除金币 */
     onUpdateGold(gold: number, coin_name_unique: string) {

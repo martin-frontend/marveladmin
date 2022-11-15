@@ -22,8 +22,16 @@
                 <el-table-column label="币种" prop="coin_name_unique" class-name="status-col"> </el-table-column>
                 <el-table-column label="账户余额" prop="sum_money" class-name="status-col"> </el-table-column>
                 <el-table-column label="平台余额" prop="plat_money" class-name="status-col"> </el-table-column>
-                <el-table-column label="操作" class-name="status-col">
+                <el-table-column label="操作" class-name="status-col" width="300">
                     <template slot-scope="{ row }">
+                        <el-button
+                            class="item"
+                            type="primary"
+                            @click="handlerTransfer(row)"
+                            v-if="myProxy.userInfo.is_credit_user == 1"
+                        >
+                            划转
+                        </el-button>
                         <el-button class="item" type="primary" @click="handlerDeductGold(row)">
                             扣款
                         </el-button>
@@ -64,6 +72,7 @@
         <!-- 扣款页面 -->
         <DeductGoldDialog v-if="dialogDeductGoldData.bShow" />
         <RechargeAddressDialog v-if="dialogRechargeAddress.bShow" />
+        <TransferDialog v-if="dialogTransferData.bShow" />
     </div>
 </template>
 
@@ -77,11 +86,13 @@ import { getProxy } from "@/views/_user_detail/PageSetting";
 import GlobalVar from "@/core/global/GlobalVar";
 import DeductGoldDialog from "./DeductGoldDialog.vue";
 import RechargeAddressDialog from "./RechargeAddressDialog.vue";
+import TransferDialog from "./TransferDialog.vue";
 
 @Component({
     components: {
         DeductGoldDialog,
         RechargeAddressDialog,
+        TransferDialog,
     },
 })
 export default class TabWallet extends AbstractView {
@@ -96,9 +107,14 @@ export default class TabWallet extends AbstractView {
     private userInfo = this.myProxy.userInfo;
     private dialogDeductGoldData = this.myProxy.dialogDeductGoldData;
     private dialogRechargeAddress = this.myProxy.dialogRechargeAddress;
+    private dialogTransferData = this.myProxy.dialogTransferData;
 
     constructor() {
         super(TabWalletMediator);
+    }
+
+    private handlerTransfer(row: any) {
+        this.myProxy.showTransferDialog(row.coin_name_unique);
     }
 
     private handlerDeductGold(row: any) {
