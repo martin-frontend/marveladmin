@@ -100,7 +100,7 @@ export default class DeductGoldDialog extends AbstractView {
                 ) {
                     MessageBox.confirm(
                         //@ts-ignore
-                        this.$t("common.confirmDeductCoinType", {
+                        this.$t("common.confirmTransfer", {
                             "0": transferGold,
                             "1": this.dialogTransferData.coin_name_unique,
                         }),
