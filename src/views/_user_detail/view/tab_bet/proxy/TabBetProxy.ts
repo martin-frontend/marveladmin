@@ -70,7 +70,8 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
             valid_bet_gold: "",
             water: "",
             win_gold: "",
-        }
+        },
+        summary_coin: [],
     }
     /**查询数据 */
     listQuery: { [key: string]: string | number } = {
@@ -147,6 +148,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
         Object.assign(this.tableData.summary, data.summary);
+        this.tableData.summary_coin = data.summary_coin;
     }
     /**重置查询数据 */
     resetListQuery() {

@@ -41,6 +41,8 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
             user_id: { name: "", options: {} },
             username: { name: "", options: {} },
             searchtime: { name: "结算时间", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
+            remark: { name: "备注", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -52,13 +54,14 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
         page_size: 20,
         start_date: dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
         end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
+        coin_name_unique: "USDT",
     };
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
         form: {
-            id: null
+            id: null,
             // TODO
         },
         formSource: null, // 表单的原始数据
@@ -93,12 +96,12 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
             page_size: 20,
             start_date: dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
             end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
+            coin_name_unique: "USDT",
         });
     }
 
     /**显示弹窗 */
-    showDialog(status: string, data?: any) {
-    }
+    showDialog(status: string, data?: any) {}
 
     /**隐藏弹窗 */
     hideDialog() {
@@ -164,17 +167,13 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
     }
 
     /**添加数据 */
-    onAdd() {
-    }
+    onAdd() {}
 
     /**更新数据 */
-    onUpdate() {
-    }
+    onUpdate() {}
 
     /**删除数据 */
-    onDelete(id: any) {
-
-    }
+    onDelete(id: any) {}
 
     /**显示用户详情 */
     showUserDetail(user_id: number) {

@@ -1,6 +1,6 @@
 <template>
     <div :class="lang">
-        <el-dialog :title="$t('user_detail.userDetail')" :visible.sync="pageSetting.bShow" width="1100px">
+        <el-dialog :title="$t('user_detail.userDetail')" :visible.sync="pageSetting.bShow" width="1500px">
             <el-tabs v-model="activeName">
                 <el-tab-pane :label="$t('common.baseInfo')" name="tab1">
                     <TabUserInfo v-if="activeName == 'tab1'" />

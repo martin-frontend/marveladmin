@@ -9,6 +9,15 @@
             <span>{{ $t("common.playerWater") }}:{{ summary.water }}</span>
             <span>{{ tableColumns["water_accelerate"].name }}:{{ summary.water_accelerate }}</span>
         </div>
+        <div class="statistics" v-for="(item, index) in myProxy.tableData.summary_coin" :key="index">
+            {{ item.coin_name_unique }}
+            <span>{{ $t("common.totalBet") }}:{{ item.bet_gold }}</span>
+            <span>{{ $t("common.validBet") }}:{{ item.valid_bet_gold }}</span>
+            <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
+            <span>{{ $t("common.settleWater") }}:{{ item.settlement_water }}</span>
+            <span>{{ $t("common.playerWater") }}:{{ item.water }}</span>
+            <!-- <span>{{ tableColumns["water_accelerate"].name }}:{{ item.water_accelerate }}</span> -->
+        </div>
         <el-table
             :data="tableData"
             border
@@ -81,9 +90,18 @@
             <el-table-column
                 :label="tableColumns['coin_name_unique'].name"
                 prop="coin_name_unique"
-                min-width="80px"
+                min-width="150px"
                 class-name="status-col"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <div>{{row.coin_name_unique}}</div>
+                    <div>{{tableColumns['bet_gold_coin'].name}}: {{row.bet_gold_coin}}</div>
+                    <div>{{tableColumns['valid_bet_gold_coin'].name}}: {{row.valid_bet_gold_coin}}</div>
+                    <div>{{tableColumns['win_gold_coin'].name}}: <WinLossDisplay :amount="row.win_gold_coin" :isShowDollar="false" /></div>
+                    <div>{{tableColumns['settlement_water_coin'].name}}: {{row.settlement_water_coin}}</div>
+                    <div>{{tableColumns['water_coin'].name}}: {{row.water_coin}}</div>
+                </template>
+            </el-table-column>
             <el-table-column :label="tableColumns['win_gold'].name" prop="win_gold" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div v-if="row.win_gold == '-'">{{ row.win_gold }}</div>
@@ -104,8 +122,8 @@
                 min-width="80px"
             ></el-table-column>
             <el-table-column
-                :label="tableColumns['backwater_game'].name"
-                prop="backwater_game"
+                :label="tableColumns['valid_bet_gold'].name"
+                prop="valid_bet_gold"
                 class-name="status-col"
                 min-width="80px"
             ></el-table-column>
@@ -183,29 +201,29 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
 })
 export default class PlatUsersBetBody extends AbstractView {
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+     unique = unique;
+     checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+     net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatUsersBetProxy = this.getProxy(PlatUsersBetProxy);
+     myProxy: PlatUsersBetProxy = this.getProxy(PlatUsersBetProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
-    private summary = this.myProxy.tableData.summary;
+     tableColumns = this.myProxy.tableData.columns;
+     tableData = this.myProxy.tableData.list;
+     pageInfo = this.myProxy.tableData.pageInfo;
+     listQuery = this.myProxy.listQuery;
+     summary = this.myProxy.tableData.summary;
 
-    private handlerPageSwitch(page: number) {
+     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+     handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private showUserDetail(user_id: number) {
+     showUserDetail(user_id: number) {
         this.myProxy.showUserDetail(user_id);
     }
 }

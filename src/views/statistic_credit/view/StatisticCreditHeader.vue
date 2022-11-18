@@ -25,6 +25,16 @@
                     </el-input>
                 </div>
 
+                <!-- 币种 -->
+                <div class="item_group">
+                    <div class="cust_title">{{ tableColumns["coin_name_unique"].name }}</div>
+                    <el-select v-model="listQuery.coin_name_unique" filterable class="select"
+                        :placeholder="$t('common.pleaseChoose')" >
+                        <el-option v-for="(value, key) in tableColumns.coin_name_unique.options[listQuery.plat_id]" :key="key" :label="value"
+                            :value="key"></el-option>
+                    </el-select>
+                </div>
+
                 <!-- 结算时间 -->
                 <div class="item_group">
                     <SearchDatePicker :title="tableColumns.searchtime.name"
@@ -45,14 +55,14 @@
             </div>
         </div>
         <div class="row" v-if="isTipsShow">
-            <p>{{ $t("common.credit_tips", timeObj) }}</p>
+            <div>{{ $t("common.credit_tips", timeObj) }}</div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 import StatisticCreditProxy from "../proxy/StatisticCreditProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -79,7 +89,7 @@ export default class NicoTestHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
-    
+
     //private searchInfo = JSON.parse( JSON.stringify( this.listQuery));
     private searchInfo =  this.myProxy.tableData.info_head;
 
@@ -90,7 +100,7 @@ export default class NicoTestHeader extends AbstractView {
                 2:this.searchInfo.end_date
             }
     }
-    
+
     public get isTipsShow() : boolean {
         if (this.searchInfo.user_id)
         {
@@ -108,13 +118,25 @@ export default class NicoTestHeader extends AbstractView {
             pageTotal:0,
         }
     }
+
+    @Watch("listQuery.plat_id")
+    onWatchPlat(){
+        this.listQuery.coin_name_unique = "USDT";
+    }
+
+    @Watch("listQuery.coin_name_unique")
+    onWatchCoin(){
+        this.myProxy.tableData.list = [];
+        this.myProxy.onQuery();
+    }
+
     handlerSearch() {
         this.listQuery.page_count = 1;
         //objectRemoveNull(this.myProxy.tableData)
 
         // this.updataSearchInfo();
         // this.myProxy.setTableData(this.errorData );
-        
+
         this.myProxy.onQuery();
     }
 

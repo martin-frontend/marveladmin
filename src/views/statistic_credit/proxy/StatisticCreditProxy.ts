@@ -33,6 +33,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             bet_gold: { name: "", options: {} },
             win_gold: { name: "", options: {} },
             backwater_game: { name: "", options: {} },
+            valid_bet_gold: { name: "", options: {} },
             back_water: { name: "", options: {} },
             back_water_except_user: { name: "", options: {} },
             agent_amount: { name: "", options: {} },
@@ -41,6 +42,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             user_id: { name: "", options: {} },
             username: { name: "", options: {} },
             searchtime: { name: "结算时间", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -61,6 +63,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             plat_amount: "",
             credit_rate: "",
             user_id: "-",
+            valid_bet_gold: "",
         },
     };
 
@@ -73,6 +76,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         page_size: 20,
         start_date: dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
         end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
+        coin_name_unique: "USDT",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -96,17 +100,18 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         sumData.agent_amount = data.agent_amount;
         sumData.plat_amount = data.plat_amount;
         sumData.credit_rate = data.credit_rate;
+        sumData.valid_bet_gold = data.valid_bet_gold;
         return sumData;
     }
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        // const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
-        // if (plat_id_options_keys.length > 0) {
-        //     if (!plat_id_options_keys.includes(this.listQuery.plat_id))
-        //         this.listQuery.plat_id = plat_id_options_keys[0];
-        //     this.onQuery();
-        // }
+        const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
+        if (plat_id_options_keys.length > 0) {
+            if (!plat_id_options_keys.includes(this.listQuery.plat_id))
+                this.listQuery.plat_id = plat_id_options_keys[0];
+            // this.onQuery();
+        }
     }
     /**表格数据 */
     setTableData(data: any) {
@@ -141,6 +146,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             page_size: 20,
             start_date: dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
             end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
+            coin_name_unique: "USDT",
         });
     }
 

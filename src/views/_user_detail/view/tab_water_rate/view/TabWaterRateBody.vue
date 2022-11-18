@@ -104,8 +104,8 @@ export default class TabWaterRateBody extends AbstractView {
                     );
                 }
             }
-            if (parseFloat(this.editWaterRateValue) > 100) {
-                this.editWaterRateValue = "100";
+            if (parseFloat(this.editWaterRateValue) > 200) {
+                this.editWaterRateValue = "200";
             }
             return this.editWaterRateValue;
         } else {

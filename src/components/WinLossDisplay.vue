@@ -7,17 +7,16 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component({
     filters: {
         hasPlus(value: string, isShowDollar: boolean) {
-            if (!isShowDollar) return value;
-
             let str = value.replace("$", "");
             let amount = Number(str);
+            if (isNaN(amount)) return str;
+            const valueStr = Math.abs(amount).toFixed(3);
             if (amount > 0) {
-                return `+$${amount.toFixed(3)}`;
+                return isShowDollar ? `+$${valueStr}` : `+${valueStr}`;
             } else if (amount < 0) {
-                amount = Math.abs(amount);
-                return `-$${amount.toFixed(3)}`;
+                return isShowDollar ? `-$${valueStr}` : `-${valueStr}`;
             } else {
-                return `$${amount.toFixed(3)}`;
+                return isShowDollar ? `$${valueStr}` : valueStr;
             }
         },
 

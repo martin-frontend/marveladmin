@@ -176,7 +176,7 @@ export default {
         validBet: "有效投注金额",
         playerWinLoss: "玩家输赢",
         settleWater: "结算流水",
-        playerWater: "玩家流水",
+        playerWater: "用户流水",
         settleType: "结算方式",
         settleRatio: "结算比例",
         userWater: "用户流水",

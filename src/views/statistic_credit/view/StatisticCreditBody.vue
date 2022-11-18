@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini"
+        <el-table :data="tableData.list" border fit highlight-current-row style="width: 100%" size="mini"
             v-loading="net_status.loading">
 
             <el-table-column :label="tableColumns['plat_id'].name" prop="plat_id" class-name="status-col" width="130">
@@ -36,12 +36,12 @@
 
             <el-table-column prop="win_gold" :label="tableColumns['win_gold'].name" align="center">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.win_gold"></WinLossDisplay>
+                    <WinLossDisplay :amount="row.win_gold" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
 
-            <el-table-column :label="tableColumns['backwater_game'].name" prop="backwater_game" class-name="status-col">
+            <el-table-column :label="tableColumns['valid_bet_gold'].name" prop="valid_bet_gold" class-name="status-col">
             </el-table-column>
 
             <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col">
@@ -52,13 +52,13 @@
 
             <el-table-column prop="agent_amount" :label="tableColumns['agent_amount'].name" align="center">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.agent_amount"></WinLossDisplay>
+                    <WinLossDisplay :amount="row.agent_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
             <el-table-column prop="plat_amount" :label="tableColumns['plat_amount'].name" align="center">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.plat_amount"></WinLossDisplay>
+                    <WinLossDisplay :amount="row.plat_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
@@ -109,7 +109,7 @@ export default class StatisticCreditBody extends AbstractView {
     private myProxy: StatisticCreditProxy = this.getProxy(StatisticCreditProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
-    tableData = this.myProxy.tableData.list;
+    tableData = this.myProxy.tableData;
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
 

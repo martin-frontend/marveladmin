@@ -7,6 +7,15 @@
             <span>{{ $t("common.settleWater") }}:{{ summary.settlement_water }}</span>
             <span>{{ $t("common.playerWater") }}:{{ summary.water }}</span>
         </div>
+        <div class="statistics" v-for="(item, index) in myProxy.tableData.summary_coin" :key="index">
+            {{ item.coin_name_unique }}
+            <span>{{ $t("common.totalBet") }}:{{ item.bet_gold }}</span>
+            <span>{{ $t("common.validBet") }}:{{ item.valid_bet_gold }}</span>
+            <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
+            <span>{{ $t("common.settleWater") }}:{{ item.settlement_water }}</span>
+            <span>{{ $t("common.playerWater") }}:{{ item.water }}</span>
+            <!-- <span>{{ tableColumns["water_accelerate"].name }}:{{ item.water_accelerate }}</span> -->
+        </div>
         <el-table
             :data="tableData"
             border
@@ -58,9 +67,18 @@
             <el-table-column
                 :label="tableColumns['coin_name_unique'].name"
                 prop="coin_name_unique"
+                min-width="150px"
                 class-name="status-col"
-                min-width="50px"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <div>{{row.coin_name_unique}}</div>
+                    <div>{{tableColumns['bet_gold_coin'].name}}: {{row.bet_gold_coin}}</div>
+                    <div>{{tableColumns['valid_bet_gold_coin'].name}}: {{row.valid_bet_gold_coin}}</div>
+                    <div>{{tableColumns['win_gold_coin'].name}}: <WinLossDisplay :amount="row.win_gold_coin" :isShowDollar="false" /></div>
+                    <div>{{tableColumns['settlement_water_coin'].name}}: {{row.settlement_water_coin}}</div>
+                    <div>{{tableColumns['water_coin'].name}}: {{row.water_coin}}</div>
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns['win_gold'].name"
                 prop="win_gold"
