@@ -50,7 +50,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['backwater_game'].name" prop="backwater_game" class-name="status-col">
+            <el-table-column :label="tableColumns['valid_bet_gold'].name" prop="valid_bet_gold" class-name="status-col">
             </el-table-column>
 
             <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col">

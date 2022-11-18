@@ -43,6 +43,7 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
             searchtime: { name: "结算时间", options: {} },
             coin_name_unique: { name: "币种", options: {} },
             remark: { name: "备注", options: {} },
+            valid_bet_gold: { name: "备注", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
