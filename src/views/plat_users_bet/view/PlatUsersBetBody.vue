@@ -8,6 +8,7 @@
             <span>{{ $t("common.settleWater") }}:{{ summary.settlement_water }}</span>
             <span>{{ $t("common.playerWater") }}:{{ summary.water }}</span>
             <span>{{ tableColumns["water_accelerate"].name }}:{{ summary.water_accelerate }}</span>
+            <span>{{ tableColumns["backwater"].name }}:{{ summary.backwater }}</span>
         </div>
         <div class="statistics" v-for="(item, index) in myProxy.tableData.summary_coin" :key="index">
             {{ item.coin_name_unique }}
@@ -16,6 +17,7 @@
             <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
             <span>{{ $t("common.settleWater") }}:{{ item.settlement_water }}</span>
             <span>{{ $t("common.playerWater") }}:{{ item.water }}</span>
+            <span>{{ tableColumns["backwater"].name }}:{{ item.backwater_coin }}</span>
             <!-- <span>{{ tableColumns["water_accelerate"].name }}:{{ item.water_accelerate }}</span> -->
         </div>
         <el-table
@@ -100,6 +102,7 @@
                     <div>{{tableColumns['win_gold_coin'].name}}: <WinLossDisplay :amount="row.win_gold_coin" :isShowDollar="false" /></div>
                     <div>{{tableColumns['settlement_water_coin'].name}}: {{row.settlement_water_coin}}</div>
                     <div>{{tableColumns['water_coin'].name}}: {{row.water_coin}}</div>
+                    <div>{{tableColumns['backwater'].name}}: {{row.backwater_coin}}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns['win_gold'].name" prop="win_gold" class-name="status-col">
@@ -143,6 +146,7 @@
                         <div>{{ $t("common.userWater") }}：{{ row.water }}</div>
                         <div>{{ tableColumns["water_accelerate"].name }}：{{ row.water_accelerate }}</div>
                         <div>{{ $t("common.water_rate_accelerate") }}：{{ row.water_rate_accelerate * 100 }}%</div>
+                        <div>{{tableColumns['backwater'].name}}: {{row.backwater}}</div>
                     </div>
                 </template>
             </el-table-column>
