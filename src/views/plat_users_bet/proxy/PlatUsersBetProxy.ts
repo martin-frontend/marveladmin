@@ -6,6 +6,7 @@ import { HttpType } from "@/views/plat_users_bet/setting";
 import { MessageBox } from "element-ui";
 import IPlatUsersBetProxy from "./IPlatUsersBetProxy";
 import i18n from "@/lang";
+import { BaseInfo } from "@/components/vo/commonVo";
 
 export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUsersBetProxy {
     static NAME = "PlatUsersBetProxy";
@@ -83,6 +84,8 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             water_accelerate: "",
         },
         summary_coin: [],
+        isExportExcel: false, //是否导出excel
+        excelPageSize: 1000000, //excel 资料长度
     };
     /**查询条件 */
     listQuery = {
@@ -187,6 +190,83 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         });
     }
 
+    /**取得excel 挡案名称 */
+    get getExcelOutputName() {
+        //let ssss = new Date()
+        
+        let times = dateFormat(new Date(), "yyyy-MM-dd hh:mm:ss");
+        let name: string =
+        i18n.t("user_detail.betDetail") +"-" +times +"-"+ this.tableData.columns.plat_id.options[this.listQuery.plat_id] ;
+
+        //return `${name}-${this.listQuery["bet_at-{>=}"]}～${this.listQuery["bet_at-{<=}"]}`;
+        return name;
+    }
+    _gameKeyList = [
+        "vendor_id",
+        "user_id",
+        "is_credit_user",
+        "nick_name",
+        "vendor_product_name",
+        "vendor_type",
+        "order_no",
+        "coin_name_unique",
+        "win_gold",
+        "bet_at",
+        "settlement_at",
+        "pull_at",
+        "bet_gold",
+        "valid_bet_gold",
+        "water",
+        "settlement_status",
+    ];
+
+    /**取得当前页签导出栏位顺序 */
+    get curKeyList() {
+        return this._gameKeyList;
+    }
+ /**取得所有资料 */
+ onQueryAll() {
+    this.tableData.isExportExcel = true;
+    let queryCopy: any = {};
+    queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+    queryCopy.page_size = this.tableData.excelPageSize;
+    queryCopy.page_count = 1;
+    //this.facade.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(queryCopy));
+    this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(queryCopy));
+}
+/**导出excel */
+exportExcel(data: any) {
+    this.tableData.isExportExcel = false;
+    let summary = this.addSummary(data);
+    summary.map((element: any) => {
+        element.win_gold = Number(element.win_gold) > 0 ? `+${element.win_gold}` : element.win_gold;
+    });
+
+    new BaseInfo.ExportExcel(
+        `${this.getExcelOutputName}`,
+        this.curKeyList,
+        this.tableData.columns,
+        summary,
+        ["plat_id", "is_credit_user", "vendor_id", "vendor_type","settlement_status"],
+        []
+    );
+}
+/**增加合计数据 */
+addSummary(data: any) {
+    let summary = {
+        user_id:"汇总",
+        bet_gold: data.summary.bet_gold,
+        settlement_water:  data.summary.settlement_water,
+        valid_bet_gold:  data.summary.valid_bet_gold,
+        water:  data.summary.water,
+        win_gold:  data.summary.win_gold,
+        water_accelerate:  data.summary.water_accelerate,
+    };
+
+    
+    data.list.unshift(summary);
+    return data.list;
+}
     /**显示弹窗 */
     showDialog(status: string, data?: any) {
         Object.assign(this.dialogData, {

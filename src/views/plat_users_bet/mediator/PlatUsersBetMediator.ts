@@ -39,7 +39,14 @@ export default class PlatUsersBetMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_users_bet_index:
-                myProxy.setTableData(body);
+                //myProxy.setTableData(body);
+                if (myProxy.tableData.isExportExcel) {
+                    myProxy.exportExcel(body);
+                }
+                else {
+                    myProxy.setTableData(body);
+                }
+
                 break;
             case EventType.admin_plat_users_bet_show:
                 myProxy.setDetail(body);

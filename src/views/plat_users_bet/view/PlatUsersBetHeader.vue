@@ -75,6 +75,10 @@
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
                     $t("common.reset")
                 }}</el-button>
+
+                <el-button @click="exportExcel()" type="primary" icon="el-icon-download">{{
+                    $t("statistic_plat_days.export")
+                }}</el-button>
             </div>
         </div>
     </div>
@@ -113,6 +117,10 @@ export default class PlatUsersBetHeader extends AbstractView {
     private onWinLossChange(value: any) {
         this.listQuery["win_gold-{>=}"] = value ? 0 : "";
         this.listQuery["win_gold-{<}"] = value ? "" : 0;
+    }
+
+    private exportExcel() {
+        this.myProxy.onQueryAll();
     }
 
     private handlerSearch() {
