@@ -121,12 +121,14 @@
                     <p>{{ tableColumns["pull_at"].name }}：{{ row.pull_at }}</p>
                 </template>
             </el-table-column>
-            <el-table-column
-                :label="tableColumns['bet_gold'].name"
-                prop="bet_gold"
-                class-name="status-col"
-                min-width="80px"
-            ></el-table-column>
+            <el-table-column :label="LangUtil('投注内容')" header-align="center" align="left" min-width="215px">
+                <template slot-scope="{ row }">
+                    <p>{{ tableColumns["bet_gold"].name }}：{{ row.bet_gold }}</p>
+                    <p v-if="row.vendor_type == 64">{{ LangUtil("下注内容") }}：{{ row.content }}</p>
+                    <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type }}</p>
+                    <p v-if="row.vendor_type == 64">{{ LangUtil("赔率") }}：{{ row.odds }}</p>
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns['valid_bet_gold'].name"
                 prop="valid_bet_gold"
