@@ -34,4 +34,3 @@ facade.registerCommand(HttpType.admin_lobby_product_store, cmd_admin_lobby_produ
 facade.registerCommand(HttpType.admin_lobby_product_show, cmd_admin_lobby_product_show);
 facade.registerCommand(HttpType.admin_lobby_product_update, cmd_admin_lobby_product_update);
 facade.registerCommand(HttpType.admin_lobby_model_product_index, cmd_admin_lobby_model_product_index);
-

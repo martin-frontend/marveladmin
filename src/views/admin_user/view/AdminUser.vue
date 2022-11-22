@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <AdminUserDialog/>
-        <AdminUserHeader/>
-        <AdminUserBody/>
+        <AdminUserDialog />
+        <AdminUserHeader />
+        <AdminUserBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import AdminUserBody from "./AdminUserBody.vue";
         AdminUserDialog,
         AdminUserHeader,
         AdminUserBody,
-    }
+    },
 })
 export default class AdminUser extends AbstractView {
-
     constructor() {
         super(AdminUserMediator);
     }

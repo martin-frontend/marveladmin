@@ -5,12 +5,9 @@ import { EventType, HttpType } from "@/views/plat_lang/setting";
 import { Message } from "element-ui";
 import PlatLangProxy from "../proxy/PlatLangProxy";
 
-interface IPlatLang extends IEventDispatcher {
-
-}
+interface IPlatLang extends IEventDispatcher {}
 
 export default class PlatLangMediator extends AbstractMediator {
-
     private myProxy: PlatLangProxy = <any>this.getProxy(PlatLangProxy);
 
     onRegister() {

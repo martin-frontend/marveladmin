@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/recharge_channels/setting";
 import { Message } from "element-ui";
 import RechargeChannelsProxy from "../proxy/RechargeChannelsProxy";
 
-interface IRechargeChannels extends IEventDispatcher {
-    
-}
+interface IRechargeChannels extends IEventDispatcher {}
 
 export default class RechargeChannelsMediator extends AbstractMediator {
     private myProxy: RechargeChannelsProxy = <any>this.getProxy(RechargeChannelsProxy);
@@ -31,7 +29,6 @@ export default class RechargeChannelsMediator extends AbstractMediator {
             EventType.admin_recharge_channels_show,
             EventType.admin_recharge_channels_store,
             EventType.admin_recharge_channels_update,
-
         ];
     }
 

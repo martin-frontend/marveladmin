@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -55,8 +56,8 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
 
     /**曲线图文字 */
     textObj = {
-        today: i18n.t("common.today"),
-        yesterday: i18n.t("common.yesterday"),
+        today: LangUtil("今日"),
+        yesterday: LangUtil("昨日"),
     };
 
     /**曲线图数据 */

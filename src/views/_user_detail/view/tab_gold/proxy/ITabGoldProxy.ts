@@ -11,7 +11,6 @@ export default interface ITabGoldProxy {
     /**查询条件 */
     listQuery: any;
 
-
     /**设置表头数据 */
     setTableColumns(data: any): void;
 

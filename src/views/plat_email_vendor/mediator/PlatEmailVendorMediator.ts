@@ -5,12 +5,9 @@ import { EventType, HttpType } from "@/views/plat_email_vendor/setting";
 import { Message } from "element-ui";
 import PlatEmailVendorProxy from "../proxy/PlatEmailVendorProxy";
 
-interface IPlatEmailVendor extends IEventDispatcher {
-
-}
+interface IPlatEmailVendor extends IEventDispatcher {}
 
 export default class PlatEmailVendorMediator extends AbstractMediator {
-
     private myProxy: PlatEmailVendorProxy = <any>this.getProxy(PlatEmailVendorProxy);
 
     onRegister() {
@@ -33,7 +30,6 @@ export default class PlatEmailVendorMediator extends AbstractMediator {
             EventType.admin_plat_email_vendor_store,
             EventType.admin_plat_email_vendor_update,
             EventType.admin_plat_email_vendor_test_send,
-
         ];
     }
 
@@ -66,7 +62,6 @@ export default class PlatEmailVendorMediator extends AbstractMediator {
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 break;
-
         }
     }
 }

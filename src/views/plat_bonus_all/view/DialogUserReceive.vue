@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('plat_bonus_all_stock_model.userLog')" :visible.sync="myProxy.tableData.bShow" width="850px">
+    <el-dialog :title="LangUtil('玩家领取记录')" :visible.sync="myProxy.tableData.bShow" width="850px">
         <el-table
             :data="tableData"
             border
@@ -52,6 +52,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatAgentPromotionModelProxy from "../proxy/PlatAgentPromotionModelProxy";
@@ -65,20 +66,21 @@ import Pagination from "@/components/Pagination.vue";
     },
 })
 export default class DialogUserReceive extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatAgentPromotionModelProxy = this.getProxy(PlatAgentPromotionModelProxy);
+    myProxy: PlatAgentPromotionModelProxy = this.getProxy(PlatAgentPromotionModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listStockTableQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listStockTableQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.admin_plat_bonus_all_stock_index();
     }

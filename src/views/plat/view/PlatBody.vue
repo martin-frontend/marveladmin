@@ -42,7 +42,7 @@
                         {{
                             tableColumns.vip_model_id.options[row.vip_model_id]
                                 ? tableColumns.vip_model_id.options[row.vip_model_id]
-                                : $t("plat.notSet")
+                                : LangUtil("未设定")
                         }}
                     </el-button>
                 </template>
@@ -57,7 +57,7 @@
                         {{
                             tableColumns.backwater_model_id.options[row.backwater_model_id]
                                 ? tableColumns.backwater_model_id.options[row.backwater_model_id]
-                                : $t("plat.notSet")
+                                : LangUtil("未设定")
                         }}
                     </el-button>
                 </template>
@@ -72,7 +72,7 @@
                         {{
                             myProxy.getPromotionModelById(row.promotion_model_id)
                                 ? myProxy.getPromotionModelById(row.promotion_model_id).name
-                                : $t("plat.noModule")
+                                : LangUtil("无模板")
                         }}
                     </el-button>
                 </template>
@@ -88,10 +88,10 @@
                         <!-- {{
                             tableColumns.all_bonus_model_id.options[row.all_bonus_model_id]
                                 ? tableColumns.all_bonus_model_id.options[row.all_bonus_model_id]
-                                : $t("plat.noModule")
+                                : LangUtil('无模板')
                         }} -->
                         <!-- 分红初始化 -->
-                        {{ $t("user_detail.dividendInitialization") }}
+                        {{ LangUtil("分红初始化") }}
                     </el-button>
                 </template>
             </el-table-column>
@@ -117,7 +117,7 @@
                     </el-tag>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="270px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="270px">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
@@ -126,13 +126,13 @@
                         @click="handlePromotionDiscount(row)"
                         >{{ tableColumns.promotion_discount.name }}</el-button
                     >
-                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
+                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ LangUtil("编辑") }}</el-button>
                     <el-button
                         v-if="checkUnique(unique.plat_clear_cache)"
                         size="mini"
                         type="primary"
                         @click="handleClearCache(row)"
-                        >{{ $t("plat.clearCache") }}</el-button
+                        >{{ LangUtil("清除缓存") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -146,6 +146,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -181,57 +182,58 @@ import AllBonusModelDialog from "./components/AllBonusModelDialog.vue";
     },
 })
 export default class PlatBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatProxy = this.getProxy(PlatProxy);
+    myProxy: PlatProxy = this.getProxy(PlatProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handleClearCache(data: any) {
+    handleClearCache(data: any) {
         this.myProxy.clearCache(data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
 
-    private handlerVipModel(row: any) {
+    handlerVipModel(row: any) {
         this.myProxy.showVipModelDialog(row);
     }
 
-    private handlerBackwaterModel(row: any) {
+    handlerBackwaterModel(row: any) {
         this.myProxy.showBackwaterModelDialog(row);
     }
 
-    private handlerPromotionModel(row: any) {
+    handlerPromotionModel(row: any) {
         this.myProxy.showPromotionModelDialog(row);
     }
 
-    private handlePromotionDiscount(row: any) {
+    handlePromotionDiscount(row: any) {
         this.myProxy.showPromotionDiscountDialog(row);
     }
 
-    private handleAllBonusModel(row: any) {
+    handleAllBonusModel(row: any) {
         this.myProxy.showAllBonusModelDialog(row);
     }
 }

@@ -9,10 +9,10 @@
             />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -22,20 +22,21 @@
                 @click="handlerCreate()"
                 type="primary"
                 icon="el-icon-circle-plus-outline"
-                >{{ $t("common.create") }}</el-button
+                >{{ LangUtil("新增") }}</el-button
             >
             <el-button
                 v-if="hasDeleteItems && checkUnique(unique.system_resource_delete)"
                 @click="handlerBatchDelete()"
                 type="primary"
                 icon="el-icon-delete"
-                >{{ $t("system_resource.batchDelete") }}</el-button
+                >{{ LangUtil("批量删除") }}</el-button
             >
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import SystemResourceProxy from "../proxy/SystemResourceProxy";
@@ -52,41 +53,42 @@ import { BatchStatus } from "../proxy/ISystemResourceProxy";
     },
 })
 export default class SystemResourceHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: SystemResourceProxy = this.getProxy(SystemResourceProxy);
+    myProxy: SystemResourceProxy = this.getProxy(SystemResourceProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
     get hasDeleteItems() {
         return this.myProxy.imgBatchDialogData.deleteItems.length > 0;
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 
-    private confirmObj: any = {
-        str1: this.$t("system_resource.deleteConfirm"),
-        prompt: this.$t("common.prompt"),
-        determine: this.$t("common.determine"),
-        cancel: this.$t("common.cancel"),
+    confirmObj: any = {
+        str1: this.LangUtil("是否删除该资源?"),
+        prompt: this.LangUtil("提示"),
+        determine: this.LangUtil("确定"),
+        cancel: this.LangUtil("取消"),
     };
 
     /**批量删除 */
-    private handlerBatchDelete() {
+    handlerBatchDelete() {
         this.$confirm(this.confirmObj.str1, this.confirmObj.prompt, {
             confirmButtonText: this.confirmObj.determine,
             cancelButtonText: this.confirmObj.cancel,

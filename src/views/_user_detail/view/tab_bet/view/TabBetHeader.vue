@@ -11,14 +11,8 @@
                 v-model="listQuery.vendor_type"
                 :options="tableColumns.vendor_type.options"
             />
-             <SearchInput
-                :title="tableColumns.vendor_product_name.name"
-                v-model="listQuery.vendor_product_name"
-            />
-            <SearchInput
-                :title="tableColumns.ori_product_id.name"
-                v-model="listQuery.ori_product_id"
-            />
+            <SearchInput :title="tableColumns.vendor_product_name.name" v-model="listQuery.vendor_product_name" />
+            <SearchInput :title="tableColumns.ori_product_id.name" v-model="listQuery.ori_product_id" />
             <SearchSelect
                 :title="tableColumns.settlement_status.name"
                 v-model="listQuery.settlement_status"
@@ -35,11 +29,11 @@
                 max="9999999"
                 :minValue.sync="listQuery['win_gold-{>=}']"
                 :maxValue.sync="listQuery['win_gold-{<}']"
-                :placeholders="[$t('common.minMoney'), $t('common.maxMoney')]"
+                :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             >
                 <el-radio-group v-model="myProxy.tableData.winLoss" @change="onWinLossChange">
-                    <el-radio :label="0">{{ $t("plat_users_bet.loss") }}</el-radio>
-                    <el-radio :label="1">{{ $t("plat_users_bet.win") }}</el-radio>
+                    <el-radio :label="0">{{ LangUtil("输") }}</el-radio>
+                    <el-radio :label="1">{{ LangUtil("赢") }}</el-radio>
                 </el-radio-group>
             </SearchRange>
             <SearchDatePicker
@@ -57,15 +51,16 @@
         </div>
         <div>
             <el-button class="header-button" @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                $t("common.search")
+                LangUtil("查询")
             }}</el-button>
             <el-button class="header-button" @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                $t("common.reset")
+                LangUtil("重置")
             }}</el-button>
         </div>
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import TabBetProxy from "../proxy/TabBetProxy";
@@ -85,23 +80,24 @@ import SearchInput from "@/components/SearchInput.vue";
     },
 })
 export default class TabBetHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: TabBetProxy = getProxy(TabBetProxy);
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    myProxy: TabBetProxy = getProxy(TabBetProxy);
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private onWinLossChange(value: any) {
+    onWinLossChange(value: any) {
         if (value === 1) {
             this.listQuery["win_gold-{>=}"] = "0";
             this.listQuery["win_gold-{<}"] = "";

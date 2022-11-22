@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('vip_recharge.searchUser')" :visible.sync="myProxy.dialogData.bShow" width="500px">
+    <el-dialog :title="LangUtil('查询玩家')" :visible.sync="myProxy.dialogData.bShow" width="500px">
         <el-form
             label-position="right"
             ref="form"
@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import VipRechargeProxy from "@/views/vip_recharge/proxy/VipRechargeProxy";
@@ -34,19 +35,20 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class VipRechargeDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: VipRechargeProxy = this.getProxy(VipRechargeProxy);
+    myProxy: VipRechargeProxy = this.getProxy(VipRechargeProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });

@@ -41,7 +41,7 @@
                 <template slot-scope="{ row }">
                     <p>
                         {{ tableColumns.type.options[row.type] }}
-                        <span v-if="row.type == 2"> ({{ row.auto_rate * 100 >> 0 }}%) </span>
+                        <span v-if="row.type == 2"> ({{ (row.auto_rate * 100) >> 0 }}%) </span>
                     </p>
                 </template>
             </el-table-column>
@@ -52,7 +52,7 @@
                     </p>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" align="center" width="200px">
+            <el-table-column :label="LangUtil('操作')" align="center" width="200px">
                 <template slot-scope="{ row }">
                     <el-button
                         v-if="row.settlement_status == 1"
@@ -60,10 +60,10 @@
                         @click="onDividendAmount(row)"
                         size="small"
                     >
-                        {{ $t("plat_bonus_all_stock_model.dividendAmount") }}
+                        {{ LangUtil("分红金额") }}
                     </el-button>
                     <el-button v-else type="primary" @click="onUserReceive(row)" size="small">
-                        {{ $t("plat_bonus_all_stock_model.userList") }}
+                        {{ LangUtil("玩家领取列表") }}
                     </el-button>
                 </template>
             </el-table-column>
@@ -72,6 +72,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -87,32 +88,33 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatBonusAllBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatBonusAllProxy = this.getProxy(PlatBonusAllProxy);
-    private stockProxy: PlatBonusAllStockProxy = this.getProxy(PlatBonusAllStockProxy);
-    private agentPromotionModelProxy: PlatAgentPromotionModelProxy = this.getProxy(PlatAgentPromotionModelProxy);
+    myProxy: PlatBonusAllProxy = this.getProxy(PlatBonusAllProxy);
+    stockProxy: PlatBonusAllStockProxy = this.getProxy(PlatBonusAllStockProxy);
+    agentPromotionModelProxy: PlatAgentPromotionModelProxy = this.getProxy(PlatAgentPromotionModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.admin_plat_bonus_all_stock_set_index();
     }
 
-    private onUserReceive(row: any) {
+    onUserReceive(row: any) {
         this.agentPromotionModelProxy.setListQuery(row);
         this.agentPromotionModelProxy.admin_plat_bonus_all_stock_table_columns();
     }
 
-    private onDividendAmount(row: any) {
+    onDividendAmount(row: any) {
         this.myProxy.onShowDividendDialog(row);
     }
 }

@@ -1,4 +1,3 @@
-
 export default class LogUtil {
     static init() {
         // @ts-ignore
@@ -8,11 +7,11 @@ export default class LogUtil {
                 const methods = ["log", "debug", "warn", "info", "group", "groupCollapsed"];
                 for (let i = 0; i < methods.length; i++) {
                     let c: any = console;
-                    c[methods[i]] = function () {};
+                    c[methods[i]] = function() {};
                 }
             }
 
-            window.onerror = function (msg, url, lineNo, columnNo, error) {
+            window.onerror = function(msg, url, lineNo, columnNo, error) {
                 LogUtil.sendLog("page_error", { msg, url, lineNo, columnNo, error });
             };
         }
@@ -36,6 +35,4 @@ export default class LogUtil {
 
         // JBDot.send(data);
     }
-
-
 }

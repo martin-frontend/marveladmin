@@ -1,42 +1,38 @@
 <template>
     <div :class="lang">
-        <el-dialog :title="$t('user_detail.userDetail')" :visible.sync="pageSetting.bShow" width="1500px">
+        <el-dialog :title="LangUtil('用户详情')" :visible.sync="pageSetting.bShow" width="1500px">
             <el-tabs v-model="activeName">
-                <el-tab-pane :label="$t('common.baseInfo')" name="tab1">
+                <el-tab-pane :label="LangUtil('基本信息')" name="tab1">
                     <TabUserInfo v-if="activeName == 'tab1'" />
                 </el-tab-pane>
-                <el-tab-pane :label="$t('user_detail.userWallet')" name="tab2">
+                <el-tab-pane :label="LangUtil('用户钱包')" name="tab2">
                     <TabWallet v-if="activeName == 'tab2'" />
                 </el-tab-pane>
-                <el-tab-pane
-                    :label="$t('user_detail.assetDetail')"
-                    name="tab3"
-                    v-if="checkUnique(unique.plat_users_gold_log)"
-                >
+                <el-tab-pane :label="LangUtil('资产明细')" name="tab3" v-if="checkUnique(unique.plat_users_gold_log)">
                     <TabGold v-if="activeName == 'tab3'" />
                 </el-tab-pane>
-                <el-tab-pane :label="$t('user_detail.betDetail')" name="tab4" v-if="checkUnique(unique.plat_users_bet)">
+                <el-tab-pane :label="LangUtil('投注明细')" name="tab4" v-if="checkUnique(unique.plat_users_bet)">
                     <TabBet v-if="activeName == 'tab4'" />
                 </el-tab-pane>
-                <el-tab-pane :label="$t('user_detail.water')" name="tab5">
+                <el-tab-pane :label="LangUtil('流水打码')" name="tab5">
                     <TabWater v-if="activeName == 'tab5'" />
                 </el-tab-pane>
-                <el-tab-pane :label="$t('user_detail.backDetail')" name="tab6">
+                <el-tab-pane :label="LangUtil('返佣明细')" name="tab6">
                     <TabCommission v-if="activeName == 'tab6'" />
                 </el-tab-pane>
-                <el-tab-pane :label="$t('user_detail.teamMember')" name="tab7">
+                <el-tab-pane :label="LangUtil('团队成员')" name="tab7">
                     <TabTeam v-if="activeName == 'tab7'" />
                 </el-tab-pane>
-                <el-tab-pane :label="$t('user_detail.relatedUsers')" name="tab8">
+                <el-tab-pane :label="LangUtil('关联查询')" name="tab8">
                     <TabRelatedUsers v-if="activeName == 'tab8'" />
                 </el-tab-pane>
-                <el-tab-pane :label="$t('user_detail.loginRecord')" name="tab9">
+                <el-tab-pane :label="LangUtil('登陆日志')" name="tab9">
                     <TabLoginRecord v-if="activeName == 'tab9'" />
                 </el-tab-pane>
-                <el-tab-pane :label="$t('user_detail.water_config')" name="tab10">
+                <el-tab-pane :label="LangUtil('流水配置')" name="tab10">
                     <TabWaterRate v-if="activeName == 'tab10'" />
                 </el-tab-pane>
-                <el-tab-pane :label="$t('user_detail.vendor_user')" name="tab11">
+                <el-tab-pane :label="LangUtil('用户厂商')" name="tab11">
                     <TabPlatVendorUser v-if="activeName == 'tab11'" />
                 </el-tab-pane>
             </el-tabs>
@@ -45,6 +41,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Prop, Watch } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -79,15 +76,16 @@ import Cookies from "js-cookie";
     },
 })
 export default class UserDetail extends AbstractView {
-    private checkUnique = checkUnique;
-    private unique = unique;
+    LangUtil = LangUtil;
+    checkUnique = checkUnique;
+    unique = unique;
 
     @Prop() page!: number;
-    private pageSetting = this.page == 1 ? page1 : page2;
-    private activeName = "tab1";
+    pageSetting = this.page == 1 ? page1 : page2;
+    activeName = "tab1";
 
     @Watch("pageSetting.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.activeName = this.pageSetting.bShow ? "tab1" : "";
     }
 

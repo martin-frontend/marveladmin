@@ -10,14 +10,20 @@
             />
         </div>
         <div class="row">
-            <el-button v-if="checkUnique(unique.vendor_store)" class="item" type="primary" icon="el-icon-circle-plus-outline" @click="handlerCreate">{{
-                $t("common.create")
-            }}</el-button>
+            <el-button
+                v-if="checkUnique(unique.vendor_store)"
+                class="item"
+                type="primary"
+                icon="el-icon-circle-plus-outline"
+                @click="handlerCreate"
+                >{{ LangUtil("新增") }}</el-button
+            >
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import VendorProxy from "../proxy/VendorProxy";
@@ -31,24 +37,25 @@ import SearchSelect from "@/components/SearchSelect.vue";
     },
 })
 export default class VendorHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: VendorProxy = this.getProxy(VendorProxy);
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    myProxy: VendorProxy = this.getProxy(VendorProxy);
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerTest() {
+    handlerTest() {
         this.myProxy.testDialogData.bShow = true;
     }
 }

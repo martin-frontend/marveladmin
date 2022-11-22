@@ -16,12 +16,13 @@
             </el-table-column>
             <el-table-column :label="tableColumns.user_id.name" class-name="status-col" min-width="120px">
                 <template slot-scope="{ row }">
-                    <span v-if="row.user_id.length > 4" @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">{{
-                        row.user_id
-                    }}</span>
-                    <span v-else style="cursor: pointer; text-decoration: underline">{{
-                        row.user_id
-                    }}</span>
+                    <span
+                        v-if="row.user_id.length > 4"
+                        @click="showUserDetail(row.user_id)"
+                        style="cursor: pointer; text-decoration: underline"
+                        >{{ row.user_id }}</span
+                    >
+                    <span v-else style="cursor: pointer; text-decoration: underline">{{ row.user_id }}</span>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.mobile.name" class-name="status-col" min-width="120px">

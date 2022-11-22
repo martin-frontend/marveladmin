@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_service/setting";
 import { Message } from "element-ui";
 import PlatServiceProxy from "../proxy/PlatServiceProxy";
 
-interface IPlatService extends IEventDispatcher {
-
-}
+interface IPlatService extends IEventDispatcher {}
 
 export default class PlatServiceMediator extends AbstractMediator {
     private myProxy: PlatServiceProxy = <any>this.getProxy(PlatServiceProxy);
@@ -34,7 +32,6 @@ export default class PlatServiceMediator extends AbstractMediator {
             EventType.admin_plats_fag_sync,
             EventType.admin_plat_show,
             EventType.admin_plat_update,
-
         ];
     }
 
@@ -70,7 +67,6 @@ export default class PlatServiceMediator extends AbstractMediator {
                 break;
             case EventType.admin_plat_update:
                 break;
-
         }
     }
 }

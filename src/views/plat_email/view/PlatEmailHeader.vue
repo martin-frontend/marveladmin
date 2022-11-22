@@ -16,13 +16,14 @@
                 type="primary"
                 icon="el-icon-circle-plus-outline"
                 v-if="checkUnique(unique.plat_email_store) || checkUnique(unique.plat_email_store_attachment)"
-                >{{ $t("common.create") }}</el-button
+                >{{ LangUtil("新增") }}</el-button
             >
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatEmailProxy from "../proxy/PlatEmailProxy";
@@ -40,18 +41,19 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatEmailHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
+    myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
     // Iproxy property
-    private EmailTab = EmailTab;
+    EmailTab = EmailTab;
 
-    private handlerSearch() {
+    handlerSearch() {
         if (EmailTab.Plat == this.myProxy.tableData.activeName) {
             this.listQuery.page_count = 1;
             this.myProxy.onQuery();
@@ -61,7 +63,7 @@ export default class PlatEmailHeader extends AbstractView {
             this.myProxy.onUserQuery();
         }
     }
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

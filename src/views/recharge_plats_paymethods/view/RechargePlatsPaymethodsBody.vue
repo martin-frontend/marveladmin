@@ -25,10 +25,10 @@
                             oninput="value=value.replace(/[^\d]/g,'');"
                         ></el-input>
                         <el-button class="item" type="warning" size="mini" @click="editGiftRateID = null">{{
-                            $t("common.cancel")
+                            LangUtil("取消")
                         }}</el-button>
                         <el-button class="item" type="success" size="mini" @click="onEditGiftRate(row)">{{
-                            $t("common.determine")
+                            LangUtil("确定")
                         }}</el-button>
                     </div>
                     <div v-else>
@@ -43,7 +43,7 @@
                                 editFeeRateValue = (row.fee_rate * 100) >> 0;
                             "
                             v-if="checkUnique(unique.recharge_plats_paymethods_update)"
-                            >{{ $t("common.update") }}</el-button
+                            >{{ LangUtil("编辑") }}</el-button
                         >
                     </div>
                 </template>
@@ -57,10 +57,10 @@
                             oninput="value=value.replace(/[^\d]/g,'');"
                         ></el-input>
                         <el-button class="item" type="warning" size="mini" @click="editFeeRateID = null">{{
-                            $t("common.cancel")
+                            LangUtil("取消")
                         }}</el-button>
                         <el-button class="item" type="success" size="mini" @click="onEditFeeRate(row)">{{
-                            $t("common.determine")
+                            LangUtil("确定")
                         }}</el-button>
                     </div>
                     <div v-else>
@@ -75,7 +75,7 @@
                                 editGiftRateValue = (row.gift_rate * 100) >> 0;
                             "
                             v-if="checkUnique(unique.recharge_plats_paymethods_update)"
-                            >{{ $t("common.update") }}</el-button
+                            >{{ LangUtil("编辑") }}</el-button
                         >
                     </div>
                 </template>
@@ -107,6 +107,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -117,41 +118,42 @@ import Sortable from "sortablejs";
 
 @Component
 export default class RechargePlatsPaymethodsBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: RechargePlatsPaymethodsProxy = this.getProxy(RechargePlatsPaymethodsProxy);
+    myProxy: RechargePlatsPaymethodsProxy = this.getProxy(RechargePlatsPaymethodsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
     get tableData() {
         return this.myProxy.tableData.list;
     }
 
-    private sortItem = {
+    sortItem = {
         id: 0,
         next_id: 0,
     };
-    private data: any = [];
-    private rowData: any = "";
-    private editGiftRateID: any = null;
-    private editGiftRateValue = "";
-    private editFeeRateID: any = null;
-    private editFeeRateValue = "";
+    data: any = [];
+    rowData: any = "";
+    editGiftRateID: any = null;
+    editGiftRateValue = "";
+    editFeeRateID: any = null;
+    editFeeRateValue = "";
 
     mounted() {
         this.initSort();
     }
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private switchUpdate(data: any) {
+    switchUpdate(data: any) {
         this.myProxy.listDate.status = data.status;
         this.myProxy.listDate.id = data.id;
         this.myProxy.listDate.gift_rate = data.gift_rate;
@@ -160,11 +162,11 @@ export default class RechargePlatsPaymethodsBody extends AbstractView {
         this.myProxy.onUpdate();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.myProxy.onQuery();
     }
 
-    private errorCode: any = this.$t("recharge_plats_paymethods.errorCode");
+    errorCode: any = this.LangUtil("赠送比例必须大于等于0，小于等于50");
 
     // 拖弋排序
     initSort() {
@@ -205,7 +207,7 @@ export default class RechargePlatsPaymethodsBody extends AbstractView {
         }
     }
 
-    private onEditGiftRate(row: any) {
+    onEditGiftRate(row: any) {
         if (this.editGiftRateValue != "" && parseInt(this.editGiftRateValue) <= 50) {
             this.myProxy.listDate.status = "";
             this.myProxy.listDate.id = row.id;
@@ -220,7 +222,7 @@ export default class RechargePlatsPaymethodsBody extends AbstractView {
             });
         }
     }
-    private onEditFeeRate(row: any) {
+    onEditFeeRate(row: any) {
         this.myProxy.listDate.id = row.id;
         this.myProxy.listDate.fee_rate = parseInt(this.editFeeRateValue) / 100;
         this.myProxy.listDate.gift_rate = parseInt(this.editGiftRateValue) / 100;

@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PromotionDiscountIndexDialog v-if="myProxy.dialogData.bShow"/>
-        <PromotionDiscountIndexHeader/>
-        <PromotionDiscountIndexBody/>
+        <PromotionDiscountIndexDialog v-if="myProxy.dialogData.bShow" />
+        <PromotionDiscountIndexHeader />
+        <PromotionDiscountIndexBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import PromotionDiscountIndexBody from "./PromotionDiscountIndexBody.vue";
         PromotionDiscountIndexDialog,
         PromotionDiscountIndexHeader,
         PromotionDiscountIndexBody,
-    }
+    },
 })
 export default class PromotionDiscountIndex extends AbstractView {
-
     constructor() {
         super(PromotionDiscountIndexMediator);
     }

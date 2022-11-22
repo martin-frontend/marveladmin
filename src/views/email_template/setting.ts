@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_email_template_index, cmd_admin_email_temp
 facade.registerCommand(HttpType.admin_email_template_show, cmd_admin_email_template_show);
 facade.registerCommand(HttpType.admin_email_template_store, cmd_admin_email_template_store);
 facade.registerCommand(HttpType.admin_email_template_update, cmd_admin_email_template_update);
-

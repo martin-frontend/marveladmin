@@ -42,7 +42,7 @@ export default class AdminUserLogProxy extends AbstractProxy implements IAdminUs
     /**查询条件 */
     listQuery = {
         plat_id: "",
-        admin_user_id:"",
+        admin_user_id: "",
         "created_at-{>=}": "",
         "created_at-{<=}": "",
         permission_id: "",
@@ -63,7 +63,7 @@ export default class AdminUserLogProxy extends AbstractProxy implements IAdminUs
             permission_id: "",
             plat_id: "",
             type: "",
-            content: ""
+            content: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -95,7 +95,7 @@ export default class AdminUserLogProxy extends AbstractProxy implements IAdminUs
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
-            admin_user_id:"",
+            admin_user_id: "",
             "created_at-{>=}": "",
             "created_at-{<=}": "",
             permission_id: "",

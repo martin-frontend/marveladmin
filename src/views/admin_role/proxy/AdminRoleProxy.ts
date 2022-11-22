@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -92,7 +93,6 @@ export default class AdminRoleProxy extends AbstractProxy implements IAdminRoleP
             new Set([...value.permission_ids, ...this.dialogSettingData.defaultPermission])
         );
         this.onMineInfo();
-        
     }
     /**权限数据 */
     setPermission(value: any) {
@@ -106,9 +106,8 @@ export default class AdminRoleProxy extends AbstractProxy implements IAdminRoleP
             new Set([...this.dialogSettingData.detail.permission_ids, ...this.dialogSettingData.defaultPermission])
         );
         // setTimeout(()=>{
-            this.dialogSettingData.bShow = true;
+        this.dialogSettingData.bShow = true;
         // }, 500);
-        
     }
     private setDefaultPermission(children: any) {
         for (const child of children) {
@@ -164,9 +163,12 @@ export default class AdminRoleProxy extends AbstractProxy implements IAdminRoleP
     }
     /**添加数据 */
     onAdd() {
-        const {name, desc, plat_id, status} = this.dialogData.form;
+        const { name, desc, plat_id, status } = this.dialogData.form;
         const formCopy: any = {
-            name, desc, plat_id, status
+            name,
+            desc,
+            plat_id,
+            status,
         };
         this.sendNotification(HttpType.admin_admin_role_store, objectRemoveNull(formCopy));
     }
@@ -188,9 +190,9 @@ export default class AdminRoleProxy extends AbstractProxy implements IAdminRoleP
     }
     /**删除数据 */
     onDelete(role_id: any) {
-        MessageBox.confirm(<string> i18n.t("admin_role.confirmText1"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("是否删除该权限组？"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

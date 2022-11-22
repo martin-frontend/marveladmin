@@ -54,13 +54,13 @@
                     {{ scope.row.updated_by }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="210px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="210px">
                 <template slot-scope="{ row }">
                     <el-button class="item" type="primary" icon="el-icon-edit" @click="handleEdit(row)">{{
-                        $t("common.update")
+                        LangUtil("编辑")
                     }}</el-button>
                     <el-button class="item" type="danger" icon="" @click="handlerDelete(row)">{{
-                        $t("common.delete")
+                        LangUtil("删除")
                     }}</el-button>
                 </template>
             </el-table-column>
@@ -69,6 +69,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -92,6 +93,7 @@ import EmailTemplateProxy from "@/views/email_template/proxy/EmailTemplateProxy"
     },
 })
 export default class EmailTemplateBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
     unique = unique;
     checkUnique = checkUnique;

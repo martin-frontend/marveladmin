@@ -8,13 +8,14 @@
             <el-form-item class="dialog-footer">
                 <el-button v-if="checkUnique(unique.plat_update)" type="primary" size="mini" @click="handlerInit">
                     <!-- 初始化基础设置 -->
-                    {{ $t("user_detail.initialization") }}
+                    {{ LangUtil("初始化基础设置") }}
                 </el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatProxy from "@/views/plat/proxy/PlatProxy";
@@ -23,22 +24,23 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PromotionModelDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatProxy = this.getProxy(PlatProxy);
+    myProxy: PlatProxy = this.getProxy(PlatProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.allBonusModelDialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.allBonusModelDialogData.form;
 
-    private handlerInit() {
+    handlerInit() {
         this.myProxy.onInitSetting();
     }
 
-    // private get modelDesc() {
+    //  get modelDesc() {
     //     const model = this.myProxy.getAllBonusModelById(this.form.all_bonus_model_id);
     //     return model ? model.desc : "";
     // }

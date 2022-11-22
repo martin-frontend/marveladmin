@@ -43,7 +43,7 @@
             <el-table-column label="厂商名称" prop="vendor_id"></el-table-column>
             <el-table-column label="最近登录IP" prop="last_login_ip"></el-table-column>
             <el-table-column label="最近登入时间" prop="last_login_at"></el-table-column>
-            <el-table-column :label="$t('common.operating')" width="90px">
+            <el-table-column :label="LangUtil('操作')" width="90px">
                 <template slot-scope="scope">
                     <el-button-group size="mini">
                         <el-button plain size="mini" type="info" @click="onCheck(scope.$index, scope.row)"
@@ -58,6 +58,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import PlatVendorUserMediator from "@/views/plat_vendor_user/mediator/PlatVendorUserMediator";
 import { Component } from "vue-property-decorator";
@@ -70,22 +71,23 @@ import Pagination from "@/components/Pagination.vue";
     },
 })
 export default class PlatVendorUser extends AbstractView {
+    LangUtil = LangUtil;
     // 表
-    private tableColumns: any = {};
-    private columns: string[] = [];
-    private tableData: any[] = [];
-    private pageInfo: PageInfoVO = { pageTotal: 0, pageCurrent: 0 };
+    tableColumns: any = {};
+    columns: string[] = [];
+    tableData: any[] = [];
+    pageInfo: PageInfoVO = { pageTotal: 0, pageCurrent: 0 };
     // 搜索
-    private search_select: number = 1;
-    private search_options: any[] = [
+    search_select: number = 1;
+    search_options: any[] = [
         { label: "用户ID", value: 1 },
         { label: "ID", value: 2 },
     ];
-    private search_input: string = "";
-    private plat_id_select: string = "";
-    private plat_id_options: any = {};
-    private vendor_id_select: string = "";
-    private vendor_id_options: any = {};
+    search_input: string = "";
+    plat_id_select: string = "";
+    plat_id_options: any = {};
+    vendor_id_select: string = "";
+    vendor_id_options: any = {};
     constructor() {
         super(PlatVendorUserMediator);
     }

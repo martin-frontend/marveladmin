@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -7,7 +8,7 @@ import ExchangeOrdersProxy from "../proxy/ExchangeOrdersProxy";
 import ExchangeAutoCheckProxy from "../proxy/ExchangeAutoCheckProxy";
 import i18n from "@/lang";
 
-interface IExchangeOrders extends IEventDispatcher { }
+interface IExchangeOrders extends IEventDispatcher {}
 
 export default class ExchangeOrdersMediator extends AbstractMediator {
     private myProxy: ExchangeOrdersProxy = <any>this.getProxy(ExchangeOrdersProxy);
@@ -42,7 +43,7 @@ export default class ExchangeOrdersMediator extends AbstractMediator {
             EventType.admin_exchange_orders_rush,
             EventType.admin_exchange_orders_update_remark,
             EventType.admin_exchange_orders_dispatch,
-            EventType.admin_exchange_orders_dispatch_cancel
+            EventType.admin_exchange_orders_dispatch_cancel,
         ];
     }
 
@@ -92,32 +93,32 @@ export default class ExchangeOrdersMediator extends AbstractMediator {
                 autoProxy.setVerify(body);
                 break;
             case EventType.admin_exchange_auto_check_setting_store:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 autoProxy.hideDialog();
                 autoProxy.checkVerify();
                 break;
             case EventType.admin_exchange_auto_check_setting_update:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 autoProxy.hideDialog();
                 autoProxy.checkVerify();
                 break;
             case EventType.admin_exchange_orders_rush:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideRemarkDialog();
                 myProxy.onQuery();
                 break;
             case EventType.admin_exchange_orders_update_remark:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideRemarkDialog();
                 myProxy.onQuery();
                 break;
             case EventType.admin_exchange_orders_dispatch:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideDispatchDialog();
                 myProxy.onQuery();
                 break;
             case EventType.admin_exchange_orders_dispatch_cancel:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideDispatchDialog();
                 myProxy.onQuery();
                 break;

@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <CoinExchangeOrdersDialog v-if="myProxy.dialogData.bShow"/>
-        <CoinExchangeOrdersHeader/>
-        <CoinExchangeOrdersBody/>
+        <CoinExchangeOrdersDialog v-if="myProxy.dialogData.bShow" />
+        <CoinExchangeOrdersHeader />
+        <CoinExchangeOrdersBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import CoinExchangeOrdersBody from "./CoinExchangeOrdersBody.vue";
         CoinExchangeOrdersDialog,
         CoinExchangeOrdersHeader,
         CoinExchangeOrdersBody,
-    }
+    },
 })
 export default class CoinExchangeOrders extends AbstractView {
-
     constructor() {
         super(CoinExchangeOrdersMediator);
     }

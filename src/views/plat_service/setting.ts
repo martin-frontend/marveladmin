@@ -42,4 +42,3 @@ facade.registerCommand(HttpType.admin_plats_fag_update, cmd_admin_plats_fag_upda
 facade.registerCommand(HttpType.admin_plats_fag_sync, cmd_admin_plats_fag_sync);
 facade.registerCommand(HttpType.admin_plat_show, cmd_admin_plat_show);
 facade.registerCommand(HttpType.admin_plat_update, cmd_admin_plat_update);
-

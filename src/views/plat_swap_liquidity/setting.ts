@@ -25,5 +25,7 @@ const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_plat_swap_liquidity_table_columns, cmd_admin_plat_swap_liquidity_table_columns);
 facade.registerCommand(HttpType.admin_plat_swap_liquidity_index, cmd_admin_plat_swap_liquidity_index);
 facade.registerCommand(HttpType.admin_plat_swap_liquidity_update, cmd_admin_plat_swap_liquidity_update);
-facade.registerCommand(HttpType.admin_plat_swap_liquidity_update_liquidity, cmd_admin_plat_swap_liquidity_update_liquidity);
-
+facade.registerCommand(
+    HttpType.admin_plat_swap_liquidity_update_liquidity,
+    cmd_admin_plat_swap_liquidity_update_liquidity
+);

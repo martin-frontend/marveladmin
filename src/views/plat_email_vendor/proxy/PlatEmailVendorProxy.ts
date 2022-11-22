@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
@@ -75,7 +76,7 @@ export default class PlatEmailVendorProxy extends AbstractProxy implements IPlat
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
         this.tableData.columns.platAll = JSON.parse(JSON.stringify(this.tableData.columns.plat_id));
-        this.tableData.columns.platAll.options["0"] = i18n.t("recharge_channels.allPlat");
+        this.tableData.columns.platAll.options["0"] = LangUtil("全部平台");
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
@@ -178,9 +179,9 @@ export default class PlatEmailVendorProxy extends AbstractProxy implements IPlat
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -230,7 +231,7 @@ export default class PlatEmailVendorProxy extends AbstractProxy implements IPlat
     }
     /**查看短信余量 */
     getBalance(id: number) {
-        // this.tableData.balance = i18n.t("plat_sms.loading");
+        // this.tableData.balance = LangUtil('读取中');
         // this.facade.sendNotification(HttpType.admin_plat_sms_getBalance, { id: id, hideLoading: true });
     }
 }

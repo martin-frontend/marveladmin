@@ -67,7 +67,7 @@ export default class SystemLangMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_system_lang_translate:
-                Message.success(SuccessMessage.update);   
+                Message.success(SuccessMessage.update);
                 myProxy.updateForm(body);
                 break;
             case EventType.admin_system_lang_import:
@@ -77,7 +77,6 @@ export default class SystemLangMediator extends AbstractMediator {
             case EventType.admin_system_lang_generate:
                 Message.success(SuccessMessage.update);
                 break;
-
         }
     }
 }

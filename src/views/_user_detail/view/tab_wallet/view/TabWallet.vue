@@ -3,9 +3,9 @@
         <!-- 新的页面 -->
         <div>
             <div class="title">
-                {{ $t("user_detail.platformAssets") }}
+                {{ LangUtil("平台资产") }}
                 <el-button class="title-btn" type="primary" @click="refreshMoney">
-                    {{ $t("coin_receive_payment_channel.refresh") }}
+                    {{ LangUtil("刷新") }}
                 </el-button>
             </div>
             <el-table
@@ -22,7 +22,7 @@
                 <el-table-column label="币种" prop="coin_name_unique" class-name="status-col"> </el-table-column>
                 <el-table-column label="账户余额" prop="sum_money" class-name="status-col"> </el-table-column>
                 <el-table-column label="平台余额" prop="plat_money" class-name="status-col"> </el-table-column>
-                <el-table-column :label="$t('common.operating')" class-name="status-col" width="300">
+                <el-table-column :label="LangUtil('操作')" class-name="status-col" width="300">
                     <template slot-scope="{ row }">
                         <el-button
                             class="item"
@@ -30,14 +30,14 @@
                             @click="handlerTransfer(row)"
                             v-if="myProxy.userInfo.is_credit_user == 1"
                         >
-                            {{ $t("user_detail.userTransfer") }}
+                            {{ LangUtil("划转") }}
                         </el-button>
                         <el-button class="item" type="primary" @click="handlerDeductGold(row)">
-                            {{ $t("user_detail.debit") }}
+                            {{ LangUtil("扣款") }}
                         </el-button>
                         <el-button class="item" type="primary" @click="handlerRechargeAddress(row)">
                             <!-- 充值地址 -->
-                            {{ $t("user_detail.rechargeAddress") }}
+                            {{ LangUtil("充值地址") }}
                         </el-button>
                     </template>
                 </el-table-column>
@@ -46,7 +46,7 @@
         <div>
             <div class="title">
                 <!-- 厂商资产 -->
-                {{ $t("user_detail.manufacturerAssets") }}
+                {{ LangUtil("厂商资产") }}
             </div>
             <el-table
                 :data="myProxy.vendorMoney"
@@ -62,11 +62,11 @@
                 <el-table-column label="游戏厂商" prop="vendor_name" class-name="status-col"> </el-table-column>
                 <el-table-column label="余额" prop="currency" class-name="status-col"> </el-table-column>
                 <el-table-column label="币种" prop="coin_name_unique" class-name="status-col"> </el-table-column>
-                <el-table-column :label="$t('common.operating')" class-name="status-col">
+                <el-table-column :label="LangUtil('操作')" class-name="status-col">
                     <template slot-scope="{ row }">
                         <el-button class="item" type="primary" @click="withdrawVendor(row)">
                             <!-- 提取 -->
-                            {{ $t("user_detail.withdraw") }}
+                            {{ LangUtil("提取") }}
                         </el-button>
                     </template>
                 </el-table-column>
@@ -80,6 +80,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -99,44 +100,45 @@ import TransferDialog from "./TransferDialog.vue";
     },
 })
 export default class TabWallet extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabWalletProxy = getProxy(TabWalletProxy);
-    private tableColumns = this.myProxy.tableColumns;
-    private userInfo = this.myProxy.userInfo;
-    private dialogDeductGoldData = this.myProxy.dialogDeductGoldData;
-    private dialogRechargeAddress = this.myProxy.dialogRechargeAddress;
-    private dialogTransferData = this.myProxy.dialogTransferData;
+    myProxy: TabWalletProxy = getProxy(TabWalletProxy);
+    tableColumns = this.myProxy.tableColumns;
+    userInfo = this.myProxy.userInfo;
+    dialogDeductGoldData = this.myProxy.dialogDeductGoldData;
+    dialogRechargeAddress = this.myProxy.dialogRechargeAddress;
+    dialogTransferData = this.myProxy.dialogTransferData;
 
     constructor() {
         super(TabWalletMediator);
     }
 
-    private handlerTransfer(row: any) {
+    handlerTransfer(row: any) {
         this.myProxy.showTransferDialog(row.coin_name_unique);
     }
 
-    private handlerDeductGold(row: any) {
+    handlerDeductGold(row: any) {
         this.myProxy.showDialog(row.coin_name_unique);
     }
 
-    private handlerRechargeAddress(row: any) {
+    handlerRechargeAddress(row: any) {
         this.myProxy.showRechargeAddressDialog(row.coin_name_unique);
     }
 
-    private refreshMoney() {
+    refreshMoney() {
         this.myProxy.getGoldInfo(this.userInfo.user_id);
     }
 
-    // private withdrawAll() {
+    //  withdrawAll() {
     //     this.myProxy.withdrawVendor();
     // }
 
-    private withdrawVendor(row: any) {
+    withdrawVendor(row: any) {
         this.myProxy.withdrawVendor(row.coin_name_unique, row.vendor_id);
     }
 

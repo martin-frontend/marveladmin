@@ -34,4 +34,3 @@ facade.registerCommand(HttpType.admin_admin_role_show, cmd_admin_admin_role_show
 facade.registerCommand(HttpType.admin_admin_role_store, cmd_admin_admin_role_store);
 facade.registerCommand(HttpType.admin_admin_role_update, cmd_admin_admin_role_update);
 facade.registerCommand(HttpType.admin_admin_user_mine, cmd_admin_admin_user_mine);
-

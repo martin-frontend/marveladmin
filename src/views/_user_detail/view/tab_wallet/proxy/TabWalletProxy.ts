@@ -12,7 +12,7 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
     }
 
     /**离开页面时调用 */
-    leave() { }
+    leave() {}
 
     /**表头信息 */
     tableColumns = {
@@ -29,7 +29,7 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
         gold_columns_disable: { name: "金币明细列屏蔽", options: {} },
         invite_user_id: { name: "邀请码人ID", options: {} },
         is_channel_statistic_display: { name: "渠道统计展示", options: {} },
-        is_credit_user: { name: '用户类型', options: {} },
+        is_credit_user: { name: "用户类型", options: {} },
         is_promotion_statistics_display: { name: "推广统计展示", options: {} },
         last_login_app_type: { name: "最近登陆应用平台", options: {} },
         last_login_at: { name: "最近登入时间", options: {} },
@@ -176,8 +176,10 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
 
     /**取得用户充值地址 */
     getAddressDetail(coin_name_unique: string) {
-        this.sendNotification(
-            HttpType.admin_plat_user_recharge_address, { user_id: this.userInfo.user_id, coin_name_unique: coin_name_unique });
+        this.sendNotification(HttpType.admin_plat_user_recharge_address, {
+            user_id: this.userInfo.user_id,
+            coin_name_unique: coin_name_unique,
+        });
     }
 
     setRechargeAddress(data: any) {
@@ -225,11 +227,20 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
     }
     /**金币划转 */
     onTransferGold(gold: number, coin_name_unique: string) {
-        this.sendNotification(HttpType.admin_plat_user_transfer_user_gold, { user_id: this.userInfo.user_id, to_user_id: this.dialogTransferData.to_user_id, gold, coin_name_unique });
+        this.sendNotification(HttpType.admin_plat_user_transfer_user_gold, {
+            user_id: this.userInfo.user_id,
+            to_user_id: this.dialogTransferData.to_user_id,
+            gold,
+            coin_name_unique,
+        });
     }
     /**扣除金币 */
     onUpdateGold(gold: number, coin_name_unique: string) {
-        this.sendNotification(HttpType.admin_plat_user_update_user_gold, { user_id: this.userInfo.user_id, gold, coin_name_unique });
+        this.sendNotification(HttpType.admin_plat_user_update_user_gold, {
+            user_id: this.userInfo.user_id,
+            gold,
+            coin_name_unique,
+        });
     }
     /**提取厂商金币 */
     withdrawVendor(coin_name_unique: string, vendor_id?: number) {

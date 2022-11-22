@@ -1,5 +1,5 @@
 <template>
-    <div class="content statistic_plat_days" >
+    <div class="content statistic_plat_days">
         <StatisticPlatDaysDialog v-if="myProxy.dialogData.bShow" />
         <StatisticPlatDaysHeader />
         <StatisticPlatDaysBody />

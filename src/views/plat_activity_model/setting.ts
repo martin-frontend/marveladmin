@@ -45,9 +45,11 @@ facade.registerCommand(HttpType.admin_plat_activity_model_index, cmd_admin_plat_
 facade.registerCommand(HttpType.admin_plat_activity_model_store, cmd_admin_plat_activity_model_store);
 facade.registerCommand(HttpType.admin_plat_activity_model_show, cmd_admin_plat_activity_model_show);
 facade.registerCommand(HttpType.admin_plat_activity_model_update, cmd_admin_plat_activity_model_update);
-facade.registerCommand(HttpType.admin_plat_activity_model_plat_table_columns, cmd_admin_plat_activity_model_plat_table_columns);
+facade.registerCommand(
+    HttpType.admin_plat_activity_model_plat_table_columns,
+    cmd_admin_plat_activity_model_plat_table_columns
+);
 facade.registerCommand(HttpType.admin_plat_activity_model_plat_index, cmd_admin_plat_activity_model_plat_index);
 facade.registerCommand(HttpType.admin_plat_activity_model_plat_store, cmd_admin_plat_activity_model_plat_store);
 facade.registerCommand(HttpType.admin_plat_index, cmd_admin_plat_index);
 facade.registerCommand(HttpType.admin_plat_activity_rule_index, cmd_admin_plat_activity_rule_index);
-

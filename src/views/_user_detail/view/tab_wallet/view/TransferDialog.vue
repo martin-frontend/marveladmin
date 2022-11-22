@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('user_detail.userTransfer')" :append-to-body="true" :visible.sync="dialogTransferData.bShow">
+    <el-dialog :title="LangUtil('划转')" :append-to-body="true" :visible.sync="dialogTransferData.bShow">
         <el-form
             ref="dialogTransferData"
             :model="dialogTransferData"
@@ -12,7 +12,7 @@
                     v-model="dialogTransferData.to_user_id"
                     filterable
                     class="select"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 >
                     <el-option
                         v-for="(value, key) in userInfo.child_users"
@@ -34,7 +34,7 @@
                     v-model="userInfo.gold_info[dialogTransferData.coin_name_unique].plat_money"
                 ></el-input>
             </el-form-item>
-            <el-form-item size="mini" :label="$t('user_detail.transferAmount')">
+            <el-form-item size="mini" :label="LangUtil('划转数量')">
                 <el-input
                     v-model="dialogTransferData.gold"
                     type="number"
@@ -43,13 +43,14 @@
                 ></el-input>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" @click="onTransferGold">{{ $t("plat_email.confirm") }}</el-button>
+                <el-button type="primary" @click="onTransferGold">{{ LangUtil("确认") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import { Message, MessageBox } from "element-ui";
@@ -60,15 +61,16 @@ import { getProxy } from "@/views/_user_detail/PageSetting";
 
 @Component
 export default class DeductGoldDialog extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabWalletProxy = getProxy(TabWalletProxy);
-    private tableColumns = this.myProxy.tableColumns;
-    private userInfo = this.myProxy.userInfo;
+    myProxy: TabWalletProxy = getProxy(TabWalletProxy);
+    tableColumns = this.myProxy.tableColumns;
+    userInfo = this.myProxy.userInfo;
     get dialogTransferData() {
         return this.myProxy.dialogTransferData;
     }
@@ -78,18 +80,18 @@ export default class DeductGoldDialog extends AbstractView {
     }
 
     @Watch("dialogTransferData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["dialogTransferData"] as Vue & { clearValidate: () => void }).clearValidate();
         });
     }
 
     // 表单验证
-    private rules = {
-        to_user_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+    rules = {
+        to_user_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
     };
 
-    private onTransferGold() {
+    onTransferGold() {
         (this.$refs["dialogTransferData"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 const transferGold = this.dialogTransferData.gold == "" ? 0 : parseFloat(this.dialogTransferData.gold);
@@ -100,14 +102,11 @@ export default class DeductGoldDialog extends AbstractView {
                 ) {
                     MessageBox.confirm(
                         //@ts-ignore
-                        this.$t("common.confirmTransfer", {
-                            "0": transferGold,
-                            "1": this.dialogTransferData.coin_name_unique,
-                        }),
-                        this.$t("common.prompt"),
+                        this.LangUtil("undefined"),
+                        this.LangUtil("提示"),
                         {
-                            confirmButtonText: this.$t("common.determine"),
-                            cancelButtonText: this.$t("common.cancel"),
+                            confirmButtonText: this.LangUtil("确定"),
+                            cancelButtonText: this.LangUtil("取消"),
                             type: "warning",
                             center: true,
                         }
@@ -115,7 +114,7 @@ export default class DeductGoldDialog extends AbstractView {
                         this.myProxy.onTransferGold(transferGold, this.dialogTransferData.coin_name_unique);
                     });
                 } else {
-                    let errorCode: any = this.$t("common.moneyInputError");
+                    let errorCode: any = this.LangUtil("请输入正确的扣除金额，大于0，小于平台余额");
                     Message.error({
                         type: "error",
                         message: errorCode,

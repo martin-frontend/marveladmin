@@ -22,8 +22,8 @@
                 <settings />
             </right-panel> -->
         </div>
-        <UserDetail :page="1"/>
-        <UserDetail :page="2"/>
+        <UserDetail :page="1" />
+        <UserDetail :page="2" />
     </div>
 </template>
 
@@ -46,17 +46,16 @@ const WIDTH = 992;
         // Settings,
         Sidebar,
         TagsView,
-        UserDetail
+        UserDetail,
     },
 })
 export default class Layout extends AbstractView {
+    public loading: boolean = false;
 
-    public loading:boolean = false;
-
-    public showLoading(){
+    public showLoading() {
         this.loading = true;
     }
-    public hideLoading(){
+    public hideLoading() {
         this.loading = false;
     }
 
@@ -142,7 +141,7 @@ export default class Layout extends AbstractView {
         this.addCachedView(view);
     }
     addVisitedView(view: any) {
-        if(view.name == "layout")return;
+        if (view.name == "layout") return;
         if (this.tags.visitedViews.some(v => v.path === view.path)) return;
         this.tags.visitedViews.push(
             Object.assign({}, view, {
@@ -295,5 +294,4 @@ export default class Layout extends AbstractView {
 .mobile .fixed-header {
     width: 100%;
 }
-
 </style>

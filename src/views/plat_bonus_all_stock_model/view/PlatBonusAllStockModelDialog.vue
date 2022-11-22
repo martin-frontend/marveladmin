@@ -2,13 +2,13 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="850px">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
-                <el-input v-model="form.name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.name" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['desc'].name" prop="desc">
-                <el-input type="textarea" v-model="form.desc" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input type="textarea" v-model="form.desc" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['calc_type'].name" prop="calc_type">
-                <el-select v-model="form.calc_type" filterable :placeholder="$t('common.pleaseChoose')">
+                <el-select v-model="form.calc_type" filterable :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in tableColumns['calc_type'].options"
                         :key="key"
@@ -21,11 +21,11 @@
                 <div>
                     <div class="level_setting">
                         <el-button size="mini" type="primary" @click="addLevel(form.all_bonus_config)"
-                            >{{ $t("plat_users_vip_model.addLevel") }}
+                            >{{ LangUtil("添加等级") }}
                         </el-button>
-                        {{ $t("common.topLevel") }}
+                        {{ LangUtil("最高配置等级") }}
                         <span style="color: red">{{ form.all_bonus_config.length }}</span>
-                        {{ $t("common.level") }}
+                        {{ LangUtil("等级") }}
                     </div>
 
                     <el-table
@@ -37,24 +37,24 @@
                         style="width: 100%"
                         size="mini"
                     >
-                        <el-table-column :label="$t('common.operating')" width="100">
+                        <el-table-column :label="LangUtil('操作')" width="100">
                             <template slot-scope="{ $index }">
                                 <el-button size="mini" type="danger" @click="deleteLevel($index, form.all_bonus_config)"
-                                    >{{ $t("common.delete") }}
+                                    >{{ LangUtil("删除") }}
                                 </el-button>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="$t('common.level')" type="index" width="80"></el-table-column>
-                        <el-table-column :label="$t('plat_bonus_all_stock_model.levelDesc')" min-width="100">
+                        <el-table-column :label="LangUtil('等级')" type="index" width="80"></el-table-column>
+                        <el-table-column :label="LangUtil('等级描述名称')" min-width="100">
                             <template slot-scope="{ row }">
                                 <el-input
                                     v-model="row.name"
-                                    :placeholder="$t('common.pleaseEnter')"
+                                    :placeholder="LangUtil('请输入')"
                                     style="width: 100%"
                                 ></el-input>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="$t('plat_bonus_all_stock_model.performance')" min-width="100">
+                        <el-table-column :label="LangUtil('团队业绩')" min-width="100">
                             <template slot-scope="{ row }">
                                 <el-input-number
                                     type="number"
@@ -64,7 +64,7 @@
                                 ></el-input-number>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="$t('plat_bonus_all_stock_model.stock')" min-width="100">
+                        <el-table-column :label="LangUtil('每万占股')" min-width="100">
                             <template slot-scope="{ row }">
                                 <el-input-number
                                     type="number"
@@ -79,7 +79,7 @@
             </div>
             <el-form-item class="dialog-footer">
                 <el-button type="primary" size="mini" @click="!isStatusUpdate ? handleAdd() : handleUpdate()">{{
-                    $t("common.save")
+                    LangUtil("确认保存")
                 }}</el-button>
             </el-form-item>
         </el-form>
@@ -87,6 +87,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatBonusAllStockModelProxy from "@/views/plat_bonus_all_stock_model/proxy/PlatBonusAllStockModelProxy";
@@ -97,24 +98,25 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatBonusAllStockModelDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatBonusAllStockModelProxy = this.getProxy(PlatBonusAllStockModelProxy);
+    myProxy: PlatBonusAllStockModelProxy = this.getProxy(PlatBonusAllStockModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -130,19 +132,19 @@ export default class PlatBonusAllStockModelDialog extends AbstractView {
 
     get rules() {
         return {
-            name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            desc: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            calc_type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            desc: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            calc_type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
-                let errorCode1: any = this.$t("plat_bonus_all_stock_model.levelDescNoData");
-                let errorCode2: any = this.$t("plat_bonus_all_stock_model.performanceNoData");
-                let errorCode3: any = this.$t("plat_bonus_all_stock_model.stockNoData");
-                let errorCode4: any = this.$t("plat_bonus_all_stock_model.levelNoData");
+                let errorCode1: any = this.LangUtil("等级描述名称没有输入数据");
+                let errorCode2: any = this.LangUtil("团队业绩没有输入数据");
+                let errorCode3: any = this.LangUtil("每万占股没有输入数据");
+                let errorCode4: any = this.LangUtil("等级没有输入数据");
                 let isValide = true;
                 const config: any = this.myProxy.dialogData.form.all_bonus_config;
 
@@ -177,7 +179,7 @@ export default class PlatBonusAllStockModelDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();

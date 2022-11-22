@@ -49,7 +49,7 @@
                 class-name="status-col"
             >
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="60px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="60px">
                 <template slot-scope="{ row }">
                     <div v-if="row.status == 2">
                         <el-button
@@ -57,7 +57,7 @@
                             type="primary"
                             @click="handleEdit(row)"
                             v-if="checkUnique(unique.admin_user_show)"
-                            >{{ $t("common.setting") }}</el-button
+                            >{{ LangUtil("设置") }}</el-button
                         >
                     </div>
                     <div v-else>-</div>
@@ -68,7 +68,8 @@
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>
 </template>
-<script lang='ts'>
+<script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -96,29 +97,30 @@ import PlatPoolDialog from "./dialog/PlatPoolDialog.vue";
     },
 })
 export default class PlatStakePoolLog extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
+    myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private tableColumns = this.myProxy.stakePooltableData.columns;
-    private tableData = this.myProxy.stakePooltableData.list;
-    private pageInfo = this.myProxy.stakePooltableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
-    private dialogData = this.myProxy.stakePooltableData.dialogData;
+    tableColumns = this.myProxy.stakePooltableData.columns;
+    tableData = this.myProxy.stakePooltableData.list;
+    pageInfo = this.myProxy.stakePooltableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
+    dialogData = this.myProxy.stakePooltableData.dialogData;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onStakePoolQuery();
     }
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showPoolDialog(data);
     }
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 </style>

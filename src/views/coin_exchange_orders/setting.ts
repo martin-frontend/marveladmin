@@ -31,7 +31,9 @@ const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_coin_exchange_orders_table_columns, cmd_admin_coin_exchange_orders_table_columns);
 facade.registerCommand(HttpType.admin_coin_exchange_orders_index, cmd_admin_coin_exchange_orders_index);
 facade.registerCommand(HttpType.admin_coin_exchange_orders_finish_order, cmd_admin_coin_exchange_orders_finish_order);
-facade.registerCommand(HttpType.admin_coin_exchange_orders_close_order_return_gold, cmd_admin_coin_exchange_orders_close_order_return_gold);
+facade.registerCommand(
+    HttpType.admin_coin_exchange_orders_close_order_return_gold,
+    cmd_admin_coin_exchange_orders_close_order_return_gold
+);
 facade.registerCommand(HttpType.admin_coin_exchange_orders_close_order, cmd_admin_coin_exchange_orders_close_order);
 facade.registerCommand(HttpType.admin_admin_user_mine, cmd_admin_admin_user_mine);
-

@@ -61,9 +61,9 @@ export default class BlockTransferInOrderProxy extends AbstractProxy implements 
     /**查询条件 */
     listQuery = {
         plat_id: "",
-        order_no:null,
-        token_name:null,
-        status:null,
+        order_no: null,
+        token_name: null,
+        status: null,
         page_count: 1,
         page_size: 20,
     };

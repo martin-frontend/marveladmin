@@ -10,22 +10,23 @@
             />
             <div>
                 <el-button class="header-button" @click="handlerSearch()" type="primary">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button class="header-button" @click="handlerReset()" type="primary">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
         <div class="group">
             <el-button @click="handlerCreate()" type="primary" icon="el-icon-circle-plus-outline">{{
-                $t("common.create")
+                LangUtil("新增")
             }}</el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatBlockCoinsProxy from "../proxy/PlatBlockCoinsProxy";
@@ -42,25 +43,26 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatBlockCoinsHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatBlockCoinsProxy = this.getProxy(PlatBlockCoinsProxy);
+    myProxy: PlatBlockCoinsProxy = this.getProxy(PlatBlockCoinsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

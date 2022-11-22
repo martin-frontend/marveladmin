@@ -13,9 +13,7 @@ export default class TabWaterProxy extends AbstractProxy implements ITabWaterPro
     }
 
     /**离开页面时调用 */
-    leave() {
-
-    }
+    leave() {}
 
     /**表格相关数据 */
     tableData = {
@@ -56,7 +54,7 @@ export default class TabWaterProxy extends AbstractProxy implements ITabWaterPro
         "created_date-{>=}": dateFormat(getTodayOffset(-10, 1), "yyyy-MM-dd hh:mm:ss"),
         "created_date-{<=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
         page_count: 1,
-        page_size: 10
+        page_size: 10,
     };
 
     /**设置表头数据 */

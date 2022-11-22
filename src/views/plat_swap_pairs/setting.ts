@@ -26,4 +26,3 @@ facade.registerCommand(HttpType.admin_plat_swap_pairs_table_columns, cmd_admin_p
 facade.registerCommand(HttpType.admin_plat_swap_pairs_index, cmd_admin_plat_swap_pairs_index);
 facade.registerCommand(HttpType.admin_plat_swap_pairs_store, cmd_admin_plat_swap_pairs_store);
 facade.registerCommand(HttpType.admin_plat_swap_pairs_update, cmd_admin_plat_swap_pairs_update);
-

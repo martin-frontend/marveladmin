@@ -40,7 +40,7 @@
             </el-table-column>
             <el-table-column :label="tableColumns['icon'].name" prop="icon" class-name="status-col" min-width="80px">
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="160px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="160px">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
@@ -58,7 +58,7 @@
                     >
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.sort')" class-name="status-col" min-width="30px">
+            <el-table-column :label="LangUtil('排序')" class-name="status-col" min-width="30px">
                 <div class="sort">
                     <i class="el-icon-rank"></i>
                 </div>
@@ -68,6 +68,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -83,21 +84,22 @@ import Sortable from "sortablejs";
     },
 })
 export default class SystemSmsAreaCodeBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: SystemSmsAreaCodeProxy = this.getProxy(SystemSmsAreaCodeProxy);
+    myProxy: SystemSmsAreaCodeProxy = this.getProxy(SystemSmsAreaCodeProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private data = [];
-    private sortItem = {
+    data = [];
+    sortItem = {
         id: 0,
         next_id: 0,
     };
@@ -114,20 +116,20 @@ export default class SystemSmsAreaCodeBody extends AbstractView {
         }
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
 
-    private initSort() {
+    initSort() {
         const tbody: any = document.querySelector(".el-table__body-wrapper tbody");
         new Sortable(tbody, {
             onStart: e => {

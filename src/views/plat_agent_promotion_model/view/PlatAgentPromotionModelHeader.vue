@@ -7,13 +7,14 @@
                 type="primary"
                 icon="el-icon-circle-plus-outline"
                 @click="handlerCreate()"
-                >{{ $t("common.create") }}</el-button
+                >{{ LangUtil("新增") }}</el-button
             >
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatAgentPromotionModelProxy from "../proxy/PlatAgentPromotionModelProxy";
@@ -22,16 +23,17 @@ import { checkUnique, unique } from "@/core/global/Permission";
 
 @Component
 export default class PlatAgentPromotionModelHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatAgentPromotionModelProxy = this.getProxy(PlatAgentPromotionModelProxy);
+    myProxy: PlatAgentPromotionModelProxy = this.getProxy(PlatAgentPromotionModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

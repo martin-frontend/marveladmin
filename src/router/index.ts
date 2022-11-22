@@ -7,22 +7,22 @@ export const routes = [
     {
         path: "/",
         name: "layout",
-        component: Layout
+        component: Layout,
     },
     {
         path: "/login",
         name: "login",
-        component: () => import(/* webpackChunkName: "login" */"@/views/login/view/Login.vue")
+        component: () => import(/* webpackChunkName: "login" */ "@/views/login/view/Login.vue"),
     },
     {
         path: "/404",
         name: "404",
-        component: () => import(/* webpackChunkName: "404" */"@/views/error-page/view/Page404.vue")
+        component: () => import(/* webpackChunkName: "404" */ "@/views/error-page/view/Page404.vue"),
     },
     {
         path: "/401",
         name: "404",
-        component: () => import(/* webpackChunkName: "401" */"@/views/error-page/view/Page401.vue")
+        component: () => import(/* webpackChunkName: "401" */ "@/views/error-page/view/Page401.vue"),
     },
     // {
     //     path: "/error",

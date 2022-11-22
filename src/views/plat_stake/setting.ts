@@ -61,9 +61,11 @@ facade.registerCommand(HttpType.admin_plat_stake_pool_log_index, cmd_admin_plat_
 facade.registerCommand(HttpType.admin_plat_stake_pool_log_update, cmd_admin_plat_stake_pool_log_update);
 facade.registerCommand(HttpType.admin_plat_stake_bonus_log_table_columns, cmd_admin_plat_stake_bonus_log_table_columns);
 facade.registerCommand(HttpType.admin_plat_stake_bonus_log_index, cmd_admin_plat_stake_bonus_log_index);
-facade.registerCommand(HttpType.admin_plat_stake_bonus_user_log_table_columns, cmd_admin_plat_stake_bonus_user_log_table_columns);
+facade.registerCommand(
+    HttpType.admin_plat_stake_bonus_user_log_table_columns,
+    cmd_admin_plat_stake_bonus_user_log_table_columns
+);
 facade.registerCommand(HttpType.admin_plat_stake_bonus_user_log_index, cmd_admin_plat_stake_bonus_user_log_index);
 facade.registerCommand(HttpType.admin_plat_stake_config_show, cmd_admin_plat_stake_config_show);
 facade.registerCommand(HttpType.admin_plat_update, cmd_admin_plat_update);
 facade.registerCommand(HttpType.admin_plat_stake_config_update, cmd_admin_plat_stake_config_update);
-

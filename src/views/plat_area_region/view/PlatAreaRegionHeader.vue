@@ -14,7 +14,7 @@
                     class="header-button"
                     type="primary"
                     icon="el-icon-circle-plus-outline"
-                    >{{ $t("common.create") }}</el-button
+                    >{{ LangUtil("新增") }}</el-button
                 >
             </div>
         </div>
@@ -22,6 +22,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatAreaRegionProxy from "../proxy/PlatAreaRegionProxy";
@@ -38,25 +39,26 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatAreaRegionHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatAreaRegionProxy = this.getProxy(PlatAreaRegionProxy);
+    myProxy: PlatAreaRegionProxy = this.getProxy(PlatAreaRegionProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

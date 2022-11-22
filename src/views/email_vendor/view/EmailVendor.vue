@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <EmailVendorHeader/>
-        <EmailVendorBody/>
-        <EmailVendorDialog/>
+        <EmailVendorHeader />
+        <EmailVendorBody />
+        <EmailVendorDialog />
     </div>
 </template>
 
@@ -22,12 +22,11 @@ import EmailVendorHeader from "./EmailVendorHeader.vue";
     },
 })
 export default class EmailVendor extends AbstractView {
-
     constructor() {
         super(EmailVendorMediator);
     }
 
-    destroyed(){
+    destroyed() {
         super.destroyed();
     }
 }

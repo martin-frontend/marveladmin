@@ -75,10 +75,10 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="80px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
                     <el-button v-if="!row.is_real" size="mini" type="primary" @click="handleEdit(row)">{{
-                        $t("common.update")
+                        LangUtil("编辑")
                     }}</el-button>
                 </template>
             </el-table-column>
@@ -87,6 +87,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -103,31 +104,32 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
     },
 })
 export default class PlatUserStatisticRankDaysBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatUserStatisticRankDaysProxy = this.getProxy(PlatUserStatisticRankDaysProxy);
+    myProxy: PlatUserStatisticRankDaysProxy = this.getProxy(PlatUserStatisticRankDaysProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.onShowUserDetail(user_id);
     }
 
     // 排序
-    private tableSortChange(column: any) {
+    tableSortChange(column: any) {
         let order_by = {};
         if (column.order === "descending") {
             order_by = {
@@ -143,7 +145,7 @@ export default class PlatUserStatisticRankDaysBody extends AbstractView {
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 }

@@ -46,4 +46,3 @@ facade.registerCommand(HttpType.admin_plat_agent_promotion_model_index, cmd_admi
 facade.registerCommand(HttpType.admin_plat_bonus_all_stock_model_index, cmd_admin_plat_bonus_all_stock_model_index);
 facade.registerCommand(HttpType.admin_plat_clear_cache, cmd_admin_plat_clear_cache);
 facade.registerCommand(HttpType.admin_plat_clear_stake_bonus, cmd_admin_plat_clear_stake_bonus);
-

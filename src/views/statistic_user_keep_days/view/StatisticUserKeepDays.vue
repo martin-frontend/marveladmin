@@ -1,7 +1,7 @@
 <template>
     <div class="content">
-        <StatisticUserKeepDaysHeader/>
-        <StatisticUserKeepDaysBody/>
+        <StatisticUserKeepDaysHeader />
+        <StatisticUserKeepDaysBody />
     </div>
 </template>
 
@@ -17,10 +17,9 @@ import StatisticUserKeepDaysBody from "./StatisticUserKeepDaysBody.vue";
     components: {
         StatisticUserKeepDaysHeader,
         StatisticUserKeepDaysBody,
-    }
+    },
 })
 export default class StatisticUserKeepDays extends AbstractView {
-
     constructor() {
         super(StatisticUserKeepDaysMediator);
     }

@@ -10,7 +10,7 @@
             'text-align': 'center',
         }"
     >
-        <el-table-column :label="$t('common.date')" prop="created_date" class-name="status-col" width="120px">
+        <el-table-column :label="LangUtil('日期')" prop="created_date" class-name="status-col" width="120px">
         </el-table-column>
         <el-table-column :label="columnInfo.total_bet.name" prop="total_bet" class-name="status-col"> </el-table-column>
         <el-table-column :label="columnInfo.bet_2.name" prop="bet_2" class-name="status-col"> </el-table-column>
@@ -24,11 +24,13 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class BetTable extends AbstractView {
+    LangUtil = LangUtil;
     @Prop({ type: Array, required: true }) tableData!: any;
     @Prop({ type: Object, required: true }) columnInfo!: any;
 }

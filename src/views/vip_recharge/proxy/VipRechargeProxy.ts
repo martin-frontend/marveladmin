@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { UserType } from "@/core/enum/UserType";
 import { DialogStatus } from "@/core/global/Constant";
@@ -19,7 +20,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
     }
 
     /**离开页面时调用 */
-    leave() { }
+    leave() {}
 
     /**表格相关数据 */
     tableData = {
@@ -60,7 +61,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
             user_id: "",
             amount: "",
             coin_name_unique: "",
-            remark :"",
+            remark: "",
         },
         isRechargeSuccess: +new Date(),
     };
@@ -81,7 +82,9 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
             }
             if (this.listQuery.plat_id) {
                 //@ts-ignore
-                this.tableData.plat_columns.coin_name_unique_option = this.tableData.plat_columns.coin_name_unique.options[this.listQuery.plat_id]
+                this.tableData.plat_columns.coin_name_unique_option = this.tableData.plat_columns.coin_name_unique.options[
+                    this.listQuery.plat_id
+                ];
                 const coin_name_unique_options_keys = Object.keys(this.tableData.plat_columns.coin_name_unique_option);
                 this.listQuery.coin_name_unique = coin_name_unique_options_keys[0];
             }
@@ -109,7 +112,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
         Object.assign(this.bodyData.form, {
             user_id: "",
             amount: "",
-            remark:"",
+            remark: "",
         });
         Object.assign(this.listQuery, {
             plat_id: "",
@@ -133,7 +136,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
                 this.getCoinGold();
                 break;
             default:
-                this.bodyData.gold = <string>i18n.t("vip_recharge.noLimit");
+                this.bodyData.gold = <string>LangUtil("无限制");
         }
     }
 }

@@ -8,28 +8,26 @@
             :clearable="false"
         />
         <div class="editor-container config">
-            {{$t("plat_load_page_domain.load_page_json_config")}}
+            {{ LangUtil("落地页文件配置") }}
             <el-form ref="form" class="border" :model="form" v-loading="net_status.loading">
                 <json-editor ref="jsonEditor" v-model="form.load_page_extend" />
             </el-form>
             <el-button @click="handlerSave" icon="el-icon-circle-plus-outline" type="primary" class="item save">{{
-                $t("common.save")
+                LangUtil("确认保存")
             }}</el-button>
         </div>
 
         <div class="row domain-config">
-             {{$t("plat_load_page_domain.load_page_domain_config")}}<el-button
-                @click="handlerCreate"
-                icon="el-icon-circle-plus-outline"
-                type="primary"
-                class="item create"
-                >{{ $t("common.create") }}</el-button
-            >
+            {{ LangUtil("落地页域名配置")
+            }}<el-button @click="handlerCreate" icon="el-icon-circle-plus-outline" type="primary" class="item create">{{
+                LangUtil("新增")
+            }}</el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatLoadPageDomainProxy from "../proxy/PlatLoadPageDomainProxy";
@@ -46,26 +44,27 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatLoadPageDomainHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatLoadPageDomainProxy = this.getProxy(PlatLoadPageDomainProxy);
+    myProxy: PlatLoadPageDomainProxy = this.getProxy(PlatLoadPageDomainProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
-    private form = this.myProxy.form;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
+    form = this.myProxy.form;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
-    private handlerSave() {
+    handlerSave() {
         this.myProxy.onSaveLoadPage();
     }
 }

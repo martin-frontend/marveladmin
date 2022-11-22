@@ -9,12 +9,12 @@
             >
                 <el-row type="flex" justify="start" align="middle" style="margin-bottom: 20px">
                     <div class="dropdown-item">
-                        <div class="label">{{ $t("plat_agent.topLevel") }}</div>
+                        <div class="label">{{ LangUtil("最高等级") }}</div>
                         <el-select
                             v-model="tableData.maxlevels[key]"
                             filterable
                             class="select"
-                            :placeholder="$t('common.pleaseChoose')"
+                            :placeholder="LangUtil('请选择')"
                             @change="onLevelChange(key)"
                             :disabled="!tableData.isEdit"
                         >
@@ -35,13 +35,13 @@
                     style="width: 100%"
                     size="mini"
                 >
-                    <el-table-column :label="$t('common.level')" type="index" width="100"></el-table-column>
+                    <el-table-column :label="LangUtil('等级')" type="index" width="100"></el-table-column>
                     <el-table-column :label="tableColumns.promotion_config.options_key[0].total_performance">
                         <template slot-scope="{ row }">
                             <el-input-number
                                 type="number"
                                 v-model="row.total_performance"
-                                :placeholder="$t('common.pleaseEnter')"
+                                :placeholder="LangUtil('请输入')"
                                 style="width: 150px"
                                 :min="0"
                                 :disabled="!tableData.isEdit"
@@ -54,7 +54,7 @@
                                 :min="0"
                                 type="number"
                                 v-model="row.commission_num"
-                                :placeholder="$t('common.pleaseEnter')"
+                                :placeholder="LangUtil('请输入')"
                                 style="width: 150px"
                                 :disabled="!tableData.isEdit"
                             ></el-input-number>
@@ -69,7 +69,7 @@
                                 :min="0"
                                 type="number"
                                 v-model="scope.row.commission_num_added"
-                                :placeholder="$t('common.pleaseEnter')"
+                                :placeholder="LangUtil('请输入')"
                                 style="width: 150px"
                                 :disabled="!tableData.isEdit"
                                 @change="onValueChange(key, scope.$index)"
@@ -82,6 +82,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -92,45 +93,46 @@ import i18n from "@/lang";
 
 @Component
 export default class PlatAgentBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatAgentProxy = this.getProxy(PlatAgentProxy);
+    myProxy: PlatAgentProxy = this.getProxy(PlatAgentProxy);
     // proxy property
-    private tableData = this.myProxy.tableData;
-    private tableColumns = this.myProxy.tableData.columns;
-    private detail = this.tableData.detail;
+    tableData = this.myProxy.tableData;
+    tableColumns = this.myProxy.tableData.columns;
+    detail = this.tableData.detail;
 
-    private promotion_config:any = {options: {"0": this.$t("common.all")}};
+    promotion_config: any = { options: { "0": this.LangUtil("全部") } };
 
-    mounted(){
+    mounted() {
         const promotionModel = this.tableData.promotionModel;
-        if(promotionModel.calc_type == 1) {
+        if (promotionModel.calc_type == 1) {
             this.tableData.activeName = "2";
-            this.promotion_config =  this.tableColumns.promotion_config;
-        }else{
+            this.promotion_config = this.tableColumns.promotion_config;
+        } else {
             this.tableData.activeName = "0";
-            this.promotion_config = {options: {"0": this.$t("common.all")}};
+            this.promotion_config = { options: { "0": this.LangUtil("全部") } };
         }
     }
 
     @Watch("tableData.update")
-    private onWatchUpdate() {
+    onWatchUpdate() {
         this.$forceUpdate();
     }
     /**更新promotion_config.options */
     @Watch("tableData.promotionModel.calc_type")
-    private onWatchModel(){
+    onWatchModel() {
         const promotionModel = this.tableData.promotionModel;
-        if(promotionModel.calc_type == 1) {
+        if (promotionModel.calc_type == 1) {
             this.tableData.activeName = "2";
-            this.promotion_config =  this.tableColumns.promotion_config;
-        }else{
+            this.promotion_config = this.tableColumns.promotion_config;
+        } else {
             this.tableData.activeName = "0";
-            this.promotion_config = {options: {"0": this.$t("common.all")}};
+            this.promotion_config = { options: { "0": this.LangUtil("全部") } };
         }
     }
     /**获取当前的最大等级 */
@@ -162,7 +164,7 @@ export default class PlatAgentBody extends AbstractView {
     //         return this.tableColumns.promotion_config;
     //     }else{
     //         this.tableData.activeName = "0";
-    //         return {options: {"0": this.$t("common.all")}};
+    //         return {options: {"0": this.LangUtil('全部')}};
     //     }
     // }
     /**是否显示级差 */
@@ -170,15 +172,15 @@ export default class PlatAgentBody extends AbstractView {
         return this.tableData.promotionModel.is_promotion_num_added == 1;
     }
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private onLevelChange(type: string) {
+    onLevelChange(type: string) {
         this.myProxy.onLevelChange(type);
     }
 
-    private onValueChange(key: number, index: number) {
+    onValueChange(key: number, index: number) {
         const conf = this.detail.promotion_config[key];
         const len = Object.keys(conf).length;
 
@@ -186,12 +188,12 @@ export default class PlatAgentBody extends AbstractView {
         const lastValue = parseInt(conf[Math.max(index - 1, 0)].commission_num_added);
         const nextValue = parseInt(conf[Math.min(index + 1, len - 1)].commission_num_added);
 
-        if(currValue>=nextValue){
+        if (currValue >= nextValue) {
             conf[index].commission_num_added = nextValue - 1;
-            Message.warning(i18n.t("plat_agent.promotionNumAdded").toString());
-        }else if(currValue<=lastValue && lastValue != 0 && currValue != 0){
+            Message.warning(LangUtil("不可大于下个等级的级差").toString());
+        } else if (currValue <= lastValue && lastValue != 0 && currValue != 0) {
             conf[index].commission_num_added = lastValue + 1;
-            Message.warning(i18n.t("plat_agent.promotionNumAdded_1").toString());
+            Message.warning(LangUtil("不可小于上个等级的级差").toString());
         }
     }
 }

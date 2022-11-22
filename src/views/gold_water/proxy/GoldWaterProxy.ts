@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -101,9 +102,9 @@ export default class GoldWaterProxy extends AbstractProxy implements IGoldWaterP
 
     /**更新数据 */
     onUpdate() {
-        MessageBox.confirm(<string>i18n.t("gold_water.confirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("是否通过此兑换兑换流水审核"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

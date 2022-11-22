@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('plat_agent.imageDesc')" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="LangUtil('配置推广代理说明图片')" :visible.sync="myProxy.dialogData.bShow">
         <div class="banner-list" v-loading="net_status.loading">
             <div v-for="(value, key) in tableColumns.app_type.options" :key="key">
                 <div style="display: flex">
@@ -32,17 +32,18 @@
                     </div>
                 </div>
                 <div style="text-align: center;margin-top: 24px">
-                    <el-tag type="primary"> {{ value }}{{ $t("plat_agent.tagStr") }} </el-tag>
+                    <el-tag type="primary"> {{ value }}{{ LangUtil("推广图") }} </el-tag>
                 </div>
             </div>
         </div>
         <div slot="footer" class="dialog-footer">
-            <el-button type="primary" size="mini" @click="setPromotionBanner">{{ $t("common.save") }}</el-button>
+            <el-button type="primary" size="mini" @click="setPromotionBanner">{{ LangUtil("确认保存") }}</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatAgentProxy from "@/views/plat_agent/proxy/PlatAgentProxy";
@@ -52,23 +53,24 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatAgentDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatAgentProxy = this.getProxy(PlatAgentProxy);
+    myProxy: PlatAgentProxy = this.getProxy(PlatAgentProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private dialogData = this.myProxy.dialogData;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    dialogData = this.myProxy.dialogData;
+    form = this.myProxy.dialogData.form;
 
     // 图片地址转换
-    private formatImageUrl = formatImageUrl;
+    formatImageUrl = formatImageUrl;
 
     @Watch("myProxy.dialogData.update")
-    private onWatchUpdate(){
+    onWatchUpdate() {
         this.$nextTick(() => {
             this.$forceUpdate();
         });

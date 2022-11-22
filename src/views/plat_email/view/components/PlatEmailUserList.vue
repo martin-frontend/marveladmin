@@ -4,29 +4,29 @@
             <div class="group">
                 <SearchInput
                     :title="tableColumns.content_id.name"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     v-model="listQuery.content_id"
                 />
                 <SearchInput
                     :title="tableColumns.title.name"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     v-model="listQuery.title"
                 />
                 <SearchInput
                     :title="tableColumns.user_id.name"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     v-model="listQuery.user_id"
                 />
                 <SearchInput
                     :title="tableColumns.nick_name.name"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     v-model="listQuery.nick_name"
                 />
                 <SearchSelect
                     v-model="listQuery.attachment_type"
                     :title="tableColumns.attachment_type.name"
                     :options="tableColumns.attachment_type.options"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 />
                 <SearchDatePicker
                     :title="tableColumns['created_at'].name"
@@ -36,35 +36,29 @@
                 />
                 <div class="header-button">
                     <el-button @click="handlerSearch" type="primary" icon="el-icon-search">{{
-                        $t("common.search")
+                        LangUtil("查询")
                     }}</el-button>
                     <el-button @click="handlerReset" type="primary" icon="el-icon-refresh">{{
-                        $t("common.reset")
+                        LangUtil("重置")
                     }}</el-button>
                     <el-button @click="handlerExport" type="primary" icon="el-icon-download">{{
-                        $t("plat_email.export")
+                        LangUtil("导出")
                     }}</el-button>
                 </div>
             </div>
         </div>
         <div class="statistics">
             <div>
-                {{
-                    $t("plat_email.statisticDesc", {
-                        "0": statistic.total_num,
-                        "1": statistic.read_num,
-                        "2": statistic.total_attachment_read,
-                    })
-                }}
+                {{ LangUtil("undefined") }}
             </div>
             <div>
-                {{ $t("plat_email.attachReward") }}
-                <span>{{ $t("plat_email.gold") }}</span>
+                {{ LangUtil("附件奖励") }}
+                <span>{{ LangUtil("金币") }}</span>
                 <span v-html="getAccessInfo(statistic.total_attachment_content)"></span>
             </div>
             <div>
-                {{ $t("plat_email.receivedReward") }}
-                <span>{{ $t("plat_email.gold") }}</span>
+                {{ LangUtil("已领取奖励") }}
+                <span>{{ LangUtil("金币") }}</span>
                 <span v-html="getAccessInfo(statistic.total_attachment_content_read)"></span>
             </div>
         </div>
@@ -181,6 +175,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -203,41 +198,42 @@ import PlatUserProxy from "@/views/plat_user/proxy/PlatUserProxy";
     },
 })
 export default class PlatEmailUserList extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
-    private userProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
+    myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
+    userProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
     // proxy property
-    private tableColumns = this.myProxy.platUserTableData.columns;
-    private tableData = this.myProxy.platUserTableData.list;
-    private pageInfo = this.myProxy.platUserTableData.pageInfo;
-    private listQuery = this.myProxy.userListQuery;
+    tableColumns = this.myProxy.platUserTableData.columns;
+    tableData = this.myProxy.platUserTableData.list;
+    pageInfo = this.myProxy.platUserTableData.pageInfo;
+    listQuery = this.myProxy.userListQuery;
 
     get statistic() {
         return this.myProxy.platUserTableData;
     }
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onUserQuery();
     }
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetUserListQuery();
     }
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onUserQuery();
     }
 
-    private handlerExport() {
+    handlerExport() {
         this.myProxy.onQueryAll();
     }
 
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.userProxy.onShowDetail(user_id);
     }
 

@@ -12,10 +12,7 @@ export default class LayoutMediator extends AbstractMediator {
     protected initViewData() {}
 
     listNotificationInterests(): string[] {
-        return [
-            GlobalEventType.SHOW_WAITING,
-            GlobalEventType.HIDE_WAITING,
-        ];
+        return [GlobalEventType.SHOW_WAITING, GlobalEventType.HIDE_WAITING];
     }
 
     handleNotification(notification: puremvc.INotification) {
@@ -30,5 +27,4 @@ export default class LayoutMediator extends AbstractMediator {
                 break;
         }
     }
-
 }

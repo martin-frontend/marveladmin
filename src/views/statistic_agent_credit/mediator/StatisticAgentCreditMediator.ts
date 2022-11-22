@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/statistic_agent_credit/setting";
 import { Message } from "element-ui";
 import StatisticAgentCreditProxy from "../proxy/StatisticAgentCreditProxy";
 
-interface IStatisticAgentCredit extends IEventDispatcher {
-
-}
+interface IStatisticAgentCredit extends IEventDispatcher {}
 
 export default class StatisticAgentCreditMediator extends AbstractMediator {
     private myProxy: StatisticAgentCreditProxy = <any>this.getProxy(StatisticAgentCreditProxy);
@@ -25,11 +23,7 @@ export default class StatisticAgentCreditMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_statistic_credit_table_columns,
-            EventType.admin_statistic_agent_credit_index,
-
-        ];
+        return [EventType.admin_statistic_credit_table_columns, EventType.admin_statistic_agent_credit_index];
     }
 
     handleNotification(notification: puremvc.INotification) {

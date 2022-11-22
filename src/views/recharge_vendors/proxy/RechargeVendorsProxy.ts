@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -10,7 +11,7 @@ export default class RechargeVendorsProxy extends AbstractProxy implements IRech
     static NAME = "RechargeVendorsProxy";
 
     /**在这里获取基础数据，退出页面时，proxy不会销毁，所以只会获取一次 */
-    onRegister() { }
+    onRegister() {}
 
     /**进入页面时调用 */
     enter() {
@@ -75,7 +76,7 @@ export default class RechargeVendorsProxy extends AbstractProxy implements IRech
             support_paymethods: [],
             extend_params: {},
             currency_scale: 1,
-            currency_type:""
+            currency_type: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -137,7 +138,7 @@ export default class RechargeVendorsProxy extends AbstractProxy implements IRech
             support_paymethods: [],
             extend_params: {},
             currency_scale: 1,
-            currency_type:""
+            currency_type: "",
         });
     }
 
@@ -152,7 +153,7 @@ export default class RechargeVendorsProxy extends AbstractProxy implements IRech
             formCopy = this.beforeSandData(formCopy);
             this.sendNotification(HttpType.admin_recharge_vendors_store, objectRemoveNull(formCopy));
         } catch (error) {
-            MessageBox.alert(<string>i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
     /**更新数据 */
@@ -171,7 +172,7 @@ export default class RechargeVendorsProxy extends AbstractProxy implements IRech
             temp.vendor_id = formCopy.id;
             this.sendNotification(HttpType.admin_recharge_vendors_update, objectRemoveNull(temp));
         } catch (error) {
-            MessageBox.alert(<string>i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
     /**传送前整理数据 */
@@ -190,14 +191,14 @@ export default class RechargeVendorsProxy extends AbstractProxy implements IRech
 
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_recharge_vendors_update, { vendor_id: id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

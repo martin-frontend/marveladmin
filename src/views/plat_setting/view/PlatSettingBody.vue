@@ -93,6 +93,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -100,19 +101,20 @@ import PlatSettingProxy from "../proxy/PlatSettingProxy";
 
 @Component
 export default class PlatSettingBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatSettingProxy = this.getProxy(PlatSettingProxy);
+    myProxy: PlatSettingProxy = this.getProxy(PlatSettingProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    listQuery = this.myProxy.listQuery;
 
-    private title: any = {
-        t1: this.$t("plat_setting.way"),
-        t2: this.$t("plat_setting.proportion"),
+    title: any = {
+        t1: this.LangUtil("计算方式"),
+        t2: this.LangUtil("计算比例"),
     };
 }
 </script>

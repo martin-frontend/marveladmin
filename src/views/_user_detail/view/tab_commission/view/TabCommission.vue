@@ -2,7 +2,7 @@
     <div class="content">
         <TabCommissionHeader />
         <TabCommissionBody />
-        <TabCommissionDialog v-if="myProxy.dialogData.bShow"/>
+        <TabCommissionDialog v-if="myProxy.dialogData.bShow" />
     </div>
 </template>
 
@@ -22,7 +22,7 @@ import TabCommissionDialog from "./TabCommissionDialog.vue";
     components: {
         TabCommissionBody,
         TabCommissionHeader,
-        TabCommissionDialog
+        TabCommissionDialog,
     },
 })
 export default class TabCommission extends AbstractView {

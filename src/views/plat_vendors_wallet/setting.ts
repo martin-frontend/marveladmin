@@ -53,9 +53,11 @@ facade.registerCommand(HttpType.admin_plat_vendors_wallet_store, cmd_admin_plat_
 facade.registerCommand(HttpType.admin_plat_vendors_wallet_update, cmd_admin_plat_vendors_wallet_update);
 facade.registerCommand(HttpType.admin_plat_vendors_wallet_index_vendors, cmd_admin_plat_vendors_wallet_index_vendors);
 facade.registerCommand(HttpType.admin_plat_vendors_wallet_update_gold, cmd_admin_plat_vendors_wallet_update_gold);
-facade.registerCommand(HttpType.admin_plat_vendors_wallet_log_table_columns, cmd_admin_plat_vendors_wallet_log_table_columns);
+facade.registerCommand(
+    HttpType.admin_plat_vendors_wallet_log_table_columns,
+    cmd_admin_plat_vendors_wallet_log_table_columns
+);
 facade.registerCommand(HttpType.admin_plat_vendors_wallet_log_index, cmd_admin_plat_vendors_wallet_log_index);
 facade.registerCommand(HttpType.admin_plat_vendors_wallet_log_show, cmd_admin_plat_vendors_wallet_log_show);
 facade.registerCommand(HttpType.admin_plat_wallet_update_gold, cmd_admin_plat_wallet_update_gold);
 facade.registerCommand(HttpType.admin_plat_wallet_log_index, cmd_admin_plat_wallet_log_index);
-

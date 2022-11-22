@@ -14,7 +14,7 @@
                     filterable
                     clearable
                     class="select"
-                    :placeholder="$t('plat.notOpen')"
+                    :placeholder="LangUtil('不开启')"
                 >
                     <el-option
                         v-for="(key, value) in tableColumns.backwater_model_id.options"
@@ -26,13 +26,14 @@
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button v-if="checkUnique(unique.plat_update)" type="primary" size="mini" @click="handlerEdit">{{
-                    $t("common.save")
+                    LangUtil("确认保存")
                 }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatProxy from "@/views/plat/proxy/PlatProxy";
@@ -43,16 +44,17 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class BackwaterModelDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatProxy = this.getProxy(PlatProxy);
+    myProxy: PlatProxy = this.getProxy(PlatProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.backwaterModelDialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.backwaterModelDialogData.form;
 
     handlerEdit() {
         this.myProxy.onUpdateBackwaterModel();

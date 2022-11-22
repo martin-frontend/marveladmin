@@ -2,25 +2,25 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 import { UserInfoVO } from "@/core/vo/UserInfoVO";
 
 export default interface IVipRechargeProxy {
-     /**表格相关数据 */
-     tableData: {
-        columns: any,
+    /**表格相关数据 */
+    tableData: {
+        columns: any;
     };
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        form: any;
+        formSource: any;
     };
     /**页面数据 */
     bodyData: {
-        gold: string,
+        gold: string;
         form: {
-            user_id: string
+            user_id: string;
             amount: string;
-        },
-        isRechargeSuccess: any
-    }
+        };
+        isRechargeSuccess: any;
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any): void;
@@ -34,5 +34,5 @@ export default interface IVipRechargeProxy {
     /**重置页面表单 */
     resetForm(): void;
     /**取得玩家资讯 */
-    setUserInfo(userInfo: UserInfoVO): void
+    setUserInfo(userInfo: UserInfoVO): void;
 }

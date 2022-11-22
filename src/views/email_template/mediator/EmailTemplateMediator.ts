@@ -5,12 +5,9 @@ import { EventType, HttpType } from "@/views/email_template/setting";
 import { Message } from "element-ui";
 import EmailTemplateProxy from "../proxy/EmailTemplateProxy";
 
-interface IEmailTemplate extends IEventDispatcher {
-
-}
+interface IEmailTemplate extends IEventDispatcher {}
 
 export default class EmailTemplateMediator extends AbstractMediator {
-
     private myProxy: EmailTemplateProxy = <any>this.getProxy(EmailTemplateProxy);
 
     onRegister() {
@@ -32,7 +29,6 @@ export default class EmailTemplateMediator extends AbstractMediator {
             EventType.admin_email_template_show,
             EventType.admin_email_template_store,
             EventType.admin_email_template_update,
-
         ];
     }
 
@@ -61,7 +57,6 @@ export default class EmailTemplateMediator extends AbstractMediator {
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
-
         }
     }
 }

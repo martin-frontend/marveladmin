@@ -19,13 +19,13 @@
                     {{ tableColumns["plat_id"].options[row.plat_id] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.userMsg')" min-width="150px">
+            <el-table-column :label="LangUtil('用户信息')" min-width="150px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
-                        {{ $t("common.id") }}：{{ row.user_id }}
+                        {{ LangUtil("ID") }}：{{ row.user_id }}
                     </div>
-                    <div>{{ $t("common.account") }}：{{ row.username }}</div>
-                    <div>{{ $t("common.nickName") }}：{{ row.nick_name }}</div>
+                    <div>{{ LangUtil("账号") }}：{{ row.username }}</div>
+                    <div>{{ LangUtil("昵称") }}：{{ row.nick_name }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.created_at.name" class-name="status-col" min-width="160px">
@@ -68,14 +68,14 @@
                     {{ row.pass_type === 0 ? "-" : tableColumns["pass_type"].options[row.pass_type] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="160px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="160px">
                 <template slot-scope="{ row }">
                     <el-button
                         v-if="row.status === 0 && checkUnique(unique.gold_water_approved)"
                         type="primary"
                         size="small"
                         @click="handlerUpdate(row.id)"
-                        >{{ $t("gold_water.btnText") }}</el-button
+                        >{{ LangUtil("设置通过") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -84,6 +84,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -98,34 +99,35 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class GoldWaterBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: GoldWaterProxy = this.getProxy(GoldWaterProxy);
+    myProxy: GoldWaterProxy = this.getProxy(GoldWaterProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handlerUpdate(id: any) {
+    handlerUpdate(id: any) {
         this.myProxy.approvedId = id;
         this.myProxy.onUpdate();
     }
 
-    private showUserDetail(user_id: string) {
+    showUserDetail(user_id: string) {
         this.myProxy.userDetailId = user_id;
         this.myProxy.onShowUserDetail();
     }

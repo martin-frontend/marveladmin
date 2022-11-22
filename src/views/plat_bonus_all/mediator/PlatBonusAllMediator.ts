@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -77,7 +78,7 @@ export default class PlatBonusAllMediator extends AbstractMediator {
                 agentPromotionModelProx.receive_admin_plat_bonus_all_stock_index(body);
                 break;
             case EventType.admin_plat_update:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideDialog();
                 bonusAllStockModelProxy.hideDialog();
                 myProxy.admin_plat_show();

@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { dateFormat, formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
@@ -134,15 +135,11 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
 
     /**更新数据 */
     onUpdate() {
-        MessageBox.confirm(
-            <string>i18n.t("plat_users_vendor_gold_log.updateConfirmStr", { "0": this.confirmData.title }),
-            <string>i18n.t("common.prompt"),
-            {
-                confirmButtonText: <string>i18n.t("common.determine"),
-                cancelButtonText: <string>i18n.t("common.cancel"),
-                type: "warning",
-            }
-        )
+        MessageBox.confirm(<string>LangUtil("undefined"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
+            type: "warning",
+        })
             .then(() => {
                 const { vendor_gold_log_id, status } = this.confirmData;
                 this.sendNotification(HttpType.admin_plat_users_vendor_gold_log_update_manual, {
@@ -150,7 +147,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
                     status,
                 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**用户详情 */

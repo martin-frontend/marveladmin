@@ -26,15 +26,15 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
     /**表格相关数据 */
     tableData = {
         columns: {
-            created_at: {name: "创建时间", options: []},
-            created_by: {name: "创建人", options: []},
-            data_belong: {name: "数据归属标记", options: []},
-            id: {name: "自增ID", options: []},
-            module: {name: "共享功能模块", options: {}},
-            plat_id: {name: "共享平台ID", options: {}},
-            to_plat_id: {name: "平台ID", options: {}},
-            updated_at: {name: "修改时间", options: []},
-            updated_by: {name: "更新人", options: []},
+            created_at: { name: "创建时间", options: [] },
+            created_by: { name: "创建人", options: [] },
+            data_belong: { name: "数据归属标记", options: [] },
+            id: { name: "自增ID", options: [] },
+            module: { name: "共享功能模块", options: {} },
+            plat_id: { name: "共享平台ID", options: {} },
+            to_plat_id: { name: "平台ID", options: {} },
+            updated_at: { name: "修改时间", options: [] },
+            updated_by: { name: "更新人", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -51,14 +51,14 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
     dialogData = {
         bShow: false,
         form: {
-            module : '',
-            plat_id : '',
-            to_plat_id : '',
-            id: ''
+            module: "",
+            plat_id: "",
+            to_plat_id: "",
+            id: "",
         },
         status: DialogStatus.update,
-        formSource: {} // 表单的原始数据
-    }
+        formSource: {}, // 表单的原始数据
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -86,15 +86,15 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
     /**显示弹窗 */
     showDialog(data?: any) {
         this.dialogData.bShow = true;
-        if(data) {
+        if (data) {
             this.dialogData.formSource = { ...data };
             Object.assign(this.dialogData.form, { ...data });
             this.dialogData.status = DialogStatus.update;
-        } else {            
+        } else {
             Object.assign(this.dialogData.form, {
-                module : '',
-                plat_id : '',
-                to_plat_id : '',
+                module: "",
+                plat_id: "",
+                to_plat_id: "",
             });
             this.dialogData.status = DialogStatus.create;
         }
@@ -105,8 +105,8 @@ export default class PlatsModuleShareProxy extends AbstractProxy implements IPla
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
 
         formCopy.id = this.dialogData.form.id;
-        console.warn('formCopy',formCopy);
-        
+        console.warn("formCopy", formCopy);
+
         // 发送消息
         this.sendNotification(HttpType.admin_plats_module_share_update, formCopy);
     }

@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('user_detail.checkBalance')" :visible.sync="dialogBalance.bShow">
+    <el-dialog :title="LangUtil('查看余额')" :visible.sync="dialogBalance.bShow">
         <el-form ref="form" label-width="95px" v-loading="net_status.loading">
             <el-form-item v-for="(item, key) of dialogBalance.data" :label="key" :key="key" :prop="key">
                 {{ item }}
@@ -9,18 +9,20 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import GlobalVar from "@/core/global/GlobalVar";
 import Component from "vue-class-component";
 import BlockTransferAccountProxy from "../proxy/BlockTransferAccountProxy";
 @Component
 export default class BalanceDialog extends AbstractView {
+    LangUtil = LangUtil;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: BlockTransferAccountProxy = this.getProxy(BlockTransferAccountProxy);
+    myProxy: BlockTransferAccountProxy = this.getProxy(BlockTransferAccountProxy);
     // proxy property
-    private dialogBalance = this.myProxy.dialogBalance;
+    dialogBalance = this.myProxy.dialogBalance;
 }
 </script>
 

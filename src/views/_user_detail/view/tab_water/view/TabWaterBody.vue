@@ -1,9 +1,9 @@
 <template>
     <div v-loading="net_status.loading">
         <el-radio-group v-model="activeName">
-            <el-radio label="water">{{ $t("gold_water.water") }}</el-radio>
-            <el-radio label="win_loss">{{ $t("user_detail.gameResult") }}</el-radio>
-            <el-radio label="bet">{{ $t("user_detail.valid") }}</el-radio>
+            <el-radio label="water">{{ LangUtil("打码流水") }}</el-radio>
+            <el-radio label="win_loss">{{ LangUtil("游戏输赢") }}</el-radio>
+            <el-radio label="bet">{{ LangUtil("有效投注") }}</el-radio>
         </el-radio-group>
         <WaterTable v-if="isWater" :tableData="tableData" :columnInfo="tableColumns" />
         <WinLossTable v-if="isWinLoss" :tableData="tableData" :columnInfo="tableColumns" />
@@ -12,6 +12,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import TabWaterProxy from "../proxy/TabWaterProxy";
@@ -32,18 +33,19 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class TabWaterBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabWaterProxy = getProxy(TabWaterProxy);
+    myProxy: TabWaterProxy = getProxy(TabWaterProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
     get isWater() {
         return this.activeName == "water";
@@ -54,9 +56,9 @@ export default class TabWaterBody extends AbstractView {
     get isBet() {
         return this.activeName == "bet";
     }
-    private activeName = "water";
+    activeName = "water";
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }

@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, getFirstKey, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
@@ -254,7 +255,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     /**设置配置初始数据 */
     setInitConfig() {
         let type = getFirstKey(this.tableData.columns.vendor_type.options_type[0]);
-        Object.keys(this.tableData.columns.vendor_type.options).forEach((element) => {
+        Object.keys(this.tableData.columns.vendor_type.options).forEach(element => {
             this.dialogData.initPromotion_floor[element] = 0;
             this.dialogData.initWater_config[element] = { type: type, rate: 1 };
         });
@@ -406,7 +407,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
 
             this.sendNotification(HttpType.admin_plat_store, objectRemoveNull(formCopy));
         } catch (error) {
-            MessageBox.alert(<string>i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
     /**更新数据 */
@@ -439,14 +440,14 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             temp.plat_id = this.dialogData.form.plat_id;
             this.sendNotification(HttpType.admin_plat_update, temp);
         } catch (error) {
-            MessageBox.alert(<string>i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -590,15 +591,11 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     /**清除缓存 */
     clearCache(data: any) {
         const { plat_id } = data;
-        MessageBox.confirm(
-            <string>i18n.t("admin_permission.confirmText2") + <string>i18n.t("plat.clearCache"),
-            <string>i18n.t("common.prompt"),
-            {
-                confirmButtonText: <string>i18n.t("common.determine"),
-                cancelButtonText: <string>i18n.t("common.cancel"),
-                type: "warning",
-            }
-        )
+        MessageBox.confirm(<string>LangUtil("确定要") + <string>LangUtil("清除缓存"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
+            type: "warning",
+        })
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_clear_cache, {
                     plat_id: plat_id,
@@ -672,9 +669,9 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     /**初始化基础设置 */
     onInitSetting() {
         const platName = this.allBonusModelDialogData.form.plat_name;
-        MessageBox.confirm(`【${platName}】${i18n.t("user_detail.whetherToInit")}`, <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(`【${platName}】${LangUtil("质押分红是否初始化")}`, <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

@@ -5,9 +5,7 @@ import PlatLoadPageDomainProxy from "../proxy/PlatLoadPageDomainProxy";
 import { Message } from "element-ui";
 import { SuccessMessage } from "@/core/global/Constant";
 
-interface IPlatLoadPageDomain extends IEventDispatcher {
-
-}
+interface IPlatLoadPageDomain extends IEventDispatcher {}
 
 export default class PlatLoadPageDomainMediator extends AbstractMediator {
     private myProxy: PlatLoadPageDomainProxy = <any>this.getProxy(PlatLoadPageDomainProxy);

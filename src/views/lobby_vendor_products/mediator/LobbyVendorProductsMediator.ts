@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -6,9 +7,7 @@ import { EventType, HttpType } from "@/views/lobby_vendor_products/setting";
 import { Message } from "element-ui";
 import LobbyVendorProductsProxy from "../proxy/LobbyVendorProductsProxy";
 
-interface ILobbyVendorProducts extends IEventDispatcher {
-
-}
+interface ILobbyVendorProducts extends IEventDispatcher {}
 
 export default class LobbyVendorProductsMediator extends AbstractMediator {
     private myProxy: LobbyVendorProductsProxy = <any>this.getProxy(LobbyVendorProductsProxy);
@@ -30,7 +29,7 @@ export default class LobbyVendorProductsMediator extends AbstractMediator {
             EventType.admin_lobby_vendor_products_table_columns,
             EventType.admin_lobby_vendor_products_index,
             EventType.admin_lobby_vendor_products_update,
-            EventType.admin_lobby_vendor_products_sync_data
+            EventType.admin_lobby_vendor_products_sync_data,
         ];
     }
 
@@ -51,7 +50,7 @@ export default class LobbyVendorProductsMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_lobby_vendor_products_sync_data:
-                Message.success(<string>i18n.t("successMessage.operation"));
+                Message.success(<string>LangUtil("操作成功"));
                 break;
         }
     }

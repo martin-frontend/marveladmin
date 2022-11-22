@@ -1,14 +1,9 @@
 <template>
-    <el-dialog :title="$t('admin_cron.batchUpdate')" :visible.sync="myProxy.cronQueueBatchDialogData.bShow" width="550px">
+    <el-dialog :title="LangUtil('批量更新')" :visible.sync="myProxy.cronQueueBatchDialogData.bShow" width="550px">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <!-- 任务名称 -->
             <el-form-item :label="tableColumns.cron_id.name" prop="cron_id">
-                <el-select
-                    filterable
-                    clearable
-                    v-model="listQuery.cron_id"
-                    :placeholder="$t('common.pleaseChoose')"
-                >
+                <el-select filterable clearable v-model="listQuery.cron_id" :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(item, key) of tableColumns.cron_id.options"
                         :key="key"
@@ -19,13 +14,13 @@
             </el-form-item>
             <!-- 执行数量 -->
             <el-form-item :label="tableColumns.num_rows.name" prop="num_rows">
-                <el-input v-model="listQuery.num_rows" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="listQuery.num_rows" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
 
             <el-form-item>
                 <div class="footer">
-                    <el-button type="primary" @click="handleBatchUpdata()">{{ $t("admin_cron.action") }}</el-button>
-                    <el-button @click="handleClose()">{{ $t("common.cancel") }}</el-button>
+                    <el-button type="primary" @click="handleBatchUpdata()">{{ LangUtil("确定执行") }}</el-button>
+                    <el-button @click="handleClose()">{{ LangUtil("取消") }}</el-button>
                 </div>
             </el-form-item>
         </el-form>
@@ -33,6 +28,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import AdminCronProxy from "@/views/admin_cron/proxy/AdminCronProxy";
@@ -43,23 +39,24 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class AdminCronDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
+    myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
     // proxy property
-    private tableColumns = this.myProxy.cronQueueTableData.columns;
-    private listQuery = this.myProxy.cronQueueBatchDialogData.form;
+    tableColumns = this.myProxy.cronQueueTableData.columns;
+    listQuery = this.myProxy.cronQueueBatchDialogData.form;
 
     get form() {
         return this.myProxy.cronQueueBatchDialogData.form;
     }
 
     @Watch("myProxy.cronQueueBatchDialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -75,12 +72,12 @@ export default class AdminCronDialog extends AbstractView {
 
     get rules() {
         return {
-            cron_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "blur" }],
-            num_rows: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            cron_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
+            num_rows: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
         };
     }
 
-    private handleBatchUpdata() {
+    handleBatchUpdata() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onBatchUpdate();
@@ -88,7 +85,7 @@ export default class AdminCronDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onCronUpdate();
@@ -96,7 +93,7 @@ export default class AdminCronDialog extends AbstractView {
         });
     }
 
-    private handleClose() {
+    handleClose() {
         this.myProxy.hideDialog();
     }
 }

@@ -26,4 +26,3 @@ facade.registerCommand(HttpType.admin_recharge_orders_table_columns, cmd_admin_r
 facade.registerCommand(HttpType.admin_recharge_orders_index, cmd_admin_recharge_orders_index);
 facade.registerCommand(HttpType.admin_recharge_orders_update_remark, cmd_admin_recharge_orders_update_remark);
 facade.registerCommand(HttpType.admin_recharge_orders_update_complete, cmd_admin_recharge_orders_update_complete);
-

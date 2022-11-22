@@ -34,4 +34,3 @@ facade.registerCommand(HttpType.admin_plat_show, cmd_admin_plat_show);
 facade.registerCommand(HttpType.admin_plat_update, cmd_admin_plat_update);
 facade.registerCommand(HttpType.admin_plat_users_vip_model_table_columns, cmd_admin_plat_users_vip_model_table_columns);
 facade.registerCommand(HttpType.admin_plat_users_vip_model_show, cmd_admin_plat_users_vip_model_show);
-

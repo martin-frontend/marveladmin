@@ -11,7 +11,7 @@
             />
             <div>
                 <el-button class="header-button" @click="exportExcel" type="primary" icon="el-icon-download">{{
-                    $t("statistic_plat_days.export")
+                    LangUtil("导出")
                 }}</el-button>
             </div>
         </div>
@@ -70,14 +70,14 @@
                 max="9999999"
                 :maxValue.sync="listQuery['gold-{<=}']"
                 :minValue.sync="listQuery['gold-{>=}']"
-                :placeholders="[$t('common.minMoney'), $t('common.maxMoney')]"
+                :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -85,6 +85,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import ExchangeOrdersProxy from "../proxy/ExchangeOrdersProxy";
@@ -105,18 +106,19 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class ExchangeOrdersHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: ExchangeOrdersProxy = this.getProxy(ExchangeOrdersProxy);
-    private autoProxy: ExchangeAutoCheckProxy = this.getProxy(ExchangeAutoCheckProxy);
+    myProxy: ExchangeOrdersProxy = this.getProxy(ExchangeOrdersProxy);
+    autoProxy: ExchangeAutoCheckProxy = this.getProxy(ExchangeAutoCheckProxy);
 
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.autoProxy.listQuery.plat_id = this.listQuery.plat_id;
 
@@ -124,11 +126,11 @@ export default class ExchangeOrdersHeader extends AbstractView {
         // this.autoProxy.checkVerify();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private exportExcel() {
+    exportExcel() {
         this.myProxy.onQueryAll();
     }
 }

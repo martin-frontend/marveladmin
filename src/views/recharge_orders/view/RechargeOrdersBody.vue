@@ -2,25 +2,25 @@
     <div>
         <div class="stastics">
             <div>
-                <span class="title">{{ $t("common.tableInfoTitle") }}</span>
+                <span class="title">{{ LangUtil("查询汇总") }}</span>
                 <div class="item_group">
-                    <span class="label">{{ $t("recharge_orders.tableInfoTotalGold") }}:</span>
+                    <span class="label">{{ LangUtil("充值总金额") }}:</span>
                     <span class="name">{{ message.total_gold }}</span>
                 </div>
                 <div class="item_group">
-                    <span class="label">{{ $t("recharge_orders.tableInfoTotalNum") }}:</span>
+                    <span class="label">{{ LangUtil("充值订单数") }}:</span>
                     <span class="name">{{ message.total_num }}</span>
                 </div>
                 <div class="item_group">
-                    <span class="label">{{ $t("recharge_orders.tableInfoSuccessTotalGold") }}:</span>
+                    <span class="label">{{ LangUtil("充值成功金额") }}:</span>
                     <span class="name">{{ message.success_total_gold }}</span>
                 </div>
                 <div class="item_group">
-                    <span class="label">{{ $t("recharge_orders.tableInfoSuccessTotalNum") }}:</span>
+                    <span class="label">{{ LangUtil("充值成功订单数") }}:</span>
                     <span class="name">{{ message.success_total_num }}</span>
                 </div>
                 <div class="item_group">
-                    <span class="label">{{ $t("recharge_orders.tableInfoTotalUserNum") }}:</span>
+                    <span class="label">{{ LangUtil("充值人数") }}:</span>
                     <span class="name">{{ message.total_user_num }}</span>
                 </div>
                 <div class="item_group">
@@ -33,10 +33,13 @@
                 </div>
             </div>
             <div class="search_style">
-                <el-tooltip class="item" effect="dark" :content="$t('common.autoRefreshTip')" placement="top">
-                    <button class="cust_title">
-                        {{ $t("recharge_orders.refreshOrder") }} <i class="el-icon-question"></i>
-                    </button>
+                <el-tooltip
+                    class="item"
+                    effect="dark"
+                    :content="LangUtil('列表在第1页的时候，自动刷新才生效')"
+                    placement="top"
+                >
+                    <button class="cust_title">{{ LangUtil("刷新订单") }} <i class="el-icon-question"></i></button>
                 </el-tooltip>
 
                 <el-select filterable v-model="myProxy.IntervalObj.default" @change="handlerAutoReload">
@@ -57,13 +60,13 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column :label="$t('common.platMsg')" min-width="150px">
+            <el-table-column :label="LangUtil('平台信息')" min-width="150px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns["plat_id"].name }}：{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
                     <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.userMsg')" min-width="130px">
+            <el-table-column :label="LangUtil('用户信息')" min-width="130px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
                         {{ tableColumns["user_id"].name }}：{{ row.user_id }}
@@ -91,10 +94,19 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="coin_name_unique" :label="tableColumns['coin_name_unique'].name" min-width="100px" align="center">
+            <el-table-column
+                prop="coin_name_unique"
+                :label="tableColumns['coin_name_unique'].name"
+                min-width="100px"
+                align="center"
+            >
                 <template slot-scope="{ row }">
                     <div align="left">{{ tableColumns["coin_name_unique"].name }}：{{ row.coin_name_unique }}</div>
-                    <div align="left">{{ tableColumns["block_network_id"].name }}：{{ tableColumns["block_network_id"].options[row.block_network_id] }}</div>
+                    <div align="left">
+                        {{ tableColumns["block_network_id"].name }}：{{
+                            tableColumns["block_network_id"].options[row.block_network_id]
+                        }}
+                    </div>
                 </template>
             </el-table-column>
 
@@ -127,7 +139,14 @@
             </el-table-column>
             <el-table-column prop="gold" :label="tableColumns['gold'].name" align="center" min-width="140px">
                 <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="$t('recharge_orders.goldTip')" placement="top">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="
+                            LangUtil('订单金额: 用户申请订单所输入的金额;  回调金额: 第三方充值确认的用户付款金额数量')
+                        "
+                        placement="top"
+                    >
                         <div>
                             <span>{{ tableColumns["gold"].name }}</span>
                             <i class="el-icon-question"></i>
@@ -146,7 +165,11 @@
                     <el-tooltip
                         class="item"
                         effect="dark"
-                        :content="$t('recharge_orders.callbackGoldTip')"
+                        :content="
+                            LangUtil(
+                                '到账金额: 用户充值到游戏中实际到账金额;  到账金币: 用户充值后所到账的是实际金币(包含赠送金币);  赔送金额: 使用该充值方式所额外获得金币;'
+                            )
+                        "
                         placement="top"
                     >
                         <div>
@@ -166,7 +189,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="$t('common.orderTime')" align="left" width="150px">
+            <el-table-column :label="LangUtil('订单时间')" align="left" width="150px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["created_at"].name }}：<br />{{ row.created_at }}</p>
                     <p>
@@ -185,21 +208,20 @@
                                 size="mini"
                                 icon="el-icon-edit"
                                 @click="handerEditRemark(row)"
-                                
                             ></el-button>
                         </div>
                     </div>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="address" :label="$t('common.operating')" width="100px" align="center">
+            <el-table-column prop="address" :label="LangUtil('操作')" width="100px" align="center">
                 <template slot-scope="scope">
                     <el-button
                         v-if="scope.row.status === 0 && checkUnique(unique.recharge_orders_complete)"
                         @click="makeUpClickHandler(scope.row)"
                         type="primary"
                         size="small"
-                        >{{ $t("recharge_orders.replenishmentOrder") }}</el-button
+                        >{{ LangUtil("补单") }}</el-button
                     >
                     <span v-else>--</span>
                 </template>
@@ -209,6 +231,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -224,31 +247,32 @@ import mediator from "@/views/recharge_orders/mediator/TableListMediator";
     },
 })
 export default class RechargeOrdersBody extends AbstractView {
+    LangUtil = LangUtil;
     constructor() {
         super(mediator);
     }
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: RechargeOrdersProxy = this.getProxy(RechargeOrdersProxy);
+    myProxy: RechargeOrdersProxy = this.getProxy(RechargeOrdersProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
     get message() {
         return this.myProxy.tableData.message;
     }
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
         // 如果在自动刷新状态 回到第一页继续
@@ -257,12 +281,12 @@ export default class RechargeOrdersBody extends AbstractView {
         }
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
     /**编辑备注 */
-    private handerEditRemark(row: any) {
+    handerEditRemark(row: any) {
         this.myProxy.remarkDialogData.status = DialogStatus.update;
         Object.assign(this.myProxy.remarkDialogData.form, {
             id: row.id,
@@ -273,17 +297,17 @@ export default class RechargeOrdersBody extends AbstractView {
         this.myProxy.showRemarkDialog();
     }
     // 自动刷新
-    private handlerAutoReload(o: any) {
+    handlerAutoReload(o: any) {
         this.myProxy.IntervalObj.default = o;
         this.myProxy.autoReload();
     }
 
     // 补单
-    private makeUpClickHandler(row: any) {
+    makeUpClickHandler(row: any) {
         // this.$confirm(`是否对订单号 "${row.order_no}"，进行补单`, "提示", {
-        this.$confirm(this.$t("recharge_orders.makeUpConfirm", { "0": row.order_no }), this.$t("common.prompt"), {
-            confirmButtonText: this.$t("common.determine"),
-            cancelButtonText: this.$t("common.cancel"),
+        this.$confirm(this.LangUtil("undefined"), this.LangUtil("提示"), {
+            confirmButtonText: this.LangUtil("确定"),
+            cancelButtonText: this.LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -292,7 +316,7 @@ export default class RechargeOrdersBody extends AbstractView {
             .catch(() => {});
     }
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.dispatchEvent("showUserDetail", user_id);
     }
 

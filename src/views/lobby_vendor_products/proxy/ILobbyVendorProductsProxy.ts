@@ -3,9 +3,9 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface ILobbyVendorProductsProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;

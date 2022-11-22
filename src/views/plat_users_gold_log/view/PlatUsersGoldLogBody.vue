@@ -28,18 +28,34 @@
                     >
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns['nick_name'].name" prop="nick_name" min-width="80px"></el-table-column>
+            <el-table-column
+                :label="tableColumns['nick_name'].name"
+                prop="nick_name"
+                min-width="80px"
+            ></el-table-column>
             <el-table-column :label="tableColumns['type'].name" prop="type" min-width="100px">
                 <template slot-scope="{ row }">
                     <span>{{ tableColumns.type.options[row.type] }}</span>
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns['coin_name_unique'].name" prop="coin_name_unique" min-width="110px"></el-table-column>
-            <el-table-column :label="tableColumns['gold_before'].name" prop="gold_before" min-width="110px"></el-table-column>
+            <el-table-column
+                :label="tableColumns['coin_name_unique'].name"
+                prop="coin_name_unique"
+                min-width="110px"
+            ></el-table-column>
+            <el-table-column
+                :label="tableColumns['gold_before'].name"
+                prop="gold_before"
+                min-width="110px"
+            ></el-table-column>
             <el-table-column :label="tableColumns['gold'].name" prop="gold" min-width="100px"></el-table-column>
             <el-table-column :label="tableColumns['balance'].name" prop="balance" min-width="90px"></el-table-column>
             <el-table-column :label="tableColumns['remark'].name" prop="remark" min-width="80px"></el-table-column>
-            <el-table-column :label="tableColumns['created_at'].name" min-width="155px" prop="created_at"></el-table-column>
+            <el-table-column
+                :label="tableColumns['created_at'].name"
+                min-width="155px"
+                prop="created_at"
+            ></el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>

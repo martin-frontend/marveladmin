@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_system_resource_index, cmd_admin_system_re
 facade.registerCommand(HttpType.admin_system_resource_store, cmd_admin_system_resource_store);
 facade.registerCommand(HttpType.admin_system_resource_update, cmd_admin_system_resource_update);
 facade.registerCommand(HttpType.admin_resource_upload, cmd_admin_resource_upload);
-

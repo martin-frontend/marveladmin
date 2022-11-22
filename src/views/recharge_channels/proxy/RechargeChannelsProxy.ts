@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
@@ -71,8 +72,8 @@ export default class RechargeChannelsProxy extends AbstractProxy implements IRec
             support_paymethods: [],
             extend_params: {},
             //以下数据在coin_relations
-            coin_name_unique:null,
-            block_network_id:null,
+            coin_name_unique: null,
+            block_network_id: null,
         },
         formSource: null, // 表单的原始数据
         platOptions: {},
@@ -82,7 +83,7 @@ export default class RechargeChannelsProxy extends AbstractProxy implements IRec
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
         this.dialogData.platOptions = JSON.parse(JSON.stringify(this.tableData.columns.plat_id.options));
-        this.tableData.columns.plat_id.options["0"] = i18n.t("common.platIdAll");
+        this.tableData.columns.plat_id.options["0"] = LangUtil("所有平台");
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
@@ -102,7 +103,7 @@ export default class RechargeChannelsProxy extends AbstractProxy implements IRec
         data.extend_params = jsonToObject(data.extend_params);
         data.plat_id = data.plat_id.toString();
         data.vendor_id = data.vendor_id.toString();
-        if(data.block_network_id) data.block_network_id = data.block_network_id.toString();
+        if (data.block_network_id) data.block_network_id = data.block_network_id.toString();
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
     }
@@ -147,8 +148,8 @@ export default class RechargeChannelsProxy extends AbstractProxy implements IRec
             status: 1,
             support_paymethods: [],
             extend_params: {},
-            coin_name_unique:null,
-            block_network_id:null,
+            coin_name_unique: null,
+            block_network_id: null,
         });
     }
 
@@ -217,14 +218,14 @@ export default class RechargeChannelsProxy extends AbstractProxy implements IRec
             // 发送消息
             this.sendNotification(HttpType.admin_recharge_channels_update, temp);
         } catch (error) {
-            MessageBox.alert(<string>i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

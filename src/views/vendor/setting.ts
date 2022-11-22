@@ -38,4 +38,3 @@ facade.registerCommand(HttpType.admin_vendor_show, cmd_admin_vendor_show);
 facade.registerCommand(HttpType.admin_vendor_update, cmd_admin_vendor_update);
 facade.registerCommand(HttpType.admin_system_config_index, cmd_admin_system_config_index);
 facade.registerCommand(HttpType.admin_vendor_test_vendor, cmd_admin_vendor_test_vendor);
-

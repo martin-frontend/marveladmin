@@ -1,9 +1,9 @@
 <template>
     <div class="content">
-        <AdminRoleDialog/>
-        <AdminRoleHeader/>
-        <AdminRoleBody/>
-        <AdminRoleSettingDialog/>
+        <AdminRoleDialog />
+        <AdminRoleHeader />
+        <AdminRoleBody />
+        <AdminRoleSettingDialog />
     </div>
 </template>
 
@@ -21,11 +21,10 @@ import AdminRoleSettingDialog from "./AdminRoleSettingDialog.vue";
         AdminRoleDialog,
         AdminRoleHeader,
         AdminRoleBody,
-        AdminRoleSettingDialog
-    }
+        AdminRoleSettingDialog,
+    },
 })
 export default class AdminRole extends AbstractView {
-
     constructor() {
         super(AdminRoleMediator);
     }

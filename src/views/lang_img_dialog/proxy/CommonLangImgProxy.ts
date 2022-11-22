@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -43,17 +44,17 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
             type: { name: "类型", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
-            plat_id:{name: "平台ID", options:{}},
-            key:{name: "键", options:{}},
-            ar_AR: {name: "键", options:{}},
-            en_EN: {name: "键", options:{}},
-            jp_JP: {name: "", options:{}},
-            ko_Kr: {name: "", options:{}},
-            th_TH: {name: "", options:{}},
-            vi_VN: {name: "", options:{}},
-            zh_CN: {name: "", options:{}},
-            zh_TW: {name: "", options:{}},
-            es_ES: {name: "", options:{}}
+            plat_id: { name: "平台ID", options: {} },
+            key: { name: "键", options: {} },
+            ar_AR: { name: "键", options: {} },
+            en_EN: { name: "键", options: {} },
+            jp_JP: { name: "", options: {} },
+            ko_Kr: { name: "", options: {} },
+            th_TH: { name: "", options: {} },
+            vi_VN: { name: "", options: {} },
+            zh_CN: { name: "", options: {} },
+            zh_TW: { name: "", options: {} },
+            es_ES: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -73,8 +74,7 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
-        let newTableData = this.tableData.list.map(({ language, ...data}) =>
-        ({
+        let newTableData = this.tableData.list.map(({ language, ...data }) => ({
             ...data,
             // language: jsonToObject(language)
         }));
@@ -96,24 +96,23 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
             id: "",
             module: "",
             type: "",
-            plat_id:"",
-            key:"",
-            ar_AR: {uris: "",urls: ""},
-            en_EN: {uris: "",urls: ""},
-            jp_JP: {uris: "",urls: ""},
-            ko_Kr: {uris: "",urls: ""},
-            th_TH: {uris: "",urls: ""},
-            vi_VN: {uris: "",urls: ""},
-            zh_CN: {uris: "",urls: ""},
-            zh_TW: {uris: "",urls: ""},
-            es_ES: {uris: "",urls: ""},
+            plat_id: "",
+            key: "",
+            ar_AR: { uris: "", urls: "" },
+            en_EN: { uris: "", urls: "" },
+            jp_JP: { uris: "", urls: "" },
+            ko_Kr: { uris: "", urls: "" },
+            th_TH: { uris: "", urls: "" },
+            vi_VN: { uris: "", urls: "" },
+            zh_CN: { uris: "", urls: "" },
+            zh_TW: { uris: "", urls: "" },
+            es_ES: { uris: "", urls: "" },
         },
         formSource: null, // 表单的原始数据
     };
 
     /**显示弹窗 */
     showDialog(data?: any) {
-        
         //清除数据
         this.resetDialogForm();
         this.dialogData.formSource = null;
@@ -133,17 +132,17 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
             // language: {},
             module: "",
             type: 1,
-            plat_id:"",
-            key:"",
-            ar_AR: {uris: "",urls: ""},
-            en_EN: {uris: "",urls: ""},
-            jp_JP: {uris: "",urls: ""},
-            ko_Kr: {uris: "",urls: ""},
-            th_TH: {uris: "",urls: ""},
-            vi_VN: {uris: "",urls: ""},
-            zh_CN: {uris: "",urls: ""},
-            zh_TW: {uris: "",urls: ""},
-            es_ES: {uris: "",urls: ""},
+            plat_id: "",
+            key: "",
+            ar_AR: { uris: "", urls: "" },
+            en_EN: { uris: "", urls: "" },
+            jp_JP: { uris: "", urls: "" },
+            ko_Kr: { uris: "", urls: "" },
+            th_TH: { uris: "", urls: "" },
+            vi_VN: { uris: "", urls: "" },
+            zh_CN: { uris: "", urls: "" },
+            zh_TW: { uris: "", urls: "" },
+            es_ES: { uris: "", urls: "" },
         });
         this.dialogData.status = DialogStatus.create;
         this.source = "";
@@ -164,9 +163,8 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
                 }
             }
             this.sendNotification(HttpType.admin_system_lang_image_store, objectRemoveNull(formCopy));
-            
         } catch (error) {
-            MessageBox.alert(<string> i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
 
@@ -183,16 +181,16 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
                     formCopy[key] = JSON.stringify(formCopy[key]);
                 }
             }
-            
+
             this.sendNotification(HttpType.admin_system_lang_image_update, objectRemoveNull(formCopy));
         } catch (error) {
-            MessageBox.alert(<string> i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
 
     /**
-     * 获取全部翻译 
-     * @param data 
+     * 获取全部翻译
+     * @param data
      * source	string	源语言: en_EN   sentence	string	要翻译的语句
      */
     translate(data: any): void {
@@ -200,7 +198,7 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
     }
 
     /**获取全部翻译返回更新表单 */
-    updateForm(data: any):void {
+    updateForm(data: any): void {
         this.dialogData.status = DialogStatus.create;
         if (data.id != undefined) {
             this.dialogData.status = DialogStatus.update;
@@ -210,10 +208,10 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
 
     /**
      * 根据key查询数据库是否有该key的图片
-     * @param data 
+     * @param data
      * plat_id , type, key
      */
-    translateLangCheck(): void{
+    translateLangCheck(): void {
         const data: any = {};
         data.plat_id = this.dialogData.form.plat_id;
         data.key = this.dialogData.form.key;

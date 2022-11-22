@@ -26,19 +26,19 @@ export default class PlatsWalletProxy extends AbstractProxy implements IPlatsWal
     /**表格相关数据 */
     tableData = {
         columns: {
-            amount: {name: "平台资产数量", options: []},
-            coin_name_unique: {name: "币种",options: {}},
-            created_at: {name: "创建时间", options: []},
-            created_by: {name: "创建人", options: []},
-            data_belong: {name: "数据归属标记", options: []},
-            id: {name: "编号", options: []},
-            plat_id: {name: "平台ID", options: {}},
-            plat_total_exchange: {name: "平台总兑换", options: []},
-            plat_total_recharge: {name: "平台总充值", options: []},
-            updated_at: {name: "修改时间", options: []},
-            updated_by: {name: "更新人", options: []},
-            user_total_exchange: {name: "用户总兑换", options: []},
-            user_total_recharge: {name: "用户总充值", options: []},
+            amount: { name: "平台资产数量", options: [] },
+            coin_name_unique: { name: "币种", options: {} },
+            created_at: { name: "创建时间", options: [] },
+            created_by: { name: "创建人", options: [] },
+            data_belong: { name: "数据归属标记", options: [] },
+            id: { name: "编号", options: [] },
+            plat_id: { name: "平台ID", options: {} },
+            plat_total_exchange: { name: "平台总兑换", options: [] },
+            plat_total_recharge: { name: "平台总充值", options: [] },
+            updated_at: { name: "修改时间", options: [] },
+            updated_by: { name: "更新人", options: [] },
+            user_total_exchange: { name: "用户总兑换", options: [] },
+            user_total_recharge: { name: "用户总充值", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -49,7 +49,7 @@ export default class PlatsWalletProxy extends AbstractProxy implements IPlatsWal
         page_count: 1,
         page_size: 20,
         plat_id: "",
-        coin_name_unique: ""
+        coin_name_unique: "",
     };
 
     /**表单资料 */
@@ -62,7 +62,7 @@ export default class PlatsWalletProxy extends AbstractProxy implements IPlatsWal
         // },
         // status: DialogStatus.update,
         // formSource: null, // 表单的原始数据
-    }
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -99,7 +99,6 @@ export default class PlatsWalletProxy extends AbstractProxy implements IPlatsWal
     /**显示弹窗 */
     showDialog(data?: any) {
         // this.dialogData.bShow = true;
-
         // if(data) {
         //     this.dialogData.formSource = { ...data };
         //     Object.assign(this.dialogData.form, { ...data });
@@ -117,7 +116,6 @@ export default class PlatsWalletProxy extends AbstractProxy implements IPlatsWal
     /**更新数据 */
     onUpdate() {
         // const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
-
         // formCopy.id = this.dialogData.form.plat_id;
         // // 发送消息
         // this.sendNotification(HttpType.qawsedxr cftvgbhn, formCopy);

@@ -13,7 +13,7 @@ export interface IRechargeVendors extends IEventDispatcher {
 
 export default class RechargeVendorsMediator extends AbstractMediator {
     private myProxy: RechargeVendorsProxy = <any>this.getProxy(RechargeVendorsProxy);
-    
+
     onRegister() {
         this.myProxy.enter();
     }
@@ -33,7 +33,7 @@ export default class RechargeVendorsMediator extends AbstractMediator {
             EventType.admin_recharge_vendors_show,
             EventType.admin_recharge_vendors_store,
             EventType.admin_recharge_vendors_update,
-            GlobalEventType.REQUEST_ERROR
+            GlobalEventType.REQUEST_ERROR,
         ];
     }
 

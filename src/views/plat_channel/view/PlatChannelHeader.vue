@@ -17,13 +17,14 @@
                 icon="el-icon-circle-plus-outline"
                 @click="handlerCreate"
             >
-                {{ $t("common.create") }}
+                {{ LangUtil("新增") }}
             </el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatChannelProxy from "../proxy/PlatChannelProxy";
@@ -37,21 +38,22 @@ import SearchSelect from "@/components/SearchSelect.vue";
     },
 })
 export default class PlatChannelHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatChannelProxy = this.getProxy(PlatChannelProxy);
+    myProxy: PlatChannelProxy = this.getProxy(PlatChannelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

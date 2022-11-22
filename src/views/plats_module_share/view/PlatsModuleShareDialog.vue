@@ -7,7 +7,7 @@
                     filterable
                     clearable
                     v-model="form.plat_id"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 >
                     <template v-for="(item, key) of tableColumns.plat_id.options">
                         <el-option v-if="key != 0" :key="item" :label="item" :value="Number(key)"></el-option>
@@ -20,7 +20,7 @@
                     filterable
                     clearable
                     v-model="form.module"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 >
                     <el-option
                         v-for="(item, key) of tableColumns.module.options"
@@ -36,7 +36,7 @@
                     filterable
                     clearable
                     v-model="form.to_plat_id"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 >
                     <el-option
                         v-for="(item, key) of tableColumns.to_plat_id.options"
@@ -48,14 +48,15 @@
                 </el-select>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button v-if="isUpdate" type="danger" @click="handleDelete">{{ $t("common.delete") }}</el-button>
-                <el-button type="primary" @click="handleUpdate">{{ $t("common.save") }}</el-button>
+                <el-button v-if="isUpdate" type="danger" @click="handleDelete">{{ LangUtil("删除") }}</el-button>
+                <el-button type="primary" @click="handleUpdate">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -65,20 +66,21 @@ import PlatsModuleShareProxy from "../proxy/PlatsModuleShareProxy";
 
 @Component
 export default class PlatsModuleShareDialog extends AbstractView {
+    LangUtil = LangUtil;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatsModuleShareProxy = this.getProxy(PlatsModuleShareProxy);
+    myProxy: PlatsModuleShareProxy = this.getProxy(PlatsModuleShareProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: i18n.t("common.update"),
+    textMap = {
+        update: LangUtil("编辑"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -90,9 +92,9 @@ export default class PlatsModuleShareDialog extends AbstractView {
 
     get rules() {
         return {
-            plat_id: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "blur" }],
-            to_plat_id: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "blur" }],
-            module: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "blur" }],
+            plat_id: [{ required: true, message: LangUtil("必须选择"), trigger: "blur" }],
+            to_plat_id: [{ required: true, message: LangUtil("必须填写"), trigger: "blur" }],
+            module: [{ required: true, message: LangUtil("必须填写"), trigger: "blur" }],
         };
     }
 
@@ -100,7 +102,7 @@ export default class PlatsModuleShareDialog extends AbstractView {
         return this.myProxy.dialogData.status == DialogStatus.update;
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.isUpdate ? this.myProxy.onUpdate() : this.myProxy.onCreate();
@@ -108,7 +110,7 @@ export default class PlatsModuleShareDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete();
     }
 }

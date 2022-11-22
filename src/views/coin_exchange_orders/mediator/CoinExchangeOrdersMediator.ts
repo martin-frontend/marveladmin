@@ -6,9 +6,7 @@ import { EventType, HttpType } from "@/views/coin_exchange_orders/setting";
 import { Message } from "element-ui";
 import CoinExchangeOrdersProxy from "../proxy/CoinExchangeOrdersProxy";
 
-interface ICoinExchangeOrders extends IEventDispatcher {
-    
-}
+interface ICoinExchangeOrders extends IEventDispatcher {}
 
 export default class CoinExchangeOrdersMediator extends AbstractMediator {
     private myProxy: CoinExchangeOrdersProxy = <any>this.getProxy(CoinExchangeOrdersProxy);
@@ -32,7 +30,7 @@ export default class CoinExchangeOrdersMediator extends AbstractMediator {
             EventType.admin_coin_exchange_orders_finish_order,
             EventType.admin_coin_exchange_orders_close_order_return_gold,
             EventType.admin_coin_exchange_orders_close_order,
-            EventType.admin_admin_user_mine
+            EventType.admin_admin_user_mine,
         ];
     }
 
@@ -47,8 +45,7 @@ export default class CoinExchangeOrdersMediator extends AbstractMediator {
             case EventType.admin_coin_exchange_orders_index:
                 if (myProxy.tableData.isExportExcel) {
                     myProxy.exportExcel(body);
-                }
-                else {
+                } else {
                     myProxy.setTableData(body);
                 }
                 break;
@@ -70,7 +67,7 @@ export default class CoinExchangeOrdersMediator extends AbstractMediator {
                 myProxy.onQuery();
                 this.sendNotification(HttpType.admin_admin_user_mine, { modules: "[4]" });
                 break;
-            case EventType.admin_admin_user_mine:{
+            case EventType.admin_admin_user_mine: {
                 let model: SelfModel = this.getProxy(SelfModel);
                 model.userInfo.coin_user["gold"] = body.coin_user.gold;
                 break;

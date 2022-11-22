@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_block_contract_index, cmd_admin_block_cont
 facade.registerCommand(HttpType.admin_block_contract_show, cmd_admin_block_contract_show);
 facade.registerCommand(HttpType.admin_block_contract_store, cmd_admin_block_contract_store);
 facade.registerCommand(HttpType.admin_block_contract_update, cmd_admin_block_contract_update);
-

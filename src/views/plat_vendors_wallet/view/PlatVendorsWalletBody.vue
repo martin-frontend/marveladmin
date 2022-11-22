@@ -57,42 +57,42 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" align="center" :width="width">
+            <el-table-column :label="LangUtil('操作')" align="center" :width="width">
                 <template slot-scope="scope">
                     <el-button
                         size="mini"
                         type="warning"
                         @click="handlerVendorLimit(scope.row.id)"
                         v-if="checkUnique(unique.plat_vendors_wallet_quota)"
-                        >{{ $t("plat_vendors_wallet.QuotaSetting") }}</el-button
+                        >{{ LangUtil("额度设置") }}</el-button
                     >
                     <el-button
                         size="mini"
                         type="success"
                         @click="handerVenderWallet(scope.row.id, 1)"
                         v-if="checkUnique(unique.plat_vendors_wallet_add_points)"
-                        >{{ $t("common.deposit") }}</el-button
+                        >{{ LangUtil("上分") }}</el-button
                     >
                     <el-button
                         size="mini"
                         type="info"
                         @click="handerVenderWallet(scope.row.id, 2)"
                         v-if="checkUnique(unique.plat_vendors_wallet_minus_points)"
-                        >{{ $t("common.withdraw") }}</el-button
+                        >{{ LangUtil("下分") }}</el-button
                     >
                     <el-button
                         size="mini"
                         type="primary"
                         @click="handlerLog(scope.row)"
                         v-if="checkUnique(unique.plat_vendors_wallet_log)"
-                        >{{ $t("common.recordQuery") }}</el-button
+                        >{{ LangUtil("记录查询") }}</el-button
                     >
                     <el-button
                         size="mini"
                         class="setting_btn"
                         @click="handlerSetting(scope.row)"
                         v-if="checkUnique(unique.plat_vendors_wallet_setting)"
-                        >{{ $t("plat_agent_bind.setUp") }}</el-button
+                        >{{ LangUtil("设定") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -101,6 +101,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -116,43 +117,44 @@ import Cookies from "js-cookie";
     },
 })
 export default class PlatVendorsWalletBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
+    myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
     // 记录查询
-    private handlerLog(row: any) {
+    handlerLog(row: any) {
         this.myProxy.onLog(row);
     }
 
     // 设置
-    private handlerSetting(row: any) {
+    handlerSetting(row: any) {
         this.myProxy.onSettingDialog(row);
     }
 
     // 厂商上下分
-    private handerVenderWallet(id: any, type: any) {
+    handerVenderWallet(id: any, type: any) {
         this.myProxy.vendorDialogData.wallet.form.type = type;
         this.myProxy.vendorDialogData.wallet.form.id = id;
         this.myProxy.onShowVenderWalletDialog();
     }
 
     // 额度设置
-    private handlerVendorLimit(id: any) {
+    handlerVendorLimit(id: any) {
         this.myProxy.vendorDialogData.limit.form.id = id;
         this.myProxy.onShowVendorLimitDialog();
     }

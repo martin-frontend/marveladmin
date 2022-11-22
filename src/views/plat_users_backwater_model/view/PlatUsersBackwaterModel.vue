@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatUsersBackwaterModelDialog/>
-        <PlatUsersBackwaterModelHeader/>
-        <PlatUsersBackwaterModelBody/>
+        <PlatUsersBackwaterModelDialog />
+        <PlatUsersBackwaterModelHeader />
+        <PlatUsersBackwaterModelBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import PlatUsersBackwaterModelBody from "./PlatUsersBackwaterModelBody.vue";
         PlatUsersBackwaterModelDialog,
         PlatUsersBackwaterModelHeader,
         PlatUsersBackwaterModelBody,
-    }
+    },
 })
 export default class PlatUsersBackwaterModel extends AbstractView {
-
     constructor() {
         super(PlatUsersBackwaterModelMediator);
     }

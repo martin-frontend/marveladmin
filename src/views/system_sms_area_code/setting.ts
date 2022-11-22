@@ -26,4 +26,3 @@ facade.registerCommand(HttpType.admin_system_sms_area_code_table_columns, cmd_ad
 facade.registerCommand(HttpType.admin_system_sms_area_code_index, cmd_admin_system_sms_area_code_index);
 facade.registerCommand(HttpType.admin_system_sms_area_code_store, cmd_admin_system_sms_area_code_store);
 facade.registerCommand(HttpType.admin_system_sms_area_code_update, cmd_admin_system_sms_area_code_update);
-

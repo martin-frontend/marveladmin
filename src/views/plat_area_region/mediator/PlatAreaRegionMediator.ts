@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_area_region/setting";
 import { Message } from "element-ui";
 import PlatAreaRegionProxy from "../proxy/PlatAreaRegionProxy";
 
-interface IPlatAreaRegion extends IEventDispatcher {
-
-}
+interface IPlatAreaRegion extends IEventDispatcher {}
 
 export default class PlatAreaRegionMediator extends AbstractMediator {
     private myProxy: PlatAreaRegionProxy = <any>this.getProxy(PlatAreaRegionProxy);
@@ -31,7 +29,6 @@ export default class PlatAreaRegionMediator extends AbstractMediator {
             EventType.admin_plat_area_region_store,
             EventType.admin_plat_area_region_update,
             EventType.admin_plat_area_region_delete,
-
         ];
     }
 
@@ -61,7 +58,6 @@ export default class PlatAreaRegionMediator extends AbstractMediator {
                 Message.success(SuccessMessage.update);
                 myProxy.onQuery();
                 break;
-
         }
     }
 }

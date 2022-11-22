@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/admin_role/setting";
 import { Message } from "element-ui";
 import AdminRoleProxy from "../proxy/AdminRoleProxy";
 
-interface IAdminRole extends IEventDispatcher {
-    
-}
+interface IAdminRole extends IEventDispatcher {}
 
 export default class AdminRoleMediator extends AbstractMediator {
     private myProxy: AdminRoleProxy = <any>this.getProxy(AdminRoleProxy);
@@ -32,7 +30,6 @@ export default class AdminRoleMediator extends AbstractMediator {
             EventType.admin_admin_role_store,
             EventType.admin_admin_role_update,
             EventType.admin_admin_user_mine,
-
         ];
     }
 
@@ -65,7 +62,6 @@ export default class AdminRoleMediator extends AbstractMediator {
             case EventType.admin_admin_user_mine:
                 myProxy.setPermission(body.permission);
                 break;
-
         }
     }
 }

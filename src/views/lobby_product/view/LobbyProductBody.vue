@@ -3,7 +3,7 @@
         <el-form ref="form" :model="listFilter" label-width="80px" label-position="left" style="padding-left: 10px">
             <el-form-item size="mini" :label="tableColumns['app_type'].name">
                 <el-radio-group v-model="listFilter.app_type" filterable @change="onFilterChange">
-                    <el-radio class="radio" :label="null">{{ $t("common.all") }}</el-radio>
+                    <el-radio class="radio" :label="null">{{ LangUtil("全部") }}</el-radio>
                     <el-radio
                         class="radio"
                         v-for="(value, key) in tableColumns.app_type.options"
@@ -15,7 +15,7 @@
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['languages'].name">
                 <el-radio-group v-model="listFilter.languages" filterable @change="onFilterChange">
-                    <el-radio class="radio" :label="null">{{ $t("common.all") }}</el-radio>
+                    <el-radio class="radio" :label="null">{{ LangUtil("全部") }}</el-radio>
                     <el-radio
                         class="radio"
                         v-for="(value, key) in tableColumns.languages.options"
@@ -27,7 +27,7 @@
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['category'].name">
                 <el-radio-group v-model="listFilter.category" filterable @change="onFilterChange">
-                    <el-radio class="radio" :label="null">{{ $t("common.all") }}</el-radio>
+                    <el-radio class="radio" :label="null">{{ LangUtil("全部") }}</el-radio>
                     <el-radio
                         class="radio"
                         v-for="(value, key) in tableColumns.category.options"
@@ -88,12 +88,7 @@
             <el-table-column align="center" :label="tableColumns['icon'].name" prop="icon" min-width="140px">
                 <template slot-scope="{ row }">
                     <div v-if="row.icon" style="margin-bottom: 5px">{{ row.icon }}</div>
-                    <el-button
-                        size="mini"
-                        type="primary"
-                        @click="handlerUpdate(row)"
-                        >{{ $t("common.update") }}</el-button
-                    >
+                    <el-button size="mini" type="primary" @click="handlerUpdate(row)">{{ LangUtil("编辑") }}</el-button>
                 </template>
             </el-table-column>
             <el-table-column align="center" :label="tableColumns.status.name" class-name="status-col" min-width="70px">
@@ -125,19 +120,19 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" :label="$t('common.operating')" class-name="status-col" width="350px">
+            <el-table-column align="center" :label="LangUtil('操作')" class-name="status-col" width="350px">
                 <template slot-scope="{ row }">
                     <el-button
                         v-if="checkUnique(unique.lobby_product_order)"
                         size="mini"
                         @click="handlerOpt(row, { opt: 1 })"
-                        >{{ $t("common.setTop") }}</el-button
+                        >{{ LangUtil("置顶") }}</el-button
                     >
                     <el-button
                         v-if="checkUnique(unique.lobby_product_order)"
                         size="mini"
                         @click="handlerOpt(row, { opt: 2 })"
-                        >{{ $t("common.setBottom") }}</el-button
+                        >{{ LangUtil("置底") }}</el-button
                     >
                     <el-button
                         v-if="checkUnique(unique.lobby_product_order)"
@@ -157,7 +152,7 @@
                         size="mini"
                         type="danger"
                         @click="handlerDelete(row)"
-                        >{{ $t("common.delete") }}</el-button
+                        >{{ LangUtil("删除") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -165,6 +160,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -189,35 +185,36 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class LobbyProductBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: LobbyProductProxy = this.getProxy(LobbyProductProxy);
+    myProxy: LobbyProductProxy = this.getProxy(LobbyProductProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private listFilter = this.myProxy.tableData.listFilter;
+    listFilter = this.myProxy.tableData.listFilter;
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data);
     }
 
     /**筛选 */
-    private onFilterChange() {
+    onFilterChange() {
         this.myProxy.onFilterChange();
     }
     /**更新标签 */
-    private handlerTags(row: any) {
+    handlerTags(row: any) {
         this.myProxy.onUpdateTags(row);
     }
     /**更新排序 */
-    private handlerOpt(row: any, value: any) {
+    handlerOpt(row: any, value: any) {
         const { lobby_product_id } = row;
         const { opt } = value;
         this.myProxy.onUpdateOpt({ lobby_product_id: lobby_product_id, opt: opt });

@@ -3,18 +3,18 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface IPlatMarqueeProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
     };
 
     /**设置表头数据 */
@@ -50,5 +50,5 @@ export enum TimeType {
 // 跑马灯状态 1:未启用 2:启用
 export enum StatusType {
     disactivated = 1,
-    activated = 2
+    activated = 2,
 }

@@ -18,10 +18,10 @@
             />
             <div>
                 <el-button @click="handlerSearch()" class="item" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" class="item" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -29,6 +29,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import GoldWaterProxy from "../proxy/GoldWaterProxy";
@@ -46,21 +47,22 @@ import SearchRange from "@/components/SearchRange.vue";
     },
 })
 export default class GoldWaterHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: GoldWaterProxy = this.getProxy(GoldWaterProxy);
+    myProxy: GoldWaterProxy = this.getProxy(GoldWaterProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 }

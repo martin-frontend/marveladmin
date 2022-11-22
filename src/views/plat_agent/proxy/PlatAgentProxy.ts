@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { HttpType } from "@/views/plat_agent/setting";
 import { Message, MessageBox } from "element-ui";
@@ -121,12 +122,12 @@ export default class PlatAgentProxy extends AbstractProxy implements IPlatAgentP
     setPromotionModel(value: any) {
         Object.assign(this.tableData.promotionModel, value);
         // 设置默认的标签
-        if(this.tableData.promotionModel.calc_type == 1) {
+        if (this.tableData.promotionModel.calc_type == 1) {
             const promotion_config_options_keys = Object.keys(this.tableData.columns.promotion_config.options);
             if (promotion_config_options_keys.length > 0) {
                 this.tableData.activeName = promotion_config_options_keys[0];
             }
-        }else{
+        } else {
             this.tableData.activeName = "0";
         }
         console.log("this.tableData.activeName: ", this.tableData.activeName);
@@ -174,9 +175,9 @@ export default class PlatAgentProxy extends AbstractProxy implements IPlatAgentP
 
     /**初始化系统模板 */
     onInitModel() {
-        MessageBox.confirm(<string>i18n.t("common.initConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否初始化数据"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -200,9 +201,9 @@ export default class PlatAgentProxy extends AbstractProxy implements IPlatAgentP
         const strConf = JSON.stringify(conf);
         const strConfSource = JSON.stringify(confSource);
         if (strConf != strConfSource) {
-            MessageBox.confirm(<string>i18n.t("common.saveConfirmStr"), <string>i18n.t("common.prompt"), {
-                confirmButtonText: <string>i18n.t("common.determine"),
-                cancelButtonText: <string>i18n.t("common.cancel"),
+            MessageBox.confirm(<string>LangUtil("是否保存本次编辑"), <string>LangUtil("提示"), {
+                confirmButtonText: <string>LangUtil("确定"),
+                cancelButtonText: <string>LangUtil("取消"),
                 type: "warning",
             })
                 .then(() => {
@@ -215,9 +216,9 @@ export default class PlatAgentProxy extends AbstractProxy implements IPlatAgentP
                             if (item.commission_num == undefined || item.total_performance == undefined) {
                                 Message.warning(
                                     `${promotionOptions[type]}` +
-                                        i18n.t("common.level") +
+                                        LangUtil("等级") +
                                         `${i + 1}` +
-                                        i18n.t("plat_agent.notData")
+                                        LangUtil("没有录入数据")
                                 );
                                 return;
                             }
@@ -269,7 +270,7 @@ export default class PlatAgentProxy extends AbstractProxy implements IPlatAgentP
     showPromotionDialog() {
         this.promotionDialogData.bShow = true;
         this.promotionDialogData.extraConfig = [];
-        Object.values(this.tableData.detail.promotion_extra_config).forEach((value) => {
+        Object.values(this.tableData.detail.promotion_extra_config).forEach(value => {
             this.promotionDialogData.extraConfig.push(JSON.parse(JSON.stringify(value)));
         });
     }

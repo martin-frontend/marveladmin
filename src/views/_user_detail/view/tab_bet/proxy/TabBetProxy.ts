@@ -14,9 +14,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
     }
 
     /**离开页面时调用 */
-    leave() {
-
-    }
+    leave() {}
 
     /**表格相关数据 */
     tableData = {
@@ -72,7 +70,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
             win_gold: "",
         },
         summary_coin: [],
-    }
+    };
     /**查询数据 */
     listQuery: { [key: string]: string | number } = {
         type: "",
@@ -92,7 +90,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
         page_count: 1,
         page_size: 10,
         coin_name_unique: "",
-    }
+    };
     /**表单资料 */
     dialogData = {
         bShow: false,
@@ -117,14 +115,17 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
             game_info: "",
             coin_name_unique: "",
         },
-    }
+    };
     /**显示弹窗 */
     showDialog(data: any) {
         this.dialogData.bShow = true;
         Object.assign(this.dialogData, {
-            data: JSON.parse(JSON.stringify(data))
+            data: JSON.parse(JSON.stringify(data)),
         });
-        this.sendNotification(HttpType.admin_plat_users_bet_show, { plat_id: this.listQuery.plat_id, bet_id: data.bet_id });
+        this.sendNotification(HttpType.admin_plat_users_bet_show, {
+            plat_id: this.listQuery.plat_id,
+            bet_id: data.bet_id,
+        });
     }
     /**隐藏弹窗 */
     hideDialog() {
@@ -134,7 +135,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
     setDetail(data: any) {
         const { nick_name } = this.dialogData.data;
         Object.assign(this.dialogData, {
-            data: JSON.parse(JSON.stringify(data))
+            data: JSON.parse(JSON.stringify(data)),
         });
         this.dialogData.data.nick_name = nick_name;
     }
@@ -166,7 +167,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
             "bet_at-{>=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
             "bet_at-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
             coin_name_unique: "",
-        })
+        });
         this.tableData.winLoss = "";
     }
 

@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_users_backwater_model/setting"
 import { Message } from "element-ui";
 import PlatUsersBackwaterModelProxy from "../proxy/PlatUsersBackwaterModelProxy";
 
-interface IPlatUsersBackwaterModel extends IEventDispatcher {
-    
-}
+interface IPlatUsersBackwaterModel extends IEventDispatcher {}
 
 export default class PlatUsersBackwaterModelMediator extends AbstractMediator {
     private myProxy: PlatUsersBackwaterModelProxy = <any>this.getProxy(PlatUsersBackwaterModelProxy);
@@ -32,7 +30,6 @@ export default class PlatUsersBackwaterModelMediator extends AbstractMediator {
             EventType.admin_plat_users_backwater_model_store,
             EventType.admin_plat_users_backwater_model_update,
             EventType.admin_plat_users_backwater_model_destroy,
-
         ];
     }
 

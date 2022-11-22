@@ -3,7 +3,7 @@ import { EventType, HttpType } from "@/views/block_transfer_account/setting";
 import { ResponseVO } from "@/core/vo/ResponseVO";
 import { getUrl } from "@/core/global/Functions";
 
-export default class cmd_admin_block_transfer_account_show extends puremvc.SimpleCommand{
+export default class cmd_admin_block_transfer_account_show extends puremvc.SimpleCommand {
     execute(notification: puremvc.INotification) {
         const body = notification.getBody() || {};
         const url = getUrl(HttpType.admin_block_transfer_account_show, body);
@@ -11,8 +11,8 @@ export default class cmd_admin_block_transfer_account_show extends puremvc.Simpl
         Http.request(body, url).then(this.response.bind(this));
     }
 
-    private response(result:ResponseVO){
-        if(result.status === 0){
+    private response(result: ResponseVO) {
+        if (result.status === 0) {
             this.sendNotification(EventType.admin_block_transfer_account_show, result.data);
         }
     }

@@ -3,9 +3,7 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/plat_users_bet/setting";
 import PlatUsersBetProxy from "../proxy/PlatUsersBetProxy";
 
-interface IPlatUsersBet extends IEventDispatcher {
-    
-}
+interface IPlatUsersBet extends IEventDispatcher {}
 
 export default class PlatUsersBetMediator extends AbstractMediator {
     private myProxy: PlatUsersBetProxy = <any>this.getProxy(PlatUsersBetProxy);
@@ -42,8 +40,7 @@ export default class PlatUsersBetMediator extends AbstractMediator {
                 //myProxy.setTableData(body);
                 if (myProxy.tableData.isExportExcel) {
                     myProxy.exportExcel(body);
-                }
-                else {
+                } else {
                     myProxy.setTableData(body);
                 }
 

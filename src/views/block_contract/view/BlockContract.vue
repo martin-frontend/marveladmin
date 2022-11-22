@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <BlockContractDialog v-if="myProxy.dialogData.bShow"/>
-        <BlockContractHeader/>
-        <BlockContractBody/>
+        <BlockContractDialog v-if="myProxy.dialogData.bShow" />
+        <BlockContractHeader />
+        <BlockContractBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import BlockContractBody from "./BlockContractBody.vue";
         BlockContractDialog,
         BlockContractHeader,
         BlockContractBody,
-    }
+    },
 })
 export default class BlockContract extends AbstractView {
-
     constructor() {
         super(BlockContractMediator);
     }

@@ -9,11 +9,7 @@
         :total="Number(pageInfo.pageTotal)"
     >
         <span class="slot" v-show="pageInfo.pageTotal">{{
-            $t("component.pageInfo", {
-                "0": pageInfo.pageTotal,
-                "1": pageInfo.pageCurrent,
-                "2": Math.ceil(pageInfo.pageTotal / pageInfo.pageSize),
-            })
+            LangUtil('总共 {0} 条记录，{1}/{2}页', pageInfo.pageTotal, pageInfo.pageCurrent, Math.ceil(pageInfo.pageTotal / pageInfo.pageSize)),
         }}</span>
     </el-pagination>
     <!-- 父组件用法 -->
@@ -21,17 +17,19 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import { PageInfoVO } from "@/core/vo/PageInfoVO";
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class Pagination extends Vue {
+    LangUtil = LangUtil;
     @Prop()
     readonly pageInfo!: PageInfoVO;
 
     @Emit("pageSwitch")
-    private pageSwitch(page: number) {}
-    private onPageSwitch(page: number) {
+    pageSwitch(page: number) {}
+    onPageSwitch(page: number) {
         this.pageSwitch(page);
     }
 }

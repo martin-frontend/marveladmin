@@ -16,13 +16,14 @@
                 ></el-input>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" @click="handleUpdate">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" @click="handleUpdate">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatVendorsWalletProxy from "@/views/plat_vendors_wallet/proxy/PlatVendorsWalletProxy";
@@ -34,29 +35,30 @@ import i18n from "@/lang";
 
 @Component
 export default class PlatVendorsWalletDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
+    myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.vendorDialogData.limit.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.vendorDialogData.limit.form;
 
-    private lengTextObj: any = {
-        title: i18n.t("plat_vendors_wallet.maxAmount"),
-        notLimited: i18n.t("plat_vendors_wallet.notLimited"),
-        limit: i18n.t("plat_vendors_wallet.limit"),
-        required: i18n.t("common.requiredInput"),
-        errorCode: i18n.t("plat_vendors_wallet.errorCode"),
-        mustNumber: i18n.t("plat_vendors_wallet.mustNumber"),
-        placeholderText: i18n.t("plat_vendors_wallet.placeholderText"),
+    lengTextObj: any = {
+        title: LangUtil("用户进入游戏最高额度"),
+        notLimited: LangUtil("不限制"),
+        limit: LangUtil("限制额度"),
+        required: LangUtil("必须填写"),
+        errorCode: LangUtil("范围必须在 0-999999999"),
+        mustNumber: LangUtil("必须为数字值"),
+        placeholderText: LangUtil("请输入0-999999999"),
     };
 
     // 验证金额范围
-    private checklimit(rule: any, value: any, callback: any): any {
+    checklimit(rule: any, value: any, callback: any): any {
         if (value === null) {
             callback(new Error(this.lengTextObj.required));
         } else if (parseInt(value) < 0 || parseInt(value) > 999999999) {
@@ -80,7 +82,7 @@ export default class PlatVendorsWalletDialog extends AbstractView {
         return this.form.is_limit_user_recharge === 0 ? rule0 : rule1;
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onVenderLimitUpdate();

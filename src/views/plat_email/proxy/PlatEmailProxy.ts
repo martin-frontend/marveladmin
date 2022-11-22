@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
@@ -50,7 +51,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         activeName: EmailTab.Plat,
         platEmailTag: EmailTab.Plat,
-        userEmailTag: EmailTab.User
+        userEmailTag: EmailTab.User,
     };
     /**查询条件 */
     listQuery = {
@@ -85,10 +86,10 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             attachment_content: <any>[], //附件内容,attachment_content:{"USDT":"10000","BNB":"88"}
         },
         formSource: null, // 表单的原始数据
-        readonly: false,  //是否唯讀
+        readonly: false, //是否唯讀
         excelColumnInfo: {
-            userid: { name: "userid", options: {} }
-        }
+            userid: { name: "userid", options: {} },
+        },
     };
 
     /**设置表头数据 */
@@ -111,11 +112,9 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
-
     }
     /**详细数据 */
     setDetail(data: any) {
-
         // let attachment_content = <any>[];
         // data.attachment_content.forEach((element: any) => {
         //     Object.keys(element).forEach(key => {
@@ -215,14 +214,12 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         let attachment_content_copy = [];
         let bonus = {};
         formCopy.attachment_content.forEach((element: any) => {
-
             if (bonus[element.type]) {
                 //防止有傻逼选择多个相同的币种
-                bonus[element.type] = String((Number(bonus[element.type]) + Number(element.amount)));
+                bonus[element.type] = String(Number(bonus[element.type]) + Number(element.amount));
             } else {
                 bonus[element.type] = element.amount;
             }
-
         });
         if (Object.keys(bonus).length === 0) {
             //没有奖励
@@ -234,23 +231,23 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             formCopy.attachment_content = JSON.stringify(bonus);
         }
         formCopy.is_mass_mailer = this.isGroupMail ? 1 : 0;
-        if(checkUnique(unique.plat_email_store_attachment)){
+        if (checkUnique(unique.plat_email_store_attachment)) {
             this.sendNotification(HttpType.admin_plat_email_store_attachment_store, objectRemoveNull(formCopy));
-        }else{
+        } else {
             this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
         }
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_mail_content_update, { content_id: id, status: 99 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**用户邮件表格相关数据 */
@@ -289,7 +286,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         total_num: 0,
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
-    }
+    };
     /**用戶郵件查询条件 */
     userListQuery = {
         plat_id: "",
@@ -302,7 +299,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         attachment_type: "",
         page_count: 1,
         page_size: 20,
-    }
+    };
     // 是否为群发
     get isGroupMail() {
         return this.dialogData.form.type == EmailType.Group;
@@ -350,16 +347,16 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             total_attachment_content: data.total_attachment_content,
             total_attachment_content_read: data.total_attachment_content_read,
             total_attachment_read: data.total_attachment_read,
-            total_num: data.total_num
+            total_num: data.total_num,
         });
     }
     /**错误讯息弹窗数据 */
     alertDialogData = {
         bShow: false,
         form: {
-            content: ""
-        }
-    }
+            content: "",
+        },
+    };
     /**显示发送错误弹窗 */
     showAlertDialog(data: any) {
         this.alertDialogData.bShow = true;
@@ -390,9 +387,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
     onExportExcel(data: any) {
         this.platUserTableData.isExportExcel = false;
         let list = data.list.filter((data: any) => {
-            return parseInt(data.attachment_gold) > 0
-        }
-        );
+            return parseInt(data.attachment_gold) > 0;
+        });
 
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),

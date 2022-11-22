@@ -27,7 +27,7 @@
                     <div>{{ tableColumns.module.options[row.module] }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="180px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="180px">
                 <template slot-scope="{ row }">
                     <div class="operation">
                         <el-button
@@ -36,7 +36,7 @@
                             class="item"
                             type="primary"
                             icon=""
-                            >{{ $t("common.update") }}</el-button
+                            >{{ LangUtil("编辑") }}</el-button
                         >
                         <el-button
                             v-if="checkUnique(unique.system_fag_delete)"
@@ -44,14 +44,14 @@
                             class="item"
                             type="danger"
                             icon=""
-                            >{{ $t("common.delete") }}</el-button
+                            >{{ LangUtil("删除") }}</el-button
                         >
                     </div>
                 </template>
             </el-table-column>
             <el-table-column
                 v-if="checkUnique(unique.system_fag_order)"
-                :label="$t('common.sort')"
+                :label="LangUtil('排序')"
                 class-name="status-col"
                 width="100px"
             >
@@ -63,6 +63,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -78,21 +79,22 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class SystemFagBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: SystemFagProxy = this.getProxy(SystemFagProxy);
+    myProxy: SystemFagProxy = this.getProxy(SystemFagProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private data = [];
-    private sortItem = {
+    data = [];
+    sortItem = {
         id: 0,
         next_id: 0,
     };
@@ -109,15 +111,15 @@ export default class SystemFagBody extends AbstractView {
         }
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
 
-    private initSort() {
+    initSort() {
         const tbody: any = document.querySelector(".el-table__body-wrapper tbody");
         new Sortable(tbody, {
             onStart: e => {

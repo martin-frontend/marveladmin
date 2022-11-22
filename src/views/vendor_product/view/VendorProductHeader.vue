@@ -30,10 +30,10 @@
             />
             <div>
                 <el-button @click="handlerSearch()" class="header-button" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" class="header-button" type="primary" icon="el-icon-search">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -45,13 +45,14 @@
                 icon="el-icon-circle-plus-outline"
                 @click="handlerCreate"
             >
-                {{ $t("common.create") }}
+                {{ LangUtil("新增") }}
             </el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import VendorProductProxy from "../proxy/VendorProductProxy";
@@ -67,33 +68,34 @@ import SearchInput from "@/components/SearchInput.vue";
     },
 })
 export default class VendorProductHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: VendorProductProxy = this.getProxy(VendorProductProxy);
+    myProxy: VendorProductProxy = this.getProxy(VendorProductProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
     get vendorIdOptions() {
         return this.myProxy.vendorIdOptions;
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 
-    private onGetVendorId() {
+    onGetVendorId() {
         this.myProxy.getVendorId();
     }
 }

@@ -42,4 +42,3 @@ facade.registerCommand(HttpType.admin_plat_lang_delete, cmd_admin_plat_lang_dele
 facade.registerCommand(HttpType.admin_system_lang_translate, cmd_admin_system_lang_translate);
 facade.registerCommand(HttpType.admin_plat_lang_import, cmd_admin_plat_lang_import);
 facade.registerCommand(HttpType.admin_plat_lang_generate, cmd_admin_plat_lang_generate);
-

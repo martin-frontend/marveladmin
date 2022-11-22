@@ -54,7 +54,7 @@
                 min-width="100px"
             ></el-table-column>
 
-            <el-table-column :label="$t('user_detail.addCount')" prop="type" class-name="status-col" min-width="110px">
+            <el-table-column :label="LangUtil('添加数量')" prop="type" class-name="status-col" min-width="110px">
                 <template slot-scope="{ row }"> {{ row.coin_a_amount }} / {{ row.coin_b_amount }} </template>
             </el-table-column>
 
@@ -69,6 +69,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -83,20 +84,21 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatSwapLiquidityLogBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatSwapLiquidityLogProxy = this.getProxy(PlatSwapLiquidityLogProxy);
+    myProxy: PlatSwapLiquidityLogProxy = this.getProxy(PlatSwapLiquidityLogProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }

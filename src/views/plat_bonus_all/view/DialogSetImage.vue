@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('plat_bonus_all_stock_model.settingImage')" :visible.sync="myProxy.dialogImgData.bShow">
+    <el-dialog :title="LangUtil('配置说明图片')" :visible.sync="myProxy.dialogImgData.bShow">
         <div class="banner-list" v-loading="net_status.loading">
             <div v-for="(value, key) in tableColumns.app_type.options" :key="key">
                 <div style="display: flex">
@@ -32,17 +32,18 @@
                     </div>
                 </div>
                 <div style="text-align: center;margin-top: 24px">
-                    <el-tag type="primary"> {{ value }}{{ $t("plat_agent.tagStr") }} </el-tag>
+                    <el-tag type="primary"> {{ value }}{{ LangUtil("推广图") }} </el-tag>
                 </div>
             </div>
         </div>
         <div slot="footer" class="dialog-footer">
-            <el-button type="primary" size="mini" @click="setPromotionBanner">{{ $t("common.save") }}</el-button>
+            <el-button type="primary" size="mini" @click="setPromotionBanner">{{ LangUtil("确认保存") }}</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatBonusAllProxy from "@/views/plat_bonus_all/proxy/PlatBonusAllProxy";
@@ -53,21 +54,22 @@ import AgentPromotionModelProxy from "../proxy/PlatAgentPromotionModelProxy";
 
 @Component
 export default class PlatAgentDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatBonusAllProxy = this.getProxy(PlatBonusAllProxy);
-    private agentModelProxy: AgentPromotionModelProxy = this.getProxy(AgentPromotionModelProxy);
+    myProxy: PlatBonusAllProxy = this.getProxy(PlatBonusAllProxy);
+    agentModelProxy: AgentPromotionModelProxy = this.getProxy(AgentPromotionModelProxy);
     // proxy property
-    private tableColumns = this.agentModelProxy.tableData.columns;
-    private dialogData = this.myProxy.dialogImgData;
-    private form = this.myProxy.dialogImgData.form;
+    tableColumns = this.agentModelProxy.tableData.columns;
+    dialogData = this.myProxy.dialogImgData;
+    form = this.myProxy.dialogImgData.form;
 
     // 图片地址转换
-    private formatImageUrl = formatImageUrl;
+    formatImageUrl = formatImageUrl;
 
     handleChange(file: any) {
         this.myProxy.admin_resource_upload({

@@ -51,13 +51,13 @@
                 </template>
             </el-table-column>
             <el-table-column
-                :label="$t('common.operating')"
+                :label="LangUtil('操作')"
                 class-name="status-col"
                 min-width="100px"
                 v-if="checkUnique(unique.admin_admin_user_log_show)"
             >
                 <template slot-scope="{ row }">
-                    <el-button @click="handleEdit(row)" type="primary">{{ $t("common.detail") }}</el-button>
+                    <el-button @click="handleEdit(row)" type="primary">{{ LangUtil("详情") }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -65,6 +65,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -79,29 +80,30 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class AdminUserLogBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: AdminUserLogProxy = this.getProxy(AdminUserLogProxy);
+    myProxy: AdminUserLogProxy = this.getProxy(AdminUserLogProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private getPlat_id(plat_id: string) {
+    getPlat_id(plat_id: string) {
         if (this.tableColumns.plat_id.options[plat_id]) {
             return this.tableColumns.plat_id.options[plat_id];
         }

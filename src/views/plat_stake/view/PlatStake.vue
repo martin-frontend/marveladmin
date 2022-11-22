@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-        <PlatStakeDialog v-if="myProxy.dialogData.bShow"/>
+        <PlatStakeDialog v-if="myProxy.dialogData.bShow" />
         <PlatStakeHeader />
         <PlatStakeBody />
     </div>
@@ -19,8 +19,8 @@ import PlatStakeDialog from "./PlatStakeDialog.vue";
     components: {
         PlatStakeHeader,
         PlatStakeBody,
-        PlatStakeDialog
-    }
+        PlatStakeDialog,
+    },
 })
 export default class PlatStake extends AbstractView {
     constructor() {

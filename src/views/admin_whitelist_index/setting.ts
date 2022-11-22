@@ -26,4 +26,3 @@ facade.registerCommand(HttpType.admin_admin_whitelist_table_columns, cmd_admin_a
 facade.registerCommand(HttpType.admin_admin_whitelist_index, cmd_admin_admin_whitelist_index);
 facade.registerCommand(HttpType.admin_admin_whitelist_store, cmd_admin_admin_whitelist_store);
 facade.registerCommand(HttpType.admin_admin_whitelist_update, cmd_admin_admin_whitelist_update);
-

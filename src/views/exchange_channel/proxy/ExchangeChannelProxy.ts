@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
@@ -85,7 +86,7 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
         Object.assign(this.tableData.columns, data);
         this.dialogData.platAllOptions = JSON.parse(JSON.stringify(this.tableData.columns.plat_id.options));
         Object.assign(this.dialogData.platAllOptions, {
-            "0": <string>i18n.t("recharge_channels.allPlat"),
+            "0": <string>LangUtil("全部平台"),
         });
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
@@ -203,9 +204,9 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

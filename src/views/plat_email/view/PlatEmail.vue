@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatEmailDialog v-if="myProxy.dialogData.bShow"/>
-        <PlatEmailHeader/>
-        <PlatEmailBody/>
+        <PlatEmailDialog v-if="myProxy.dialogData.bShow" />
+        <PlatEmailHeader />
+        <PlatEmailBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import PlatEmailBody from "./PlatEmailBody.vue";
         PlatEmailDialog,
         PlatEmailHeader,
         PlatEmailBody,
-    }
+    },
 })
 export default class PlatEmail extends AbstractView {
-
     constructor() {
         super(PlatEmailMediator);
     }

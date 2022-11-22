@@ -12,21 +12,26 @@
                     prop="value"
                     class-name="status-col"
                 ></el-table-column>
-                <el-table-column :label="$t('common.operating')" class-name="status-col" width="100px">
+                <el-table-column :label="LangUtil('操作')" class-name="status-col" width="100px">
                     <template slot-scope="{ row }">
-                        <el-button v-if="checkUnique(unique.test_vendor)" size="mini" type="danger" @click="handlerTest(row)">{{
-                            $t("plat_sms.test")
-                        }}</el-button>
+                        <el-button
+                            v-if="checkUnique(unique.test_vendor)"
+                            size="mini"
+                            type="danger"
+                            @click="handlerTest(row)"
+                            >{{ LangUtil("测试") }}</el-button
+                        >
                     </template>
                 </el-table-column>
             </el-table>
             <div class="dialog_footer">
-                <el-button type="primary" size="mini" @click="handlerClose">{{ $t("common.close") }}</el-button>
+                <el-button type="primary" size="mini" @click="handlerClose">{{ LangUtil("关闭") }}</el-button>
             </div>
         </el-form>
     </el-dialog>
 </template>
-<script lang='ts'>
+<script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import VendorProxy from "@/views/vendor/proxy/VendorProxy";
@@ -35,15 +40,16 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class VendorTestDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: VendorProxy = this.getProxy(VendorProxy);
+    myProxy: VendorProxy = this.getProxy(VendorProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
 
     get configAry() {
         let ary: any = [];
@@ -53,16 +59,16 @@ export default class VendorTestDialog extends AbstractView {
         return ary;
     }
 
-    private handlerTest(data: any) {
+    handlerTest(data: any) {
         this.myProxy.onTest(data.value);
     }
 
-    private handlerClose() {
+    handlerClose() {
         this.myProxy.testDialogData.bShow = false;
     }
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 
 .dialog_footer {

@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { dateFormat, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
 import { getPageSetting } from "@/views/_user_detail/PageSetting";
@@ -14,7 +15,7 @@ export default class TabCommissionProxy extends AbstractProxy implements ITabCom
     }
 
     /**离开页面时调用 */
-    leave() { }
+    leave() {}
 
     /**表格相关数据 */
     tableData = {
@@ -23,11 +24,11 @@ export default class TabCommissionProxy extends AbstractProxy implements ITabCom
                 commission_history_num: "",
                 commission_received_num: "",
                 date: { name: "" },
-                direct_water: {name: ''},
-                group_water: {name: ''},
+                direct_water: { name: "" },
+                group_water: { name: "" },
                 keep_time: { name: "" },
                 total_commission: { name: "" },
-                total_water: {name: ''}
+                total_water: { name: "" },
             },
             commission_detail: {
                 commission_awaiting_num: { name: "" },
@@ -169,10 +170,10 @@ export default class TabCommissionProxy extends AbstractProxy implements ITabCom
         const total: any = {
             // 这里的合计不能翻 需要拿来判断
             date: "合计",
-            direct_water:data.summary.direct_water,
-            group_water:data.summary.group_water,
+            direct_water: data.summary.direct_water,
+            group_water: data.summary.group_water,
             total_commission: data.summary.total_commission,
-            total_water:data.summary.total_water
+            total_water: data.summary.total_water,
         };
         Object.assign(this.tableData, JSON.parse(JSON.stringify(data)));
         this.tableData.list.length = 0;
@@ -223,7 +224,7 @@ export default class TabCommissionProxy extends AbstractProxy implements ITabCom
             });
         });
         this.dialogData.detailData.infoList.push({
-            title: <string>i18n.t("common.total"),
+            title: <string>LangUtil("合计"),
             total_water: this.dialogData.detailData.tableData.statistics_data.total_water_summary,
             self_water: this.dialogData.detailData.tableData.statistics_data.self_water_summary,
             direct_water: this.dialogData.detailData.tableData.statistics_data.direct_water_summary,

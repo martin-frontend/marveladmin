@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <GameDomainDialog/>
-        <GameDomainHeader/>
-        <GameDomainBody/>
+        <GameDomainDialog />
+        <GameDomainHeader />
+        <GameDomainBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import GameDomainBody from "./GameDomainBody.vue";
         GameDomainDialog,
         GameDomainHeader,
         GameDomainBody,
-    }
+    },
 })
 export default class GameDomain extends AbstractView {
-
     constructor() {
         super(GameDomainMediator);
     }

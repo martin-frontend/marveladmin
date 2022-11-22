@@ -8,12 +8,12 @@ export enum UserType {
     ADMIN_NORMAL = 4,
     CHANNEL = 8,
     COIN = 32,
-    COINUSEREXCHANGE = 64
+    COINUSEREXCHANGE = 64,
 }
 
 /**
  * 语言管理里面的管理类型
- * options: {1: '前端WEB皮肤1语言', 2: '后端管理语言', 3: '服务器数据语言', 4: '厂商游戏', 5: '平台公告', 6: '常见问题', 7: '平台邮件', 
+ * options: {1: '前端WEB皮肤1语言', 2: '后端管理语言', 3: '服务器数据语言', 4: '厂商游戏', 5: '平台公告', 6: '常见问题', 7: '平台邮件',
  * 8: '平台活动',11:‘跑马灯’,12:'系统邮件模版','13':'平台短信通道'，‘14’:'充值兑换'}
  */
 export enum LanguageType {

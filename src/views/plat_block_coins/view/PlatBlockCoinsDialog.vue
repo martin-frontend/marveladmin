@@ -2,7 +2,7 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="105px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
-                <el-select filterable v-model="form.plat_id" :placeholder="$t('common.pleaseChoose')">
+                <el-select filterable v-model="form.plat_id" :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(item, key) of tableColumns.plat_id.options"
                         :label="item"
@@ -13,7 +13,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.coin_name_unique.name" prop="coin_name_unique">
-                <el-select filterable v-model="form.coin_name_unique" :placeholder="$t('common.pleaseChoose')">
+                <el-select filterable v-model="form.coin_name_unique" :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(item, key) of tableColumns.coin_name_unique.options"
                         :label="item"
@@ -24,7 +24,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.type.name" prop="type">
-                <el-select filterable v-model="form.type" :placeholder="$t('common.pleaseChoose')">
+                <el-select filterable v-model="form.type" :placeholder="LangUtil('请选择')">
                     <el-option v-for="(item, key) of tableColumns.type.options" :label="item" :value="key" :key="key">
                     </el-option>
                 </el-select>
@@ -55,15 +55,16 @@
             </el-form-item>
         </el-form>
         <div class="btn_group">
-            <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ $t("common.delete") }}</el-button>
+            <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ LangUtil("删除") }}</el-button>
             <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
-                $t("common.save")
+                LangUtil("确认保存")
             }}</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatBlockCoinsProxy from "@/views/plat_block_coins/proxy/PlatBlockCoinsProxy";
@@ -74,24 +75,25 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatBlockCoinsDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatBlockCoinsProxy = this.getProxy(PlatBlockCoinsProxy);
+    myProxy: PlatBlockCoinsProxy = this.getProxy(PlatBlockCoinsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -107,11 +109,11 @@ export default class PlatBlockCoinsDialog extends AbstractView {
 
     get rules() {
         return {
-            languages: [{ type: "array", required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            languages: [{ type: "array", required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -119,7 +121,7 @@ export default class PlatBlockCoinsDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -127,7 +129,7 @@ export default class PlatBlockCoinsDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 }

@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_system_fag_index, cmd_admin_system_fag_ind
 facade.registerCommand(HttpType.admin_system_fag_show, cmd_admin_system_fag_show);
 facade.registerCommand(HttpType.admin_system_fag_store, cmd_admin_system_fag_store);
 facade.registerCommand(HttpType.admin_system_fag_update, cmd_admin_system_fag_update);
-

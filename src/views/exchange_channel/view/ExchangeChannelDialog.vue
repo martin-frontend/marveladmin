@@ -2,13 +2,7 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item size="mini" :label="tableColumns.plat_id.name" prop="plat_id">
-                <el-select
-                    v-model="form.plat_id"
-                    filterable
-                    clearable
-                    class="select"
-                    :placeholder="$t('common.pleaseChoose')"
-                >
+                <el-select v-model="form.plat_id" filterable clearable class="select" :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in tableColumns.plat_id.options"
                         :key="key"
@@ -23,7 +17,7 @@
                     filterable
                     clearable
                     class="select"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns.exchange_vendors_id.options"
@@ -42,12 +36,7 @@
                 :label="`${tableColumns.coin_name_unique.name}`"
                 prop="coin_name_unique"
             >
-                <el-select
-                    v-model="form.coin_name_unique"
-                    filterable
-                    class="select"
-                    :placeholder="$t('common.pleaseChoose')"
-                >
+                <el-select v-model="form.coin_name_unique" filterable class="select" :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in tableColumns.coin_relations[form.plat_id]"
                         :key="key"
@@ -65,12 +54,7 @@
                 :label="`${tableColumns.block_network_id.name}`"
                 prop="block_network_id"
             >
-                <el-select
-                    v-model="form.block_network_id"
-                    filterable
-                    class="select"
-                    :placeholder="$t('common.pleaseChoose')"
-                >
+                <el-select v-model="form.block_network_id" filterable class="select" :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in tableColumns.coin_relations[form.plat_id][form.coin_name_unique]
                             .block_network_id"
@@ -94,7 +78,7 @@
                     v-model="form.account"
                     filterable
                     class="select"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     width="100%"
                 >
                     <el-option
@@ -108,13 +92,13 @@
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns.name.name" prop="name">
-                <el-input v-model="form.name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.name" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns.account.name" prop="account">
-                <el-input v-model="form.account" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.account" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns.secret.name" prop="secret">
-                <el-input v-model="form.secret" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.secret" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
 
             <el-form-item :label="tableColumns.extend_params.name">
@@ -137,13 +121,13 @@
                     type="danger"
                     size="mini"
                     @click="handleDelete"
-                    >{{ $t("common.delete") }}</el-button
+                    >{{ LangUtil("删除") }}</el-button
                 >
                 <el-button
                     type="primary"
                     v-if="checkUnique(unique.exchange_channel_update)"
                     @click="isStatusUpdate ? handleUpdate() : handleAdd()"
-                    >{{ $t("common.save") }}</el-button
+                    >{{ LangUtil("确认保存") }}</el-button
                 >
             </el-form-item>
         </el-form>
@@ -151,6 +135,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import ExchangeChannelProxy from "@/views/exchange_channel/proxy/ExchangeChannelProxy";
@@ -166,24 +151,25 @@ import JsonEditor from "@/components/JsonEditor/index.vue";
     },
 })
 export default class ExchangeChannelDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: ExchangeChannelProxy = this.getProxy(ExchangeChannelProxy);
+    myProxy: ExchangeChannelProxy = this.getProxy(ExchangeChannelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -199,18 +185,18 @@ export default class ExchangeChannelDialog extends AbstractView {
 
     get rules() {
         return {
-            plat_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            exchange_vendors_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            account: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            secret: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            status: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            coin_name_unique: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            block_network_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            plat_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            exchange_vendors_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            account: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            secret: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            status: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            coin_name_unique: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            block_network_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -218,7 +204,7 @@ export default class ExchangeChannelDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -226,7 +212,7 @@ export default class ExchangeChannelDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 }

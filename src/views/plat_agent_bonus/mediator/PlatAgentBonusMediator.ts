@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_agent_bonus/setting";
 import { Message } from "element-ui";
 import PlatAgentBonusProxy from "../proxy/PlatAgentBonusProxy";
 
-interface IPlatAgentBonus extends IEventDispatcher {
-    
-}
+interface IPlatAgentBonus extends IEventDispatcher {}
 
 export default class PlatAgentBonusMediator extends AbstractMediator {
     private myProxy: PlatAgentBonusProxy = <any>this.getProxy(PlatAgentBonusProxy);
@@ -25,11 +23,7 @@ export default class PlatAgentBonusMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_plat_agent_bonus_table_columns,
-            EventType.admin_plat_agent_bonus_index,
-
-        ];
+        return [EventType.admin_plat_agent_bonus_table_columns, EventType.admin_plat_agent_bonus_index];
     }
 
     handleNotification(notification: puremvc.INotification) {

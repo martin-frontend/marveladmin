@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatServiceDialog v-if="myProxy.dialogData.bShow"/>
-        <PlatServiceHeader/>
-        <PlatServiceBody/>
+        <PlatServiceDialog v-if="myProxy.dialogData.bShow" />
+        <PlatServiceHeader />
+        <PlatServiceBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import PlatServiceBody from "./PlatServiceBody.vue";
         PlatServiceDialog,
         PlatServiceHeader,
         PlatServiceBody,
-    }
+    },
 })
 export default class PlatService extends AbstractView {
-
     constructor() {
         super(PlatServiceMediator);
     }

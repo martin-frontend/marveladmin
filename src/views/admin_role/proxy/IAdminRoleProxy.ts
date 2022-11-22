@@ -3,33 +3,33 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface IAdminRoleProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
     };
     /**权限弹窗相关数据 */
     dialogSettingData: {
-        bShow: boolean,
+        bShow: boolean;
         /**搜索条件 */
-        inputSearch: string,
+        inputSearch: string;
         /**详细数据 */
-        detail: any,
+        detail: any;
         /**已选择的权限 */
-        detailPermission: any,
+        detailPermission: any;
         /**权限树 */
-        permissionData: any,
+        permissionData: any;
         /**默认选择 */
-        defaultPermission: any,
-    }
+        defaultPermission: any;
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any): void;

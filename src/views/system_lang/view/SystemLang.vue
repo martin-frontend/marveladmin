@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <SystemLangDialog v-if="myProxy.dialogData.bShow"/>
-        <SystemLangHeader/>
-        <SystemLangBody/>
+        <SystemLangDialog v-if="myProxy.dialogData.bShow" />
+        <SystemLangHeader />
+        <SystemLangBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import SystemLangBody from "./SystemLangBody.vue";
         SystemLangDialog,
         SystemLangHeader,
         SystemLangBody,
-    }
+    },
 })
 export default class SystemLang extends AbstractView {
-
     constructor() {
         super(SystemLangMediator);
     }

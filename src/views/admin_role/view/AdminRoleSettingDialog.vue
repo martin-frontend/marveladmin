@@ -1,24 +1,20 @@
 <template>
-    <el-dialog :title="$t('common.setting')" :visible.sync="myProxy.dialogSettingData.bShow" width="800px">
+    <el-dialog :title="LangUtil('设置')" :visible.sync="myProxy.dialogSettingData.bShow" width="800px">
         <div v-loading="net_status.loading">
             <div class="row">
-                <el-button type="primary" size="mini" @click="checkedAll(true)">{{
-                    $t("admin_role.selectAll")
-                }}</el-button>
-                <el-button type="primary" size="mini" @click="checkedAll(false)">{{
-                    $t("admin_role.clearAll")
-                }}</el-button>
+                <el-button type="primary" size="mini" @click="checkedAll(true)">{{ LangUtil("全选") }}</el-button>
+                <el-button type="primary" size="mini" @click="checkedAll(false)">{{ LangUtil("取消全选") }}</el-button>
                 <el-button type="primary" size="mini" @click="setAllExpand(true)">{{
-                    $t("admin_role.unfold")
+                    LangUtil("展开所有节点")
                 }}</el-button>
                 <el-button type="primary" size="mini" @click="setAllExpand(false)">{{
-                    $t("admin_role.putAway")
+                    LangUtil("收起所有节点")
                 }}</el-button>
                 <el-input
                     v-model="dialogData.inputSearch"
                     clearable
                     style="margin-left: 10px; width: 200px"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                 ></el-input>
             </div>
             <div class="tree-content" v-if="myProxy.dialogSettingData.bShow">
@@ -57,7 +53,7 @@
                     @click="onSavePermission"
                     v-if="checkUnique(unique.admin_role_setting_edit)"
                 >
-                    {{ $t("common.save") }}
+                    {{ LangUtil("确认保存") }}
                 </el-button>
             </div>
         </div>
@@ -65,6 +61,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import AdminRoleProxy from "@/views/admin_role/proxy/AdminRoleProxy";
@@ -75,34 +72,35 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class AdminRoleSettingDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: AdminRoleProxy = this.getProxy(AdminRoleProxy);
+    myProxy: AdminRoleProxy = this.getProxy(AdminRoleProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private dialogData = this.myProxy.dialogSettingData;
+    tableColumns = this.myProxy.tableData.columns;
+    dialogData = this.myProxy.dialogSettingData;
 
-    private onSavePermission() {
+    onSavePermission() {
         this.myProxy.onSavePermission(JSON.stringify((this.$refs.tree as any).getCheckedKeys()));
     }
 
     @Watch("dialogData.inputSearch")
-    private watchSearchInput() {
+    watchSearchInput() {
         //@ts-ignore
         this.$refs.tree.filter(this.dialogData.inputSearch);
     }
     // tree筛选
-    private filterNode(value: string, data: any) {
+    filterNode(value: string, data: any) {
         if (!value) return true;
         return data.meta.title.indexOf(value) !== -1;
     }
 
     // 展开收起所有节点
-    private setAllExpand(state: boolean) {
+    setAllExpand(state: boolean) {
         function dis(nodes: any) {
             for (const node of nodes) {
                 node.expanded = state;

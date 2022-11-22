@@ -6,7 +6,7 @@ import { MessageBox } from "element-ui";
 import IPlatAgentBindProxy from "./IPlatAgentBindProxy";
 import GlobalEventType from "@/core/global/GlobalEventType";
 
-export type BooleanOrNumber = 'boolean' | 'number';
+export type BooleanOrNumber = "boolean" | "number";
 export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAgentBindProxy {
     static NAME = "PlatAgentBindProxy";
 
@@ -30,7 +30,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         columns: <any>{
             // TODO
             binded_at: { name: "绑定时间", options: {} },
-            bonus_ratio: { name: '分红统计比例' },
+            bonus_ratio: { name: "分红统计比例" },
             channel_id: <any>{ name: "所属渠道", options: {} },
             commission_awaiting_num: { name: "当前可领取佣金", options: {} },
             commission_received_num: { name: "已领取佣金总额", options: {} },
@@ -193,7 +193,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 win_loss_32: 0,
                 win_loss_64: 0,
                 win_loss_128: 0,
-            }
+            },
         },
         tableData: {
             columns: <any>{
@@ -251,7 +251,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 win_loss_32: { name: "真人输赢", options: [] },
                 win_loss_64: { name: "体育电竞输赢", options: [] },
                 win_loss_128: { name: "链游输赢", options: [] },
-            }
+            },
         },
         isCanEditConfig: 0, //1-可编辑 0-不可编辑
     };
@@ -282,7 +282,9 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 this.listQuery.plat_id = plat_id_options_keys[0];
             }
             if (this.listQuery.plat_id) {
-                this.tableData.columns.channel_id_options = this.tableData.columns.channel_id.options[this.listQuery.plat_id]
+                this.tableData.columns.channel_id_options = this.tableData.columns.channel_id.options[
+                    this.listQuery.plat_id
+                ];
                 const channel_id_keys = Object.keys(this.tableData.columns.channel_id_options);
                 channel_id_keys.forEach((key: any) => {
                     this.tableData.columns.channel_id_options[key] = key;
@@ -441,7 +443,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     }
 
     api_admin_plat_agent_bonus_config_show(user_id: number) {
-        this.bonusConfigDialogData.user_id = user_id,
+        (this.bonusConfigDialogData.user_id = user_id),
             this.sendNotification(HttpType.admin_plat_agent_bonus_config_show, { user_id });
     }
 
@@ -453,17 +455,17 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     /**设置代理分红配置表格数据 */
     setBonusConfigTableData(data: any) {
         Object.assign(this.bonusConfigDialogData.form, data);
-        Object.assign(this.bonusConfigDialogData.form.bonus_config, this.convertBonusConfigValue(data.bonus_config, 'boolean'));
+        Object.assign(
+            this.bonusConfigDialogData.form.bonus_config,
+            this.convertBonusConfigValue(data.bonus_config, "boolean")
+        );
         this.bonusConfigDialogData.formSource = JSON.parse(JSON.stringify(this.bonusConfigDialogData.form));
         this.bonusConfigDialogData.isCanEditConfig = data.can_edit_config;
     }
 
     /**更新代理分红配置数据 */
     updateBonusConfig() {
-        const formCopy: any = formCompared(
-            this.bonusConfigDialogData.form,
-            this.bonusConfigDialogData.formSource
-        );
+        const formCopy: any = formCompared(this.bonusConfigDialogData.form, this.bonusConfigDialogData.formSource);
 
         const formConfigCopy: any = formCompared(
             this.bonusConfigDialogData.form.bonus_config,
@@ -471,7 +473,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         );
 
         if (Object.keys(formConfigCopy).length > 0) {
-            const newConfig = this.convertBonusConfigValue(formConfigCopy, 'number');
+            const newConfig = this.convertBonusConfigValue(formConfigCopy, "number");
             formCopy.bonus_config = jsonStringify(newConfig);
         } else {
             delete formCopy.bonus_config;
@@ -483,13 +485,14 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
 
     convertBonusConfigValue(config: any, converToNumberOrBoolean: BooleanOrNumber) {
         const keysArr = Object.keys(config);
-        const converFunction = converToNumberOrBoolean === 'number' ? this.convertBooleanToNumber : this.convertNumberToBoolean;
+        const converFunction =
+            converToNumberOrBoolean === "number" ? this.convertBooleanToNumber : this.convertNumberToBoolean;
         if (keysArr.length > 0) {
             const newObject = <any>{};
-            keysArr.forEach((key) => {
+            keysArr.forEach(key => {
                 newObject[key] = converFunction(config[key]);
-            })
-            return newObject
+            });
+            return newObject;
         }
         return config;
     }

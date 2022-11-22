@@ -37,7 +37,7 @@ export default interface IPlatAgentBindProxy {
         user_id: any;
         form: any;
         tableData: any;
-    }
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any): void;

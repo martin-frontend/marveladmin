@@ -13,7 +13,7 @@
                 :startDate.sync="listQuery['settlement_at-{>=}']"
                 :endDate.sync="listQuery['settlement_at-{<=}']"
                 :showTime="true"
-                :tip="$t('plat_users_bet.defaultTime')"
+                :tip="LangUtil('（北京时间）')"
                 :pickerOptions="myProxy.pickerOptions"
             />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
@@ -25,10 +25,10 @@
             />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -40,7 +40,7 @@
                     type="warning"
                     icon="el-icon-refresh"
                 >
-                    {{ $t("user_detail.rebateRecovery") }}
+                    {{ LangUtil("返佣恢復") }}
                     <!-- 返佣恢復 -->
                 </el-button>
                 <el-button
@@ -49,7 +49,7 @@
                     type="primary"
                     icon="el-icon-circle-plus-outline"
                 >
-                    {{ $t("user_detail.addBetHistory") }}
+                    {{ LangUtil("添加投注记录") }}
                     <!-- 添加投注记录 -->
                 </el-button>
             </div>
@@ -58,6 +58,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PromotionDiscountIndexProxy from "../proxy/PromotionDiscountIndexProxy";
@@ -76,29 +77,30 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PromotionDiscountIndexHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PromotionDiscountIndexProxy = this.getProxy(PromotionDiscountIndexProxy);
+    myProxy: PromotionDiscountIndexProxy = this.getProxy(PromotionDiscountIndexProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerRecover() {
+    handlerRecover() {
         this.myProxy.recover();
     }
 
-    private handlerRecord() {
+    handlerRecord() {
         this.myProxy.showDialog();
     }
 }

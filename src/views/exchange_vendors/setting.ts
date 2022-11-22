@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_exchange_vendors_index, cmd_admin_exchange
 facade.registerCommand(HttpType.admin_exchange_vendors_show, cmd_admin_exchange_vendors_show);
 facade.registerCommand(HttpType.admin_exchange_vendors_store, cmd_admin_exchange_vendors_store);
 facade.registerCommand(HttpType.admin_exchange_vendors_update, cmd_admin_exchange_vendors_update);
-

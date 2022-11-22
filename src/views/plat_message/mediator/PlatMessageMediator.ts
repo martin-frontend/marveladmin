@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_message/setting";
 import { Message } from "element-ui";
 import PlatMessageProxy from "../proxy/PlatMessageProxy";
 
-interface IPlatMessage extends IEventDispatcher {
-    
-}
+interface IPlatMessage extends IEventDispatcher {}
 
 export default class PlatMessageMediator extends AbstractMediator {
     private myProxy: PlatMessageProxy = <any>this.getProxy(PlatMessageProxy);
@@ -25,11 +23,7 @@ export default class PlatMessageMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_plat_message_table_columns,
-            EventType.admin_plat_message_index,
-
-        ];
+        return [EventType.admin_plat_message_table_columns, EventType.admin_plat_message_index];
     }
 
     handleNotification(notification: puremvc.INotification) {

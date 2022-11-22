@@ -3,7 +3,7 @@
         <el-scrollbar style="height: 700px">
             <el-form ref="form" :rules="rules[status]" :model="form" label-width="160px" v-loading="net_status.loading">
                 <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
-                    <el-select filterable v-model="form.plat_id" :placeholder="$t('common.pleaseChoose')">
+                    <el-select filterable v-model="form.plat_id" :placeholder="LangUtil('请选择')">
                         <el-option v-for="(item, key) of platIdOptions" :label="item" :value="key" :key="key">
                         </el-option>
                     </el-select>
@@ -21,8 +21,8 @@
                     <el-input v-model="form.max_gold" oninput="value=value.replace(/[^\d]/g,'');"></el-input>
                 </el-form-item>
                 <el-form-item :label="tableColumns.is_fixed_gold.name" prop="is_fixed_gold">
-                    <el-radio v-model="form.is_fixed_gold" label="1">{{ $t("common.yes") }}</el-radio>
-                    <el-radio v-model="form.is_fixed_gold" label="0">{{ $t("common.no") }}</el-radio>
+                    <el-radio v-model="form.is_fixed_gold" label="1">{{ LangUtil("是") }}</el-radio>
+                    <el-radio v-model="form.is_fixed_gold" label="0">{{ LangUtil("否") }}</el-radio>
                 </el-form-item>
                 <el-form-item :label="tableColumns.fixed_gold_list.name" prop="fixed_gold_list">
                     <div class="gold_list">
@@ -30,51 +30,51 @@
                             <el-input
                                 v-model="form.gold_list_1"
                                 oninput="value=value.replace(/[^\d]/g,'');"
-                                :placeholder="$t('common.money')+1"
+                                :placeholder="LangUtil('金额') + 1"
                             ></el-input>
                             <el-input
                                 v-model="form.gold_list_2"
                                 oninput="value=value.replace(/[^\d]/g,'');"
-                                :placeholder="$t('common.money')+2"
+                                :placeholder="LangUtil('金额') + 2"
                             ></el-input>
                             <el-input
                                 v-model="form.gold_list_3"
                                 oninput="value=value.replace(/[^\d]/g,'');"
-                                :placeholder="$t('common.money')+3"
+                                :placeholder="LangUtil('金额') + 3"
                             ></el-input>
                             <el-input
                                 v-model="form.gold_list_4"
                                 oninput="value=value.replace(/[^\d]/g,'');"
-                                :placeholder="$t('common.money')+4"
+                                :placeholder="LangUtil('金额') + 4"
                             ></el-input>
                         </div>
                         <div>
                             <el-input
                                 v-model="form.gold_list_5"
                                 oninput="value=value.replace(/[^\d]/g,'');"
-                                :placeholder="$t('common.money')+5"
+                                :placeholder="LangUtil('金额') + 5"
                             ></el-input>
                             <el-input
                                 v-model="form.gold_list_6"
                                 oninput="value=value.replace(/[^\d]/g,'');"
-                                :placeholder="$t('common.money')+6"
+                                :placeholder="LangUtil('金额') + 6"
                             ></el-input>
                             <el-input
                                 v-model="form.gold_list_7"
                                 oninput="value=value.replace(/[^\d]/g,'');"
-                                :placeholder="$t('common.money')+7"
+                                :placeholder="LangUtil('金额') + 7"
                             ></el-input>
                             <el-input
                                 v-model="form.gold_list_8"
                                 oninput="value=value.replace(/[^\d]/g,'');"
-                                :placeholder="$t('common.money')+8"
+                                :placeholder="LangUtil('金额') + 8"
                             ></el-input>
                         </div>
                     </div>
                 </el-form-item>
                 <el-form-item :label="tableColumns.gold_random.name" prop="gold_random">
-                    <el-radio v-model="form.gold_random" label="1">{{ $t("common.yes") }}</el-radio>
-                    <el-radio v-model="form.gold_random" label="0">{{ $t("common.no") }}</el-radio>
+                    <el-radio v-model="form.gold_random" label="1">{{ LangUtil("是") }}</el-radio>
+                    <el-radio v-model="form.gold_random" label="0">{{ LangUtil("否") }}</el-radio>
                     <p class="notic">{{ goldNotice }}</p>
                 </el-form-item>
                 <el-form-item :label="tableColumns.total_limit_gold.name" prop="total_limit_gold">
@@ -85,7 +85,13 @@
                 </el-form-item>
 
                 <el-form-item :label="tableColumns.user_total_recharge.name" prop="user_total_recharge">
-                    <el-input v-model="form.user_total_recharge" max="1000000" min="0" type="number" onkeyup="value=value.replace(/[^\d]/g,'')"></el-input>
+                    <el-input
+                        v-model="form.user_total_recharge"
+                        max="1000000"
+                        min="0"
+                        type="number"
+                        onkeyup="value=value.replace(/[^\d]/g,'')"
+                    ></el-input>
                 </el-form-item>
 
                 <el-form-item :label="tableColumns.type.name" prop="type">
@@ -93,7 +99,7 @@
                         <el-input v-model="form.type" :disabled="isStatusUpdate !== null"></el-input>
                     </div>
                     <div v-else>
-                        <el-select filterable v-model="form.type" :placeholder="$t('common.pleaseChoose')">
+                        <el-select filterable v-model="form.type" :placeholder="LangUtil('请选择')">
                             <el-option
                                 v-for="(item, key) of tableColumns.type.options"
                                 :label="item"
@@ -105,10 +111,10 @@
                     </div>
                 </el-form-item>
                 <!-- receive_notice -->
-                <el-form-item :label="`${tableColumns.receive_notice.name}`+$t('common.info')">
+                <el-form-item :label="`${tableColumns.receive_notice.name}` + LangUtil('信息')">
                     <el-input
                         type="textarea"
-                        :placeholder="$t('common.pleaseEnter')"
+                        :placeholder="LangUtil('请输入')"
                         v-model="form.receive_notice"
                         maxlength="100"
                         show-word-limit
@@ -119,33 +125,41 @@
                     <el-input v-model="form.receive_name" :disabled="isStatusUpdate"></el-input>
                 </el-form-item>
                 <div v-if="form.type === '1' || form.type === '银行卡'">
-                    <el-form-item :label="$t('coin_receive_payment_channel.accountBank')" prop="bank">
+                    <el-form-item :label="LangUtil('开户行')" prop="bank">
                         <el-select
                             filterable
                             v-model="form.bank"
-                            :placeholder="$t('common.pleaseChoose')"
+                            :placeholder="LangUtil('请选择')"
                             :disabled="isStatusUpdate"
                         >
                             <el-option v-for="(item, key) of bankList" :label="item" :value="key" :key="key">
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item :label="$t('coin_receive_payment_channel.accountOpeningBranch')" prop="account_bank">
+                    <el-form-item :label="LangUtil('开户支行')" prop="account_bank">
                         <el-input v-model="form.account_bank" :disabled="isStatusUpdate"></el-input>
                     </el-form-item>
-                    <el-form-item :label="$t('common.bankCard')" prop="account">
+                    <el-form-item :label="LangUtil('银行卡号')" prop="account">
                         <el-input v-model="form.account" :disabled="isStatusUpdate"></el-input>
                     </el-form-item>
                 </div>
-                <el-form-item :label="$t('common.alipayNumber')" prop="account" v-if="form.type === '2' || form.type === '支付宝'">
+                <el-form-item
+                    :label="LangUtil('支付宝账号')"
+                    prop="account"
+                    v-if="form.type === '2' || form.type === '支付宝'"
+                >
                     <el-input v-model="form.account" :disabled="isStatusUpdate"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('common.weChatAccount')" prop="account" v-if="form.type === '3' || form.type === '微信'">
+                <el-form-item
+                    :label="LangUtil('微信账号')"
+                    prop="account"
+                    v-if="form.type === '3' || form.type === '微信'"
+                >
                     <el-input v-model="form.account" :disabled="isStatusUpdate"></el-input>
                 </el-form-item>
 
                 <div v-if="form.type == '2' || form.type == '支付宝' || form.type == '3' || form.type == '微信'">
-                    <el-form-item :label="$t('coin_receive_payment_channel.uploadQrcode')" prop="qr_code">
+                    <el-form-item :label="LangUtil('上传二维码')" prop="qr_code">
                         <div>
                             <el-upload
                                 class="upload_group"
@@ -158,10 +172,12 @@
                                 :on-change="fileChange"
                                 :http-request="upload"
                             >
-                                <el-button class="item upload_btn" type="primary" icon="el-icon-circle-plus-outline"
-                                    >{{ $t("common.uploadImage") }}</el-button
-                                >
-                                <div slot="tip" class="el-upload__tip">{{ $t("coin_receive_payment_channel.uploadTip") }}</div>
+                                <el-button class="item upload_btn" type="primary" icon="el-icon-circle-plus-outline">{{
+                                    LangUtil("上传图片")
+                                }}</el-button>
+                                <div slot="tip" class="el-upload__tip">
+                                    {{ LangUtil("图片正方形，JPG后者PNG，最大不要超过200kb") }}
+                                </div>
                             </el-upload>
                         </div>
                     </el-form-item>
@@ -175,7 +191,7 @@
                         filterable
                         multiple
                         v-model="form.coin_wallet_ids"
-                        :placeholder="$t('common.pleaseChoose')"
+                        :placeholder="LangUtil('请选择')"
                         style="width:100%"
                     >
                         <el-option
@@ -189,19 +205,22 @@
                 </el-form-item>
 
                 <el-form-item :label="tableColumns['status'].name" prop="status">
-                    <el-radio v-model="form.status" label="1">{{ $t("common.yes") }}</el-radio>
-                    <el-radio v-model="form.status" label="98">{{ $t("common.no") }}</el-radio>
+                    <el-radio v-model="form.status" label="1">{{ LangUtil("是") }}</el-radio>
+                    <el-radio v-model="form.status" label="98">{{ LangUtil("否") }}</el-radio>
                 </el-form-item>
             </el-form>
         </el-scrollbar>
         <div class="btn_group">
-            <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ $t("common.delete") }}</el-button>
-            <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{ $t("common.save") }}</el-button>
+            <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ LangUtil("删除") }}</el-button>
+            <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
+                LangUtil("确认保存")
+            }}</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import CoinReceivePaymentChannelProxy from "@/views/coin_receive_payment_channel/proxy/CoinReceivePaymentChannelProxy";
@@ -213,25 +232,26 @@ import { warn } from "node_modules/vue-class-component/lib/util";
 
 @Component
 export default class CoinReceivePaymentChannelDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: CoinReceivePaymentChannelProxy = this.getProxy(CoinReceivePaymentChannelProxy);
+    myProxy: CoinReceivePaymentChannelProxy = this.getProxy(CoinReceivePaymentChannelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
 
-    private form = this.myProxy.dialogData.form;
+    form = this.myProxy.dialogData.form;
 
-    private goldNotice = this.myProxy.goldNotice;
+    goldNotice = this.myProxy.goldNotice;
 
-    private bankList = this.myProxy.bankList;
+    bankList = this.myProxy.bankList;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     get platIdOptions() {
@@ -239,7 +259,7 @@ export default class CoinReceivePaymentChannelDialog extends AbstractView {
     }
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -255,23 +275,23 @@ export default class CoinReceivePaymentChannelDialog extends AbstractView {
 
     get rules() {
         const commonRules = {
-            plat_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "blur" }],
+            plat_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
             title: [
-                { required: true, message: this.$t("common.requiredInput"), trigger: "blur" },
-                { max: 20, message: this.$t("coin_receive_payment_channel.ruleText1"), trigger: "blur" },
+                { required: true, message: this.LangUtil("必须填写"), trigger: "blur" },
+                { max: 20, message: this.LangUtil("长度在20个字符"), trigger: "blur" },
             ],
-            min_gold: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            max_gold: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            is_fixed_gold: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "blur" }],
+            min_gold: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            max_gold: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            is_fixed_gold: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
             fixed_gold_list: [{ required: true, validator: this.validateGoldList, trigger: "blur" }],
-            type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            receive_name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            bank: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            account_bank: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            account: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            receive_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            bank: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            account_bank: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            account: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
             qr_code: [{ required: true, validator: this.validateUpload, trigger: "blur" }],
-            status: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            user_total_recharge: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            status: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            user_total_recharge: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
         };
         return {
             create: commonRules,
@@ -279,7 +299,7 @@ export default class CoinReceivePaymentChannelDialog extends AbstractView {
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -287,7 +307,7 @@ export default class CoinReceivePaymentChannelDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -295,12 +315,12 @@ export default class CoinReceivePaymentChannelDialog extends AbstractView {
         });
     }
 
-    private validateGoldList(rule: any, value: any, callback: any) {
+    validateGoldList(rule: any, value: any, callback: any) {
         let d: any = this.form;
-        let errorCode1: any = this.$t("coin_receive_payment_channel.errorCode1")
-        let errorCode7: any = this.$t("coin_receive_payment_channel.errorCode7")
-        let errorCode2: any = this.$t("coin_receive_payment_channel.errorCode2")
-        let errorCode3: any = this.$t("coin_receive_payment_channel.errorCode3")
+        let errorCode1: any = this.LangUtil("请输入金额");
+        let errorCode7: any = this.LangUtil("最大金额或最小金额没填写");
+        let errorCode2: any = this.LangUtil("金额不能小于最小金额");
+        let errorCode3: any = this.LangUtil("金额不能大于最大金额");
         if (
             !d.gold_list_1 &&
             !d.gold_list_2 &&
@@ -344,8 +364,8 @@ export default class CoinReceivePaymentChannelDialog extends AbstractView {
     }
 
     // qr code 验证
-    private validateUpload(rule: any, value: any, callback: any) {
-        let errorCode4: any = this.$t("coin_receive_payment_channel.errorCode4")
+    validateUpload(rule: any, value: any, callback: any) {
+        let errorCode4: any = this.LangUtil("请上传QR Code");
         if (this.myProxy.uploadData.fileList.length === 0) {
             callback(new Error(errorCode4));
         } else {
@@ -353,14 +373,14 @@ export default class CoinReceivePaymentChannelDialog extends AbstractView {
         }
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 
     // 图片上传前验证
     checkImage(file: File) {
-        let errorCode5: any = this.$t("coin_receive_payment_channel.errorCode5")
-        let uploadImageErrorCode: any = this.$t("common.uploadImageErrorCode")
+        let errorCode5: any = this.LangUtil("上传图片大小不能超过 2KB!");
+        let uploadImageErrorCode: any = this.LangUtil("上传文件只能是 jpeg/jpg/png");
         const isIMAGE = file.type === "image/jpeg" || "image/png" || "image/jpg";
         const isLt2M = file.size / 1024 / 1024 / 1024 < 2;
         if (file.size > 200000) {

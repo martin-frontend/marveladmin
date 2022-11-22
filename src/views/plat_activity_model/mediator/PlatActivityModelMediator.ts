@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_activity_model/setting";
 import { Message } from "element-ui";
 import PlatActivityModelProxy from "../proxy/PlatActivityModelProxy";
 
-interface IPlatActivityModel extends IEventDispatcher {
-
-}
+interface IPlatActivityModel extends IEventDispatcher {}
 
 export default class PlatActivityModelMediator extends AbstractMediator {
     private myProxy: PlatActivityModelProxy = <any>this.getProxy(PlatActivityModelProxy);
@@ -36,7 +34,6 @@ export default class PlatActivityModelMediator extends AbstractMediator {
             EventType.admin_plat_activity_model_plat_store,
             EventType.admin_plat_index,
             EventType.admin_plat_activity_rule_index,
-
         ];
     }
 
@@ -73,14 +70,13 @@ export default class PlatActivityModelMediator extends AbstractMediator {
                 Message.success(SuccessMessage.update);
                 myProxy.hidePlatSettingDialog();
                 myProxy.onQuery();
-            break;
+                break;
             case EventType.admin_plat_activity_model_plat_index:
                 myProxy.setPlatSetting(body);
                 break;
             case EventType.admin_plat_activity_rule_index:
                 myProxy.setActivityRuleList(body);
                 break;
-
         }
     }
 }

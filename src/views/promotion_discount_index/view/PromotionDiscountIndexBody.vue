@@ -1,16 +1,16 @@
 <template>
     <div>
         <div class="statistics">
-            {{ $t("plat_users_bet.stastisticList") }}
-            <span>{{ $t("common.totalBet") }}:{{ summary.bet_gold }}</span>
-            <span>{{ $t("common.validBet") }}:{{ summary.valid_bet_gold }}</span>
+            {{ LangUtil("当前统计列表") }}
+            <span>{{ LangUtil("总投注金额") }}:{{ summary.bet_gold }}</span>
+            <span>{{ LangUtil("有效投注金额") }}:{{ summary.valid_bet_gold }}</span>
             <span
-                >{{ $t("common.playerWinLoss") }}:<a :style="summary.win_gold >= 0 ? 'color:green' : 'color:red'">{{
+                >{{ LangUtil("玩家输赢") }}:<a :style="summary.win_gold >= 0 ? 'color:green' : 'color:red'">{{
                     summary.win_gold >= 0 ? "+" + summary.win_gold : summary.win_gold
                 }}</a></span
             >
-            <span>{{ $t("common.settleWater") }}:{{ summary.settlement_water }}</span>
-            <span>{{ $t("common.playerWater") }}:{{ summary.water }}</span>
+            <span>{{ LangUtil("结算流水") }}:{{ summary.settlement_water }}</span>
+            <span>{{ LangUtil("用户流水") }}:{{ summary.water }}</span>
         </div>
         <el-table
             :data="tableData"
@@ -76,7 +76,7 @@
                     <WinLossDisplay :amount="row.win_gold" />
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.time')" header-align="center" align="left" min-width="215px">
+            <el-table-column :label="LangUtil('时间')" header-align="center" align="left" min-width="215px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["bet_at"].name }}：{{ row.bet_at }}</p>
                     <p>{{ tableColumns["settlement_at"].name }}：{{ row.settlement_at }}</p>
@@ -95,20 +95,13 @@
                 class-name="status-col"
                 min-width="80px"
             ></el-table-column>
-            <el-table-column
-                :label="$t('statistic_user_days.water')"
-                prop="water"
-                class-name="status-col"
-                min-width="170px"
-            >
+            <el-table-column :label="LangUtil('流水')" prop="water" class-name="status-col" min-width="170px">
                 <template slot-scope="{ row }">
                     <div align="left">
-                        <div>{{ $t("common.settleWater") }}：{{ row.settlement_water }}</div>
-                        <div>
-                            {{ $t("common.settleType") }}：{{ tableColumns["water_type"].options[row.water_type] }}
-                        </div>
-                        <div>{{ $t("common.settleRatio") }}：{{ row.water_rate }}</div>
-                        <div>{{ $t("common.userWater") }}：{{ row.water }}</div>
+                        <div>{{ LangUtil("结算流水") }}：{{ row.settlement_water }}</div>
+                        <div>{{ LangUtil("结算方式") }}：{{ tableColumns["water_type"].options[row.water_type] }}</div>
+                        <div>{{ LangUtil("结算比例") }}：{{ row.water_rate }}</div>
+                        <div>{{ LangUtil("用户流水") }}：{{ row.water }}</div>
                     </div>
                 </template>
             </el-table-column>
@@ -117,6 +110,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -143,27 +137,28 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
     },
 })
 export default class PromotionDiscountIndexBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PromotionDiscountIndexProxy = this.getProxy(PromotionDiscountIndexProxy);
+    myProxy: PromotionDiscountIndexProxy = this.getProxy(PromotionDiscountIndexProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
-    private summary = this.myProxy.tableData.summary;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
+    summary = this.myProxy.tableData.summary;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.onShowDetail(user_id);
     }
 }

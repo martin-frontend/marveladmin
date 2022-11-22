@@ -36,19 +36,19 @@
                     {{ scope.row.updated_at }}
                 </template>
             </el-table-column>
-            <!-- <el-table-column :label="$t('common.operating')" class-name="status-col" width="210px">
+            <!-- <el-table-column :label="LangUtil('操作')" class-name="status-col" width="210px">
                 <template slot-scope="{ row }">
                     <el-button v-if="checkUnique(unique.sms_update)" class="item" type="primary" icon="el-icon-edit" @click="handleEdit(row)">{{
-                        $t("common.update")
+                        LangUtil('编辑')
                     }}</el-button>
                     <el-button v-if="checkUnique(unique.sms_delete)" class="item" type="danger" icon="" @click="handlerDelete(row)">{{
-                        $t("common.delete")
+                        LangUtil('删除')
                     }}</el-button>
                 </template>
             </el-table-column> -->
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="200px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="200px">
                 <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
+                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ LangUtil("编辑") }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -56,6 +56,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -79,6 +80,7 @@ import EmailVendorProxy from "../proxy/EmailVendorProxy";
     },
 })
 export default class EmailVendorBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
     unique = unique;
     checkUnique = checkUnique;

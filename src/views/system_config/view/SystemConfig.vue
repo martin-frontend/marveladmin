@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <SystemConfigDialog/>
-        <SystemConfigHeader/>
-        <SystemConfigBody/>
+        <SystemConfigDialog />
+        <SystemConfigHeader />
+        <SystemConfigBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import SystemConfigBody from "./SystemConfigBody.vue";
         SystemConfigDialog,
         SystemConfigHeader,
         SystemConfigBody,
-    }
+    },
 })
 export default class SystemConfig extends AbstractView {
-
     constructor() {
         super(SystemConfigMediator);
     }

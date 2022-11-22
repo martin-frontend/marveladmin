@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SelfModel from "@/core/model/SelfModel";
@@ -33,21 +34,22 @@ import i18n from "@/lang";
 
 @Component
 export default class MessagePanel extends AbstractView {
-    private checkUnique = checkUnique;
-    private unique = unique;
+    LangUtil = LangUtil;
+    checkUnique = checkUnique;
+    unique = unique;
 
-    private selfModel = this.getProxy(SelfModel);
-    private messageInfo = this.selfModel.userInfo.message_info;
+    selfModel = this.getProxy(SelfModel);
+    messageInfo = this.selfModel.userInfo.message_info;
 
-    private enabledSound1 = localStorage.getItem("sound1") != "false";
-    private enabledSound2 = localStorage.getItem("sound2") != "false";
-    private textGroup = {
-        paymentReview: i18n.t("dashboard.paymentReview"),
-        order: i18n.t("dashboard.order"),
-        stationLetter: i18n.t("dashboard.stationLetter"),
+    enabledSound1 = localStorage.getItem("sound1") != "false";
+    enabledSound2 = localStorage.getItem("sound2") != "false";
+    textGroup = {
+        paymentReview: LangUtil("出款审核"),
+        order: LangUtil("币商充值订单"),
+        stationLetter: LangUtil("站内信"),
     };
 
-    private handlerChange(index: number) {
+    handlerChange(index: number) {
         if (index == 1) {
             this.enabledSound1 = !this.enabledSound1;
             localStorage.setItem("sound1", this.enabledSound1.toString());

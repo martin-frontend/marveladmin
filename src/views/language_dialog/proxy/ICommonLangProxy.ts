@@ -1,7 +1,6 @@
 import { PageInfoVO } from "@/core/vo/PageInfoVO";
 
 export default interface ICommonLangProxy {
-
     /**设置表头数据 */
     setTableColumns(data: any): void;
 
@@ -16,7 +15,7 @@ export default interface ICommonLangProxy {
     resetDialogForm(): void;
 
     /**获取全部翻译内容 */
-    translate():void;
+    translate(): void;
 
     /**根据key查询数据库是否有该key的翻译 */
     translateLangCheck(): void;

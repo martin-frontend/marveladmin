@@ -25,9 +25,11 @@ export var EventType = {
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(HttpType.admin_vip_receive_payment_channel_table_columns, cmd_admin_vip_receive_payment_channel_table_columns);
+facade.registerCommand(
+    HttpType.admin_vip_receive_payment_channel_table_columns,
+    cmd_admin_vip_receive_payment_channel_table_columns
+);
 facade.registerCommand(HttpType.admin_vip_receive_payment_channel_index, cmd_admin_vip_receive_payment_channel_index);
 facade.registerCommand(HttpType.admin_vip_receive_payment_channel_show, cmd_admin_vip_receive_payment_channel_show);
 facade.registerCommand(HttpType.admin_vip_receive_payment_channel_store, cmd_admin_vip_receive_payment_channel_store);
 facade.registerCommand(HttpType.admin_vip_receive_payment_channel_update, cmd_admin_vip_receive_payment_channel_update);
-

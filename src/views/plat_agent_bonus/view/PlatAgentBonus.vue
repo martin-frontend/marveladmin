@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatAgentBonusDialog v-if="myProxy.dialogData.bShow"/>
-        <PlatAgentBonusHeader/>
-        <PlatAgentBonusBody/>
+        <PlatAgentBonusDialog v-if="myProxy.dialogData.bShow" />
+        <PlatAgentBonusHeader />
+        <PlatAgentBonusBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import PlatAgentBonusBody from "./PlatAgentBonusBody.vue";
         PlatAgentBonusDialog,
         PlatAgentBonusHeader,
         PlatAgentBonusBody,
-    }
+    },
 })
 export default class PlatAgentBonus extends AbstractView {
-
     constructor() {
         super(PlatAgentBonusMediator);
     }

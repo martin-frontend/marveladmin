@@ -42,4 +42,3 @@ facade.registerCommand(HttpType.admin_plat_email_store_attachment_store, cmd_adm
 facade.registerCommand(HttpType.admin_plat_mail_content_update, cmd_admin_plat_mail_content_update);
 facade.registerCommand(HttpType.admin_plat_users_mail_table_columns, cmd_admin_plat_users_mail_table_columns);
 facade.registerCommand(HttpType.admin_plat_users_mail_index, cmd_admin_plat_users_mail_index);
-

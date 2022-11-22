@@ -26,4 +26,3 @@ facade.registerCommand(HttpType.admin_system_config_table_columns, cmd_admin_sys
 facade.registerCommand(HttpType.admin_system_config_index, cmd_admin_system_config_index);
 facade.registerCommand(HttpType.admin_system_config_store, cmd_admin_system_config_store);
 facade.registerCommand(HttpType.admin_system_config_update, cmd_admin_system_config_update);
-

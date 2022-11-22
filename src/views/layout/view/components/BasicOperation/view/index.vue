@@ -1,15 +1,15 @@
 <template>
     <div class="app-operation" v-if="selfModel.userInfo.type == 32 || selfModel.userInfo.type == 64">
-        <div>{{ $t("user_detail.balance") }}: {{ userGold.gold }}</div>
+        <div>{{ LangUtil("余额") }}: {{ userGold.gold }}</div>
         <div v-if="checkUnique(unique.coin_wallet_log)">
             <el-button size="mini" type="primary" @click="handlerShowGoldDetail()">
-                {{ $t("user_detail.goldDetail") }}
+                {{ LangUtil("金币明细") }}
             </el-button>
         </div>
         <RecordQueryDialog v-if="!coinWalletProxy.logDialogData.isCoinWalletShow" />
         <div v-if="selfModel.userInfo.type == 64 && checkUnique(unique.coin_wallet_log)">
             <!-- 状态 -->
-            {{ $t("user_detail.status") }}:
+            {{ LangUtil("状态") }}:
             <el-switch @change="onSwitch()" v-model="status" :active-value="1" :inactive-value="99"></el-switch>
         </div>
         <div>
@@ -21,6 +21,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import SelfModel from "@/core/model/SelfModel";
@@ -35,11 +36,12 @@ import { checkUnique, unique } from "@/core/global/Permission";
     },
 })
 export default class BasicOperationIndex extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
 
-    private selfModel = this.getProxy(SelfModel);
+    selfModel = this.getProxy(SelfModel);
 
     constructor() {
         super(CoinWalletMediator);
@@ -48,18 +50,18 @@ export default class BasicOperationIndex extends AbstractView {
         super.destroyed();
     }
 
-    private cate_options: any = { 1: i18n.t("dashboard.system"), 2: i18n.t("common.plat") };
-    private type_options: any = {
-        1: i18n.t("dashboard.superAdmin"),
-        2: i18n.t("dashboard.admin"),
-        4: i18n.t("dashboard.user"),
-        8: i18n.t("dashboard.channelUser"),
-        32: i18n.t("dashboard.coinUser"),
-        64: i18n.t("dashboard.coinUserExchange"),
+    cate_options: any = { 1: LangUtil("系统"), 2: LangUtil("平台") };
+    type_options: any = {
+        1: LangUtil("超级管理员"),
+        2: LangUtil("管理员"),
+        4: LangUtil("普通用户"),
+        8: LangUtil("渠道用户"),
+        32: LangUtil("币商代收"),
+        64: LangUtil("币商代付"),
     };
 
-    private status: any = this.userGold.status;
-    private userInfo = this.selfModel.userInfo;
+    status: any = this.userGold.status;
+    userInfo = this.selfModel.userInfo;
     get userGold() {
         return this.selfModel.userInfo.coin_user;
     }

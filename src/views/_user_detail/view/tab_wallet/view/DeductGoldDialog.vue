@@ -1,9 +1,5 @@
 <template>
-    <el-dialog
-        :title="$t('user_detail.userDeductMoney')"
-        :append-to-body="true"
-        :visible.sync="dialogDeductGoldData.bShow"
-    >
+    <el-dialog :title="LangUtil('用户扣除金币')" :append-to-body="true" :visible.sync="dialogDeductGoldData.bShow">
         <el-form ref="form" :model="userInfo" label-width="70px" v-loading="net_status.loading">
             <el-form-item size="mini" :label="tableColumns['user_id'].name" prop="user_id">
                 <el-input disabled v-model="userInfo.user_id"></el-input>
@@ -20,7 +16,7 @@
                     v-model="userInfo.gold_info[dialogDeductGoldData.coin_name_unique].plat_money"
                 ></el-input>
             </el-form-item>
-            <el-form-item size="mini" :label="$t('user_detail.deductAmount')">
+            <el-form-item size="mini" :label="LangUtil('扣除数量')">
                 <el-input
                     v-model="dialogDeductGoldData.gold"
                     type="number"
@@ -28,17 +24,18 @@
                     onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
                 ></el-input>
                 <div style="color: #ff0000">
-                    {{ $t("user_detail.withdrawHint") }}
+                    {{ LangUtil("扣除玩家金币只能扣除玩家平台余额。如果金币在厂商以及保险箱里，可进行先提取") }}
                 </div>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" @click="onDeductGold">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" @click="onDeductGold">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import { Message, MessageBox } from "element-ui";
@@ -49,41 +46,38 @@ import { getProxy } from "@/views/_user_detail/PageSetting";
 
 @Component
 export default class DeductGoldDialog extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabWalletProxy = getProxy(TabWalletProxy);
-    private tableColumns = this.myProxy.tableColumns;
-    private userInfo = this.myProxy.userInfo;
-    private dialogDeductGoldData = this.myProxy.dialogDeductGoldData;
+    myProxy: TabWalletProxy = getProxy(TabWalletProxy);
+    tableColumns = this.myProxy.tableColumns;
+    userInfo = this.myProxy.userInfo;
+    dialogDeductGoldData = this.myProxy.dialogDeductGoldData;
 
     constructor() {
         super();
     }
 
-    private onDeductGold() {
+    onDeductGold() {
         const deductGold = this.dialogDeductGoldData.gold == "" ? 0 : parseFloat(this.dialogDeductGoldData.gold);
         if (
             deductGold > 0 &&
             deductGold <= parseFloat(this.userInfo.gold_info[this.dialogDeductGoldData.coin_name_unique].plat_money)
         ) {
-            MessageBox.confirm(
-                this.$t("common.confirmDeductCoinType", { "0": deductGold, "1": this.dialogDeductGoldData.coin_name_unique }),
-                this.$t("common.prompt"),
-                {
-                    confirmButtonText: this.$t("common.determine"),
-                    cancelButtonText: this.$t("common.cancel"),
-                    type: "warning",
-                    center: true,
-                }
-            ).then(() => {
+            MessageBox.confirm(this.LangUtil("undefined"), this.LangUtil("提示"), {
+                confirmButtonText: this.LangUtil("确定"),
+                cancelButtonText: this.LangUtil("取消"),
+                type: "warning",
+                center: true,
+            }).then(() => {
                 this.myProxy.onUpdateGold(deductGold, this.dialogDeductGoldData.coin_name_unique);
             });
         } else {
-            let errorCode: any = this.$t("common.moneyInputError");
+            let errorCode: any = this.LangUtil("请输入正确的扣除金额，大于0，小于平台余额");
             Message.error({
                 type: "error",
                 message: errorCode,

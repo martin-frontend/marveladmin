@@ -10,7 +10,7 @@
         <el-progress :percentage="myProxy.percentage"></el-progress>
     </el-dialog>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
 import SystemResourceProxy from "../../proxy/SystemResourceProxy";
@@ -21,7 +21,7 @@ export default class ProgressDialog extends AbstractView {
     private myProxy: SystemResourceProxy = this.getProxy(SystemResourceProxy);
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 .dialog {
     padding-top: 8rem;

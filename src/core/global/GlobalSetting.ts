@@ -10,15 +10,15 @@ import cmd_admin_admin_user_google_key from "@/views/login/command/cmd_admin_adm
 export var HttpType = {
     admin_admin_user_login: "admin/admin_user/login",
     admin_admin_user_mine: "admin/admin_user/mine",
-    admin_admin_user_google_key:"admin/admin_user/google_key",
-    admin_index_message_show: "admin/index_message/show"
+    admin_admin_user_google_key: "admin/admin_user/google_key",
+    admin_index_message_show: "admin/index_message/show",
 };
 /**事件*/
 export var EventType = {
     admin_admin_user_login: "admin_admin_user_login",
     admin_admin_user_mine: "admin_admin_user_mine",
-    admin_admin_user_google_key:"admin_admin_user_google_key",
-    admin_index_message_show: "admin_index_message_show"
+    admin_admin_user_google_key: "admin_admin_user_google_key",
+    admin_index_message_show: "admin_index_message_show",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();

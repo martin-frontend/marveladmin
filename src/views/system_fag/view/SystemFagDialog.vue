@@ -14,7 +14,7 @@
                     v-model="form.module"
                     filterable
                     clearable
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns.module.options"
@@ -34,7 +34,7 @@
                         filterable
                         clearable
                         show-word-limit
-                        :placeholder="$t('system_fag.questionTitle')"
+                        :placeholder="LangUtil('请输入问题标题')"
                         v-model="form.name"
                     ></el-input>
                     <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)"
@@ -53,7 +53,7 @@
                         clearable
                         show-word-limit
                         :rows="6"
-                        :placeholder="$t('system_fag.questionContent')"
+                        :placeholder="LangUtil('请输入问题解答内容')"
                         v-model="form.content"
                     ></el-input>
                     <el-button
@@ -72,7 +72,7 @@
                     type="primary"
                     size="mini"
                     @click="isStatusUpdate ? handleUpdate() : handleAdd()"
-                    >{{ $t("common.save") }}</el-button
+                    >{{ LangUtil("确认保存") }}</el-button
                 >
             </el-form-item>
         </el-form>
@@ -80,6 +80,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SystemFagProxy from "@/views/system_fag/proxy/SystemFagProxy";
@@ -92,27 +93,28 @@ import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class SystemFagDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: SystemFagProxy = this.getProxy(SystemFagProxy);
-    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+    myProxy: SystemFagProxy = this.getProxy(SystemFagProxy);
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private contentRemnant: number = 2000;
+    contentRemnant: number = 2000;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -130,7 +132,7 @@ export default class SystemFagDialog extends AbstractView {
         return {};
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -138,7 +140,7 @@ export default class SystemFagDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -146,7 +148,7 @@ export default class SystemFagDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 

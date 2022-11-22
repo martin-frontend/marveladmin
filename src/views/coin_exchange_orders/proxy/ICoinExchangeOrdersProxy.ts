@@ -3,18 +3,18 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface ICoinExchangeOrdersProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
     };
 
     /**设置表头数据 */
@@ -34,11 +34,11 @@ export default interface ICoinExchangeOrdersProxy {
 
     /**查询 */
     onQuery(): void;
-    
+
     /**完成订单 */
-    onFinishOrder(id:string):void;
+    onFinishOrder(id: string): void;
     /**退还金币 */
-    onReturn(id:string):void;
+    onReturn(id: string): void;
     /**不退还金币 */
-    onUnreturn(id:string):void;
+    onUnreturn(id: string): void;
 }

@@ -2,7 +2,7 @@
     <div class="header-content">
         <div class="group">
             <SearchSelect
-                :title="$t('common.plat')"
+                :title="LangUtil('平台')"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
                 :clearable="false"
@@ -21,10 +21,10 @@
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -32,6 +32,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import StatisticPlatFundsFlowProxy from "../proxy/StatisticPlatFundsFlowProxy";
@@ -50,20 +51,21 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class StatisticPlatFundsFlowHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: StatisticPlatFundsFlowProxy = this.getProxy(StatisticPlatFundsFlowProxy);
+    myProxy: StatisticPlatFundsFlowProxy = this.getProxy(StatisticPlatFundsFlowProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 }

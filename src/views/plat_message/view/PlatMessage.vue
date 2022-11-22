@@ -1,7 +1,7 @@
 <template>
     <div class="content">
-        <PlatMessageHeader/>
-        <PlatMessageBody/>
+        <PlatMessageHeader />
+        <PlatMessageBody />
     </div>
 </template>
 
@@ -17,10 +17,9 @@ import PlatMessageBody from "./PlatMessageBody.vue";
     components: {
         PlatMessageHeader,
         PlatMessageBody,
-    }
+    },
 })
 export default class PlatMessage extends AbstractView {
-
     constructor() {
         super(PlatMessageMediator);
     }

@@ -23,14 +23,19 @@
             />
 
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{ $t("common.search") }}</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{ $t("common.reset") }}</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
+                    LangUtil("查询")
+                }}</el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
+                    LangUtil("重置")
+                }}</el-button>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatUserSmsCodeProxy from "../proxy/PlatUserSmsCodeProxy";
@@ -48,21 +53,22 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatUserSmsCodeHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatUserSmsCodeProxy = this.getProxy(PlatUserSmsCodeProxy);
+    myProxy: PlatUserSmsCodeProxy = this.getProxy(PlatUserSmsCodeProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 }

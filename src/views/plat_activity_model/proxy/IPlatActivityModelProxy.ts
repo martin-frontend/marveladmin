@@ -3,9 +3,9 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface IPlatActivityModelProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
@@ -13,10 +13,10 @@ export default interface IPlatActivityModelProxy {
     defaultForm: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
     };
     /**條件规则 */
     conditionRule: any;
@@ -70,5 +70,5 @@ export default interface IPlatActivityModelProxy {
     /** 设置活动规则数据 */
     setActivityRuleList(data: any): void;
     /** 显示复制模版 */
-    showCopyDialog(status: string, data?: any):void;
+    showCopyDialog(status: string, data?: any): void;
 }

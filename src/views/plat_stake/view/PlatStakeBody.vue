@@ -11,6 +11,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -32,15 +33,16 @@ import i18n from "@/lang";
     },
 })
 export default class PlatStakeBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
+    myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private listQuery = this.myProxy.listQuery;
+    listQuery = this.myProxy.listQuery;
 
     get isStakeLog() {
         return this.stakeType == StakeType.StakeLog;
@@ -51,11 +53,11 @@ export default class PlatStakeBody extends AbstractView {
     get isStakeBonusLog() {
         return this.stakeType == StakeType.Bonus;
     }
-    private stakeType = 0;
-    private stakeOptions: any = {
-        0: i18n.t("user_detail.pledge"),
-        1: i18n.t("user_detail.pool"),
-        2: i18n.t("user_detail.dividend"),
+    stakeType = 0;
+    stakeOptions: any = {
+        0: LangUtil("质押"),
+        1: LangUtil("奖池"),
+        2: LangUtil("分红"),
     };
 
     @Watch("stakeType")

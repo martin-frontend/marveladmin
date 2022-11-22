@@ -1,19 +1,19 @@
 <template>
     <div>
         <div class="statistics">
-            {{ $t("plat_users_bet.stastisticList") }} <span>{{ $t("common.totalBet") }}:{{ summary.bet_gold }}</span>
-            <span>{{ $t("common.validBet") }}:{{ summary.valid_bet_gold }}</span>
-            <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="summary.win_gold"/></span>
-            <span>{{ $t("common.settleWater") }}:{{ summary.settlement_water }}</span>
-            <span>{{ $t("common.playerWater") }}:{{ summary.water }}</span>
+            {{ LangUtil("当前统计列表") }} <span>{{ LangUtil("总投注金额") }}:{{ summary.bet_gold }}</span>
+            <span>{{ LangUtil("有效投注金额") }}:{{ summary.valid_bet_gold }}</span>
+            <span>{{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="summary.win_gold"/></span>
+            <span>{{ LangUtil("结算流水") }}:{{ summary.settlement_water }}</span>
+            <span>{{ LangUtil("用户流水") }}:{{ summary.water }}</span>
         </div>
         <div class="statistics" v-for="(item, index) in myProxy.tableData.summary_coin" :key="index">
             {{ item.coin_name_unique }}
-            <span>{{ $t("common.totalBet") }}:{{ item.bet_gold }}</span>
-            <span>{{ $t("common.validBet") }}:{{ item.valid_bet_gold }}</span>
-            <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
-            <span>{{ $t("common.settleWater") }}:{{ item.settlement_water }}</span>
-            <span>{{ $t("common.playerWater") }}:{{ item.water }}</span>
+            <span>{{ LangUtil("总投注金额") }}:{{ item.bet_gold }}</span>
+            <span>{{ LangUtil("有效投注金额") }}:{{ item.valid_bet_gold }}</span>
+            <span>{{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
+            <span>{{ LangUtil("结算流水") }}:{{ item.settlement_water }}</span>
+            <span>{{ LangUtil("用户流水") }}:{{ item.water }}</span>
             <!-- <span>{{ tableColumns["water_accelerate"].name }}:{{ item.water_accelerate }}</span> -->
         </div>
         <el-table
@@ -71,12 +71,15 @@
                 class-name="status-col"
             >
                 <template slot-scope="{ row }">
-                    <div>{{row.coin_name_unique}}</div>
-                    <div>{{tableColumns['bet_gold_coin'].name}}: {{row.bet_gold_coin}}</div>
-                    <div>{{tableColumns['valid_bet_gold_coin'].name}}: {{row.valid_bet_gold_coin}}</div>
-                    <div>{{tableColumns['win_gold_coin'].name}}: <WinLossDisplay :amount="row.win_gold_coin" :isShowDollar="false" /></div>
-                    <div>{{tableColumns['settlement_water_coin'].name}}: {{row.settlement_water_coin}}</div>
-                    <div>{{tableColumns['water_coin'].name}}: {{row.water_coin}}</div>
+                    <div>{{ row.coin_name_unique }}</div>
+                    <div>{{ tableColumns["bet_gold_coin"].name }}: {{ row.bet_gold_coin }}</div>
+                    <div>{{ tableColumns["valid_bet_gold_coin"].name }}: {{ row.valid_bet_gold_coin }}</div>
+                    <div>
+                        {{ tableColumns["win_gold_coin"].name }}:
+                        <WinLossDisplay :amount="row.win_gold_coin" :isShowDollar="false" />
+                    </div>
+                    <div>{{ tableColumns["settlement_water_coin"].name }}: {{ row.settlement_water_coin }}</div>
+                    <div>{{ tableColumns["water_coin"].name }}: {{ row.water_coin }}</div>
                 </template>
             </el-table-column>
             <el-table-column
@@ -89,7 +92,7 @@
                     <WinLossDisplay :amount="row.win_gold" />
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.time')" align="left" min-width="145px">
+            <el-table-column :label="LangUtil('时间')" align="left" min-width="145px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["bet_at"].name }}：<br />{{ row.bet_at }}</p>
                     <p>{{ tableColumns["settlement_at"].name }}：<br />{{ row.settlement_at }}</p>
@@ -108,22 +111,15 @@
                 class-name="status-col"
                 min-width="70px"
             ></el-table-column>
-            <el-table-column
-                :label="$t('statistic_user_days.water')"
-                prop="water"
-                class-name="status-col"
-                min-width="150px"
-            >
+            <el-table-column :label="LangUtil('流水')" prop="water" class-name="status-col" min-width="150px">
                 <template slot-scope="{ row }">
                     <div align="left">
-                        <div>{{ $t("common.settleWater") }}：{{ row.settlement_water }}</div>
-                        <div>
-                            {{ $t("common.settleType") }}：{{ tableColumns["water_type"].options[row.water_type] }}
-                        </div>
-                        <div>{{ $t("common.settleRatio") }}：{{ row.water_rate }}</div>
-                        <div>{{ $t("common.userWater") }}：{{ row.water }}</div>
+                        <div>{{ LangUtil("结算流水") }}：{{ row.settlement_water }}</div>
+                        <div>{{ LangUtil("结算方式") }}：{{ tableColumns["water_type"].options[row.water_type] }}</div>
+                        <div>{{ LangUtil("结算比例") }}：{{ row.water_rate }}</div>
+                        <div>{{ LangUtil("用户流水") }}：{{ row.water }}</div>
                         <div>{{ tableColumns["water_accelerate"].name }}：{{ row.water_accelerate }}</div>
-                        <div>{{ $t("common.water_rate_accelerate") }}：{{ row.water_rate_accelerate }}</div>
+                        <div>{{ LangUtil("加速流水比例") }}：{{ row.water_rate_accelerate }}</div>
                     </div>
                 </template>
             </el-table-column>
@@ -139,11 +135,9 @@
                     </el-tag>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="80px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="handlerDetail(row)">{{
-                        $t("common.detail")
-                    }}</el-button>
+                    <el-button size="mini" type="primary" @click="handlerDetail(row)">{{ LangUtil("详情") }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -152,6 +146,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -180,26 +175,27 @@ import PlatUserBetDetail from "@/views/plat_users_bet/view/PlatUserBetDetail.vue
     },
 })
 export default class TabBetBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabBetProxy = getProxy(TabBetProxy);
+    myProxy: TabBetProxy = getProxy(TabBetProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private summary = this.myProxy.tableData.summary;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    summary = this.myProxy.tableData.summary;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handlerDetail(data: any) {
+    handlerDetail(data: any) {
         this.myProxy.showDialog(data);
     }
 }

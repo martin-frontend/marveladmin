@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { EventType, HttpType } from "@/views/_user_detail/setting";
 import TabWalletProxy from "../proxy/TabWalletProxy";
@@ -55,7 +56,7 @@ export default class TabWalletMediator extends AbstractMediator {
                     this.myProxy.setRechargeAddress(body);
                     break;
                 case EventType.admin_plat_user_transfer_user_gold:
-                    Message.success(<any>i18n.t("successMessage.operation"));
+                    Message.success(<any>LangUtil("操作成功"));
                     this.myProxy.dialogTransferData.bShow = false;
                     this.myProxy.getGoldInfo(this.myProxy.userInfo.user_id);
                     break;

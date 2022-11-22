@@ -1,9 +1,9 @@
 <template>
     <div class="content">
-        <BalanceDialog v-if="myProxy.dialogBalance.bShow"/>
-        <BlockTransferAccountDialog v-if="myProxy.dialogData.bShow"/>
-        <BlockTransferAccountHeader/>
-        <BlockTransferAccountBody/>
+        <BalanceDialog v-if="myProxy.dialogBalance.bShow" />
+        <BlockTransferAccountDialog v-if="myProxy.dialogData.bShow" />
+        <BlockTransferAccountHeader />
+        <BlockTransferAccountBody />
     </div>
 </template>
 
@@ -22,11 +22,10 @@ import BalanceDialog from "./BalanceDialog.vue";
         BlockTransferAccountDialog,
         BlockTransferAccountHeader,
         BlockTransferAccountBody,
-        BalanceDialog
-    }
+        BalanceDialog,
+    },
 })
 export default class BlockTransferAccount extends AbstractView {
-
     constructor() {
         super(BlockTransferAccountMediator);
     }

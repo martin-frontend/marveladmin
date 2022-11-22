@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -27,7 +28,7 @@ export default class PlatSettingProxy extends AbstractProxy implements IPlatSett
     /**表格相关数据 */
     tableData = {
         columns: {
-            plat_id: { name: i18n.t("common.plat"), options: {} },
+            plat_id: { name: LangUtil("平台"), options: {} },
             vendor_type: {
                 name: "",
                 options: {

@@ -19,7 +19,7 @@ import TabBetBody from "../view/TabBetBody.vue";
 @Component({
     components: {
         TabBetHeader,
-        TabBetBody
+        TabBetBody,
     },
 })
 export default class TabBet extends AbstractView {

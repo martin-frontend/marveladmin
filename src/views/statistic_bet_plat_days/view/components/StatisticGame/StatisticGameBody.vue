@@ -84,7 +84,7 @@
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import StatisticBetPlatDaysProxy from "../../../proxy/StatisticBetPlatDaysProxy";
@@ -127,7 +127,7 @@ export default class StatisticGameBody extends AbstractView {
         } else {
             order_by = "ASC";
         }
-        
+
         // 团队
         Object.assign(this.listQuery, {
             order_by: jsonStringify({ [column.prop]: order_by }),
@@ -156,6 +156,6 @@ export default class StatisticGameBody extends AbstractView {
     }
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 </style>

@@ -2,7 +2,7 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="800px">
         <el-form ref="form" :rules="rules" :model="form" label-width="135px" v-loading="net_status.loading">
             <el-form-item size="mini" :label="tableColumns.plat_id.name" prop="plat_id">
-                <el-select v-model="form.plat_id" filterable clearable :placeholder="$t('common.pleaseChoose')">
+                <el-select v-model="form.plat_id" filterable clearable :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in tableColumns.plat_id.options"
                         :key="key"
@@ -25,7 +25,7 @@
                 <el-date-picker
                     v-model="form.start_time"
                     type="datetime"
-                    :placeholder="$t('plat_marquee.dateSelect')"
+                    :placeholder="LangUtil('选择日期时间')"
                     value-format="yyyy-MM-dd HH:mm:ss"
                     style="margin-right: 16px"
                 >
@@ -50,7 +50,7 @@
                         clearable
                         class="select"
                         maxlength="100"
-                        :placeholder="$t('common.pleaseEnter')"
+                        :placeholder="LangUtil('请输入')"
                         v-model="form.content"
                         style="margin-right: 0.8rem"
                     ></el-input>
@@ -61,31 +61,31 @@
                         @click="handleTranslate(form.content)"
                     >
                         <!-- 翻译 -->
-                        {{ $t("user_detail.translate") }}
+                        {{ LangUtil("翻译") }}
                     </el-button>
                 </div>
                 <div class="contentDesc">
-                    {{ $t("plat_marquee.contentDesc1")
+                    {{ LangUtil("最多还可输入")
                     }}<span>{{ myProxy.dialogData.contetnMaxLength - form.content.length }}</span
-                    >{{ $t("plat_marquee.contentDesc2") }}
+                    >{{ LangUtil("个字符") }}
                 </div>
             </el-form-item>
-            <el-form-item size="mini" :label="$t('plat_marquee.status')">
+            <el-form-item size="mini" :label="LangUtil('状态开关')">
                 <el-switch
                     v-model="form.status"
                     :active-value="StatusType.activated"
                     :inactive-value="StatusType.disactivated"
-                    :active-text="$t('common.operating')"
-                    :inactive-text="$t('common.close')"
+                    :active-text="LangUtil('操作')"
+                    :inactive-text="LangUtil('关闭')"
                 >
                 </el-switch>
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button v-if="isStatusUpdate" type="danger" size="mini" @click="handleDelete(form)">{{
-                    $t("common.delete")
+                    LangUtil("删除")
                 }}</el-button>
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
-                    $t("common.save")
+                    LangUtil("确认保存")
                 }}</el-button>
             </el-form-item>
         </el-form>
@@ -93,6 +93,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatMarqueeProxy from "@/views/plat_marquee/proxy/PlatMarqueeProxy";
@@ -111,34 +112,35 @@ import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
     },
 })
 export default class PlatMarqueeDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatMarqueeProxy = this.getProxy(PlatMarqueeProxy);
-    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+    myProxy: PlatMarqueeProxy = this.getProxy(PlatMarqueeProxy);
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
     // Iproxy property
-    private TimeType = TimeType;
-    private StatusType = StatusType;
+    TimeType = TimeType;
+    StatusType = StatusType;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
     }
     @Watch("form.type")
-    private onWatchType(value: any) {
+    onWatchType(value: any) {
         if (value == TimeType.Now) {
             this.form.start_time = dateFormat(new Date(), "yyyy-MM-dd hh:mm:ss");
         }
@@ -154,12 +156,12 @@ export default class PlatMarqueeDialog extends AbstractView {
 
     get rules() {
         return {
-            plat_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            app_types: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            content: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            status: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            start_time: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            plat_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            app_types: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            status: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            start_time: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 
@@ -167,7 +169,7 @@ export default class PlatMarqueeDialog extends AbstractView {
         return this.form.type == TimeType.Setting;
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -175,7 +177,7 @@ export default class PlatMarqueeDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -183,7 +185,7 @@ export default class PlatMarqueeDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 

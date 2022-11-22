@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import LangUtil from "@/core/global/LangUtil";
 import Breadcrumb from "@/views/layout/view/components/Breadcrumb";
 import Hamburger from "@/views/layout/view/components/Hamburger";
 import Screenfull from "@/views/layout/view/components/Screenfull";
@@ -85,14 +86,14 @@ export default {
     data() {
         return {
             avatar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
-            cate_options: { 1: i18n.t("dashboard.system"), 2: i18n.t("common.plat") },
+            cate_options: { 1: LangUtil("系统"), 2: LangUtil("平台") },
             type_options: {
-                1: i18n.t("dashboard.superAdmin"),
-                2: i18n.t("dashboard.admin"),
-                4: i18n.t("dashboard.user"),
-                8: i18n.t("dashboard.channelUser"),
-                32: i18n.t("dashboard.coinUser"),
-                64: i18n.t("dashboard.coinUserExchange")
+                1: LangUtil("超级管理员"),
+                2: LangUtil("管理员"),
+                4: LangUtil("普通用户"),
+                8: LangUtil("渠道用户"),
+                32: LangUtil("币商代收"),
+                64: LangUtil("币商代付"),
             },
         };
     },

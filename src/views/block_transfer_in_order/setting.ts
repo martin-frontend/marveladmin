@@ -16,6 +16,8 @@ export var EventType = {
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(HttpType.admin_block_transfer_in_order_table_columns, cmd_admin_block_transfer_in_order_table_columns);
+facade.registerCommand(
+    HttpType.admin_block_transfer_in_order_table_columns,
+    cmd_admin_block_transfer_in_order_table_columns
+);
 facade.registerCommand(HttpType.admin_block_transfer_in_order_index, cmd_admin_block_transfer_in_order_index);
-

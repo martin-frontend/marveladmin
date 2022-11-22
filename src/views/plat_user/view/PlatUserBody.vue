@@ -13,26 +13,29 @@
                 'text-align': 'center',
             }"
         >
-            <el-table-column :label="$t('common.platMsg')" min-width="150px">
+            <el-table-column :label="LangUtil('平台信息')" min-width="150px">
                 <template slot-scope="{ row }">
-                    <div>{{ $t("common.plat") }}：{{ tableColumns.plat_id.options[row.plat_id] }}</div>
-                    <div>{{ $t("common.channelId") }}：{{ row.channel_id }}</div>
+                    <div>{{ LangUtil("平台") }}：{{ tableColumns.plat_id.options[row.plat_id] }}</div>
+                    <div>{{ LangUtil("渠道") }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.userMsg')" prop="user_id" min-width="150px" sortable="custom">
+            <el-table-column :label="LangUtil('用户信息')" prop="user_id" min-width="150px" sortable="custom">
                 <template slot-scope="{ row }">
                     <div>
                         ID：<span @click="showUserDetail(row.user_id)" class="user_id">{{ row.user_id }}</span>
                     </div>
-                    <div>{{ $t("common.account") }}：{{ row.username }}</div>
-                    <div>{{ $t("common.nickName") }}：{{ row.nick_name }}</div>
+                    <div>{{ LangUtil("账号") }}：{{ row.username }}</div>
+                    <div>{{ LangUtil("昵称") }}：{{ row.nick_name }}</div>
                     <div>
-                        {{ $t("plat_agent_bind.note") }}：<span class="user_remark">{{ row.remark }}</span>
+                        {{ LangUtil("备注") }}：<span class="user_remark">{{ row.remark }}</span>
                     </div>
                     <div>VIP：{{ row.vip_level }}</div>
 
-                    <div>{{tableColumns.is_credit_user.name}}：{{tableColumns.is_credit_user.options[row.is_credit_user]}}</div>
-
+                    <div>
+                        {{ tableColumns.is_credit_user.name }}：{{
+                            tableColumns.is_credit_user.options[row.is_credit_user]
+                        }}
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column
@@ -56,7 +59,7 @@
                 <template slot="header">
                     <el-tooltip effect="dark" placement="top">
                         <div>
-                            <span style="margin-right: 5px">{{ $t("plat_user.account") }}</span>
+                            <span style="margin-right: 5px">{{ LangUtil("账户") }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
                         </div>
                         <div slot="content">
@@ -103,7 +106,7 @@
                 min-width="110px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.total_win"/>
+                    <WinLossDisplay :amount="row.total_win" />
                 </template>
             </el-table-column>
             <el-table-column
@@ -112,7 +115,7 @@
                 class-name="status-col"
                 min-width="120px"
             ></el-table-column>
-            <el-table-column :label="$t('plat_user.loginMsg')" min-width="245px">
+            <el-table-column :label="LangUtil('登录信息')" min-width="245px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["created_at"].name }}：{{ row.created_at }}</p>
                     <p>{{ tableColumns["last_online_at"].name }}：{{ row.last_online_at }}</p>
@@ -120,7 +123,7 @@
                     <p>{{ tableColumns["last_login_ip"].name }}：{{ row.last_login_ip }}</p>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" :min-width="width" class-name="status-col">
+            <el-table-column :label="LangUtil('操作')" :min-width="width" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div>
                         <el-button
@@ -130,7 +133,7 @@
                             @click="showUserDetail(row.user_id)"
                             v-if="checkUnique(unique.plat_user_show)"
                         >
-                            {{ $t("common.detail") }}
+                            {{ LangUtil("详情") }}
                         </el-button>
                     </div>
                     <div>
@@ -141,7 +144,7 @@
                             @click="refreshGold(row.user_id)"
                             v-if="checkUnique(unique.plat_user_refresh)"
                         >
-                            {{ $t("plat_user.refreshAsset") }}
+                            {{ LangUtil("刷新资产") }}
                         </el-button>
                     </div>
                     <!-- <div>
@@ -152,7 +155,7 @@
                             @click="onUpdateGold(row)"
                             v-if="checkUnique(unique.plat_user_update_user_gold)"
                         >
-                            {{ $t("user_detail.deduct") }}
+                            {{ LangUtil('扣款') }}
                         </el-button>
                     </div> -->
                 </template>
@@ -162,6 +165,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -176,27 +180,28 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
     components: {
         WinLossDisplay,
         Pagination,
-    }
+    },
 })
 export default class PlatUserBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
+    myProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
@@ -210,11 +215,11 @@ export default class PlatUserBody extends AbstractView {
     }
 
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.onShowDetail(user_id);
     }
     // 刷新money
-    private refreshGold(user_id: number) {
+    refreshGold(user_id: number) {
         this.myProxy.onRefrushGold(user_id);
     }
     // 打开扣除余额弹窗
@@ -222,7 +227,7 @@ export default class PlatUserBody extends AbstractView {
         this.myProxy.showDialog(row);
     }
     // 排序
-    private tableSortChange(column: any) {
+    tableSortChange(column: any) {
         let order_by = {};
         if (column.order === "descending") {
             order_by = {
@@ -238,7 +243,7 @@ export default class PlatUserBody extends AbstractView {
         this.myProxy.onQuery();
     }
     // 状态切换
-    private handleToggle(user_id: number, status: number) {
+    handleToggle(user_id: number, status: number) {
         this.myProxy.onToggleStatus(user_id, status);
     }
 }

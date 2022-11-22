@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('recharge_orders.topUpOrder')" width="500px" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="LangUtil('充值补单')" width="500px" :visible.sync="myProxy.dialogData.bShow">
         <el-form
             :model="form"
             status-icon
@@ -17,18 +17,19 @@
                 ><span>{{ form.gold }}</span>
             </div>
 
-            <el-form-item :label="$t('recharge_orders.replenishmentAmount')" prop="actual_gold">
+            <el-form-item :label="LangUtil('补单金额')" prop="actual_gold">
                 <el-input type="number" v-model.number="form.actual_gold"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="handleClose">{{ $t("common.cancel") }}</el-button>
-                <el-button type="primary" @click="handleUpdate()">{{ $t("common.determine") }}</el-button>
+                <el-button type="primary" @click="handleClose">{{ LangUtil("取消") }}</el-button>
+                <el-button type="primary" @click="handleUpdate()">{{ LangUtil("确定") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import RechargeOrdersProxy from "@/views/recharge_orders/proxy/RechargeOrdersProxy";
@@ -39,19 +40,20 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class RechargeOrdersDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: RechargeOrdersProxy = this.getProxy(RechargeOrdersProxy);
+    myProxy: RechargeOrdersProxy = this.getProxy(RechargeOrdersProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -64,24 +66,24 @@ export default class RechargeOrdersDialog extends AbstractView {
     get isStatusUpdate() {
         return this.status == DialogStatus.update;
     }
-    private regex = /^[+-]?\d*\.?\d*$/;
-    private langObj: any = {
-        required: this.$t("common.requiredInput"),
-        errorCode1: this.$t("recharge_orders.makeErrorCode1"),
-        errorCode2: this.$t("recharge_orders.makeErrorCode2"),
-        errorCode3: this.$t("recharge_orders.makeErrorCode3"),
+    regex = /^[+-]?\d*\.?\d*$/;
+    langObj: any = {
+        required: this.LangUtil("必须填写"),
+        errorCode1: this.LangUtil("只能输入正数字，正浮点数，小数点后三位"),
+        errorCode2: this.LangUtil("补单金格不能超过订单金额"),
+        errorCode3: this.LangUtil("只能输入小数点后三位"),
     };
     get rules() {
         return {
             actual_gold: [
                 { required: true, message: this.langObj.required, trigger: "blur" },
-                { pattern: this.regex, message: this.$t("recharge_orders.makeErrorCode1") },
+                { pattern: this.regex, message: this.LangUtil("只能输入正数字，正浮点数，小数点后三位") },
                 { validator: this.validateMethod, trigger: "blur" },
             ],
         };
     }
 
-    private validateMethod(rule: any, value: any, callback: any) {
+    validateMethod(rule: any, value: any, callback: any) {
         if (value > this.form.gold) {
             callback(new Error(this.langObj.errorCode2));
         } else if (value < 0) {
@@ -97,7 +99,7 @@ export default class RechargeOrdersDialog extends AbstractView {
         }
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -105,7 +107,7 @@ export default class RechargeOrdersDialog extends AbstractView {
         });
     }
 
-    private handleClose() {
+    handleClose() {
         this.myProxy.hideDialog();
     }
 }

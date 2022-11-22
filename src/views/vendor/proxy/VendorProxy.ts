@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -10,7 +11,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     static NAME = "VendorProxy";
 
     /**在这里获取基础数据，退出页面时，proxy不会销毁，所以只会获取一次 */
-    onRegister() { }
+    onRegister() {}
 
     /**进入页面时调用 */
     enter() {
@@ -91,9 +92,9 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         bShow: false,
         form: {
             vendor_id: "",
-            value: ""
-        }
-    }
+            value: "",
+        },
+    };
 
     /**设置表头数据 */
     setTableCoulmns(data: any) {
@@ -220,18 +221,21 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_vendor_update, { vendor_id: id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
     /**测试数据 */
     onTest(value: string) {
-        this.sendNotification(HttpType.admin_vendor_test_vendor, { vendor_id: this.testDialogData.form.vendor_id, value: value });
+        this.sendNotification(HttpType.admin_vendor_test_vendor, {
+            vendor_id: this.testDialogData.form.vendor_id,
+            value: value,
+        });
     }
 }

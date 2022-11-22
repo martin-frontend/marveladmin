@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="notice">
-            {{$t("user_detail.loginRecordNotice")}}
+            {{ LangUtil("只展示最近20次登陆日志") }}
         </div>
         <el-table
             :data="tableData"
@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -36,15 +37,16 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class TabLoginRecord extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabLoginRecordProxy = getProxy(TabLoginRecordProxy);
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
+    myProxy: TabLoginRecordProxy = getProxy(TabLoginRecordProxy);
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
 
     constructor() {
         super(TabLoginRecordMediator);

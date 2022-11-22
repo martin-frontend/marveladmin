@@ -19,7 +19,7 @@
         </div>
         <!-- 新增 -->
         <el-button class="item" size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handlerCreate">{{
-            $t("common.create")
+            LangUtil("新增")
         }}</el-button>
         <!-- table -->
         <el-table
@@ -57,10 +57,10 @@
                     {{ methodTableColumns.status.options[row.status] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="120px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="120px">
                 <template slot-scope="{ row }">
                     <el-button class="item" type="primary" size="mini" @click="handleEdit(row)">{{
-                        $t("common.setting")
+                        LangUtil("设置")
                     }}</el-button>
                 </template>
             </el-table-column>
@@ -70,6 +70,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import ExchangeChannelMethodProxy from "@/views/exchange_channel_method/proxy/ExchangeChannelMethodProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
@@ -84,28 +85,29 @@ import Pagination from "@/components/Pagination.vue";
     },
 })
 export default class ExchangeChannelListDialog extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: ExchangeChannelMethodProxy = this.getProxy(ExchangeChannelMethodProxy);
+    myProxy: ExchangeChannelMethodProxy = this.getProxy(ExchangeChannelMethodProxy);
     // columns
-    private tableColumns = this.myProxy.tableData.columns;
-    private methodTableColumns = this.myProxy.methodTableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
+    methodTableColumns = this.myProxy.methodTableData.columns;
 
     // table Data
-    private tableData = this.myProxy.dialogDataChannelData.list;
-    private row = this.myProxy.dialogDataChannelData.row;
-    private pageInfo = this.myProxy.tableData.pageInfo;
+    tableData = this.myProxy.dialogDataChannelData.list;
+    row = this.myProxy.dialogDataChannelData.row;
+    pageInfo = this.myProxy.tableData.pageInfo;
 
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
 
-    private listQuery = this.myProxy.methodQuery;
+    listQuery = this.myProxy.methodQuery;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     get status() {
@@ -115,7 +117,7 @@ export default class ExchangeChannelListDialog extends AbstractView {
     get isStatusUpdate() {
         return this.status == DialogStatus.update;
     }
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.api_admin_exchange_channel_method_index();
     }
@@ -125,7 +127,7 @@ export default class ExchangeChannelListDialog extends AbstractView {
         this.myProxy.showDialog(DialogStatus.create);
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         console.log("handleEdit ---");
         this.myProxy.showDialog(DialogStatus.update, data);
     }

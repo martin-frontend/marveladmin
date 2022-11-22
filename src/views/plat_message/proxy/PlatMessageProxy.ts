@@ -32,7 +32,7 @@ export default class PlatMessageProxy extends AbstractProxy implements IPlatMess
             content: { name: "", options: {} },
             operator: { name: "", options: {} },
             is_read: { name: "", options: {} },
-            created_at: { name: "", options: {} }
+            created_at: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },

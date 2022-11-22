@@ -18,4 +18,3 @@ export var EventType = {
 const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_statistic_user_days_table_columns, cmd_admin_statistic_user_days_table_columns);
 facade.registerCommand(HttpType.admin_statistic_user_days_index, cmd_admin_statistic_user_days_index);
-

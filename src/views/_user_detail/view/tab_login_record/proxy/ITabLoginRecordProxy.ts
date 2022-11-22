@@ -1,3 +1,1 @@
-export default interface ITabLoginRecordProxy {
-    
-}
+export default interface ITabLoginRecordProxy {}

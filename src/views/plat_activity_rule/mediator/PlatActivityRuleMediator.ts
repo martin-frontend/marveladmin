@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_activity_rule/setting";
 import { Message } from "element-ui";
 import PlatActivityRuleProxy from "../proxy/PlatActivityRuleProxy";
 
-interface IPlatActivityRule extends IEventDispatcher {
-    
-}
+interface IPlatActivityRule extends IEventDispatcher {}
 
 export default class PlatActivityRuleMediator extends AbstractMediator {
     private myProxy: PlatActivityRuleProxy = <any>this.getProxy(PlatActivityRuleProxy);

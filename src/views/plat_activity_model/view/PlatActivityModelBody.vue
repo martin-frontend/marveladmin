@@ -66,7 +66,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column class-name="status-col" :label="$t('common.operating')" :width="width">
+            <el-table-column class-name="status-col" :label="LangUtil('操作')" :width="width">
                 <template slot-scope="{ row }">
                     <el-button
                         v-if="checkUnique(unique.plat_activity_model_show)"
@@ -74,10 +74,10 @@
                         type="primary"
                         @click="onCopyModule(row)"
                     >
-                        {{ $t("plat_activity_model.copyModule") }}
+                        {{ LangUtil("复制模板") }}
                     </el-button>
                     <el-button size="mini" type="danger" @click="onSettingPlat(row)">
-                        {{ $t("plat_activity_model.setPlat") }}
+                        {{ LangUtil("平台设置") }}
                     </el-button>
                     <el-button
                         size="mini"
@@ -85,7 +85,7 @@
                         type="danger"
                         @click="handleEdit(row)"
                     >
-                        {{ $t("plat_activity_model.editModule") }}
+                        {{ LangUtil("編輯模板") }}
                     </el-button>
                 </template>
             </el-table-column>
@@ -94,6 +94,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -109,18 +110,19 @@ import Cookies from "js-cookie";
     },
 })
 export default class PlatActivityModelBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
+    myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
     getShowTypes(types: number[]) {
         let typeNames = "";
@@ -133,19 +135,19 @@ export default class PlatActivityModelBody extends AbstractView {
         return typeNames;
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private onCopyModule(data: any) {
+    onCopyModule(data: any) {
         this.myProxy.showCopyDialog(DialogStatus.create, data);
     }
-    private onSettingPlat(data: any) {
+    onSettingPlat(data: any) {
         this.myProxy.showPlatSettingDialog(data.id);
     }
 

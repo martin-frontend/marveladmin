@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/admin_user_log/setting";
 import { Message } from "element-ui";
 import AdminUserLogProxy from "../proxy/AdminUserLogProxy";
 
-interface IAdminUserLog extends IEventDispatcher {
-    
-}
+interface IAdminUserLog extends IEventDispatcher {}
 
 export default class AdminUserLogMediator extends AbstractMediator {
     private myProxy: AdminUserLogProxy = <any>this.getProxy(AdminUserLogProxy);
@@ -29,7 +27,6 @@ export default class AdminUserLogMediator extends AbstractMediator {
             EventType.admin_admin_user_log_table_columns,
             EventType.admin_admin_user_log_index,
             EventType.admin_admin_user_log_show,
-
         ];
     }
 

@@ -58,14 +58,14 @@
                 class-name="status-col"
             >
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="60px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="60px">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
                         type="primary"
                         @click="handlerDetail(row)"
                         v-if="checkUnique(unique.admin_user_show)"
-                        >{{ $t("common.detail") }}</el-button
+                        >{{ LangUtil("详情") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -75,7 +75,8 @@
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>
 </template>
-<script lang='ts'>
+<script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -103,29 +104,30 @@ import PlatBonusUserLogDialog from "./dialog/PlatBonusUserLogDialog.vue";
     },
 })
 export default class PlatStakeBonusLog extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
+    myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private tableColumns = this.myProxy.stakeBonustableData.columns;
-    private tableData = this.myProxy.stakeBonustableData.list;
-    private pageInfo = this.myProxy.stakeBonustableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
-    private dialogData = this.myProxy.stakeBonusUserLogtableData.dialogData;
+    tableColumns = this.myProxy.stakeBonustableData.columns;
+    tableData = this.myProxy.stakeBonustableData.list;
+    pageInfo = this.myProxy.stakeBonustableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
+    dialogData = this.myProxy.stakeBonusUserLogtableData.dialogData;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onStakeBonusQuery();
     }
-    private handlerDetail(data: any) {
+    handlerDetail(data: any) {
         this.myProxy.showBonusUserLogDialog({ plat_id: data.plat_id, date: data.date });
     }
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 </style>

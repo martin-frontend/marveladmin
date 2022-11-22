@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_admin_permission_index, cmd_admin_admin_pe
 facade.registerCommand(HttpType.admin_admin_permission_show, cmd_admin_admin_permission_show);
 facade.registerCommand(HttpType.admin_admin_permission_store, cmd_admin_admin_permission_store);
 facade.registerCommand(HttpType.admin_admin_permission_update, cmd_admin_admin_permission_update);
-

@@ -17,20 +17,25 @@
                 :width="300"
             />
             <SearchInput
-                :title="$t('plat_users_payment_method.beneficiaryAccount')"
-                :placeholder="$t('plat_users_payment_method.placeholder')"
+                :title="LangUtil('收款人账号')"
+                :placeholder="LangUtil('收款人账号或者收款卡号或收款人姓名')"
                 :width="width"
                 v-model="listQuery.payment_method"
             />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{$t('common.search')}}</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{$t('common.reset')}}</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
+                    LangUtil("查询")
+                }}</el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
+                    LangUtil("重置")
+                }}</el-button>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatUsersPaymentMethodProxy from "../proxy/PlatUsersPaymentMethodProxy";
@@ -51,16 +56,17 @@ import Cookies from "js-cookie";
     },
 })
 export default class PlatUsersPaymentMethodHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatUsersPaymentMethodProxy = this.getProxy(PlatUsersPaymentMethodProxy);
+    myProxy: PlatUsersPaymentMethodProxy = this.getProxy(PlatUsersPaymentMethodProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
@@ -75,7 +81,7 @@ export default class PlatUsersPaymentMethodHeader extends AbstractView {
         return _w;
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 }

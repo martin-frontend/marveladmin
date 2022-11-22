@@ -8,7 +8,7 @@
                     class="item"
                     type="primary"
                     icon="el-icon-circle-plus-outline"
-                    >{{ $t("plat_service.addQuestion") }}</el-button
+                    >{{ LangUtil("新增问题") }}</el-button
                 >
             </div>
             <div>
@@ -18,7 +18,7 @@
                     class="item"
                     type="primary"
                     icon=""
-                    >{{ $t("plat_service.resetToInit") }}</el-button
+                    >{{ LangUtil("还原默认配置") }}</el-button
                 >
             </div>
         </div>
@@ -51,25 +51,25 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="100px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="100px">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
                         v-if="checkUnique(unique.plat_service_fag_delete)"
                         type="danger"
                         @click="handlerDelete(row)"
-                        >{{ $t("common.delete") }}</el-button
+                        >{{ LangUtil("删除") }}</el-button
                     >
                     <el-button
                         v-if="checkUnique(unique.plat_service_fag_update)"
                         size="mini"
                         type="primary"
                         @click="handleEdit(row)"
-                        >{{ $t("common.update") }}</el-button
+                        >{{ LangUtil("编辑") }}</el-button
                     >
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.sort')" class-name="status-col" min-width="30px">
+            <el-table-column :label="LangUtil('排序')" class-name="status-col" min-width="30px">
                 <div class="sort">
                     <i class="el-icon-rank"></i>
                 </div>
@@ -79,6 +79,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -94,21 +95,22 @@ import Sortable from "sortablejs";
     },
 })
 export default class CommonIssue extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatServiceProxy = this.getProxy(PlatServiceProxy);
+    myProxy: PlatServiceProxy = this.getProxy(PlatServiceProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private data = [];
-    private sortItem = {
+    data = [];
+    sortItem = {
         id: 0,
         next_id: 0,
     };
@@ -125,27 +127,27 @@ export default class CommonIssue extends AbstractView {
         }
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
 
-    private handlerReset() {
-        let isResetToInit: any = this.$t("plat_service.isResetToInit");
-        let prompt: any = this.$t("common.prompt");
-        let determine: any = this.$t("common.determine");
-        let cancel: any = this.$t("common.cancel");
+    handlerReset() {
+        let isResetToInit: any = this.LangUtil("是否还原默认配置?");
+        let prompt: any = this.LangUtil("提示");
+        let determine: any = this.LangUtil("确定");
+        let cancel: any = this.LangUtil("取消");
         this.$confirm(isResetToInit, prompt, {
             confirmButtonText: determine,
             cancelButtonText: cancel,
@@ -157,7 +159,7 @@ export default class CommonIssue extends AbstractView {
             .catch(() => {});
     }
 
-    private initSort() {
+    initSort() {
         if (checkUnique(unique.plat_service_fag_order)) {
             const tbody: any = document.querySelector(".el-table__body-wrapper tbody");
             new Sortable(tbody, {

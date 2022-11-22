@@ -104,7 +104,7 @@
                     {{ tableColumns.status.options[row.status] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.orderTime')" align="left" min-width="120px">
+            <el-table-column :label="LangUtil('订单时间')" align="left" min-width="120px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["created_at"].name }}：<br />{{ row.created_at }}</p>
                     <p>{{ tableColumns["updated_at"].name }}：<br />{{ row.updated_at }}</p>
@@ -127,10 +127,10 @@
                     {{ row.remark }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="120px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="120px">
                 <template slot-scope="{ row }">
                     <el-button v-if="row.status == 11" size="mini" type="primary" @click="handleEdit(row)">{{
-                        $t(`coin_exchange_orders.orders_operation`)
+                        LangUtil("订单操作")
                     }}</el-button>
                     <template v-else>-</template>
                 </template>
@@ -140,6 +140,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -158,25 +159,26 @@ import i18n from "@/lang";
     },
 })
 export default class CoinExchangeOrdersBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: CoinExchangeOrdersProxy = this.getProxy(CoinExchangeOrdersProxy);
+    myProxy: CoinExchangeOrdersProxy = this.getProxy(CoinExchangeOrdersProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(row: any) {
+    handleEdit(row: any) {
         this.myProxy.showDialog(row);
     }
 
@@ -184,13 +186,13 @@ export default class CoinExchangeOrdersBody extends AbstractView {
     onCopy(target: any) {
         const clipboard = new Clipboard(`#${target}`);
         clipboard.on("success", () => {
-            const str: any = i18n.t("user_detail.copySuccess");
+            const str: any = LangUtil("复制成功");
             Message.info(str);
             clipboard.destroy(); // 释放内存
         });
         clipboard.on("error", () => {
             // 不支持复制
-            const str: any = i18n.t("user_detail.browserDoesCopying");
+            const str: any = LangUtil("该浏览器不支持自动复制");
             Message.info(str);
             clipboard.destroy(); // 释放内存
         });

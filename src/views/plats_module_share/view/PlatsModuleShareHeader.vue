@@ -7,20 +7,19 @@
             :options="tableColumns.plat_id.options"
         />
         <el-button @click="handlerSearch" type="primary" class="item" icon="el-icon-search">{{
-            $t("common.search")
+            LangUtil("查询")
         }}</el-button>
-        <el-button @click="handlerRefresh" type="primary" class="item">{{
-            $t("coin_receive_payment_channel.refresh")
-        }}</el-button>
+        <el-button @click="handlerRefresh" type="primary" class="item">{{ LangUtil("刷新") }}</el-button>
         <el-row>
             <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handlerCreate">{{
-                $t("common.create")
+                LangUtil("新增")
             }}</el-button>
         </el-row>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -34,25 +33,26 @@ import PlatsModuleShareProxy from "../proxy/PlatsModuleShareProxy";
     },
 })
 export default class PlatsModuleShareHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatsModuleShareProxy = this.getProxy(PlatsModuleShareProxy);
+    myProxy: PlatsModuleShareProxy = this.getProxy(PlatsModuleShareProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerRefresh() {
+    handlerRefresh() {
         this.myProxy.onQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog();
     }
 }

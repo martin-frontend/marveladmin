@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('statistic_plat_days.dialogTitle')" :visible.sync="myProxy.dialogData.bShow" width="550px">
+    <el-dialog :title="LangUtil('字段配置')" :visible.sync="myProxy.dialogData.bShow" width="550px">
         <el-form label-width="115px" class="form" v-loading="net_status.loading">
             <el-col :span="8" v-for="(category, key) in form" :key="key">
                 <div>{{ category.title }}</div>
@@ -24,16 +24,17 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button type="primary" size="mini" @click="handlerClose">
-                {{ $t("common.cancel") }}
+                {{ LangUtil("取消") }}
             </el-button>
             <el-button type="primary" size="mini" @click="handlerSave">
-                {{ $t("common.save") }}
+                {{ LangUtil("确认保存") }}
             </el-button>
         </div>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import StatisticPlatDaysProxy from "@/views/statistic_plat_days/proxy/StatisticPlatDaysProxy";
@@ -44,15 +45,16 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class StatisticPlatDaysDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: StatisticPlatDaysProxy = this.getProxy(StatisticPlatDaysProxy);
+    myProxy: StatisticPlatDaysProxy = this.getProxy(StatisticPlatDaysProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
     get form() {
         return this.myProxy.dialogData.form;
     }

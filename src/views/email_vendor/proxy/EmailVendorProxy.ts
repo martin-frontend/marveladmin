@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
@@ -33,10 +34,9 @@ export default class EmailVendorProxy extends AbstractProxy implements IEmailVen
             email_vendor_desc: { name: "", options: {} },
             extends: { name: "", options: {} },
             created_by: { name: "", options: {} },
-            created_at:{ name: "", options: {} },
-            updated_by:{ name: "", options: {} },
-            updated_at:{ name: "", options: {} },
-
+            created_at: { name: "", options: {} },
+            updated_by: { name: "", options: {} },
+            updated_at: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -142,20 +142,20 @@ export default class EmailVendorProxy extends AbstractProxy implements IEmailVen
         // TODO
         // 添加主键
         formCopy.email_vender_id = this.dialogData.form.email_vender_id;
-        
+
         // 发送消息
         this.sendNotification(HttpType.admin_email_vendor_update, formCopy);
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_email_vendor_update, { email_vender_id: id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

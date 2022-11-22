@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plats_module_share/setting";
 import { Message } from "element-ui";
 import PlatsModuleShareProxy from "../proxy/PlatsModuleShareProxy";
 
-interface IPlatsModuleShare extends IEventDispatcher {
-
-}
+interface IPlatsModuleShare extends IEventDispatcher {}
 
 export default class PlatsModuleShareMediator extends AbstractMediator {
     private myProxy: PlatsModuleShareProxy = <any>this.getProxy(PlatsModuleShareProxy);
@@ -30,7 +28,6 @@ export default class PlatsModuleShareMediator extends AbstractMediator {
             EventType.admin_plats_module_share_index,
             EventType.admin_plats_module_share_store,
             EventType.admin_plats_module_share_update,
-
         ];
     }
 

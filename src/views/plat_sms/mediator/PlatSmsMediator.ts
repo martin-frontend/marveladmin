@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_sms/setting";
 import { Message } from "element-ui";
 import PlatSmsProxy from "../proxy/PlatSmsProxy";
 
-interface IPlatSms extends IEventDispatcher {
-    
-}
+interface IPlatSms extends IEventDispatcher {}
 
 export default class PlatSmsMediator extends AbstractMediator {
     private myProxy: PlatSmsProxy = <any>this.getProxy(PlatSmsProxy);
@@ -33,7 +31,6 @@ export default class PlatSmsMediator extends AbstractMediator {
             EventType.admin_plat_sms_update,
             EventType.admin_plat_sms_send,
             EventType.admin_plat_sms_getBalance,
-
         ];
     }
 

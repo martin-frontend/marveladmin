@@ -29,16 +29,18 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import { dateFormat, getTodayOffset } from "@/core/global/Functions";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import i18n from "@/lang";
 
 @Component
 export default class SearchDatePicker extends Vue {
+    LangUtil = LangUtil;
     @Prop({ default: "选择时间" })
-    private title!: string;
+    title!: string;
     @Prop({ default: false })
-    private showTime!: boolean;
+    showTime!: boolean;
     @Prop() tip!: string;
 
     @Prop() startDate!: string;
@@ -50,7 +52,7 @@ export default class SearchDatePicker extends Vue {
             return {
                 shortcuts: [
                     {
-                        text: i18n.t("common.today"),
+                        text: LangUtil("今日"),
                         onClick(picker: any) {
                             const start = getTodayOffset();
                             const end = getTodayOffset(1, 1);
@@ -58,7 +60,7 @@ export default class SearchDatePicker extends Vue {
                         },
                     },
                     {
-                        text: i18n.t("common.yesterday"),
+                        text: LangUtil("昨日"),
                         onClick(picker: any) {
                             const start = getTodayOffset(-1);
                             const end = getTodayOffset(0, 1);
@@ -66,7 +68,7 @@ export default class SearchDatePicker extends Vue {
                         },
                     },
                     {
-                        text: i18n.t("common.lastWeek"),
+                        text: LangUtil("最近一周"),
                         onClick(picker: any) {
                             const start = getTodayOffset(-6);
                             const end = getTodayOffset(1, 1);
@@ -74,7 +76,7 @@ export default class SearchDatePicker extends Vue {
                         },
                     },
                     {
-                        text: i18n.t("common.lastMonth"),
+                        text: LangUtil("最近一个月"),
                         onClick(picker: any) {
                             const start = getTodayOffset(-29);
                             const end = getTodayOffset(1, 1);
@@ -95,11 +97,11 @@ export default class SearchDatePicker extends Vue {
     })
     pickerOptions!: {};
 
-    private timeRange: any = [this.getStartDate, this.getEndDate];
-    private start: any = i18n.t("component.startFrom");
-    private end: any = i18n.t("component.endTo");
-    private to: any = i18n.t("common.to");
-    private defaultWidth: any = "350px";
+    timeRange: any = [this.getStartDate, this.getEndDate];
+    start: any = LangUtil("选择开始时间");
+    end: any = LangUtil("选择结束时间");
+    to: any = LangUtil("至");
+    defaultWidth: any = "350px";
 
     @Watch("startDate")
     onMinValueChange() {
@@ -123,7 +125,7 @@ export default class SearchDatePicker extends Vue {
         return this.disabled;
     }
 
-    private datePick(data: Date[]) {
+    datePick(data: Date[]) {
         if (!data) {
             this.$emit("update:startDate", "");
             this.$emit("update:endDate", "");

@@ -20,7 +20,7 @@
                     <div class="group">
                         <div class="title">
                             <!-- 折扣数量 -->
-                            {{ $t("user_detail.discountQuantity") }}
+                            {{ LangUtil("折扣数量") }}
                         </div>
                         <div>
                             <el-input
@@ -34,7 +34,7 @@
                     <div class="group">
                         <div class="title">
                             <!-- 每日玩家条数 -->
-                            {{ $t("user_detail.dailyPlayerCount") }}
+                            {{ LangUtil("每日玩家条数") }}
                         </div>
                         <div>
                             <el-input
@@ -48,7 +48,7 @@
                     <div class="group">
                         <div class="title">
                             <!-- 流水限制金额 -->
-                            {{ $t("user_detail.limitAmount") }}
+                            {{ LangUtil("流水限制金额") }}
                         </div>
                         <div>
                             <el-input
@@ -64,13 +64,14 @@
             </div>
             <el-form-item class="dialog-footer">
                 <el-button v-if="checkUnique(unique.plat_update)" type="primary" size="mini" @click="handlerEdit()">{{
-                    $t("common.save")
+                    LangUtil("确认保存")
                 }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatProxy from "@/views/plat/proxy/PlatProxy";
@@ -81,23 +82,24 @@ import GlobalVar from "@/core/global/GlobalVar";
 import { inputOnlyPositive } from "@/core/global/Functions";
 @Component
 export default class PromotionDiscountDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatProxy = this.getProxy(PlatProxy);
+    myProxy: PlatProxy = this.getProxy(PlatProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
 
     get form() {
         return this.myProxy.promotionDiscountDialogData.form.promotion_discount;
     }
 
-    private inputOnlyPositive = inputOnlyPositive;
+    inputOnlyPositive = inputOnlyPositive;
 
-    private handlerEdit() {
+    handlerEdit() {
         this.myProxy.onUpdatePromotionDiscount();
     }
 }

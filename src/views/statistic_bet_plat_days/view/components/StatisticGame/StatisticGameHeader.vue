@@ -17,7 +17,7 @@
                 :options="myProxy.gameOptions"
                 v-model="listQuery.vendor_product_id"
                 :title="tableColumns['vendor_product_id'].name"
-                :placeholder="$t('common.pleaseChoose')"
+                :placeholder="LangUtil('请选择')"
             />
             <SearchSelect
                 :options="tableColumns['vendor_type'].options"
@@ -33,10 +33,10 @@
             />
             <div>
                 <el-button @click="handlerSearch()" class="header-button" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" class="header-button" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -48,6 +48,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import StatisticBetPlatDaysProxy from "../../../proxy/StatisticBetPlatDaysProxy";
@@ -63,25 +64,26 @@ import SearchSelect from "@/components/SearchSelect.vue";
     },
 })
 export default class StatisticGameHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: StatisticBetPlatDaysProxy = this.getProxy(StatisticBetPlatDaysProxy);
+    myProxy: StatisticBetPlatDaysProxy = this.getProxy(StatisticBetPlatDaysProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
     @Watch("listQuery.time_type")
     onWatchTimeType() {
         this.myProxy.onQuery();
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 }

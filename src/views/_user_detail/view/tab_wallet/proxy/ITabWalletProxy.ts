@@ -7,9 +7,9 @@ export default interface ITabWalletProxy {
     refreshing: boolean;
     /**扣款页面数据 */
     dialogDeductGoldData: {
-        bShow: boolean,
-        gold: string
-    }
+        bShow: boolean;
+        gold: string;
+    };
     /**打开扣款弹窗 */
     showDialog(coin_name_unique: string): void;
     /**打开用户充值地址弹窗 */

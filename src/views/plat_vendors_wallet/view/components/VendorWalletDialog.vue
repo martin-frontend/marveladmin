@@ -5,13 +5,14 @@
                 <el-input v-model.number="form.gold" :placeholder="langTextObj.placeholderText"></el-input>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" @click="handleUpdate">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" @click="handleUpdate">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatVendorsWalletProxy from "@/views/plat_vendors_wallet/proxy/PlatVendorsWalletProxy";
@@ -23,29 +24,30 @@ import i18n from "@/lang";
 
 @Component
 export default class PlatVendorsWalletDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
+    myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.vendorDialogData.wallet.form;
-    private title = this.myProxy.vendorDialogData.wallet.title[this.form.type];
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.vendorDialogData.wallet.form;
+    title = this.myProxy.vendorDialogData.wallet.title[this.form.type];
 
-    private langTextObj: any = {
-        title: i18n.t("plat_vendors_wallet.vender") + this.title,
-        money: this.title + ' ' + i18n.t("common.money"),
-        required: i18n.t("common.requiredInput"),
-        errorCode: i18n.t("plat_vendors_wallet.errorCode"),
-        mustNumber: i18n.t("plat_vendors_wallet.mustNumber"),
-        placeholderText: i18n.t("plat_vendors_wallet.placeholderText"),
+    langTextObj: any = {
+        title: LangUtil("厂商") + this.title,
+        money: this.title + " " + LangUtil("金额"),
+        required: LangUtil("必须填写"),
+        errorCode: LangUtil("范围必须在 0-999999999"),
+        mustNumber: LangUtil("必须为数字值"),
+        placeholderText: LangUtil("请输入0-999999999"),
     };
 
     // 验证金额范围
-    private checklimit(rule: any, value: any, callback: any): any {
+    checklimit(rule: any, value: any, callback: any): any {
         if (value === "") {
             callback(new Error(this.langTextObj.required));
         } else if (parseInt(value) < 1 || parseInt(value) > 999999999) {
@@ -65,7 +67,7 @@ export default class PlatVendorsWalletDialog extends AbstractView {
         };
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onVenderWalletUpdate();

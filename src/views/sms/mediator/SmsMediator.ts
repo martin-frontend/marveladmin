@@ -6,9 +6,7 @@ import { EventType, HttpType } from "@/views/sms/setting";
 import { Message } from "element-ui";
 import SmsProxy from "../proxy/SmsProxy";
 
-interface ISms extends IEventDispatcher {
-    
-}
+interface ISms extends IEventDispatcher {}
 
 export default class SmsMediator extends AbstractMediator {
     private myProxy: SmsProxy = <any>this.getProxy(SmsProxy);
@@ -32,7 +30,7 @@ export default class SmsMediator extends AbstractMediator {
             EventType.admin_sms_show,
             EventType.admin_sms_store,
             EventType.admin_sms_update,
-            GlobalEventType.REQUEST_ERROR
+            GlobalEventType.REQUEST_ERROR,
         ];
     }
 

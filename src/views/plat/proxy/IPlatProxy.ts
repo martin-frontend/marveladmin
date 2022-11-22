@@ -3,20 +3,20 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface IPlatProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any,
-        initPromotion_floor: any,
-        initWater_config: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
+        initPromotion_floor: any;
+        initWater_config: any;
     };
 
     /**设置表头数据 */
@@ -51,9 +51,9 @@ export default interface IPlatProxy {
 
     /**Vip Model弹窗相关数据 */
     vipModelDialogData: {
-        bShow: boolean,
-        form: any,
-        formSource: any, // 表单的原始数据
+        bShow: boolean;
+        form: any;
+        formSource: any; // 表单的原始数据
     };
     /**顯示Vip Model弹窗 */
     showVipModelDialog(data: any): void;
@@ -64,10 +64,10 @@ export default interface IPlatProxy {
 
     /**Backwater Model弹窗相关数据 */
     backwaterModelDialogData: {
-        bShow: boolean,
-        form: any,
-        formSource: any, // 表单的原始数据
-    }
+        bShow: boolean;
+        form: any;
+        formSource: any; // 表单的原始数据
+    };
     /**顯示Backwater Model弹窗 */
     showBackwaterModelDialog(data: any): void;
     /**隱藏Vip Model弹窗 */
@@ -77,11 +77,11 @@ export default interface IPlatProxy {
 
     /**Promotion Model弹窗相关数据 */
     promotionModelDialogData: {
-        bShow: boolean,
-        form: any,
-        formSource: any, // 表单的原始数据
-        promotionModelList: any
-    }
+        bShow: boolean;
+        form: any;
+        formSource: any; // 表单的原始数据
+        promotionModelList: any;
+    };
     /**顯示Promotion Model弹窗 */
     showPromotionModelDialog(data: any): void;
     /**隱藏Promotion Model弹窗 */
@@ -93,6 +93,6 @@ export default interface IPlatProxy {
     getPromotionModelById(id: any): void;
 }
 export interface IWaterConfig {
-    type: string,
-    rate: number
+    type: string;
+    rate: number;
 }

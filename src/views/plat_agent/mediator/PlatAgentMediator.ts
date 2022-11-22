@@ -33,7 +33,7 @@ export default class PlatAgentMediator extends AbstractMediator {
             EventType.admin_plat_agent_promotion_model_table_columns,
             EventType.admin_plat_agent_promotion_model_show,
             EventType.admin_resource_upload,
-            GlobalEventType.REQUEST_ERROR
+            GlobalEventType.REQUEST_ERROR,
         ];
     }
 
@@ -46,8 +46,8 @@ export default class PlatAgentMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             // case EventType.admin_plat_index:
-                // myProxy.setTableData(body);
-                // break;
+            // myProxy.setTableData(body);
+            // break;
             case EventType.admin_plat_show:
                 myProxy.setDetail(body);
                 break;
@@ -64,7 +64,7 @@ export default class PlatAgentMediator extends AbstractMediator {
                 myProxy.onUploadSuccess(body);
                 break;
             case GlobalEventType.REQUEST_ERROR:
-                if(body.url == getUrl(HttpType.admin_plat_update, {plat_id: this.myProxy.listQuery.plat_id})){
+                if (body.url == getUrl(HttpType.admin_plat_update, { plat_id: this.myProxy.listQuery.plat_id })) {
                     myProxy.onQuery();
                 }
                 break;

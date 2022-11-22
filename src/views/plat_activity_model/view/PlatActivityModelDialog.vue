@@ -4,23 +4,23 @@
             <el-scrollbar style="height: 860px">
                 <el-form ref="form" :rules="rules" :model="form" label-width="115px">
                     <el-form-item size="mini" :label="tableColumns.activity_name.name" prop="activity_name">
-                        <el-input v-model="form.activity_name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                        <el-input v-model="form.activity_name" :placeholder="LangUtil('请输入')"></el-input>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['activity_desc'].name" prop="activity_desc">
                         <el-input
                             type="textarea"
                             v-model="form.activity_desc"
-                            :placeholder="$t('common.pleaseEnter')"
+                            :placeholder="LangUtil('请输入')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['icon'].name" prop="icon">
-                        <el-input v-model="form.icon" :placeholder="$t('common.pleaseEnter')"></el-input>
+                        <el-input v-model="form.icon" :placeholder="LangUtil('请输入')"></el-input>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['type'].name" prop="type">
                         <el-select
                             v-model="form.type"
                             filterable
-                            :placeholder="$t('common.pleaseChoose')"
+                            :placeholder="LangUtil('请选择')"
                             @change="onModelTypeChange"
                         >
                             <el-option
@@ -37,12 +37,7 @@
                         prop="category"
                         v-if="filterCategory"
                     >
-                        <el-select
-                            v-model="form.category"
-                            clearable
-                            filterable
-                            :placeholder="$t('common.pleaseChoose')"
-                        >
+                        <el-select v-model="form.category" clearable filterable :placeholder="LangUtil('请选择')">
                             <el-option
                                 v-for="(value, key) in filterCategory"
                                 :key="key"
@@ -52,7 +47,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['open_mode'].name" prop="open_mode">
-                        <el-select v-model="form.open_mode" filterable :placeholder="$t('common.pleaseChoose')">
+                        <el-select v-model="form.open_mode" filterable :placeholder="LangUtil('请选择')">
                             <el-option
                                 v-for="(value, key) in tableColumns['open_mode'].options"
                                 :key="key"
@@ -62,7 +57,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['settlement_period'].name" prop="settlement_period">
-                        <el-select v-model="form.settlement_period" filterable :placeholder="$t('common.pleaseChoose')">
+                        <el-select v-model="form.settlement_period" filterable :placeholder="LangUtil('请选择')">
                             <el-option
                                 v-for="(value, key) in tableColumns['settlement_period'].options"
                                 :key="key"
@@ -104,7 +99,7 @@
                         prop="award_tpl"
                         v-if="isShowAwardTpl"
                     >
-                        <el-input v-model="form.award_tpl" :placeholder="$t('common.pleaseEnter')"></el-input>
+                        <el-input v-model="form.award_tpl" :placeholder="LangUtil('请输入')"></el-input>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['show_types'].name" prop="show_types">
                         <el-checkbox-group v-model="form.show_types">
@@ -122,7 +117,7 @@
                         <el-input
                             type="number"
                             v-model="form.bonus_multiple"
-                            :placeholder="$t('common.pleaseEnter')"
+                            :placeholder="LangUtil('请输入')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['is_once'].name" prop="is_once">
@@ -138,7 +133,7 @@
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['rules'].name" prop="rules">
                         <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="onAddRule"
-                            >{{ $t("common.addRule") }}
+                            >{{ LangUtil("新增规则") }}
                         </el-button>
                     </el-form-item>
 
@@ -151,14 +146,14 @@
                     size="mini"
                     v-if="isStatusUpdate && checkUnique(unique.plat_activity_model_delete)"
                     @click="handleDelete(form)"
-                    >{{ $t("common.delete") }}</el-button
+                    >{{ LangUtil("删除") }}</el-button
                 >
                 <el-button
                     v-if="checkUnique(unique.plat_activity_model_update)"
                     type="primary"
                     size="mini"
                     @click="isStatusUpdate ? handleUpdate() : handleAdd()"
-                    >{{ $t("common.save") }}</el-button
+                    >{{ LangUtil("确认保存") }}</el-button
                 >
             </div>
         </el-form>
@@ -166,6 +161,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatActivityModelProxy from "@/views/plat_activity_model/proxy/PlatActivityModelProxy";
@@ -182,27 +178,28 @@ import Cookies from "js-cookie";
     },
 })
 export default class PlatActivityModelDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
+    myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
     get form() {
         return this.myProxy.dialogData.form;
     }
-    private filterCategory = "";
+    filterCategory = "";
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -218,21 +215,21 @@ export default class PlatActivityModelDialog extends AbstractView {
 
     get rules() {
         return {
-            activity_name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            activity_desc: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            activity_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            activity_desc: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             icon: [{ required: false }],
-            type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            open_mode: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            settlement_period: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            settlement_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            award_types: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            show_types: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            bonus_multiple: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            link_url: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            award_tpl: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            category: [{ required: false, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            is_once: [{ required: false, message: this.$t("common.requiredInput"), trigger: "change" }],
-            rules: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            open_mode: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            settlement_period: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            settlement_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            award_types: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            show_types: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            bonus_multiple: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            link_url: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            award_tpl: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            category: [{ required: false, message: this.LangUtil("必须选择"), trigger: "change" }],
+            is_once: [{ required: false, message: this.LangUtil("必须填写"), trigger: "change" }],
+            rules: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
@@ -244,7 +241,7 @@ export default class PlatActivityModelDialog extends AbstractView {
         return (this.form.award_types.includes(1) || this.form.award_types.includes(4)) && this.isShowAwardType;
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -252,7 +249,7 @@ export default class PlatActivityModelDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -260,14 +257,14 @@ export default class PlatActivityModelDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
     onShowTypeSelect(value: any) {
         console.error(value);
     }
     // 模型類型變動
-    private onModelTypeChange(type: string) {
+    onModelTypeChange(type: string) {
         const category = JSON.parse(JSON.stringify(this.tableColumns["category"].options));
         let filterCategory: any = {};
         Object.keys(category).forEach((key: string) => {
@@ -297,11 +294,11 @@ export default class PlatActivityModelDialog extends AbstractView {
         }
     }
     // 新增规则
-    private onAddRule() {
+    onAddRule() {
         this.myProxy.addRule();
     }
 
-    private hide() {
+    hide() {
         this.myProxy.dialogData.isRender = false;
     }
 }

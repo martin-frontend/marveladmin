@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_game_domain_index, cmd_admin_game_domain_i
 facade.registerCommand(HttpType.admin_game_domain_show, cmd_admin_game_domain_show);
 facade.registerCommand(HttpType.admin_game_domain_store, cmd_admin_game_domain_store);
 facade.registerCommand(HttpType.admin_game_domain_update, cmd_admin_game_domain_update);
-

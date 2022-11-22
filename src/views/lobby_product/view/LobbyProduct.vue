@@ -1,9 +1,9 @@
 <template>
     <div class="content lobby_product">
-        <LobbyProductDialog v-if="myProxy.dialogData.bShow"/>
-        <LobbyProductIconDialog v-if="myProxy.iconDialogData.bShow"/>
-        <LobbyProductHeader/>
-        <LobbyProductBody/>
+        <LobbyProductDialog v-if="myProxy.dialogData.bShow" />
+        <LobbyProductIconDialog v-if="myProxy.iconDialogData.bShow" />
+        <LobbyProductHeader />
+        <LobbyProductBody />
     </div>
 </template>
 
@@ -23,10 +23,9 @@ import LobbyProductIconDialog from "./LobbyProductIconDialog.vue";
         LobbyProductHeader,
         LobbyProductBody,
         LobbyProductIconDialog,
-    }
+    },
 })
 export default class LobbyProduct extends AbstractView {
-
     constructor() {
         super(LobbyProductMediator);
     }

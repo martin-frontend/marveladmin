@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -37,17 +38,17 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             type: { name: "类型", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
-            plat_id:{name: "平台ID", options:{}},
-            key:{name: "键", options:{}},
-            ar_AR: {name: "键", options:{}},
-            en_EN: {name: "键", options:{}},
-            jp_JP: {name: "", options:{}},
-            ko_Kr: {name: "", options:{}},
-            th_TH: {name: "", options:{}},
-            vi_VN: {name: "", options:{}},
-            zh_CN: {name: "", options:{}},
-            zh_TW: {name: "", options:{}},
-            es_ES: {name: "", options:{}},
+            plat_id: { name: "平台ID", options: {} },
+            key: { name: "键", options: {} },
+            ar_AR: { name: "键", options: {} },
+            en_EN: { name: "键", options: {} },
+            jp_JP: { name: "", options: {} },
+            ko_Kr: { name: "", options: {} },
+            th_TH: { name: "", options: {} },
+            vi_VN: { name: "", options: {} },
+            zh_CN: { name: "", options: {} },
+            zh_TW: { name: "", options: {} },
+            es_ES: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -70,8 +71,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             language: "",
             module: "",
             type: "",
-            plat_id:"",
-            key:"",
+            plat_id: "",
+            key: "",
             ar_AR: "",
             en_EN: "",
             jp_JP: "",
@@ -94,10 +95,9 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
-        let newTableData = this.tableData.list.map(({ language, ...data}) =>
-        ({
+        let newTableData = this.tableData.list.map(({ language, ...data }) => ({
             ...data,
-            language: jsonToObject(language)
+            language: jsonToObject(language),
         }));
         Object.assign(this.tableData.pageInfo, data.pageInfo);
         Object.assign(this.tableData.list, newTableData);
@@ -125,7 +125,6 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -142,8 +141,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             language: {},
             module: "",
             type: 1,
-            plat_id:"",
-            key:"",
+            plat_id: "",
+            key: "",
             ar_AR: "",
             en_EN: "",
             jp_JP: "",
@@ -164,10 +163,9 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     onAdd() {
         let formCopy: any = Object.assign({}, this.dialogData.form);
         try {
-            
             this.sendNotification(HttpType.admin_system_lang_store, objectRemoveNull(formCopy));
         } catch (error) {
-            MessageBox.alert(<string> i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
     /**更新数据 */
@@ -187,14 +185,14 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             temp.key = formCopy.key;
             this.sendNotification(HttpType.admin_system_lang_update, objectRemoveNull(temp));
         } catch (error) {
-            MessageBox.alert(<string> i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -232,7 +230,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         exportColumn = exportColumn.concat(langKeys);
         let dataArray: any = [];
 
-        newData.forEach((item:any, index:any) => {
+        newData.forEach((item: any, index: any) => {
             dataArray.push(({ langKeys } = newData[index]));
         });
 
@@ -243,8 +241,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     }
 
     /**
-     * 获取全部翻译 
-     * @param data 
+     * 获取全部翻译
+     * @param data
      * source	string	源语言: en_EN   sentence	string	要翻译的语句
      */
     translate(data: any): void {
@@ -252,18 +250,17 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     }
 
     /**获取全部翻译返回更新表单 */
-    updateForm(data: any):void {
+    updateForm(data: any): void {
         Object.assign(this.dialogData.form, data);
-        
     }
 
     /**语言包导入翻译 */
     languageImport(sentences: any): void {
         const newData = JSON.stringify(sentences);
-        this.sendNotification(HttpType.admin_system_lang_import, {"sentences": newData});
+        this.sendNotification(HttpType.admin_system_lang_import, { sentences: newData });
     }
 
-    generate():void {
+    generate(): void {
         this.sendNotification(HttpType.admin_system_lang_generate);
     }
 }

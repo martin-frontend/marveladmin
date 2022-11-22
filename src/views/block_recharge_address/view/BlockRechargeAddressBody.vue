@@ -19,12 +19,22 @@
                 min-width="30px"
             >
             </el-table-column>
-            <el-table-column prop="block_network_id" :label="`${tableColumns.block_network_id.name}`" class-name="status-col" width="150px">
+            <el-table-column
+                prop="block_network_id"
+                :label="`${tableColumns.block_network_id.name}`"
+                class-name="status-col"
+                width="150px"
+            >
                 <template slot-scope="{ row }">
                     {{ tableColumns.block_network_id.options[row.block_network_id] }}
                 </template>
             </el-table-column>
-            <el-table-column prop="coin_name_unique" :label="`${tableColumns.coin_name_unique.name}`" class-name="status-col" width="90px">
+            <el-table-column
+                prop="coin_name_unique"
+                :label="`${tableColumns.coin_name_unique.name}`"
+                class-name="status-col"
+                width="90px"
+            >
                 <template slot-scope="{ row }">
                     {{ tableColumns.coin_name_unique.options[row.coin_name_unique] }}
                 </template>

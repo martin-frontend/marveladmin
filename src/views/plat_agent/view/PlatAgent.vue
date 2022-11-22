@@ -21,7 +21,7 @@ import PromotionExtraConfigDialog from "./components/PromotionExtraConfigDialog.
         PlatAgentDialog,
         PlatAgentHeader,
         PlatAgentBody,
-        PromotionExtraConfigDialog
+        PromotionExtraConfigDialog,
     },
 })
 export default class PlatAgent extends AbstractView {

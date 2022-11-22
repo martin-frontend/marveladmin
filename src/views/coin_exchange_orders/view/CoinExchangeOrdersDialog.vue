@@ -90,13 +90,14 @@
                 <el-button @click="handleReturn(form.id)" type="danger">{{ `关闭(退还)` }}</el-button>
                 <!-- <el-button @click="handleUnreturn(form.id)" type="danger">{{ `关闭(不退还)` }}</el-button> -->
                 <el-button @click="handleFinish(form.id)" type="success">{{ `完成订单` }}</el-button>
-                <el-button @click="handleClose" type="primary">{{ $t("common.cancel") }}</el-button>
+                <el-button @click="handleClose" type="primary">{{ LangUtil("取消") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import CoinExchangeOrdersProxy from "@/views/coin_exchange_orders/proxy/CoinExchangeOrdersProxy";
@@ -111,19 +112,20 @@ import i18n from "@/lang";
 
 @Component
 export default class CoinExchangeOrdersDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: CoinExchangeOrdersProxy = this.getProxy(CoinExchangeOrdersProxy);
+    myProxy: CoinExchangeOrdersProxy = this.getProxy(CoinExchangeOrdersProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -133,28 +135,28 @@ export default class CoinExchangeOrdersDialog extends AbstractView {
     onCopy(target: any) {
         const clipboard = new Clipboard(`#${target}`);
         clipboard.on("success", () => {
-            const str: any = i18n.t("user_detail.copySuccess");
+            const str: any = LangUtil("复制成功");
             Message.info(str);
             clipboard.destroy(); // 释放内存
         });
         clipboard.on("error", () => {
             // 不支持复制
-            const str: any = i18n.t("user_detail.browserDoesCopying");
+            const str: any = LangUtil("该浏览器不支持自动复制");
             Message.info(str);
             clipboard.destroy(); // 释放内存
         });
     }
 
-    private handleFinish(id: string) {
+    handleFinish(id: string) {
         this.myProxy.onFinishOrder(id);
     }
-    private handleReturn(id: string) {
+    handleReturn(id: string) {
         this.myProxy.onReturn(id);
     }
-    private handleUnreturn(id: string) {
+    handleUnreturn(id: string) {
         this.myProxy.onUnreturn(id);
     }
-    private handleClose() {
+    handleClose() {
         this.myProxy.hideDialog();
     }
 }

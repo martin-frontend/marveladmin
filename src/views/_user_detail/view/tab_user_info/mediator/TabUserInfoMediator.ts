@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { EventType, HttpType } from "@/views/_user_detail/setting";
 import TabUserInfoProxy from "../proxy/TabUserInfoProxy";
@@ -47,32 +48,31 @@ export default class TabUserUnfoMediator extends AbstractMediator {
                         // @ts-ignore
                         Message.success(
                             `${this.myProxy.tableColumns[this.myProxy.dialogData.filed].name}` +
-                            <any>i18n.t("successMessage.modified")
+                                <any>LangUtil("修改成功")
                         );
                     } else {
                         // 清除谷歌验证码
-                        Message.success(<any>i18n.t("successMessage.operation"));
+                        Message.success(<any>LangUtil("操作成功"));
                     }
                     this.myProxy.dialogData.filed = "";
                     this.sendNotification(GlobalEventType.REFRESH_PAGE);
                     this.myProxy.hideDialog();
                     break;
                 case EventType.admin_plat_user_phone:
-                    MessageBox.alert(<any>i18n.t("successMessage.operation") + ":" + body);
+                    MessageBox.alert(<any>LangUtil("操作成功") + ":" + body);
                     break;
                 case EventType.admin_plat_user_agent_bind_show:
                     this.myProxy.setRelationChain(body);
                     break;
                 case EventType.admin_plat_user_update_level_exp:
                     Message.success(
-                        `${this.myProxy.tableColumns[this.myProxy.dialogData.filed].name}` +
-                        <any>i18n.t("successMessage.modified")
+                        `${this.myProxy.tableColumns[this.myProxy.dialogData.filed].name}` + <any>LangUtil("修改成功")
                     );
                     this.sendNotification(GlobalEventType.REFRESH_PAGE);
                     this.myProxy.hideDialog();
                     break;
                 case EventType.admin_plat_user_clear_cache:
-                    Message.success(<any>i18n.t("successMessage.operation"));
+                    Message.success(<any>LangUtil("操作成功"));
                     break;
                 case GlobalEventType.REFRESH_PAGE:
                     this.myProxy.getUserDetail(getPageSetting().user_id);

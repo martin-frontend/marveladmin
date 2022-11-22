@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
@@ -66,9 +67,8 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             fee_rate: { name: "", options: {} },
             third_id: { name: "", options: {} },
             third_name: { name: "", options: {} },
-            block_network_id: { name: "链名", options: {}},
-            coin_name_unique: { name: "币种", options:{}},
-
+            block_network_id: { name: "链名", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
         },
         list: <any>[],
         message: {
@@ -79,7 +79,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             total_num: "",
             total_user_num: "",
             total_fee: "",
-            total_gift_gold: ""
+            total_gift_gold: "",
         },
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         isExportExcel: false, //是否导出excel
@@ -90,10 +90,10 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
     IntervalObj = {
         default: "0",
         options: {
-            "0": i18n.t("common.notAutoRefresh"),
-            "30000": i18n.t("common.autoRefresh30"),
-            "60000": i18n.t("common.autoRefresh60"),
-            "180000": i18n.t("common.autoRefresh180"),
+            "0": LangUtil("不自动刷新"),
+            "30000": LangUtil("30秒自动刷新"),
+            "60000": LangUtil("60秒自动刷新"),
+            "180000": LangUtil("180秒自动刷新"),
         },
         timer: 0,
     };
@@ -140,10 +140,10 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             id: "",
             type: "",
             remark: "",
-            desc: ""
+            desc: "",
         },
-        formSource: null
-    }
+        formSource: null,
+    };
     /**显示备注弹窗 */
     showRemarkDialog() {
         this.remarkDialogData.bShow = true;
@@ -154,18 +154,17 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
     }
     /**更新備註 */
     onUpdateReamrk() {
-        this.sendNotification(HttpType.admin_recharge_orders_update_remark,
-            {
-                id: this.remarkDialogData.form.id,
-                remark: this.remarkDialogData.form.remark
-            });
+        this.sendNotification(HttpType.admin_recharge_orders_update_remark, {
+            id: this.remarkDialogData.form.id,
+            remark: this.remarkDialogData.form.remark,
+        });
     }
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
         this.tableData.columns.plat_id.options = {
             ...this.tableData.columns.plat_id.options,
-            "0": i18n.t("common.platIdAll"),
+            "0": LangUtil("所有平台"),
         };
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
@@ -187,7 +186,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             total_num: data.total_num,
             total_user_num: data.total_user_num,
             total_fee: data.total_fee,
-            total_gift_gold: data.total_gift_gold
+            total_gift_gold: data.total_gift_gold,
         };
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
@@ -252,19 +251,16 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         const data: any = JSON.parse(JSON.stringify(this.listQuery));
         data.plat_id = data.plat_id === "0" ? "" : data.plat_id;
         data.hideLoading = hideLoading;
-        console.log("data=====",data);
-        
+        console.log("data=====", data);
+
         this.sendNotification(HttpType.admin_recharge_orders_index, objectRemoveNull(data));
     }
 
     /**更新数据 */
     onUpdate({ type, row }: any) {
-        if(type && row)
-        {
-            console.log("更新 传入了 新的值")
-        }
-        else
-        {
+        if (type && row) {
+            console.log("更新 传入了 新的值");
+        } else {
             const data = {
                 id: this.dialogData.form.id,
                 actual_gold: this.dialogData.form.actual_gold,

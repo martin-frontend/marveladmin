@@ -16,7 +16,11 @@ export default class TabWaterRateMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [EventType.admin_plat_user_table_columns, EventType.admin_plat_user_show, EventType.admin_plat_user_update];
+        return [
+            EventType.admin_plat_user_table_columns,
+            EventType.admin_plat_user_show,
+            EventType.admin_plat_user_update,
+        ];
     }
 
     handleNotification(notification: puremvc.INotification) {
@@ -24,8 +28,8 @@ export default class TabWaterRateMediator extends AbstractMediator {
             const body = notification.getBody();
             switch (notification.getName()) {
                 case EventType.admin_plat_user_table_columns:
-                    this.myProxy.setTableColumns(body);    
-                break;
+                    this.myProxy.setTableColumns(body);
+                    break;
                 case EventType.admin_plat_user_show:
                     this.myProxy.setTableData(body);
                     break;

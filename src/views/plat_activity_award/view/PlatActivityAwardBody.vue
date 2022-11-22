@@ -6,16 +6,12 @@
                 size="mini"
                 @click="multiType == 'rewards' ? multiSendAward() : multiCancelAward()"
                 style="margin-right: 10px; margin-bottom: 5px"
-                >{{
-                    multiType == "rewards"
-                        ? $t("plat_activity_award.batchAward")
-                        : $t("plat_activity_award.batchCancel")
-                }}</el-button
+                >{{ multiType == "rewards" ? LangUtil("批量派奖") : LangUtil("批量取消") }}</el-button
             >
 
             <el-radio-group v-model="multiType" @change="clearSelection">
-                <el-radio label="rewards">{{ $t("plat_activity_award.award") }}</el-radio>
-                <el-radio label="cancel">{{ $t("common.cancel") }}</el-radio>
+                <el-radio label="rewards">{{ LangUtil("派奖") }}</el-radio>
+                <el-radio label="cancel">{{ LangUtil("取消") }}</el-radio>
             </el-radio-group>
             <div>
                 <span>{{ tableColumns.award_num.name }}：{{ myProxy.tableData.summary.award_num }},</span>
@@ -98,7 +94,7 @@
                     {{ tableColumns.plat_id.options[row.plat_id] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" min-width="300px">
+            <el-table-column :label="LangUtil('操作')" min-width="300px">
                 <template slot-scope="{ row }">
                     <el-button-group>
                         <el-button
@@ -107,7 +103,7 @@
                             @click="handleEdit(row)"
                             v-if="checkUnique(unique.plat_activity_award_show)"
                         >
-                            {{ $t("common.detail") }}
+                            {{ LangUtil("详情") }}
                         </el-button>
                         <el-button
                             size="mini"
@@ -115,7 +111,7 @@
                             v-if="row.award_status == 11 && checkUnique(unique.plat_activity_award_send)"
                             @click="handlerSendAward(row)"
                         >
-                            {{ $t("plat_activity_award.rewards") }}
+                            {{ LangUtil("派发奖励") }}
                         </el-button>
                         <el-button
                             size="mini"
@@ -123,7 +119,7 @@
                             v-if="row.award_status == 11"
                             @click="handlerCancelAward(row)"
                         >
-                            {{ $t("plat_activity_award.cancelRewards") }}
+                            {{ LangUtil("取消派奖") }}
                         </el-button>
                     </el-button-group>
                 </template>
@@ -133,6 +129,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -149,52 +146,53 @@ type MultiType = "rewards" | "cancel";
     },
 })
 export default class PlatActivityAwardBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatActivityAwardProxy = this.getProxy(PlatActivityAwardProxy);
+    myProxy: PlatActivityAwardProxy = this.getProxy(PlatActivityAwardProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
     multiType: MultiType = "rewards";
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handleSelectionChange(val: any) {
+    handleSelectionChange(val: any) {
         this.myProxy.tableData.multipleSelection.length = 0;
         Object.assign(this.myProxy.tableData.multipleSelection, val);
     }
 
     /**检查是否可勾选 */
-    private checkSelectable(row: any, index: any) {
+    checkSelectable(row: any, index: any) {
         return row.award_status == 11;
     }
     /**显示用户详情 */
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.showUserDetail(user_id);
     }
     /**批量派奖 */
-    private multiSendAward() {
+    multiSendAward() {
         if (this.myProxy.tableData.multipleSelection.length === 0) {
-            this.$message(this.$t("plat_activity_award.confirmError"));
+            this.$message(this.LangUtil("请勾选玩家派奖"));
             return;
         }
-        this.$confirm(this.$t("plat_activity_award.batchConfirm"), this.$t("common.prompt"), {
-            confirmButtonText: this.$t("common.determine"),
-            cancelButtonText: this.$t("common.cancel"),
+        this.$confirm(this.LangUtil("是否给当前勾选玩家进行派奖?"), this.LangUtil("提示"), {
+            confirmButtonText: this.LangUtil("确定"),
+            cancelButtonText: this.LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -204,10 +202,10 @@ export default class PlatActivityAwardBody extends AbstractView {
             .catch(() => {});
     }
     /**单次派奖 */
-    private handlerSendAward(data: any) {
-        this.$confirm(this.$t("plat_activity_award.confirmOnce"), this.$t("common.prompt"), {
-            confirmButtonText: this.$t("common.determine"),
-            cancelButtonText: this.$t("common.cancel"),
+    handlerSendAward(data: any) {
+        this.$confirm(this.LangUtil("是否给该玩家派奖?"), this.LangUtil("提示"), {
+            confirmButtonText: this.LangUtil("确定"),
+            cancelButtonText: this.LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -219,12 +217,12 @@ export default class PlatActivityAwardBody extends AbstractView {
     /**批量取消 */
     multiCancelAward() {
         if (this.myProxy.tableData.multipleSelection.length === 0) {
-            this.$message(this.$t("plat_activity_award.confirmError1"));
+            this.$message(this.LangUtil("请勾选玩家取消派奖"));
             return;
         }
-        this.$confirm(this.$t("plat_activity_award.batchConfirm1"), this.$t("common.prompt"), {
-            confirmButtonText: this.$t("common.determine"),
-            cancelButtonText: this.$t("common.cancel"),
+        this.$confirm(this.LangUtil("是否给当前勾选玩家取消派奖?"), this.LangUtil("提示"), {
+            confirmButtonText: this.LangUtil("确定"),
+            cancelButtonText: this.LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -237,9 +235,9 @@ export default class PlatActivityAwardBody extends AbstractView {
 
     /**单次取消派獎 */
     handlerCancelAward(data: any) {
-        this.$confirm(this.$t("plat_activity_award.confirmOnce1"), this.$t("common.prompt"), {
-            confirmButtonText: this.$t("common.determine"),
-            cancelButtonText: this.$t("common.cancel"),
+        this.$confirm(this.LangUtil("是否取消派奖?"), this.LangUtil("提示"), {
+            confirmButtonText: this.LangUtil("确定"),
+            cancelButtonText: this.LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

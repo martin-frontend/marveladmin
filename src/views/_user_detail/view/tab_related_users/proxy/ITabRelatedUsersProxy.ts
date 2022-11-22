@@ -1,3 +1,1 @@
-export default interface ITabRelatedUsersProxy {
-    
-}
+export default interface ITabRelatedUsersProxy {}

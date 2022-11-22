@@ -31,11 +31,13 @@ export var EventType = {
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(HttpType.admin_plat_load_page_domain_table_columns, cmd_admin_plat_load_page_domain_table_columns);
+facade.registerCommand(
+    HttpType.admin_plat_load_page_domain_table_columns,
+    cmd_admin_plat_load_page_domain_table_columns
+);
 facade.registerCommand(HttpType.admin_plat_load_page_domain_index, cmd_admin_plat_load_page_domain_index);
 facade.registerCommand(HttpType.admin_plat_load_page_domain_show, cmd_admin_plat_load_page_domain_show);
 facade.registerCommand(HttpType.admin_plat_load_page_domain_store, cmd_admin_plat_load_page_domain_store);
 facade.registerCommand(HttpType.admin_plat_load_page_domain_update, cmd_admin_plat_load_page_domain_update);
 facade.registerCommand(HttpType.admin_plat_show, cmd_admin_plat_show);
 facade.registerCommand(HttpType.admin_plat_upload_load_page, cmd_admin_plat_upload_load_page);
-

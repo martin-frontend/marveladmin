@@ -42,8 +42,10 @@ facade.registerCommand(HttpType.admin_exchange_channel_index, cmd_admin_exchange
 facade.registerCommand(HttpType.admin_exchange_channel_show, cmd_admin_exchange_channel_show);
 facade.registerCommand(HttpType.admin_exchange_channel_store, cmd_admin_exchange_channel_store);
 facade.registerCommand(HttpType.admin_exchange_channel_update, cmd_admin_exchange_channel_update);
-facade.registerCommand(HttpType.admin_exchange_channel_method_table_columns, cmd_admin_exchange_channel_method_table_columns);
+facade.registerCommand(
+    HttpType.admin_exchange_channel_method_table_columns,
+    cmd_admin_exchange_channel_method_table_columns
+);
 facade.registerCommand(HttpType.admin_exchange_channel_method_show, cmd_admin_exchange_channel_method_show);
 facade.registerCommand(HttpType.admin_exchange_channel_method_store, cmd_admin_exchange_channel_method_store);
 facade.registerCommand(HttpType.admin_exchange_channel_method_update, cmd_admin_exchange_channel_method_update);
-

@@ -12,7 +12,7 @@
             <el-table-column prop="id" :label="tableColumns.id.name" align="center"> </el-table-column>
             <el-table-column prop="type" :label="tableColumns.type.name" align="center">
                 <template slot-scope="{ row }">
-                    {{tableColumns.type.options[row.type]}}
+                    {{ tableColumns.type.options[row.type] }}
                 </template>
             </el-table-column>
             <el-table-column prop="name" :label="tableColumns.name.name" align="center"> </el-table-column>
@@ -48,9 +48,9 @@
                 </template>
             </el-table-column>
             <!--  -->
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="160px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="160px">
                 <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
+                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ LangUtil("编辑") }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -58,6 +58,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -72,37 +73,38 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class AdminCronBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
+    myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
     // proxy property
-    private tableColumns = this.myProxy.cronTableData.columns;
-    private tableData = this.myProxy.cronTableData.list;
-    private pageInfo = this.myProxy.cronTableData.pageInfo;
-    private listQuery = this.myProxy.cronListQuery;
+    tableColumns = this.myProxy.cronTableData.columns;
+    tableData = this.myProxy.cronTableData.list;
+    pageInfo = this.myProxy.cronTableData.pageInfo;
+    listQuery = this.myProxy.cronListQuery;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQueryCron();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQueryCron();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialogCron(DialogStatus.update, data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
 
-    private onSwitch(row: any, el: any) {
+    onSwitch(row: any, el: any) {
         this.myProxy.cronTableSwitch[el] = row[el];
         this.myProxy.cronTableSwitch.id = row.id;
         this.myProxy.onCronUpdate(true);

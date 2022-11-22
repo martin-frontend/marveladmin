@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatUsersBackwaterLogDialog v-if="myProxy.dialogData.bShow"/>
-        <PlatUsersBackwaterLogHeader/>
-        <PlatUsersBackwaterLogBody/>
+        <PlatUsersBackwaterLogDialog v-if="myProxy.dialogData.bShow" />
+        <PlatUsersBackwaterLogHeader />
+        <PlatUsersBackwaterLogBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import PlatUsersBackwaterLogBody from "./PlatUsersBackwaterLogBody.vue";
         PlatUsersBackwaterLogDialog,
         PlatUsersBackwaterLogHeader,
         PlatUsersBackwaterLogBody,
-    }
+    },
 })
 export default class PlatUsersBackwaterLog extends AbstractView {
-
     constructor() {
         super(PlatUsersBackwaterLogMediator);
     }

@@ -10,7 +10,7 @@
             />
             <div>
                 <el-button class="header-button" @click="heandlerExport()" type="primary">{{
-                    $t("statistic_plat_days.export")
+                    LangUtil("导出")
                 }}</el-button>
             </div>
         </div>
@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import StatisticPlatCoinDaysDateProxy from "../proxy/StatisticPlatCoinDaysDateProxy";
@@ -30,24 +31,25 @@ import SearchSelect from "@/components/SearchSelect.vue";
     },
 })
 export default class StatisticPlatCoinDaysDateHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: StatisticPlatCoinDaysDateProxy = this.getProxy(StatisticPlatCoinDaysDateProxy);
+    myProxy: StatisticPlatCoinDaysDateProxy = this.getProxy(StatisticPlatCoinDaysDateProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
-    private heandlerExport() {
+    heandlerExport() {
         this.myProxy.onExportExcel();
     }
 }

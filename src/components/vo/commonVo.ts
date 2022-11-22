@@ -3,11 +3,11 @@ import { exportJson2Excel } from "@/core/global/Excel";
 export module BaseInfo {
     export enum DateRangeKey {
         dateFrom = "created_at-{>=}",
-        dateTo = "created_at-{<=}"
+        dateTo = "created_at-{<=}",
     }
     export interface IColumn {
-        name: string,
-        options: { [index: string]: string }
+        name: string;
+        options: { [index: string]: string };
     }
     export class ExportExcel {
         private _fileName: string = "";
@@ -16,15 +16,22 @@ export module BaseInfo {
         private _data: any[] = [];
         private _columnInfo: { [key: string]: BaseInfo.IColumn } = {};
         /**
- * @constructor
- * @type {string} fileName 挡案名称
- * @type {string[]} keyList 栏位顺序
- * @type { [key: string]: BaseInfo.IColumn } columnInfo 栏位资讯
- * @type {any[]} data 栏位资料
- * @type {string[]} convertKeys 特定栏位转换值
- * @type {string[]} excludeKeys 排除特定栏位
- */
-        constructor(fileName: string, keyList: string[], columnInfo: { [key: string]: BaseInfo.IColumn }, data: any[], convertKeys: string[], excludeKeys: string[] = []) {
+         * @constructor
+         * @type {string} fileName 挡案名称
+         * @type {string[]} keyList 栏位顺序
+         * @type { [key: string]: BaseInfo.IColumn } columnInfo 栏位资讯
+         * @type {any[]} data 栏位资料
+         * @type {string[]} convertKeys 特定栏位转换值
+         * @type {string[]} excludeKeys 排除特定栏位
+         */
+        constructor(
+            fileName: string,
+            keyList: string[],
+            columnInfo: { [key: string]: BaseInfo.IColumn },
+            data: any[],
+            convertKeys: string[],
+            excludeKeys: string[] = []
+        ) {
             this._fileName = fileName;
             this._columnInfo = columnInfo;
             this._keyList = keyList;
@@ -35,9 +42,8 @@ export module BaseInfo {
                         this._headerList.push(this._columnInfo[key].name);
                     }
                 }
-            }
-            else {
-                Object.keys(this._columnInfo).forEach((element) => {
+            } else {
+                Object.keys(this._columnInfo).forEach(element => {
                     this._headerList.push(this._columnInfo[element].name);
                 });
             }
@@ -56,8 +62,8 @@ export module BaseInfo {
         }
 
         /**
-* @param {string[]} keys 将特定栏位的值转为对应资料
-*/
+         * @param {string[]} keys 将特定栏位的值转为对应资料
+         */
         public valueToData(data: any[], keys: string[]) {
             return data.map((data: any) =>
                 this._keyList.map((key: string) => {

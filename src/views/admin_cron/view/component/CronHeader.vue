@@ -12,22 +12,23 @@
                 v-model="listQuery.type"
                 :options="tableColumns.type.options"
             />
-            <el-button class="header-button" icon="el-icon-search" @click="handlerSearch()" type="primary"
-                >{{ $t("common.search") }}</el-button
-            >
-            <el-button class="header-button" icon="el-icon-refresh" @click="handlerReset()" type="primary"
-                >{{ $t("common.reset") }}</el-button
-            >
+            <el-button class="header-button" icon="el-icon-search" @click="handlerSearch()" type="primary">{{
+                LangUtil("查询")
+            }}</el-button>
+            <el-button class="header-button" icon="el-icon-refresh" @click="handlerReset()" type="primary">{{
+                LangUtil("重置")
+            }}</el-button>
         </div>
         <div class="group">
-            <el-button @click="handlerCreate" icon="el-icon-circle-plus-outline" type="primary" class="item"
-                >{{ $t("common.create") }}</el-button
-            >
+            <el-button @click="handlerCreate" icon="el-icon-circle-plus-outline" type="primary" class="item">{{
+                LangUtil("新增")
+            }}</el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import AdminCronProxy from "../../proxy/AdminCronProxy";
@@ -47,14 +48,15 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class AdminCronHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
+    myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
     // proxy property
-    private tableColumns = this.myProxy.cronTableData.columns;
-    private listQuery = this.myProxy.cronListQuery;
+    tableColumns = this.myProxy.cronTableData.columns;
+    listQuery = this.myProxy.cronListQuery;
 
     get tabsStatus() {
         return this.myProxy.tabsStatus;
@@ -64,20 +66,20 @@ export default class AdminCronHeader extends AbstractView {
         this.handlerSearch();
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQueryCron();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetCronListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialogCron(DialogStatus.create);
     }
 
-    private handlerTabs(value: any) {
+    handlerTabs(value: any) {
         this.myProxy.onTabsChange(value.name);
     }
 }

@@ -3,24 +3,24 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface IAdminUserProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
     };
     /**所有的渠道 */
     channelList: {
-        list: any[],
-        listSource: any[]
-    }
+        list: any[];
+        listSource: any[];
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any): void;

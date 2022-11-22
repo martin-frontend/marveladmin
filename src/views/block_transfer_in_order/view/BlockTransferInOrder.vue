@@ -1,8 +1,8 @@
 <template>
     <div class="content">
         <!-- <BlockTransferInOrderDialog v-if="myProxy.dialogData.bShow"/> -->
-        <BlockTransferInOrderHeader/>
-        <BlockTransferInOrderBody/>
+        <BlockTransferInOrderHeader />
+        <BlockTransferInOrderBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import BlockTransferInOrderBody from "./BlockTransferInOrderBody.vue";
         BlockTransferInOrderDialog,
         BlockTransferInOrderHeader,
         BlockTransferInOrderBody,
-    }
+    },
 })
 export default class BlockTransferInOrder extends AbstractView {
-
     constructor() {
         super(BlockTransferInOrderMediator);
     }

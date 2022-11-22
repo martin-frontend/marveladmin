@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_user_sms_code/setting";
 import { Message } from "element-ui";
 import PlatUserSmsCodeProxy from "../proxy/PlatUserSmsCodeProxy";
 
-interface IPlatUserSmsCode extends IEventDispatcher {
-    
-}
+interface IPlatUserSmsCode extends IEventDispatcher {}
 
 export default class PlatUserSmsCodeMediator extends AbstractMediator {
     private myProxy: PlatUserSmsCodeProxy = <any>this.getProxy(PlatUserSmsCodeProxy);
@@ -25,10 +23,7 @@ export default class PlatUserSmsCodeMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_plat_user_sms_code_table_columns,
-            EventType.admin_plat_user_sms_code_index,
-        ];
+        return [EventType.admin_plat_user_sms_code_table_columns, EventType.admin_plat_user_sms_code_index];
     }
 
     handleNotification(notification: puremvc.INotification) {

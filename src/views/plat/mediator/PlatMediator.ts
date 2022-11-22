@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -74,7 +75,7 @@ export default class PlatMediator extends AbstractMediator {
                 myProxy.setAllBonusModel(body.list);
                 break;
             case EventType.admin_plat_clear_cache:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 break;
         }
     }

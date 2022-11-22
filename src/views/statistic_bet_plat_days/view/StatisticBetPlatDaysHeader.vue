@@ -10,7 +10,7 @@
             />
             <div>
                 <el-button class="header-button" @click="exportExcel" type="primary" icon="el-icon-download">{{
-                    $t("statistic_plat_days.export")
+                    LangUtil("导出")
                 }}</el-button>
             </div>
         </div>
@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import StatisticBetPlatDaysProxy from "../proxy/StatisticBetPlatDaysProxy";
@@ -31,16 +32,17 @@ import SearchSelect from "@/components/SearchSelect.vue";
     },
 })
 export default class StatisticBetPlatDaysHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: StatisticBetPlatDaysProxy = this.getProxy(StatisticBetPlatDaysProxy);
+    myProxy: StatisticBetPlatDaysProxy = this.getProxy(StatisticBetPlatDaysProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch(plat_id: string) {
+    handlerSearch(plat_id: string) {
         this.listQuery.page_count = 1;
         this.listQuery.plat_id = plat_id;
         this.myProxy.platListQuery.page_count = 1;
@@ -48,7 +50,7 @@ export default class StatisticBetPlatDaysHeader extends AbstractView {
         this.myProxy.onQuery();
     }
 
-    private exportExcel() {
+    exportExcel() {
         this.myProxy.onQueryAll();
     }
 }

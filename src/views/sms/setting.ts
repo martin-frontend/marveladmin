@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_sms_index, cmd_admin_sms_index);
 facade.registerCommand(HttpType.admin_sms_show, cmd_admin_sms_show);
 facade.registerCommand(HttpType.admin_sms_store, cmd_admin_sms_store);
 facade.registerCommand(HttpType.admin_sms_update, cmd_admin_sms_update);
-

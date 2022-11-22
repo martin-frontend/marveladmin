@@ -4,7 +4,7 @@
         <StatisticPlatBody />
     </div>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
 import GlobalVar from "@/core/global/GlobalVar";
@@ -19,6 +19,6 @@ import StatisticPlatBody from "./StatisticPlatBody.vue";
 })
 export default class StatisticPlat extends AbstractView {}
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 </style>

@@ -7,7 +7,7 @@
             @change="handlerSearch"
         />
         <el-button @click="handlerSync()" class="header-button" type="primary" icon="el-icon-help">{{
-            $t("common.syncGame")
+            LangUtil("同步游戏")
         }}</el-button>
         <div class="group">
             <SearchInput
@@ -47,18 +47,19 @@
                 clearable
             />
             <div>
-                <el-button @click="handlerSearch()" class="header-button" type="primary" icon="el-icon-search"
-                    >{{ $t("common.search") }}</el-button
-                >
-                <el-button @click="handlerReset()" class="header-button" type="primary" icon="el-icon-search"
-                    >{{ $t("common.reset") }}</el-button
-                >
+                <el-button @click="handlerSearch()" class="header-button" type="primary" icon="el-icon-search">{{
+                    LangUtil("查询")
+                }}</el-button>
+                <el-button @click="handlerReset()" class="header-button" type="primary" icon="el-icon-search">{{
+                    LangUtil("重置")
+                }}</el-button>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import LobbyVendorProductsProxy from "../proxy/LobbyVendorProductsProxy";
@@ -74,24 +75,25 @@ import SearchInput from "@/components/SearchInput.vue";
     },
 })
 export default class VendorProductHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: LobbyVendorProductsProxy = this.getProxy(LobbyVendorProductsProxy);
+    myProxy: LobbyVendorProductsProxy = this.getProxy(LobbyVendorProductsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
-     private handlerSync() {
+    handlerSync() {
         this.myProxy.onSync();
     }
 }

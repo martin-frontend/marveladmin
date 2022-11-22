@@ -46,4 +46,3 @@ facade.registerCommand(HttpType.admin_plat_user_vendor_withdraw, cmd_admin_plat_
 facade.registerCommand(HttpType.admin_plat_user_update_safe_gold, cmd_admin_plat_user_update_safe_gold);
 facade.registerCommand(HttpType.admin_plat_user_update_user_gold, cmd_admin_plat_user_update_user_gold);
 facade.registerCommand(HttpType.admin_plat_user_recharge_address, cmd_admin_plat_user_recharge_address);
-

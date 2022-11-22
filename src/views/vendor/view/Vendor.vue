@@ -21,7 +21,7 @@ import VendorTestDialog from "./components/VendorTestDialog.vue";
         VendorDialog,
         VendorHeader,
         VendorBody,
-        VendorTestDialog
+        VendorTestDialog,
     },
 })
 export default class Vendor extends AbstractView {

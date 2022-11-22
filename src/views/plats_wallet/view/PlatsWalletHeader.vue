@@ -14,14 +14,15 @@
                 :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
             />
             <el-button @click="handlerSearch" type="primary" class="item" icon="el-icon-search">{{
-                $t("common.search")
+                LangUtil("查询")
             }}</el-button>
-            <el-button @click="handlerReset" type="primary" class="item">{{ $t("common.reset") }}</el-button>
+            <el-button @click="handlerReset" type="primary" class="item">{{ LangUtil("重置") }}</el-button>
         </el-row>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -35,31 +36,32 @@ import PlatsWalletProxy from "../proxy/PlatsWalletProxy";
     },
 })
 export default class PlatsWalletHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatsWalletProxy = this.getProxy(PlatsWalletProxy);
+    myProxy: PlatsWalletProxy = this.getProxy(PlatsWalletProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private changePlatId() {
+    changePlatId() {
         this.listQuery.page_count = 1;
         this.listQuery.coin_name_unique = "";
         this.myProxy.onQuery();
     }
 
-    private handlerRefresh() {
+    handlerRefresh() {
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 }

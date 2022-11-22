@@ -11,7 +11,7 @@
         <el-form>
             <el-form-item>
                 <el-col :span="12">
-                    <div class="red" v-if="!isShowVipModel">{{ $t("plat_vip.tableString") }}</div>
+                    <div class="red" v-if="!isShowVipModel">{{ LangUtil("VIP未开启，请联系管理员开启") }}</div>
                     <div v-else>
                         <div>{{ vipModel.name }}</div>
                         <div>{{ vipModel.desc }}</div>
@@ -21,17 +21,17 @@
                     <el-row type="flex" justify="end">
                         <div v-if="vipModel.name">
                             <el-button type="primary" v-show="myProxy.isEdit" @click="handlerInitModel">{{
-                                $t("common.initTemplate")
+                                LangUtil("初始化系统模板")
                             }}</el-button>
                             <el-button
                                 type="primary"
                                 v-if="checkUnique(unique.plat_vip_update)"
                                 v-show="myProxy.isEdit"
                                 @click="handlerSave"
-                                >{{ $t("common.save") }}</el-button
+                                >{{ LangUtil("确认保存") }}</el-button
                             >
                             <el-button type="primary" @click="onEdit">{{
-                                myProxy.isEdit ? $t("common.unUpdate") : $t("common.update")
+                                myProxy.isEdit ? LangUtil("取消编辑") : LangUtil("编辑")
                             }}</el-button>
                         </div>
                     </el-row>
@@ -41,7 +41,7 @@
 
         <div class="row">
             <SearchSelect
-                :title="$t('plat_agent.topLevel')"
+                :title="LangUtil('最高等级')"
                 :disabled="!myProxy.isEdit"
                 :options="levelOptions"
                 v-if="vipModel.name"
@@ -53,6 +53,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatVipProxy from "../proxy/PlatVipProxy";
@@ -66,16 +67,17 @@ import SearchSelect from "@/components/SearchSelect.vue";
     },
 })
 export default class PlatVipHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatVipProxy = this.getProxy(PlatVipProxy);
+    myProxy: PlatVipProxy = this.getProxy(PlatVipProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private maxLevel = this.getMaxLevel;
+    maxLevel = this.getMaxLevel;
     get vipModel() {
         return this.myProxy.vipModeDesc;
     }
@@ -92,22 +94,22 @@ export default class PlatVipHeader extends AbstractView {
         return this.myProxy.levelOptions;
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerInitModel() {
+    handlerInitModel() {
         this.myProxy.onInitModel();
     }
-    private handlerSave() {
+    handlerSave() {
         this.myProxy.onUpdate();
     }
-    private onEdit() {
+    onEdit() {
         this.myProxy.isEdit = !this.myProxy.isEdit;
     }
 
-    private handlerLevelChange(e: any) {
+    handlerLevelChange(e: any) {
         this.myProxy.onLevelChange(e);
     }
 }

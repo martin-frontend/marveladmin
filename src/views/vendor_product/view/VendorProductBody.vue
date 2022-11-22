@@ -49,7 +49,7 @@
                 min-width="100px"
             ></el-table-column>
             <el-table-column :label="tableColumns['icon'].name" prop="icon" min-width="80px"></el-table-column>
-            <el-table-column :label="$t('vendor_product.label1')" min-width="80px">
+            <el-table-column :label="LangUtil('缩略图')" min-width="80px">
                 <template slot-scope="{ row }">
                     <img
                         style="width: 40px; height: 40px; object-fit: contain"
@@ -65,8 +65,8 @@
                 <template slot-scope="{ row }">
                     <el-switch
                         v-model="row.orientation"
-                        :active-text="$t('vendor_product.landscape')"
-                        :inactive-text="$t('vendor_product.portrait')"
+                        :active-text="LangUtil('横屏')"
+                        :inactive-text="LangUtil('竖屏')"
                         :active-value="1"
                         :inactive-value="2"
                         @change="onOrientationChange(row)"
@@ -92,14 +92,14 @@
                     <div>{{ tableColumns.open_mode.options[row.open_mode] }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="80px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
                     <el-button
                         v-if="checkUnique(unique.vendor_product_update)"
                         size="mini"
                         type="primary"
                         @click="handleEdit(row)"
-                        >{{ $t("common.update") }}</el-button
+                        >{{ LangUtil("编辑") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -108,6 +108,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -133,25 +134,26 @@ import Cookies from "js-cookie";
     },
 })
 export default class VendorProductBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: VendorProductProxy = this.getProxy(VendorProductProxy);
+    myProxy: VendorProductProxy = this.getProxy(VendorProductProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 

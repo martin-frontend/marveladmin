@@ -12,16 +12,16 @@
             <div class="btn-group">
                 <div>
                     <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                        $t("common.search")
+                        LangUtil("查询")
                     }}</el-button>
                     <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                        $t("common.reset")
+                        LangUtil("重置")
                     }}</el-button>
                 </div>
             </div>
         </div>
         <div class="row" style="margin-top: 8px">
-            <el-button @click="handlerCreate" type="primary" class="item">{{ $t("common.create") }}</el-button>
+            <el-button @click="handlerCreate" type="primary" class="item">{{ LangUtil("新增") }}</el-button>
             <input
                 style="margin-left: 8px"
                 v-show="false"
@@ -34,20 +34,21 @@
 
             <el-button style="margin-left: 8px" @click="heandlerImport()" type="primary" icon="">
                 <!-- 导入 -->
-                {{ $t("user_detail.import") }}
+                {{ LangUtil("导入") }}
             </el-button>
 
-            <el-button @click="heandlerExport()" type="primary">{{ $t("statistic_plat_days.export") }}</el-button>
+            <el-button @click="heandlerExport()" type="primary">{{ LangUtil("导出") }}</el-button>
 
             <el-button style="margin-left: 8px" @click="heandlerGenerate()" type="primary" icon="">
                 <!-- 生成语言包 -->
-                {{ $t("user_detail.languagePack") }}
+                {{ LangUtil("生成语言包") }}
             </el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import SystemLangProxy from "../proxy/SystemLangProxy";
@@ -64,28 +65,29 @@ import { readerData } from "@/core/global/Excel";
     },
 })
 export default class SystemLangHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: SystemLangProxy = this.getProxy(SystemLangProxy);
+    myProxy: SystemLangProxy = this.getProxy(SystemLangProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
-    private heandlerExport() {
+    heandlerExport() {
         this.myProxy.onQueryAll();
     }
 
@@ -99,7 +101,7 @@ export default class SystemLangHeader extends AbstractView {
         this.myProxy.languageImport(excel.results);
     }
     // 汇入用户excel
-    private heandlerImport() {
+    heandlerImport() {
         (this.$refs["excel-upload-input"] as any).click();
     }
 

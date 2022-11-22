@@ -2,13 +2,13 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="850px">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
-                <el-input v-model="form.name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.name" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['desc'].name" prop="desc">
-                <el-input type="textarea" v-model="form.desc" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input type="textarea" v-model="form.desc" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['type'].name" prop="type">
-                <el-select v-model="form.type" filterable :placeholder="$t('common.pleaseChoose')">
+                <el-select v-model="form.type" filterable :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in tableColumns['type'].options"
                         :key="key"
@@ -23,7 +23,7 @@
                 :label="tableColumns['promotion_reward_coin_ratio'].name"
                 prop="promotion_reward_coin_ratio"
             >
-                <el-input v-model="form.promotion_reward_coin_ratio" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.promotion_reward_coin_ratio" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
 
             <el-form-item :label="tableColumns.is_promotion_num_added.name" prop="promotion_model_id">
@@ -50,10 +50,10 @@
                     >
                         <div class="level_setting">
                             <el-button size="mini" type="primary" @click="addLevel(value)"
-                                >{{ $t("plat_users_vip_model.addLevel") }}
+                                >{{ LangUtil("添加等级") }}
                             </el-button>
-                            {{ $t("common.topLevel") }} <span style="color: red">{{ value.length }}</span>
-                            {{ $t("common.level") }}
+                            {{ LangUtil("最高配置等级") }} <span style="color: red">{{ value.length }}</span>
+                            {{ LangUtil("等级") }}
                         </div>
 
                         <el-table
@@ -65,34 +65,31 @@
                             style="width: 100%"
                             size="mini"
                         >
-                            <el-table-column :label="$t('common.operating')" width="100">
+                            <el-table-column :label="LangUtil('操作')" width="100">
                                 <template slot-scope="{ $index }">
                                     <el-button size="mini" type="danger" @click="deleteLevel($index, value)"
-                                        >{{ $t("common.delete") }}
+                                        >{{ LangUtil("删除") }}
                                     </el-button>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="$t('common.level')" type="index" width="80"></el-table-column>
-                            <el-table-column :label="$t('plat_agent_promotion_model.totalRevenue')" min-width="100">
+                            <el-table-column :label="LangUtil('等级')" type="index" width="80"></el-table-column>
+                            <el-table-column :label="LangUtil('总业绩')" min-width="100">
                                 <template slot-scope="{ row }">
                                     <el-input-number
                                         type="number"
                                         v-model="row.total_performance"
-                                        :placeholder="$t('plat_agent_promotion_model.placeholder1')"
+                                        :placeholder="LangUtil('输入总业绩')"
                                         style="width: 100%"
                                         :min="0"
                                     ></el-input-number>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                :label="$t('plat_agent_promotion_model.rewardPerTenThousand')"
-                                min-width="100"
-                            >
+                            <el-table-column :label="LangUtil('每万返佣')" min-width="100">
                                 <template slot-scope="{ row }">
                                     <el-input-number
                                         type="number"
                                         v-model="row.commission_num"
-                                        :placeholder="$t('plat_agent_promotion_model.placeholder2')"
+                                        :placeholder="LangUtil('输入每万返佣')"
                                         style="width: 100%"
                                         :min="0"
                                     ></el-input-number>
@@ -127,10 +124,10 @@
                     >
                         <div class="level_setting">
                             <el-button size="mini" type="primary" @click="addLevel(value)"
-                                >{{ $t("plat_users_vip_model.addLevel") }}
+                                >{{ LangUtil("添加等级") }}
                             </el-button>
-                            {{ $t("common.topLevel") }} <span style="color: red">{{ value.length }}</span>
-                            {{ $t("common.level") }}
+                            {{ LangUtil("最高配置等级") }} <span style="color: red">{{ value.length }}</span>
+                            {{ LangUtil("等级") }}
                         </div>
 
                         <el-table
@@ -142,34 +139,31 @@
                             style="width: 100%"
                             size="mini"
                         >
-                            <el-table-column :label="$t('common.operating')" width="100">
+                            <el-table-column :label="LangUtil('操作')" width="100">
                                 <template slot-scope="{ $index }">
                                     <el-button size="mini" type="danger" @click="deleteLevel($index, value)"
-                                        >{{ $t("common.delete") }}
+                                        >{{ LangUtil("删除") }}
                                     </el-button>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="$t('common.level')" type="index" width="80"></el-table-column>
-                            <el-table-column :label="$t('plat_agent_promotion_model.totalRevenue')" min-width="100">
+                            <el-table-column :label="LangUtil('等级')" type="index" width="80"></el-table-column>
+                            <el-table-column :label="LangUtil('总业绩')" min-width="100">
                                 <template slot-scope="{ row }">
                                     <el-input-number
                                         type="number"
                                         v-model="row.total_performance"
-                                        :placeholder="$t('plat_agent_promotion_model.placeholder1')"
+                                        :placeholder="LangUtil('输入总业绩')"
                                         style="width: 100%"
                                         :min="0"
                                     ></el-input-number>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                :label="$t('plat_agent_promotion_model.rewardPerTenThousand')"
-                                min-width="100"
-                            >
+                            <el-table-column :label="LangUtil('每万返佣')" min-width="100">
                                 <template slot-scope="{ row }">
                                     <el-input-number
                                         type="number"
                                         v-model="row.commission_num"
-                                        :placeholder="$t('plat_agent_promotion_model.placeholder2')"
+                                        :placeholder="LangUtil('输入每万返佣')"
                                         style="width: 100%"
                                         :min="0"
                                     ></el-input-number>
@@ -195,7 +189,7 @@
             </div>
             <el-form-item class="dialog-footer">
                 <el-button type="primary" size="mini" @click="!isStatusUpdate ? handleAdd() : handleUpdate()">{{
-                    $t("common.save")
+                    LangUtil("确认保存")
                 }}</el-button>
             </el-form-item>
         </el-form>
@@ -203,6 +197,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatAgentPromotionModelProxy from "@/views/plat_agent_promotion_model/proxy/PlatAgentPromotionModelProxy";
@@ -213,27 +208,28 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatAgentPromotionModelDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatAgentPromotionModelProxy = this.getProxy(PlatAgentPromotionModelProxy);
+    myProxy: PlatAgentPromotionModelProxy = this.getProxy(PlatAgentPromotionModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
-    private configIndex = "2";
-    private configAll = "0";
+    configIndex = "2";
+    configAll = "0";
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -253,14 +249,14 @@ export default class PlatAgentPromotionModelDialog extends AbstractView {
 
     get rules() {
         return {
-            name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            desc: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            promotion_reward_coin_ratio: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            desc: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            promotion_reward_coin_ratio: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 let isValide = true;
@@ -269,8 +265,7 @@ export default class PlatAgentPromotionModelDialog extends AbstractView {
                     const element = promotion_config[vConf];
                     if (!element || element.length == 0) {
                         this.$message(
-                            `${this.tableColumns.promotion_config.options[vConf]}` +
-                                this.$t("plat_agent_promotion_model.noData")
+                            `${this.tableColumns.promotion_config.options[vConf]}` + this.LangUtil("没有输入数据")
                         );
                         isValide = false;
                         return;
@@ -279,8 +274,7 @@ export default class PlatAgentPromotionModelDialog extends AbstractView {
                         if (!isValide) return;
                         if (item.commission_num === undefined || item.total_performance === undefined) {
                             this.$message(
-                                `${this.tableColumns.promotion_config.options[vConf]}` +
-                                    this.$t("plat_agent_promotion_model.noData")
+                                `${this.tableColumns.promotion_config.options[vConf]}` + this.LangUtil("没有输入数据")
                             );
                             isValide = false;
                             return;
@@ -296,7 +290,7 @@ export default class PlatAgentPromotionModelDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();

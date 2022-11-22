@@ -3,12 +3,12 @@
         <div class="desc">
             <span>{{ myProxy.dialogData.detailData.listQuery.date }}</span>
             <span
-                >{{ tableColumns.directly_users.name }}({{ $t("common.create") }})：{{ tableData.directly_users }}({{
+                >{{ tableColumns.directly_users.name }}({{ LangUtil("新增") }})：{{ tableData.directly_users }}({{
                     tableData.today_directly_users
                 }})</span
             >
             <span
-                >{{ tableColumns.group_users.name }}({{ $t("common.create") }})：{{ tableData.group_users }}({{
+                >{{ tableColumns.group_users.name }}({{ LangUtil("新增") }})：{{ tableData.group_users }}({{
                     tableData.today_group_users
                 }})</span
             >
@@ -77,7 +77,7 @@
                     </template>
                     <template v-else> -</template>
                     <template v-if="row.is_promotion_floor == 1">
-                        <span class="red">({{ $t("user_detail.keep") }})</span>
+                        <span class="red">({{ LangUtil("保") }})</span>
                     </template>
                 </template>
             </el-table-column>
@@ -97,6 +97,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -106,15 +107,16 @@ import { getProxy } from "@/views/_user_detail/PageSetting";
 
 @Component
 export default class Detail extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabCommissionProxy = getProxy(TabCommissionProxy);
+    myProxy: TabCommissionProxy = getProxy(TabCommissionProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns.commission_detail;
+    tableColumns = this.myProxy.tableData.columns.commission_detail;
     get tableData() {
         return this.myProxy.dialogData.detailData.tableData;
     }

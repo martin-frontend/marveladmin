@@ -1,14 +1,15 @@
 <template>
     <div>
         <el-tabs v-model="myProxy.chartData.activeName" @tab-click="handleClick">
-            <el-tab-pane :label="$t('dashboard.recharge')" name="first">{{ $t("dashboard.recharge") }}</el-tab-pane>
-            <el-tab-pane :label="$t('dashboard.exchange')" name="second">{{ $t("dashboard.exchange") }}</el-tab-pane>
+            <el-tab-pane :label="LangUtil('平台充值')" name="first">{{ LangUtil("平台充值") }}</el-tab-pane>
+            <el-tab-pane :label="LangUtil('平台兑换')" name="second">{{ LangUtil("平台兑换") }}</el-tab-pane>
         </el-tabs>
         <div ref="chart" class="chart"></div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 // import CountTo from "vue-count-to";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -21,22 +22,23 @@ import echarts from "echarts";
 
 @Component
 export default class DashboardDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: DashboardProxy = this.getProxy(DashboardProxy);
+    myProxy: DashboardProxy = this.getProxy(DashboardProxy);
 
-    private handleClick(value: any) {
+    handleClick(value: any) {
         // console.log(value);
         this.myProxy.chartData.activeName = value.name;
         this.myProxy.showChart();
     }
 
     @Watch("myProxy.chartData.number")
-    private onChartInit() {
+    onChartInit() {
         let chartDome = this.$refs.chart;
         let myChart = echarts.init(chartDome);
         myChart.clear();

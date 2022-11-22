@@ -1,9 +1,5 @@
 <template>
-    <el-dialog
-        :title="$t('user_detail.userRechargeAddress')"
-        :append-to-body="true"
-        :visible.sync="dialogRechargeAddress.bShow"
-    >
+    <el-dialog :title="LangUtil('用户充值地址')" :append-to-body="true" :visible.sync="dialogRechargeAddress.bShow">
         <el-table
             :data="dialogRechargeAddress.addressList"
             border
@@ -14,13 +10,13 @@
             v-loading="net_status.loading"
         >
             <el-table-column
-                :label="$t('user_detail.block_name')"
+                :label="LangUtil('链名')"
                 prop="block_name"
                 class-name="status-col"
                 min-width="80px"
             ></el-table-column>
             <el-table-column
-                :label="$t('user_detail.address')"
+                :label="LangUtil('充值地址')"
                 prop="address"
                 class-name="status-col"
                 min-width="200px"
@@ -30,6 +26,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import { Message, MessageBox } from "element-ui";
@@ -40,15 +37,16 @@ import { getProxy } from "@/views/_user_detail/PageSetting";
 
 @Component
 export default class DeductGoldDialog extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabWalletProxy = getProxy(TabWalletProxy);
-    private tableColumns = this.myProxy.tableColumns;
-    private dialogRechargeAddress = this.myProxy.dialogRechargeAddress;
+    myProxy: TabWalletProxy = getProxy(TabWalletProxy);
+    tableColumns = this.myProxy.tableColumns;
+    dialogRechargeAddress = this.myProxy.dialogRechargeAddress;
 
     constructor() {
         super();

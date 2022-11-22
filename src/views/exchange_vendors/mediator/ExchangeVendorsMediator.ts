@@ -16,7 +16,7 @@ interface IExchangeVendors extends IEventDispatcher {
 
 export default class ExchangeVendorsMediator extends AbstractMediator {
     private myProxy: ExchangeVendorsProxy = <any>this.getProxy(ExchangeVendorsProxy);
-    
+
     onRegister() {
         this.myProxy.enter();
     }
@@ -36,7 +36,7 @@ export default class ExchangeVendorsMediator extends AbstractMediator {
             EventType.admin_exchange_vendors_show,
             EventType.admin_exchange_vendors_store,
             EventType.admin_exchange_vendors_update,
-            GlobalEventType.REQUEST_ERROR
+            GlobalEventType.REQUEST_ERROR,
         ];
     }
 

@@ -19,7 +19,7 @@
             <el-table-column prop="title" :label="tableColumns.title.name" align="center" width="200px">
             </el-table-column>
             <el-table-column prop="url" :label="tableColumns.url.name" align="center"> </el-table-column>
-            <el-table-column prop="status" :label="$t('common.status')" align="center" width="110px">
+            <el-table-column prop="status" :label="LangUtil('状态')" align="center" width="110px">
                 <template slot-scope="{ row }">
                     <el-switch
                         v-model="row.status"
@@ -31,20 +31,20 @@
                     </el-switch>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="170px" align="center">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="170px" align="center">
                 <template slot-scope="{ row }">
                     <div class="btn_group">
                         <el-button
                             size="mini"
                             @click="handlerOrder(row, 2)"
                             v-if="checkUnique(unique.vip_receive_payment_channel_update)"
-                            >{{ $t("common.setTop") }}</el-button
+                            >{{ LangUtil("置顶") }}</el-button
                         >
                         <el-button
                             size="mini"
                             @click="handlerOrder(row, 1)"
                             v-if="checkUnique(unique.vip_receive_payment_channel_update)"
-                            >{{ $t("common.setBottom") }}</el-button
+                            >{{ LangUtil("置底") }}</el-button
                         >
                         <el-button
                             size="mini"
@@ -63,7 +63,7 @@
                             type="primary"
                             @click="handleEdit(row)"
                             v-if="checkUnique(unique.vip_receive_payment_channel_update)"
-                            >{{ $t("common.update") }}</el-button
+                            >{{ LangUtil("编辑") }}</el-button
                         >
                     </div>
                 </template>
@@ -73,6 +73,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -87,29 +88,30 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class VipReceivePaymentChannelBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: VipReceivePaymentChannelProxy = this.getProxy(VipReceivePaymentChannelProxy);
+    myProxy: VipReceivePaymentChannelProxy = this.getProxy(VipReceivePaymentChannelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handlerStatus(row: any) {
+    handlerStatus(row: any) {
         Object.assign(this.myProxy.tableUpdateData, {
             status: row.status,
             id: row.id,
@@ -119,7 +121,7 @@ export default class VipReceivePaymentChannelBody extends AbstractView {
         this.myProxy.onUpdate(true);
     }
 
-    private handlerOrder(row: any, opt: any) {
+    handlerOrder(row: any, opt: any) {
         Object.assign(this.myProxy.tableUpdateData, {
             id: row.id,
             status: null,
@@ -128,11 +130,11 @@ export default class VipReceivePaymentChannelBody extends AbstractView {
         this.myProxy.onUpdate(true);
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
 }

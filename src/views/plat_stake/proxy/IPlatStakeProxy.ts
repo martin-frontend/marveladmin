@@ -3,9 +3,9 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface IPlatStakeProxy {
     /**表格相关数据 */
     stakeLogtableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;

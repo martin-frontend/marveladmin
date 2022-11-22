@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-        :title="$t('plat_agent_bind.bonusStatistics')"
+        :title="LangUtil('分红统计')"
         :visible.sync="myProxy.bonusConfigDialogData.bShow"
         width="600px"
         top="5vh"
@@ -34,8 +34,8 @@
                 <el-switch v-model="form.is_show" :active-value="1" :inactive-value="0"></el-switch>
             </el-form-item>
             <template v-if="myProxy.bonusConfigDialogData.isCanEditConfig == 1">
-                <el-form-item :label="$t('plat_agent_bind.bonusConfig')">
-                    <span style="width: 120px">{{ $t("plat_agent_bind.winLoss") }}</span>
+                <el-form-item :label="LangUtil('分红统计筛选')">
+                    <span style="width: 120px">{{ LangUtil("玩家输赢") }}</span>
                 </el-form-item>
                 <el-form-item>
                     <el-checkbox :label="tableColumns.win_loss_2.name" v-model="form.bonus_config.win_loss_2">
@@ -54,7 +54,7 @@
                     </el-checkbox>
                 </el-form-item>
                 <el-form-item>
-                    <span style="width: 120px">{{ $t("plat_agent_bind.bonus_pool") }}</span>
+                    <span style="width: 120px">{{ LangUtil("奖池分红") }}</span>
                 </el-form-item>
                 <el-form-item>
                     <el-checkbox :label="tableColumns.bonus_pool_2.name" v-model="form.bonus_config.bonus_pool_2">
@@ -73,7 +73,7 @@
                     </el-checkbox>
                 </el-form-item>
                 <el-form-item>
-                    <span style="width: 120px">{{ $t("plat_agent_bind.commission") }}</span>
+                    <span style="width: 120px">{{ LangUtil("推广佣金") }}</span>
                 </el-form-item>
                 <el-form-item>
                     <el-checkbox :label="tableColumns.commission_2.name" v-model="form.bonus_config.commission_2">
@@ -92,7 +92,7 @@
                     </el-checkbox>
                 </el-form-item>
                 <el-form-item>
-                    <span style="width: 120px">{{ $t("plat_agent_bind.backwater") }}</span>
+                    <span style="width: 120px">{{ LangUtil("挖矿返水") }}</span>
                 </el-form-item>
                 <el-form-item>
                     <el-checkbox :label="tableColumns.backwater_2.name" v-model="form.bonus_config.backwater_2">
@@ -111,7 +111,7 @@
                     </el-checkbox>
                 </el-form-item>
                 <el-form-item>
-                    <span style="width: 120px">{{ $t("plat_agent_bind.vendor") }}</span>
+                    <span style="width: 120px">{{ LangUtil("厂商游戏费用") }}</span>
                 </el-form-item>
                 <el-form-item>
                     <el-checkbox :label="tableColumns.vendor_fee_2.name" v-model="form.bonus_config.vendor_fee_2">
@@ -130,7 +130,7 @@
                     </el-checkbox>
                 </el-form-item>
                 <el-form-item>
-                    <span style="width: 120px">{{ $t("plat_agent_bind.else") }}</span>
+                    <span style="width: 120px">{{ LangUtil("其它") }}</span>
                 </el-form-item>
                 <el-form-item>
                     <el-checkbox :label="tableColumns.activity_bonus.name" v-model="form.bonus_config.activity_bonus">
@@ -140,7 +140,7 @@
                     <el-checkbox :label="tableColumns.exchange_fee.name" v-model="form.bonus_config.exchange_fee">
                     </el-checkbox>
                 </el-form-item>
-                <el-form-item :label="$t('plat_agent_bind.configSetting')"> </el-form-item>
+                <el-form-item :label="LangUtil('分红参数配置')"> </el-form-item>
                 <el-form-item>
                     <el-form-item
                         style="margin-bottom: 10px"
@@ -191,7 +191,7 @@
                     v-if="checkUnique(unique.plat_agent_bonus_config_update)"
                     type="primary"
                     @click="handleSave()"
-                    >{{ $t("common.save") }}</el-button
+                    >{{ LangUtil("确认保存") }}</el-button
                 >
             </div>
         </el-form>
@@ -199,6 +199,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatAgentBindProxy from "@/views/plat_agent_bind/proxy/PlatAgentBindProxy";
@@ -208,6 +209,7 @@ import { inputOnlyPositive } from "@/core/global/Functions";
 
 @Component
 export default class BonusConfigDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
     unique = unique;
     checkUnique = checkUnique;

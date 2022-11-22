@@ -1,17 +1,11 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
-        <el-form
-            ref="form"
-            :rules="rules"
-            :model="form"
-            label-width="115px"
-            v-loading="net_status.loading"
-        >
-        </el-form>
+        <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading"> </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatUserSmsCodeProxy from "@/views/plat_user_sms_code/proxy/PlatUserSmsCodeProxy";
@@ -22,24 +16,25 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatUserSmsCodeDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatUserSmsCodeProxy = this.getProxy(PlatUserSmsCodeProxy);
+    myProxy: PlatUserSmsCodeProxy = this.getProxy(PlatUserSmsCodeProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow(){
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -57,7 +52,7 @@ export default class PlatUserSmsCodeDialog extends AbstractView {
         return {};
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -65,7 +60,7 @@ export default class PlatUserSmsCodeDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -73,7 +68,7 @@ export default class PlatUserSmsCodeDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 }

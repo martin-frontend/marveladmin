@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_user/setting";
 import { Message } from "element-ui";
 import PlatUserProxy from "../proxy/PlatUserProxy";
 
-interface IPlatUser extends IEventDispatcher {
-
-}
+interface IPlatUser extends IEventDispatcher {}
 
 export default class PlatUserMediator extends AbstractMediator {
     private myProxy: PlatUserProxy = <any>this.getProxy(PlatUserProxy);
@@ -34,7 +32,6 @@ export default class PlatUserMediator extends AbstractMediator {
             EventType.admin_plat_user_vendor_withdraw,
             EventType.admin_plat_user_update_safe_gold,
             EventType.admin_plat_user_update_user_gold,
-
         ];
     }
 
@@ -71,7 +68,6 @@ export default class PlatUserMediator extends AbstractMediator {
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
-
         }
     }
 }

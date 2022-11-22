@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -38,7 +39,7 @@ export default class SystemConfigProxy extends AbstractProxy implements ISystemC
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
             value: { name: "参数值", options: {} },
-            category: { name: "", options: {} }
+            category: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -138,7 +139,7 @@ export default class SystemConfigProxy extends AbstractProxy implements ISystemC
             key,
             type,
             value,
-            category
+            category,
         };
         this.sendNotification(HttpType.admin_system_config_store, objectRemoveNull(formCopy));
     }
@@ -159,14 +160,14 @@ export default class SystemConfigProxy extends AbstractProxy implements ISystemC
 
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_system_config_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

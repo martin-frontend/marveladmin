@@ -1,8 +1,8 @@
 <template>
     <div>
         <el-tabs v-model="myProxy.tabsStatus" @tab-click="handlerTabs">
-            <el-tab-pane :label="$t('admin_cron.tabsText1')" name="cron_queue"></el-tab-pane>
-            <el-tab-pane :label="$t('admin_cron.tabsText2')" name="cron"></el-tab-pane>
+            <el-tab-pane :label="LangUtil('运行日志')" name="cron_queue"></el-tab-pane>
+            <el-tab-pane :label="LangUtil('定时任务配置')" name="cron"></el-tab-pane>
         </el-tabs>
 
         <CronHeader v-if="tabsStatus === 'cron'" />
@@ -11,6 +11,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import AdminCronProxy from "../proxy/AdminCronProxy";
@@ -26,18 +27,19 @@ import CronQueueHeader from "./component/CronQueueHeader.vue";
     },
 })
 export default class AdminCronHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
+    myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
     // proxy property
 
     get tabsStatus() {
         return this.myProxy.tabsStatus;
     }
 
-    private handlerTabs(value: any) {
+    handlerTabs(value: any) {
         this.myProxy.onTabsChange(value.name);
     }
 }

@@ -46,10 +46,14 @@
             <el-table-column prop="created_at" :label="tableColumns.created_at.name" align="center"> </el-table-column>
             <el-table-column prop="updated_at" :label="tableColumns.updated_at.name" align="center"> </el-table-column>
             <el-table-column prop="result" :label="tableColumns.result.name" align="center"> </el-table-column>
-            <el-table-column :label="$t('common.operating')" align="center" width="200px">
+            <el-table-column :label="LangUtil('操作')" align="center" width="200px">
                 <template slot-scope="{ row }">
-                    <el-button type="primary" @click="handlerPreview(row)" size="small">{{ $t("common.lookOver") }}</el-button>
-                    <el-button type="danger" @click="handlerAgain(row)" size="small">{{ $t("admin_cron.again") }}</el-button>
+                    <el-button type="primary" @click="handlerPreview(row)" size="small">{{
+                        LangUtil("查看")
+                    }}</el-button>
+                    <el-button type="danger" @click="handlerAgain(row)" size="small">{{
+                        LangUtil("重新执行")
+                    }}</el-button>
                 </template>
             </el-table-column>
             <!--  -->
@@ -58,6 +62,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -73,39 +78,40 @@ import { MessageBox } from "element-ui";
     },
 })
 export default class AdminCronBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
+    myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
     // proxy property
-    private tableColumns = this.myProxy.cronQueueTableData.columns;
-    private tableData = this.myProxy.cronQueueTableData.list;
-    private pageInfo = this.myProxy.cronQueueTableData.pageInfo;
-    private listQuery = this.myProxy.cronQueueListQuery;
+    tableColumns = this.myProxy.cronQueueTableData.columns;
+    tableData = this.myProxy.cronQueueTableData.list;
+    pageInfo = this.myProxy.cronQueueTableData.pageInfo;
+    listQuery = this.myProxy.cronQueueListQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQueryCronQueue();
     }
 
-    private onSwitch(row: any, el: any) {
+    onSwitch(row: any, el: any) {
         this.myProxy.cronTableSwitch.is_ordered_exec = row.is_ordered_exec;
         this.myProxy.cronTableSwitch.id = row.id;
         this.myProxy.onCronQueueUpdate(true);
     }
 
-    private handlerPreview(row: any) {
+    handlerPreview(row: any) {
         this.myProxy.showDialogCronQueuePreview(row);
     }
 
-    private handlerAgain(row: any) {
-        let confirmText1: any = this.$t("admin_cron.confirmText1")
-        let prompt: any = this.$t("common.prompt")
-        let determine: any = this.$t("common.determine")
-        let cancel: any = this.$t("common.cancel")
+    handlerAgain(row: any) {
+        let confirmText1: any = this.LangUtil("您是否要重新执行该内容");
+        let prompt: any = this.LangUtil("提示");
+        let determine: any = this.LangUtil("确定");
+        let cancel: any = this.LangUtil("取消");
         MessageBox.confirm(confirmText1, prompt, {
             confirmButtonText: determine,
             cancelButtonText: cancel,

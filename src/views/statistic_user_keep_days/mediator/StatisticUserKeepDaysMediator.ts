@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/statistic_user_keep_days/setting";
 import { Message } from "element-ui";
 import StatisticUserKeepDaysProxy from "../proxy/StatisticUserKeepDaysProxy";
 
-interface IStatisticUserKeepDays extends IEventDispatcher {
-    
-}
+interface IStatisticUserKeepDays extends IEventDispatcher {}
 
 export default class StatisticUserKeepDaysMediator extends AbstractMediator {
     private myProxy: StatisticUserKeepDaysProxy = <any>this.getProxy(StatisticUserKeepDaysProxy);
@@ -25,11 +23,7 @@ export default class StatisticUserKeepDaysMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_statistic_user_keep_days_table_columns,
-            EventType.admin_statistic_user_keep_days_index,
-
-        ];
+        return [EventType.admin_statistic_user_keep_days_table_columns, EventType.admin_statistic_user_keep_days_index];
     }
 
     handleNotification(notification: puremvc.INotification) {

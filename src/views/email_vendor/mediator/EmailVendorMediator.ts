@@ -5,12 +5,9 @@ import { EventType, HttpType } from "@/views/email_vendor/setting";
 import { Message } from "element-ui";
 import EmailVendorProxy from "../proxy/EmailVendorProxy";
 
-interface IEmailVendor extends IEventDispatcher {
-
-}
+interface IEmailVendor extends IEventDispatcher {}
 
 export default class EmailVendorMediator extends AbstractMediator {
-
     private myProxy: EmailVendorProxy = <any>this.getProxy(EmailVendorProxy);
 
     onRegister() {
@@ -32,7 +29,6 @@ export default class EmailVendorMediator extends AbstractMediator {
             EventType.admin_email_vendor_show,
             EventType.admin_email_vendor_store,
             EventType.admin_email_vendor_update,
-
         ];
     }
 
@@ -61,7 +57,6 @@ export default class EmailVendorMediator extends AbstractMediator {
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
-
         }
     }
 }

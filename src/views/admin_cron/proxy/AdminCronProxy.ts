@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -65,7 +66,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             next_run_date: { name: "预计执行时间", options: {} },
             result: { name: "运行结果", options: {} },
             runtime: { name: "运行时长(秒)", options: {} },
-            run_times: {name: "执行次数", options: {}},
+            run_times: { name: "执行次数", options: {} },
             status: { name: "运行状态", options: {} },
             timeout: { name: "超时时长(秒)", options: {} },
             unique: { name: "唯一标记", options: {} },
@@ -194,7 +195,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             page_size: 20,
             name: "",
             status: "",
-            type: ""
+            type: "",
         });
     }
     /**运行日志 重置查询数据 */
@@ -355,9 +356,9 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
 
     /**定时任务 删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

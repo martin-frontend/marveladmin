@@ -12,7 +12,7 @@
         <div class="d-flex">
             <div class="notic">
                 <div class="no_data" v-if="!myProxy.tableData.bShow">
-                    {{ $t("plat_bonus_all_stock_model.text6") }}
+                    {{ LangUtil("推广代理未开启-请联系管理员开启") }}
                 </div>
                 <div class="desc" v-else>
                     <p>{{ bonusAllmodel.name }}</p>
@@ -20,18 +20,15 @@
                 </div>
             </div>
             <div class="ctrl_group" v-if="myProxy.tableData.bShow">
-                <el-button @click="onChangeBanner()" type="primary">
-                    {{ $t("plat_bonus_all_stock_model.text7") }}</el-button
-                >
-                <el-button @click="onSetTemplate()" type="primary">{{
-                    $t("plat_bonus_all_stock_model.text8")
-                }}</el-button>
+                <el-button @click="onChangeBanner()" type="primary"> {{ LangUtil("配置说明图片") }}</el-button>
+                <el-button @click="onSetTemplate()" type="primary">{{ LangUtil("配置梯度模版") }}</el-button>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatBonusAllProxy from "../proxy/PlatBonusAllProxy";
@@ -50,27 +47,28 @@ import PlatBonusAllStockProxy from "../proxy/PlatBonusAllStockProxy";
     },
 })
 export default class PlatBonusAllHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatBonusAllProxy = this.getProxy(PlatBonusAllProxy);
-    private allStockProxy: PlatBonusAllStockProxy = this.getProxy(PlatBonusAllStockProxy);
+    myProxy: PlatBonusAllProxy = this.getProxy(PlatBonusAllProxy);
+    allStockProxy: PlatBonusAllStockProxy = this.getProxy(PlatBonusAllStockProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private bonusAllmodel = this.myProxy.tableData.model;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    bonusAllmodel = this.myProxy.tableData.model;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.admin_plat_bonus_all_stock_set_index();
         this.myProxy.admin_plat_show();
     }
 
-    private onChangeBanner() {
+    onChangeBanner() {
         this.myProxy.showBannerDialog();
     }
-    private onSetTemplate() {
+    onSetTemplate() {
         this.allStockProxy.openTemplateSetting();
     }
 }

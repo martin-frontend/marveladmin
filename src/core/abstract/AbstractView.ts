@@ -5,22 +5,22 @@ import { generateUUID } from "@/core/global/Functions";
 
 export default class AbstractView extends Vue {
     private facde = puremvc.Facade.getInstance();
-    private readonly mediator!:AbstractMediator;
-    private readonly model!:puremvc.Proxy;
+    private readonly mediator!: AbstractMediator;
+    private readonly model!: puremvc.Proxy;
     private eventMaps: any = {};
 
     constructor(mediatorClass?: any, proxyClass?: any, proxyInstance?: any) {
         super();
-        if(proxyClass){
-            if(!this.facde.hasProxy(proxyClass.NAME)){
+        if (proxyClass) {
+            if (!this.facde.hasProxy(proxyClass.NAME)) {
                 this.model = new proxyClass();
                 this.facde.registerProxy(this.model);
             }
         }
-        if(proxyInstance){
+        if (proxyInstance) {
             this.facde.registerProxy(proxyInstance);
         }
-        if(mediatorClass){
+        if (mediatorClass) {
             this.mediator = new mediatorClass();
             this.mediator.mediatorName = generateUUID();
             this.mediator.setViewComponent(this);
@@ -61,33 +61,33 @@ export default class AbstractView extends Vue {
         }
     }
 
-    public getModel(modelName?:string):any{
-        if(modelName){
+    public getModel(modelName?: string): any {
+        if (modelName) {
             return this.facde.retrieveProxy(modelName);
         }
         return this.model;
     }
 
-    public getProxy(proxyClass:any):any{
-        if(!this.facde.hasProxy(proxyClass.NAME)){
+    public getProxy(proxyClass: any): any {
+        if (!this.facde.hasProxy(proxyClass.NAME)) {
             this.facde.registerProxy(new proxyClass(proxyClass.NAME));
         }
         return this.facde.retrieveProxy(proxyClass.NAME);
     }
 
-    public getProxySnap(proxyClass:any, snapName:string):any{
+    public getProxySnap(proxyClass: any, snapName: string): any {
         const pName = proxyClass.NAME + snapName;
-        if(!this.facde.hasProxy(pName)){
+        if (!this.facde.hasProxy(pName)) {
             this.facde.registerProxy(new proxyClass(pName));
         }
         return this.facde.retrieveProxy(pName);
     }
 
     destroyed() {
-        if(this.mediator){
+        if (this.mediator) {
             this.facde.removeMediator(this.mediator.mediatorName);
         }
-        if(this.model){
+        if (this.model) {
             this.facde.removeProxy(this.model.proxyName);
         }
     }

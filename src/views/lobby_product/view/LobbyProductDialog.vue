@@ -19,7 +19,7 @@
 
             <el-form-item size="mini" :label="tableColumns['languages'].name" prop="languages">
                 <el-radio-group v-model="form.languages" filterable clearable @change="handleChange">
-                    <el-radio class="radio" :label="null" style="width: 60px">{{ $t("common.all") }}</el-radio>
+                    <el-radio class="radio" :label="null" style="width: 60px">{{ LangUtil("全部") }}</el-radio>
                     <el-radio
                         class="radio"
                         v-for="(value, key) in tableColumns.languages.options"
@@ -32,7 +32,7 @@
 
             <el-form-item size="mini" :label="tableColumns['category'].name">
                 <el-radio-group v-model="form.category" filterable @change="handleChange">
-                    <el-radio class="radio" :label="null" style="width: 60px">{{ $t("common.all") }}</el-radio>
+                    <el-radio class="radio" :label="null" style="width: 60px">{{ LangUtil("全部") }}</el-radio>
                     <el-radio
                         class="radio"
                         v-for="(value, key) in tableColumns.category.options"
@@ -76,13 +76,14 @@
                 </el-table-column>
             </el-table>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleAdd()">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" size="mini" @click="handleAdd()">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import LobbyProductProxy from "@/views/lobby_product/proxy/LobbyProductProxy";
@@ -104,25 +105,26 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class LobbyProductDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: LobbyProductProxy = this.getProxy(LobbyProductProxy);
+    myProxy: LobbyProductProxy = this.getProxy(LobbyProductProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
+    listQuery = this.myProxy.listQuery;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -138,18 +140,18 @@ export default class LobbyProductDialog extends AbstractView {
 
     get rules() {
         return {
-            app_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            app_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             lobby_model_product_ids: [
                 {
                     required: this.form.lobby_model_product_ids.length > 0,
-                    message: this.$t("common.requiredSelect"),
+                    message: this.LangUtil("必须选择"),
                     trigger: "change",
                 },
             ],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -158,7 +160,7 @@ export default class LobbyProductDialog extends AbstractView {
     }
 
     /**表格资料异动 */
-    private handleSelectionChange(val: any) {
+    handleSelectionChange(val: any) {
         const ids: any[] = [];
         val.map((item: { lobby_model_product_id: any }) => {
             ids.push(item.lobby_model_product_id);
@@ -166,7 +168,7 @@ export default class LobbyProductDialog extends AbstractView {
         this.form.lobby_model_product_ids = ids;
     }
     /**表单异动 */
-    private handleChange(val: number) {
+    handleChange(val: number) {
         this.myProxy.handleFormChange();
     }
 }

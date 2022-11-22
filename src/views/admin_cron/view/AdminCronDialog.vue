@@ -31,10 +31,12 @@
             </el-form-item>
             <el-form-item>
                 <div class="footer">
-                    <el-button type="danger" @click="handleDelete()" v-if="isStatusUpdate">{{ $t("common.delete") }}</el-button>
-                    <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()"
-                        >{{ $t("common.save") }}</el-button
-                    >
+                    <el-button type="danger" @click="handleDelete()" v-if="isStatusUpdate">{{
+                        LangUtil("删除")
+                    }}</el-button>
+                    <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
+                        LangUtil("确认保存")
+                    }}</el-button>
                 </div>
             </el-form-item>
         </el-form>
@@ -42,6 +44,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import AdminCronProxy from "@/views/admin_cron/proxy/AdminCronProxy";
@@ -52,28 +55,29 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class AdminCronDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
+    myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
     // proxy property
-    private tableColumns = this.myProxy.cronTableData.columns;
-    private listQuery = this.myProxy.cronDialogData.form;
+    tableColumns = this.myProxy.cronTableData.columns;
+    listQuery = this.myProxy.cronDialogData.form;
 
     get form() {
         return this.myProxy.cronDialogData.form;
     }
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.cronDialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -89,19 +93,19 @@ export default class AdminCronDialog extends AbstractView {
 
     get rules() {
         return {
-            frequency: [{ required: true, message: this.$t("admin_cron.messageText1"), trigger: "blur" }],
-            name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            content: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            timeout: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            desc: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            is_ordered_exec: [
-                { required: true, message: this.$t("common.requiredSelect"), trigger: "blur" },
+            frequency: [
+                { required: true, message: this.LangUtil("秒[5的倍数]、分钟、小时、日、月、周"), trigger: "blur" },
             ],
-            status: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "blur" }],
+            name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            timeout: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            desc: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            is_ordered_exec: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
+            status: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -109,7 +113,7 @@ export default class AdminCronDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onCronUpdate();
@@ -117,7 +121,7 @@ export default class AdminCronDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 }

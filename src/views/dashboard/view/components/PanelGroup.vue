@@ -11,21 +11,21 @@
                     </div>
                     <span v-if="item.vary">
                         <div class="card-panel-num">
-                            {{ $t("common.today") }}
-                            <WinLossDisplay :amount="item.today"/>
+                            {{ LangUtil("今日") }}
+                            <WinLossDisplay :amount="item.today" />
                         </div>
                         <div class="card-panel-num">
-                            {{ $t("common.yesterday") }}
-                            <WinLossDisplay :amount="item.yesterday"/>
+                            {{ LangUtil("昨日") }}
+                            <WinLossDisplay :amount="item.yesterday" />
                         </div>
                     </span>
                     <span v-if="!item.vary">
                         <div class="card-panel-num">
-                            {{ $t("common.today") }}
+                            {{ LangUtil("今日") }}
                             <span>{{ item.today }}</span>
                         </div>
                         <div class="card-panel-num">
-                            {{ $t("common.yesterday") }}
+                            {{ LangUtil("昨日") }}
                             <span>{{ item.yesterday }}</span>
                         </div>
                     </span>
@@ -36,6 +36,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 // import CountTo from "vue-count-to";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -52,13 +53,14 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
     },
 })
 export default class DashboardDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: DashboardProxy = this.getProxy(DashboardProxy);
+    myProxy: DashboardProxy = this.getProxy(DashboardProxy);
 
     get panelData() {
         return this.myProxy.panelData;

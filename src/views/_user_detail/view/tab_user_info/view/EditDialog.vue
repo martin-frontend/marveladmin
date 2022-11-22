@@ -1,14 +1,14 @@
 <template>
-    <el-dialog :title="$t('common.update')" :visible.sync="dialogData.bShow" width="500px" :append-to-body="true">
+    <el-dialog :title="LangUtil('编辑')" :visible.sync="dialogData.bShow" width="500px" :append-to-body="true">
         <div v-loading="net_status.loading">
-            <div class="input_title">{{ $t("common.pleaseEnter") }}</div>
+            <div class="input_title">{{ LangUtil("请输入") }}</div>
             <!-- 金币明细屏蔽 start -->
             <template v-if="dialogData.filed == 'gold_columns_disable'">
                 <el-select
                     v-model="dialogData.filedValue"
                     multiple
                     clearable
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     style="width: 400px; margin-left: 25px"
                 >
                     <el-option
@@ -30,7 +30,7 @@
                     maxlength="10"
                     show-word-limit
                     class="dialog_input"
-                    :placeholder="$t('user_detail.userComment')"
+                    :placeholder="LangUtil('输入用户备注信息 最多10个字')"
                 ></el-input>
             </template>
             <!--备注 end-->
@@ -42,7 +42,7 @@
                     maxlength="6"
                     show-word-limit
                     class="dialog_input"
-                    :placeholder="`${tableColumns.pretty_user_id.name} ${$t('user_detail.maxLang6')}`"
+                    :placeholder="`${tableColumns.pretty_user_id.name} ${LangUtil('最多六位数')}`"
                 ></el-input>
             </template>
 
@@ -52,15 +52,13 @@
 
             <!-- 密码 start-->
             <template v-if="dialogData.filed == 'password'">
-                <div class="input_title">
-                    {{ $t("user_detail.inputAgain") }}{{ tableColumns[dialogData.filed].name }}
-                </div>
+                <div class="input_title">{{ LangUtil("请再次输入") }}{{ tableColumns[dialogData.filed].name }}</div>
                 <el-input class="dialog_input" v-model="dialogData.filedValue1"></el-input>
             </template>
             <!--密码 end-->
 
             <div class="confirm">
-                <el-button class="item" type="primary" @click="handlerSubmit"> {{ $t("common.save") }} </el-button>
+                <el-button class="item" type="primary" @click="handlerSubmit"> {{ LangUtil("确认保存") }} </el-button>
             </div>
             <div slot="footer" class="dialog-footer"></div>
         </div>
@@ -68,6 +66,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import TabUserInfoProxy from "../proxy/TabUserInfoProxy";
@@ -78,33 +77,34 @@ import { getProxy } from "@/views/_user_detail/PageSetting";
 
 @Component
 export default class EditDialog extends AbstractView {
+    LangUtil = LangUtil;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabUserInfoProxy = getProxy(TabUserInfoProxy);
-    private tableColumns: any = this.myProxy.tableColumns;
-    private dialogData = this.myProxy.dialogData;
+    myProxy: TabUserInfoProxy = getProxy(TabUserInfoProxy);
+    tableColumns: any = this.myProxy.tableColumns;
+    dialogData = this.myProxy.dialogData;
 
-    private handlerSubmit() {
+    handlerSubmit() {
         const filed = this.dialogData.filed;
         const filedValue = this.dialogData.filedValue;
 
         if (filed == "phone" && !checkPhone(filedValue)) {
-            Message.error(this.$t("user_detail.errorCode1") + `${this.tableColumns[filed].name}`);
+            Message.error(this.LangUtil("请输入正确的") + `${this.tableColumns[filed].name}`);
         } else if (filed == "email" && !checkMail(filedValue)) {
-            Message.error(this.$t("user_detail.errorCode1") + `${this.tableColumns[filed].name}`);
+            Message.error(this.LangUtil("请输入正确的") + `${this.tableColumns[filed].name}`);
         } else if (filed == "password" && !this.checkUserPassword(filedValue)) {
             Message.error(
-                this.$t("user_detail.errorCode1") +
+                this.LangUtil("请输入正确的") +
                     `${this.tableColumns[filed].name}` +
-                    this.$t("user_detail.errorCode2")
+                    this.LangUtil("，长度6～20的字母数字组合")
             );
         } else if (filed == "password" && filedValue != this.dialogData.filedValue1) {
-            const str: any = this.$t("user_detail.passwordError");
+            const str: any = this.LangUtil("两次密码输入不一致");
             Message.error(str);
         } else if ((filed == "base_win" || filed == "base_water") && !this.checkBaseInput(filedValue)) {
-            const str: any = `${this.$t("user_detail.errorCode1")}${this.tableColumns[filed].name}${this.$t(
-                "user_detail.errorCode3"
+            const str: any = `${this.LangUtil("请输入正确的")}${this.tableColumns[filed].name}${this.LangUtil(
+                "，必须是大于0的数字"
             )}`;
             Message.error(str);
         } else {
@@ -116,12 +116,12 @@ export default class EditDialog extends AbstractView {
      * 验证密码是否合法
      * @param value
      */
-    private checkUserPassword(value: string): boolean {
+    checkUserPassword(value: string): boolean {
         const Regx = /^[A-Za-z0-9]*$/;
         return value.length >= 6 && value.length <= 20 && Regx.test(value);
     }
 
-    private checkBaseInput(value: string): boolean {
+    checkBaseInput(value: string): boolean {
         if (isNaN(Number(value)) || Number(value) < 0) {
             return false;
         }

@@ -9,7 +9,7 @@
             />
             <SearchInput :title="tableColumns['vendor_product_name'].name" v-model="listQuery.vendor_product_name" />
             <el-button class="header-button" icon="el-icon-search" @click="handlerSearch()" type="primary">{{
-                $t("common.search")
+                LangUtil("查询")
             }}</el-button>
         </div>
         <!-- FILTER -->
@@ -23,7 +23,7 @@
                         filterable
                         @change="onFilterChange"
                     >
-                        <el-radio class="radio" :label="null">{{ $t("common.all") }}</el-radio>
+                        <el-radio class="radio" :label="null">{{ LangUtil("全部") }}</el-radio>
                         <el-radio
                             class="radio"
                             v-for="(value, key) in tableColumns.currency_type.options"
@@ -41,7 +41,7 @@
                         filterable
                         @change="onFilterChange"
                     >
-                        <el-radio class="radio" :label="null">{{ $t("common.all") }}</el-radio>
+                        <el-radio class="radio" :label="null">{{ LangUtil("全部") }}</el-radio>
                         <el-radio
                             class="radio"
                             v-for="(value, key) in tableColumns.app_types.options"
@@ -53,7 +53,7 @@
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['languages'].name">
                     <el-radio-group v-model="listFilter.languages" filterable @change="onFilterChange">
-                        <el-radio class="radio" :label="null">{{ $t("common.all") }}</el-radio>
+                        <el-radio class="radio" :label="null">{{ LangUtil("全部") }}</el-radio>
                         <el-radio
                             class="radio"
                             v-for="(value, key) in tableColumns.languages.options"
@@ -70,7 +70,7 @@
                         filterable
                         @change="onFilterChange"
                     >
-                        <el-radio class="radio" :label="null">{{ $t("common.all") }}</el-radio>
+                        <el-radio class="radio" :label="null">{{ LangUtil("全部") }}</el-radio>
                         <el-radio
                             class="radio"
                             v-for="(value, key) in tableColumns.category.options"
@@ -87,7 +87,7 @@
                         filterable
                         @change="onFilterChange"
                     >
-                        <el-radio class="radio" :label="null">{{ $t("common.all") }}</el-radio>
+                        <el-radio class="radio" :label="null">{{ LangUtil("全部") }}</el-radio>
                         <el-radio
                             class="radio"
                             v-for="(value, key) in tableColumns.show_type.options"
@@ -107,13 +107,14 @@
                 type="primary"
                 icon="el-icon-circle-plus-outline"
                 @click="handlerCreate"
-                >{{ $t("common.create") }}
+                >{{ LangUtil("新增") }}
             </el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import LobbyModelProductProxy from "../proxy/LobbyModelProductProxy";
@@ -133,26 +134,27 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class LobbyModelProductHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: LobbyModelProductProxy = this.getProxy(LobbyModelProductProxy);
+    myProxy: LobbyModelProductProxy = this.getProxy(LobbyModelProductProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
-    private listFilter = this.myProxy.listFilter;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
+    listFilter = this.myProxy.listFilter;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private onFilterChange() {
+    onFilterChange() {
         this.myProxy.onFilterTable();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

@@ -1,12 +1,6 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
-        <el-form
-            ref="form"
-            :rules="rules"
-            :model="form"
-            label-width="60px"
-            v-loading="net_status.loading"
-        >
+        <el-form ref="form" :rules="rules" :model="form" label-width="60px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.coin_name.name" prop="coin_name">
                 <el-input v-model="form.coin_name"></el-input>
             </el-form-item>
@@ -22,15 +16,16 @@
             </el-form-item>
         </el-form>
         <div class="btn_group">
-            <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ $t("common.delete") }}</el-button>
+            <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ LangUtil("删除") }}</el-button>
             <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
-                $t("common.save")
+                LangUtil("确认保存")
             }}</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import BlockSystemCoinsProxy from "@/views/block_system_coins/proxy/BlockSystemCoinsProxy";
@@ -41,24 +36,25 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class BlockSystemCoinsDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: BlockSystemCoinsProxy = this.getProxy(BlockSystemCoinsProxy);
+    myProxy: BlockSystemCoinsProxy = this.getProxy(BlockSystemCoinsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow(){
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -76,7 +72,7 @@ export default class BlockSystemCoinsDialog extends AbstractView {
         return {};
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -84,7 +80,7 @@ export default class BlockSystemCoinsDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -92,7 +88,7 @@ export default class BlockSystemCoinsDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 }

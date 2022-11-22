@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { dateFormat, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
@@ -193,10 +194,10 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     /**取得excel 挡案名称 */
     get getExcelOutputName() {
         //let ssss = new Date()
-        
+
         let times = dateFormat(new Date(), "yyyy-MM-dd hh:mm:ss");
         let name: string =
-        i18n.t("user_detail.betDetail") +"-" +times +"-"+ this.tableData.columns.plat_id.options[this.listQuery.plat_id] ;
+            LangUtil("投注明细") + "-" + times + "-" + this.tableData.columns.plat_id.options[this.listQuery.plat_id];
 
         //return `${name}-${this.listQuery["bet_at-{>=}"]}～${this.listQuery["bet_at-{<=}"]}`;
         return name;
@@ -224,49 +225,48 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     get curKeyList() {
         return this._gameKeyList;
     }
- /**取得所有资料 */
- onQueryAll() {
-    this.tableData.isExportExcel = true;
-    let queryCopy: any = {};
-    queryCopy = JSON.parse(JSON.stringify(this.listQuery));
-    queryCopy.page_size = this.tableData.excelPageSize;
-    queryCopy.page_count = 1;
-    //this.facade.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(queryCopy));
-    this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(queryCopy));
-}
-/**导出excel */
-exportExcel(data: any) {
-    this.tableData.isExportExcel = false;
-    let summary = this.addSummary(data);
-    summary.map((element: any) => {
-        element.win_gold = Number(element.win_gold) > 0 ? `+${element.win_gold}` : element.win_gold;
-    });
+    /**取得所有资料 */
+    onQueryAll() {
+        this.tableData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        queryCopy.page_size = this.tableData.excelPageSize;
+        queryCopy.page_count = 1;
+        //this.facade.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(queryCopy));
+        this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(queryCopy));
+    }
+    /**导出excel */
+    exportExcel(data: any) {
+        this.tableData.isExportExcel = false;
+        let summary = this.addSummary(data);
+        summary.map((element: any) => {
+            element.win_gold = Number(element.win_gold) > 0 ? `+${element.win_gold}` : element.win_gold;
+        });
 
-    new BaseInfo.ExportExcel(
-        `${this.getExcelOutputName}`,
-        this.curKeyList,
-        this.tableData.columns,
-        summary,
-        ["plat_id", "is_credit_user", "vendor_id", "vendor_type","settlement_status"],
-        []
-    );
-}
-/**增加合计数据 */
-addSummary(data: any) {
-    let summary = {
-        user_id:"汇总",
-        bet_gold: data.summary.bet_gold,
-        settlement_water:  data.summary.settlement_water,
-        valid_bet_gold:  data.summary.valid_bet_gold,
-        water:  data.summary.water,
-        win_gold:  data.summary.win_gold,
-        water_accelerate:  data.summary.water_accelerate,
-    };
+        new BaseInfo.ExportExcel(
+            `${this.getExcelOutputName}`,
+            this.curKeyList,
+            this.tableData.columns,
+            summary,
+            ["plat_id", "is_credit_user", "vendor_id", "vendor_type", "settlement_status"],
+            []
+        );
+    }
+    /**增加合计数据 */
+    addSummary(data: any) {
+        let summary = {
+            user_id: "汇总",
+            bet_gold: data.summary.bet_gold,
+            settlement_water: data.summary.settlement_water,
+            valid_bet_gold: data.summary.valid_bet_gold,
+            water: data.summary.water,
+            win_gold: data.summary.win_gold,
+            water_accelerate: data.summary.water_accelerate,
+        };
 
-    
-    data.list.unshift(summary);
-    return data.list;
-}
+        data.list.unshift(summary);
+        return data.list;
+    }
     /**显示弹窗 */
     showDialog(status: string, data?: any) {
         Object.assign(this.dialogData, {
@@ -289,7 +289,7 @@ addSummary(data: any) {
     pickerOptions = {
         shortcuts: [
             {
-                text: i18n.t("common.today"),
+                text: LangUtil("今日"),
                 onClick(picker: any) {
                     const start = getTodayOffset();
                     const end = getTodayOffset(1, 1);
@@ -297,7 +297,7 @@ addSummary(data: any) {
                 },
             },
             {
-                text: i18n.t("common.yesterday"),
+                text: LangUtil("昨日"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-1);
                     const end = getTodayOffset(0, 1);
@@ -305,7 +305,7 @@ addSummary(data: any) {
                 },
             },
             {
-                text: i18n.t("common.lastWeek"),
+                text: LangUtil("最近一周"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-6);
                     const end = getTodayOffset(1, 1);
@@ -313,7 +313,7 @@ addSummary(data: any) {
                 },
             },
             {
-                text: i18n.t("common.lastMonth"),
+                text: LangUtil("最近一个月"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-30);
                     const end = getTodayOffset(1, 1);
@@ -321,7 +321,7 @@ addSummary(data: any) {
                 },
             },
             {
-                text: i18n.t("common.last3Month"),
+                text: LangUtil("最近60天"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-60);
                     const end = getTodayOffset(1, 1);

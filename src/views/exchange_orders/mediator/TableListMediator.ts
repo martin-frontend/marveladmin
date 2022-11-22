@@ -2,8 +2,7 @@ import AbstractMediator from "@/core/abstract/AbstractMediator";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { HttpType } from "../setting";
-interface IView extends IEventDispatcher {
-}
+interface IView extends IEventDispatcher {}
 export default class TableListMediator extends AbstractMediator {
     protected initViewData() {
         const myView: IView = this.viewComponent;

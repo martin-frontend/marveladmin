@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <BlockNetworkDialog v-if="myProxy.dialogData.bShow"/>
-        <BlockNetworkHeader/>
-        <BlockNetworkBody/>
+        <BlockNetworkDialog v-if="myProxy.dialogData.bShow" />
+        <BlockNetworkHeader />
+        <BlockNetworkBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import BlockNetworkBody from "./BlockNetworkBody.vue";
         BlockNetworkDialog,
         BlockNetworkHeader,
         BlockNetworkBody,
-    }
+    },
 })
 export default class BlockNetwork extends AbstractView {
-
     constructor() {
         super(BlockNetworkMediator);
     }

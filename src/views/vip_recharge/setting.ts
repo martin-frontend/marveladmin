@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_vip_recharge_recharge, cmd_admin_vip_recha
 facade.registerCommand(HttpType.admin_coin_wallet_wallet, cmd_admin_coin_wallet_wallet);
 facade.registerCommand(HttpType.admin_plat_user_table_columns, cmd_admin_plat_user_table_columns);
 facade.registerCommand(HttpType.admin_plat_user_show, cmd_admin_plat_user_show);
-

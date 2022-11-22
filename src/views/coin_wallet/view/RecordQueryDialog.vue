@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :visible.sync="myProxy.logDialogData.bShow" :title="$t('coin_wallet.record')" width="85%">
+    <el-dialog :visible.sync="myProxy.logDialogData.bShow" :title="LangUtil('记录')" width="85%">
         <div class="header-content">
             <div class="search_style">
                 <div class="search_space">
@@ -8,12 +8,7 @@
                     </div>
                     <div class="item_group">
                         <div class="cust_title">{{ columnInfo.type.name }}</div>
-                        <el-select
-                            v-model="listQuery.type"
-                            filterable
-                            class="select"
-                            :placeholder="$t('common.pleaseChoose')"
-                        >
+                        <el-select v-model="listQuery.type" filterable class="select" :placeholder="LangUtil('请选择')">
                             <el-option
                                 v-for="(value, key) in columnInfo.type.options"
                                 :key="key"
@@ -24,16 +19,16 @@
                     </div>
                     <div class="item_group">
                         <el-button @click="onSearch()" class="item" type="primary" icon="el-icon-search">{{
-                            $t("common.search")
+                            LangUtil("查询")
                         }}</el-button>
                         <el-button @click="onReset()" class="item" type="primary" icon="el-icon-refresh">{{
-                            $t("common.reset")
+                            LangUtil("重置")
                         }}</el-button>
                     </div>
                 </div>
                 <div>
                     <el-button class="header-button" @click="exportExcel" type="primary" icon="el-icon-download">{{
-                        $t("statistic_plat_days.export")
+                        LangUtil("导出")
                     }}</el-button>
                 </div>
             </div>
@@ -109,6 +104,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "../../../core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import CoinWalletProxy from "@/views/coin_wallet/proxy/CoinWalletProxy";
@@ -127,19 +123,20 @@ import { UserType } from "@/core/enum/UserType";
     },
 })
 export default class RecordQueryDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
-    private SelfModel: SelfModel = this.getProxy(SelfModel);
+    myProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
+    SelfModel: SelfModel = this.getProxy(SelfModel);
     // proxy property
-    private columnInfo = this.myProxy.logDialogData.columns;
-    private listQuery = this.myProxy.logListQuery;
-    private logData = this.myProxy.logDialogData.list;
-    private pageInfo = this.myProxy.logDialogData.pageInfo;
+    columnInfo = this.myProxy.logDialogData.columns;
+    listQuery = this.myProxy.logListQuery;
+    logData = this.myProxy.logDialogData.list;
+    pageInfo = this.myProxy.logDialogData.pageInfo;
 
     set queryDate(time: string[]) {
         this.myProxy.logListQuery["created_at-{>=}"] = time[0];
@@ -170,7 +167,7 @@ export default class RecordQueryDialog extends AbstractView {
         this.myProxy.resetLogQuery();
     }
 
-    private exportExcel() {
+    exportExcel() {
         this.myProxy.onQueryAll();
     }
 }

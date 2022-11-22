@@ -19,10 +19,10 @@
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -30,6 +30,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatUsersBackwaterLogProxy from "../proxy/PlatUsersBackwaterLogProxy";
@@ -49,24 +50,25 @@ import { dateFormat } from "@/core/global/Functions";
     },
 })
 export default class PlatUsersBackwaterLogHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatUsersBackwaterLogProxy = this.getProxy(PlatUsersBackwaterLogProxy);
+    myProxy: PlatUsersBackwaterLogProxy = this.getProxy(PlatUsersBackwaterLogProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private date = [this.listQuery["created_at-{>=}"], this.listQuery["created_at-{<=}"]];
-    private handlerSearch() {
+    date = [this.listQuery["created_at-{>=}"], this.listQuery["created_at-{<=}"]];
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.listQuery["created_at-{>=}"] = this.date[0];
         this.listQuery["created_at-{<=}"] = this.date[1];
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.date = [dateFormat(new Date(), "yyyy-MM-dd 00:00:00"), dateFormat(new Date(), "yyyy-MM-dd 23:59:59")];
         this.myProxy.resetListQuery();
     }

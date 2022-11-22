@@ -34,4 +34,3 @@ facade.registerCommand(HttpType.admin_plats_notice_store, cmd_admin_plats_notice
 facade.registerCommand(HttpType.admin_plats_notice_update, cmd_admin_plats_notice_update);
 facade.registerCommand(HttpType.admin_plats_notice_show, cmd_admin_plats_notice_show);
 facade.registerCommand(HttpType.admin_resource_upload, cmd_admin_resource_upload);
-

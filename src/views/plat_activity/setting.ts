@@ -50,4 +50,3 @@ facade.registerCommand(HttpType.admin_plat_activity_model_index, cmd_admin_plat_
 facade.registerCommand(HttpType.admin_plat_activity_rule_index, cmd_admin_plat_activity_rule_index);
 facade.registerCommand(HttpType.admin_plat_activity_model_show, cmd_admin_plat_activity_model_show);
 facade.registerCommand(HttpType.admin_resource_upload, cmd_admin_resource_upload);
-

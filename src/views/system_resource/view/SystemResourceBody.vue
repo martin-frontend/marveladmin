@@ -23,20 +23,20 @@
             <el-table-column :label="tableColumns['url'].name" prop="url" class-name="status-col">
                 <template slot-scope="{ row }"> {{ formatImageUrl(row.url) }} </template>
             </el-table-column>
-            <el-table-column :label="$t('vendor_product.label1')" class-name="status-col">
+            <el-table-column :label="LangUtil('缩略图')" class-name="status-col">
                 <template slot-scope="{ row }">
                     <img style="width: 80px" @click="showPic(row.url)" :src="formatImageUrl(row.url)" width="100%"
                 /></template>
             </el-table-column>
 
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="180px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="180px">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
                         v-if="checkUnique(unique.system_resource_delete)"
                         type="primary"
                         @click="handlerDelete(row)"
-                        >{{ $t("common.delete") }}</el-button
+                        >{{ LangUtil("删除") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -45,6 +45,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -60,44 +61,45 @@ import { formatImageUrl } from "@/core/global/Functions";
     },
 })
 export default class SystemResourceBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: SystemResourceProxy = this.getProxy(SystemResourceProxy);
+    myProxy: SystemResourceProxy = this.getProxy(SystemResourceProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
     // 图片地址转换
-    private formatImageUrl = formatImageUrl;
+    formatImageUrl = formatImageUrl;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
 
-    private handelSelectionChange(selectItems: any) {
+    handelSelectionChange(selectItems: any) {
         this.myProxy.imgBatchDialogData.deleteItems = selectItems;
     }
 
-    private checkSelectable(row: any, index: number) {
+    checkSelectable(row: any, index: number) {
         return !(row.is_delete == 1);
     }
 
-    private showPic(url: string) {
+    showPic(url: string) {
         GlobalVar.preview_image.url = url;
     }
 }

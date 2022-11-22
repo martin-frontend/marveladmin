@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/statistic_bet_plat_days/setting";
 import { Message } from "element-ui";
 import StatisticBetPlatDaysProxy from "../proxy/StatisticBetPlatDaysProxy";
 
-interface IStatisticBetPlatDays extends IEventDispatcher {
-
-}
+interface IStatisticBetPlatDays extends IEventDispatcher {}
 
 export default class StatisticBetPlatDaysMediator extends AbstractMediator {
     private myProxy: StatisticBetPlatDaysProxy = <any>this.getProxy(StatisticBetPlatDaysProxy);
@@ -25,11 +23,7 @@ export default class StatisticBetPlatDaysMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_statistic_bet_plat_days_table_columns,
-            EventType.admin_statistic_bet_plat_days_index,
-
-        ];
+        return [EventType.admin_statistic_bet_plat_days_table_columns, EventType.admin_statistic_bet_plat_days_index];
     }
 
     handleNotification(notification: puremvc.INotification) {
@@ -43,8 +37,7 @@ export default class StatisticBetPlatDaysMediator extends AbstractMediator {
             case EventType.admin_statistic_bet_plat_days_index:
                 if (myProxy.tableData.isExportExcel) {
                     myProxy.exportExcel(body);
-                }
-                else {
+                } else {
                     myProxy.setTableData(body);
                 }
                 break;

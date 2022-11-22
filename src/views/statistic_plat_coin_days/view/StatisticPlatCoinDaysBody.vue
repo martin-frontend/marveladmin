@@ -23,8 +23,8 @@
             <el-table-column :label="tableColumns['plat_id'].name" align="center" min-width="130px">
                 <template slot-scope="{ row }">
                     <div>
-                        <div v-if="row.plat_id === '合计' || row.plat_id === $t('common.total')">
-                            {{ $t("common.total") }}
+                        <div v-if="row.plat_id === '合计' || row.plat_id === LangUtil('合计')">
+                            {{ LangUtil("合计") }}
                         </div>
                         <div v-else>
                             <div>{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
@@ -160,6 +160,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -176,33 +177,34 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
     },
 })
 export default class StatisticPlatCoinDaysBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: StatisticPlatCoinDaysProxy = this.getProxy(StatisticPlatCoinDaysProxy);
+    myProxy: StatisticPlatCoinDaysProxy = this.getProxy(StatisticPlatCoinDaysProxy);
     // proxy property
     get tableColumns() {
         return this.myProxy.tableData.columns;
     }
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
     @Watch("myProxy.tableData.updateNum")
-    private reload() {
+    reload() {
         this.$forceUpdate();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
     // 合并行
-    private mergeRowMethod(options: { row: any; column: any; rowIndex: any; columnIndex: any }) {
+    mergeRowMethod(options: { row: any; column: any; rowIndex: any; columnIndex: any }) {
         const { columnIndex, row, rowIndex } = options;
 
         // columnIndex 代表列数，从0开始计数,我们要合并的字段属于第一列，取0

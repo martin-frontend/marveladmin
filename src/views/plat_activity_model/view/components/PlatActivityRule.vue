@@ -4,17 +4,17 @@
             <el-row type="flex" justify="start" align="middle" :gutter="24">
                 <el-col :span="4">
                     <el-button size="mini" icon="el-icon-delete" @click="onDelRule(index)">{{
-                        $t("plat_activity_model.deleteRule")
+                        LangUtil("刪除规则")
                     }}</el-button>
                 </el-col>
                 <el-col :span="2" class="vi_div">
                     <div>ID: {{ index + 1 }}</div>
                 </el-col>
                 <el-col :span="7" class="vi_div">
-                    <el-input size="small" v-model="item.name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                    <el-input size="small" v-model="item.name" :placeholder="LangUtil('请输入')"></el-input>
                 </el-col>
                 <el-col :span="spanWidth" class="vi_div">
-                    <el-select v-model="item.open_mode" filterable :placeholder="$t('common.pleaseChoose')">
+                    <el-select v-model="item.open_mode" filterable :placeholder="LangUtil('请选择')">
                         <el-option
                             v-for="(value, key) in tableColumns['open_mode'].options"
                             :key="key"
@@ -25,11 +25,7 @@
                 </el-col>
 
                 <el-col :span="8" class="vi_div">
-                    <el-select
-                        v-model="item.run_type"
-                        filterable
-                        :placeholder="$t('plat_activity_model.settleFrequency')"
-                    >
+                    <el-select v-model="item.run_type" filterable :placeholder="LangUtil('选择结算次数')">
                         <el-option
                             v-for="(value, key) in runTypeOptions"
                             :key="key"
@@ -39,15 +35,11 @@
                     </el-select>
                 </el-col>
                 <el-col :span="10" class="vi_div">
-                    <el-input
-                        size="small"
-                        v-model="item.icon"
-                        :placeholder="$t('plat_activity_model.requireIconName')"
-                    ></el-input>
+                    <el-input size="small" v-model="item.icon" :placeholder="LangUtil('请输入图标名称')"></el-input>
                 </el-col>
                 <el-col :span="6" class="vi_div">
                     <el-button size="mini" icon="el-icon-circle-plus-outline" @click="onAddSecondLevel(index)"
-                        >{{ $t("plat_activity_model.addRewardLogic") }}
+                        >{{ LangUtil("新增奖励逻辑") }}
                     </el-button>
                 </el-col>
             </el-row>
@@ -58,15 +50,11 @@
                         <div>ID: {{ secondIndex + 1 }}</div>
                     </el-col>
                     <el-col :span="10">
-                        <el-input
-                            size="small"
-                            v-model="rule.name"
-                            :placeholder="$t('plat_activity_model.ruleName')"
-                        ></el-input>
+                        <el-input size="small" v-model="rule.name" :placeholder="LangUtil('请输入规则名称')"></el-input>
                     </el-col>
                     <el-col :span="4">
                         <el-button size="mini" icon="el-icon-delete" @click="onDelSecondLevel(index, secondIndex)"
-                            >{{ $t("common.delete") }}
+                            >{{ LangUtil("删除") }}
                         </el-button>
                     </el-col>
                 </el-row>
@@ -77,14 +65,14 @@
                                 size="mini"
                                 icon="el-icon-delete"
                                 @click="onDelThirdLevel(index, secondIndex, thirdIndex)"
-                                >{{ $t("common.delete") }}
+                                >{{ LangUtil("删除") }}
                             </el-button>
                         </el-col>
                         <el-col :span="6">
                             <el-select
                                 v-model="childRule.type"
                                 filterable
-                                :placeholder="$t('common.pleaseChoose')"
+                                :placeholder="LangUtil('请选择')"
                                 @change="onTypeChange(childRule)"
                             >
                                 <el-option
@@ -99,7 +87,7 @@
                             <el-select
                                 v-model="childRule.rule_id"
                                 filterable
-                                :placeholder="$t('common.pleaseChoose')"
+                                :placeholder="LangUtil('请选择')"
                                 @change="onRuleIdChange(childRule)"
                             >
                                 <el-option
@@ -115,7 +103,7 @@
                                 size="small"
                                 v-if="childRule.params_type == '1'"
                                 v-model="childRule.params"
-                                :placeholder="$t('common.pleaseEnter')"
+                                :placeholder="LangUtil('请输入')"
                             ></el-input>
                             <el-radio-group v-model="childRule.params" v-if="childRule.params_type == '2'">
                                 <el-radio v-for="(value, key) in boolOptions" :key="key" :label="Number(key)">
@@ -136,7 +124,7 @@
                         size="mini"
                         icon="el-icon-circle-plus-outline"
                         @click="onAddThirdLevel(index, secondIndex)"
-                        >{{ $t("plat_activity_model.addCondition") }}
+                        >{{ LangUtil("添加条件") }}
                     </el-button>
                 </div>
             </div>
@@ -144,6 +132,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
 import PlatActivityModelProxy from "@/views/plat_activity_model/proxy/PlatActivityModelProxy";
@@ -151,10 +140,11 @@ import Cookies from "js-cookie";
 
 @Component
 export default class PlatActivityRule extends AbstractView {
+    LangUtil = LangUtil;
     // proxy
-    private myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
+    myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
 
     get form() {
         return this.myProxy.dialogData.form;
@@ -168,23 +158,23 @@ export default class PlatActivityRule extends AbstractView {
         return _w;
     }
 
-    private runTypeOptions: any = {
-        "1": this.$t("plat_activity_model.multipleSettle"),
-        "2": this.$t("plat_activity_model.onceSettle"),
+    runTypeOptions: any = {
+        "1": this.LangUtil("多次结算"),
+        "2": this.LangUtil("单次结算"),
     };
-    private typeOptions: any = {
-        "1": this.$t("common.condition"),
-        "21": this.$t("common.consume"),
-        "61": this.$t("common.reward"),
-        "71": this.$t("common.probabilityPot"),
+    typeOptions: any = {
+        "1": this.LangUtil("条件"),
+        "21": this.LangUtil("消耗"),
+        "61": this.LangUtil("奖励"),
+        "71": this.LangUtil("概率奖池"),
     };
-    private paramsTypeOptions: any = {
-        "1": this.$t("plat_activity_model.number"),
-        "2": this.$t("plat_activity_model.bool"),
+    paramsTypeOptions: any = {
+        "1": this.LangUtil("数值"),
+        "2": this.LangUtil("布林值"),
     };
-    private boolOptions: any = {
-        0: this.$t("common.no"),
-        1: this.$t("common.yes"),
+    boolOptions: any = {
+        0: this.LangUtil("否"),
+        1: this.LangUtil("是"),
     };
 
     mounted() {
@@ -193,10 +183,10 @@ export default class PlatActivityRule extends AbstractView {
         });
     }
 
-    private onDelRule(index: number) {
+    onDelRule(index: number) {
         this.form.rules.splice(index, 1);
     }
-    private onAddSecondLevel(index: number) {
+    onAddSecondLevel(index: number) {
         this.form.rules[index].list.push({
             name: "", //子规则名称
             list: [JSON.parse(JSON.stringify(this.myProxy.conditionRule))],
@@ -213,22 +203,22 @@ export default class PlatActivityRule extends AbstractView {
         this.form.rules[index].list[secondIndex].list.splice(thirdIndex, 1);
     }
 
-    private onTypeChange(childRule: any) {
+    onTypeChange(childRule: any) {
         const list = this.myProxy.activityRuleList.filter((item: any) => item.type == childRule.type);
         if (!list || list.length === 0) return;
         childRule.rule_id = list[0].id.toString();
         childRule.params_type = list[0].params_type;
     }
-    private onRuleIdChange(childRule: any) {
+    onRuleIdChange(childRule: any) {
         const list = this.myProxy.activityRuleList.filter((item: any) => item.id == childRule.rule_id);
         if (!list || list.length === 0) return;
         childRule.params_type = list[0].params_type;
     }
-    private getRulesByType(type: any) {
+    getRulesByType(type: any) {
         return this.myProxy.activityRuleList.filter((item: any) => item.type == type);
     }
 
-    private getRuleDes(rule: any) {
+    getRuleDes(rule: any) {
         let result: any = "";
         if (this.myProxy.activityRuleList.length === 0) return result;
         this.myProxy.activityRuleList.find((item: any) => {

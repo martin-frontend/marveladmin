@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/system_sms_area_code/setting";
 import { Message } from "element-ui";
 import SystemSmsAreaCodeProxy from "../proxy/SystemSmsAreaCodeProxy";
 
-interface ISystemSmsAreaCode extends IEventDispatcher {
-
-}
+interface ISystemSmsAreaCode extends IEventDispatcher {}
 
 export default class SystemSmsAreaCodeMediator extends AbstractMediator {
     private myProxy: SystemSmsAreaCodeProxy = <any>this.getProxy(SystemSmsAreaCodeProxy);
@@ -30,7 +28,6 @@ export default class SystemSmsAreaCodeMediator extends AbstractMediator {
             EventType.admin_system_sms_area_code_index,
             EventType.admin_system_sms_area_code_store,
             EventType.admin_system_sms_area_code_update,
-
         ];
     }
 

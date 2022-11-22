@@ -33,9 +33,11 @@ export var EventType = {
 const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_exchange_channel_table_columns, cmd_admin_exchange_channel_table_columns);
 facade.registerCommand(HttpType.admin_exchange_channel_index, cmd_admin_exchange_channel_index);
-facade.registerCommand(HttpType.admin_exchange_channel_method_table_columns, cmd_admin_exchange_channel_method_table_columns);
+facade.registerCommand(
+    HttpType.admin_exchange_channel_method_table_columns,
+    cmd_admin_exchange_channel_method_table_columns
+);
 facade.registerCommand(HttpType.admin_exchange_channel_method_show, cmd_admin_exchange_channel_method_show);
 facade.registerCommand(HttpType.admin_exchange_channel_method_store, cmd_admin_exchange_channel_method_store);
 facade.registerCommand(HttpType.admin_exchange_channel_method_index, cmd_admin_exchange_channel_method_index);
 facade.registerCommand(HttpType.admin_exchange_channel_method_update, cmd_admin_exchange_channel_method_update);
-

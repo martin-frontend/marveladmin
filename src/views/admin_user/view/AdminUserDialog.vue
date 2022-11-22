@@ -12,11 +12,11 @@
                 <el-input
                     v-model="form.admin_username"
                     :disabled="isStatusUpdate"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                 ></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['nick_name'].name" prop="nick_name">
-                <el-input v-model="form.nick_name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.nick_name" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns['cate'].name" prop="cate">
@@ -24,7 +24,7 @@
                     v-model="form.cate"
                     clearable
                     class="select"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     @change="form.type = null"
                     :disabled="isStatusUpdate"
                 >
@@ -42,7 +42,7 @@
                     clearable
                     class="select"
                     :disabled="isStatusUpdate"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     @change="form.type != 4 ? (form.role_ids = []) : null"
                 >
                     <template v-if="form.cate">
@@ -61,7 +61,7 @@
                     multiple
                     filterable
                     clearable
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     style="width: 100%"
                     @change="channelListFilter"
                 >
@@ -80,7 +80,7 @@
                     v-model="form.channel_ids"
                     multiple
                     clearable
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     style="width: 100%"
                 >
                     <el-option
@@ -103,7 +103,7 @@
                     v-model="form.role_ids"
                     multiple
                     clearable
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     style="width: 100%"
                 >
                     <el-option
@@ -117,22 +117,24 @@
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns['password'].name" prop="password">
-                <el-input show-password v-model="form.password" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input show-password v-model="form.password" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
-            <el-form-item size="mini" :label="$t('admin_user.checkPwd')" prop="password_verify">
-                <el-input
-                    show-password
-                    v-model="form.password_verify"
-                    :placeholder="$t('common.pleaseEnter')"
-                ></el-input>
+            <el-form-item size="mini" :label="LangUtil('确认密码')" prop="password_verify">
+                <el-input show-password v-model="form.password_verify" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" label="">
-                <span>{{ $t("admin_user.pwdRule") }}：~!@#$%^&amp;*()\-_=+{};:&lt;,.&gt;?</span>
+                <span
+                    >{{
+                        LangUtil(
+                            "留空为不修改，8-20位字符，必须为同时包含一个大、小写字母、数字、特殊字符的组合,特殊字符为以下任何一个"
+                        )
+                    }}：~!@#$%^&amp;*()\-_=+{};:&lt;,.&gt;?</span
+                >
             </el-form-item>
             <el-form-item v-if="isStatusUpdate" size="mini" :label="tableColumns['google_key'].name" prop="google_key">
                 <el-input style="width: 80%" v-model="form.google_key"></el-input
                 ><el-button style="margin-left: 10px" type="primary" @click="clearGoogle">{{
-                    $t("admin_user.clear")
+                    LangUtil("清除")
                 }}</el-button>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['status'].name" prop="status">
@@ -148,14 +150,14 @@
                     type="danger"
                     size="mini"
                     @click="handleDelete(form)"
-                    >{{ $t("common.delete") }}</el-button
+                    >{{ LangUtil("删除") }}</el-button
                 >
                 <el-button
                     type="primary"
                     size="mini"
                     @click="isStatusUpdate ? handleUpdate() : handleAdd()"
                     v-if="checkUnique(unique.admin_user_edit)"
-                    >{{ $t("common.save") }}</el-button
+                    >{{ LangUtil("确认保存") }}</el-button
                 >
             </el-form-item>
         </el-form>
@@ -163,6 +165,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import AdminUserProxy from "@/views/admin_user/proxy/AdminUserProxy";
@@ -173,25 +176,26 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class AdminUserDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: AdminUserProxy = this.getProxy(AdminUserProxy);
+    myProxy: AdminUserProxy = this.getProxy(AdminUserProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private channelList = this.myProxy.channelList.list;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    channelList = this.myProxy.channelList.list;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -208,13 +212,13 @@ export default class AdminUserDialog extends AbstractView {
     get rules() {
         const commonRule = {
             admin_username: [{ required: true, validator: this.validateUserName.bind(this), trigger: "blur" }],
-            nick_name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            cate: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            plat_ids: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            role_ids: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            channel_ids: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            status: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            nick_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            cate: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            plat_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            role_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            channel_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            status: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
         return {
             create: Object.assign(commonRule, {
@@ -228,19 +232,19 @@ export default class AdminUserDialog extends AbstractView {
         };
     }
     /**验证用户 */
-    private validateUserName(rule: any, value: any, callback: any) {
+    validateUserName(rule: any, value: any, callback: any) {
         if (value && checkUserName(value)) {
             callback();
         } else {
-            let errorCode: any = this.$t("admin_user.errorCode1");
+            let errorCode: any = this.LangUtil("4-20位字符，字母与数字组合");
             callback(new Error(errorCode));
         }
     }
     /**验证密码 */
-    private validatePass(rule: any, value: any, callback: any) {
+    validatePass(rule: any, value: any, callback: any) {
         const myForm = this.myProxy.dialogData.form;
         if (!myForm.admin_user_id && value === "") {
-            let errorCode: any = this.$t("login.password");
+            let errorCode: any = this.LangUtil("请输入密码");
             callback(new Error(errorCode));
         } else {
             if ((myForm.admin_user_id && value === "") || checkUserPassword(value)) {
@@ -249,31 +253,31 @@ export default class AdminUserDialog extends AbstractView {
                 }
                 callback();
             } else {
-                let error: any = this.$t("admin_user.errorCode2");
+                let error: any = this.LangUtil("8-20位字符，必须为同时包含一个大、小写字母、数字、特殊字符的组合");
                 callback(new Error(error));
             }
         }
     }
     /**验证确认密码 */
-    private validatePass2(rule: any, value: any, callback: any) {
+    validatePass2(rule: any, value: any, callback: any) {
         const staus = this.myProxy.dialogData.status;
         const myForm = this.myProxy.dialogData.form;
         if (staus == DialogStatus.create && value === "") {
-            let error: any = this.$t("admin_user.errorCode3");
+            let error: any = this.LangUtil("请再次输入密码");
             callback(new Error(error));
         } else if (value !== myForm.password) {
-            let error: any = this.$t("admin_user.errorCode4");
+            let error: any = this.LangUtil("两次输入密码不一致!");
             callback(new Error(error));
         } else {
             callback();
         }
     }
 
-    private clearGoogle() {
+    clearGoogle() {
         this.form.google_key = "";
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -281,7 +285,7 @@ export default class AdminUserDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -289,12 +293,12 @@ export default class AdminUserDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.admin_user_id);
     }
 
     // 筛选渠道
-    private channelListFilter() {
+    channelListFilter() {
         this.myProxy.channelListFilter();
     }
 }

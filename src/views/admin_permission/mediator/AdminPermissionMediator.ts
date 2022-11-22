@@ -9,7 +9,6 @@ interface IAdminPermission extends IEventDispatcher {
 }
 
 export default class AdminPermissionMediator extends AbstractMediator {
-
     onRegister() {
         this.sendNotification(HttpType.admin_admin_permission_table_columns);
         this.sendNotification(HttpType.admin_admin_permission_index);
@@ -52,7 +51,6 @@ export default class AdminPermissionMediator extends AbstractMediator {
             EventType.admin_admin_permission_show,
             EventType.admin_admin_permission_store,
             EventType.admin_admin_permission_update,
-
         ];
     }
 
@@ -77,7 +75,6 @@ export default class AdminPermissionMediator extends AbstractMediator {
                 this.sendNotification(HttpType.admin_admin_permission_index);
                 // this.sendNotification(HttpType.admin_admin_permission_show, {permission_id: body});
                 break;
-
         }
     }
 }

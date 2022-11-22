@@ -1,7 +1,7 @@
 <template>
     <div class="content">
-        <StatisticBetPlatDaysHeader/>
-        <StatisticBetPlatDaysBody/>
+        <StatisticBetPlatDaysHeader />
+        <StatisticBetPlatDaysBody />
     </div>
 </template>
 
@@ -17,10 +17,9 @@ import StatisticBetPlatDaysBody from "./StatisticBetPlatDaysBody.vue";
     components: {
         StatisticBetPlatDaysHeader,
         StatisticBetPlatDaysBody,
-    }
+    },
 })
 export default class StatisticBetPlatDays extends AbstractView {
-
     constructor() {
         super(StatisticBetPlatDaysMediator);
     }

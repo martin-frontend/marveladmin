@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -32,11 +33,11 @@ export default class PlatServiceProxy extends AbstractProxy implements IPlatServ
             name: { name: "", options: {} },
             content: { name: "", options: {} },
             index_no: { name: "", options: {} },
-            module: {name: "", options: {}},
+            module: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
-        isResort: false,    // 是否重新排序
+        isResort: false, // 是否重新排序
     };
     /**查询条件 */
     listQuery = {
@@ -53,7 +54,7 @@ export default class PlatServiceProxy extends AbstractProxy implements IPlatServ
             plat_id: 0,
             name: "",
             content: "",
-            module: ""
+            module: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -106,7 +107,7 @@ export default class PlatServiceProxy extends AbstractProxy implements IPlatServ
             id: "",
             plat_id: 0,
             name: "",
-            content: ""
+            content: "",
         });
     }
 
@@ -116,17 +117,12 @@ export default class PlatServiceProxy extends AbstractProxy implements IPlatServ
     }
     /**添加数据 */
     onAdd() {
-        const {
-            plat_id,
-            name,
-            content,
-            module
-        } = this.dialogData.form;
+        const { plat_id, name, content, module } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
             name,
             content,
-            module
+            module,
         };
         this.sendNotification(HttpType.admin_plats_fag_store, objectRemoveNull(formCopy));
     }
@@ -147,15 +143,15 @@ export default class PlatServiceProxy extends AbstractProxy implements IPlatServ
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_plats_fag_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
     /**还原默认配置 */
     reSync() {

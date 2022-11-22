@@ -27,7 +27,7 @@
                 min-width="90px"
             ></el-table-column>
             <el-table-column
-                :label="`${tableColumns.group_users.name}` + '(' + $t('common.create') + ')'"
+                :label="`${tableColumns.group_users.name}` + '(' + LangUtil('新增') + ')'"
                 prop="group_users"
                 class-name="status-col"
                 min-width="80px"
@@ -56,7 +56,7 @@
                                     >{{ row.water_info[2].commission_num }}</span
                                 >
                                 <span v-if="row.water_info[2].is_promotion_floor == 1" class="red_text"
-                                    >({{ $t("user_detail.keep") }})</span
+                                    >({{ LangUtil("保") }})</span
                                 >
                             </p>
                         </span>
@@ -86,7 +86,7 @@
                                     >{{ row.water_info[4].commission_num }}</span
                                 >
                                 <span v-if="row.water_info[4].is_promotion_floor == 1" class="red_text"
-                                    >({{ $t("user_detail.keep") }})</span
+                                    >({{ LangUtil("保") }})</span
                                 >
                             </p>
                         </span>
@@ -116,7 +116,7 @@
                                     >{{ row.water_info[8].commission_num }}</span
                                 >
                                 <span v-if="row.water_info[8].is_promotion_floor == 1" class="red_text"
-                                    >({{ $t("user_detail.keep") }})</span
+                                    >({{ LangUtil("保") }})</span
                                 >
                             </p>
                         </span>
@@ -146,7 +146,7 @@
                                     >{{ row.water_info[16].commission_num }}</span
                                 >
                                 <span v-if="row.water_info[16].is_promotion_floor == 1" class="red_text"
-                                    >({{ $t("user_detail.keep") }})</span
+                                    >({{ LangUtil("保") }})</span
                                 >
                             </p>
                         </span>
@@ -176,7 +176,7 @@
                                     >{{ row.water_info[32].commission_num }}</span
                                 >
                                 <span v-if="row.water_info[32].is_promotion_floor == 1" class="red_text"
-                                    >({{ $t("user_detail.keep") }})</span
+                                    >({{ LangUtil("保") }})</span
                                 >
                             </p>
                         </span>
@@ -206,7 +206,7 @@
                                     >{{ row.water_info[64].commission_num }}</span
                                 >
                                 <span v-if="row.water_info[64].is_promotion_floor == 1" class="red_text"
-                                    >({{ $t("user_detail.keep") }})</span
+                                    >({{ LangUtil("保") }})</span
                                 >
                             </p>
                         </span>
@@ -242,7 +242,7 @@
                                     >{{ row.water_info[128].commission_num }}</span
                                 >
                                 <span v-if="row.water_info[128].is_promotion_floor == 1" class="red_text"
-                                    >({{ $t("user_detail.keep") }})</span
+                                    >({{ LangUtil("保") }})</span
                                 >
                             </p>
                         </span>
@@ -255,6 +255,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -270,29 +271,30 @@ import Pagination from "@/components/Pagination.vue";
     },
 })
 export default class DirectWater extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabCommissionProxy = getProxy(TabCommissionProxy);
+    myProxy: TabCommissionProxy = getProxy(TabCommissionProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns.directs_water;
-    private tableData = this.myProxy.dialogData.directData.tableData.list;
-    private listQuery = this.myProxy.dialogData.directData.listQuery;
-    private pageInfo = this.myProxy.dialogData.directData.tableData.pageInfo;
+    tableColumns = this.myProxy.tableData.columns.directs_water;
+    tableData = this.myProxy.dialogData.directData.tableData.list;
+    listQuery = this.myProxy.dialogData.directData.listQuery;
+    pageInfo = this.myProxy.dialogData.directData.tableData.pageInfo;
     get options() {
         return this.tableColumns.water_info.vendor_type.options;
     }
 
-    private checkNumber(num: number) {
+    checkNumber(num: number) {
         if (num > 0) {
             return "color:green";
         }
     }
     // 排序
-    private tableSortChange(column: any) {
+    tableSortChange(column: any) {
         let order_by = "";
         if (column.order === "descending") {
             order_by = "DESC";
@@ -310,7 +312,7 @@ export default class DirectWater extends AbstractView {
         this.myProxy.getDirectWater();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.getDirectWater();
     }

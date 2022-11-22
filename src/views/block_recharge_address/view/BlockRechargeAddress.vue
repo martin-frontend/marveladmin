@@ -1,8 +1,8 @@
 <template>
     <div class="content">
         <!-- <BlockRechargeAddressDialog v-if="myProxy.dialogData.bShow"/> -->
-        <BlockRechargeAddressHeader/>
-        <BlockRechargeAddressBody/>
+        <BlockRechargeAddressHeader />
+        <BlockRechargeAddressBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import BlockRechargeAddressBody from "./BlockRechargeAddressBody.vue";
         // BlockRechargeAddressDialog,
         BlockRechargeAddressHeader,
         BlockRechargeAddressBody,
-    }
+    },
 })
 export default class BlockRechargeAddress extends AbstractView {
-
     constructor() {
         super(BlockRechargeAddressMediator);
     }

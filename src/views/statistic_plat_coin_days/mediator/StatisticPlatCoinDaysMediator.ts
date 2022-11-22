@@ -3,9 +3,7 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/statistic_plat_coin_days/setting";
 import StatisticPlatCoinDaysProxy from "../proxy/StatisticPlatCoinDaysProxy";
 
-interface IStatisticPlatCoinDays extends IEventDispatcher {
-
-}
+interface IStatisticPlatCoinDays extends IEventDispatcher {}
 
 export default class StatisticPlatCoinDaysMediator extends AbstractMediator {
     private myProxy: StatisticPlatCoinDaysProxy = <any>this.getProxy(StatisticPlatCoinDaysProxy);
@@ -23,11 +21,7 @@ export default class StatisticPlatCoinDaysMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_statistic_plat_coin_days_table_columns,
-            EventType.admin_statistic_plat_coin_days_index,
-
-        ];
+        return [EventType.admin_statistic_plat_coin_days_table_columns, EventType.admin_statistic_plat_coin_days_index];
     }
 
     handleNotification(notification: puremvc.INotification) {
@@ -45,7 +39,6 @@ export default class StatisticPlatCoinDaysMediator extends AbstractMediator {
                     myProxy.setTableData(body);
                 }
                 break;
-
         }
     }
 }

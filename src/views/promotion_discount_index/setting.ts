@@ -23,7 +23,12 @@ export var EventType = {
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_plat_users_bet_table_columns, cmd_admin_plat_users_bet_table_columns);
-facade.registerCommand(HttpType.admin_plat_users_bet_promotion_discount_index, cmd_admin_plat_users_bet_promotion_discount_index);
-facade.registerCommand(HttpType.admin_plat_users_bet_promotion_discount_recover, cmd_admin_plat_users_bet_promotion_discount_recover);
+facade.registerCommand(
+    HttpType.admin_plat_users_bet_promotion_discount_index,
+    cmd_admin_plat_users_bet_promotion_discount_index
+);
+facade.registerCommand(
+    HttpType.admin_plat_users_bet_promotion_discount_recover,
+    cmd_admin_plat_users_bet_promotion_discount_recover
+);
 facade.registerCommand(HttpType.admin_plat_users_bet_store_fake_bet, cmd_admin_plat_users_bet_store_fake_bet);
-

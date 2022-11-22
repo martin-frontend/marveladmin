@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/coin_receive_recharge_order/setting
 import { Message } from "element-ui";
 import CoinReceiveRechargeOrderProxy from "../proxy/CoinReceiveRechargeOrderProxy";
 
-interface ICoinReceiveRechargeOrder extends IEventDispatcher {
-
-}
+interface ICoinReceiveRechargeOrder extends IEventDispatcher {}
 
 export default class CoinReceiveRechargeOrderMediator extends AbstractMediator {
     private myProxy: CoinReceiveRechargeOrderProxy = <any>this.getProxy(CoinReceiveRechargeOrderProxy);
@@ -32,12 +30,13 @@ export default class CoinReceiveRechargeOrderMediator extends AbstractMediator {
             EventType.admin_coin_receive_recharge_order_close,
             EventType.admin_coin_receive_recharge_order_confirm,
             EventType.admin_coin_wallet_wallet,
-
         ];
     }
 
     handleNotification(notification: puremvc.INotification) {
-        const myProxy: CoinReceiveRechargeOrderProxy = <any>this.facade.retrieveProxy(CoinReceiveRechargeOrderProxy.NAME);
+        const myProxy: CoinReceiveRechargeOrderProxy = <any>(
+            this.facade.retrieveProxy(CoinReceiveRechargeOrderProxy.NAME)
+        );
         const myView: ICoinReceiveRechargeOrder = this.viewComponent;
         const body = notification.getBody();
         switch (notification.getName()) {
@@ -66,7 +65,6 @@ export default class CoinReceiveRechargeOrderMediator extends AbstractMediator {
             case EventType.admin_coin_wallet_wallet:
                 myProxy.coinWallet = body;
                 break;
-
         }
     }
 }

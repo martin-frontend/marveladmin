@@ -46,13 +46,16 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
+                    LangUtil("确认保存")
+                }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import ExchangeChannelProxy from "@/views/exchange_channel/proxy/ExchangeChannelProxy";
@@ -63,24 +66,25 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class ExchangeChannelDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: ExchangeChannelProxy = this.getProxy(ExchangeChannelProxy);
+    myProxy: ExchangeChannelProxy = this.getProxy(ExchangeChannelProxy);
     // proxy property
-    private tableColumns = this.myProxy.payMethodDialogData.columns;
-    private form = this.myProxy.payMethodDialogData.form;
+    tableColumns = this.myProxy.payMethodDialogData.columns;
+    form = this.myProxy.payMethodDialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -98,7 +102,7 @@ export default class ExchangeChannelDialog extends AbstractView {
         return {};
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAddPayMethod();
@@ -106,7 +110,7 @@ export default class ExchangeChannelDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdatePayMethod();

@@ -14,7 +14,7 @@
             <el-form-item>
                 <el-col :span="12" class="lineheight">
                     <div v-if="!isShowBackWaterModel" style="color: #F56C6C">
-                        {{ $t("plat_backwater.tableString") }}
+                        {{ LangUtil("实时返水未开启，请联系管理员开启") }}
                     </div>
                     <div v-else>
                         <div style="fontSize: 15px;color:#606266">{{ backWaterModel.name }}</div>
@@ -25,17 +25,17 @@
                     <el-row type="flex" justify="end">
                         <div v-if="backWaterModel.name">
                             <el-button type="primary" v-show="myProxy.backWaterData.isEdit" @click="handlerInitModel">{{
-                                $t("common.initTemplate")
+                                LangUtil("初始化系统模板")
                             }}</el-button>
                             <el-button
                                 type="primary"
                                 v-if="checkUnique(unique.plat_backwater_update)"
                                 v-show="myProxy.backWaterData.isEdit"
                                 @click="handlerSave"
-                                >{{ $t("common.save") }}
+                                >{{ LangUtil("确认保存") }}
                             </el-button>
                             <el-button type="primary" @click="onEdit">{{
-                                myProxy.backWaterData.isEdit ? $t("common.unUpdate") : $t("common.update")
+                                myProxy.backWaterData.isEdit ? LangUtil("取消编辑") : LangUtil("编辑")
                             }}</el-button>
                         </div>
                     </el-row>
@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatBackwaterProxy from "../proxy/PlatBackwaterProxy";
@@ -59,14 +60,15 @@ import SearchSelect from "@/components/SearchSelect.vue";
     },
 })
 export default class PlatBackwaterHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatBackwaterProxy = this.getProxy(PlatBackwaterProxy);
+    myProxy: PlatBackwaterProxy = this.getProxy(PlatBackwaterProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
     get backWaterModel() {
         return this.myProxy.backWaterData.backWaterModeDesc;
@@ -76,17 +78,17 @@ export default class PlatBackwaterHeader extends AbstractView {
         return Object.keys(this.myProxy.backWaterData.backWaterModeDesc).length > 0 ? true : false;
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.myProxy.onQuery();
     }
 
-    private handlerInitModel() {
+    handlerInitModel() {
         this.myProxy.onInitModel();
     }
-    private handlerSave() {
+    handlerSave() {
         this.myProxy.onUpdate();
     }
-    private onEdit() {
+    onEdit() {
         this.myProxy.onEdit();
     }
 }

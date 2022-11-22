@@ -4,15 +4,13 @@
             <div class="interval search_style">
                 <div class="auto-review" v-show="showButton">
                     <el-button type="warning" v-if="isVerify" @click="handlerAutoCheck">{{
-                        $t("exchange_orders.underReview")
+                        LangUtil("审核中...")
                     }}</el-button>
-                    <el-button v-else type="success" @click="handlerAutoCheck">{{
-                        $t("exchange_orders.autoReview")
-                    }}</el-button>
+                    <el-button v-else type="success" @click="handlerAutoCheck">{{ LangUtil("自动审核") }}</el-button>
                 </div>
                 <SearchSelect
-                    :title="$t('recharge_orders.refreshOrder')"
-                    :tip="$t('common.autoRefreshTip')"
+                    :title="LangUtil('刷新订单')"
+                    :tip="LangUtil('列表在第1页的时候，自动刷新才生效')"
                     v-model="myProxy.IntervalObj.default"
                     :options="myProxy.IntervalObj.options"
                     :clearable="false"
@@ -23,29 +21,29 @@
         </div>
         <div class="table_info">
             <div>
-                <title>{{ $t("common.tableInfoTitle") }}</title>
+                <title>{{ LangUtil("查询汇总") }}</title>
                 <div class="item-group">
-                    <span class="label">{{ $t("exchange_orders.tableInfoTotalGold") }}</span>
+                    <span class="label">{{ LangUtil("兑换总金额") }}</span>
                     <span class="name">{{ message.total_gold }}</span>
                 </div>
                 <div class="item-group">
-                    <span class="label">{{ $t("exchange_orders.tableInfoTotalNum") }}</span>
+                    <span class="label">{{ LangUtil("兑换订单数") }}</span>
                     <span class="name">{{ message.total_num }}</span>
                 </div>
                 <div class="item-group">
-                    <span class="label">{{ $t("exchange_orders.tableInfoSuccessTotalGold") }}</span>
+                    <span class="label">{{ LangUtil("兑换成功金额") }}</span>
                     <span class="name">{{ message.success_total_gold }}</span>
                 </div>
                 <div class="item-group">
-                    <span class="label">{{ $t("exchange_orders.tableInfoSuccessTotalNum") }}</span>
+                    <span class="label">{{ LangUtil("兑换成功订单数") }}</span>
                     <span class="name">{{ message.success_total_num }}</span>
                 </div>
                 <div class="item-group">
-                    <span class="label">{{ $t("exchange_orders.tableInfoTotalUserNum") }}</span>
+                    <span class="label">{{ LangUtil("兑换人数") }}</span>
                     <span class="name">{{ message.total_user_num }}</span>
                 </div>
                 <div class="item-group">
-                    <span class="label">{{ $t("exchange_orders.tableInfoSuccessFee") }}</span>
+                    <span class="label">{{ LangUtil("兑换手续费统计") }}</span>
                     <span class="name">{{ message.success_fee }}</span>
                 </div>
             </div>
@@ -60,13 +58,13 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column :label="$t('common.platMsg')" align="left" min-width="160px">
+            <el-table-column :label="LangUtil('平台信息')" align="left" min-width="160px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns["plat_id"].name }}：{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
                     <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.userMsg')" align="left" min-width="150px">
+            <el-table-column :label="LangUtil('用户信息')" align="left" min-width="150px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
                         {{ tableColumns["user_id"].name }}：{{ row.user_id }}
@@ -94,7 +92,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.exchangeMsg')" min-width="160px" align="center">
+            <el-table-column :label="LangUtil('兑换信息')" min-width="160px" align="center">
                 <template slot-scope="{ row }">
                     <div align="left">
                         <template v-if="row.is_coin_user_order != 1">
@@ -132,14 +130,15 @@
                 <template slot-scope="{ row }">
                     <div align="left">
                         <div>
-                            {{ tableColumns["receive_payment_type"].name
-                            }}：{{ tableColumns["receive_payment_type"].options[row.receive_payment_type] }}
+                            {{ tableColumns["receive_payment_type"].name }}：{{
+                                tableColumns["receive_payment_type"].options[row.receive_payment_type]
+                            }}
                         </div>
                         <span v-html="getAccessInfo(row)"></span>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.orderMsg')" align="left" min-width="160px">
+            <el-table-column :label="LangUtil('订单信息')" align="left" min-width="160px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns["gold"].name }}：{{ row.gold }}</div>
                     <div>{{ tableColumns["fee_rate"].name }}：{{ row.fee_rate }}</div>
@@ -147,7 +146,7 @@
                     <div>{{ tableColumns["money"].name }}：{{ row.money }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.orderTime')" align="left" min-width="150px">
+            <el-table-column :label="LangUtil('订单时间')" align="left" min-width="150px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["created_at"].name }}：<br />{{ row.created_at }}</p>
                     <p>{{ tableColumns["updated_at"].name }}：<br />{{ row.updated_at }}</p>
@@ -172,7 +171,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" :width="width">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" :width="width">
                 <template slot-scope="{ row }">
                     <!--取消派发 -->
                     <div v-if="row.status === 10 && checkUnique(unique.exchange_orders_dispatch_cancel)">
@@ -234,7 +233,7 @@
                         <!--平台币商代付 -->
                         <!-- <div>
                             <el-button class="item" type="primary" size="small" @click="handleDispatch(row)">{{
-                                $t(`exchange_orders.coin_user_pay`)
+                                LangUtil("平台币商代付")
                             }}</el-button>
                         </div> -->
                     </div>
@@ -253,7 +252,7 @@
                     <div
                         v-else-if="
                             row.status === -2 ||
-                            ((row.status == 2 || row.status == 3) && row.paying_status_more_than_30_minutes)
+                                ((row.status == 2 || row.status == 3) && row.paying_status_more_than_30_minutes)
                         "
                     >
                         <!--关闭| 退回金币-->
@@ -287,6 +286,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -307,24 +307,25 @@ import { Dialog } from "element-ui";
     },
 })
 export default class ExchangeOrdersBody extends AbstractView {
+    LangUtil = LangUtil;
     constructor() {
         super(mediator);
     }
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: ExchangeOrdersProxy = this.getProxy(ExchangeOrdersProxy);
-    private autoProxy: ExchangeAutoCheckProxy = this.getProxy(ExchangeAutoCheckProxy);
+    myProxy: ExchangeOrdersProxy = this.getProxy(ExchangeOrdersProxy);
+    autoProxy: ExchangeAutoCheckProxy = this.getProxy(ExchangeAutoCheckProxy);
 
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
-    private ctrlStr: any = this.myProxy.ctrlStr;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
+    ctrlStr: any = this.myProxy.ctrlStr;
 
     get width() {
         let _w: string = "150px";
@@ -359,11 +360,11 @@ export default class ExchangeOrdersBody extends AbstractView {
         return infoStr;
     }
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
         // 如果在自动刷新状态 回到第一页继续
@@ -372,20 +373,17 @@ export default class ExchangeOrdersBody extends AbstractView {
         }
     }
 
-    private handleEdit({ type, row }: any) {
+    handleEdit({ type, row }: any) {
         if (type == "5") {
             this.myProxy.showChangeDialog(row);
             return false;
         }
 
-        let confirmStr: any =
-            type === "4"
-                ? this.$t("exchange_orders.confirmStr1")
-                : this.$t("exchange_orders.confirmStr2", { "0": this.ctrlStr[type] });
+        let confirmStr: any = type === "4" ? this.LangUtil("确定平台已付款给该玩家?") : this.LangUtil("undefined");
         let confitmContent: any = {
-            prompt: this.$t("common.prompt"),
-            confirm: this.$t("common.determine"),
-            cancel: this.$t("common.cancel"),
+            prompt: this.LangUtil("提示"),
+            confirm: this.LangUtil("确定"),
+            cancel: this.LangUtil("取消"),
         };
         this.$confirm(confirmStr, confitmContent.prompt, {
             confirmButtonText: confitmContent.confirm,
@@ -399,7 +397,7 @@ export default class ExchangeOrdersBody extends AbstractView {
     }
 
     //关闭| 退回金币 /关闭| 不退回金币 //冲正
-    private handleEditRemark({ type, row }: any) {
+    handleEditRemark({ type, row }: any) {
         this.myProxy.remarkDialogData.status = DialogStatus.create;
         Object.assign(this.myProxy.remarkDialogData.form, {
             id: row.id,
@@ -410,7 +408,7 @@ export default class ExchangeOrdersBody extends AbstractView {
         this.myProxy.showRemarkDialog();
     }
     /**编辑备注 */
-    private handerEditRemark(row: any) {
+    handerEditRemark(row: any) {
         this.myProxy.remarkDialogData.status = DialogStatus.update;
         Object.assign(this.myProxy.remarkDialogData.form, {
             id: row.id,
@@ -421,32 +419,32 @@ export default class ExchangeOrdersBody extends AbstractView {
         this.myProxy.showRemarkDialog();
     }
     // 自动刷新
-    private handlerAutoReload(o: any) {
+    handlerAutoReload(o: any) {
         this.myProxy.IntervalObj.default = o;
         this.myProxy.autoReload();
     }
 
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.dispatchEvent("showUserDetail", user_id);
     }
 
     // 自动审核
-    private handlerAutoCheck() {
+    handlerAutoCheck() {
         this.myProxy.listQuery.plat_id === "0" ? "" : this.myProxy.listQuery.plat_id;
         this.autoProxy.autoCheckDialog.form.plat_id = this.myProxy.listQuery.plat_id;
         this.autoProxy.onShowAutoCheckDialog();
     }
 
     //派发
-    private handleDispatch(row: any) {
+    handleDispatch(row: any) {
         this.myProxy.dispatchDialogData.form.type = 1;
         this.myProxy.dispatchDialogData.form.id = row.id;
         this.myProxy.dispatchDialogData.form.plat_id = row.plat_id;
         this.myProxy.showDispatchDialog();
     }
     //取消派发
-    private handleDispatchCancel(id: string) {
+    handleDispatchCancel(id: string) {
         this.myProxy.dispatchDialogData.form.id = id;
         this.myProxy.onDispatchCancel();
     }

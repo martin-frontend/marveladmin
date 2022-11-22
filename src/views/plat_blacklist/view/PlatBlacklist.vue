@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatBlacklistDialog/>
-        <PlatBlacklistHeader/>
-        <PlatBlacklistBody/>
+        <PlatBlacklistDialog />
+        <PlatBlacklistHeader />
+        <PlatBlacklistBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import PlatBlacklistBody from "./PlatBlacklistBody.vue";
         PlatBlacklistDialog,
         PlatBlacklistHeader,
         PlatBlacklistBody,
-    }
+    },
 })
 export default class PlatBlacklist extends AbstractView {
-
     constructor() {
         super(PlatBlacklistMediator);
     }

@@ -67,23 +67,23 @@
                     }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.sort')" class-name="status-col" width="280px">
+            <el-table-column :label="LangUtil('排序')" class-name="status-col" width="280px">
                 <template slot-scope="{ row }">
                     <div>
                         <el-button size="mini" @click="handlerSort(row, 2)">
-                            {{ $t("common.setTop") }}
+                            {{ LangUtil("置顶") }}
                         </el-button>
                         <el-button size="mini" @click="handlerSort(row, 1)">
-                            {{ $t("common.setBottom") }}
+                            {{ LangUtil("置底") }}
                         </el-button>
                         <el-button size="mini" icon="el-icon-top" @click="handlerSort(row, 3)"></el-button>
                         <el-button size="mini" icon="el-icon-bottom" @click="handlerSort(row, 4)"></el-button>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="90px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
+                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ LangUtil("编辑") }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -91,6 +91,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -105,6 +106,7 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatBlockCoinsBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
@@ -132,7 +134,7 @@ export default class PlatBlockCoinsBody extends AbstractView {
     }
 
     /**排序 */
-    private handlerSort(row: any, opt: any) {
+    handlerSort(row: any, opt: any) {
         this.myProxy.sortData.id = row.id;
         this.myProxy.sortData.opt = opt;
         this.myProxy.onSort();

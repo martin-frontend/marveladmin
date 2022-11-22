@@ -19,7 +19,7 @@ import LobbyVendorProductsDialog from "./LobbyVendorProductsDialog.vue";
     components: {
         LobbyVendorProductsHeader,
         LobbyVendorProductsBody,
-        LobbyVendorProductsDialog
+        LobbyVendorProductsDialog,
     },
 })
 export default class LobbyVendorProducts extends AbstractView {

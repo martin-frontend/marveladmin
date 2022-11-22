@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -60,14 +61,14 @@ export default class PlatMarqueeProxy extends AbstractProxy implements IPlatMarq
             status: StatusType.disactivated,
         },
         formSource: null, // 表单的原始数据
-        contetnMaxLength: 100    // 内容长度限制
+        contetnMaxLength: 100, // 内容长度限制
     };
 
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
         this.tableData.columns.platAll = JSON.parse(JSON.stringify(this.tableData.columns.plat_id));
-        this.tableData.columns.platAll.options["0"] = <string> i18n.t("recharge_channels.allPlat");
+        this.tableData.columns.platAll.options["0"] = <string>LangUtil("全部平台");
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
@@ -123,7 +124,7 @@ export default class PlatMarqueeProxy extends AbstractProxy implements IPlatMarq
             start_time: "",
             app_types: [],
             content: "",
-            status: StatusType.disactivated
+            status: StatusType.disactivated,
         });
     }
 
@@ -137,15 +138,7 @@ export default class PlatMarqueeProxy extends AbstractProxy implements IPlatMarq
     }
     /**添加数据 */
     onAdd() {
-        const {
-            id,
-            plat_id,
-            type,
-            start_time,
-            app_types,
-            content,
-            status
-        } = this.dialogData.form;
+        const { id, plat_id, type, start_time, app_types, content, status } = this.dialogData.form;
         const formCopy: any = {
             id,
             plat_id,
@@ -153,7 +146,7 @@ export default class PlatMarqueeProxy extends AbstractProxy implements IPlatMarq
             start_time,
             app_types,
             content,
-            status
+            status,
         };
         formCopy.app_types = JSON.stringify(formCopy.app_types);
         this.sendNotification(HttpType.admin_plats_marquee_store, objectRemoveNull(formCopy));
@@ -175,14 +168,14 @@ export default class PlatMarqueeProxy extends AbstractProxy implements IPlatMarq
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_plats_marquee_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/block_recharge_address/setting";
 import { Message } from "element-ui";
 import BlockRechargeAddressProxy from "../proxy/BlockRechargeAddressProxy";
 
-interface IBlockRechargeAddress extends IEventDispatcher {
-
-}
+interface IBlockRechargeAddress extends IEventDispatcher {}
 
 export default class BlockRechargeAddressMediator extends AbstractMediator {
     private myProxy: BlockRechargeAddressProxy = <any>this.getProxy(BlockRechargeAddressProxy);
@@ -25,11 +23,7 @@ export default class BlockRechargeAddressMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_block_recharge_address_table_columns,
-            EventType.admin_block_recharge_address_index,
-
-        ];
+        return [EventType.admin_block_recharge_address_table_columns, EventType.admin_block_recharge_address_index];
     }
 
     handleNotification(notification: puremvc.INotification) {

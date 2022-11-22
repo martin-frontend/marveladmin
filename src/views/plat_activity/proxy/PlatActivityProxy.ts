@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -68,7 +69,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             start_time: { name: "开始时间", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
-            reward_coin: { name: "", options: {} }
+            reward_coin: { name: "", options: {} },
         },
         orderData: {
             id: "",
@@ -312,8 +313,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         for (const item of rules) {
             for (const child of item.list) {
                 for (const child_1 of child.list) {
-                    if (child_1.coin_type &&
-                        child_1.type == "61" && child_1.params_type == 5) {
+                    if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
                         child_1.params = { [child_1.coin_type]: child_1.coin_amount };
                     }
                 }
@@ -365,22 +365,22 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         */
         formCopy["publish_status"] = Object.keys(this.tableData.columns.publish_status.options)[1];
 
-        MessageBox.confirm(<string>i18n.t("plat_activity.releaseConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("发布以后活动数据不能修改，确定发布"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_activity_store, objectRemoveNull(formCopy));
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**关闭该活动 */
     onCloseActive() {
-        MessageBox.confirm(<string>i18n.t("plat_activity.closeConfirm"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("活动已发布，是否要关闭该活动"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -400,7 +400,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 };
                 this.facade.sendNotification(HttpType.admin_plat_activity_update, copyForm);
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**更新活动*/

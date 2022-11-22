@@ -82,21 +82,21 @@
                     </el-tag>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="160px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="160px">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
                         type="danger"
                         @click="handlerDelete(row)"
                         v-if="checkUnique(unique.admin_user_delete) && row.update_btn == 1"
-                        >{{ $t("common.delete") }}</el-button
+                        >{{ LangUtil("删除") }}</el-button
                     >
                     <el-button
                         size="mini"
                         type="primary"
                         @click="handleEdit(row)"
                         v-if="checkUnique(unique.admin_user_show) && row.update_btn == 1"
-                        >{{ $t("common.update") }}</el-button
+                        >{{ LangUtil("编辑") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -105,6 +105,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -129,34 +130,35 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class AdminUserBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: AdminUserProxy = this.getProxy(AdminUserProxy);
+    myProxy: AdminUserProxy = this.getProxy(AdminUserProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
         this.myProxy.channelListFilter();
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.admin_user_id);
     }
 }

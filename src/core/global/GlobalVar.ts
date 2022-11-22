@@ -36,6 +36,6 @@ export default class GlobalVar {
     static api_version: string = <any>null;
     /**全局图片预览 */
     static preview_image = {
-        url: ""
-    }
+        url: "",
+    };
 }

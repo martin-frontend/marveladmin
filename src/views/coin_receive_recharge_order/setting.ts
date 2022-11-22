@@ -28,10 +28,15 @@ export var EventType = {
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(HttpType.admin_coin_receive_recharge_order_table_columns, cmd_admin_coin_receive_recharge_order_table_columns);
+facade.registerCommand(
+    HttpType.admin_coin_receive_recharge_order_table_columns,
+    cmd_admin_coin_receive_recharge_order_table_columns
+);
 facade.registerCommand(HttpType.admin_coin_receive_recharge_order_index, cmd_admin_coin_receive_recharge_order_index);
 facade.registerCommand(HttpType.admin_coin_receive_recharge_order_show, cmd_admin_coin_receive_recharge_order_show);
 facade.registerCommand(HttpType.admin_coin_receive_recharge_order_close, cmd_admin_coin_receive_recharge_order_close);
-facade.registerCommand(HttpType.admin_coin_receive_recharge_order_confirm, cmd_admin_coin_receive_recharge_order_confirm);
+facade.registerCommand(
+    HttpType.admin_coin_receive_recharge_order_confirm,
+    cmd_admin_coin_receive_recharge_order_confirm
+);
 facade.registerCommand(HttpType.admin_coin_wallet_wallet, cmd_admin_coin_wallet_wallet);
-

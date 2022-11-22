@@ -1,3 +1,1 @@
-export default interface ITabPlatVendorUserProxy {
-    
-}
+export default interface ITabPlatVendorUserProxy {}

@@ -1,30 +1,22 @@
 <template>
-    <el-dialog
-        :title="$t('plat_agent_bind.guaranteedSetting')"
-        :visible.sync="myProxy.promotionFloorDialogData.bShow"
-        width="680px"
-    >
+    <el-dialog :title="LangUtil('保底设定')" :visible.sync="myProxy.promotionFloorDialogData.bShow" width="680px">
         <el-form ref="form" :model="form" label-width="130px" v-loading="net_status.loading">
             <el-form-item size="mini" :label="tableColumns.vendor_type_0.name">
                 <el-input
                     v-model="form.vendor_type_0"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'')"
                 ></el-input>
-                <span
-                    >{{ $t("plat_agent_bind.guaranteedAmount") }}：{{ floorRange["0"].min }}-{{
-                        floorRange["0"].max
-                    }}</span
-                >
+                <span>{{ LangUtil("保底金额") }}：{{ floorRange["0"].min }}-{{ floorRange["0"].max }}</span>
             </el-form-item>
             <!-- <el-form-item size="mini" :label="tableColumns.vendor_type_2.name">
                 <el-input
                     v-model="form.vendor_type_2"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'')"
                 ></el-input>
                 <span
-                    >{{ $t("plat_agent_bind.guaranteedAmount") }}：{{ floorRange["2"].min }}-{{
+                    >{{ LangUtil('保底金额') }}：{{ floorRange["2"].min }}-{{
                         floorRange["2"].max
                     }}</span
                 >
@@ -32,11 +24,11 @@
             <el-form-item size="mini" :label="tableColumns['vendor_type_4'].name" prop="vendor_type_4">
                 <el-input
                     v-model="form.vendor_type_4"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'')"
                 ></el-input>
                 <span
-                    >{{ $t("plat_agent_bind.guaranteedAmount") }}：{{ floorRange["4"].min }}-{{
+                    >{{ LangUtil('保底金额') }}：{{ floorRange["4"].min }}-{{
                         floorRange["4"].max
                     }}</span
                 >
@@ -44,11 +36,11 @@
             <el-form-item size="mini" :label="tableColumns['vendor_type_8'].name" prop="vendor_type_8">
                 <el-input
                     v-model="form.vendor_type_8"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'')"
                 ></el-input>
                 <span
-                    >{{ $t("plat_agent_bind.guaranteedAmount") }}：{{ floorRange["8"].min }}-{{
+                    >{{ LangUtil('保底金额') }}：{{ floorRange["8"].min }}-{{
                         floorRange["8"].max
                     }}</span
                 >
@@ -56,11 +48,11 @@
             <el-form-item size="mini" :label="tableColumns['vendor_type_16'].name" prop="vendor_type_16">
                 <el-input
                     v-model="form.vendor_type_16"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'')"
                 ></el-input>
                 <span
-                    >{{ $t("plat_agent_bind.guaranteedAmount") }}：{{ floorRange["16"].min }}-{{
+                    >{{ LangUtil('保底金额') }}：{{ floorRange["16"].min }}-{{
                         floorRange["16"].max
                     }}</span
                 >
@@ -68,11 +60,11 @@
             <el-form-item size="mini" :label="tableColumns['vendor_type_32'].name" prop="vendor_type_32">
                 <el-input
                     v-model="form.vendor_type_32"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'')"
                 ></el-input>
                 <span
-                    >{{ $t("plat_agent_bind.guaranteedAmount") }}：{{ floorRange["32"].min }}-{{
+                    >{{ LangUtil('保底金额') }}：{{ floorRange["32"].min }}-{{
                         floorRange["32"].max
                     }}</span
                 >
@@ -80,11 +72,11 @@
             <el-form-item size="mini" :label="tableColumns['vendor_type_64'].name" prop="vendor_type_64">
                 <el-input
                     v-model="form.vendor_type_64"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'')"
                 ></el-input>
                 <span
-                    >{{ $t("plat_agent_bind.guaranteedAmount") }}：{{ floorRange["64"].min }}-{{
+                    >{{ LangUtil('保底金额') }}：{{ floorRange["64"].min }}-{{
                         floorRange["64"].max
                     }}</span
                 >
@@ -92,36 +84,37 @@
             <el-form-item size="mini" :label="tableColumns['vendor_type_128'].name" prop="vendor_type_128">
                 <el-input
                     v-model="form.vendor_type_128"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'')"
                 ></el-input>
                 <span
-                    >{{ $t("plat_agent_bind.guaranteedAmount") }}：{{ floorRange["128"].min }}-{{
+                    >{{ LangUtil('保底金额') }}：{{ floorRange["128"].min }}-{{
                         floorRange["128"].max
                     }}</span
                 >
             </el-form-item> -->
             <div class="remarks">
-                <div>{{ $t("plat_agent_bind.note") }}</div>
+                <div>{{ LangUtil("备注") }}</div>
                 <ol>
-                    <li>{{ $t("plat_agent_bind.noteText1") }}</li>
-                    <li>{{ $t("plat_agent_bind.noteText2") }}</li>
-                    <li>{{ $t("plat_agent_bind.noteText3") }}</li>
-                    <li>{{ $t("plat_agent_bind.noteText4") }}</li>
-                    <li>{{ $t("plat_agent_bind.noteText5") }}</li>
+                    <li>{{ LangUtil("默认保底最高金额为平台设定最高保底金额;") }}</li>
+                    <li>{{ LangUtil("如果该用户存在代理上级，则保底金额不能超过代理上级的保底基金额;") }}</li>
+                    <li>{{ LangUtil("如果该用户存在直属代理下级，则保底金额不能低于直属代理下级;") }}</li>
+                    <li>{{ LangUtil("如果保底金设置为0，则该游戏类型不进行保底。(适用第三条规则，既不能设置0);") }}</li>
+                    <li>{{ LangUtil("设置保底的用户，如果未绑定上级，则该用户不能进行绑定用户;") }}</li>
                 </ol>
             </div>
             <div class="dialog-footer">
                 <el-button type="primary" @click="myProxy.promotionFloorDialogData.bShow = false">{{
-                    $t("common.cancel")
+                    LangUtil("取消")
                 }}</el-button>
-                <el-button type="primary" @click="onSbumit">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" @click="onSbumit">{{ LangUtil("确认保存") }}</el-button>
             </div>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatAgentBindProxy from "@/views/plat_agent_bind/proxy/PlatAgentBindProxy";
@@ -132,15 +125,16 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatAgentBindDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
+    myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
     get form() {
         return this.myProxy.promotionFloorDialogData.form;
     }
@@ -148,20 +142,20 @@ export default class PlatAgentBindDialog extends AbstractView {
         return this.myProxy.promotionFloorDialogData.range;
     }
 
-    private checkPromotionFloor(type: string): boolean {
+    checkPromotionFloor(type: string): boolean {
         const value = this.form[`vendor_type_${type}`];
         const range = this.floorRange[type];
         if (value && (value < range.min || value > range.max)) {
             this.$message({
                 type: "warning",
-                message: this.tableColumns[`vendor_type_${type}`].name + this.$t("plat_agent_bind.errorCode"),
+                message: this.tableColumns[`vendor_type_${type}`].name + this.LangUtil("，取值范围错误"),
             });
             return false;
         }
         return true;
     }
 
-    private onSbumit() {
+    onSbumit() {
         const arr = ["0", "2", "4", "8", "16", "32", "64", "128"];
         for (const type of arr) {
             if (!this.checkPromotionFloor(type)) {

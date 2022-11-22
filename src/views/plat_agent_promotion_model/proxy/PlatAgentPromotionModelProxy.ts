@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -33,7 +34,7 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
             promotion_model_id: { name: "", options: {} },
             type: { name: "", options: {} },
             is_promotion_num_added: { name: "", options: {} },
-            promotion_reward_coin_ratio: {name: "", options: {}},
+            promotion_reward_coin_ratio: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -54,7 +55,7 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
             type: "",
             promotion_reward_coin_ratio: 0,
             is_promotion_num_added: 98,
-            calc_type:'1',
+            calc_type: "1",
             promotion_config: {
                 // 0: [{ commission_num: 30, total_performance: 0, commission_num_added: 0 }],
                 2: [{ commission_num: 0, total_performance: 0, commission_num_added: 0 }],
@@ -65,9 +66,9 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
                 64: [{ commission_num: 0, total_performance: 0, commission_num_added: 0 }],
                 128: [{ commission_num: 0, total_performance: 0, commission_num_added: 0 }],
             },
-            promotion_config2:{
+            promotion_config2: {
                 0: [{ commission_num: 30, total_performance: 0, commission_num_added: 0 }],
-            }
+            },
         },
         formSource: null, // 表单的原始数据
     };
@@ -94,19 +95,18 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
         }
         this.dialogData.formSource = obj;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(obj)));
-        this.dialogData.form.calc_type = this.dialogData.form.calc_type.toString()
-        if(this.dialogData.form.calc_type == '2'){
-            if(this.dialogData.form['promotion_config2']){
+        this.dialogData.form.calc_type = this.dialogData.form.calc_type.toString();
+        if (this.dialogData.form.calc_type == "2") {
+            if (this.dialogData.form["promotion_config2"]) {
                 //@ts-ignore
-                this.dialogData.form['promotion_config2']['0'] =  this.dialogData.form.promotion_config[0]
-            }else{
-                let promotion_config2 = {}
+                this.dialogData.form["promotion_config2"]["0"] = this.dialogData.form.promotion_config[0];
+            } else {
+                let promotion_config2 = {};
                 //@ts-ignore
-                promotion_config2['0'] = this.dialogData.form.promotion_config[0];
-                 //@ts-ignore
-                this.dialogData.form['promotion_config2'] = promotion_config2;
+                promotion_config2["0"] = this.dialogData.form.promotion_config[0];
+                //@ts-ignore
+                this.dialogData.form["promotion_config2"] = promotion_config2;
             }
-
         }
     }
 
@@ -117,7 +117,9 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            this.sendNotification(HttpType.admin_plat_agent_promotion_model_show, { promotion_model_id: data.promotion_model_id });
+            this.sendNotification(HttpType.admin_plat_agent_promotion_model_show, {
+                promotion_model_id: data.promotion_model_id,
+            });
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -135,7 +137,7 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
             desc: "",
             type: "",
             promotion_reward_coin_ratio: 0,
-            calc_type:'1',
+            calc_type: "1",
             is_promotion_num_added: 98,
             promotion_config: {
                 // 0: [{ commission_num: 30, total_performance: 0, commission_num_added: 0 }],
@@ -147,9 +149,9 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
                 64: [{ commission_num: 0, total_performance: 0, commission_num_added: 0 }],
                 128: [{ commission_num: 0, total_performance: 0, commission_num_added: 0 }],
             },
-            promotion_config2:{
+            promotion_config2: {
                 0: [{ commission_num: 30, total_performance: 0, commission_num_added: 0 }],
-            }
+            },
         });
     }
 
@@ -159,7 +161,16 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
     }
     /**添加数据 */
     onAdd() {
-        const { name, desc, type, promotion_reward_coin_ratio, promotion_config, promotion_config2, is_promotion_num_added,calc_type } = this.dialogData.form;
+        const {
+            name,
+            desc,
+            type,
+            promotion_reward_coin_ratio,
+            promotion_config,
+            promotion_config2,
+            is_promotion_num_added,
+            calc_type,
+        } = this.dialogData.form;
         const formCopy: any = {
             name,
             desc,
@@ -167,10 +178,10 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
             promotion_reward_coin_ratio,
             promotion_config,
             is_promotion_num_added,
-            calc_type
+            calc_type,
         };
-        if(calc_type == '2'){
-            formCopy.promotion_config['0'] = promotion_config2['0']
+        if (calc_type == "2") {
+            formCopy.promotion_config["0"] = promotion_config2["0"];
         }
 
         formCopy.promotion_config = JSON.stringify(formCopy.promotion_config);
@@ -180,25 +191,24 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
     }
     /**更新数据 */
     onUpdate() {
-
-        const calc_type  = this.dialogData.form.calc_type
-        let formCopy: any = null
+        const calc_type = this.dialogData.form.calc_type;
+        let formCopy: any = null;
         // 删除多余无法去除的参数
         // TODO
         // 如果没有修改，就直接关闭弹窗
-        if(calc_type == '1'){
+        if (calc_type == "1") {
             //@ts-ignore
-            delete this.dialogData.form.promotion_config[0]
+            delete this.dialogData.form.promotion_config[0];
             formCopy = formCompared(this.dialogData.form, this.dialogData.formSource);
-        }else{
-            formCopy = this.dialogData.form
-            formCopy.promotion_config['0'] = formCopy.promotion_config2[0]
-            console.warn('formCopy',formCopy);
-            if(formCopy.promotion_config){
-                formCopy.promotion_config = JSON.stringify(formCopy.promotion_config)
+        } else {
+            formCopy = this.dialogData.form;
+            formCopy.promotion_config["0"] = formCopy.promotion_config2[0];
+            console.warn("formCopy", formCopy);
+            if (formCopy.promotion_config) {
+                formCopy.promotion_config = JSON.stringify(formCopy.promotion_config);
             }
         }
-        delete formCopy.promotion_config2
+        delete formCopy.promotion_config2;
         if (Object.keys(formCopy).length == 0) {
             this.dialogData.bShow = false;
             return;
@@ -210,14 +220,17 @@ export default class PlatAgentPromotionModelProxy extends AbstractProxy implemen
     }
     /**删除数据 */
     onDelete(data: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr1"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该模版"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
-                this.sendNotification(HttpType.admin_plat_agent_promotion_model_update, { promotion_model_id: data.promotion_model_id,  is_delete: 1 });
+                this.sendNotification(HttpType.admin_plat_agent_promotion_model_update, {
+                    promotion_model_id: data.promotion_model_id,
+                    is_delete: 1,
+                });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

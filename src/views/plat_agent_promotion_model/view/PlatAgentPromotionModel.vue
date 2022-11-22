@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatAgentPromotionModelDialog/>
-        <PlatAgentPromotionModelHeader/>
-        <PlatAgentPromotionModelBody/>
+        <PlatAgentPromotionModelDialog />
+        <PlatAgentPromotionModelHeader />
+        <PlatAgentPromotionModelBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import PlatAgentPromotionModelBody from "./PlatAgentPromotionModelBody.vue";
         PlatAgentPromotionModelDialog,
         PlatAgentPromotionModelHeader,
         PlatAgentPromotionModelBody,
-    }
+    },
 })
 export default class PlatAgentPromotionModel extends AbstractView {
-
     constructor() {
         super(PlatAgentPromotionModelMediator);
     }

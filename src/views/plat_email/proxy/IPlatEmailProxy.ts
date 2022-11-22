@@ -3,18 +3,18 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface IPlatEmailProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
     };
 
     /**设置表头数据 */
@@ -41,9 +41,9 @@ export default interface IPlatEmailProxy {
 
     /**用户邮件表格相关数据 */
     platUserTableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**用戶郵件查询条件 */
     userListQuery: any;
@@ -58,9 +58,9 @@ export default interface IPlatEmailProxy {
 
     /**错误讯息弹窗数据 */
     alertDialogData: {
-        bShow: boolean,
-        form: any,
-    }
+        bShow: boolean;
+        form: any;
+    };
     /**显示发送错误弹窗 */
     showAlertDialog(data: any): void;
     /**隐藏发送错误弹窗 */
@@ -74,13 +74,13 @@ export enum EmailTab {
 //郵件狀態
 export enum EmailStatus {
     Sended = 1, //發送
-    Revoked = 99,//撤銷
+    Revoked = 99, //撤銷
 }
 //邮件类型
 export enum EmailType {
     AllPlatWithNew = "1",
-    AllPlat = "2",  //全平台
-    Group = "3",    //群发
+    AllPlat = "2", //全平台
+    Group = "3", //群发
 }
 //獎勵類型
 export enum BonusType {

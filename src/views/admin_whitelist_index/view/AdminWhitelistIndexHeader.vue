@@ -16,10 +16,10 @@
             />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -29,12 +29,13 @@
             type="primary"
             icon="el-icon-circle-plus-outline"
             v-if="checkUnique(unique.admin_whitelist_store)"
-            >{{ $t("common.create") }}</el-button
+            >{{ LangUtil("新增") }}</el-button
         >
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import AdminWhitelistIndexProxy from "../proxy/AdminWhitelistIndexProxy";
@@ -52,25 +53,26 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class AdminWhitelistIndexHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: AdminWhitelistIndexProxy = this.getProxy(AdminWhitelistIndexProxy);
+    myProxy: AdminWhitelistIndexProxy = this.getProxy(AdminWhitelistIndexProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

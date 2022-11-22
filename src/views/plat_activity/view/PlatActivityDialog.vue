@@ -6,7 +6,7 @@
                     <el-select
                         v-model="form.plat_id"
                         filterable
-                        :placeholder="$t('common.pleaseChoose')"
+                        :placeholder="LangUtil('请选择')"
                         :disabled="isStatusUpdate"
                         @change="onPlatChange"
                     >
@@ -23,7 +23,7 @@
                     <div class="flex d-flex">
                         <el-input
                             style="margin-right: 0.8rem"
-                            :placeholder="$t('common.pleaseEnter')"
+                            :placeholder="LangUtil('请输入')"
                             v-model="form.activity_name"
                         ></el-input>
                         <el-button
@@ -36,23 +36,23 @@
                     </div>
                 </el-form-item>
 
-                <el-form-item size="mini" :label="$t('plat_activity.eventTemplate')">
+                <el-form-item size="mini" :label="LangUtil('活动模板')">
                     <div class="d-flex">
                         <el-select
                             v-model="form.type"
                             filterable
-                            :placeholder="$t('common.pleaseChoose')"
+                            :placeholder="LangUtil('请选择')"
                             :disabled="isStatusUpdate"
                             @change="onTypeChange"
                             class="model"
                         >
-                            <el-option :label="$t('plat_activity.customize')" value="2"></el-option>
-                            <el-option :label="$t('plat_activity.template')" value="1"></el-option>
+                            <el-option :label="LangUtil('自定义')" value="2"></el-option>
+                            <el-option :label="LangUtil('模板')" value="1"></el-option>
                         </el-select>
                         <el-select
                             v-model="form.model_id"
                             filterable
-                            :placeholder="$t('plat_activity.selectTemplate')"
+                            :placeholder="LangUtil('选择活动模板')"
                             v-if="form.type == 1"
                             @change="onModelIdChange"
                             :disabled="isStatusUpdate"
@@ -68,7 +68,7 @@
                 </el-form-item>
                 <el-form-item
                     size="mini"
-                    :label="$t('common.templateDesc')"
+                    :label="LangUtil('模板描述')"
                     prop="des"
                     v-if="form.type == 1 && form.model_id"
                 >
@@ -80,7 +80,7 @@
                         v-model="form.start_time"
                         type="date"
                         align="right"
-                        :placeholder="$t('component.startFrom')"
+                        :placeholder="LangUtil('选择开始时间')"
                         value-format="yyyy-MM-dd"
                         :disabled="isStatusUpdate"
                     >
@@ -91,7 +91,7 @@
                         v-model="form.end_time"
                         type="date"
                         align="right"
-                        :placeholder="$t('component.endTo')"
+                        :placeholder="LangUtil('选择结束时间')"
                         value-format="yyyy-MM-dd"
                         :disabled="isStatusUpdate"
                     >
@@ -115,7 +115,7 @@
                 </el-form-item>
 
                 <el-form-item size="mini" :label="tableColumns['model_open_mode'].name" prop="model_open_mode">
-                    <el-select v-model="form.model_open_mode" filterable :placeholder="$t('common.pleaseChoose')">
+                    <el-select v-model="form.model_open_mode" filterable :placeholder="LangUtil('请选择')">
                         <el-option
                             v-for="(value, key) in tableColumns['model_open_mode'].options"
                             :key="key"
@@ -127,7 +127,7 @@
                 <el-form-item size="mini" v-if="isCustom" :label="tableColumns['open_mode_url'].name">
                     <el-input
                         v-model="form.open_mode_url"
-                        :placeholder="$t('common.pleaseEnter')"
+                        :placeholder="LangUtil('请输入')"
                         maxlength="100"
                         show-word-limit
                     ></el-input>
@@ -135,7 +135,7 @@
                 <el-form-item size="mini" :label="tableColumns['activity_category'].name">
                     <el-input
                         v-model="form.activity_category"
-                        :placeholder="$t('common.pleaseEnter')"
+                        :placeholder="LangUtil('请输入')"
                         maxlength="30"
                         show-word-limit
                         clearable
@@ -170,7 +170,7 @@
                 >
                     <el-input
                         v-model="form.bonus_multiple"
-                        :placeholder="$t('common.pleaseEnter')"
+                        :placeholder="LangUtil('请输入')"
                         :disabled="isStatusUpdate"
                     ></el-input>
                 </el-form-item>
@@ -218,7 +218,7 @@
                         </el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item size="mini" :label="$t('common.uploadImage')" v-if="form.show_type == 4" prop="link_url">
+                <el-form-item size="mini" :label="LangUtil('上传图片')" v-if="form.show_type == 4" prop="link_url">
                     <div style="display: flex">
                         <el-upload
                             action="#"
@@ -249,7 +249,7 @@
                             @click="handleLangImg()"
                         >
                             <!-- 多语言图片 -->
-                            {{ $t("user_detail.multilingualPictures") }}
+                            {{ LangUtil("多语言图片") }}
                         </el-button>
                     </div>
                 </el-form-item>
@@ -259,12 +259,12 @@
                     prop="link_url"
                     v-if="form.show_type == 2"
                 >
-                    <el-input v-model="form.link_url" :placeholder="$t('common.pleaseEnter')"></el-input>
+                    <el-input v-model="form.link_url" :placeholder="LangUtil('请输入')"></el-input>
                 </el-form-item>
             </el-form>
             <!-- 奖励规则 -->
             <div v-if="form.type == 1 && form.model_id" class="_title">
-                {{ $t("plat_activity.rule") }}
+                {{ LangUtil("奖励规则") }}
             </div>
             <div v-if="form.type == 1" style="bordertop: 2px solid #dddddd">
                 <div
@@ -275,7 +275,7 @@
                 >
                     <el-row type="flex" justify="start" align="middle" :gutter="24">
                         <el-col :span="2">
-                            <div>{{ $t("common.id") }}: {{ item.rule_num }}</div>
+                            <div>{{ LangUtil("ID") }}: {{ item.rule_num }}</div>
                         </el-col>
                         <el-col :span="10">
                             <div>{{ item.name }}</div>
@@ -284,7 +284,7 @@
                     <div class="rule-list" v-for="(rule, secondIndex) in item.list" :key="secondIndex">
                         <el-row type="flex" justify="start" align="middle" :gutter="24">
                             <el-col :span="3">
-                                <div>{{ $t("common.id") }}: {{ secondIndex + 1 }}</div>
+                                <div>{{ LangUtil("ID") }}: {{ secondIndex + 1 }}</div>
                             </el-col>
                             <el-col :span="10">
                                 <div>{{ rule.name }}</div>
@@ -303,7 +303,7 @@
                                         size="small"
                                         v-if="childRule.params_type == '1'"
                                         v-model="childRule.params"
-                                        :placeholder="$t('common.pleaseEnter')"
+                                        :placeholder="LangUtil('请输入')"
                                         :disabled="isStatusUpdate"
                                         style="width: 80px"
                                     ></el-input>
@@ -312,7 +312,7 @@
                                         v-if="childRule.type == 61 && childRule.params_type == 5"
                                         v-model="childRule.coin_type"
                                         filterable
-                                        :placeholder="$t('common.pleaseChoose')"
+                                        :placeholder="LangUtil('请选择')"
                                         :disabled="isStatusUpdate"
                                         style="margin-right: 5px"
                                     >
@@ -327,7 +327,7 @@
                                         size="small"
                                         v-if="childRule.type == 61 && childRule.params_type == 5"
                                         v-model="childRule.coin_amount"
-                                        :placeholder="$t('common.pleaseEnter')"
+                                        :placeholder="LangUtil('请输入')"
                                         :disabled="isStatusUpdate"
                                         :min="0"
                                         :step="1"
@@ -362,7 +362,7 @@
                 @click="handleCloseActive"
                 v-if="isStatusUpdate && checkUnique(unique.plat_activity_close)"
             >
-                {{ $t("common.close") }}
+                {{ LangUtil("关闭") }}
             </el-button>
             <el-button
                 type="primary"
@@ -376,6 +376,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatActivityProxy from "@/views/plat_activity/proxy/PlatActivityProxy";
@@ -391,68 +392,69 @@ import i18n from "@/lang";
 
 @Component
 export default class PlatActivityDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
-    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
-    private langImgProxy: CommonLangImgProxy = this.getProxy(CommonLangImgProxy);
+    myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+    langImgProxy: CommonLangImgProxy = this.getProxy(CommonLangImgProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
     get form() {
         return this.myProxy.dialogData.form;
     }
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
-    private typeOptions: any = {
-        "1": this.$t("common.condition"),
-        "21": this.$t("common.consume"),
-        "61": this.$t("common.reward"),
-        "71": this.$t("common.probabilityPot"),
+    typeOptions: any = {
+        "1": this.LangUtil("条件"),
+        "21": this.LangUtil("消耗"),
+        "61": this.LangUtil("奖励"),
+        "71": this.LangUtil("概率奖池"),
     };
 
     get buttonText() {
-        return this.isStatusUpdate ? this.$t("common.save") : this.$t("common.create");
+        return this.isStatusUpdate ? this.LangUtil("确认保存") : this.LangUtil("新增");
     }
 
-    // private paramsTypeOptions: any = {
+    //  paramsTypeOptions: any = {
     //     "1": "数值",
     //     "2": "布尔值",
     // };
 
-    private boolOptions: any = {
-        0: this.$t("common.no"),
-        1: this.$t("common.yes"),
+    boolOptions: any = {
+        0: this.LangUtil("否"),
+        1: this.LangUtil("是"),
     };
 
-    // private runTypeOptions: any = {
+    //  runTypeOptions: any = {
     //     1: "多次结算",
     //     2: "单次次结算",
     // };
 
-    private dialogStatus = DialogStatus;
-    private formatImageUrl = formatImageUrl;
+    dialogStatus = DialogStatus;
+    formatImageUrl = formatImageUrl;
 
-    private showMask = false;
-    private dialogImageUrl = "";
-    private dialogVisible = false;
+    showMask = false;
+    dialogImageUrl = "";
+    dialogVisible = false;
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
     }
 
     @Watch("myProxy.dialogData.update")
-    private onWatchUpdate() {
+    onWatchUpdate() {
         this.$nextTick(() => {
             this.$forceUpdate();
         });
@@ -478,24 +480,24 @@ export default class PlatActivityDialog extends AbstractView {
 
     get rules() {
         return {
-            plat_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            activity_name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            is_preheat: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            start_time: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            end_time: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            model_open_mode: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            plat_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            activity_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            is_preheat: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            start_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            end_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            model_open_mode: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             settlement_type: [{ required: false }],
-            award_type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            bonus_multiple: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            award_type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            bonus_multiple: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             model_id: [{ required: false }],
-            link_url: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            show_type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            rules: [{ required: false, message: this.$t("common.requiredInput"), trigger: "change" }],
+            link_url: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            show_type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            rules: [{ required: false, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -503,7 +505,7 @@ export default class PlatActivityDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -511,7 +513,7 @@ export default class PlatActivityDialog extends AbstractView {
         });
     }
 
-    private handleCloseActive() {
+    handleCloseActive() {
         this.myProxy.onCloseActive();
     }
     //图片相关---
@@ -597,7 +599,7 @@ export default class PlatActivityDialog extends AbstractView {
         data.plat_id = this.form.plat_id;
         data.key = this.myProxy.dialogData.form.link_url;
         if (!data.key) {
-            const str: any = i18n.t("user_detail.uploadDefaultImg");
+            const str: any = LangUtil("请先上传默认图片");
             Message.warning(str);
             return;
         }

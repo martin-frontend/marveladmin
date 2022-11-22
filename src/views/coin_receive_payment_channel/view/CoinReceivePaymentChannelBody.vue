@@ -31,24 +31,24 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('coin_receive_payment_channel.receiveNotice')" width="240" align="center">
+            <el-table-column :label="LangUtil('收款信息')" width="240" align="center">
                 <template slot-scope="{ row }">
                     <div align="left">
                         <div v-if="row.type === 1">
-                            <p>{{ $t("common.bank") }}：{{ row.payment_method.bank_ch }}</p>
-                            <p>{{ $t("common.branch") }}：{{ row.payment_method.account_bank }}</p>
-                            <p>{{ $t("coin_receive_payment_channel.tabsText1") }}：{{ row.payment_method.account }}</p>
+                            <p>{{ LangUtil("所属银行") }}：{{ row.payment_method.bank_ch }}</p>
+                            <p>{{ LangUtil("开户行支行") }}：{{ row.payment_method.account_bank }}</p>
+                            <p>{{ LangUtil("银行卡") }}：{{ row.payment_method.account }}</p>
                         </div>
                         <div v-if="row.type === 2">
-                            <p>{{ $t("common.alipayNumber") }}：{{ row.payment_method.account }}</p>
+                            <p>{{ LangUtil("支付宝账号") }}：{{ row.payment_method.account }}</p>
                         </div>
                         <div v-if="row.type === 3">
-                            <p>{{ $t("common.weChatAccount") }}：{{ row.payment_method.account }}</p>
+                            <p>{{ LangUtil("微信账号") }}：{{ row.payment_method.account }}</p>
                         </div>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('coin_receive_payment_channel.collectionAmount')" width="200" align="center">
+            <el-table-column :label="LangUtil('收款额度')" width="200" align="center">
                 <template slot-scope="{ row }">
                     <div align="left">
                         <p>{{ tableColumns.total_limit_gold.name }}：{{ row.total_limit_gold }}</p>
@@ -66,18 +66,14 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('coin_receive_payment_channel.showNotice')" width="200" align="center">
+            <el-table-column :label="LangUtil('展示信息')" width="200" align="center">
                 <template slot-scope="{ row }">
                     <div align="left">
                         <p>{{ tableColumns.title.name }}：{{ row.title }}</p>
                         <p>{{ tableColumns.min_gold.name }}：{{ row.min_gold }}</p>
                         <p>{{ tableColumns.notice.name }}：{{ row.notice }}</p>
-                        <p>{{ $t("common.rechargeAmount") }}：{{ goldListFormat(row.fixed_gold_list) }}</p>
-                        <p>
-                            {{ $t("coin_receive_payment_channel.goldRandom") }}：{{
-                                tableColumns.gold_random.options[row.gold_random]
-                            }}
-                        </p>
+                        <p>{{ LangUtil("充值金额") }}：{{ goldListFormat(row.fixed_gold_list) }}</p>
+                        <p>{{ LangUtil("金额随机") }}：{{ tableColumns.gold_random.options[row.gold_random] }}</p>
                         <p>
                             {{ tableColumns.is_fixed_gold.name }}：{{
                                 tableColumns.is_fixed_gold.options[row.is_fixed_gold]
@@ -87,7 +83,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('coin_receive_payment_channel.qrcode')" align="center" width="120px">
+            <el-table-column :label="LangUtil('二维码')" align="center" width="120px">
                 <template slot-scope="{ row }">
                     <div v-if="row.type !== 1">
                         <div v-if="row.qr_code_url">
@@ -121,20 +117,20 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="190px" align="center">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="190px" align="center">
                 <template slot-scope="{ row }">
                     <div class="btn_group">
                         <el-button
                             size="mini"
                             @click="handleUpdate(row, 2)"
                             v-if="checkUnique(unique.coin_receive_payment_channel_update)"
-                            >{{ $t("common.setTop") }}</el-button
+                            >{{ LangUtil("置顶") }}</el-button
                         >
                         <el-button
                             size="mini"
                             @click="handleUpdate(row, 1)"
                             v-if="checkUnique(unique.coin_receive_payment_channel_update)"
-                            >{{ $t("common.setBottom") }}</el-button
+                            >{{ LangUtil("置底") }}</el-button
                         >
                         <el-button
                             size="mini"
@@ -153,7 +149,7 @@
                             type="primary"
                             @click="handleEdit(row)"
                             v-if="checkUnique(unique.coin_receive_payment_channel_update)"
-                            >{{ $t("common.setting") }}</el-button
+                            >{{ LangUtil("设置") }}</el-button
                         >
                     </div>
                 </template>
@@ -163,6 +159,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -178,37 +175,38 @@ import { objectRemoveNull } from "@/core/global/Functions";
     },
 })
 export default class CoinReceivePaymentChannelBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: CoinReceivePaymentChannelProxy = this.getProxy(CoinReceivePaymentChannelProxy);
+    myProxy: CoinReceivePaymentChannelProxy = this.getProxy(CoinReceivePaymentChannelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
 
-    private handleUpdate(row: any, opt: any = null) {
+    handleUpdate(row: any, opt: any = null) {
         const obj: any = {
             opt: opt ? opt : null,
             status: opt ? null : row.status,
@@ -219,14 +217,14 @@ export default class CoinReceivePaymentChannelBody extends AbstractView {
     }
 
     // 表格金额样式
-    private styleLimit(row: any) {
+    styleLimit(row: any) {
         return row.total_gold >= row.total_limit_gold ? "red" : "";
     }
-    private styleDayGold(row: any) {
+    styleDayGold(row: any) {
         return row.total_gold >= row.day_gold ? "red" : "";
     }
     // 充值金
-    private goldListFormat(gold: any) {
+    goldListFormat(gold: any) {
         return gold.join("|");
     }
 }

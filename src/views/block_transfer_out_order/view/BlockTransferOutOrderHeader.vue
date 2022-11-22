@@ -1,7 +1,6 @@
 <template>
     <div class="header-content">
         <div class="group">
-
             <SearchSelect
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
@@ -18,10 +17,10 @@
             />
             <div>
                 <el-button @click="handlerSearch" class="header-button" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset" type="primary" icon="el-icon-refresh" class="header-button">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -29,6 +28,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import BlockTransferOutOrderProxy from "../proxy/BlockTransferOutOrderProxy";
@@ -40,31 +40,32 @@ import SearchRange from "@/components/SearchRange.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
-    components:{
+    components: {
         SearchInput,
-        SearchSelect
-    }
+        SearchSelect,
+    },
 })
 export default class BlockTransferOutOrderHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: BlockTransferOutOrderProxy = this.getProxy(BlockTransferOutOrderProxy);
+    myProxy: BlockTransferOutOrderProxy = this.getProxy(BlockTransferOutOrderProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    // private handlerCreate() {
+    //  handlerCreate() {
     //     this.myProxy.showDialog(DialogStatus.create);
     // }
 }

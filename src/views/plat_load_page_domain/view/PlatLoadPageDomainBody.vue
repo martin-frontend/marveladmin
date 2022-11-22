@@ -9,18 +9,13 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column
-                :label="$t('common.serialNumber')"
-                type="index"
-                width="50"
-                align="center"
-            ></el-table-column>
+            <el-table-column :label="LangUtil('序号')" type="index" width="50" align="center"></el-table-column>
             <el-table-column :label="tableColumns['domain'].name" prop="domain" align="center"> </el-table-column>
             <el-table-column :label="tableColumns['remark'].name" prop="remark" align="center"> </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="220">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="220">
                 <template slot-scope="{ row }">
                     <el-button size="mini" type="primary" @click="handleEdit(row)">
-                        {{ $t("common.update") }}
+                        {{ LangUtil("编辑") }}
                     </el-button>
                 </template>
             </el-table-column>
@@ -29,6 +24,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -43,25 +39,26 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatLoadPageDomainBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatLoadPageDomainProxy = this.getProxy(PlatLoadPageDomainProxy);
+    myProxy: PlatLoadPageDomainProxy = this.getProxy(PlatLoadPageDomainProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 }

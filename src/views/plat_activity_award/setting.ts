@@ -34,4 +34,3 @@ facade.registerCommand(HttpType.admin_plat_activity_award_show, cmd_admin_plat_a
 facade.registerCommand(HttpType.admin_plat_activity_award_send_by_hand, cmd_admin_plat_activity_award_send_by_hand);
 facade.registerCommand(HttpType.admin_plat_index, cmd_admin_plat_index);
 facade.registerCommand(HttpType.admin_plat_activity_award_cancel, cmd_admin_plat_activity_award_cancel);
-

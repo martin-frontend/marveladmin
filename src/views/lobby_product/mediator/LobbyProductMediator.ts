@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/lobby_product/setting";
 import { Message } from "element-ui";
 import LobbyProductProxy from "../proxy/LobbyProductProxy";
 
-interface ILobbyProduct extends IEventDispatcher {
-    
-}
+interface ILobbyProduct extends IEventDispatcher {}
 
 export default class LobbyProductMediator extends AbstractMediator {
     private myProxy: LobbyProductProxy = <any>this.getProxy(LobbyProductProxy);
@@ -32,7 +30,6 @@ export default class LobbyProductMediator extends AbstractMediator {
             EventType.admin_lobby_product_show,
             EventType.admin_lobby_product_update,
             EventType.admin_lobby_model_product_index,
-
         ];
     }
 
@@ -64,7 +61,6 @@ export default class LobbyProductMediator extends AbstractMediator {
             case EventType.admin_lobby_model_product_index:
                 myProxy.setProductList(body);
                 break;
-
         }
     }
 }

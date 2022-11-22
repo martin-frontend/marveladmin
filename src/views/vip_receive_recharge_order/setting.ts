@@ -19,7 +19,9 @@ export var EventType = {
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(HttpType.admin_vip_receive_recharge_order_table_columns, cmd_admin_vip_receive_recharge_order_table_columns);
+facade.registerCommand(
+    HttpType.admin_vip_receive_recharge_order_table_columns,
+    cmd_admin_vip_receive_recharge_order_table_columns
+);
 facade.registerCommand(HttpType.admin_vip_receive_recharge_order_index, cmd_admin_vip_receive_recharge_order_index);
 facade.registerCommand(HttpType.admin_vip_receive_recharge_order_show, cmd_admin_vip_receive_recharge_order_show);
-

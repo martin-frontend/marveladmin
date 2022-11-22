@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import GlobalEventType from "@/core/global/GlobalEventType";
@@ -51,7 +52,7 @@ export default class PlatActivityAwardMediator extends AbstractMediator {
                 myProxy.setDetail(body);
                 break;
             case EventType.admin_plat_activity_award_send_by_hand:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.onQuery();
                 myProxy.hideDialog();
                 break;
@@ -61,7 +62,7 @@ export default class PlatActivityAwardMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_activity_award_cancel:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.onQuery();
                 myProxy.hideDialog();
                 break;

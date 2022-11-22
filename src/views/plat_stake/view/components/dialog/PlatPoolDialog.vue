@@ -18,13 +18,14 @@
                 <el-input-number v-model="form.put_in_ratio" :min="0" :max="100" :step="0.01"></el-input-number>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" size="mini" @click="save">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" size="mini" @click="save">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import { Component, Vue, Watch } from "vue-property-decorator";
@@ -39,33 +40,34 @@ import i18n from "@/lang";
     },
 })
 export default class PlatUserLogDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
+    myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private tableColumns = this.myProxy.stakePooltableData.columns;
-    private dialogData = this.myProxy.stakePooltableData.dialogData;
-    private form = this.myProxy.stakePooltableData.dialogData.form;
+    tableColumns = this.myProxy.stakePooltableData.columns;
+    dialogData = this.myProxy.stakePooltableData.dialogData;
+    form = this.myProxy.stakePooltableData.dialogData.form;
 
-    private title = i18n.t("user_detail.prizePoolSettings");
-    private pool_type_title = i18n.t("user_detail.howToSet");
-    private poolType = 1;
-    private poolTypeOptions: any = {
-        1: i18n.t("user_detail.manualEntry"),
-        2: i18n.t("user_detail.percentageAuto"),
+    title = LangUtil("奖池设定");
+    pool_type_title = LangUtil("设定方式");
+    poolType = 1;
+    poolTypeOptions: any = {
+        1: LangUtil("手动输入"),
+        2: LangUtil("百分比自动"),
     };
-    private poolTypeMap = {
-        1: i18n.t("user_detail.dividendAmount"),
-        2: i18n.t("user_detail.percentage") + "%",
+    poolTypeMap = {
+        1: LangUtil("分红金额"),
+        2: LangUtil("百分比") + "%",
     };
     get rules() {
         return {
-            put_in_amount: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            put_in_ratio: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            put_in_amount: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            put_in_ratio: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
     get isManual() {
@@ -73,11 +75,11 @@ export default class PlatUserLogDialog extends AbstractView {
     }
 
     @Watch("form.pool_type")
-    private onPoolTypeChange(type: number) {
+    onPoolTypeChange(type: number) {
         this.myProxy.resetPoolDialog(type);
     }
 
-    private save() {
+    save() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.updateStakeConfig();

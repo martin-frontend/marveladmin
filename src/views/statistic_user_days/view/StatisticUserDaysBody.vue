@@ -9,9 +9,9 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column prop="created_date" :label="$t('common.date')" align="center" width="120">
+            <el-table-column prop="created_date" :label="LangUtil('日期')" align="center" width="120">
             </el-table-column>
-            <el-table-column :label="$t('common.userMsg')" align="center" min-width="160">
+            <el-table-column :label="LangUtil('用户信息')" align="center" min-width="160">
                 <template slot-scope="{ row }">
                     <div v-show="row.display !== true">
                         <div>
@@ -39,10 +39,10 @@
                             <span>{{ row.username }}</span>
                         </div>
                     </div>
-                    <div v-show="row.display === true">{{ $t("common.total") }}</div>
+                    <div v-show="row.display === true">{{ LangUtil("合计") }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('statistic_user_days.recharge')" align="center" width="160">
+            <el-table-column :label="LangUtil('充值')" align="center" width="160">
                 <template slot-scope="{ row }">
                     <div>
                         <div>
@@ -55,12 +55,12 @@
                         </div>
                         <div v-show="row.display !== true">
                             <span>{{ tableColumns["is_first_recharge"].name }}:</span>
-                            <span>{{ row.is_first_recharge === 0 ? $t("common.no") : $t("common.yes") }}</span>
+                            <span>{{ row.is_first_recharge === 0 ? LangUtil("否") : LangUtil("是") }}</span>
                         </div>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('statistic_user_days.exchange')" align="center" width="160">
+            <el-table-column :label="LangUtil('兑换')" align="center" width="160">
                 <template slot-scope="{ row }">
                     <div>
                         <div>
@@ -74,7 +74,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('statistic_user_days.promote')" width="160">
+            <el-table-column :label="LangUtil('推广')" width="160">
                 <template slot-scope="{ row }">
                     <div>
                         <div>
@@ -116,16 +116,16 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('statistic_user_days.bonus')" min-width="180">
+            <el-table-column :label="LangUtil('平台赠金')" min-width="180">
                 <template slot="header">
                     <el-tooltip
                         class="item"
                         effect="dark"
-                        :content="$t('statistic_user_days.bonusTip')"
+                        :content="LangUtil('平台赠送包活动、邮件 用户获得的金币')"
                         placement="top"
                     >
                         <div>
-                            <span>{{ $t("statistic_user_days.bonus") }}</span>
+                            <span>{{ LangUtil("平台赠金") }}</span>
                             <i class="el-icon-question"></i>
                         </div>
                     </el-tooltip>
@@ -171,7 +171,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('statistic_user_days.betting')" align="left" min-width="200">
+            <el-table-column :label="LangUtil('投注')" align="left" min-width="200">
                 <template slot-scope="{ row }">
                     <div>
                         <div>
@@ -209,7 +209,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('statistic_user_days.water')" align="left" min-width="200">
+            <el-table-column :label="LangUtil('流水')" align="left" min-width="200">
                 <template slot-scope="{ row }">
                     <div>
                         <span>{{ tableColumns["total_water"].name }}:</span>
@@ -245,7 +245,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('statistic_user_days.WinOrLose')" align="left" min-width="200">
+            <el-table-column :label="LangUtil('输赢')" align="left" min-width="200">
                 <template slot-scope="{ row }">
                     <div>
                         <span>{{ tableColumns["total_win_loss"].name }}:</span>
@@ -286,6 +286,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -302,26 +303,27 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class StatisticUserDaysBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: StatisticUserDaysProxy = this.getProxy(StatisticUserDaysProxy);
+    myProxy: StatisticUserDaysProxy = this.getProxy(StatisticUserDaysProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.onShowUserDetail(user_id);
     }
 }

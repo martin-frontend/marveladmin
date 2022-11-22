@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -112,16 +113,16 @@ export default class PlatUsersVipModelProxy extends AbstractProxy implements IPl
         });
     }
     /**types更新时调用 */
-    typesChange(){
+    typesChange() {
         const form = this.dialogData.form;
-        const vip_config:any = form.vip_config;
-        for(const vConf of vip_config){
+        const vip_config: any = form.vip_config;
+        for (const vConf of vip_config) {
             vConf.total_water = form.types.includes(1) ? vConf.total_water || 1000 : undefined;
             vConf.total_recharge = form.types.includes(2) ? vConf.total_recharge || 1000 : undefined;
         }
     }
     /**添加等级 */
-    addLevel(){
+    addLevel() {
         const newConfig: any = {
             total_water: 1000,
             total_recharge: 1000,
@@ -135,7 +136,7 @@ export default class PlatUsersVipModelProxy extends AbstractProxy implements IPl
         (this.dialogData.form.vip_config as any).push(newConfig);
     }
     /**删除等级 */
-    deleteLevel(index:number){
+    deleteLevel(index: number) {
         this.dialogData.form.vip_config.splice(index, 1);
     }
 
@@ -145,38 +146,35 @@ export default class PlatUsersVipModelProxy extends AbstractProxy implements IPl
     }
     /**添加数据 */
     onAdd() {
-        const {
-            name,
-            desc,
-            types,
-            vip_config
-        } = this.dialogData.form
+        const { name, desc, types, vip_config } = this.dialogData.form;
         const formCopy: any = {
             name,
             desc,
             types,
-            vip_config
+            vip_config,
         };
-        formCopy.types = JSON.stringify(formCopy.types)
-        formCopy.vip_config = JSON.stringify(formCopy.vip_config)
+        formCopy.types = JSON.stringify(formCopy.types);
+        formCopy.vip_config = JSON.stringify(formCopy.vip_config);
         this.sendNotification(HttpType.admin_plat_users_vip_model_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
     onUpdate() {
         // 原数据total_water/total_recharge 是小数点保留二位的字符串，更新前需要处理一下。
-        const vip_config:any = this.dialogData.form.vip_config;
-        for(const vConf of vip_config){
-            if(vConf.total_water && typeof vConf.total_water == "number") vConf.total_water = vConf.total_water.toFixed(2);
-            if(vConf.total_recharge  && typeof vConf.total_recharge == "number") vConf.total_recharge = vConf.total_recharge.toFixed(2);
+        const vip_config: any = this.dialogData.form.vip_config;
+        for (const vConf of vip_config) {
+            if (vConf.total_water && typeof vConf.total_water == "number")
+                vConf.total_water = vConf.total_water.toFixed(2);
+            if (vConf.total_recharge && typeof vConf.total_recharge == "number")
+                vConf.total_recharge = vConf.total_recharge.toFixed(2);
         }
         // 获取对比后的数据，并处理数组和对象
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
         // 删除多余无法去除的参数
         // TODO
         // 如果没有修改，就直接关闭弹窗
-        if(Object.keys(formCopy).length == 0){
+        if (Object.keys(formCopy).length == 0) {
             this.dialogData.bShow = false;
-            return ;
+            return;
         }
         // 添加必填参数
         formCopy.vip_model_id = this.dialogData.form.vip_model_id;
@@ -186,14 +184,14 @@ export default class PlatUsersVipModelProxy extends AbstractProxy implements IPl
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_users_vip_model_update, { vip_model_id: id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

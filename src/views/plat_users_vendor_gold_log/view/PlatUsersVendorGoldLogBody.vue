@@ -27,9 +27,13 @@
             </el-table-column>
             <el-table-column prop="order_at" :label="tableColumns['order_at'].name" width="150px" align="center">
             </el-table-column>
-            <el-table-column :label="$t('common.userMsg')" min-width="150px" align="center">
+            <el-table-column :label="LangUtil('用户信息')" min-width="150px" align="center">
                 <template slot-scope="{ row }">
-                    <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline" align="left">
+                    <div
+                        @click="showUserDetail(row.user_id)"
+                        style="cursor: pointer; text-decoration: underline"
+                        align="left"
+                    >
                         {{ tableColumns["user_id"].name }}：{{ row.user_id }}
                     </div>
                     <div align="left">{{ tableColumns["nick_name"].name }}：{{ row.nick_name }}</div>
@@ -61,7 +65,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('plat_agent_bind.note')" align="center">
+            <el-table-column :label="LangUtil('备注')" align="center">
                 <template slot-scope="{ row }">
                     <div v-if="row.status === 2">
                         {{ JSON.parse(row.response).third_response }}
@@ -70,15 +74,12 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="$t('common.operating')" align="center" width="320px">
+            <el-table-column :label="LangUtil('操作')" align="center" width="320px">
                 <template slot-scope="{ row }">
-                    <div v-if="checkUnique(unique.plat_users_vendor_gold_log_update_manual) && row.status === 1" >
-                        <el-button
-                            type="primary"
-                            size="small"
-                            @click="handlerAutoCheck(row.vendor_gold_log_id)"
-                            >{{ buttonParam.check }}</el-button
-                        >
+                    <div v-if="checkUnique(unique.plat_users_vendor_gold_log_update_manual) && row.status === 1">
+                        <el-button type="primary" size="small" @click="handlerAutoCheck(row.vendor_gold_log_id)">{{
+                            buttonParam.check
+                        }}</el-button>
                         <el-button
                             type="primary"
                             size="small"
@@ -100,6 +101,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -114,43 +116,44 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatUsersVendorGoldLogBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatUsersVendorGoldLogProxy = this.getProxy(PlatUsersVendorGoldLogProxy);
+    myProxy: PlatUsersVendorGoldLogProxy = this.getProxy(PlatUsersVendorGoldLogProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handlerUpdate(vendor_gold_log_id: any, status: any, title: string) {
+    handlerUpdate(vendor_gold_log_id: any, status: any, title: string) {
         this.myProxy.confirmData.vendor_gold_log_id = vendor_gold_log_id;
         this.myProxy.confirmData.status = status;
         this.myProxy.confirmData.title = title;
         this.myProxy.onUpdate();
     }
 
-    private handlerAutoCheck(vendor_gold_log_id: any){
+    handlerAutoCheck(vendor_gold_log_id: any) {
         this.myProxy.admin_plat_users_vendor_gold_log_auto_check(vendor_gold_log_id);
     }
 
-    private buttonParam = {
-        check: this.$t("plat_users_vendor_gold_log.btnTxtAutoCheck"),
-        fail: this.$t("plat_users_vendor_gold_log.btnTxtSetFail"),
-        success: this.$t("plat_users_vendor_gold_log.btnTxtSetSuccess"),
+    buttonParam = {
+        check: this.LangUtil("自动检测"),
+        fail: this.LangUtil("设置失败"),
+        success: this.LangUtil("设置成功"),
     };
 
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.onShowUserDetail(user_id);
     }
 }

@@ -22,4 +22,3 @@ const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_gold_water_table_columns, cmd_admin_gold_water_table_columns);
 facade.registerCommand(HttpType.admin_gold_water_index, cmd_admin_gold_water_index);
 facade.registerCommand(HttpType.admin_gold_water_approved, cmd_admin_gold_water_approved);
-

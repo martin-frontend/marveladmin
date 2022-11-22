@@ -1,14 +1,15 @@
 <template>
     <div>
         <el-tabs v-model="myProxy.tableData.activeName">
-            <el-tab-pane :label="$t('plat_email.PlatMail')" :name="EmailTab.Plat"> </el-tab-pane>
-            <el-tab-pane :label="$t('plat_email.UserMail')" :name="EmailTab.User"> </el-tab-pane>
+            <el-tab-pane :label="LangUtil('平台邮件列表')" :name="EmailTab.Plat"> </el-tab-pane>
+            <el-tab-pane :label="LangUtil('用户邮件列表')" :name="EmailTab.User"> </el-tab-pane>
         </el-tabs>
         <PlatEmailList v-if="isEmailList" />
         <PlatEmailUserList v-if="!isEmailList" />
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -28,20 +29,21 @@ import { EmailTab } from "../proxy/IPlatEmailProxy";
     },
 })
 export default class PlatEmailBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
+    myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
     // Iproxy property
-    private EmailTab = EmailTab;
+    EmailTab = EmailTab;
 
     get isEmailList() {
         return this.myProxy.tableData.activeName == EmailTab.Plat;

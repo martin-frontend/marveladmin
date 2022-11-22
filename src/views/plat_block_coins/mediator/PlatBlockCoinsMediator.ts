@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_block_coins/setting";
 import { Message } from "element-ui";
 import PlatBlockCoinsProxy from "../proxy/PlatBlockCoinsProxy";
 
-interface IPlatBlockCoins extends IEventDispatcher {
-
-}
+interface IPlatBlockCoins extends IEventDispatcher {}
 
 export default class PlatBlockCoinsMediator extends AbstractMediator {
     private myProxy: PlatBlockCoinsProxy = <any>this.getProxy(PlatBlockCoinsProxy);
@@ -30,7 +28,6 @@ export default class PlatBlockCoinsMediator extends AbstractMediator {
             EventType.admin_plat_block_coins_index,
             EventType.admin_plat_block_coins_store,
             EventType.admin_plat_block_coins_update,
-
         ];
     }
 
@@ -56,7 +53,6 @@ export default class PlatBlockCoinsMediator extends AbstractMediator {
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
-
         }
     }
 }

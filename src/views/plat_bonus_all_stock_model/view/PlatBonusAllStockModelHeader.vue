@@ -8,7 +8,7 @@
                     type="primary"
                     icon="el-icon-circle-plus-outline"
                     @click="handlerCreate()"
-                    >{{ $t("common.create") }}</el-button
+                    >{{ LangUtil("新增") }}</el-button
                 >
             </div>
         </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatBonusAllStockModelProxy from "../proxy/PlatBonusAllStockModelProxy";
@@ -24,25 +25,26 @@ import { checkUnique, unique } from "@/core/global/Permission";
 
 @Component
 export default class PlatBonusAllStockModelHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatBonusAllStockModelProxy = this.getProxy(PlatBonusAllStockModelProxy);
+    myProxy: PlatBonusAllStockModelProxy = this.getProxy(PlatBonusAllStockModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

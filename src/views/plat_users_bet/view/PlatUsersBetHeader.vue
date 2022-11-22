@@ -13,7 +13,7 @@
                 :startDate.sync="listQuery['bet_at-{>=}']"
                 :endDate.sync="listQuery['bet_at-{<=}']"
                 :showTime="true"
-                :tip="$t('plat_users_bet.defaultTime')"
+                :tip="LangUtil('（北京时间）')"
                 :pickerOptions="myProxy.pickerOptions"
             />
             <SearchDatePicker
@@ -21,7 +21,7 @@
                 :startDate.sync="listQuery['settlement_at-{>=}']"
                 :endDate.sync="listQuery['settlement_at-{<=}']"
                 :showTime="true"
-                :tip="$t('plat_users_bet.defaultTime')"
+                :tip="LangUtil('（北京时间）')"
                 :pickerOptions="myProxy.pickerOptions"
             />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
@@ -60,24 +60,24 @@
                 max="9999999"
                 :minValue.sync="listQuery['win_gold-{>=}']"
                 :maxValue.sync="listQuery['win_gold-{<}']"
-                :placeholders="[$t('common.minMoney'), $t('common.maxMoney')]"
+                :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             >
                 <el-radio-group v-model="winLoss" @change="onWinLossChange">
-                    <el-radio :label="0">{{ $t("plat_users_bet.loss") }}</el-radio>
-                    <el-radio :label="1">{{ $t("plat_users_bet.win") }}</el-radio>
+                    <el-radio :label="0">{{ LangUtil("输") }}</el-radio>
+                    <el-radio :label="1">{{ LangUtil("赢") }}</el-radio>
                 </el-radio-group>
             </SearchRange>
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
 
                 <el-button @click="exportExcel()" type="primary" icon="el-icon-download">{{
-                    $t("statistic_plat_days.export")
+                    LangUtil("导出")
                 }}</el-button>
             </div>
         </div>
@@ -85,6 +85,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatUsersBetProxy from "../proxy/PlatUsersBetProxy";
@@ -104,35 +105,36 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatUsersBetHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatUsersBetProxy = this.getProxy(PlatUsersBetProxy);
+    myProxy: PlatUsersBetProxy = this.getProxy(PlatUsersBetProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private winLoss: string = "";
-    private onWinLossChange(value: any) {
+    winLoss: string = "";
+    onWinLossChange(value: any) {
         this.listQuery["win_gold-{>=}"] = value ? 0 : "";
         this.listQuery["win_gold-{<}"] = value ? "" : 0;
     }
 
-    private exportExcel() {
+    exportExcel() {
         this.myProxy.onQueryAll();
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

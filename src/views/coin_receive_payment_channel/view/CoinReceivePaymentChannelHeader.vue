@@ -17,19 +17,19 @@
             <SearchInput :title="tableColumns.coin_wallet_ids.name" v-model="listQuery.coin_wallet_ids" />
             <div>
                 <el-button @click="handlerSearch" class="item" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset" class="item" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
         <!-- tabs -->
         <div>
             <el-tabs v-model="tabsName" @tab-click="typeChange">
-                <el-tab-pane :label="$t('coin_receive_payment_channel.tabsText1')" name="1"></el-tab-pane>
-                <el-tab-pane :label="$t('coin_receive_payment_channel.tabsText2')" name="2"></el-tab-pane>
-                <el-tab-pane :label="$t('coin_receive_payment_channel.tabsText3')" name="3"></el-tab-pane>
+                <el-tab-pane :label="LangUtil('银行卡')" name="1"></el-tab-pane>
+                <el-tab-pane :label="LangUtil('支付宝')" name="2"></el-tab-pane>
+                <el-tab-pane :label="LangUtil('微信')" name="3"></el-tab-pane>
             </el-tabs>
         </div>
         <div class="add_btn">
@@ -39,10 +39,10 @@
                 type="primary"
                 icon="el-icon-circle-plus-outline"
                 v-if="checkUnique(unique.coin_receive_payment_channel_store)"
-                >{{ $t("common.create") }}</el-button
+                >{{ LangUtil("新增") }}</el-button
             >
             <el-button @click="handlerReload()" class="item" icon="el-icon-refresh" type="primary">{{
-                $t("coin_receive_payment_channel.refresh")
+                LangUtil("刷新")
             }}</el-button>
         </div>
         <!-- table -->
@@ -50,6 +50,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import CoinReceivePaymentChannelProxy from "../proxy/CoinReceivePaymentChannelProxy";
@@ -65,34 +66,35 @@ import SearchInput from "@/components/SearchInput.vue";
     },
 })
 export default class CoinReceivePaymentChannelHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: CoinReceivePaymentChannelProxy = this.getProxy(CoinReceivePaymentChannelProxy);
+    myProxy: CoinReceivePaymentChannelProxy = this.getProxy(CoinReceivePaymentChannelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
-    private tabsName = this.myProxy.tabsName;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
+    tabsName = this.myProxy.tabsName;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 
-    private handlerReload() {
+    handlerReload() {
         this.myProxy.onQuery();
     }
 
-    private typeChange({ name }: any) {
+    typeChange({ name }: any) {
         this.myProxy.onTypeChange(name);
     }
 }

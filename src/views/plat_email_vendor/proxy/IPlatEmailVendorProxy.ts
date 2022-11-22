@@ -3,18 +3,18 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface IPlatEmailVendorProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
     };
 
     /**设置表头数据 */
@@ -43,9 +43,9 @@ export default interface IPlatEmailVendorProxy {
 
     /**讯息测试弹窗数据 */
     messageDialogData: {
-        bShow: boolean,
-        form: any
-    }
+        bShow: boolean;
+        form: any;
+    };
     /**显示简讯弹窗 */
     showMessageDialog(data: any): void;
     /**隐藏简讯弹窗 */

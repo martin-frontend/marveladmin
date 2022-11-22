@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatChannelDialog/>
-        <PlatChannelHeader/>
-        <PlatChannelBody/>
+        <PlatChannelDialog />
+        <PlatChannelHeader />
+        <PlatChannelBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import PlatChannelBody from "./PlatChannelBody.vue";
         PlatChannelDialog,
         PlatChannelHeader,
         PlatChannelBody,
-    }
+    },
 })
 export default class PlatChannel extends AbstractView {
-
     constructor() {
         super(PlatChannelMediator);
     }

@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -51,12 +52,12 @@ export default class PlatBlacklistMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_plats_blacklist_update:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
             case EventType.admin_plats_blacklist_delete_batch:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.onQuery();
                 break;
         }

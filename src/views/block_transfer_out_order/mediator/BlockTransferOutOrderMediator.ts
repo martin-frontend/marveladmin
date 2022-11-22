@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/block_transfer_out_order/setting";
 import { Message } from "element-ui";
 import BlockTransferOutOrderProxy from "../proxy/BlockTransferOutOrderProxy";
 
-interface IBlockTransferOutOrder extends IEventDispatcher {
-
-}
+interface IBlockTransferOutOrder extends IEventDispatcher {}
 
 export default class BlockTransferOutOrderMediator extends AbstractMediator {
     private myProxy: BlockTransferOutOrderProxy = <any>this.getProxy(BlockTransferOutOrderProxy);
@@ -25,11 +23,7 @@ export default class BlockTransferOutOrderMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_block_transfer_out_order_table_columns,
-            EventType.admin_block_transfer_out_order_index,
-
-        ];
+        return [EventType.admin_block_transfer_out_order_table_columns, EventType.admin_block_transfer_out_order_index];
     }
 
     handleNotification(notification: puremvc.INotification) {

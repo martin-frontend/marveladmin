@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -67,22 +68,19 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         params_probability: "", //独立规则-第二参数值
     };
     /**活动规则 */
-    activityRules: any =
-        {
-            name: "", //大规则名称
-            rule_num: 1, //大规则ID
-            run_type: "1", //结算次数:1-多次结算|2-单次结算
-            icon: "",
-            open_mode: "",
-            list: [
-                {
-                    name: "", //子规则名称
-                    list: [
-                        JSON.parse(JSON.stringify(this.conditionRule))
-                    ],
-                },
-            ],
-        };
+    activityRules: any = {
+        name: "", //大规则名称
+        rule_num: 1, //大规则ID
+        run_type: "1", //结算次数:1-多次结算|2-单次结算
+        icon: "",
+        open_mode: "",
+        list: [
+            {
+                name: "", //子规则名称
+                list: [JSON.parse(JSON.stringify(this.conditionRule))],
+            },
+        ],
+    };
 
     /**预设弹窗数据 */
     defaultForm = {
@@ -101,7 +99,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         category: "",
         is_once: "",
         rules: [JSON.parse(JSON.stringify(this.activityRules))],
-    }
+    };
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -196,14 +194,14 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             rules: JSON.stringify(this.dialogData.form.rules),
             award_types: JSON.stringify(this.dialogData.form.award_types),
             show_types: JSON.stringify(this.dialogData.form.show_types),
-        })
+        });
         this.sendNotification(HttpType.admin_plat_activity_model_update, objectRemoveNull(formCopy));
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -212,11 +210,11 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
                     rules: JSON.stringify(this.dialogData.form.rules),
                     award_types: JSON.stringify(this.dialogData.form.award_types),
                     show_types: JSON.stringify(this.dialogData.form.show_types),
-                    is_delete: 1
-                })
+                    is_delete: 1,
+                });
                 this.sendNotification(HttpType.admin_plat_activity_model_update, formCopy);
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**平台数据 */
@@ -230,7 +228,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             authorize_plats: <any>[],
             all_plats: {},
         },
-        formSource: null // 表单的原始数据
+        formSource: null, // 表单的原始数据
     };
     /** 活动规则数据 */
     activityRuleList: any = [];
@@ -266,7 +264,9 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         this.platSettingDialogData.form = data;
         this.platSettingDialogData.formSource = JSON.parse(JSON.stringify(data));
         this.platSettingDialogData.bShow = true;
-        this.platSettingDialogData.selectedAll = this.platSettingDialogData.form.authorize_plats.length == Object.keys(this.platSettingDialogData.form.all_plats).length;
+        this.platSettingDialogData.selectedAll =
+            this.platSettingDialogData.form.authorize_plats.length ==
+            Object.keys(this.platSettingDialogData.form.all_plats).length;
     }
     /**更新活动模型平台授权数据 */
     onUpdatePlatSetting() {

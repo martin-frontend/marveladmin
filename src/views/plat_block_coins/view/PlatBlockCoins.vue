@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatBlockCoinsDialog v-if="myProxy.dialogData.bShow"/>
-        <PlatBlockCoinsHeader/>
-        <PlatBlockCoinsBody/>
+        <PlatBlockCoinsDialog v-if="myProxy.dialogData.bShow" />
+        <PlatBlockCoinsHeader />
+        <PlatBlockCoinsBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import PlatBlockCoinsBody from "./PlatBlockCoinsBody.vue";
         PlatBlockCoinsDialog,
         PlatBlockCoinsHeader,
         PlatBlockCoinsBody,
-    }
+    },
 })
 export default class PlatBlockCoins extends AbstractView {
-
     constructor() {
         super(PlatBlockCoinsMediator);
     }

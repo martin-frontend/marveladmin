@@ -6,12 +6,7 @@
                     {{ tableColumns.plat_id.options[form.plat_id] }}
                 </template>
                 <template v-else>
-                    <el-select
-                        v-model="form.plat_id"
-                        filterable
-                        class="select"
-                        :placeholder="$t('common.pleaseChoose')"
-                    >
+                    <el-select v-model="form.plat_id" filterable class="select" :placeholder="LangUtil('请选择')">
                         <el-option
                             v-for="(value, key) in tableColumns.plat_id.options"
                             :key="key"
@@ -24,38 +19,46 @@
 
             <el-form-item :label="`${tableColumns.title.name}`" prop="title">
                 <div class="flex d-flex">
-                        <el-input
-                            style="margin-right: 0.8rem"
-                            type="textarea"
-                            maxlength="30"
-                            filterable
-                            clearable
-                            show-word-limit
-                            :readonly="readonly"
-                            :placeholder="`${tableColumns.title.name}`"
-                            v-model="form.title"
-                        ></el-input>
-                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.title)">翻译</el-button>
-                    </div>
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        type="textarea"
+                        maxlength="30"
+                        filterable
+                        clearable
+                        show-word-limit
+                        :readonly="readonly"
+                        :placeholder="`${tableColumns.title.name}`"
+                        v-model="form.title"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.title)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <el-form-item :label="`${tableColumns.content.name}`" prop="content">
                 <div class="flex d-flex">
-                        <el-input
-                            style="margin-right: 0.8rem"
-                            type="textarea"
-                            maxlength="300"
-                            :rows="5"
-                            filterable
-                            clearable
-                            show-word-limit
-                            :readonly="readonly"
-                            class="select"
-                            :placeholder="`${tableColumns.content.name}`"
-                            v-model="form.content"
-                        ></el-input>
-                        <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.content)">翻译</el-button>
-                    </div>
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        type="textarea"
+                        maxlength="300"
+                        :rows="5"
+                        filterable
+                        clearable
+                        show-word-limit
+                        :readonly="readonly"
+                        class="select"
+                        :placeholder="`${tableColumns.content.name}`"
+                        v-model="form.content"
+                    ></el-input>
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.content)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns.cate.name" prop="cate">
@@ -88,13 +91,13 @@
                 {{ form.receive_users }}
             </el-form-item>
             <template v-if="isGroupMail && !readonly">
-                <el-form-item size="mini" :label="$t('plat_email.sendUser')" prop="user_list">
+                <el-form-item size="mini" :label="LangUtil('发送用户')" prop="user_list">
                     <div class="send_users">
                         <el-input
                             size="medium"
                             filterable
                             clearable
-                            :placeholder="$t('plat_email.requireInput')"
+                            :placeholder="LangUtil('请输入单个或多个用户')"
                             v-model.trim="form.user_list"
                             oninput="value=value.replace(/[^\d,]/g,'')"
                             style="margin-right: 0.8rem"
@@ -108,16 +111,18 @@
                             @change="handleClick"
                         />
 
-                        <el-button @click="onImportUser()" type="primary" icon="">{{ $t("plat_email.importUser") }}</el-button>
-                        <el-button @click="onLoadModule()" type="primary" icon="">{{ $t("plat_email.downloadModule") }}</el-button>
+                        <el-button @click="onImportUser()" type="primary" icon="">{{ LangUtil("导入用户") }}</el-button>
+                        <el-button @click="onLoadModule()" type="primary" icon="">{{
+                            LangUtil("下载导入模版")
+                        }}</el-button>
                     </div>
-                    <div class="mark_font">{{ $t("plat_email.userRule") }}</div>
+                    <div class="mark_font">{{ LangUtil("用户ID, 多个用户使用英文逗号", "区分") }}</div>
                 </el-form-item>
             </template>
             <template v-if="!readonly && checkUnique(unique.plat_email_store_attachment)">
                 <el-form-item size="mini" :label="tableColumns.attachment_content.name" class="additional-bonus">
-                    <el-button @click="onAddBonus()" type="success">{{ $t("plat_email.addReward") }}</el-button>
-                    <span class="mark_font">{{ $t("plat_email.atMost") }}</span>
+                    <el-button @click="onAddBonus()" type="success">{{ LangUtil("添加奖励") }}</el-button>
+                    <span class="mark_font">{{ LangUtil("最多增加五个奖励") }}</span>
                 </el-form-item>
             </template>
             <el-form-item
@@ -139,18 +144,25 @@
                             @keydown.native="inputOnlyPositive"
                         ></el-input>
                         <div class="mark_font">
-                            {{ $t("plat_email.attachDesc") }}
+                            {{
+                                LangUtil(
+                                    "附件奖励为金币的时候有作用, 该笔金币奖励满足: 提领流水倍数X奖励金币数量才可提现"
+                                )
+                            }}
                         </div>
                     </template>
                 </div>
             </el-form-item>
             <el-form-item size="mini" v-for="(item, index) in form.attachment_content" :key="index">
-                <template v-if="readonly">
-                    {{ index }}：{{ item }}
-                </template>
+                <template v-if="readonly"> {{ index }}：{{ item }} </template>
                 <template v-if="!readonly">
-                    <el-button style="margin-right: 8px" size="mini" @click="onDeleteBonus(item)" type="primary" icon=""
-                        >{{ $t("common.delete") }}</el-button
+                    <el-button
+                        style="margin-right: 8px"
+                        size="mini"
+                        @click="onDeleteBonus(item)"
+                        type="primary"
+                        icon=""
+                        >{{ LangUtil("删除") }}</el-button
                     >
                     <el-select
                         style="margin-right: 8px; width: 120px"
@@ -177,16 +189,22 @@
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <div class="delete">
-                    <el-button v-if="readonly && this.form.status != 99" @click="handleDelete()" type="danger" icon=""
-                        >{{ $t("plat_email.revodeEmail") }}</el-button
+                    <el-button
+                        v-if="readonly && this.form.status != 99"
+                        @click="handleDelete()"
+                        type="danger"
+                        icon=""
+                        >{{ LangUtil("撤销邮件") }}</el-button
                     >
                 </div>
                 <div class="submit">
                     <div style="">
-                        <el-button v-if="!readonly" @click="handleAdd()" type="primary" icon="">{{ $t("plat_email.submitEmail") }}</el-button>
+                        <el-button v-if="!readonly" @click="handleAdd()" type="primary" icon="">{{
+                            LangUtil("发送邮件")
+                        }}</el-button>
                     </div>
                     <div v-if="!readonly" class="mark_font" style="margin-top: 0.5rem">
-                        {{ $t("plat_email.emailDesc") }}
+                        {{ LangUtil("默认: 邮件发送日起 30日后失效") }}
                     </div>
                 </div>
             </el-form-item>
@@ -196,6 +214,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatEmailProxy from "@/views/plat_email/proxy/PlatEmailProxy";
@@ -223,37 +242,38 @@ import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
         // 邮件类型描述
         emailTypeDesc(type: any) {
             const typeMap: any = {
-                1: i18n.t("plat_email.emailTypeDesc1"),
-                2: i18n.t("plat_email.emailTypeDesc2"),
-                3: i18n.t("plat_email.emailTypeDesc3"),
+                1: LangUtil("在时间范围内，无论新老用户都能领取该邮件"),
+                2: LangUtil("只有发送时间以前的用户才能领取邮件"),
+                3: LangUtil("指定用户获得邮件"),
             };
             return typeMap[type];
         },
     },
 })
 export default class PlatEmailDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
-    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+    myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
-    private readonly = this.myProxy.dialogData.readonly;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
+    readonly = this.myProxy.dialogData.readonly;
     // Global Function
-    private inputOnlyPositive = inputOnlyPositive;
+    inputOnlyPositive = inputOnlyPositive;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -278,26 +298,26 @@ export default class PlatEmailDialog extends AbstractView {
 
     get rules() {
         return {
-            plat_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            title: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            content: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            cate: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            user_list: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            plat_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            title: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            cate: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            user_list: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
-            let atMostUser:any = this.$t("plat_email.atMostUser")
-            let emailConfirm:any = this.$t("plat_email.emailConfirm")
-            let prompt:any = this.$t("common.prompt")
-            let determine:any = this.$t("common.determine")
-            let cancel:any = this.$t("common.cancel")
+            let atMostUser: any = this.LangUtil("最多群发1000个用户");
+            let emailConfirm: any = this.LangUtil("发布以后邮件不能修改，确定发布?");
+            let prompt: any = this.LangUtil("提示");
+            let determine: any = this.LangUtil("确定");
+            let cancel: any = this.LangUtil("取消");
             if (valid) {
                 let userCount: number = this.myProxy.dialogData.form.user_list.split(",").length;
                 if (userCount > 1000) {
-                    this.$message.warning(atMostUser );
+                    this.$message.warning(atMostUser);
                     return;
                 }
                 this.$confirm(emailConfirm, prompt, {
@@ -313,7 +333,7 @@ export default class PlatEmailDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.content_id);
     }
 
@@ -328,13 +348,19 @@ export default class PlatEmailDialog extends AbstractView {
         this.form.user_list = userList;
     }
     // 汇入用户excel
-    private onImportUser() {
+    onImportUser() {
         (this.$refs["excel-upload-input"] as any).click();
     }
     // 载入模组
-    private onLoadModule() {
-        let emailTemplate:any = this.$t("plat_email.emailTemplate")
-        new BaseInfo.ExportExcel(`【` + emailTemplate + `】${this.curTime}`, [], this.myProxy.dialogData.excelColumnInfo, [], []);
+    onLoadModule() {
+        let emailTemplate: any = this.LangUtil("邮件模版");
+        new BaseInfo.ExportExcel(
+            `【` + emailTemplate + `】${this.curTime}`,
+            [],
+            this.myProxy.dialogData.excelColumnInfo,
+            [],
+            []
+        );
     }
     // 添加奖励
     onAddBonus() {

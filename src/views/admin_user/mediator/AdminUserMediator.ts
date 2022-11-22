@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/admin_user/setting";
 import { Message } from "element-ui";
 import AdminUserProxy from "../proxy/AdminUserProxy";
 
-interface IAdminUser extends IEventDispatcher {
-    
-}
+interface IAdminUser extends IEventDispatcher {}
 
 export default class AdminUserMediator extends AbstractMediator {
     private myProxy: AdminUserProxy = <any>this.getProxy(AdminUserProxy);
@@ -31,7 +29,7 @@ export default class AdminUserMediator extends AbstractMediator {
             EventType.admin_admin_user_show,
             EventType.admin_admin_user_store,
             EventType.admin_admin_user_update,
-            EventType.admin_plat_channel_index
+            EventType.admin_plat_channel_index,
         ];
     }
 

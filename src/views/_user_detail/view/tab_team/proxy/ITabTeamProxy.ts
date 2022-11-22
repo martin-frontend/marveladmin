@@ -22,7 +22,7 @@ export class MemberTree {
         nick_name: "",
         directly_users: 0,
         group_users: 0,
-        children: []
+        children: [],
     };
     // 实体资料
     private _list: IMember[] = [];
@@ -51,8 +51,8 @@ export class MemberTree {
             nick_name: data.nick_name,
             directly_users: data.directly_users,
             group_users: data.group_users,
-            children: []
-        })
+            children: [],
+        });
         this._list.push(this._rootNode);
         this._viewList = JSON.parse(JSON.stringify(this._list));
         this.updateViewList(this._viewList[0]);
@@ -70,8 +70,8 @@ export class MemberTree {
                 directly_users: 0,
                 bind_relation: node.bind_relation,
                 page_count: node.page_count,
-                children: []
-            }
+                children: [],
+            };
             node.hasMore = false;
             node.children.push(getMoreNode);
         }
@@ -86,8 +86,8 @@ export class MemberTree {
                 directly_users: 0,
                 bind_relation: node.bind_relation,
                 page_count: node.page_count,
-                children: []
-            }
+                children: [],
+            };
             node.hasMore = false;
             let parent_node = this.getNode(this._viewList[0], node.invite_user_id);
             if (parent_node) {
@@ -107,7 +107,7 @@ export class MemberTree {
         let pageCurrent: number = 0;
         let hasMore: boolean = false;
         if (data.pageInfo.pageCount && data.pageInfo.pageCurrent) {
-            hasMore = (data.pageInfo.pageCount > data.pageInfo.pageCurrent);
+            hasMore = data.pageInfo.pageCount > data.pageInfo.pageCurrent;
             pageCurrent = data.pageInfo.pageCurrent;
         }
 
@@ -118,7 +118,7 @@ export class MemberTree {
             data.list.forEach(element => {
                 let member: IMember = {
                     level: node!.level + 1,
-                    hasMore: (element.directly_users > 0),
+                    hasMore: element.directly_users > 0,
                     invite_user_id: element.invite_user_id,
                     user_id: element.user_id,
                     username: element.username,
@@ -126,8 +126,8 @@ export class MemberTree {
                     nick_name: element.nick_name,
                     directly_users: element.directly_users,
                     page_count: 0,
-                    children: []
-                }
+                    children: [],
+                };
                 node!.children.push(member);
                 i++;
             });
@@ -163,20 +163,20 @@ export class MemberTree {
     }
 }
 interface IMember {
-    level: number,
-    user_id: string,
-    username?: string,
-    nick_name?: string,
-    directly_users: number,
-    group_users?: number,
-    children: IMember[],
-    bind_relation: string,
-    invite_user_id: string,
+    level: number;
+    user_id: string;
+    username?: string;
+    nick_name?: string;
+    directly_users: number;
+    group_users?: number;
+    children: IMember[];
+    bind_relation: string;
+    invite_user_id: string;
     // 是否加载
-    hasMore?: boolean,
-    page_count?: number,
+    hasMore?: boolean;
+    page_count?: number;
 }
 interface IMemberData {
-    list: IMember[],
-    pageInfo: PageInfoVO
+    list: IMember[];
+    pageInfo: PageInfoVO;
 }

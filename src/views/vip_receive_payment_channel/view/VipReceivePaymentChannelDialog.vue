@@ -2,31 +2,32 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
-                <el-select v-model="form.plat_id" :placeholder="$t('common.pleaseChoose')">
+                <el-select v-model="form.plat_id" :placeholder="LangUtil('请选择')">
                     <el-option v-for="(item, key) of platIdOptions" :label="item" :value="key" :key="key"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.title.name" prop="title">
-                <el-input v-model="form.title" maxlength="30" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.title" maxlength="30" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item :label="tableColumns.url.name" prop="url">
-                <el-input v-model="form.url" maxlength="300" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.url" maxlength="300" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('common.status')" prop="status">
-                <el-radio v-model="form.status" label="1">{{ $t("common.normal") }}</el-radio>
-                <el-radio v-model="form.status" label="98">{{ $t("common.close") }}</el-radio>
+            <el-form-item :label="LangUtil('状态')" prop="status">
+                <el-radio v-model="form.status" label="1">{{ LangUtil("正常") }}</el-radio>
+                <el-radio v-model="form.status" label="98">{{ LangUtil("关闭") }}</el-radio>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ $t("common.delete") }}</el-button>
+            <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ LangUtil("删除") }}</el-button>
             <el-button type="primary" @click="isStatusUpdate ? handleUpdate('ruleForm') : handleAdd('ruleForm')">{{
-                $t("common.save")
+                LangUtil("确认保存")
             }}</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import VipReceivePaymentChannelProxy from "@/views/vip_receive_payment_channel/proxy/VipReceivePaymentChannelProxy";
@@ -38,24 +39,25 @@ import i18n from "@/lang";
 
 @Component
 export default class VipReceivePaymentChannelDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: VipReceivePaymentChannelProxy = this.getProxy(VipReceivePaymentChannelProxy);
+    myProxy: VipReceivePaymentChannelProxy = this.getProxy(VipReceivePaymentChannelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: i18n.t("common.update"),
-        create: i18n.t("common.create"),
+    textMap = {
+        update: LangUtil("编辑"),
+        create: LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -77,20 +79,20 @@ export default class VipReceivePaymentChannelDialog extends AbstractView {
 
     get rules() {
         return {
-            plat_id: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "blur" }],
+            plat_id: [{ required: true, message: LangUtil("必须填写"), trigger: "blur" }],
             title: [
-                { required: true, message: i18n.t("common.requiredInput"), trigger: "blur" },
-                { max: 30, message: i18n.t("vip_receive_payment_channel.errorCode30"), trigger: "blur" },
+                { required: true, message: LangUtil("必须填写"), trigger: "blur" },
+                { max: 30, message: LangUtil("30个字符限制"), trigger: "blur" },
             ],
             url: [
-                { required: true, message: i18n.t("common.requiredInput"), trigger: "blur" },
-                { max: 200, message: i18n.t("vip_receive_payment_channel.errorCode200"), trigger: "blur" },
+                { required: true, message: LangUtil("必须填写"), trigger: "blur" },
+                { max: 200, message: LangUtil("200个字符限制"), trigger: "blur" },
             ],
-            status: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "blur" }],
+            status: [{ required: true, message: LangUtil("必须选择"), trigger: "blur" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -98,7 +100,7 @@ export default class VipReceivePaymentChannelDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -106,7 +108,7 @@ export default class VipReceivePaymentChannelDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 }

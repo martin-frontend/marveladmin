@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -5,7 +6,6 @@ import { HttpType } from "@/views/statistic_plat_coin_days_date/setting";
 import { MessageBox } from "element-ui";
 import IStatisticPlatCoinDaysDateProxy from "./IStatisticPlatCoinDaysDateProxy";
 import { exportJson2Excel } from "@/core/global/Excel";
-import i18n from "@/lang";
 
 export default class StatisticPlatCoinDaysDateProxy extends AbstractProxy implements IStatisticPlatCoinDaysDateProxy {
     static NAME = "StatisticPlatCoinDaysDateProxy";
@@ -41,16 +41,16 @@ export default class StatisticPlatCoinDaysDateProxy extends AbstractProxy implem
             swap_amount: { name: "SWAP交易", options: {} },
             swap_fee_amount: { name: "SWAP交易手续费", options: {} },
             commission_amount: { name: "推广返佣", options: {} },
-            commission_received_amount: { name: '推广赚钱已领', options: {} },
+            commission_received_amount: { name: "推广赚钱已领", options: {} },
             backwater_amount: { name: "游戏挖矿", options: {} },
             stake_bonus_amount: { name: "质押分红", options: {} },
-            stake_bonus_fee_amount: { name: '解质押手续费', options: {} },
-            stake_bonus_pool_amount: { name: '质押奖池', options: {} },
-            stake_bonus_received_amount: { name: '质押分红已领', options: {} },
+            stake_bonus_fee_amount: { name: "解质押手续费", options: {} },
+            stake_bonus_pool_amount: { name: "质押奖池", options: {} },
+            stake_bonus_received_amount: { name: "质押分红已领", options: {} },
             mail_awards_amount: { name: "邮件奖励（人工）", options: {} },
-            mail_awards_received_amount: { name: '邮件奖励(人工)已领', options: {} },
+            mail_awards_received_amount: { name: "邮件奖励(人工)已领", options: {} },
             activity_awards_amount: { name: "活动奖励", options: {} },
-            activity_awards_received_amount: { name: '活动奖励已领', options: {} },
+            activity_awards_received_amount: { name: "活动奖励已领", options: {} },
             manual_deduct_amount: { name: "人工扣款", options: {} },
             win_loss_amount: { name: "游戏输赢", options: {} },
             // data_belong: {name: '数据归属标记', options: {}, display: true },
@@ -130,13 +130,16 @@ export default class StatisticPlatCoinDaysDateProxy extends AbstractProxy implem
             page_count: 1,
             page_size: 20,
             coin_name_unique: "",
-            plat_id: ""
+            plat_id: "",
         });
     }
 
     /**查询 */
     onQuery() {
-        this.sendNotification(HttpType.admin_statistic_plat_coin_days_statistic_by_date, objectRemoveNull(this.listQuery));
+        this.sendNotification(
+            HttpType.admin_statistic_plat_coin_days_statistic_by_date,
+            objectRemoveNull(this.listQuery)
+        );
     }
 
     /**取导出资料 */
@@ -166,7 +169,7 @@ export default class StatisticPlatCoinDaysDateProxy extends AbstractProxy implem
 
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any) {
-        return arr1.concat(arr2).filter(function (v: any, i: any, arr: any) {
+        return arr1.concat(arr2).filter(function(v: any, i: any, arr: any) {
             return arr.indexOf(v) === arr.lastIndexOf(v);
         });
     }
@@ -176,7 +179,7 @@ export default class StatisticPlatCoinDaysDateProxy extends AbstractProxy implem
         return listData.map((data: any) =>
             filterKeys.map((key: string) => {
                 if (key === "plat_id") {
-                    return data.plat_id ? this.tableData.columns["plat_id"].options[data.plat_id] : '合计';
+                    return data.plat_id ? this.tableData.columns["plat_id"].options[data.plat_id] : "合计";
                 }
                 return data[key];
             })
@@ -190,12 +193,12 @@ export default class StatisticPlatCoinDaysDateProxy extends AbstractProxy implem
         if (this.listQuery.plat_id !== "0") {
             let str: any =
                 this.listQuery.plat_id == "0"
-                    ? i18n.t("common.platIdAll")
+                    ? LangUtil("所有平台")
                     : this.tableData.columns["plat_id"].options[this.listQuery.plat_id];
             // fileFirstName = `平台每日统计[${str}]`;
-            fileFirstName = i18n.t("exportFileNamePart1.exportFileName", { "0": str });
+            fileFirstName = LangUtil("平台每日统计[{0}]", str);
         } else {
-            fileFirstName = i18n.t("statistic_plat_days.exportFileName");
+            fileFirstName = LangUtil("平台每日统计[所有平台]");
         }
         return `${fileFirstName}${fileLastName}`;
     }

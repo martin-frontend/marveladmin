@@ -1,7 +1,7 @@
 <template>
     <div class="content">
-        <PlatUsersGoldLogHeader/>
-        <PlatUsersGoldLogBody/>
+        <PlatUsersGoldLogHeader />
+        <PlatUsersGoldLogBody />
     </div>
 </template>
 
@@ -16,10 +16,9 @@ import PlatUsersGoldLogBody from "./PlatUsersGoldLogBody.vue";
     components: {
         PlatUsersGoldLogHeader,
         PlatUsersGoldLogBody,
-    }
+    },
 })
 export default class PlatUsersGoldLog extends AbstractView {
-
     constructor() {
         super(PlatUsersGoldLogMediator);
     }

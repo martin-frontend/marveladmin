@@ -1,8 +1,5 @@
 <template>
-    <el-dialog
-        :title="$t('plat_activity_model.activityModuleAuthorization')"
-        :visible.sync="platSettingDialogData.bShow"
-    >
+    <el-dialog :title="LangUtil('活动模型平台授权')" :visible.sync="platSettingDialogData.bShow">
         <el-checkbox-group v-model="platSettingDialogData.form.authorize_plats">
             <el-checkbox
                 v-for="(value, key) in platSettingDialogData.form.all_plats"
@@ -15,7 +12,7 @@
         </el-checkbox-group>
         <div slot="footer" class="dialog-footer plat">
             <el-checkbox v-model="platSettingDialogData.selectedAll" @change="handleCheckAllChange">
-                {{ $t("plat_activity_model.selectAll") }}
+                {{ LangUtil("选择全部") }}
             </el-checkbox>
             <div>
                 <el-button
@@ -23,14 +20,15 @@
                     type="primary"
                     size="mini"
                     @click="onSave"
-                    >{{ $t("common.save") }}</el-button
+                    >{{ LangUtil("确认保存") }}</el-button
                 >
-                <el-button size="mini" @click="onCancel"> {{ $t("common.cancel") }} </el-button>
+                <el-button size="mini" @click="onCancel"> {{ LangUtil("取消") }} </el-button>
             </div>
         </div>
     </el-dialog>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import { Component, Vue } from "vue-property-decorator";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -39,15 +37,16 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatSettingDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
+    myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
 
     get platSettingDialogData() {
         return this.myProxy.platSettingDialogData;
@@ -63,10 +62,10 @@ export default class PlatSettingDialog extends AbstractView {
             this.platSettingDialogData.form.authorize_plats = [];
         }
     }
-    private onSave() {
+    onSave() {
         this.myProxy.onUpdatePlatSetting();
     }
-    private onCancel() {
+    onCancel() {
         this.myProxy.hidePlatSettingDialog();
     }
 }

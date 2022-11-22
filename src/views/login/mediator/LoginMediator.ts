@@ -11,7 +11,6 @@ export interface ILogin extends IEventDispatcher {
     loginFailed(): void;
 }
 export default class LoginMediator extends AbstractMediator {
-
     private selfModel!: SelfModel;
 
     onRegister() {
@@ -28,16 +27,12 @@ export default class LoginMediator extends AbstractMediator {
         this.sendNotification(HttpType.admin_admin_user_login, data);
     }
 
-    private getGoogleKey(data: any){
+    private getGoogleKey(data: any) {
         this.sendNotification(HttpType.admin_admin_user_google_key, data);
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_admin_user_login,
-            EventType.admin_admin_user_mine,
-            GlobalEventType.REQUEST_END
-        ];
+        return [EventType.admin_admin_user_login, EventType.admin_admin_user_mine, GlobalEventType.REQUEST_END];
     }
 
     handleNotification(notification: puremvc.INotification) {
@@ -56,9 +51,9 @@ export default class LoginMediator extends AbstractMediator {
                     break;
                 case EventType.admin_admin_user_mine:
                     // if (this.selfModel.userInfo.type > 4) {
-                        router.replace("/layout");
+                    router.replace("/layout");
                     // } else {
-                        // router.replace("/layout/dashboard");
+                    // router.replace("/layout/dashboard");
                     // }
                     break;
                 case GlobalEventType.REQUEST_END:

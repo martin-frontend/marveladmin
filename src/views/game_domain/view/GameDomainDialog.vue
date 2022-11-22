@@ -2,7 +2,7 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="95px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
-                <el-select filterable clearable v-model="form.plat_id" :placeholder="$t('common.pleaseChoose')">
+                <el-select filterable clearable v-model="form.plat_id" :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(item, key) of tableColumns.plat_id.options"
                         :key="item"
@@ -12,16 +12,16 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.channel_id.name" prop="channel_id">
-                <el-input type="text" v-model="form.channel_id" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input type="text" v-model="form.channel_id" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item :label="tableColumns.domain.name" prop="domain">
-                <el-input v-model.number="form.domain" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model.number="form.domain" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item :label="tableColumns.api_domain.name" prop="api_domain">
-                <el-input v-model.number="form.api_domain" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model.number="form.api_domain" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item :label="tableColumns.cdn_domain.name" prop="cdn_domain">
-                <el-input v-model.number="form.cdn_domain" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model.number="form.cdn_domain" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item :label="tableColumns.remark.name" prop="remark">
                 <el-input
@@ -29,16 +29,16 @@
                     maxlength="100"
                     show-word-limit
                     v-model="form.remark"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                 ></el-input>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="danger" @click="handleDelete">{{ $t("common.delete") }}</el-button>
+                <el-button type="danger" @click="handleDelete">{{ LangUtil("删除") }}</el-button>
                 <el-button
                     type="primary"
                     v-if="checkUnique(unique.game_domain_update)"
                     @click="isStatusUpdate ? handleUpdate() : handleAdd()"
-                    >{{ $t("common.save") }}</el-button
+                    >{{ LangUtil("确认保存") }}</el-button
                 >
             </el-form-item>
         </el-form>
@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import GameDomainProxy from "@/views/game_domain/proxy/GameDomainProxy";
@@ -57,24 +58,25 @@ import i18n from "@/lang";
 
 @Component
 export default class GameDomainDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: GameDomainProxy = this.getProxy(GameDomainProxy);
+    myProxy: GameDomainProxy = this.getProxy(GameDomainProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: i18n.t("common.update"),
-        create: i18n.t("common.create"),
+    textMap = {
+        update: LangUtil("编辑"),
+        create: LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -90,13 +92,13 @@ export default class GameDomainDialog extends AbstractView {
 
     get rules() {
         return {
-            plat_id: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "blur" }],
-            channel_id: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "blur" }],
-            domain: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "blur" }],
+            plat_id: [{ required: true, message: LangUtil("必须选择"), trigger: "blur" }],
+            channel_id: [{ required: true, message: LangUtil("必须填写"), trigger: "blur" }],
+            domain: [{ required: true, message: LangUtil("必须填写"), trigger: "blur" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -104,7 +106,7 @@ export default class GameDomainDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -112,7 +114,7 @@ export default class GameDomainDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 }

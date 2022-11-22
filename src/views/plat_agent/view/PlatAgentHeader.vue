@@ -13,7 +13,9 @@
             <el-form-item>
                 <el-col :span="12">
                     <el-row type="flex">
-                        <div v-if="!checkPromotionModel()" class="red">{{ $t("plat_agent.tableStr") }}</div>
+                        <div v-if="!checkPromotionModel()" class="red">
+                            {{ LangUtil("代理功能未开启-请联系客服开启") }}
+                        </div>
                         <div v-else>
                             <div>{{ tableData.promotionModel.name }}</div>
                             <div>{{ tableData.promotionModel.desc }}</div>
@@ -24,26 +26,26 @@
                     <el-row v-if="checkPromotionModel()">
                         <div class="btn_group">
                             <el-button type="primary" @click="onEditPromotionDialog">{{
-                                $t(`plat_agent.promotionExtraConfig`)
+                                LangUtil("额外返佣配置")
                             }}</el-button>
                             <el-button
                                 type="primary"
                                 v-if="checkUnique(unique.plat_agent_update_banner)"
                                 @click="onChangeBanner"
-                                >{{ $t("plat_agent.buttonStr1") }}</el-button
+                                >{{ LangUtil("配置代理说明") }}</el-button
                             >
                             <el-button type="primary" v-show="tableData.isEdit" @click="onInitModel">{{
-                                $t("common.initTemplate")
+                                LangUtil("初始化系统模板")
                             }}</el-button>
                             <el-button
                                 type="primary"
                                 v-if="checkUnique(unique.plat_agent_update)"
                                 v-show="tableData.isEdit"
                                 @click="onSave"
-                                >{{ $t("common.save") }}</el-button
+                                >{{ LangUtil("确认保存") }}</el-button
                             >
                             <el-button type="primary" @click="onEditSwitch">{{
-                                tableData.isEdit ? $t("common.unUpdate") : $t("common.update")
+                                tableData.isEdit ? LangUtil("取消编辑") : LangUtil("编辑")
                             }}</el-button>
                         </div>
                     </el-row>
@@ -54,6 +56,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatAgentProxy from "../proxy/PlatAgentProxy";
@@ -67,42 +70,43 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatAgentHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatAgentProxy = this.getProxy(PlatAgentProxy);
+    myProxy: PlatAgentProxy = this.getProxy(PlatAgentProxy);
     // proxy property
-    private tableData = this.myProxy.tableData;
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableData = this.myProxy.tableData;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private checkPromotionModel() {
+    checkPromotionModel() {
         return this.tableData.promotionModel.promotion_model_id == this.tableData.detail.promotion_model_id;
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.myProxy.onQuery();
     }
 
-    private onEditPromotionDialog() {
+    onEditPromotionDialog() {
         this.myProxy.showPromotionDialog();
     }
-    private onChangeBanner() {
+    onChangeBanner() {
         this.myProxy.showDialog();
     }
 
-    private onInitModel() {
+    onInitModel() {
         this.myProxy.onInitModel();
     }
 
-    private onSave() {
+    onSave() {
         this.myProxy.onSave();
     }
 
-    private onEditSwitch() {
+    onEditSwitch() {
         this.tableData.isEdit = !this.tableData.isEdit;
         if (!this.tableData.isEdit) {
             this.myProxy.onCancel();

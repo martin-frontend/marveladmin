@@ -7,7 +7,7 @@
                         v-model="myProxy.dialogData.form.type"
                         filterable
                         class="select"
-                        :placeholder="$t('common.pleaseChoose')"
+                        :placeholder="LangUtil('请选择')"
                     >
                         <el-option
                             v-for="(value, key) in tableColumns.type.options"
@@ -30,12 +30,12 @@
                     class="el_upload"
                 >
                     <el-button class="item" type="primary" icon="el-icon-circle-plus-outline">{{
-                        $t("common.uploadImage")
+                        LangUtil("上传图片")
                     }}</el-button>
                 </el-upload>
                 <div style="text-align: right; margin-top: 2rem" v-if="myProxy.imgBatchDialogData.fileList.length > 0">
                     <el-button @click="handleAdd" class="item" type="primary" icon="">{{
-                        $t("common.save")
+                        LangUtil("确认保存")
                     }}</el-button>
                 </div>
             </el-form>
@@ -44,6 +44,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SystemResourceProxy from "@/views/system_resource/proxy/SystemResourceProxy";
@@ -55,24 +56,25 @@ import { BatchStatus } from "../proxy/ISystemResourceProxy";
 
 @Component
 export default class SystemResourceDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: SystemResourceProxy = this.getProxy(SystemResourceProxy);
+    myProxy: SystemResourceProxy = this.getProxy(SystemResourceProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -92,16 +94,16 @@ export default class SystemResourceDialog extends AbstractView {
         };
     }
 
-    private confirmObj: any = {
-        str1: this.$t("system_resource.confirmSubmit"),
-        prompt: this.$t("common.prompt"),
-        determine: this.$t("common.determine"),
-        cancel: this.$t("common.cancel"),
-        errorCode1: this.$t("system_resource.uploadSizeLimit"),
-        errorCode2: this.$t("system_resource.uploadImageErrorCode"),
+    confirmObj: any = {
+        str1: this.LangUtil("确定上传?"),
+        prompt: this.LangUtil("提示"),
+        determine: this.LangUtil("确定"),
+        cancel: this.LangUtil("取消"),
+        errorCode1: this.LangUtil("上传图片大小不能超过 2MB!"),
+        errorCode2: this.LangUtil("undefined"),
     };
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.$confirm(this.confirmObj.str1, this.confirmObj.prompt, {

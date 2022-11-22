@@ -46,4 +46,3 @@ facade.registerCommand(HttpType.admin_system_lang_translate, cmd_admin_system_la
 facade.registerCommand(HttpType.admin_system_lang_translate_all, cmd_admin_system_lang_translate_all);
 facade.registerCommand(HttpType.admin_system_lang_import, cmd_admin_system_lang_import);
 facade.registerCommand(HttpType.admin_system_lang_generate, cmd_admin_system_lang_generate);
-

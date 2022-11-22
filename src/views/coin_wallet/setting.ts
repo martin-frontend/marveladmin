@@ -42,4 +42,3 @@ facade.registerCommand(HttpType.admin_coin_wallet_withdraw, cmd_admin_coin_walle
 facade.registerCommand(HttpType.admin_coin_wallet_log_table_columns, cmd_admin_coin_wallet_log_table_columns);
 facade.registerCommand(HttpType.admin_coin_wallet_log_index, cmd_admin_coin_wallet_log_index);
 facade.registerCommand(HttpType.admin_coin_wallet_update, cmd_admin_coin_wallet_update);
-

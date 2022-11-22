@@ -19,7 +19,9 @@ export var EventType = {
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(HttpType.admin_recharge_plats_paymethods_table_columns, cmd_admin_recharge_plats_paymethods_table_columns);
+facade.registerCommand(
+    HttpType.admin_recharge_plats_paymethods_table_columns,
+    cmd_admin_recharge_plats_paymethods_table_columns
+);
 facade.registerCommand(HttpType.admin_recharge_plats_paymethods_index, cmd_admin_recharge_plats_paymethods_index);
 facade.registerCommand(HttpType.admin_recharge_plats_paymethods_update, cmd_admin_recharge_plats_paymethods_update);
-

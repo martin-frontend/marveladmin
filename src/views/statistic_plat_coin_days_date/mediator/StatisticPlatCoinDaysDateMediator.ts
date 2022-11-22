@@ -3,12 +3,9 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/statistic_plat_coin_days_date/setting";
 import StatisticPlatCoinDaysDateProxy from "../proxy/StatisticPlatCoinDaysDateProxy";
 
-interface IStatisticPlatCoinDaysDate extends IEventDispatcher {
-
-}
+interface IStatisticPlatCoinDaysDate extends IEventDispatcher {}
 
 export default class StatisticPlatCoinDaysDateMediator extends AbstractMediator {
-
     private myProxy: StatisticPlatCoinDaysDateProxy = <any>this.getProxy(StatisticPlatCoinDaysDateProxy);
 
     onRegister() {
@@ -19,7 +16,6 @@ export default class StatisticPlatCoinDaysDateMediator extends AbstractMediator 
         this.myProxy.leave();
     }
 
-
     protected initViewData() {
         const myView: IStatisticPlatCoinDaysDate = this.viewComponent;
     }
@@ -28,12 +24,13 @@ export default class StatisticPlatCoinDaysDateMediator extends AbstractMediator 
         return [
             EventType.admin_statistic_plat_coin_days_table_columns,
             EventType.admin_statistic_plat_coin_days_statistic_by_date,
-
         ];
     }
 
     handleNotification(notification: puremvc.INotification) {
-        const myProxy: StatisticPlatCoinDaysDateProxy = <any>this.facade.retrieveProxy(StatisticPlatCoinDaysDateProxy.NAME);
+        const myProxy: StatisticPlatCoinDaysDateProxy = <any>(
+            this.facade.retrieveProxy(StatisticPlatCoinDaysDateProxy.NAME)
+        );
         const myView: IStatisticPlatCoinDaysDate = this.viewComponent;
         const body = notification.getBody();
         switch (notification.getName()) {

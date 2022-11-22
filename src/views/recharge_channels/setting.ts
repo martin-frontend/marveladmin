@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_recharge_channels_index, cmd_admin_recharg
 facade.registerCommand(HttpType.admin_recharge_channels_show, cmd_admin_recharge_channels_show);
 facade.registerCommand(HttpType.admin_recharge_channels_store, cmd_admin_recharge_channels_store);
 facade.registerCommand(HttpType.admin_recharge_channels_update, cmd_admin_recharge_channels_update);
-

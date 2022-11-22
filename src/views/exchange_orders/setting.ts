@@ -58,11 +58,17 @@ const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_exchange_orders_table_columns, cmd_admin_exchange_orders_table_columns);
 facade.registerCommand(HttpType.admin_exchange_orders_index, cmd_admin_exchange_orders_index);
 facade.registerCommand(HttpType.admin_exchange_orders_approved, cmd_admin_exchange_orders_approved);
-facade.registerCommand(HttpType.admin_exchange_orders_close_order_return_gold, cmd_admin_exchange_orders_close_order_return_gold);
+facade.registerCommand(
+    HttpType.admin_exchange_orders_close_order_return_gold,
+    cmd_admin_exchange_orders_close_order_return_gold
+);
 facade.registerCommand(HttpType.admin_exchange_orders_close_order, cmd_admin_exchange_orders_close_order);
 facade.registerCommand(HttpType.admin_exchange_orders_finish_order, cmd_admin_exchange_orders_finish_order);
 facade.registerCommand(HttpType.admin_exchange_orders_update_channel, cmd_admin_exchange_orders_update_channel);
-facade.registerCommand(HttpType.admin_exchange_auto_check_setting_table_columns, cmd_admin_exchange_auto_check_setting_table_columns);
+facade.registerCommand(
+    HttpType.admin_exchange_auto_check_setting_table_columns,
+    cmd_admin_exchange_auto_check_setting_table_columns
+);
 facade.registerCommand(HttpType.admin_exchange_auto_check_setting_show, cmd_admin_exchange_auto_check_setting_show);
 facade.registerCommand(HttpType.admin_exchange_auto_check_setting_store, cmd_admin_exchange_auto_check_setting_store);
 facade.registerCommand(HttpType.admin_exchange_auto_check_setting_update, cmd_admin_exchange_auto_check_setting_update);
@@ -70,4 +76,3 @@ facade.registerCommand(HttpType.admin_exchange_orders_rush, cmd_admin_exchange_o
 facade.registerCommand(HttpType.admin_exchange_orders_update_remark, cmd_admin_exchange_orders_update_remark);
 facade.registerCommand(HttpType.admin_exchange_orders_dispatch, cmd_admin_exchange_orders_dispatch);
 facade.registerCommand(HttpType.admin_exchange_orders_dispatch_cancel, cmd_admin_exchange_orders_dispatch_cancel);
-

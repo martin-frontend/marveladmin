@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -95,8 +96,8 @@ export default class PlatVendorsWalletProxy extends AbstractProxy implements IPl
                 type: 1, //1 上分, 2 下分
             },
             title: <any>{
-                1: i18n.t("common.deposit"),
-                2: i18n.t("common.withdraw"),
+                1: LangUtil("上分"),
+                2: LangUtil("下分"),
             },
         },
         limit: {
@@ -130,8 +131,8 @@ export default class PlatVendorsWalletProxy extends AbstractProxy implements IPl
                 gold: 0,
             },
             title: <any>{
-                1: i18n.t("common.deposit"),
-                2: i18n.t("common.withdraw"),
+                1: LangUtil("上分"),
+                2: LangUtil("下分"),
             },
         },
     };
@@ -277,9 +278,9 @@ export default class PlatVendorsWalletProxy extends AbstractProxy implements IPl
 
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -43,7 +44,7 @@ export default class GoldWaterMediator extends AbstractMediator {
                 myProxy.setTableData(body);
                 break;
             case EventType.admin_gold_water_approved:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.onQuery();
                 break;
         }

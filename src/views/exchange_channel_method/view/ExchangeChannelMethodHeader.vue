@@ -5,7 +5,7 @@
             v-model="listQuery.plat_id"
             filterable
             class="select"
-            :placeholder="$t('common.pleaseChoose')"
+            :placeholder="LangUtil('请选择')"
             @change="onChangePlat"
         >
             <el-option
@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import ExchangeChannelMethodProxy from "../proxy/ExchangeChannelMethodProxy";
@@ -27,25 +28,26 @@ import { checkUnique, unique } from "@/core/global/Permission";
 
 @Component
 export default class ExchangeChannelMethodHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: ExchangeChannelMethodProxy = this.getProxy(ExchangeChannelMethodProxy);
+    myProxy: ExchangeChannelMethodProxy = this.getProxy(ExchangeChannelMethodProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private onChangePlat(plat_id: string) {
+    onChangePlat(plat_id: string) {
         this.listQuery.plat_id = plat_id;
         this.myProxy.onQuery();
     }
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { dateFormat, formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
@@ -85,7 +86,7 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
     pickerOptions = {
         shortcuts: [
             {
-                text: i18n.t("common.today"),
+                text: LangUtil("今日"),
                 onClick(picker: any) {
                     const start = getTodayOffset();
                     const end = getTodayOffset(1, 1);
@@ -93,7 +94,7 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
                 },
             },
             {
-                text: i18n.t("common.yesterday"),
+                text: LangUtil("昨日"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-1);
                     const end = getTodayOffset(0, 1);
@@ -101,7 +102,7 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
                 },
             },
             {
-                text: i18n.t("common.lastWeek"),
+                text: LangUtil("最近一周"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-6);
                     const end = getTodayOffset(1, 1);
@@ -109,7 +110,7 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
                 },
             },
             {
-                text: i18n.t("common.lastMonth"),
+                text: LangUtil("最近一个月"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-30);
                     const end = getTodayOffset(1, 1);
@@ -117,7 +118,7 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
                 },
             },
             {
-                text: i18n.t("common.last3Month"),
+                text: LangUtil("最近60天"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-60);
                     const end = getTodayOffset(1, 1);
@@ -216,9 +217,9 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
 
     /**返佣恢复 */
     recover() {
-        MessageBox.confirm(<string>i18n.t("user_detail.recoverRecords"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否需要恢复列表当前返佣记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
             center: true,
         })

@@ -42,7 +42,7 @@ export default class PlatServiceHeader extends AbstractView {
     private handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
-    }    
+    }
 }
 </script>
 

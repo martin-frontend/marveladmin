@@ -32,6 +32,8 @@ facade.registerCommand(HttpType.admin_plat_table_columns, cmd_admin_plat_table_c
 facade.registerCommand(HttpType.admin_plat_index, cmd_admin_plat_index);
 facade.registerCommand(HttpType.admin_plat_show, cmd_admin_plat_show);
 facade.registerCommand(HttpType.admin_plat_update, cmd_admin_plat_update);
-facade.registerCommand(HttpType.admin_plat_users_backwater_model_table_columns, cmd_admin_plat_users_backwater_model_table_columns);
+facade.registerCommand(
+    HttpType.admin_plat_users_backwater_model_table_columns,
+    cmd_admin_plat_users_backwater_model_table_columns
+);
 facade.registerCommand(HttpType.admin_plat_users_backwater_model_show, cmd_admin_plat_users_backwater_model_show);
-

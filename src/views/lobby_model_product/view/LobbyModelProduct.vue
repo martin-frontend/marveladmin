@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <LobbyModelProductDialog/>
-        <LobbyModelProductHeader/>
-        <LobbyModelProductBody/>
+        <LobbyModelProductDialog />
+        <LobbyModelProductHeader />
+        <LobbyModelProductBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import LobbyModelProductBody from "./LobbyModelProductBody.vue";
         LobbyModelProductDialog,
         LobbyModelProductHeader,
         LobbyModelProductBody,
-    }
+    },
 })
 export default class LobbyModelProduct extends AbstractView {
-
     constructor() {
         super(LobbyModelProductMediator);
     }

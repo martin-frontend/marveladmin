@@ -18,4 +18,3 @@ export var EventType = {
 const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_plat_setting_table_columns, cmd_admin_plat_setting_table_columns);
 facade.registerCommand(HttpType.admin_plat_setting_show, cmd_admin_plat_setting_show);
-

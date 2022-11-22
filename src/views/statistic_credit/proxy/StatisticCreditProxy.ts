@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull, getTodayOffset, dateFormat } from "@/core/global/Functions";
@@ -89,7 +90,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
     setSummaryData(data: any) {
         let sumData = JSON.parse(JSON.stringify(this.tableData.columns));
         sumData.plat_id = data.plat_id;
-        sumData.user_id = <string>i18n.t("common.total");
+        sumData.user_id = <string>LangUtil("合计");
         sumData.username = "-";
         sumData.record_count = data.record_count;
         sumData.bet_gold = data.bet_gold;
@@ -179,7 +180,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
     pickerOptions = {
         shortcuts: [
             {
-                text: i18n.t("common.today"),
+                text: LangUtil("今日"),
                 onClick(picker: any) {
                     const start = getTodayOffset();
                     const end = getTodayOffset(1, 1);
@@ -187,7 +188,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
                 },
             },
             {
-                text: i18n.t("common.yesterday"),
+                text: LangUtil("昨日"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-1);
                     const end = getTodayOffset(0, 1);
@@ -195,7 +196,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
                 },
             },
             {
-                text: i18n.t("common.lastWeek"),
+                text: LangUtil("最近一周"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-6);
                     const end = getTodayOffset(1, 1);
@@ -203,7 +204,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
                 },
             },
             {
-                text: i18n.t("common.lastMonth"),
+                text: LangUtil("最近一个月"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-30);
                     const end = getTodayOffset(1, 1);
@@ -211,7 +212,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
                 },
             },
             {
-                text: i18n.t("common.last3Month"),
+                text: LangUtil("最近60天"),
                 onClick(picker: any) {
                     const start = getTodayOffset(-60);
                     const end = getTodayOffset(1, 1);

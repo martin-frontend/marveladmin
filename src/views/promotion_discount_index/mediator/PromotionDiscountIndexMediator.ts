@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/promotion_discount_index/setting";
 import { Message } from "element-ui";
 import PromotionDiscountIndexProxy from "../proxy/PromotionDiscountIndexProxy";
 
-interface IPromotionDiscountIndex extends IEventDispatcher {
-
-}
+interface IPromotionDiscountIndex extends IEventDispatcher {}
 
 export default class PromotionDiscountIndexMediator extends AbstractMediator {
     private myProxy: PromotionDiscountIndexProxy = <any>this.getProxy(PromotionDiscountIndexProxy);
@@ -29,7 +27,7 @@ export default class PromotionDiscountIndexMediator extends AbstractMediator {
             EventType.admin_plat_users_bet_table_columns,
             EventType.admin_plat_users_bet_promotion_discount_index,
             EventType.admin_plat_users_bet_promotion_discount_recover,
-            EventType.admin_plat_users_bet_store_fake_bet
+            EventType.admin_plat_users_bet_store_fake_bet,
         ];
     }
 

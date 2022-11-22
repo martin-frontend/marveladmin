@@ -12,18 +12,18 @@
             }"
             v-loading="net_status.loading"
         >
-            <el-table-column :label="$t('common.platMsg')" min-width="180px">
+            <el-table-column :label="LangUtil('平台信息')" min-width="180px">
                 <template slot-scope="{ row }">
-                    <div>{{ $t("common.plat") }}：{{ tableColumns.plat_id.options[row.plat_id] }}</div>
-                    <div>{{ $t("common.channelId") }}：{{ row.channel_id }}</div>
+                    <div>{{ LangUtil("平台") }}：{{ tableColumns.plat_id.options[row.plat_id] }}</div>
+                    <div>{{ LangUtil("渠道") }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.userMsg')" prop="user_id" min-width="120px">
+            <el-table-column :label="LangUtil('用户信息')" prop="user_id" min-width="120px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
-                        {{ $t("common.id") }}：{{ row.user_id }}
+                        {{ LangUtil("ID") }}：{{ row.user_id }}
                     </div>
-                    <div>{{ $t("common.nickName") }}：{{ row.nick_name }}</div>
+                    <div>{{ LangUtil("昵称") }}：{{ row.nick_name }}</div>
                 </template>
             </el-table-column>
             <el-table-column
@@ -106,7 +106,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" :min-width="width" align="center">
+            <el-table-column :label="LangUtil('操作')" :min-width="width" align="center">
                 <template slot-scope="{ row }">
                     <el-button
                         v-if="checkUnique(unique.plat_agent_bonus_config_show)"
@@ -114,10 +114,10 @@
                         type="primary"
                         @click="showBonusConifgDialog(row)"
                     >
-                        {{ $t("plat_agent_bind.bonusStatistics") }}
+                        {{ LangUtil("分红统计") }}
                     </el-button>
                     <el-button size="mini" type="primary" @click="handlerPromotionFloor(row)">
-                        {{ $t("plat_agent_bind.guaranteedSetting") }}
+                        {{ LangUtil("保底设定") }}
                     </el-button>
                     <el-button
                         size="mini"
@@ -125,7 +125,7 @@
                         @click="handlerBind(row)"
                         v-if="checkUnique(unique.plat_agent_bind)"
                     >
-                        {{ $t("plat_agent_bind.btnBind") }}
+                        {{ LangUtil("绑定") }}
                     </el-button>
                 </template>
             </el-table-column>
@@ -134,6 +134,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -151,6 +152,7 @@ import i18n from "@/lang";
     },
 })
 export default class PlatAgentBindBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
@@ -185,7 +187,7 @@ export default class PlatAgentBindBody extends AbstractView {
 
     onSwitchAgentBonus(row: any) {
         if (row.is_agent_bonus == 98) {
-            const str: any = i18n.t("user_detail.confirmClear");
+            const str: any = LangUtil("该操作会清空所有直属分红比例，确认关闭总代分红吗？");
             MessageBox.confirm(str)
                 .then(() => {
                     this.updateAgentBonus(row);

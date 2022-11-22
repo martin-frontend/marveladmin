@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { getFirstKey, objectRemoveNull } from "@/core/global/Functions";
@@ -87,7 +88,7 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
             icon: "",
         },
         formSource: null, // 表单的原始数据
-    }
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -174,11 +175,11 @@ export default class LobbyProductProxy extends AbstractProxy implements ILobbyPr
     /**删除数据 */
     onDelete(data: any) {
         MessageBox.confirm(
-            <string>i18n.t("lobby_product.deleteConfirmStr") + data.vendor_product_name,
-            <string>i18n.t("common.prompt"),
+            <string>LangUtil("确定要删除大厅产品：") + data.vendor_product_name,
+            <string>LangUtil("提示"),
             {
-                confirmButtonText: <string>i18n.t("common.determine"),
-                cancelButtonText: <string>i18n.t("common.cancel"),
+                confirmButtonText: <string>LangUtil("确定"),
+                cancelButtonText: <string>LangUtil("取消"),
                 type: "warning",
             }
         )

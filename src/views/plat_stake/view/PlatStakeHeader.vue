@@ -21,7 +21,7 @@
                     type="primary"
                     @click="handlerSetting()"
                     v-if="checkUnique(unique.plat_stake_config_update)"
-                    >{{ $t("common.setting") }}</el-button
+                    >{{ LangUtil("设置") }}</el-button
                 ></el-col
             >
         </el-row>
@@ -54,6 +54,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatStakeProxy from "../proxy/PlatStakeProxy";
@@ -76,25 +77,26 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatStakeHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
+    myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private tableData = this.myProxy.stakeLogtableData;
-    private tableColumns = this.myProxy.stakeLogtableData.columns;
-    private listQuery = this.myProxy.listQuery;
-    private span: number = 5;
+    tableData = this.myProxy.stakeLogtableData;
+    tableColumns = this.myProxy.stakeLogtableData.columns;
+    listQuery = this.myProxy.listQuery;
+    span: number = 5;
 
     get stake_config() {
         return this.myProxy.stake_bonus_config;
     }
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
-    private handlerSetting() {
+    handlerSetting() {
         this.myProxy.showBonusConfigDialog();
     }
 }

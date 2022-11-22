@@ -34,4 +34,3 @@ facade.registerCommand(HttpType.admin_admin_user_show, cmd_admin_admin_user_show
 facade.registerCommand(HttpType.admin_admin_user_store, cmd_admin_admin_user_store);
 facade.registerCommand(HttpType.admin_admin_user_update, cmd_admin_admin_user_update);
 facade.registerCommand(HttpType.admin_plat_channel_index, cmd_admin_plat_channel_index);
-

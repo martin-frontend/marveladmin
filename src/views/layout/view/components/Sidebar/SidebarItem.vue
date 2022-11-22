@@ -30,7 +30,6 @@
                 :base-path="resolvePath(child.path)"
                 class="nest-menu"
             >
-            
             </sidebar-item>
         </el-submenu>
     </div>
@@ -104,7 +103,7 @@ export default {
             if (isExternal(this.basePath)) {
                 return this.basePath;
             }
-            return path.resolve(this.basePath, routePath?routePath:"");
+            return path.resolve(this.basePath, routePath ? routePath : "");
         },
         getIndex(index, cindex) {
             // console.log(">>>>>>>>>", `${index}-${cindex}`);

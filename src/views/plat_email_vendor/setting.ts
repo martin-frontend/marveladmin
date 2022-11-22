@@ -34,4 +34,3 @@ facade.registerCommand(HttpType.admin_plat_email_vendor_show, cmd_admin_plat_ema
 facade.registerCommand(HttpType.admin_plat_email_vendor_store, cmd_admin_plat_email_vendor_store);
 facade.registerCommand(HttpType.admin_plat_email_vendor_update, cmd_admin_plat_email_vendor_update);
 facade.registerCommand(HttpType.admin_plat_email_vendor_test_send, cmd_admin_plat_email_vendor_test_send);
-

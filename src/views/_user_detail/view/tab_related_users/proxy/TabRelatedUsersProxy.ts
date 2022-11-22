@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { getPageSetting } from "@/views/_user_detail/PageSetting";
 import { HttpType } from "@/views/_user_detail/setting";
@@ -150,20 +151,16 @@ export default class TabRelatedUsersProxy extends AbstractProxy implements ITabR
     onDeductGold() {
         const { user_id, gold, deductGold } = this.dialogData.form;
         if (deductGold != "" && parseFloat(deductGold) > 0 && parseFloat(deductGold) <= gold) {
-            MessageBox.confirm(
-                <string>i18n.t("common.confirmDeductMoney", { "0": deductGold }),
-                <string>i18n.t("common.prompt"),
-                {
-                    confirmButtonText: <string>i18n.t("common.determine"),
-                    cancelButtonText: <string>i18n.t("common.cancel"),
-                    type: "warning",
-                    center: true,
-                }
-            ).then(() => {
+            MessageBox.confirm(<string>LangUtil("undefined"), <string>LangUtil("提示"), {
+                confirmButtonText: <string>LangUtil("确定"),
+                cancelButtonText: <string>LangUtil("取消"),
+                type: "warning",
+                center: true,
+            }).then(() => {
                 this.sendNotification(HttpType.admin_plat_user_update_user_gold, { user_id, gold: deductGold });
             });
         } else {
-            let error: any = i18n.t("common.moneyInputError");
+            let error: any = LangUtil("请输入正确的扣除金额，大于0，小于平台余额");
             Message.error({
                 type: "error",
                 message: error,

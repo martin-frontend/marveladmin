@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_plats_blacklist_index, cmd_admin_plats_bla
 facade.registerCommand(HttpType.admin_plats_blacklist_store, cmd_admin_plats_blacklist_store);
 facade.registerCommand(HttpType.admin_plats_blacklist_update, cmd_admin_plats_blacklist_update);
 facade.registerCommand(HttpType.admin_plats_blacklist_delete_batch, cmd_admin_plats_blacklist_delete_batch);
-

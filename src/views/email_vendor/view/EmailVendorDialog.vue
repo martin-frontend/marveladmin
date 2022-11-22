@@ -5,7 +5,7 @@
                 <el-input
                     clearable
                     maxlength="30"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     v-model="form.email_vendor_name"
                 ></el-input>
             </el-form-item>
@@ -14,7 +14,7 @@
                     class="email_vendor_name_unique"
                     clearable
                     maxlength="30"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     v-model="form.email_vendor_name_unique"
                 ></el-input>
             </el-form-item>
@@ -31,11 +31,9 @@
                 </div>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="danger" size="mini" @click="handleDelete()">{{
-                    $t("common.delete")
-                }}</el-button>
+                <el-button type="danger" size="mini" @click="handleDelete()">{{ LangUtil("删除") }}</el-button>
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
-                    $t("common.save")
+                    LangUtil("确认保存")
                 }}</el-button>
             </el-form-item>
         </el-form>
@@ -43,6 +41,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -57,24 +56,25 @@ import JsonEditor from "@/components/JsonEditor/index.vue";
     },
 })
 export default class EmailVendorDialog extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: EmailVendorProxy = this.getProxy(EmailVendorProxy);
+    myProxy: EmailVendorProxy = this.getProxy(EmailVendorProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -90,12 +90,12 @@ export default class EmailVendorDialog extends AbstractView {
 
     get rules() {
         return {
-            name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            area_code: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            area_code: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -103,7 +103,7 @@ export default class EmailVendorDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -111,7 +111,7 @@ export default class EmailVendorDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.email_vendor_id);
     }
 }

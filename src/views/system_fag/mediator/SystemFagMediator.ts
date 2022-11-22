@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/system_fag/setting";
 import { Message } from "element-ui";
 import SystemFagProxy from "../proxy/SystemFagProxy";
 
-interface ISystemFag extends IEventDispatcher {
-
-}
+interface ISystemFag extends IEventDispatcher {}
 
 export default class SystemFagMediator extends AbstractMediator {
     private myProxy: SystemFagProxy = <any>this.getProxy(SystemFagProxy);
@@ -31,7 +29,6 @@ export default class SystemFagMediator extends AbstractMediator {
             EventType.admin_system_fag_show,
             EventType.admin_system_fag_store,
             EventType.admin_system_fag_update,
-
         ];
     }
 

@@ -1,23 +1,27 @@
 <template>
-    <el-dialog :title="$t('plat_email.userError')" class="alert_dialog" append-to-body :visible.sync="dialogData.bShow">
+    <el-dialog :title="LangUtil('发送用户错误')" class="alert_dialog" append-to-body :visible.sync="dialogData.bShow">
         <p>{{ dialogData.form.content }}</p>
-        <div class="btn"><el-button type="primary" @click="dialogData.bShow = false">{{ $t("plat_email.confirm") }}</el-button></div></el-dialog
+        <div class="btn">
+            <el-button type="primary" @click="dialogData.bShow = false">{{ LangUtil("确认") }}</el-button>
+        </div></el-dialog
     >
 </template>
-<script lang='ts'>
+<script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
 import PlatEmailProxy from "../../proxy/PlatEmailProxy";
 
 @Component
 export default class AlertDialog extends AbstractView {
+    LangUtil = LangUtil;
     // proxy
-    private myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
+    myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
     // proxy property
-    private dialogData = this.myProxy.alertDialogData;
+    dialogData = this.myProxy.alertDialogData;
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 .alert_dialog {
     p {

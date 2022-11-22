@@ -19,10 +19,10 @@
         </el-input>
     </div>
     <!-- 父组件用法 -->
-    <!-- <SearchInput 
-        :title="tableColumns.channel_id.name" 
-        v-model="listQuery.channel_id" 
-        :placeholder="" 
+    <!-- <SearchInput
+        :title="tableColumns.channel_id.name"
+        v-model="listQuery.channel_id"
+        :placeholder=""
         :width=""
     /> -->
     <!-- placeholder 如不设定 预设使用 title -->
@@ -30,10 +30,12 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import { Component, Model, Prop, Vue, Watch } from "vue-property-decorator";
 
 @Component
 export default class SearchInput extends Vue {
+    LangUtil = LangUtil;
     @Prop() title!: string;
     @Prop() options!: any;
     @Prop({ default: "" }) width!: String;
@@ -42,7 +44,7 @@ export default class SearchInput extends Vue {
     @Prop({ default: false }) disabled!: boolean;
     @Prop() maxLength!: number;
 
-    private inputValue = this.getValue;
+    inputValue = this.getValue;
 
     @Prop() value!: any;
     @Watch("value")
@@ -50,7 +52,7 @@ export default class SearchInput extends Vue {
         this.inputValue = this.value;
     }
 
-    private onInput(value: any) {
+    onInput(value: any) {
         this.$emit("input", value);
     }
 
@@ -62,7 +64,7 @@ export default class SearchInput extends Vue {
         return this.width ? `width:${this.width}px` : "";
     }
 
-    private placeholder: any = this.$t("common.pleaseEnter");
+    placeholder: any = this.LangUtil("请输入");
 
     // get getPlaceholder() {
     //     return this.placeholder ? this.placeholder : this.title;

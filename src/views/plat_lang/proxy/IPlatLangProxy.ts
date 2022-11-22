@@ -3,18 +3,18 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface IPlatLangProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
     };
 
     /**设置表头数据 */
@@ -41,11 +41,11 @@ export default interface IPlatLangProxy {
     /**删除数据 */
     onDelete(id: any): void;
     /**获取全部翻译内容 */
-    translate():void;
+    translate(): void;
     /**获取其他全部翻译内容 */
-    translateAll():void;
+    translateAll(): void;
     /**语言包导入 */
-    languageImport():void;
+    languageImport(): void;
     /**生成语言包，添加了翻译语言，手动调用此方法生成.json文件上传cdn */
-    generate():void;
+    generate(): void;
 }

@@ -10,7 +10,7 @@
         />
         <div class="group">
             <SearchDatePicker
-                :title="$t('plat_activity.activeTime')"
+                :title="LangUtil('活动时间')"
                 :startDate.sync="listQuery['start_time-{<=}']"
                 :endDate.sync="listQuery['end_time-{>=}']"
             />
@@ -33,10 +33,10 @@
             />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -48,13 +48,14 @@
                 @click="handlerCreate"
                 v-if="checkUnique(unique.plat_activity_store)"
             >
-                {{ $t("common.create") }}
+                {{ LangUtil("新增") }}
             </el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatActivityProxy from "../proxy/PlatActivityProxy";
@@ -74,25 +75,26 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatActivityHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
+    myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

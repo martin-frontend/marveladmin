@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <BlockSystemCoinsDialog v-if="myProxy.dialogData.bShow"/>
-        <BlockSystemCoinsHeader/>
-        <BlockSystemCoinsBody/>
+        <BlockSystemCoinsDialog v-if="myProxy.dialogData.bShow" />
+        <BlockSystemCoinsHeader />
+        <BlockSystemCoinsBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import BlockSystemCoinsBody from "./BlockSystemCoinsBody.vue";
         BlockSystemCoinsDialog,
         BlockSystemCoinsHeader,
         BlockSystemCoinsBody,
-    }
+    },
 })
 export default class BlockSystemCoins extends AbstractView {
-
     constructor() {
         super(BlockSystemCoinsMediator);
     }

@@ -17,16 +17,16 @@
             />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
         <div class="public_wallet_info">
             <p>{{ platInfo.plat_name }}</p>
-            <p>{{ $t("plat_vendors_wallet.publicWallet") }}</p>
+            <p>{{ LangUtil("公共钱包") }}</p>
             <p>{{ platInfo.gold }}</p>
         </div>
         <el-row>
@@ -36,26 +36,27 @@
                 icon="el-icon-circle-plus-outline"
                 @click="handlerCreate"
                 v-if="checkUnique(unique.plat_vendors_wallet_store)"
-                >{{ $t("plat_vendors_wallet.createVenderWallet") }}</el-button
+                >{{ LangUtil("新增厂商钱包") }}</el-button
             >
             <el-button
                 type="primary"
                 class="wallet_btn"
                 @click="onPublicLog"
                 v-if="checkUnique(unique.plat_wallet_log)"
-                >{{ $t("plat_vendors_wallet.publicWalletLog") }}</el-button
+                >{{ LangUtil("公共钱包记录查询") }}</el-button
             >
             <el-button type="primary" @click="publicWallet(1)" v-if="checkUnique(unique.plat_wallet_add_points)">{{
-                $t("plat_vendors_wallet.publicWalletTop")
+                LangUtil("公共钱包上分")
             }}</el-button>
             <el-button type="primary" @click="publicWallet(2)" v-if="checkUnique(unique.plat_wallet_minus_points)">{{
-                $t("plat_vendors_wallet.publicWalletBottom")
+                LangUtil("公共钱包下分")
             }}</el-button>
         </el-row>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatVendorsWalletProxy from "../proxy/PlatVendorsWalletProxy";
@@ -69,40 +70,41 @@ import SearchSelect from "@/components/SearchSelect.vue";
     },
 })
 export default class PlatVendorsWalletHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
+    myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
     get platInfo() {
         return this.myProxy.tableData.platInfo;
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
     // 新增厂商钱包
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.onCreateWallet();
     }
 
     // 公共钱包记录查询
-    private onPublicLog() {
+    onPublicLog() {
         this.myProxy.publicDialogData.isPublicCtrl = true;
         this.myProxy.onPublicLog();
     }
 
     //公共钱包上/下分
-    private publicWallet(type: any) {
+    publicWallet(type: any) {
         this.myProxy.resetDialogForm();
         this.myProxy.publicDialogData.wallet.form.type = type;
         this.myProxy.publicDialogData.wallet.form.plat_id = this.listQuery.plat_id;

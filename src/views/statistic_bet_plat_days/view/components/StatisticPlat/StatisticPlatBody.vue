@@ -48,7 +48,12 @@
                 class-name="status-col"
             >
             </el-table-column>
-            <el-table-column sortable="custom" prop="win_gold" :label="`${tableColumns.win_gold.name}`" class-name="status-col">
+            <el-table-column
+                sortable="custom"
+                prop="win_gold"
+                :label="`${tableColumns.win_gold.name}`"
+                class-name="status-col"
+            >
                 <template slot-scope="{ row }">
                     <WinLoss :amount="row.win_gold" />
                 </template>
@@ -64,7 +69,7 @@
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import StatisticBetPlatDaysProxy from "../../../proxy/StatisticBetPlatDaysProxy";
@@ -135,6 +140,6 @@ export default class StatisticPlatBody extends AbstractView {
     }
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 </style>

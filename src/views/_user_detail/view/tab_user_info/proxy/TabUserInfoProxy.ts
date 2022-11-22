@@ -30,7 +30,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         gender: { name: "性别", options: {} },
         gold: { name: "平台余额", options: {}, tips: "" },
         gold_columns_disable: { name: "金币明细列屏蔽", options: <any>{} },
-        google_key: { name: '谷歌验证码KEY', options: <any>{} },
+        google_key: { name: "谷歌验证码KEY", options: <any>{} },
         invite_user_id: { name: "邀请码人ID", options: {} },
         is_channel_statistic_display: { name: "渠道统计展示", options: {} },
         is_promotion_statistics_display: { name: "推广统计展示", options: {} },
@@ -84,12 +84,12 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         water_config: { name: "", options: {} },
         pretty_user_id: { name: "推广靓号", options: {} },
 
-        credit_rate: { name: '信用占比', options: {} },
+        credit_rate: { name: "信用占比", options: {} },
         show_credit_statistic: { name: '"显示信用统计"', options: {} },
-        show_credit_report: { name: '信用报表', options: {} },
+        show_credit_report: { name: "信用报表", options: {} },
         is_credit_user: { name: "信用用户", options: {} },
         is_gold_exchange: { name: "是否货币互转", options: {} },
-        show_credit_set: { name: '允许多层', options: {} },
+        show_credit_set: { name: "允许多层", options: {} },
     };
     /**用户详情 */
     userInfo = {
@@ -166,7 +166,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         credit_rate: 60,
         is_credit_user: "98",
         is_gold_exchange: "98",
-        is_login_need_google: "0"
+        is_login_need_google: "0",
     };
     /**代理关系链 */
     relationChain: string[] = [];

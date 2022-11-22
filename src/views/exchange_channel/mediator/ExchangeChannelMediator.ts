@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/exchange_channel/setting";
 import { Message } from "element-ui";
 import ExchangeChannelProxy from "../proxy/ExchangeChannelProxy";
 
-interface IExchangeChannel extends IEventDispatcher {
-    
-}
+interface IExchangeChannel extends IEventDispatcher {}
 
 export default class ExchangeChannelMediator extends AbstractMediator {
     private myProxy: ExchangeChannelProxy = <any>this.getProxy(ExchangeChannelProxy);
@@ -35,7 +33,6 @@ export default class ExchangeChannelMediator extends AbstractMediator {
             EventType.admin_exchange_channel_method_show,
             EventType.admin_exchange_channel_method_store,
             EventType.admin_exchange_channel_method_update,
-
         ];
     }
 
@@ -79,7 +76,6 @@ export default class ExchangeChannelMediator extends AbstractMediator {
                 myProxy.hidePayMethodDialog();
                 myProxy.onQuery();
                 break;
-
         }
     }
 }

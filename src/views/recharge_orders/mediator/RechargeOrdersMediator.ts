@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -6,7 +7,7 @@ import { Message } from "element-ui";
 import RechargeOrdersProxy from "../proxy/RechargeOrdersProxy";
 import i18n from "@/lang";
 
-interface IRechargeOrders extends IEventDispatcher { }
+interface IRechargeOrders extends IEventDispatcher {}
 
 export default class RechargeOrdersMediator extends AbstractMediator {
     private myProxy: RechargeOrdersProxy = <any>this.getProxy(RechargeOrdersProxy);
@@ -53,7 +54,7 @@ export default class RechargeOrdersMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_recharge_orders_update_remark:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideRemarkDialog();
                 myProxy.onQuery();
                 break;

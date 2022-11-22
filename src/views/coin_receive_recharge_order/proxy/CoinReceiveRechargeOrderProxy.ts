@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -107,10 +108,10 @@ export default class CoinReceiveRechargeOrderProxy extends AbstractProxy impleme
     reloadData = {
         autoTime: "0",
         options: {
-            0: i18n.t("common.notAutoRefresh"),
-            30000: i18n.t("common.autoRefresh30"),
-            60000: i18n.t("common.autoRefresh60"),
-            180000: i18n.t("common.autoRefresh180"),
+            0: LangUtil("不自动刷新"),
+            30000: LangUtil("30秒自动刷新"),
+            60000: LangUtil("60秒自动刷新"),
+            180000: LangUtil("180秒自动刷新"),
         },
         timer: <any>null,
     };
@@ -148,11 +149,11 @@ export default class CoinReceiveRechargeOrderProxy extends AbstractProxy impleme
         Object.assign(this.tableData.columns, data);
         const selfModel: SelfModel = <any>this.facade.retrieveProxy(SelfModel.NAME);
         if (selfModel.isCoinUser) {
-            this.tableData.columns.plat_id.options = { "0": i18n.t("common.platIdAll") };
+            this.tableData.columns.plat_id.options = { "0": LangUtil("所有平台") };
         } else {
             this.tableData.columns.plat_id.options = {
                 ...this.tableData.columns.plat_id.options,
-                "0": i18n.t("common.platIdAll"),
+                "0": LangUtil("所有平台"),
             };
         }
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
@@ -236,19 +237,11 @@ export default class CoinReceiveRechargeOrderProxy extends AbstractProxy impleme
     /**关闭订单 */
     onOrderClose(data: any) {
         const { id, user_id, nick_name, gold } = data;
-        MessageBox.confirm(
-            <string>i18n.t("coin_receive_recharge_order.closeOrderConfirmStrPart", {
-                "0": user_id,
-                "1": nick_name,
-                "2": gold,
-            }),
-            <string>i18n.t("common.prompt"),
-            {
-                confirmButtonText: <string>i18n.t("common.determine"),
-                cancelButtonText: <string>i18n.t("common.cancel"),
-                type: "warning",
-            }
-        )
+        MessageBox.confirm(<string>LangUtil("undefined"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
+            type: "warning",
+        })
             .then(() => {
                 this.sendNotification(HttpType.admin_coin_receive_recharge_order_close, { id });
             })
@@ -289,7 +282,7 @@ export default class CoinReceiveRechargeOrderProxy extends AbstractProxy impleme
     exportExcel(data: any) {
         //处理payment_method
         for (const item of data.list) {
-            let str = i18n.t("common.paymentChannelId") + ": " + item.payment_channel_id + "\n";
+            let str = LangUtil("收款通道ID") + ": " + item.payment_channel_id + "\n";
             str += this.getAccessInfo(item);
             item.payment_method = str;
         }

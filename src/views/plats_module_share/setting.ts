@@ -26,4 +26,3 @@ facade.registerCommand(HttpType.admin_plats_module_share_table_columns, cmd_admi
 facade.registerCommand(HttpType.admin_plats_module_share_index, cmd_admin_plats_module_share_index);
 facade.registerCommand(HttpType.admin_plats_module_share_store, cmd_admin_plats_module_share_store);
 facade.registerCommand(HttpType.admin_plats_module_share_update, cmd_admin_plats_module_share_update);
-

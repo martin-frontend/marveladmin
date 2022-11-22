@@ -1,10 +1,10 @@
 <template>
     <div v-loading="net_status.loading">
         <div class="notice">
-            {{ $t("user_detail.waterRateDesc") }}
+            {{ LangUtil("给该玩家单独设置投注流水比例") }}
         </div>
         <div class="notice red">
-            {{ $t("user_detail.settingDesc") }}
+            {{ LangUtil("注意：如有修改流水配置要1个多小时后才生效，需要记录更改时间。") }}
         </div>
         <el-table
             :data="tableData"
@@ -35,10 +35,10 @@
                             @input="ChangeNumValue"
                         ></el-input>
                         <el-button class="item" type="warning" size="mini" @click="editWaterRateID = null">{{
-                            $t("common.cancel")
+                            LangUtil("取消")
                         }}</el-button>
                         <el-button class="item" type="success" size="mini" @click="onEditWaterRate(row)">{{
-                            $t("common.determine")
+                            LangUtil("确定")
                         }}</el-button>
                     </div>
                     <div v-else>
@@ -51,7 +51,7 @@
                                 editWaterRateID = row.type;
                                 editWaterRateValue = (row.water_rate * 100).toFixed(2);
                             "
-                            >{{ $t("common.update") }}</el-button
+                            >{{ LangUtil("编辑") }}</el-button
                         >
                     </div>
                 </template>
@@ -60,6 +60,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import TabWaterRateProxy from "../proxy/TabWaterRateProxy";
@@ -71,22 +72,23 @@ import GlobalVar from "@/core/global/GlobalVar";
     components: {},
 })
 export default class TabWaterRateBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabWaterRateProxy = getProxy(TabWaterRateProxy);
+    myProxy: TabWaterRateProxy = getProxy(TabWaterRateProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
 
-    private editWaterRateID = null;
-    private editWaterRateValue = "";
+    editWaterRateID = null;
+    editWaterRateValue = "";
 
-    private ChangeNumValue() {
+    ChangeNumValue() {
         if (this.editWaterRateValue) {
             this.editWaterRateValue = this.editWaterRateValue.replace(/[^\d\.]/g, "");
             var reg = /^(0|([1-9]\d*))(\.\d{1,2})?$/; //正则验证保留 最多允许后输入两位小数
@@ -113,7 +115,7 @@ export default class TabWaterRateBody extends AbstractView {
         }
     }
 
-    private onEditWaterRate(row: any) {
+    onEditWaterRate(row: any) {
         this.editWaterRateID = null;
         this.myProxy.water_config[row.type] = parseFloat((parseFloat(this.editWaterRateValue) / 100).toFixed(4));
 

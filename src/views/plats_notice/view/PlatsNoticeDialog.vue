@@ -2,13 +2,8 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="120px" v-loading="net_status.loading">
             <!--  -->
-            <el-form-item size="mini" :label="$t('plats_notice.release')" prop="plat_id">
-                <el-select
-                    v-model="form.plat_id"
-                    :placeholder="$t('common.pleaseChoose')"
-                    filterable
-                    style="width: 300px"
-                >
+            <el-form-item size="mini" :label="LangUtil('发布平台')" prop="plat_id">
+                <el-select v-model="form.plat_id" :placeholder="LangUtil('请选择')" filterable style="width: 300px">
                     <el-option
                         v-for="(value, key) in tableColumns['plat_id'].options"
                         :key="key"
@@ -39,7 +34,7 @@
                 </el-checkbox-group>
             </el-form-item>
             <!-- <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
-                <el-input v-model="form.name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.name" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item> -->
 
             <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
@@ -49,12 +44,12 @@
                         type="textarea"
                         filterable
                         clearable
-                        :placeholder="$t('common.pleaseEnter')"
+                        :placeholder="LangUtil('请输入')"
                         v-model="form.name"
                     ></el-input>
                     <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)">
                         <!-- 翻译 -->
-                        {{ $t("user_detail.translate") }}
+                        {{ LangUtil("翻译") }}
                     </el-button>
                 </div>
             </el-form-item>
@@ -62,7 +57,7 @@
             <el-form-item size="mini" :label="tableColumns['type_position'].name" prop="type_position">
                 <el-select
                     v-model="form.type_position"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     filterable
                     style="width: 300px"
                 >
@@ -82,7 +77,7 @@
                     type="datetime"
                     align="right"
                     value-format="yyyy-MM-dd HH:mm:ss"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 >
                 </el-date-picker>
             </el-form-item>
@@ -92,13 +87,13 @@
                     type="datetime"
                     align="right"
                     value-format="yyyy-MM-dd HH:mm:ss"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 >
                 </el-date-picker>
             </el-form-item>
             <!-- 模块 -->
             <el-form-item size="mini" :label="tableColumns['open_mode'].name" prop="open_mode">
-                <el-select v-model="form.open_mode" :placeholder="$t('common.pleaseChoose')" filterable>
+                <el-select v-model="form.open_mode" :placeholder="LangUtil('请选择')" filterable>
                     <el-option
                         v-for="(value, key) in tableColumns['open_mode'].options"
                         :key="key"
@@ -112,7 +107,7 @@
             <el-form-item size="mini" :label="tableColumns['open_mode_url'].name">
                 <el-input
                     v-model="form.open_mode_url"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     maxlength="100"
                     show-word-limit
                 ></el-input>
@@ -134,7 +129,7 @@
                         filterable
                         clearable
                         rows="5"
-                        :placeholder="$t('common.pleaseEnter')"
+                        :placeholder="LangUtil('请输入')"
                         v-model="form.content"
                     ></el-input>
                     <el-button
@@ -144,7 +139,7 @@
                         @click="handleTranslate(form.content)"
                     >
                         <!-- 翻译 -->
-                        {{ $t("user_detail.translate") }}
+                        {{ LangUtil("翻译") }}
                     </el-button>
                 </div>
             </el-form-item>
@@ -195,7 +190,7 @@
                     @click="handleLangImg()"
                 >
                     <!-- 多语言图片 -->
-                    {{ $t("user_detail.multilingualPictures") }}
+                    {{ LangUtil("多语言图片") }}
                 </el-button>
             </el-form-item>
 
@@ -250,13 +245,13 @@
                     @click="handleLangImg1()"
                 >
                     <!-- 多语言图片 -->
-                    {{ $t("user_detail.multilingualPictures") }}
+                    {{ LangUtil("多语言图片") }}
                 </el-button>
             </el-form-item>
 
             <el-form-item class="dialog-footer">
                 <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
-                    isStatusUpdate ? $t("common.save") : $t("plats_notice.releaseConfirm")
+                    isStatusUpdate ? LangUtil("确认保存") : LangUtil("确认发布")
                 }}</el-button>
             </el-form-item>
         </el-form>
@@ -264,6 +259,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatsNoticeProxy from "@/views/plats_notice/proxy/PlatsNoticeProxy";
@@ -279,29 +275,30 @@ import i18n from "@/lang";
 
 @Component
 export default class PlatsNoticeDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatsNoticeProxy = this.getProxy(PlatsNoticeProxy);
-    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
-    private langImgProxy: CommonLangImgProxy = this.getProxy(CommonLangImgProxy);
+    myProxy: PlatsNoticeProxy = this.getProxy(PlatsNoticeProxy);
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+    langImgProxy: CommonLangImgProxy = this.getProxy(CommonLangImgProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private formatImageUrl = formatImageUrl;
+    formatImageUrl = formatImageUrl;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
-    private showMask = false;
+    showMask = false;
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -317,21 +314,21 @@ export default class PlatsNoticeDialog extends AbstractView {
 
     get rules() {
         return {
-            plat_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            app_types: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            start_time: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            end_time: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            content: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            img_urls: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            // thumbnail_urls: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            languages: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            type_position: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            plat_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            app_types: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            start_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            end_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            img_urls: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            // thumbnail_urls: [{ required: true, message: this.LangUtil('必须选择'), trigger: "change" }],
+            languages: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            type_position: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -339,7 +336,7 @@ export default class PlatsNoticeDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -347,7 +344,7 @@ export default class PlatsNoticeDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 
@@ -429,7 +426,7 @@ export default class PlatsNoticeDialog extends AbstractView {
             }
         }
         if (!data.key) {
-            const str: any = i18n.t("user_detail.uploadDefaultImg");
+            const str: any = LangUtil("请先上传默认图片");
             Message.warning(str);
             return;
         }
@@ -448,7 +445,7 @@ export default class PlatsNoticeDialog extends AbstractView {
             }
         }
         if (!data.key) {
-            const str: any = i18n.t("user_detail.uploadDefaultImg");
+            const str: any = LangUtil("请先上传默认图片");
             Message.warning(str);
             return;
         }

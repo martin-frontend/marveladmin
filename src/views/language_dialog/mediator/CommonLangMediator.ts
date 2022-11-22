@@ -5,12 +5,9 @@ import { Message } from "element-ui";
 import CommonLangProxy from "../proxy/CommonLangProxy";
 import { EventType } from "../setting";
 
-interface IPlatLang extends IEventDispatcher {
-
-}
+interface IPlatLang extends IEventDispatcher {}
 
 export default class CommonLangMediator extends AbstractMediator {
-
     private myProxy: CommonLangProxy = <any>this.getProxy(CommonLangProxy);
 
     onRegister() {

@@ -3,13 +3,11 @@ import GlobalEventType from "./core/global/GlobalEventType";
 import { IEventDispatcher } from "./core/IEventDispatcher";
 
 export interface IApp extends IEventDispatcher {
-    showMessagePanel(data:any): void;
+    showMessagePanel(data: any): void;
 }
 export default class AppMediator extends AbstractMediator {
     listNotificationInterests(): string[] {
-        return [
-            GlobalEventType.SHOW_MESSAGE_PANEL
-        ];
+        return [GlobalEventType.SHOW_MESSAGE_PANEL];
     }
 
     handleNotification(notification: puremvc.INotification) {

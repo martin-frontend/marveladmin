@@ -1,12 +1,8 @@
 <template>
-    <el-dialog
-        :title="$t(`plat_agent.promotionExtraConfig`)"
-        :visible.sync="myProxy.promotionDialogData.bShow"
-        width="800px"
-    >
-        <div class="">{{ $t(`plat_agent.promotionExtraDesc`) }}}</div>
+    <el-dialog :title="LangUtil('额外返佣配置')" :visible.sync="myProxy.promotionDialogData.bShow" width="800px">
+        <div class="">{{ LangUtil("每日代理业绩(自营+团队) 根据以下等级配置,获取平台赠送的额外佣金奖励") }}}</div>
         <el-button @click="onAdd()" class="add_level" type="primary" icon="el-icon-circle-plus-outline">{{
-            $t("plat_users_vip_model.addLevel")
+            LangUtil("添加等级")
         }}</el-button>
         <el-table
             :header-cell-style="{
@@ -22,7 +18,7 @@
             size="mini"
             :data="myProxy.promotionDialogData.extraConfig"
         >
-            <el-table-column :label="$t('common.level')" type="index" width="100"></el-table-column>
+            <el-table-column :label="LangUtil('等级')" type="index" width="100"></el-table-column>
             <el-table-column :label="tableColumns.promotion_extra_config.gold" prop="gold">
                 <template slot-scope="scope">
                     <el-input
@@ -43,22 +39,23 @@
                     ></el-input>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" min-width="100px">
+            <el-table-column :label="LangUtil('操作')" min-width="100px">
                 <template slot-scope="scope">
                     <el-button type="primary" @click="onDelete(scope.$index)" size="small">{{
-                        $t("common.delete")
+                        LangUtil("删除")
                     }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
         <div class="footer">
-            <el-button @click="onConfirm()" type="primary" icon="">{{ $t("common.determine") }}</el-button>
-            <el-button @click="myProxy.promotionDialogData.bShow = false">{{ $t("common.cancel") }}</el-button>
+            <el-button @click="onConfirm()" type="primary" icon="">{{ LangUtil("确定") }}</el-button>
+            <el-button @click="myProxy.promotionDialogData.bShow = false">{{ LangUtil("取消") }}</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatAgentProxy from "@/views/plat_agent/proxy/PlatAgentProxy";
@@ -67,16 +64,17 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PromotionExtraConfigDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatAgentProxy = this.getProxy(PlatAgentProxy);
+    myProxy: PlatAgentProxy = this.getProxy(PlatAgentProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private dialogData = this.myProxy.promotionDialogData;
+    tableColumns = this.myProxy.tableData.columns;
+    dialogData = this.myProxy.promotionDialogData;
 
     get extraConfig() {
         return this.myProxy.promotionDialogData.extraConfig;

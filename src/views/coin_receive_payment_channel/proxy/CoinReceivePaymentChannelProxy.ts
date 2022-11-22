@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -23,9 +24,13 @@ export default class CoinReceivePaymentChannelProxy extends AbstractProxy implem
         });
     }
 
-    receiveNoticeStr = <string>i18n.t("coin_receive_payment_channel.receiveNoticeStr");
+    receiveNoticeStr = <string>(
+        LangUtil(
+            "以上收款信息仅限本次支付使用，收款信息不定期更换，每次付款前请依照本页所显示的收款信息付款，如入款到已经过期账户导致无法查收，本平台概不负责。"
+        )
+    );
 
-    goldNotice = <string>i18n.t("coin_receive_payment_channel.goldNotice");
+    goldNotice = <string>LangUtil("展示充值金额时，是否随机增加随机数，方便区分充值订单");
 
     /**表格相关数据 */
     tableData = {
@@ -350,9 +355,9 @@ export default class CoinReceivePaymentChannelProxy extends AbstractProxy implem
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

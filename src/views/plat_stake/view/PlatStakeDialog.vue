@@ -25,13 +25,14 @@
                 <el-switch v-model="form.is_open_stake" :active-value="1" :inactive-value="0"></el-switch>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handlerUpdate">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" size="mini" @click="handlerUpdate">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatStakeProxy from "@/views/plat_stake/proxy/PlatStakeProxy";
@@ -43,21 +44,22 @@ import i18n from "@/lang";
 
 @Component
 export default class PlatStakeDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
+    myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private tableColumns = this.myProxy.stakeLogtableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.stakeLogtableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private title = i18n.t("user_detail.dividendConfiguration");
+    title = LangUtil("质押分红配置");
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -67,7 +69,7 @@ export default class PlatStakeDialog extends AbstractView {
         return {};
     }
 
-    private handlerUpdate() {
+    handlerUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdateStakeConfig();

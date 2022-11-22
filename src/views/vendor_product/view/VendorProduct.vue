@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <VendorProductDialog/>
-        <VendorProductHeader/>
-        <VendorProductBody/>
+        <VendorProductDialog />
+        <VendorProductHeader />
+        <VendorProductBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import VendorProductBody from "./VendorProductBody.vue";
         VendorProductDialog,
         VendorProductHeader,
         VendorProductBody,
-    }
+    },
 })
 export default class VendorProduct extends AbstractView {
-
     constructor() {
         super(VendorProductMediator);
     }

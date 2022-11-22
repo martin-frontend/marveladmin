@@ -10,7 +10,7 @@
             'text-align': 'center',
         }"
     >
-        <el-table-column :label="$t('common.date')" prop="created_date" class-name="status-col" width="120px">
+        <el-table-column :label="LangUtil('日期')" prop="created_date" class-name="status-col" width="120px">
         </el-table-column>
         <el-table-column :label="columnInfo.total_win_loss.name" prop="total_win_loss" class-name="status-col">
             <template slot-scope="{ row }">
@@ -56,6 +56,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Prop } from "vue-property-decorator";
 import WinLoss from "@/components/WinLossDisplay.vue";
@@ -66,6 +67,7 @@ import WinLoss from "@/components/WinLossDisplay.vue";
     },
 })
 export default class WinLossTable extends AbstractView {
+    LangUtil = LangUtil;
     @Prop({ type: Array, required: true }) tableData!: any;
     @Prop({ type: Object, required: true }) columnInfo!: any;
 }

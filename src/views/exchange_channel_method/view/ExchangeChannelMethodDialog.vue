@@ -24,7 +24,7 @@
                 <el-select
                     v-model="form.coin_name_unique"
                     class="select"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     @change="getBlockNetworkOptions"
                 >
                     <el-option
@@ -81,7 +81,7 @@
                         @click="handleTranslate(form.explain)"
                     >
                         <!-- 翻译 -->
-                        {{ $t("user_detail.translate") }}
+                        {{ LangUtil("翻译") }}
                     </el-button>
                 </div>
             </el-form-item>
@@ -96,20 +96,21 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button type="danger" size="mini" v-if="isStatusUpdate" @click="handleDelete()">{{
-                $t("common.delete")
+                LangUtil("删除")
             }}</el-button>
             <el-button
                 v-if="checkUnique(unique.exchange_channel_method_update)"
                 type="primary"
                 size="mini"
                 @click="!isStatusUpdate ? handleAdd() : handleUpdate()"
-                >{{ $t("common.save") }}</el-button
+                >{{ LangUtil("确认保存") }}</el-button
             >
         </div>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import ExchangeChannelMethodProxy from "@/views/exchange_channel_method/proxy/ExchangeChannelMethodProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
@@ -121,34 +122,35 @@ import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class ExchangeChannelMethodDialog extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: ExchangeChannelMethodProxy = this.getProxy(ExchangeChannelMethodProxy);
-    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+    myProxy: ExchangeChannelMethodProxy = this.getProxy(ExchangeChannelMethodProxy);
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
 
     // columns
-    private tableColumns = this.myProxy.tableData.columns;
-    private methodTableColumns: any = this.myProxy.methodTableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
+    methodTableColumns: any = this.myProxy.methodTableData.columns;
 
     // table Data
-    private tableData = this.myProxy.dialogDataChannelData.row.payment_method_detail;
-    private row = this.myProxy.dialogDataChannelData.row;
-    private form = this.myProxy.dialogData.form;
+    tableData = this.myProxy.dialogDataChannelData.row.payment_method_detail;
+    row = this.myProxy.dialogDataChannelData.row;
+    form = this.myProxy.dialogData.form;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
 
     //练 下拉选单
-    private blockNetworkOptions = [];
+    blockNetworkOptions = [];
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -171,16 +173,16 @@ export default class ExchangeChannelMethodDialog extends AbstractView {
 
     get rules() {
         return {
-            payment_method_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            coin_name_unique: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            block_network_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            exchange_channel_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            min_gold: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            max_gold: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            free_time: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            fee: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            min_fee: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            balance: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            payment_method_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            coin_name_unique: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            block_network_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            exchange_channel_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            min_gold: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            max_gold: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            free_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            fee: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            min_fee: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            balance: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
@@ -191,7 +193,7 @@ export default class ExchangeChannelMethodDialog extends AbstractView {
         ].options;
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -199,7 +201,7 @@ export default class ExchangeChannelMethodDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -207,7 +209,7 @@ export default class ExchangeChannelMethodDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete();
     }
 

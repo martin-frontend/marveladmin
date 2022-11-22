@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-table border :data="[{}]" style="width: 100%" v-loading="net_status.loading">
-            <el-table-column prop="date" :label="$t('statistic_plat_funds_flow.income')" align="right">
+            <el-table-column prop="date" :label="LangUtil('收入')" align="right">
                 <template>
                     <div align="center">
                         <p>
@@ -51,7 +51,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="date" :label="$t('statistic_plat_funds_flow.expenditure')" align="right">
+            <el-table-column prop="date" :label="LangUtil('支出')" align="right">
                 <template>
                     <div align="center">
                         <p>
@@ -106,17 +106,24 @@
         </el-table>
         <div class="info" v-if="this.myProxy.tableData.bShowInfo">
             <ol>
-                <li>{{ $t("statistic_plat_funds_flow.infoText1") }}</li>
-                <li>{{ $t("statistic_plat_funds_flow.infoText2") }}</li>
-                <li>{{ $t("statistic_plat_funds_flow.infoText3") }}</li>
-                <li>{{ $t("statistic_plat_funds_flow.infoText4") }}</li>
-                <li>{{ $t("statistic_plat_funds_flow.infoText5") }}</li>
-                <li>{{ $t("statistic_plat_funds_flow.infoText6") }}</li>
+                <li>
+                    {{ LangUtil("平台出入款：平台出入款只是根据充值订单订与兑换订单、用户实际出款、入款 进行统计") }}
+                </li>
+                <li>{{ LangUtil("统计时间：可选择查询时间。查询时间最多不超过40天。") }}</li>
+                <li>
+                    {{ LangUtil("用户ID（直属）：根据输入的用户ID，统计该用户所有【直属下级】的出入款数据，包含自己") }}
+                </li>
+                <li>
+                    {{ LangUtil("用户ID（团队）：根据输入的用户ID，统计该用户所有【团队下级】的出入款数据，包含自己") }}
+                </li>
+                <li>{{ LangUtil("用户ID：根据输入的用户ID，统计该用户的出入款数据") }}</li>
+                <li>{{ LangUtil("收支盈亏：平台入款+线上入款+人工存款-平台出款-线上出款") }}</li>
             </ol>
         </div>
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -131,20 +138,21 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class StatisticPlatFundsFlowBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: StatisticPlatFundsFlowProxy = this.getProxy(StatisticPlatFundsFlowProxy);
+    myProxy: StatisticPlatFundsFlowProxy = this.getProxy(StatisticPlatFundsFlowProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.data;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.data;
+    listQuery = this.myProxy.listQuery;
 
     @Watch("myProxy.tableData.watchNumber")
-    private reloadView() {
+    reloadView() {
         this.$nextTick(() => {
             this.$forceUpdate();
         });

@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -89,7 +90,9 @@ export default class PlatUsersBackwaterModelProxy extends AbstractProxy implemen
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            this.sendNotification(HttpType.admin_plat_users_backwater_model_show, { backwater_model_id: data.backwater_model_id });
+            this.sendNotification(HttpType.admin_plat_users_backwater_model_show, {
+                backwater_model_id: data.backwater_model_id,
+            });
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -106,7 +109,7 @@ export default class PlatUsersBackwaterModelProxy extends AbstractProxy implemen
             name: "",
             desc: "",
         });
-        this.dialogData.form.backwater_config = JSON.parse(JSON.stringify(this.initBackwater))
+        this.dialogData.form.backwater_config = JSON.parse(JSON.stringify(this.initBackwater));
     }
 
     /**查询 */
@@ -115,11 +118,7 @@ export default class PlatUsersBackwaterModelProxy extends AbstractProxy implemen
     }
     /**添加数据 */
     onAdd() {
-        const {
-            name,
-            desc,
-            backwater_config
-        } = this.dialogData.form;
+        const { name, desc, backwater_config } = this.dialogData.form;
         const formCopy: any = {
             name,
             desc,
@@ -144,14 +143,17 @@ export default class PlatUsersBackwaterModelProxy extends AbstractProxy implemen
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
-                this.sendNotification(HttpType.admin_plat_users_backwater_model_update, { backwater_model_id: id, is_delete: 1 });
+                this.sendNotification(HttpType.admin_plat_users_backwater_model_update, {
+                    backwater_model_id: id,
+                    is_delete: 1,
+                });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

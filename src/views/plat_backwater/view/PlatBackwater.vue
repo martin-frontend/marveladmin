@@ -1,7 +1,7 @@
 <template>
     <div class="content">
-        <PlatBackwaterHeader/>
-        <PlatBackwaterBody/>
+        <PlatBackwaterHeader />
+        <PlatBackwaterBody />
     </div>
 </template>
 
@@ -16,10 +16,9 @@ import PlatBackwaterBody from "./PlatBackwaterBody.vue";
     components: {
         PlatBackwaterHeader,
         PlatBackwaterBody,
-    }
+    },
 })
 export default class PlatBackwater extends AbstractView {
-
     constructor() {
         super(PlatBackwaterMediator);
     }

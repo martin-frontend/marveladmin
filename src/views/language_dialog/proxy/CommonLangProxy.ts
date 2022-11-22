@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -45,17 +46,17 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             type: { name: "类型", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
-            plat_id:{name: "平台ID", options:{}},
-            key:{name: "键", options:{}},
-            ar_AR: {name: "键", options:{}},
-            en_EN: {name: "键", options:{}},
-            jp_JP: {name: "", options:{}},
-            ko_Kr: {name: "", options:{}},
-            th_TH: {name: "", options:{}},
-            vi_VN: {name: "", options:{}},
-            zh_CN: {name: "", options:{}},
-            zh_TW: {name: "", options:{}},
-            es_ES: {name: "", options:{}}
+            plat_id: { name: "平台ID", options: {} },
+            key: { name: "键", options: {} },
+            ar_AR: { name: "键", options: {} },
+            en_EN: { name: "键", options: {} },
+            jp_JP: { name: "", options: {} },
+            ko_Kr: { name: "", options: {} },
+            th_TH: { name: "", options: {} },
+            vi_VN: { name: "", options: {} },
+            zh_CN: { name: "", options: {} },
+            zh_TW: { name: "", options: {} },
+            es_ES: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -68,7 +69,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
         Object.assign(this.tableData.columns, data);
         this.dialogData.form.key = this.sentence;
         this.dialogData.form.type = this.type;
-        if (this.tableData.columns.language.options ) {
+        if (this.tableData.columns.language.options) {
             for (let key in this.tableData.columns.language.options) {
                 this.dialogData.form[key] = this.sentence;
             }
@@ -82,10 +83,9 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
-        let newTableData = this.tableData.list.map(({ language, ...data}) =>
-        ({
+        let newTableData = this.tableData.list.map(({ language, ...data }) => ({
             ...data,
-            language: jsonToObject(language)
+            language: jsonToObject(language),
         }));
         Object.assign(this.tableData.pageInfo, data.pageInfo);
         Object.assign(this.tableData.list, newTableData);
@@ -106,8 +106,8 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             language: "",
             module: "",
             type: "",
-            plat_id:"",
-            key:"",
+            plat_id: "",
+            key: "",
             ar_AR: "",
             en_EN: "",
             jp_JP: "",
@@ -144,8 +144,8 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             language: {},
             module: "",
             type: 1,
-            plat_id:"",
-            key:"",
+            plat_id: "",
+            key: "",
             ar_AR: "",
             en_EN: "",
             jp_JP: "",
@@ -168,9 +168,8 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             } else {
                 this.sendNotification(HttpType.admin_system_lang_store, objectRemoveNull(formCopy));
             }
-            
         } catch (error) {
-            MessageBox.alert(<string> i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
 
@@ -179,21 +178,21 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
         const formCopy: any = Object.assign({}, this.dialogData.form);
         try {
             if (formCopy.plat_id) {
-                console.log("admin_plat_lang_update========",formCopy);
+                console.log("admin_plat_lang_update========", formCopy);
                 this.sendNotification(HttpType.admin_plat_lang_update, objectRemoveNull(formCopy));
             } else {
-                console.log("admin_system_lang_update========",formCopy);
-                
+                console.log("admin_system_lang_update========", formCopy);
+
                 this.sendNotification(HttpType.admin_system_lang_update, objectRemoveNull(formCopy));
             }
         } catch (error) {
-            MessageBox.alert(<string> i18n.t("common.jsonError"));
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
 
     /**
-     * 获取全部翻译 
-     * @param data 
+     * 获取全部翻译
+     * @param data
      * source	string	源语言: en_EN   sentence	string	要翻译的语句
      */
     translate(data: any): void {
@@ -201,16 +200,16 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     }
 
     /**获取全部翻译返回更新表单 */
-    updateForm(data: any):void {
+    updateForm(data: any): void {
         Object.assign(this.dialogData.form, data);
     }
 
     /**
      * 根据key查询数据库是否有该key的翻译
-     * @param data 
+     * @param data
      * plat_id , type, key
      */
-    translateLangCheck(): void{
+    translateLangCheck(): void {
         const data: any = {};
         data.plat_id = this.dialogData.form.plat_id;
         data.type = this.dialogData.form.type;

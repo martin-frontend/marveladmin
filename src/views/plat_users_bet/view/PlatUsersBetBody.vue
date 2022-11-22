@@ -1,22 +1,22 @@
 <template>
     <div>
         <div class="statistics">
-            {{ $t("plat_users_bet.stastisticList") }}
-            <span>{{ $t("common.totalBet") }}:{{ summary.bet_gold }}</span>
-            <span>{{ $t("common.validBet") }}:{{ summary.valid_bet_gold }}</span>
-            <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="summary.win_gold"/></span>
-            <span>{{ $t("common.settleWater") }}:{{ summary.settlement_water }}</span>
-            <span>{{ $t("common.playerWater") }}:{{ summary.water }}</span>
+            {{ LangUtil("当前统计列表") }}
+            <span>{{ LangUtil("总投注金额") }}:{{ summary.bet_gold }}</span>
+            <span>{{ LangUtil("有效投注金额") }}:{{ summary.valid_bet_gold }}</span>
+            <span>{{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="summary.win_gold"/></span>
+            <span>{{ LangUtil("结算流水") }}:{{ summary.settlement_water }}</span>
+            <span>{{ LangUtil("用户流水") }}:{{ summary.water }}</span>
             <span>{{ tableColumns["water_accelerate"].name }}:{{ summary.water_accelerate }}</span>
             <span>{{ tableColumns["backwater"].name }}:{{ summary.backwater }}</span>
         </div>
         <div class="statistics" v-for="(item, index) in myProxy.tableData.summary_coin" :key="index">
             {{ item.coin_name_unique }}
-            <span>{{ $t("common.totalBet") }}:{{ item.bet_gold }}</span>
-            <span>{{ $t("common.validBet") }}:{{ item.valid_bet_gold }}</span>
-            <span>{{ $t("common.playerWinLoss") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
-            <span>{{ $t("common.settleWater") }}:{{ item.settlement_water }}</span>
-            <span>{{ $t("common.playerWater") }}:{{ item.water }}</span>
+            <span>{{ LangUtil("总投注金额") }}:{{ item.bet_gold }}</span>
+            <span>{{ LangUtil("有效投注金额") }}:{{ item.valid_bet_gold }}</span>
+            <span>{{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
+            <span>{{ LangUtil("结算流水") }}:{{ item.settlement_water }}</span>
+            <span>{{ LangUtil("用户流水") }}:{{ item.water }}</span>
             <span>{{ tableColumns["backwater"].name }}:{{ item.backwater_coin }}</span>
             <!-- <span>{{ tableColumns["water_accelerate"].name }}:{{ item.water_accelerate }}</span> -->
         </div>
@@ -96,13 +96,16 @@
                 class-name="status-col"
             >
                 <template slot-scope="{ row }">
-                    <div>{{row.coin_name_unique}}</div>
-                    <div>{{tableColumns['bet_gold_coin'].name}}: {{row.bet_gold_coin}}</div>
-                    <div>{{tableColumns['valid_bet_gold_coin'].name}}: {{row.valid_bet_gold_coin}}</div>
-                    <div>{{tableColumns['win_gold_coin'].name}}: <WinLossDisplay :amount="row.win_gold_coin" :isShowDollar="false" /></div>
-                    <div>{{tableColumns['settlement_water_coin'].name}}: {{row.settlement_water_coin}}</div>
-                    <div>{{tableColumns['water_coin'].name}}: {{row.water_coin}}</div>
-                    <div>{{tableColumns['backwater'].name}}: {{row.backwater_coin}}</div>
+                    <div>{{ row.coin_name_unique }}</div>
+                    <div>{{ tableColumns["bet_gold_coin"].name }}: {{ row.bet_gold_coin }}</div>
+                    <div>{{ tableColumns["valid_bet_gold_coin"].name }}: {{ row.valid_bet_gold_coin }}</div>
+                    <div>
+                        {{ tableColumns["win_gold_coin"].name }}:
+                        <WinLossDisplay :amount="row.win_gold_coin" :isShowDollar="false" />
+                    </div>
+                    <div>{{ tableColumns["settlement_water_coin"].name }}: {{ row.settlement_water_coin }}</div>
+                    <div>{{ tableColumns["water_coin"].name }}: {{ row.water_coin }}</div>
+                    <div>{{ tableColumns["backwater"].name }}: {{ row.backwater_coin }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns['win_gold'].name" prop="win_gold" class-name="status-col">
@@ -111,7 +114,7 @@
                     <WinLossDisplay v-else :amount="row.win_gold" />
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.time')" header-align="center" align="left" min-width="215px">
+            <el-table-column :label="LangUtil('时间')" header-align="center" align="left" min-width="215px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["bet_at"].name }}：{{ row.bet_at }}</p>
                     <p>{{ tableColumns["settlement_at"].name }}：{{ row.settlement_at }}</p>
@@ -130,23 +133,16 @@
                 class-name="status-col"
                 min-width="80px"
             ></el-table-column>
-            <el-table-column
-                :label="$t('statistic_user_days.water')"
-                prop="water"
-                class-name="status-col"
-                min-width="170px"
-            >
+            <el-table-column :label="LangUtil('流水')" prop="water" class-name="status-col" min-width="170px">
                 <template slot-scope="{ row }">
                     <div align="left">
-                        <div>{{ $t("common.settleWater") }}：{{ row.settlement_water }}</div>
-                        <div>
-                            {{ $t("common.settleType") }}：{{ tableColumns["water_type"].options[row.water_type] }}
-                        </div>
-                        <div>{{ $t("common.settleRatio") }}：{{ row.water_rate * 100 }}%</div>
-                        <div>{{ $t("common.userWater") }}：{{ row.water }}</div>
+                        <div>{{ LangUtil("结算流水") }}：{{ row.settlement_water }}</div>
+                        <div>{{ LangUtil("结算方式") }}：{{ tableColumns["water_type"].options[row.water_type] }}</div>
+                        <div>{{ LangUtil("结算比例") }}：{{ row.water_rate * 100 }}%</div>
+                        <div>{{ LangUtil("用户流水") }}：{{ row.water }}</div>
                         <div>{{ tableColumns["water_accelerate"].name }}：{{ row.water_accelerate }}</div>
-                        <div>{{ $t("common.water_rate_accelerate") }}：{{ row.water_rate_accelerate * 100 }}%</div>
-                        <div>{{tableColumns['backwater'].name}}: {{row.backwater}}</div>
+                        <div>{{ LangUtil("加速流水比例") }}：{{ row.water_rate_accelerate * 100 }}%</div>
+                        <div>{{ tableColumns["backwater"].name }}: {{ row.backwater }}</div>
                     </div>
                 </template>
             </el-table-column>
@@ -162,14 +158,14 @@
                     </el-tag>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="80px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
                         type="primary"
                         @click="handleEdit(row)"
                         v-if="checkUnique(unique.plat_users_bet_show)"
-                        >{{ $t("common.detail") }}</el-button
+                        >{{ LangUtil("详情") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -178,6 +174,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -204,30 +201,31 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
     },
 })
 export default class PlatUsersBetBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-     unique = unique;
-     checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-     net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-     myProxy: PlatUsersBetProxy = this.getProxy(PlatUsersBetProxy);
+    myProxy: PlatUsersBetProxy = this.getProxy(PlatUsersBetProxy);
     // proxy property
-     tableColumns = this.myProxy.tableData.columns;
-     tableData = this.myProxy.tableData.list;
-     pageInfo = this.myProxy.tableData.pageInfo;
-     listQuery = this.myProxy.listQuery;
-     summary = this.myProxy.tableData.summary;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
+    summary = this.myProxy.tableData.summary;
 
-     handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-     handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-     showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.showUserDetail(user_id);
     }
 }

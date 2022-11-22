@@ -9,9 +9,9 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column prop="created_date" :label="$t('common.date')" align="center" min-width="120px">
+            <el-table-column prop="created_date" :label="LangUtil('日期')" align="center" min-width="120px">
             </el-table-column>
-            <el-table-column prop="plat_id" :label="$t('common.plat')" align="center" min-width="120px">
+            <el-table-column prop="plat_id" :label="LangUtil('平台')" align="center" min-width="120px">
                 <template slot-scope="{ row }">
                     <div>
                         {{ tableColumns.plat_id.options[row.plat_id] }}
@@ -56,6 +56,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -70,25 +71,26 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class StatisticUserKeepDaysBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: StatisticUserKeepDaysProxy = this.getProxy(StatisticUserKeepDaysProxy);
+    myProxy: StatisticUserKeepDaysProxy = this.getProxy(StatisticUserKeepDaysProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private toPercent(curAmount: string, total: string) {
+    toPercent(curAmount: string, total: string) {
         if (total == "0" || curAmount == "0") {
             return "0%";
         }

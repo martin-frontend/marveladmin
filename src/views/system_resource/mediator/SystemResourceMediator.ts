@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -32,8 +33,8 @@ export default class SystemResourceMediator extends AbstractMediator {
             EventType.admin_resource_upload,
         ];
     }
-    private uploadSuccess: any = i18n.t("system_resource.uploadSuccess");
-    private deleteSuccess: any = i18n.t("system_resource.deleteSuccess");
+    private uploadSuccess: any = LangUtil("图片上传成功");
+    private deleteSuccess: any = LangUtil("图片删除成功");
     handleNotification(notification: puremvc.INotification) {
         const myProxy: SystemResourceProxy = <any>this.facade.retrieveProxy(SystemResourceProxy.NAME);
         const myView: ISystemResource = this.viewComponent;

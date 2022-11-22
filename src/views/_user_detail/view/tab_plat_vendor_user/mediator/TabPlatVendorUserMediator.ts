@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { EventType, HttpType } from "@/views/_user_detail/setting";
 import TabPlatVendorUserProxy from "../proxy/TabPlatVendorUserProxy";
@@ -24,7 +25,7 @@ export default class TabPlatVendorUserMediator extends AbstractMediator {
             EventType.admin_plat_vendor_user_index,
             EventType.admin_plat_vendor_user_show,
             EventType.admin_plat_vendor_user_money,
-            EventType.admin_plat_user_vendor_withdraw
+            EventType.admin_plat_user_vendor_withdraw,
         ];
     }
 
@@ -43,11 +44,11 @@ export default class TabPlatVendorUserMediator extends AbstractMediator {
                     break;
                 case EventType.admin_plat_vendor_user_money:
                     {
-                        const msg = i18n.t("user_detail.vendorBalance") + "：" + body.gold;
+                        const msg = LangUtil("厂商余额") + "：" + body.gold;
                         if (convertToNum(body.gold) > 0) {
                             MessageBox.confirm(msg, "", {
-                                confirmButtonText: <string>i18n.t("user_detail.withdraw"),
-                                cancelButtonText: <string>i18n.t("common.close"),
+                                confirmButtonText: <string>LangUtil("提取"),
+                                cancelButtonText: <string>LangUtil("关闭"),
                             }).then(() => {
                                 const data = {
                                     user_id: this.pageSetting.user_id,
@@ -58,13 +59,13 @@ export default class TabPlatVendorUserMediator extends AbstractMediator {
                             });
                         } else {
                             MessageBox.alert(msg, "", {
-                                confirmButtonText: <string>i18n.t("common.close"),
+                                confirmButtonText: <string>LangUtil("关闭"),
                             });
                         }
                     }
                     break;
                 case EventType.admin_plat_user_vendor_withdraw:
-                    Message.success(<string>i18n.t("successMessage.operation"))
+                    Message.success(<string>LangUtil("操作成功"));
                     break;
             }
         }

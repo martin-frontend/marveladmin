@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('admin_cron.titleText1')" :visible.sync="myProxy.cronQueuePreviewDialogData.bShow" width="550px">
+    <el-dialog :title="LangUtil('查看定时任务')" :visible.sync="myProxy.cronQueuePreviewDialogData.bShow" width="550px">
         <el-form ref="form" :rules="rules" :model="form" label-width="100px" v-loading="net_status.loading">
             <!-- id -->
             <el-form-item :label="tableColumns.id.name + ':'">
@@ -43,7 +43,7 @@
             </el-form-item>
             <el-form-item>
                 <div class="footer">
-                    <el-button type="primary" @click="handleClose">{{ $t("common.close") }}</el-button>
+                    <el-button type="primary" @click="handleClose">{{ LangUtil("关闭") }}</el-button>
                 </div>
             </el-form-item>
         </el-form>
@@ -51,6 +51,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import AdminCronProxy from "@/views/admin_cron/proxy/AdminCronProxy";
@@ -61,16 +62,17 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class AdminCronDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
+    myProxy: AdminCronProxy = this.getProxy(AdminCronProxy);
     // proxy property
-    private tableColumns = this.myProxy.cronQueueTableData.columns;
-    private listQuery = this.myProxy.cronQueuePreviewDialogData.form;
+    tableColumns = this.myProxy.cronQueueTableData.columns;
+    listQuery = this.myProxy.cronQueuePreviewDialogData.form;
 
     get form() {
         return this.myProxy.cronQueuePreviewDialogData.form;
@@ -86,12 +88,12 @@ export default class AdminCronDialog extends AbstractView {
 
     get rules() {
         return {
-            cron_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "blur" }],
-            num_rows: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
+            cron_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
+            num_rows: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
         };
     }
 
-    private handleClose() {
+    handleClose() {
         this.myProxy.hideDialog();
     }
 }

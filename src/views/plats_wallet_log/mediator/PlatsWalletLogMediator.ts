@@ -3,13 +3,11 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/plats_wallet_log/setting";
 import PlatsWalletLogProxy from "../proxy/PlatsWalletLogProxy";
 
-interface IPlatsWalletLog extends IEventDispatcher {
-
-}
+interface IPlatsWalletLog extends IEventDispatcher {}
 
 export default class PlatsWalletLogMediator extends AbstractMediator {
     private myProxy: PlatsWalletLogProxy = <any>this.getProxy(PlatsWalletLogProxy);
-    
+
     onRegister() {
         this.myProxy.enter();
     }
@@ -23,11 +21,7 @@ export default class PlatsWalletLogMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_plats_wallet_log_table_columns,
-            EventType.admin_plats_wallet_log_index,
-
-        ];
+        return [EventType.admin_plats_wallet_log_table_columns, EventType.admin_plats_wallet_log_index];
     }
 
     handleNotification(notification: puremvc.INotification) {
@@ -41,7 +35,6 @@ export default class PlatsWalletLogMediator extends AbstractMediator {
             case EventType.admin_plats_wallet_log_index:
                 myProxy.setTableData(body);
                 break;
-
         }
     }
 }

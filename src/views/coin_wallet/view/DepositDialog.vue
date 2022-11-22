@@ -1,13 +1,15 @@
 <template>
-    <el-dialog :visible.sync="myProxy.depositData.bShow" :title="$t('common.deposit')">
+    <el-dialog :visible.sync="myProxy.depositData.bShow" :title="LangUtil('上分')">
         <el-form ref="refForm" :rules="rules" :model="form" label-width="130px">
             <el-form-item :label="tableColumns.admin_username.name">{{ username }} </el-form-item>
-            <el-form-item :label="tableColumns.plat_id.name">{{ tableColumns.plat_id.options[form.plat_id] }} </el-form-item>
+            <el-form-item :label="tableColumns.plat_id.name"
+                >{{ tableColumns.plat_id.options[form.plat_id] }}
+            </el-form-item>
             <el-form-item :label="tableColumns.gold.name">{{ form.gold }} </el-form-item>
-            <el-form-item :label="$t('coin_wallet.depositMoney')" prop="amount">
+            <el-form-item :label="LangUtil('上分金额')" prop="amount">
                 <el-input
                     clearable
-                    :placeholder="$t('coin_wallet.input')"
+                    :placeholder="LangUtil('请输入1~9999999999')"
                     v-model="form.amount"
                     type="number"
                     max="9999999999"
@@ -16,13 +18,14 @@
                 ></el-input>
             </el-form-item>
             <div class="footer">
-                <el-button @click="confirm()" type="primary" icon="">{{ $t("common.determine") }}</el-button>
+                <el-button @click="confirm()" type="primary" icon="">{{ LangUtil("确定") }}</el-button>
             </div>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "../../../core/abstract/AbstractView";
 import { Form } from "element-ui";
 import { Component, Watch } from "vue-property-decorator";
@@ -30,10 +33,11 @@ import CoinWalletProxy from "@/views/coin_wallet/proxy/CoinWalletProxy";
 
 @Component
 export default class DepositDialog extends AbstractView {
+    LangUtil = LangUtil;
     // proxy
-    private myProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
+    myProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
     get form() {
         return this.myProxy.depositData.form;
     }
@@ -42,18 +46,18 @@ export default class DepositDialog extends AbstractView {
     }
 
     // 表单验证
-    private rules = {
-        amount: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+    rules = {
+        amount: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
     };
 
     @Watch("myProxy.depositData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["refForm"] as Form & { clearValidate: () => void }).clearValidate();
         });
     }
 
-    private confirm() {
+    confirm() {
         (this.$refs["refForm"] as Form & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onDeposit(this.form);

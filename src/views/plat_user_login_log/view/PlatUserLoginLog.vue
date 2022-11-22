@@ -53,7 +53,7 @@
             <el-table-column label="设备号" prop="device"></el-table-column>
             <el-table-column label="IP" prop="ip"></el-table-column>
             <el-table-column label="创建时间" prop="created_at"></el-table-column>
-            <el-table-column :label="$t('common.operating')" width="90px">
+            <el-table-column :label="LangUtil('操作')" width="90px">
                 <template slot-scope="scope">
                     <el-button-group size="mini">
                         <el-button plain size="mini" type="info" @click="onCheck(scope.$index, scope.row)"
@@ -68,6 +68,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import PlatUserLoginLogMediator from "@/views/plat_user_login_log/mediator/PlatUserLoginLogMediator";
 import { Component } from "vue-property-decorator";
@@ -80,20 +81,21 @@ import Pagination from "@/components/Pagination.vue";
     },
 })
 export default class PlatUserLoginLog extends AbstractView {
+    LangUtil = LangUtil;
     // 表
-    private tableColumns: any = {};
-    private columns: string[] = [];
-    private tableData: any[] = [];
-    private pageInfo: PageInfoVO = { pageTotal: 0, pageCurrent: 0 };
+    tableColumns: any = {};
+    columns: string[] = [];
+    tableData: any[] = [];
+    pageInfo: PageInfoVO = { pageTotal: 0, pageCurrent: 0 };
     // 搜索
-    private search_select: number = 1;
-    private search_options: any[] = [
+    search_select: number = 1;
+    search_options: any[] = [
         { label: "用户ID", value: 1 },
         { label: "ID", value: 2 },
     ];
-    private search_input: string = "";
-    private plat_id_select: string = "";
-    private plat_id_options: any = {};
+    search_input: string = "";
+    plat_id_select: string = "";
+    plat_id_options: any = {};
     //
     constructor() {
         super(PlatUserLoginLogMediator);

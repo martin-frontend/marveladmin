@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -52,23 +53,12 @@ export default class PlatUsersVendorGoldLogMediator extends AbstractMediator {
             case EventType.admin_plat_users_vendor_gold_log_show:
                 break;
             case EventType.admin_plat_users_vendor_gold_log_update_manual:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_users_vendor_gold_log_auto_check:
                 myProxy.onQuery();
-                MessageBox.alert(
-                    body.error,
-                    <string>(
-                        i18n.t(
-                            [
-                                "plat_users_vendor_gold_log.tradeSuccess",
-                                "plat_users_vendor_gold_log.tradeUnknown",
-                                "plat_users_vendor_gold_log.tradeFail",
-                            ][body.status - 1]
-                        )
-                    )
-                );
+                MessageBox.alert(body.error, <string>LangUtil("undefined"));
                 break;
         }
     }

@@ -10,7 +10,7 @@
             />
             <div>
                 <el-button class="header-button" @click="exportExcel" type="primary" icon="el-icon-download">{{
-                    $t("statistic_plat_days.export")
+                    LangUtil("导出")
                 }}</el-button>
             </div>
         </div>
@@ -26,24 +26,25 @@
             <SearchInput :title="tableColumns.created_by.name" v-model="listQuery.created_by" />
             <div>
                 <el-button @click="handlerSearch()" class="item" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" class="item" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
 
-                <span>{{ $t("common.tableInfoTitle") }}</span>
-                <span>{{ $t("recharge_orders.tableInfoTotalGold") }}:{{ tableData.total_gold }}</span>
-                <span>{{ $t("recharge_orders.tableInfoTotalNum") }}:{{ tableData.total_num }}</span>
-                <span>{{ $t("recharge_orders.tableInfoSuccessTotalGold") }}:{{ tableData.success_total_gold }}</span>
-                <span>{{ $t("recharge_orders.tableInfoSuccessTotalNum") }}:{{ tableData.success_total_num }}</span>
-                <span>{{ $t("recharge_orders.tableInfoTotalUserNum") }}:{{ tableData.total_user_num }}</span>
+                <span>{{ LangUtil("查询汇总") }}</span>
+                <span>{{ LangUtil("充值总金额") }}:{{ tableData.total_gold }}</span>
+                <span>{{ LangUtil("充值订单数") }}:{{ tableData.total_num }}</span>
+                <span>{{ LangUtil("充值成功金额") }}:{{ tableData.success_total_gold }}</span>
+                <span>{{ LangUtil("充值成功订单数") }}:{{ tableData.success_total_num }}</span>
+                <span>{{ LangUtil("充值人数") }}:{{ tableData.total_user_num }}</span>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import VipReceiveRechargeOrderProxy from "../proxy/VipReceiveRechargeOrderProxy";
@@ -63,26 +64,27 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class VipReceiveRechargeOrderHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: VipReceiveRechargeOrderProxy = this.getProxy(VipReceiveRechargeOrderProxy);
+    myProxy: VipReceiveRechargeOrderProxy = this.getProxy(VipReceiveRechargeOrderProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private exportExcel() {
+    exportExcel() {
         this.myProxy.onQueryAll();
     }
 }

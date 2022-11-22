@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_stake/setting";
 import { Message } from "element-ui";
 import PlatStakeProxy from "../proxy/PlatStakeProxy";
 
-interface IPlatStake extends IEventDispatcher {
-
-}
+interface IPlatStake extends IEventDispatcher {}
 
 export default class PlatStakeMediator extends AbstractMediator {
     private myProxy: PlatStakeProxy = <any>this.getProxy(PlatStakeProxy);
@@ -38,7 +36,7 @@ export default class PlatStakeMediator extends AbstractMediator {
             EventType.admin_plat_stake_bonus_user_log_table_columns,
             EventType.admin_plat_stake_bonus_user_log_index,
             EventType.admin_plat_stake_config_show,
-            EventType.admin_plat_stake_config_update
+            EventType.admin_plat_stake_config_update,
         ];
     }
 
@@ -60,7 +58,7 @@ export default class PlatStakeMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_stake_config_show:
-                myProxy.setStakeBonusConfig(body.stake_bonus_config)
+                myProxy.setStakeBonusConfig(body.stake_bonus_config);
                 break;
             case EventType.admin_plat_stake_user_log_table_columns:
                 myProxy.setStakeUserLogTableColumns(body);
@@ -91,7 +89,6 @@ export default class PlatStakeMediator extends AbstractMediator {
                 myProxy.hideBonusConfigDialog();
                 myProxy.onPlatShow();
                 break;
-
         }
     }
 }

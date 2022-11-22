@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_agent_promotion_model/setting"
 import { Message } from "element-ui";
 import PlatAgentPromotionModelProxy from "../proxy/PlatAgentPromotionModelProxy";
 
-interface IPlatAgentPromotionModel extends IEventDispatcher {
-    
-}
+interface IPlatAgentPromotionModel extends IEventDispatcher {}
 
 export default class PlatAgentPromotionModelMediator extends AbstractMediator {
     private myProxy: PlatAgentPromotionModelProxy = <any>this.getProxy(PlatAgentPromotionModelProxy);
@@ -31,7 +29,6 @@ export default class PlatAgentPromotionModelMediator extends AbstractMediator {
             EventType.admin_plat_agent_promotion_model_show,
             EventType.admin_plat_agent_promotion_model_store,
             EventType.admin_plat_agent_promotion_model_update,
-
         ];
     }
 

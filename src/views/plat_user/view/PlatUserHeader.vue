@@ -28,7 +28,6 @@
                 v-model="listQuery.is_credit_user"
                 :options="tableColumns.is_credit_user.options"
             />
-
         </div>
         <div class="group">
             <SearchRange
@@ -37,11 +36,11 @@
                 max="9999999"
                 :minValue.sync="listQuery['total_win-{>=}']"
                 :maxValue.sync="listQuery['total_win-{<}']"
-                :placeholders="[$t('common.minMoney'), $t('common.maxMoney')]"
+                :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             >
                 <el-radio-group v-model="winLoss" @change="onWinLossChange">
-                    <el-radio :label="0">{{ $t("plat_users_bet.loss") }}</el-radio>
-                    <el-radio :label="1">{{ $t("plat_users_bet.win") }}</el-radio>
+                    <el-radio :label="0">{{ LangUtil("输") }}</el-radio>
+                    <el-radio :label="1">{{ LangUtil("赢") }}</el-radio>
                 </el-radio-group>
             </SearchRange>
             <SearchRange
@@ -50,7 +49,7 @@
                 :max="tableColumns.vip_level.options[listQuery.plat_id]"
                 :minValue.sync="listQuery.min_level"
                 :maxValue.sync="listQuery.max_level"
-                :placeholders="[$t('plat_user.minLevel'), $t('plat_user.maxLevel')]"
+                :placeholders="[LangUtil('最小等级'), LangUtil('最大等级')]"
             />
         </div>
         <div class="group">
@@ -66,15 +65,14 @@
                 :endDate.sync="listQuery['last_online_at-{<}']"
                 :showTime="true"
             />
-            <el-button class="header-button" @click="handlerSearch()" type="primary">{{
-                $t("common.search")
-            }}</el-button>
-            <el-button class="header-button" @click="handlerReset()" type="primary">{{ $t("common.reset") }}</el-button>
+            <el-button class="header-button" @click="handlerSearch()" type="primary">{{ LangUtil("查询") }}</el-button>
+            <el-button class="header-button" @click="handlerReset()" type="primary">{{ LangUtil("重置") }}</el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import PlatUserProxy from "../proxy/PlatUserProxy";
@@ -94,32 +92,33 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatUserHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
+    myProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private winLoss: string = "";
-    private onWinLossChange(value: any) {
+    winLoss: string = "";
+    onWinLossChange(value: any) {
         this.listQuery["total_win-{>=}"] = value ? 0 : "";
         this.listQuery["total_win-{<}"] = value ? "" : 0;
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.winLoss = "";
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

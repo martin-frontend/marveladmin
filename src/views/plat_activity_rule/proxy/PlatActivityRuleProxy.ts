@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -140,15 +141,7 @@ export default class PlatActivityRuleProxy extends AbstractProxy implements IPla
     }
     /**添加数据 */
     onAdd() {
-        const {
-            name,
-            desc,
-            type,
-            settlement_types,
-            params_name,
-            params_type,
-            weight,
-        } = this.dialogData.form
+        const { name, desc, type, settlement_types, params_name, params_type, weight } = this.dialogData.form;
         const formCopy: any = {
             name,
             desc,
@@ -159,7 +152,7 @@ export default class PlatActivityRuleProxy extends AbstractProxy implements IPla
             weight,
         };
 
-        formCopy.settlement_types = JSON.stringify(settlement_types)
+        formCopy.settlement_types = JSON.stringify(settlement_types);
         formCopy.class = this.dialogData.form.class;
         this.sendNotification(HttpType.admin_plat_activity_rule_store, objectRemoveNull(formCopy));
     }
@@ -178,25 +171,25 @@ export default class PlatActivityRuleProxy extends AbstractProxy implements IPla
         const formCopy: any = {};
         Object.assign(formCopy, this.dialogData.form, {
             settlement_types: JSON.stringify(this.dialogData.form.settlement_types),
-        })
+        });
         // 发送消息
         this.sendNotification(HttpType.admin_plat_activity_rule_update, objectRemoveNull(formCopy));
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string> i18n.t("common.deleteConfirmStr"), <string> i18n.t("common.prompt"), {
-            confirmButtonText: <string> i18n.t("common.determine"),
-            cancelButtonText: <string> i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 const formCopy: any = {};
                 Object.assign(formCopy, this.dialogData.form, {
                     settlement_types: JSON.stringify(this.dialogData.form.settlement_types),
-                })
+                });
                 formCopy.is_delete = 1;
                 this.sendNotification(HttpType.admin_plat_activity_rule_update, formCopy);
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

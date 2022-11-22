@@ -22,4 +22,3 @@ const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_plat_users_bet_table_columns, cmd_admin_plat_users_bet_table_columns);
 facade.registerCommand(HttpType.admin_plat_users_bet_index, cmd_admin_plat_users_bet_index);
 facade.registerCommand(HttpType.admin_plat_users_bet_show, cmd_admin_plat_users_bet_show);
-

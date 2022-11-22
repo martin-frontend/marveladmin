@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('admin_user_log.userLog')" :visible.sync="myProxy.dialogData.bShow" width="800px">
+    <el-dialog :title="LangUtil('操作日志详情')" :visible.sync="myProxy.dialogData.bShow" width="800px">
         <el-form ref="form" :model="form" label-width="140px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name">
                 {{ tableColumns.plat_id.options[form.plat_id] }}
@@ -18,7 +18,7 @@
             <el-form-item :label="tableColumns.permission_id.name">
                 {{ tableColumns.permission_id.options[form.permission_id] }}
             </el-form-item>
-            <el-form-item :label="$t('admin_user_log.content')">
+            <el-form-item :label="LangUtil('操作内容')">
                 <div class="editor-container">
                     <json-editor ref="jsonEditor" v-model="form.content" :readOnly="true" />
                 </div>
@@ -28,6 +28,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import AdminUserLogProxy from "@/views/admin_user_log/proxy/AdminUserLogProxy";
@@ -43,19 +44,20 @@ import JsonEditor from "@/components/JsonEditor/index.vue";
     },
 })
 export default class AdminUserLogDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: AdminUserLogProxy = this.getProxy(AdminUserLogProxy);
+    myProxy: AdminUserLogProxy = this.getProxy(AdminUserLogProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });

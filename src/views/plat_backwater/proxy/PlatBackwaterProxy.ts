@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -138,9 +139,9 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
     /**更新数据 */
     onUpdate() {
         if (this.checkRate(this.backWaterData.backWaterConfig)) {
-            MessageBox.confirm(<string>i18n.t("plat_users_backwater_model.saveEdit"), <string>i18n.t("common.prompt"), {
-                confirmButtonText: <string>i18n.t("common.determine"),
-                cancelButtonText: <string>i18n.t("common.cancel"),
+            MessageBox.confirm(<string>LangUtil("您是否保存本次编辑"), <string>LangUtil("提示"), {
+                confirmButtonText: <string>LangUtil("确定"),
+                cancelButtonText: <string>LangUtil("取消"),
                 type: "warning",
             })
                 .then(() => {
@@ -153,7 +154,7 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
                 })
                 .catch(() => {});
         } else {
-            Message.info(<string>i18n.t("plat_users_backwater_model.betweenZeroToOne"));
+            Message.info(<string>LangUtil("返水必须为大于0小于1的数字"));
         }
     }
     updateSuccess() {
@@ -164,15 +165,11 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
 
     onEdit() {
         if (this.backWaterData.isEdit) {
-            MessageBox.confirm(
-                <string>i18n.t("plat_users_backwater_model.cancelEdit"),
-                <string>i18n.t("common.prompt"),
-                {
-                    confirmButtonText: <string>i18n.t("common.determine"),
-                    cancelButtonText: <string>i18n.t("common.cancel"),
-                    type: "warning",
-                }
-            )
+            MessageBox.confirm(<string>LangUtil("您是否取消本次编辑"), <string>LangUtil("提示"), {
+                confirmButtonText: <string>LangUtil("确定"),
+                cancelButtonText: <string>LangUtil("取消"),
+                type: "warning",
+            })
                 .then(() => {
                     // this.initModel();
                     this.backWaterData.isEdit = false;
@@ -191,9 +188,9 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
     }
     /**初始化模版 */
     onInitModel() {
-        MessageBox.confirm(<string>i18n.t("common.initConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否初始化数据"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

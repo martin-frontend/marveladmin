@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_recharge_vendors_index, cmd_admin_recharge
 facade.registerCommand(HttpType.admin_recharge_vendors_show, cmd_admin_recharge_vendors_show);
 facade.registerCommand(HttpType.admin_recharge_vendors_store, cmd_admin_recharge_vendors_store);
 facade.registerCommand(HttpType.admin_recharge_vendors_update, cmd_admin_recharge_vendors_update);
-

@@ -1,11 +1,11 @@
 <template>
     <!-- 新增厂商钱包 -->
-    <el-dialog :title="$t('common.create')" :visible.sync="myProxy.vendorDialogData.create.bShow" width="768px">
+    <el-dialog :title="LangUtil('新增')" :visible.sync="myProxy.vendorDialogData.create.bShow" width="768px">
         <el-form ref="form" :rules="rules" :model="form" :label-width="width" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name">
                 {{ tableColumns.plat_id.options[myProxy.listQuery.plat_id] }}
             </el-form-item>
-            <el-form-item :label="$t('plat_vendors_wallet.venderSelect')" prop="data">
+            <el-form-item :label="LangUtil('选择厂商')" prop="data">
                 <el-checkbox-group v-model="form.data">
                     <el-checkbox :label="item.key" v-for="item in form.checkboxData" :key="item.key">{{
                         item.value
@@ -13,13 +13,14 @@
                 </el-checkbox-group>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" @click="handleAdd">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" @click="handleAdd">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatVendorsWalletProxy from "@/views/plat_vendors_wallet/proxy/PlatVendorsWalletProxy";
@@ -32,24 +33,25 @@ import Cookies from "js-cookie";
 
 @Component
 export default class PlatVendorsWalletDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
+    myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.vendorDialogData.create.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.vendorDialogData.create.form;
 
     get rules() {
         return {
-            data: [{ type: "array", required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
+            data: [{ type: "array", required: true, message: LangUtil("必须选择"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();

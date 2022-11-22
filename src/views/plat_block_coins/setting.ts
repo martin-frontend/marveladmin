@@ -26,4 +26,3 @@ facade.registerCommand(HttpType.admin_plat_block_coins_table_columns, cmd_admin_
 facade.registerCommand(HttpType.admin_plat_block_coins_index, cmd_admin_plat_block_coins_index);
 facade.registerCommand(HttpType.admin_plat_block_coins_store, cmd_admin_plat_block_coins_store);
 facade.registerCommand(HttpType.admin_plat_block_coins_update, cmd_admin_plat_block_coins_update);
-

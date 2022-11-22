@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/exchange_orders/setting";
@@ -58,8 +59,8 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             is_coin_user_order: { name: "", options: {} },
             coin_user_id: { name: "", options: {} },
             coin_username: { name: "", options: {} },
-            coin_name_unique: { name: "", options: {}},
-            block_network_id: { name: "", options: {}},
+            coin_name_unique: { name: "", options: {} },
+            block_network_id: { name: "", options: {} },
         },
         list: <any>[],
         message: {},
@@ -98,33 +99,33 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         bShow: false,
         form: {
             id: "",
-            plat_id:"",
+            plat_id: "",
             type: 1,
-            coin_user_id: ""
+            coin_user_id: "",
         },
         formSource: null,
-    }
+    };
 
     /**定时器 */
     IntervalObj = {
         default: "0",
         options: {
-            "0": i18n.t("common.notAutoRefresh"),
-            "30000": i18n.t("common.autoRefresh30"),
-            "60000": i18n.t("common.autoRefresh60"),
-            "180000": i18n.t("common.autoRefresh180"),
+            "0": LangUtil("不自动刷新"),
+            "30000": LangUtil("30秒自动刷新"),
+            "60000": LangUtil("60秒自动刷新"),
+            "180000": LangUtil("180秒自动刷新"),
         },
         timer: 0,
     };
 
     /**操作 */
     ctrlStr = {
-        "1": i18n.t("exchange_orders.ctrlBtnText1"),    //关闭| 退回金币
-        "2": i18n.t("exchange_orders.ctrlBtnText2"),    //关闭| 不退回金币
-        "3": i18n.t("exchange_orders.ctrlBtnText3"),    //审核通过
-        "4": i18n.t("exchange_orders.ctrlBtnText4"),    //平台已完成订单
-        "5": i18n.t("exchange_orders.changeChannelTitle"),  //更换兑换渠道
-        "6": i18n.t("exchange_orders.ctrlBtnText6"),    //冲正
+        "1": LangUtil("关闭| 退回金币"), //关闭| 退回金币
+        "2": LangUtil("关闭| 不退回金币"), //关闭| 不退回金币
+        "3": LangUtil("审核通过"), //审核通过
+        "4": LangUtil("平台已完成订单"), //平台已完成订单
+        "5": LangUtil("更换兑换渠道"), //更换兑换渠道
+        "6": LangUtil("冲正"), //冲正
     };
 
     /**更换通道弹窗 */
@@ -144,10 +145,10 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             id: "",
             type: "",
             remark: "",
-            desc: ""
+            desc: "",
         },
-        formSource: null
-    }
+        formSource: null,
+    };
     /**显示备注弹窗 */
     showRemarkDialog() {
         this.remarkDialogData.bShow = true;
@@ -186,7 +187,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         Object.assign(this.tableData.columns, data);
         this.tableData.columns.plat_id.options = {
             ...this.tableData.columns.plat_id.options,
-            "0": i18n.t("common.platIdAll"),
+            "0": LangUtil("所有平台"),
         };
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
@@ -281,11 +282,17 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         switch (type) {
             case "1":
                 // 关闭退回金币
-                this.sendNotification(HttpType.admin_exchange_orders_close_order_return_gold, objectRemoveNull({ id: row.id, remark: row.remark }));
+                this.sendNotification(
+                    HttpType.admin_exchange_orders_close_order_return_gold,
+                    objectRemoveNull({ id: row.id, remark: row.remark })
+                );
                 break;
             case "2":
                 // 关闭不退回金币
-                this.sendNotification(HttpType.admin_exchange_orders_close_order, objectRemoveNull({ id: row.id, remark: row.remark }));
+                this.sendNotification(
+                    HttpType.admin_exchange_orders_close_order,
+                    objectRemoveNull({ id: row.id, remark: row.remark })
+                );
                 break;
             case "3":
                 // 审核通过
@@ -297,7 +304,10 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
                 break;
             case "6":
                 // 冲正
-                this.sendNotification(HttpType.admin_exchange_orders_rush, objectRemoveNull({ id: row.id, remark: row.remark }));
+                this.sendNotification(
+                    HttpType.admin_exchange_orders_rush,
+                    objectRemoveNull({ id: row.id, remark: row.remark })
+                );
                 break;
             default:
                 console.error("更新数据 Error :");
@@ -306,11 +316,10 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
     }
     /**更新備註 */
     onUpdateReamrk() {
-        this.sendNotification(HttpType.admin_exchange_orders_update_remark,
-            {
-                id: this.remarkDialogData.form.id,
-                remark: this.remarkDialogData.form.remark
-            });
+        this.sendNotification(HttpType.admin_exchange_orders_update_remark, {
+            id: this.remarkDialogData.form.id,
+            remark: this.remarkDialogData.form.remark,
+        });
     }
     /**更换渠道 */
     onUpdateChannel() {
@@ -356,7 +365,11 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         //资料列表处理
         for (const item of data.list) {
             //@ts-ignore
-            let str = this.tableData.columns["receive_payment_type"].name + ": " + this.tableData.columns["receive_payment_type"].options[item.receive_payment_type] + "\n";
+            let str =
+                this.tableData.columns["receive_payment_type"].name +
+                ": " +
+                this.tableData.columns["receive_payment_type"].options[item.receive_payment_type] +
+                "\n";
             str += this.getAccessInfo(item);
             item.payment_method = str;
             item.exchange_channel = this.tableData.columns["exchange_channel"].options[item.exchange_channel];
@@ -392,7 +405,10 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
     }
     /**取消派发 */
     onDispatchCancel() {
-        this.sendNotification(HttpType.admin_exchange_orders_dispatch_cancel, objectRemoveNull(this.dispatchDialogData.form))
+        this.sendNotification(
+            HttpType.admin_exchange_orders_dispatch_cancel,
+            objectRemoveNull(this.dispatchDialogData.form)
+        );
     }
 
     /**显示派发弹窗 */
@@ -403,5 +419,4 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
     public hideDispatchDialog() {
         this.dispatchDialogData.bShow = false;
     }
-
 }

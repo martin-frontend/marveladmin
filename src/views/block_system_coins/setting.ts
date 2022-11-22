@@ -26,4 +26,3 @@ facade.registerCommand(HttpType.admin_block_system_coins_table_columns, cmd_admi
 facade.registerCommand(HttpType.admin_block_system_coins_index, cmd_admin_block_system_coins_index);
 facade.registerCommand(HttpType.admin_block_system_coins_store, cmd_admin_block_system_coins_store);
 facade.registerCommand(HttpType.admin_block_system_coins_update, cmd_admin_block_system_coins_update);
-

@@ -35,7 +35,7 @@
                 min-width="120px"
             >
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="100px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="100px">
                 <template slot-scope="{ row }">
                     <el-button type="primary" @click="onVerify(row.operator.params.order_no)">{{
                         row.operator.description
@@ -47,6 +47,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -61,25 +62,26 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatMessageBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatMessageProxy = this.getProxy(PlatMessageProxy);
+    myProxy: PlatMessageProxy = this.getProxy(PlatMessageProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private onVerify(order_no: string) {
+    onVerify(order_no: string) {
         this.$router.push({ path: `/layout/exchange_orders`, query: { order_no: order_no } });
     }
 }

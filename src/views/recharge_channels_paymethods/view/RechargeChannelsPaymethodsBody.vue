@@ -24,7 +24,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="status" :label="$t('common.status')" align="center">
+            <el-table-column prop="status" :label="LangUtil('状态')" align="center">
                 <template slot-scope="{ row }">
                     <el-switch
                         v-model="row.status"
@@ -35,10 +35,10 @@
                     ></el-switch>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" align="center" :width="width">
+            <el-table-column :label="LangUtil('操作')" align="center" :width="width">
                 <template slot-scope="{ row }">
                     <el-button v-if="row.type === 1" @click="handleEdit(row)" type="primary" size="small">{{
-                        $t("recharge_channels_paymethods.channelList")
+                        LangUtil("充值渠道参数列表")
                     }}</el-button>
                     <span v-else>--</span>
                 </template>
@@ -48,6 +48,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -63,33 +64,34 @@ import Cookies from "js-cookie";
     },
 })
 export default class RechargeChannelsPaymethodsBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: RechargeChannelsPaymethodsProxy = this.getProxy(RechargeChannelsPaymethodsProxy);
+    myProxy: RechargeChannelsPaymethodsProxy = this.getProxy(RechargeChannelsPaymethodsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private onUpdate(row: any) {
+    onUpdate(row: any) {
         this.myProxy.onUpdate({ id: row.id, status: row.status });
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private switchChangeHandler(row: any) {
+    switchChangeHandler(row: any) {
         this.myProxy.onUpdateSwitch({ id: row.id, status: row.status }, "body");
     }
 

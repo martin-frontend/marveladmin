@@ -46,4 +46,3 @@ facade.registerCommand(HttpType.admin_admin_cron_queue_table_columns, cmd_admin_
 facade.registerCommand(HttpType.admin_admin_cron_queue_index, cmd_admin_admin_cron_queue_index);
 facade.registerCommand(HttpType.admin_admin_cron_queue_update, cmd_admin_admin_cron_queue_update);
 facade.registerCommand(HttpType.admin_admin_cron_queue_update_batch, cmd_admin_admin_cron_queue_update_batch);
-

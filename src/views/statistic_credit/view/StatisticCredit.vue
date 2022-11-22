@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <StatisticCreditDialog v-if="myProxy.dialogData.bShow"/>
-        <StatisticCreditHeader/>
-        <StatisticCreditBody/>
+        <StatisticCreditDialog v-if="myProxy.dialogData.bShow" />
+        <StatisticCreditHeader />
+        <StatisticCreditBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import StatisticCreditBody from "./StatisticCreditBody.vue";
         StatisticCreditDialog,
         StatisticCreditHeader,
         StatisticCreditBody,
-    }
+    },
 })
 export default class StatisticCredit extends AbstractView {
-
     constructor() {
         super(StatisticCreditMediator);
     }

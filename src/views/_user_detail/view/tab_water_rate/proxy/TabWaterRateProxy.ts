@@ -12,9 +12,7 @@ export default class TabWaterRateProxy extends AbstractProxy implements ITabWate
     }
 
     /**离开页面时调用 */
-    leave() {
-
-    }
+    leave() {}
 
     /**表格相关数据 */
     tableData = {
@@ -26,7 +24,7 @@ export default class TabWaterRateProxy extends AbstractProxy implements ITabWate
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 10 },
     };
 
-    water_config = <any>{}
+    water_config = <any>{};
 
     api_admin_plat_user_show() {
         this.sendNotification(HttpType.admin_plat_user_show, { user_id: getPageSetting().user_id });
@@ -43,8 +41,8 @@ export default class TabWaterRateProxy extends AbstractProxy implements ITabWate
         this.water_config = JSON.parse(JSON.stringify(data.water_config));
 
         let list = <any>[];
-        Object.keys(data.water_config).forEach((element) => {
-            list.push({ type: element, water_rate: data.water_config[element] })
+        Object.keys(data.water_config).forEach(element => {
+            list.push({ type: element, water_rate: data.water_config[element] });
         });
         this.tableData.list.length = 0;
         this.tableData.list.push(...list);
@@ -55,8 +53,8 @@ export default class TabWaterRateProxy extends AbstractProxy implements ITabWate
         console.error(this.water_config);
 
         this.sendNotification(HttpType.admin_plat_user_update, {
-            user_id: getPageSetting().user_id, water_config: JSON.stringify(this.water_config
-            )
-        })
+            user_id: getPageSetting().user_id,
+            water_config: JSON.stringify(this.water_config),
+        });
     }
 }

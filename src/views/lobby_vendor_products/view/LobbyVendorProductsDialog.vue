@@ -9,13 +9,14 @@
                 </el-checkbox-group>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" @click="handleUpdate()">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" @click="handleUpdate()">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import LobbyVendorProductsProxy from "@/views/lobby_vendor_products/proxy/LobbyVendorProductsProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
@@ -24,6 +25,7 @@ import i18n from "@/lang";
 
 @Component
 export default class LobbyVendorProductsDialog extends AbstractView {
+    LangUtil = LangUtil;
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
@@ -36,8 +38,8 @@ export default class LobbyVendorProductsDialog extends AbstractView {
     }
 
     textMap = {
-        update: i18n.t("common.update"),
-        create: i18n.t("common.create"),
+        update: LangUtil("编辑"),
+        create: LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
@@ -49,7 +51,7 @@ export default class LobbyVendorProductsDialog extends AbstractView {
 
     get rules() {
         return {
-            languages: [{ type: "array", required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            languages: [{ type: "array", required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 

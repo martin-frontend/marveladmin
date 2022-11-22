@@ -45,18 +45,18 @@
                     maxlength="6"
                     oninput="value=value.replace(/[^\d]/g,'')"
                     v-model="loginForm.google_code"
-                    :placeholder="$t('login.googleAuthCode')"
+                    :placeholder="LangUtil('输入Google验证码')"
                     name="google_code"
                     type="text"
                 ></el-input>
             </el-form-item>
             <div class="google_code">
                 <div>
-                    <p>{{ $t("login.googleAuth") }}</p>
+                    <p>{{ LangUtil("说明：谷歌验证需下载") }}</p>
                     <p>Google Authenticator APP</p>
                 </div>
                 <div>
-                    <el-button type="text" @click="getGoogleKey">{{ $t("login.googleKey") }}</el-button>
+                    <el-button type="text" @click="getGoogleKey">{{ LangUtil("点击获得google密钥") }}</el-button>
                 </div>
             </div>
 
@@ -73,6 +73,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import { Component, Watch, Vue } from "vue-property-decorator";
 import AbstractView from "../../../core/abstract/AbstractView";
 import LoginMediator from "../mediator/LoginMediator";
@@ -86,26 +87,27 @@ import QRCode from "./QRCode.vue";
     },
 })
 export default class Login extends AbstractView {
-    private loginForm = {
+    LangUtil = LangUtil;
+    loginForm = {
         username: "",
         password: "",
         google_code: "",
     };
-    private rules = {
-        username: [{ required: true, message: this.$t("login.accountRequired"), trigger: "blur" }],
-        password: [{ required: true, message: this.$t("login.passwordRequired"), trigger: "blur" }],
+    rules = {
+        username: [{ required: true, message: this.LangUtil("账号未填写"), trigger: "blur" }],
+        password: [{ required: true, message: this.LangUtil("密码未填写"), trigger: "blur" }],
     };
-    private capsTooltip = false;
-    private loading = false;
-    private redirect = undefined;
-    private otherQuery = {};
+    capsTooltip = false;
+    loading = false;
+    redirect = undefined;
+    otherQuery = {};
 
     constructor() {
         super(LoginMediator);
     }
 
     @Watch("$route", { immediate: true })
-    private watchRoute(route: any) {
+    watchRoute(route: any) {
         const query = route.query;
         if (query) {
             this.redirect = query.redirect;
@@ -113,11 +115,11 @@ export default class Login extends AbstractView {
         }
     }
 
-    private checkCapslock(e: any) {
+    checkCapslock(e: any) {
         const { key } = e;
         this.capsTooltip = key && key.length === 1 && key >= "A" && key <= "Z";
     }
-    private handleLogin() {
+    handleLogin() {
         this.loading = true;
         this.dispatchEvent("login", {
             username: this.loginForm.username,
@@ -125,7 +127,7 @@ export default class Login extends AbstractView {
             google_code: this.loginForm.google_code,
         });
     }
-    private getOtherQuery(query: any) {
+    getOtherQuery(query: any) {
         return Object.keys(query).reduce((acc: any, cur) => {
             if (cur !== "redirect") {
                 acc[cur] = query[cur];
@@ -143,7 +145,7 @@ export default class Login extends AbstractView {
         this.loading = false;
     }
 
-    private getGoogleKey() {
+    getGoogleKey() {
         (this.$refs["form"] as Form & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.dispatchEvent("getGoogleKey", {

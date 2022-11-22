@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="$t('plat_activity_award.dialogTitle')" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="LangUtil('奖励详情')" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :model="form" label-width="120px" v-loading="net_status.loading">
             <el-form-item size="mini" :label="tableColumns['id'].name" prop="id">{{ form.id }}</el-form-item>
             <el-form-item size="mini" :label="tableColumns['activity_name'].name" prop="activity_name">{{
@@ -43,10 +43,10 @@
             }}</el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button type="primary" size="mini" @click="handlerAward(form)" v-if="form.award_status == 11">{{
-                    $t("plat_activity_award.award")
+                    LangUtil("派奖")
                 }}</el-button>
                 <el-button type="primary" size="mini" @click="myProxy.dialogData.bShow = false">{{
-                    $t("common.close")
+                    LangUtil("关闭")
                 }}</el-button>
             </el-form-item>
         </el-form>
@@ -54,6 +54,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatActivityAwardProxy from "@/views/plat_activity_award/proxy/PlatActivityAwardProxy";
@@ -64,28 +65,29 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatActivityAwardDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatActivityAwardProxy = this.getProxy(PlatActivityAwardProxy);
+    myProxy: PlatActivityAwardProxy = this.getProxy(PlatActivityAwardProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
     }
 
-    private handlerAward(data: any) {
-        this.$confirm(this.$t("plat_activity_award.confirmOnce"), this.$t("common.prompt"), {
-            confirmButtonText: this.$t("common.determine"),
-            cancelButtonText: this.$t("common.cancel"),
+    handlerAward(data: any) {
+        this.$confirm(this.LangUtil("是否给该玩家派奖?"), this.LangUtil("提示"), {
+            confirmButtonText: this.LangUtil("确定"),
+            cancelButtonText: this.LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

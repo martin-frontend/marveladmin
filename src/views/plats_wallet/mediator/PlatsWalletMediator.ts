@@ -5,9 +5,7 @@ import PlatsWalletProxy from "../proxy/PlatsWalletProxy";
 import { SuccessMessage } from "@/core/global/Constant";
 import { Message } from "element-ui";
 
-interface IPlatsWallet extends IEventDispatcher {
-
-}
+interface IPlatsWallet extends IEventDispatcher {}
 
 export default class PlatsWalletMediator extends AbstractMediator {
     private myProxy: PlatsWalletProxy = <any>this.getProxy(PlatsWalletProxy);
@@ -25,10 +23,7 @@ export default class PlatsWalletMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [
-            EventType.admin_plats_wallet_table_columns,
-            EventType.admin_plats_wallet_index,
-        ];
+        return [EventType.admin_plats_wallet_table_columns, EventType.admin_plats_wallet_index];
     }
 
     handleNotification(notification: puremvc.INotification) {

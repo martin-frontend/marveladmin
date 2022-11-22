@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_plats_marquee_index, cmd_admin_plats_marqu
 facade.registerCommand(HttpType.admin_plats_marquee_show, cmd_admin_plats_marquee_show);
 facade.registerCommand(HttpType.admin_plats_marquee_store, cmd_admin_plats_marquee_store);
 facade.registerCommand(HttpType.admin_plats_marquee_update, cmd_admin_plats_marquee_update);
-

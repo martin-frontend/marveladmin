@@ -1,29 +1,29 @@
 <template>
     <div class="errPage-container">
         <el-button icon="el-icon-arrow-left" class="pan-back-btn" @click="back">
-            {{ $t("error_page.back") }}
+            {{ LangUtil("返回") }}
         </el-button>
         <el-row>
             <el-col :span="12">
                 <h1 class="text-jumbo text-ginormous">
                     Oops!
                 </h1>
-                {{ $t("error_page.source") }}<a href="https://zh.airbnb.com/" target="_blank">airbnb</a>
-                {{ $t("error_page.page") }}
-                <h2>{{ $t("error_page.pageText1") }}</h2>
-                <h6>{{ $t("error_page.pageText2") }}</h6>
+                {{ LangUtil("gif来源") }}<a href="https://zh.airbnb.com/" target="_blank">airbnb</a>
+                {{ LangUtil("页面") }}
+                <h2>{{ LangUtil("你没有权限去该页面") }}</h2>
+                <h6>{{ LangUtil("如有不满请联系你领导") }}</h6>
                 <ul class="list-unstyled">
-                    <li>{{ $t("error_page.pageText3") }}:</li>
+                    <li>{{ LangUtil("或者你可以去") }}:</li>
                     <li class="link-type">
                         <router-link to="/dashboard">
-                            {{ $t("error_page.backHome") }}
+                            {{ LangUtil("回首页") }}
                         </router-link>
                     </li>
                     <li class="link-type">
-                        <a href="https://www.taobao.com/">{{ $t("error_page.pageText4") }}</a>
+                        <a href="https://www.taobao.com/">{{ LangUtil("随便看看") }}</a>
                     </li>
                     <li>
-                        <a href="#" @click.prevent="dialogVisible = true">{{ $t("error_page.clickMe") }}</a>
+                        <a href="#" @click.prevent="dialogVisible = true">{{ LangUtil("点我看图") }}</a>
                     </li>
                 </ul>
             </el-col>
@@ -31,20 +31,22 @@
                 <img src="@/assets/401_images/401.gif" width="313" height="428" alt="Girl has dropped her ice cream." />
             </el-col>
         </el-row>
-        <el-dialog :visible.sync="dialogVisible" :title="$t('error_page.pageText4')">
+        <el-dialog :visible.sync="dialogVisible" :title="LangUtil('随便看看')">
             <img :src="ewizardClap" class="pan-img" />
         </el-dialog>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import { Vue } from "vue-property-decorator";
 
 export default class Page401 extends Vue {
-    private ewizardClap = "https://wpimg.wallstcn.com/007ef517-bafd-4066-aae4-6883632d9646";
-    private dialogVisible = false;
+    LangUtil = LangUtil;
+    ewizardClap = "https://wpimg.wallstcn.com/007ef517-bafd-4066-aae4-6883632d9646";
+    dialogVisible = false;
 
-    private back() {
+    back() {
         if (this.$route.query.noGoBack) {
             this.$router.push({ path: "/" });
         } else {

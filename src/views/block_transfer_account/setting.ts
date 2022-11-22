@@ -28,10 +28,12 @@ export var EventType = {
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(HttpType.admin_block_transfer_account_table_columns, cmd_admin_block_transfer_account_table_columns);
+facade.registerCommand(
+    HttpType.admin_block_transfer_account_table_columns,
+    cmd_admin_block_transfer_account_table_columns
+);
 facade.registerCommand(HttpType.admin_block_transfer_account_index, cmd_admin_block_transfer_account_index);
 facade.registerCommand(HttpType.admin_block_transfer_account_show, cmd_admin_block_transfer_account_show);
 facade.registerCommand(HttpType.admin_block_transfer_account_store, cmd_admin_block_transfer_account_store);
 facade.registerCommand(HttpType.admin_block_transfer_account_update, cmd_admin_block_transfer_account_update);
 facade.registerCommand(HttpType.admin_block_transfer_account_balance, cmd_admin_block_transfer_account_balance);
-

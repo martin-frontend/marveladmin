@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatLangDialog v-if="myProxy.dialogData.bShow"/>
-        <PlatLangHeader/>
-        <PlatLangBody/>
+        <PlatLangDialog v-if="myProxy.dialogData.bShow" />
+        <PlatLangHeader />
+        <PlatLangBody />
     </div>
 </template>
 
@@ -20,15 +20,14 @@ import PlatLangProxy from "../proxy/PlatLangProxy";
         PlatLangDialog,
         PlatLangHeader,
         PlatLangBody,
-    }
+    },
 })
 export default class PlatLang extends AbstractView {
-
     constructor() {
         super(PlatLangMediator);
     }
 
-    destroyed(){
+    destroyed() {
         super.destroyed();
     }
     private myProxy: PlatLangProxy = this.getProxy(PlatLangProxy);

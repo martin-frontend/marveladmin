@@ -31,11 +31,13 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import i18n from "@/lang";
 
 @Component
 export default class SearchSelect extends Vue {
+    LangUtil = LangUtil;
     @Prop() title!: string;
     @Prop() options!: any;
     @Prop({ default: true }) clearable!: boolean;
@@ -44,7 +46,7 @@ export default class SearchSelect extends Vue {
     @Prop({ default: false }) disabled!: boolean;
     @Prop() tip!: string;
 
-    private selectValue = this.getValue;
+    selectValue = this.getValue;
 
     @Prop() value!: any;
     @Watch("value")
@@ -60,7 +62,7 @@ export default class SearchSelect extends Vue {
         return this.width ? `width:${this.width}px` : "";
     }
 
-    private placeholder: any = this.$t("common.pleaseChoose");
+    placeholder: any = this.LangUtil("请选择");
 
     // get getPlaceholder() {
     //     return this.placeholder ? this.placeholder : this.title;
@@ -70,7 +72,7 @@ export default class SearchSelect extends Vue {
         return this.disabled;
     }
 
-    private onChange(value: any) {
+    onChange(value: any) {
         this.$emit("input", value);
         this.$emit("change", value);
     }

@@ -7,7 +7,7 @@ export default class TabPlatVendorUserProxy extends AbstractProxy implements ITa
     static NAME = "TabPlatVendorUserProxy";
 
     coin_name_unique: any = "";
-    
+
     private pageSetting = getPageSetting();
     /**进入页面时调用 */
     enter() {
@@ -74,7 +74,7 @@ export default class TabPlatVendorUserProxy extends AbstractProxy implements ITa
     admin_plat_vendor_user_show() {}
     /**查询厂商余额 */
     admin_plat_vendor_user_money(row: any) {
-        const {vendor_id, vendor_user_id} = row;
+        const { vendor_id, vendor_user_id } = row;
         this.select_vendor_id = vendor_id;
         this.sendNotification(HttpType.admin_plat_vendor_user_money, { vendor_user_id });
     }

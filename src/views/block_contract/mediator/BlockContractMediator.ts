@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/block_contract/setting";
 import { Message } from "element-ui";
 import BlockContractProxy from "../proxy/BlockContractProxy";
 
-interface IBlockContract extends IEventDispatcher {
-
-}
+interface IBlockContract extends IEventDispatcher {}
 
 export default class BlockContractMediator extends AbstractMediator {
     private myProxy: BlockContractProxy = <any>this.getProxy(BlockContractProxy);
@@ -31,7 +29,6 @@ export default class BlockContractMediator extends AbstractMediator {
             EventType.admin_block_contract_show,
             EventType.admin_block_contract_store,
             EventType.admin_block_contract_update,
-
         ];
     }
 
@@ -60,7 +57,6 @@ export default class BlockContractMediator extends AbstractMediator {
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
-
         }
     }
 }

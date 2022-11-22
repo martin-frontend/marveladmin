@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/block_system_coins/setting";
 import { Message } from "element-ui";
 import BlockSystemCoinsProxy from "../proxy/BlockSystemCoinsProxy";
 
-interface IBlockSystemCoins extends IEventDispatcher {
-
-}
+interface IBlockSystemCoins extends IEventDispatcher {}
 
 export default class BlockSystemCoinsMediator extends AbstractMediator {
     private myProxy: BlockSystemCoinsProxy = <any>this.getProxy(BlockSystemCoinsProxy);
@@ -30,7 +28,6 @@ export default class BlockSystemCoinsMediator extends AbstractMediator {
             EventType.admin_block_system_coins_index,
             EventType.admin_block_system_coins_store,
             EventType.admin_block_system_coins_update,
-
         ];
     }
 

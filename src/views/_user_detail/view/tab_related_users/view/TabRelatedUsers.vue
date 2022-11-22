@@ -3,7 +3,7 @@
         <div class="total" v-loading="net_status.loading">
             <div class="total related">
                 <span
-                    >{{ $t("user_detail.relatedDevice") }}：<span
+                    >{{ LangUtil("登陆设备号关联") }}：<span
                         @click="showDeviceDetail()"
                         class="user_id count"
                         :class="selected == 0 ? 'selected' : ''"
@@ -11,7 +11,7 @@
                     ></span
                 >
                 <span
-                    >{{ $t("user_detail.relatedIp") }}：<span
+                    >{{ LangUtil("登陆IP关联") }}：<span
                         @click="showIpDetail()"
                         class="user_id count"
                         :class="selected == 1 ? 'selected' : ''"
@@ -19,7 +19,7 @@
                     ></span
                 >
                 <span
-                    >{{ $t("user_detail.relatedBank") }}：<span
+                    >{{ LangUtil("绑定银行卡关联") }}：<span
                         @click="showBankDetail()"
                         class="user_id count"
                         :class="selected == 2 ? 'selected' : ''"
@@ -27,7 +27,7 @@
                     ></span
                 >
                 <span
-                    >{{ $t("user_detail.relatedCoin") }}：<span
+                    >{{ LangUtil("数字收款地址关联") }}：<span
                         @click="showCoinDetail()"
                         class="user_id"
                         :class="selected == 3 ? 'selected' : ''"
@@ -46,17 +46,17 @@
                     'text-align': 'center',
                 }"
             >
-                <el-table-column :label="$t('common.userMsg')" prop="user_id" min-width="150px">
+                <el-table-column :label="LangUtil('用户信息')" prop="user_id" min-width="150px">
                     <template slot-scope="{ row }">
                         <div>
                             ID：<span @click="showUserDetail(row.user_id)" :class="isShowDetailBtn ? 'user_id' : ''">{{
                                 row.user_id
                             }}</span>
                         </div>
-                        <div>{{ $t("common.account") }}：{{ row.username }}</div>
-                        <div>{{ $t("common.nickName") }}：{{ row.nick_name }}</div>
+                        <div>{{ LangUtil("账号") }}：{{ row.username }}</div>
+                        <div>{{ LangUtil("昵称") }}：{{ row.nick_name }}</div>
                         <div>
-                            {{ $t("plat_agent_bind.note") }}：<span class="user_remark">{{ row.remark }}</span>
+                            {{ LangUtil("备注") }}：<span class="user_remark">{{ row.remark }}</span>
                         </div>
                         <div>VIP：{{ row.vip_level }}</div>
                     </template>
@@ -102,7 +102,7 @@
                         }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column :label="$t('common.operating')" :min-width="width" class-name="status-col">
+                <el-table-column :label="LangUtil('操作')" :min-width="width" class-name="status-col">
                     <template slot-scope="{ row }">
                         <div v-if="isShowDetailBtn">
                             <el-button
@@ -112,7 +112,7 @@
                                 @click="showUserDetail(row.user_id)"
                                 v-if="checkUnique(unique.plat_user_show)"
                             >
-                                {{ $t("common.detail") }}
+                                {{ LangUtil("详情") }}
                             </el-button>
                         </div>
                         <div>
@@ -123,7 +123,7 @@
                                 @click="refreshGold(row.user_id)"
                                 v-if="checkUnique(unique.plat_user_refresh)"
                             >
-                                {{ $t("plat_user.refreshCoins") }}
+                                {{ LangUtil("刷新金币") }}
                             </el-button>
                         </div>
                         <div>
@@ -134,7 +134,7 @@
                                 @click="onUpdateGold(row)"
                                 v-if="checkUnique(unique.plat_user_update_user_gold)"
                             >
-                                {{ $t("user_detail.deduct") }}
+                                {{ LangUtil("扣款") }}
                             </el-button>
                         </div>
                     </template>
@@ -146,6 +146,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -170,21 +171,22 @@ import UpdateGoldDialog from "./UpdateGoldDialog.vue";
     },
 })
 export default class TabRelatedUsers extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabRelatedUsersProxy = getProxy(TabRelatedUsersProxy);
+    myProxy: TabRelatedUsersProxy = getProxy(TabRelatedUsersProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.devicelList;
-    private devicePageInfo = this.myProxy.tableData.devicePageInfo;
-    private ipPageInfo = this.myProxy.tableData.ipPageInfo;
-    private bankPageInfo = this.myProxy.tableData.bankPageInfo;
-    private coinPageInfo = this.myProxy.tableData.coinPageInfo;
-    private selected = 0;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.devicelList;
+    devicePageInfo = this.myProxy.tableData.devicePageInfo;
+    ipPageInfo = this.myProxy.tableData.ipPageInfo;
+    bankPageInfo = this.myProxy.tableData.bankPageInfo;
+    coinPageInfo = this.myProxy.tableData.coinPageInfo;
+    selected = 0;
     constructor() {
         super(TabRelatedUsersMediator);
     }
@@ -222,7 +224,7 @@ export default class TabRelatedUsers extends AbstractView {
     }
 
     // 排序
-    private tableSortChange(column: any) {
+    tableSortChange(column: any) {
         let order_by = {};
         if (column.order === "descending") {
             order_by = {
@@ -236,12 +238,12 @@ export default class TabRelatedUsers extends AbstractView {
     }
 
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.onShowDetail(user_id);
     }
 
     // 刷新money
-    private refreshGold(user_id: number) {
+    refreshGold(user_id: number) {
         this.myProxy.onRefrushGold(user_id);
     }
     // 打开扣除余额弹窗
@@ -250,7 +252,7 @@ export default class TabRelatedUsers extends AbstractView {
     }
 
     // 状态切换
-    private handleToggle(user_id: number, status: number) {
+    handleToggle(user_id: number, status: number) {
         this.myProxy.onToggleStatus(user_id, status);
     }
 

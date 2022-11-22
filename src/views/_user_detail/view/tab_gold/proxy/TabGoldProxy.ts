@@ -10,7 +10,7 @@ export default class TabGoldProxy extends AbstractProxy implements ITabGoldProxy
     enter() {
         this.sendNotification(HttpType.admin_plat_users_gold_log_table_columns);
         this.listQuery.user_id = getPageSetting().user_id;
-        this.listQuery.plat_id = getPageSetting().plat_id;  
+        this.listQuery.plat_id = getPageSetting().plat_id;
     }
 
     /**离开页面时调用 */
@@ -31,11 +31,11 @@ export default class TabGoldProxy extends AbstractProxy implements ITabGoldProxy
             balance: { name: "", options: {} },
             remark: { name: "", options: {} },
             created_at: { name: "", options: {} },
-            coin_name_unique: { name: "", options: {}},
+            coin_name_unique: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 10 },
-    }
+    };
     /**查詢数据 */
     listQuery = {
         "created_at-{>=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
@@ -44,9 +44,9 @@ export default class TabGoldProxy extends AbstractProxy implements ITabGoldProxy
         user_id: 0,
         page_count: 1,
         page_size: 10,
-        coin_name_unique:"",
+        coin_name_unique: "",
         plat_id: 0,
-    }
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -64,8 +64,8 @@ export default class TabGoldProxy extends AbstractProxy implements ITabGoldProxy
             "created_at-{>=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
             "created_at-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
             type: "",
-            coin_name_unique:"",
-        })
+            coin_name_unique: "",
+        });
     }
 
     /**查询 */

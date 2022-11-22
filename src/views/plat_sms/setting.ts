@@ -38,4 +38,3 @@ facade.registerCommand(HttpType.admin_plat_sms_store, cmd_admin_plat_sms_store);
 facade.registerCommand(HttpType.admin_plat_sms_update, cmd_admin_plat_sms_update);
 facade.registerCommand(HttpType.admin_plat_sms_send, cmd_admin_plat_sms_send);
 facade.registerCommand(HttpType.admin_plat_sms_getBalance, cmd_admin_plat_sms_getBalance);
-

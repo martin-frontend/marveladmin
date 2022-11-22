@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <AdminWhitelistIndexDialog v-if="myProxy.dialogData.bShow"/>
-        <AdminWhitelistIndexHeader/>
-        <AdminWhitelistIndexBody/>
+        <AdminWhitelistIndexDialog v-if="myProxy.dialogData.bShow" />
+        <AdminWhitelistIndexHeader />
+        <AdminWhitelistIndexBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import AdminWhitelistIndexBody from "./AdminWhitelistIndexBody.vue";
         AdminWhitelistIndexDialog,
         AdminWhitelistIndexHeader,
         AdminWhitelistIndexBody,
-    }
+    },
 })
 export default class AdminWhitelistIndex extends AbstractView {
-
     constructor() {
         super(AdminWhitelistIndexMediator);
     }

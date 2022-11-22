@@ -22,12 +22,12 @@
                     <p>{{ tableColumns.type.options[row.type] }}</p>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('plat_users_payment_method.content')" align="center">
+            <el-table-column :label="LangUtil('內容')" align="center">
                 <template slot-scope="{ row }">
                     <p align="left" v-html="getAccessInfo(row)"></p>
                 </template>
             </el-table-column>
-            <el-table-column prop="address" :label="$t('common.operating')" width="80px" align="center">
+            <el-table-column prop="address" :label="LangUtil('操作')" width="80px" align="center">
                 --
             </el-table-column>
         </el-table>
@@ -35,6 +35,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -49,18 +50,19 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatUsersPaymentMethodBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatUsersPaymentMethodProxy = this.getProxy(PlatUsersPaymentMethodProxy);
+    myProxy: PlatUsersPaymentMethodProxy = this.getProxy(PlatUsersPaymentMethodProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
     getAccessInfo(data: any) {
         const options: any = this.tableColumns.payment_method.options[data.type];
@@ -73,18 +75,18 @@ export default class PlatUsersPaymentMethodBody extends AbstractView {
         return infoStr;
     }
 
-    private handlerQuery() {
+    handlerQuery() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.userDetailId = user_id;
         this.myProxy.onShowUserDetail();
     }

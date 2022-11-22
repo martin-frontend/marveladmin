@@ -4,9 +4,9 @@ import { PageInfoVO } from "@/core/vo/PageInfoVO";
 export default interface ICoinWalletProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
@@ -14,22 +14,22 @@ export default interface ICoinWalletProxy {
     logListQuery: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
     };
     /**上下分相关数据 */
     depositData: {
-        bShow: boolean,
-        form: any
+        bShow: boolean;
+        form: any;
     };
     /**记录查询数据 */
     logDialogData: {
-        bShow: boolean,
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        bShow: boolean;
+        columns: any;
+        list: any;
+        pageInfo: PageInfoVO;
     };
 
     /**设置表头数据 */

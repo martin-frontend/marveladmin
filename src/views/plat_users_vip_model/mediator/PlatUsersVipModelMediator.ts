@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_users_vip_model/setting";
 import { Message } from "element-ui";
 import PlatUsersVipModelProxy from "../proxy/PlatUsersVipModelProxy";
 
-interface IPlatUsersVipModel extends IEventDispatcher {
-    
-}
+interface IPlatUsersVipModel extends IEventDispatcher {}
 
 export default class PlatUsersVipModelMediator extends AbstractMediator {
     private myProxy: PlatUsersVipModelProxy = <any>this.getProxy(PlatUsersVipModelProxy);
@@ -32,7 +30,6 @@ export default class PlatUsersVipModelMediator extends AbstractMediator {
             EventType.admin_plat_users_vip_model_store,
             EventType.admin_plat_users_vip_model_update,
             EventType.admin_plat_users_vip_model_destroy,
-
         ];
     }
 

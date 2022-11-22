@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <SystemFagDialog/>
-        <SystemFagHeader/>
-        <SystemFagBody ref="body"/>
+        <SystemFagDialog />
+        <SystemFagHeader />
+        <SystemFagBody ref="body" />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import SystemFagBody from "./SystemFagBody.vue";
         SystemFagDialog,
         SystemFagHeader,
         SystemFagBody,
-    }
+    },
 })
 export default class SystemFag extends AbstractView {
-
     constructor() {
         super(SystemFagMediator);
     }

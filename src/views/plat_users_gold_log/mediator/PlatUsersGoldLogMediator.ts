@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_users_gold_log/setting";
 import { Message } from "element-ui";
 import PlatUsersGoldLogProxy from "../proxy/PlatUsersGoldLogProxy";
 
-interface IPlatUsersGoldLog extends IEventDispatcher {
-    
-}
+interface IPlatUsersGoldLog extends IEventDispatcher {}
 
 export default class PlatUsersGoldLogMediator extends AbstractMediator {
     private myProxy: PlatUsersGoldLogProxy = <any>this.getProxy(PlatUsersGoldLogProxy);
@@ -29,7 +27,6 @@ export default class PlatUsersGoldLogMediator extends AbstractMediator {
             EventType.admin_plat_users_gold_log_table_columns,
             EventType.admin_plat_users_gold_log_index,
             EventType.admin_plat_users_gold_log_show,
-
         ];
     }
 

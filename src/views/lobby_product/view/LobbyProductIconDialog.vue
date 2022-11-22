@@ -6,13 +6,14 @@
             </el-form-item>
 
             <el-form-item class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleUpdate()">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" size="mini" @click="handleUpdate()">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import LobbyProductProxy from "@/views/lobby_product/proxy/LobbyProductProxy";
@@ -23,6 +24,7 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class LobbyProductDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
     unique = unique;
     checkUnique = checkUnique;
@@ -36,12 +38,12 @@ export default class LobbyProductDialog extends AbstractView {
     listQuery = this.myProxy.listQuery;
 
     textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });

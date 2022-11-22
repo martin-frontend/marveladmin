@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -6,7 +7,7 @@ import { Message } from "element-ui";
 import CoinWalletProxy from "../proxy/CoinWalletProxy";
 import i18n from "@/lang";
 
-interface ICoinWallet extends IEventDispatcher { }
+interface ICoinWallet extends IEventDispatcher {}
 
 export default class CoinWalletMediator extends AbstractMediator {
     private myProxy: CoinWalletProxy = <any>this.getProxy(CoinWalletProxy);
@@ -50,12 +51,12 @@ export default class CoinWalletMediator extends AbstractMediator {
             case EventType.admin_coin_wallet_wallet:
                 break;
             case EventType.admin_coin_wallet_deposit:
-                Message.success(i18n.t("coin_wallet.depositSuccess") + `:${this.myProxy.depositData.form.amount}`);
+                Message.success(LangUtil("上分成功") + `:${this.myProxy.depositData.form.amount}`);
                 myProxy.hideDeposit();
                 myProxy.onQuery();
                 break;
             case EventType.admin_coin_wallet_withdraw:
-                Message.success(i18n.t("coin_wallet.depositSuccess") + `:${this.myProxy.withdrawData.form.amount}`);
+                Message.success(LangUtil("上分成功") + `:${this.myProxy.withdrawData.form.amount}`);
                 myProxy.hideWithdraw();
                 myProxy.onQuery();
                 break;
@@ -65,8 +66,7 @@ export default class CoinWalletMediator extends AbstractMediator {
             case EventType.admin_coin_wallet_log_index:
                 if (myProxy.logDialogData.isExportExcel) {
                     myProxy.exportExcel(body);
-                }
-                else {
+                } else {
                     myProxy.setLogData(body);
                 }
                 break;

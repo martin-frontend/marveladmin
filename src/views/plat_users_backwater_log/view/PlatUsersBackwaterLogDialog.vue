@@ -1,9 +1,5 @@
 <template>
-    <el-dialog
-        :title="$t('plat_users_backwater_log.userWaterDetail')"
-        width="1000px"
-        :visible.sync="myProxy.dialogData.bShow"
-    >
+    <el-dialog :title="LangUtil('用户返水详情')" width="1000px" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :model="form" label-width="135px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.user_id.name" prop="user_id" size="mini">
                 {{ form.user_id }}
@@ -22,23 +18,22 @@
             </el-form-item>
             <el-form-item :label="tableColumns.created_at.name" prop="created_at"> {{ form.created_at }} </el-form-item>
 
-            <el-form-item :label="$t('plat_users_backwater_log.settleDetail')" style="margin-bottom: 0rem">
-            </el-form-item>
+            <el-form-item :label="LangUtil('结算详情')" style="margin-bottom: 0rem"> </el-form-item>
             <div class="line"></div>
             <el-table :data="form.detail" border fit highlight-current-row style="width: 100%" size="mini">
-                <el-table-column :label="$t('plat_users_backwater_log.settleName')" class-name="status-col">
+                <el-table-column :label="LangUtil('结算名称')" class-name="status-col">
                     <template slot-scope="{ row }">
                         {{ tableColumns["water_" + row.vendor_type] && tableColumns["water_" + row.vendor_type].name }}
                     </template>
                 </el-table-column>
-                <el-table-column :label="$t('common.settleWater')" class-name="status-col">
+                <el-table-column :label="LangUtil('结算流水')" class-name="status-col">
                     <template slot-scope="{ row }">
                         {{ row.water }}
                     </template>
                 </el-table-column>
 
                 <el-table-column
-                    :label="tableColumns.main_coin_name_unique.name + $t('plat_users_vip_model.backWater')"
+                    :label="tableColumns.main_coin_name_unique.name + LangUtil('返水比例')"
                     class-name="status-col"
                     min-width="120px"
                 >
@@ -47,7 +42,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                    :label="tableColumns.main_coin_name_unique.name + $t('plat_users_backwater_log.rewardMoney')"
+                    :label="tableColumns.main_coin_name_unique.name + LangUtil('派奖数量')"
                     class-name="status-col"
                     min-width="120px"
                 >
@@ -56,7 +51,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                    :label="tableColumns.reward_coin_name_unique.name + $t('plat_users_vip_model.backWater')"
+                    :label="tableColumns.reward_coin_name_unique.name + LangUtil('返水比例')"
                     class-name="status-col"
                     min-width="200px"
                 >
@@ -65,7 +60,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                    :label="tableColumns.reward_coin_name_unique.name + $t('plat_users_backwater_log.rewardMoney')"
+                    :label="tableColumns.reward_coin_name_unique.name + LangUtil('派奖数量')"
                     class-name="status-col"
                     min-width="120px"
                 >
@@ -73,11 +68,7 @@
                         {{ row.reward_coin_name_unique }}：{{ row.reward_coin_backwater }}
                     </template>
                 </el-table-column>
-                <el-table-column
-                    :label="$t('plat_users_backwater_log.gold_scale')"
-                    class-name="status-col"
-                    min-width="120px"
-                >
+                <el-table-column :label="LangUtil('奖励金额')" class-name="status-col" min-width="120px">
                     <template slot-scope="{ row }">
                         {{ row.gold_scale }}
                     </template>
@@ -85,7 +76,7 @@
             </el-table>
             <div class="confirm">
                 <el-button style="width: 8rem" @click="handlerConfirm()" type="primary" icon="">{{
-                    $t("common.determine")
+                    LangUtil("确定")
                 }}</el-button>
             </div>
         </el-form>
@@ -93,6 +84,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatUsersBackwaterLogProxy from "@/views/plat_users_backwater_log/proxy/PlatUsersBackwaterLogProxy";
@@ -103,25 +95,26 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatUsersBackwaterLogDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatUsersBackwaterLogProxy = this.getProxy(PlatUsersBackwaterLogProxy);
+    myProxy: PlatUsersBackwaterLogProxy = this.getProxy(PlatUsersBackwaterLogProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
     }
 
-    private handlerConfirm() {
+    handlerConfirm() {
         this.myProxy.hideDialog();
     }
 

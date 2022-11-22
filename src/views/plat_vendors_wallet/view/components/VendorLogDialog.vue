@@ -1,22 +1,14 @@
 <template>
     <!-- 上下分记录查询 -->
-    <el-dialog
-        :title="$t('plat_vendors_wallet.logSearch')"
-        :visible.sync="myProxy.vendorDialogData.log.bShow"
-        width="980px"
-    >
+    <el-dialog :title="LangUtil('上下分记录查询')" :visible.sync="myProxy.vendorDialogData.log.bShow" width="980px">
         <div class="group">
             <SearchDatePicker
                 :title="tableColumns.created_at.name"
                 :startDate.sync="listQuery['created_at-{>}']"
                 :endDate.sync="listQuery['created_at-{<}']"
             />
-            <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                $t("common.search")
-            }}</el-button>
-            <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                $t("common.reset")
-            }}</el-button>
+            <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{ LangUtil("查询") }}</el-button>
+            <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{ LangUtil("重置") }}</el-button>
         </div>
         <el-table border :data="tableData" v-loading="net_status.loading">
             <el-table-column property="plat_id" :label="tableColumns['plat_id'].name" align="center" width="150px">
@@ -52,6 +44,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatVendorsWalletProxy from "@/views/plat_vendors_wallet/proxy/PlatVendorsWalletProxy";
@@ -69,20 +62,21 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatVendorsWalletDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
+    myProxy: PlatVendorsWalletProxy = this.getProxy(PlatVendorsWalletProxy);
     // proxy property
-    private tableColumns = this.myProxy.logData.columns;
-    private tableData = this.myProxy.logData.list;
-    private pageInfo = this.myProxy.logData.pageInfo;
-    private listQuery = this.myProxy.logListQuery;
+    tableColumns = this.myProxy.logData.columns;
+    tableData = this.myProxy.logData.list;
+    pageInfo = this.myProxy.logData.pageInfo;
+    listQuery = this.myProxy.logListQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onLogQuery();
     }

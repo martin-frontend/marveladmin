@@ -1,12 +1,13 @@
 <template>
     <div>
-        <el-button v-if="true" class="item" type="primary" icon="el-icon-circle-plus-outline" @click="handlerCreate"
-            >{{ $t("common.create") }}</el-button
-        >
+        <el-button v-if="true" class="item" type="primary" icon="el-icon-circle-plus-outline" @click="handlerCreate">{{
+            LangUtil("新增")
+        }}</el-button>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -15,13 +16,14 @@ import EmailVendorProxy from "../proxy/EmailVendorProxy";
 
 @Component
 export default class EmailVendorHeader extends AbstractView {
-     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    LangUtil = LangUtil;
+    //权限标识
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: EmailVendorProxy = this.getProxy(EmailVendorProxy);
+    myProxy: EmailVendorProxy = this.getProxy(EmailVendorProxy);
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

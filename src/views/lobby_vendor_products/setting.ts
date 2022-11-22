@@ -1,6 +1,6 @@
 /**
  * description: 平台大厅厂商产品
- * document: 
+ * document:
  */
 import cmd_admin_lobby_vendor_products_table_columns from "@/views/lobby_vendor_products/command/cmd_admin_lobby_vendor_products_table_columns";
 import cmd_admin_lobby_vendor_products_index from "@/views/lobby_vendor_products/command/cmd_admin_lobby_vendor_products_index";
@@ -22,8 +22,10 @@ export var EventType = {
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(HttpType.admin_lobby_vendor_products_table_columns, cmd_admin_lobby_vendor_products_table_columns);
+facade.registerCommand(
+    HttpType.admin_lobby_vendor_products_table_columns,
+    cmd_admin_lobby_vendor_products_table_columns
+);
 facade.registerCommand(HttpType.admin_lobby_vendor_products_index, cmd_admin_lobby_vendor_products_index);
 facade.registerCommand(HttpType.admin_lobby_vendor_products_update, cmd_admin_lobby_vendor_products_update);
 facade.registerCommand(HttpType.admin_lobby_vendor_products_sync_data, cmd_admin_lobby_vendor_products_sync_data);
-

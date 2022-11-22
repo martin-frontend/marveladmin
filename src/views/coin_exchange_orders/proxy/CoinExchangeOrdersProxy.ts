@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import { BaseInfo } from "@/components/vo/commonVo";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
@@ -32,46 +33,46 @@ export default class CoinExchangeOrdersProxy extends AbstractProxy implements IC
     /**表格相关数据 */
     tableData = {
         columns: {
-            auto_check_at: { name: '', options: {} },
-            auto_check_status: { name: '', options: {} },
-            auto_check_times: { name: '', options: {} },
-            channel_id: { name: '', options: {} },
-            coin_user_id: { name: '', options: {} },
-            coin_username: { name: '', options: {} },
-            created_at: { name: '', options: {} },
-            created_ip: { name: '', options: {} },
-            currency_num: { name: '', options: {} },
-            currency_type: { name: '', options: {} },
-            data_belong: { name: '', options: {} },
-            exchange_channel: { name: '', options: {} },
-            exchange_vendors_id: { name: '', options: {} },
-            fee: { name: '', options: {} },
-            fee_rate: { name: '', options: {} },
-            gold: { name: '', options: {} },
-            id: { name: '', options: {} },
-            is_coin_user_order: { name: '', options: {} },
-            money: { name: '', options: {} },
-            nick_name: { name: '', options: {} },
-            order_no: { name: '', options: {} },
-            payment_method: { name: '', options: <any>{} },
-            payment_method_id: { name: '', options: {} },
+            auto_check_at: { name: "", options: {} },
+            auto_check_status: { name: "", options: {} },
+            auto_check_times: { name: "", options: {} },
+            channel_id: { name: "", options: {} },
+            coin_user_id: { name: "", options: {} },
+            coin_username: { name: "", options: {} },
+            created_at: { name: "", options: {} },
+            created_ip: { name: "", options: {} },
+            currency_num: { name: "", options: {} },
+            currency_type: { name: "", options: {} },
+            data_belong: { name: "", options: {} },
+            exchange_channel: { name: "", options: {} },
+            exchange_vendors_id: { name: "", options: {} },
+            fee: { name: "", options: {} },
+            fee_rate: { name: "", options: {} },
+            gold: { name: "", options: {} },
+            id: { name: "", options: {} },
+            is_coin_user_order: { name: "", options: {} },
+            money: { name: "", options: {} },
+            nick_name: { name: "", options: {} },
+            order_no: { name: "", options: {} },
+            payment_method: { name: "", options: <any>{} },
+            payment_method_id: { name: "", options: {} },
             plat_exchange_channel: { name: "", options: {} },
-            plat_id: { name: '', options: {} },
-            receive_payment_type: { name: '', options: {} },
-            remark: { name: '', options: {} },
-            status: { name: '', options: <any>{} },
-            third_order_no: { name: '', options: {} },
-            updated_at: { name: '', options: {} },
-            updated_by: { name: '', options: {} },
-            user_id: { name: '', options: {} },
-            user_remark: { name: '', options: {} },
-            username: { name: '', options: {} },
-            updated_id: { name: '', options: {} },
+            plat_id: { name: "", options: {} },
+            receive_payment_type: { name: "", options: {} },
+            remark: { name: "", options: {} },
+            status: { name: "", options: <any>{} },
+            third_order_no: { name: "", options: {} },
+            updated_at: { name: "", options: {} },
+            updated_by: { name: "", options: {} },
+            user_id: { name: "", options: {} },
+            user_remark: { name: "", options: {} },
+            username: { name: "", options: {} },
+            updated_id: { name: "", options: {} },
         },
-        total_gold: "",// 兑换总金额
+        total_gold: "", // 兑换总金额
         total_num: "", //兑换订单数
         success_total_gold: "", //兑换成功金额
-        success_total_num: "",// 兑换成功订单数
+        success_total_num: "", // 兑换成功订单数
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         isExportExcel: false, //是否导出excel
@@ -114,10 +115,10 @@ export default class CoinExchangeOrdersProxy extends AbstractProxy implements IC
     reloadData = {
         autoTime: "0",
         options: {
-            0: i18n.t("common.notAutoRefresh"),
-            30000: i18n.t("common.autoRefresh30"),
-            60000: i18n.t("common.autoRefresh60"),
-            180000: i18n.t("common.autoRefresh180"),
+            0: LangUtil("不自动刷新"),
+            30000: LangUtil("30秒自动刷新"),
+            60000: LangUtil("60秒自动刷新"),
+            180000: LangUtil("180秒自动刷新"),
         },
         timer: <any>null,
     };
@@ -127,11 +128,11 @@ export default class CoinExchangeOrdersProxy extends AbstractProxy implements IC
         Object.assign(this.tableData.columns, data);
         const selfModel: SelfModel = <any>this.facade.retrieveProxy(SelfModel.NAME);
         if (selfModel.isCoinUser) {
-            this.tableData.columns.plat_id.options = { "0": i18n.t("common.platIdAll") };
+            this.tableData.columns.plat_id.options = { "0": LangUtil("所有平台") };
         } else {
             this.tableData.columns.plat_id.options = {
                 ...this.tableData.columns.plat_id.options,
-                "0": i18n.t("common.platIdAll"),
+                "0": LangUtil("所有平台"),
             };
         }
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
@@ -205,15 +206,24 @@ export default class CoinExchangeOrdersProxy extends AbstractProxy implements IC
 
     /**完成订单 */
     onFinishOrder(id: string) {
-        this.sendNotification(HttpType.admin_coin_exchange_orders_finish_order, objectRemoveNull({ id: id, remark: this.dialogData.form.remark }));
+        this.sendNotification(
+            HttpType.admin_coin_exchange_orders_finish_order,
+            objectRemoveNull({ id: id, remark: this.dialogData.form.remark })
+        );
     }
     /**关闭订单 退还金币 */
     onReturn(id: string) {
-        this.sendNotification(HttpType.admin_coin_exchange_orders_close_order_return_gold, objectRemoveNull({ id: id, remark: this.dialogData.form.remark }));
+        this.sendNotification(
+            HttpType.admin_coin_exchange_orders_close_order_return_gold,
+            objectRemoveNull({ id: id, remark: this.dialogData.form.remark })
+        );
     }
     /**关闭订单 不退还金币 */
     onUnreturn(id: string) {
-        this.sendNotification(HttpType.admin_coin_exchange_orders_close_order, objectRemoveNull({ id: id, remark: this.dialogData.form.remark }));
+        this.sendNotification(
+            HttpType.admin_coin_exchange_orders_close_order,
+            objectRemoveNull({ id: id, remark: this.dialogData.form.remark })
+        );
     }
 
     /**取得excel 挡案名称 */
@@ -240,16 +250,16 @@ export default class CoinExchangeOrdersProxy extends AbstractProxy implements IC
         "remark",
     ];
     _columns = {
-        coin_username: { name: '', options: {} },
-        order_no: { name: '', options: {} },
-        payment_method: { name: '', options: {} },
-        gold: { name: '', options: {} },
-        status: { name: '', options: {} },
-        created_at: { name: '', options: {} },
-        updated_at: { name: '', options: {} },
-        updated_by: { name: '', options: {} },
-        remark: { name: '', options: {} },
-    }
+        coin_username: { name: "", options: {} },
+        order_no: { name: "", options: {} },
+        payment_method: { name: "", options: {} },
+        gold: { name: "", options: {} },
+        status: { name: "", options: {} },
+        created_at: { name: "", options: {} },
+        updated_at: { name: "", options: {} },
+        updated_by: { name: "", options: {} },
+        remark: { name: "", options: {} },
+    };
 
     /**导出excel */
     exportExcel(data: any) {
@@ -260,16 +270,9 @@ export default class CoinExchangeOrdersProxy extends AbstractProxy implements IC
         }
 
         this.tableData.isExportExcel = false;
-        Object.assign(this._columns, this.tableData.columns)
+        Object.assign(this._columns, this.tableData.columns);
 
-        new BaseInfo.ExportExcel(
-            this.getExcelOutputName(),
-            this._KeyList,
-            this._columns,
-            data.list,
-            [],
-            []
-        );
+        new BaseInfo.ExportExcel(this.getExcelOutputName(), this._KeyList, this._columns, data.list, [], []);
     }
 
     private getAccessInfo(data: any) {

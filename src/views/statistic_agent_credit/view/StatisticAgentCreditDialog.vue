@@ -1,13 +1,6 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
-        <el-form
-            ref="form"
-            :rules="rules"
-            :model="form"
-            label-width="115px"
-            v-loading="net_status.loading"
-        >
-        </el-form>
+        <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading"> </el-form>
     </el-dialog>
 </template>
 
@@ -35,11 +28,11 @@ export default class StatisticAgentCreditDialog extends AbstractView {
 
     private textMap = {
         update: "编辑",
-        create: "新增"
+        create: "新增",
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow(){
+    private onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });

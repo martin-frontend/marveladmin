@@ -9,7 +9,7 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column v-if="isShowColumn" :label="$t('common.platMsg')" align="center" width="180">
+            <el-table-column v-if="isShowColumn" :label="LangUtil('平台信息')" align="center" width="180">
                 <template slot-scope="{ row }">
                     <div align="left">
                         <p>{{ tableColumns.plat_id.name }}：{{ tableColumns.plat_id.options[row.plat_id] }}</p>
@@ -17,7 +17,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.userMsg')" width="180" align="center">
+            <el-table-column :label="LangUtil('用户信息')" width="180" align="center">
                 <template slot-scope="{ row }">
                     <div align="left">
                         <p>
@@ -33,11 +33,11 @@
             </el-table-column>
             <el-table-column
                 prop="order_no"
-                :label="$t('coin_receive_recharge_order.orderNo')"
+                :label="LangUtil('订单号')"
                 align="center"
                 min-width="120px"
             ></el-table-column>
-            <el-table-column :label="$t('common.backStageAccount')" align="center" width="180px">
+            <el-table-column :label="LangUtil('后台账号')" align="center" width="180px">
                 <template slot-scope="{ row }">
                     <div align="left">
                         <p>{{ tableColumns.created_id.name }}：{{ row.created_id }}</p>
@@ -50,30 +50,30 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.orderStatus')" align="center" min-width="80px">
+            <el-table-column :label="LangUtil('订单状态')" align="center" min-width="80px">
                 <template slot-scope="{ row }">
                     <div>
                         {{ tableColumns.status.options[row.status] }}
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.paymentMethod')" align="center" min-width="80px">
+            <el-table-column :label="LangUtil('支付方式')" align="center" min-width="80px">
                 <template slot-scope="{ row }">
                     <div>
                         {{ tableColumns.type.options[row.type] }}
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="gold" :label="$t('common.orderAmount')" align="center"></el-table-column>
+            <el-table-column prop="gold" :label="LangUtil('订单金额')" align="center"></el-table-column>
             <el-table-column
                 prop="gold"
-                :label="$t('vip_receive_recharge_order.playerPaymentAmount')"
+                :label="LangUtil('玩家付款金额')"
                 align="center"
                 min-width="100px"
             ></el-table-column>
             <el-table-column
                 prop="created_at"
-                :label="$t('common.createdDate')"
+                :label="LangUtil('创建时间')"
                 align="center"
                 width="170px"
             ></el-table-column>
@@ -82,6 +82,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -97,36 +98,37 @@ import SelfModel from "@/core/model/SelfModel";
     },
 })
 export default class VipReceiveRechargeOrderBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: VipReceiveRechargeOrderProxy = this.getProxy(VipReceiveRechargeOrderProxy);
-    private SelfModel: SelfModel = this.getProxy(SelfModel);
+    myProxy: VipReceiveRechargeOrderProxy = this.getProxy(VipReceiveRechargeOrderProxy);
+    SelfModel: SelfModel = this.getProxy(SelfModel);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
     get isShowColumn() {
         //@ts-ignore
         return this.SelfModel._userInfo.type == 32 ? false : true;
     }
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.onShowUserDetail(user_id);
     }
 }

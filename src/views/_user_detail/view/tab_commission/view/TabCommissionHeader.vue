@@ -7,26 +7,31 @@
                 :endDate.sync="listQuery['end_date']"
             />
             <div>
-                <el-button class="header-button" @click="handlerSearch()" type="primary" icon="el-icon-search"
-                    >{{ $t("common.search") }}</el-button
-                >
-                <el-button class="header-button" @click="handlerReset()" type="primary" icon="el-icon-refresh"
-                    >{{ $t("common.reset") }}</el-button
-                >
+                <el-button class="header-button" @click="handlerSearch()" type="primary" icon="el-icon-search">{{
+                    LangUtil("查询")
+                }}</el-button>
+                <el-button class="header-button" @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
+                    LangUtil("重置")
+                }}</el-button>
             </div>
         </div>
         <div class="desc" v-loading="net_status.loading">
-            <p>{{ $t("user_detail.atMostDisplay",{"0": tableColumns.keep_time}) }}</p>
+            <p>{{ LangUtil("undefined") }}</p>
             <p>
-                {{ tableColumns.commission_history_num }}：<span v-html="getAccessInfo(tableData.commission_history_num)"></span>
+                {{ tableColumns.commission_history_num }}：<span
+                    v-html="getAccessInfo(tableData.commission_history_num)"
+                ></span>
             </p>
             <p>
-                {{ tableColumns.commission_received_num }}：<span v-html="getAccessInfo(tableData.commission_received_num)"></span>
+                {{ tableColumns.commission_received_num }}：<span
+                    v-html="getAccessInfo(tableData.commission_received_num)"
+                ></span>
             </p>
         </div>
     </div>
 </template>
-<script lang='ts'>
+<script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import TabCommissionProxy from "../proxy/TabCommissionProxy";
@@ -41,23 +46,24 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class TabCommissionHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabCommissionProxy = getProxy(TabCommissionProxy);
+    myProxy: TabCommissionProxy = getProxy(TabCommissionProxy);
     get tableColumns() {
         return this.myProxy.tableData.columns.commission;
     }
-    private tableData = this.myProxy.tableData;
-    private listQuery = this.myProxy.listQuery;
+    tableData = this.myProxy.tableData;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.myProxy.onQuery();
     }
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
@@ -74,7 +80,7 @@ export default class TabCommissionHeader extends AbstractView {
     }
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 .header-content {
     display: flex;

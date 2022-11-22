@@ -1,21 +1,17 @@
 <template>
-    <el-dialog
-        :title="$t('recharge_channels_paymethods.channelList')"
-        width="90%"
-        :visible.sync="myProxy.dialogData.bShow"
-    >
+    <el-dialog :title="LangUtil('充值渠道参数列表')" width="90%" :visible.sync="myProxy.dialogData.bShow">
         <div>
             <div class="title-group">
                 <div class="title-item">
-                    <span>{{ $t("common.belongingPlat") }}</span>
+                    <span>{{ LangUtil("所属平台") }}</span>
                     <p>{{ channelsColumns.plat_id.options[form["plat_id"]] }}</p>
                 </div>
                 <div class="title-item">
-                    <span>{{ $t("recharge_channels_paymethods.vendorId") }}</span>
+                    <span>{{ LangUtil("通道厂商") }}</span>
                     <p>{{ channelsColumns.vendor_id.options[form["vendor_id"]] }}</p>
                 </div>
                 <div class="title-item">
-                    <span>{{ $t("recharge_channels_paymethods.channelName") }}</span>
+                    <span>{{ LangUtil("渠道名称") }}</span>
                     <p>{{ form["name"] }}</p>
                 </div>
             </div>
@@ -25,7 +21,7 @@
                 class="create_channel_btn"
                 size="small"
                 v-if="checkUnique(unique.recharge_channels_paymethods_store)"
-                >{{ $t("common.create") }}</el-button
+                >{{ LangUtil("新增") }}</el-button
             >
             <div class="table">
                 <el-table :data="list.list" border style="width: 100%" v-loading="net_status.loading">
@@ -89,10 +85,10 @@
                             ></el-switch>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="$t('common.operating')" align="center">
+                    <el-table-column :label="LangUtil('操作')" align="center">
                         <template slot-scope="scope">
                             <el-button @click="handleEdit(scope.row)" type="primary" size="small">{{
-                                $t("common.update")
+                                LangUtil("编辑")
                             }}</el-button>
                         </template>
                     </el-table-column>
@@ -103,6 +99,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import RechargeChannelsPaymethodsProxy from "@/views/recharge_channels_paymethods/proxy/RechargeChannelsPaymethodsProxy";
@@ -113,29 +110,30 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class RechargeChannelsPaymethodsDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: RechargeChannelsPaymethodsProxy = this.getProxy(RechargeChannelsPaymethodsProxy);
+    myProxy: RechargeChannelsPaymethodsProxy = this.getProxy(RechargeChannelsPaymethodsProxy);
     // proxy property
-    private tableColumns = this.myProxy.dialogTableData.columns;
-    private channelsColumns = this.myProxy.tableData.columns;
-    private list = this.myProxy.channelList;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.dialogTableData.columns;
+    channelsColumns = this.myProxy.tableData.columns;
+    list = this.myProxy.channelList;
+    form = this.myProxy.dialogData.form;
 
-    private switchChangeHandler(row: any) {
+    switchChangeHandler(row: any) {
         this.myProxy.onUpdateSwitch({ id: row.id, status: row.status });
     }
 
     // 充值通道编辑
-    private onShowAddDialog() {
+    onShowAddDialog() {
         this.myProxy.showAddDialog(DialogStatus.create);
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showAddDialog(DialogStatus.update, data);
     }
 }

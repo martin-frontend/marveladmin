@@ -59,7 +59,7 @@ export default class SelfModel extends puremvc.Proxy {
     public get userInfo(): UserInfoVO {
         return this._userInfo;
     }
-    
+
     /**是否为币商 */
     public get isCoinUser() {
         return this._userInfo.type == UserType.COIN || this._userInfo.type == UserType.COINUSEREXCHANGE;

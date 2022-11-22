@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -27,18 +28,18 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
     /**表格相关数据 */
     tableData = {
         columns: {
-            area_region: { name: '地区', options: {} },
-            created_at: { name: '创建时间', options: {} },
-            created_by: { name: '创建人', options: {} },
-            id: { name: '编号', options: {} },
-            index_no: { name: '排序', options: {} },
-            plat_id: { name: '平台ID', options: {} },
-            updated_at: { name: '修改时间', options: {} },
-            updated_by: { name: '更新人', options: {} },
+            area_region: { name: "地区", options: {} },
+            created_at: { name: "创建时间", options: {} },
+            created_by: { name: "创建人", options: {} },
+            id: { name: "编号", options: {} },
+            index_no: { name: "排序", options: {} },
+            plat_id: { name: "平台ID", options: {} },
+            updated_at: { name: "修改时间", options: {} },
+            updated_by: { name: "更新人", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
-        isResort: false,    // 是否重新排序
+        isResort: false, // 是否重新排序
     };
     /**查询条件 */
     listQuery = {
@@ -120,10 +121,7 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
     }
     /**添加数据 */
     onAdd() {
-        const {
-            plat_id,
-            area_region,
-        } = this.dialogData.form;
+        const { plat_id, area_region } = this.dialogData.form;
         const formCopy: any = {
             area_region,
             plat_id,
@@ -147,15 +145,15 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_area_region_delete, { id });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**重新排序 */

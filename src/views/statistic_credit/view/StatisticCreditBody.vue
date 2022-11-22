@@ -1,8 +1,14 @@
 <template>
     <div>
-        <el-table :data="tableData.list" border fit highlight-current-row style="width: 100%" size="mini"
-            v-loading="net_status.loading">
-
+        <el-table
+            :data="tableData.list"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
             <el-table-column :label="tableColumns['plat_id'].name" prop="plat_id" class-name="status-col" width="130">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
@@ -12,18 +18,19 @@
             <el-table-column :label="tableColumns['user_id'].name" prop="user_id" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div>
-                        <div v-if="row.user_id === '合计' || row.user_id === $t('common.total')">
+                        <div v-if="row.user_id === '合计' || row.user_id === LangUtil('合计')">
                             {{ row.user_id }}
                         </div>
-                        <div v-else @click="showUserDetail(row.user_id)"
-                            style="cursor: pointer; text-decoration: underline">
-                            <div :class="row.user_id == listQuery.user_id ? 'selfid' : '' ">{{ row.user_id }}</div>
+                        <div
+                            v-else
+                            @click="showUserDetail(row.user_id)"
+                            style="cursor: pointer; text-decoration: underline"
+                        >
+                            <div :class="row.user_id == listQuery.user_id ? 'selfid' : ''">{{ row.user_id }}</div>
                         </div>
                     </div>
-
                 </template>
             </el-table-column>
-
 
             <el-table-column :label="tableColumns['username'].name" prop="username" class-name="status-col">
             </el-table-column>
@@ -40,14 +47,17 @@
                 </template>
             </el-table-column>
 
-
             <el-table-column :label="tableColumns['valid_bet_gold'].name" prop="valid_bet_gold" class-name="status-col">
             </el-table-column>
 
             <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col">
             </el-table-column>
 
-            <el-table-column :label="tableColumns['back_water_except_user'].name" prop="back_water_except_user" class-name="status-col">
+            <el-table-column
+                :label="tableColumns['back_water_except_user'].name"
+                prop="back_water_except_user"
+                class-name="status-col"
+            >
             </el-table-column>
 
             <el-table-column prop="agent_amount" :label="tableColumns['agent_amount'].name" align="center">
@@ -67,13 +77,13 @@
                     <div>{{ row.credit_rate }}%</div>
                 </template>
             </el-table-column>
-
         </el-table>
 
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -100,20 +110,21 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
     },
 })
 export default class StatisticCreditBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: StatisticCreditProxy = this.getProxy(StatisticCreditProxy);
+    myProxy: StatisticCreditProxy = this.getProxy(StatisticCreditProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.tableData;
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
@@ -138,7 +149,7 @@ export default class StatisticCreditBody extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
-.selfid{
+.selfid {
     font-weight: bold;
 }
 </style>

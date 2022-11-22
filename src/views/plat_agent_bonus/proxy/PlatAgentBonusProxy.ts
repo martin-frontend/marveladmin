@@ -52,7 +52,7 @@ export default class PlatAgentBonusProxy extends AbstractProxy implements IPlatA
             bonus_received_num: "",
             group_profit: "",
             plat_cost: "",
-        }
+        },
     };
     /**查询条件 */
     listQuery = {
@@ -70,7 +70,7 @@ export default class PlatAgentBonusProxy extends AbstractProxy implements IPlatA
         bShow: false,
         status: DialogStatus.create,
         form: {
-            id: null
+            id: null,
             // TODO
         },
         formSource: null, // 表单的原始数据
@@ -116,5 +116,4 @@ export default class PlatAgentBonusProxy extends AbstractProxy implements IPlatA
             page_size: 20,
         });
     }
-
 }

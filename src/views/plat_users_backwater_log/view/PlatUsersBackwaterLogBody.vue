@@ -2,12 +2,12 @@
     <div v-loading="net_status.loading">
         <div class="statistics">
             <template v-if="listQuery[`created_at-{>=}`]">
-                <span>{{ listQuery["created_at-{>=}"] }} </span>{{ $t("common.to") }}<span>{{ dateTo }}</span>
+                <span>{{ listQuery["created_at-{>=}"] }} </span>{{ LangUtil("至") }}<span>{{ dateTo }}</span>
             </template>
-            <a style="margin-left: 1rem">{{ $t("plat_users_backwater_log.totalPeople") }}</a>
+            <a style="margin-left: 1rem">{{ LangUtil("总结算人数") }}</a>
             <span>{{ myProxy.tableData.total_people }}</span>
-            {{ $t("plat_users_backwater_log.settleMoney") }}<span>{{ myProxy.tableData.total_water }}</span>
-            {{ $t("plat_users_backwater_log.rewardMoney") }}<span>{{ myProxy.tableData.total_backwater }}</span>
+            {{ LangUtil("结算流水") }}<span>{{ myProxy.tableData.total_water }}</span> {{ LangUtil("派奖数量")
+            }}<span>{{ myProxy.tableData.total_backwater }}</span>
         </div>
         <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini">
             <el-table-column
@@ -72,14 +72,14 @@
                 min-width="160px"
             >
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="90px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
                         type="primary"
                         @click="handleEdit(row)"
                         v-if="checkUnique(unique.plat_users_backwater_log_show)"
-                        >{{ $t("common.detail") }}</el-button
+                        >{{ LangUtil("详情") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -88,6 +88,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -102,33 +103,34 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatUsersBackwaterLogBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatUsersBackwaterLogProxy = this.getProxy(PlatUsersBackwaterLogProxy);
+    myProxy: PlatUsersBackwaterLogProxy = this.getProxy(PlatUsersBackwaterLogProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
     get dateTo() {
         return this.listQuery["created_at-{<=}"];
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.showUserDetail(user_id);
     }
 

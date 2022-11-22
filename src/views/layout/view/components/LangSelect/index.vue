@@ -2,7 +2,7 @@
     <el-dropdown trigger="click" class="international" @command="handleSetLanguage">
         <!-- <el-tooltip class="item" effect="dark" content="Language" placement="top-start">
             <div class="el-icon-set-up" class-name="international-icon" icon-class="language" />
-           
+
         </el-tooltip> -->
         <span class="lang"> <img :src="getImage" class="img" /> {{ languageText }}</span>
         <el-dropdown-menu slot="dropdown">

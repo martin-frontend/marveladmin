@@ -6,7 +6,7 @@
                 <i class="el-icon-question"></i>
             </el-tooltip>
         </span>
-        <div class="input_group" :class="$slots.default?'input_group-slot':''">
+        <div class="input_group" :class="$slots.default ? 'input_group-slot' : ''">
             <el-input
                 :min="min"
                 :max="max"

@@ -39,16 +39,16 @@
                     {{ tableColumns.type.options[row.type] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('plat_sms.smsRemain')" class-name="status-col" min-width="100px">
+            <el-table-column :label="LangUtil('短信余额')" class-name="status-col" min-width="100px">
                 <template slot-scope="{ row }">
                     <el-popover placement="top" width="200" trigger="click">
-                        {{ $t("plat_sms.smsBalance") }}： {{ myProxy.tableData.balance }}
+                        {{ LangUtil("此短信通道余额") }}： {{ myProxy.tableData.balance }}
                         <el-button
                             type="primary"
                             slot="reference"
                             @click="onCheck(row.id)"
                             v-if="checkUnique(unique.plat_sms_balance)"
-                            >{{ $t("common.lookOver") }}</el-button
+                            >{{ LangUtil("查看") }}</el-button
                         >
                     </el-popover>
                 </template>
@@ -80,7 +80,7 @@
                     {{ row.updated_at }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="160px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="160px">
                 <template slot-scope="{ row }">
                     <div class="btns">
                         <el-button
@@ -88,14 +88,14 @@
                             class="item"
                             @click="handleEdit(row)"
                             v-if="checkUnique(unique.plat_sms_update)"
-                            >{{ $t("common.update") }}</el-button
+                            >{{ LangUtil("编辑") }}</el-button
                         >
                         <el-button
                             @click="onTest(row)"
                             class="item"
                             type="primary"
                             v-if="checkUnique(unique.plat_sms_send)"
-                            >{{ $t("plat_sms.test") }}</el-button
+                            >{{ LangUtil("测试") }}</el-button
                         >
                     </div>
                     <div class="btns">
@@ -104,21 +104,21 @@
                             class="item"
                             type="primary"
                             v-if="row.status == SmsStatusType.Activate && checkUnique(unique.plat_sms_update)"
-                            >{{ $t("plat_sms.inActive") }}</el-button
+                            >{{ LangUtil("停用") }}</el-button
                         >
                         <el-button
                             @click="onActivate(row.id)"
                             class="item"
                             type="primary"
                             v-if="row.status == SmsStatusType.Disactivate && checkUnique(unique.plat_sms_update)"
-                            >{{ $t("plat_sms.active") }}</el-button
+                            >{{ LangUtil("启用") }}</el-button
                         >
                         <el-button
                             @click="handlerDelete(row)"
                             class="item"
                             type="danger"
                             v-if="checkUnique(unique.plat_sms_delete)"
-                            >{{ $t("common.delete") }}</el-button
+                            >{{ LangUtil("删除") }}</el-button
                         >
                     </div>
                 </template>
@@ -128,6 +128,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -152,31 +153,32 @@ import { SmsStatusType } from "../proxy/IPlatSmsProxy";
     },
 })
 export default class PlatSmsBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatSmsProxy = this.getProxy(PlatSmsProxy);
+    myProxy: PlatSmsProxy = this.getProxy(PlatSmsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private SmsStatusType = SmsStatusType;
+    SmsStatusType = SmsStatusType;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
     /**查看短信余量 */

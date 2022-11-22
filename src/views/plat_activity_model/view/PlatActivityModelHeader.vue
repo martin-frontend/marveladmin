@@ -4,17 +4,17 @@
             <SearchInput :title="tableColumns.id.name" v-model="listQuery.id" />
             <SearchInput :title="tableColumns.activity_name.name" v-model="listQuery.activity_name" />
             <SearchSelect
-                :title="$t('plat_activity_model.selectPlat')"
+                :title="LangUtil('选择平台')"
                 v-model="listQuery.plat_id"
                 :options="platOptions"
                 :width="300"
             />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -25,13 +25,14 @@
                 icon="el-icon-circle-plus-outline"
                 type="primary"
                 class="item"
-                >{{ $t("common.create") }}</el-button
+                >{{ LangUtil("新增") }}</el-button
             >
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatActivityModelProxy from "../proxy/PlatActivityModelProxy";
@@ -51,28 +52,29 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatActivityModelHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
+    myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
     get platOptions() {
         return this.myProxy.platOptions;
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

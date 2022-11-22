@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import { BaseInfo } from "@/components/vo/commonVo";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
@@ -122,7 +123,7 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
         let summary = {
             id: "",
             plat_id: "",
-            created_date: i18n.t("common.total"),
+            created_date: LangUtil("合计"),
             type: "",
             vendor_id: "",
             vendor_product_id: "",
@@ -218,9 +219,7 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
     }
     /**取得excel 挡案名称 */
     get getExcelOutputName() {
-        let name: string =
-            this.tableData.columns.type.options[this.tableData.activeName] +
-            i18n.t("statistic_bet_plat_days.dataPerDay");
+        let name: string = this.tableData.columns.type.options[this.tableData.activeName] + LangUtil("每日数据");
         if (this.isPlat) {
             return `${name}-${this.platListQuery["created_date-{>=}"]}～${this.platListQuery["created_date-{>=}"]}`;
         } else {

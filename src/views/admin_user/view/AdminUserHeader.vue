@@ -6,7 +6,7 @@
                 v-model="listQuery.plat_id"
                 filterable
                 class="select"
-                :placeholder="$t('common.pleaseChoose')"
+                :placeholder="LangUtil('请选择')"
                 @change="handlerSearch"
             >
                 <el-option
@@ -20,20 +20,18 @@
             <div class="search_space">
                 <div class="item_group">
                     <div class="cust_title">{{ tableColumns["admin_user_id"].name }}</div>
-                    <el-input :placeholder="$t('common.pleaseEnter')" v-model="listQuery.admin_user_id" clearable>
-                    </el-input>
+                    <el-input :placeholder="LangUtil('请输入')" v-model="listQuery.admin_user_id" clearable> </el-input>
                 </div>
 
                 <div class="item_group">
                     <div class="cust_title">{{ tableColumns["admin_username"].name }}</div>
-                    <el-input :placeholder="$t('common.pleaseEnter')" v-model="listQuery.admin_username" clearable>
+                    <el-input :placeholder="LangUtil('请输入')" v-model="listQuery.admin_username" clearable>
                     </el-input>
                 </div>
 
                 <div class="item_group">
                     <div class="cust_title">{{ tableColumns["nick_name"].name }}</div>
-                    <el-input :placeholder="$t('common.pleaseEnter')" v-model="listQuery.nick_name" clearable>
-                    </el-input>
+                    <el-input :placeholder="LangUtil('请输入')" v-model="listQuery.nick_name" clearable> </el-input>
                 </div>
                 <div class="item_group">
                     <div class="cust_title">{{ tableColumns["cate"].name }}</div>
@@ -42,7 +40,7 @@
                         filterable
                         clearable
                         class="select"
-                        :placeholder="$t('common.pleaseChoose')"
+                        :placeholder="LangUtil('请选择')"
                     >
                         <el-option
                             v-for="(value, key) in tableColumns.cate.options"
@@ -60,7 +58,7 @@
                         filterable
                         clearable
                         class="select"
-                        :placeholder="$t('common.pleaseChoose')"
+                        :placeholder="LangUtil('请选择')"
                     >
                         <el-option
                             v-for="(value, key) in tableColumns.type.options"
@@ -72,23 +70,24 @@
                 </div>
                 <div>
                     <el-button @click="handlerSearch" type="primary" icon="el-icon-search" class="item">{{
-                        $t("common.search")
+                        LangUtil("查询")
                     }}</el-button>
                     <el-button @click="handlerReset" type="primary" icon="el-icon-refresh" class="item">{{
-                        $t("common.reset")
+                        LangUtil("重置")
                     }}</el-button>
                 </div>
             </div>
         </div>
         <div class="row">
             <el-button @click="handlerCreate" type="primary" class="item" v-if="checkUnique(unique.admin_user_store)">{{
-                $t("common.create")
+                LangUtil("新增")
             }}</el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import AdminUserProxy from "../proxy/AdminUserProxy";
@@ -97,25 +96,26 @@ import { checkUnique, unique } from "@/core/global/Permission";
 
 @Component
 export default class AdminUserHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: AdminUserProxy = this.getProxy(AdminUserProxy);
+    myProxy: AdminUserProxy = this.getProxy(AdminUserProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 }

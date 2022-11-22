@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatMarqueeDialog v-if="myProxy.dialogData.bShow"/>
-        <PlatMarqueeHeader/>
-        <PlatMarqueeBody/>
+        <PlatMarqueeDialog v-if="myProxy.dialogData.bShow" />
+        <PlatMarqueeHeader />
+        <PlatMarqueeBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import PlatMarqueeBody from "./PlatMarqueeBody.vue";
         PlatMarqueeDialog,
         PlatMarqueeHeader,
         PlatMarqueeBody,
-    }
+    },
 })
 export default class PlatMarquee extends AbstractView {
-
     constructor() {
         super(PlatMarqueeMediator);
     }

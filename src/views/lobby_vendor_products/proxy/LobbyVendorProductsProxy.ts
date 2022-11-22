@@ -145,7 +145,7 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         this.sendNotification(HttpType.admin_lobby_vendor_products_update, formCopy);
     }
     /**更新数据 */
-    onUpdateLanguages() {        
+    onUpdateLanguages() {
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
         if (Object.keys(formCopy).length == 0) {
             this.dialogData.bShow = false;

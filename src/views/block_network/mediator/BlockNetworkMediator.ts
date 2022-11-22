@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/block_network/setting";
 import { Message } from "element-ui";
 import BlockNetworkProxy from "../proxy/BlockNetworkProxy";
 
-interface IBlockNetwork extends IEventDispatcher {
-
-}
+interface IBlockNetwork extends IEventDispatcher {}
 
 export default class BlockNetworkMediator extends AbstractMediator {
     private myProxy: BlockNetworkProxy = <any>this.getProxy(BlockNetworkProxy);
@@ -31,7 +29,6 @@ export default class BlockNetworkMediator extends AbstractMediator {
             EventType.admin_block_network_show,
             EventType.admin_block_network_store,
             EventType.admin_block_network_update,
-
         ];
     }
 

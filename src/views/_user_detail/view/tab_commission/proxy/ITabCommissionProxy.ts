@@ -1,3 +1,1 @@
-export default interface ITabCommissionProxy {
-    
-}
+export default interface ITabCommissionProxy {}

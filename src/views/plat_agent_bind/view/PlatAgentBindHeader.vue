@@ -30,15 +30,15 @@
                 :title="tableColumns.promotion_floor.name"
                 :minValue.sync="listQuery['min_promotion_floor']"
                 :maxValue.sync="listQuery['max_promotion_floor']"
-                :placeholders="[$t('common.minMoney'), $t('common.maxMoney')]"
+                :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             />
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatAgentBindProxy from "../proxy/PlatAgentBindProxy";
@@ -65,22 +66,23 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatAgentBindHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
+    myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
     //更换平台切换对应渠道
-    private changePlat() {
+    changePlat() {
         this.listQuery.channel_id = "";
         this.tableColumns.channel_id_options = this.tableColumns.channel_id.options[this.listQuery.plat_id];
         const channel_id_keys = Object.keys(this.tableColumns.channel_id_options);
@@ -89,7 +91,7 @@ export default class PlatAgentBindHeader extends AbstractView {
         });
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 }

@@ -2,11 +2,11 @@
     <div>
         <div v-for="(item, index) in vipConfig" :key="index" class="config-item">
             <el-form label-width="70px" :inline="false" v-loading="net_status.loading">
-                <el-form-item :label="$t('common.level') + (index + 1)">
+                <el-form-item :label="LangUtil('等级') + (index + 1)">
                     <el-input
                         class="input"
                         clearable
-                        :placeholder="$t('plat_vip.effectiveFlow')"
+                        :placeholder="LangUtil('有效流水')"
                         v-model="item.total_water"
                         :disabled="!myProxy.isEdit"
                         oninput="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')"
@@ -19,7 +19,7 @@
                         class="input"
                         type="number"
                         clearable
-                        :placeholder="$t('plat_vip.totalRecharge')"
+                        :placeholder="LangUtil('总充值')"
                         v-model="item.total_recharge"
                         :disabled="!myProxy.isEdit"
                         oninput="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')"
@@ -51,6 +51,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -60,27 +61,28 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatVipBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatVipProxy = this.getProxy(PlatVipProxy);
+    myProxy: PlatVipProxy = this.getProxy(PlatVipProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    listQuery = this.myProxy.listQuery;
 
     get vipConfig() {
         return this.myProxy.vipData;
     }
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }

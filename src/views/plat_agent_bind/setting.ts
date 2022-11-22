@@ -43,7 +43,9 @@ facade.registerCommand(HttpType.admin_plat_agent_bind_show, cmd_admin_plat_agent
 facade.registerCommand(HttpType.admin_plat_agent_bind_show_floor_range, cmd_admin_plat_agent_bind_show_floor_range);
 facade.registerCommand(HttpType.admin_plat_agent_bind_update, cmd_admin_plat_agent_bind_update);
 facade.registerCommand(HttpType.admin_plat_user_change_bind, cmd_admin_plat_user_change_bind);
-facade.registerCommand(HttpType.admin_plat_agent_bonus_config_table_columns, cmd_admin_plat_agent_bonus_config_table_columns);
+facade.registerCommand(
+    HttpType.admin_plat_agent_bonus_config_table_columns,
+    cmd_admin_plat_agent_bonus_config_table_columns
+);
 facade.registerCommand(HttpType.admin_plat_agent_bonus_config_show, cmd_admin_plat_agent_bonus_config_show);
 facade.registerCommand(HttpType.admin_plat_agent_bonus_config_update, cmd_admin_plat_agent_bonus_config_update);
-

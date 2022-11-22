@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_plat_activity_rule_index, cmd_admin_plat_a
 facade.registerCommand(HttpType.admin_plat_activity_rule_store, cmd_admin_plat_activity_rule_store);
 facade.registerCommand(HttpType.admin_plat_activity_rule_show, cmd_admin_plat_activity_rule_show);
 facade.registerCommand(HttpType.admin_plat_activity_rule_update, cmd_admin_plat_activity_rule_update);
-

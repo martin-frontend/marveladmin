@@ -1,10 +1,11 @@
 <template>
-    <el-dialog :title="$t('common.imagePreview')" :visible.sync="myProxy.previewImageDialogData.bShow">
+    <el-dialog :title="LangUtil('图片预览')" :visible.sync="myProxy.previewImageDialogData.bShow">
         <img :src="previewImage" v-loading="net_status.loading" />
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatsNoticeProxy from "@/views/plats_notice/proxy/PlatsNoticeProxy";
@@ -15,13 +16,14 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatsNoticeDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatsNoticeProxy = this.getProxy(PlatsNoticeProxy);
+    myProxy: PlatsNoticeProxy = this.getProxy(PlatsNoticeProxy);
 
     get previewImage() {
         return this.myProxy.previewImageDialogData.url;

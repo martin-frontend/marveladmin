@@ -1,9 +1,5 @@
 <template>
-    <el-dialog
-        :title="$t('exchange_orders.changeChannelTitle')"
-        :visible.sync="myProxy.changeDialogData.bShow"
-        width="700px"
-    >
+    <el-dialog :title="LangUtil('更换兑换渠道')" :visible.sync="myProxy.changeDialogData.bShow" width="700px">
         <div v-loading="net_status.loading">
             <div class="info-box">
                 <el-form ref="form" label-width="80px" label-position="left">
@@ -37,12 +33,12 @@
             </div>
             <el-divider />
             <div style="text-align:center">
-                {{ $t("exchange_orders.changeText") }}{{ tableColumns.exchange_channel.name }}
+                {{ LangUtil("更换") }}{{ tableColumns.exchange_channel.name }}
                 <el-select
                     v-model="form.exchange_channel"
                     filterable
                     class="select"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     style="margin: 0px 10px"
                 >
                     <el-option
@@ -59,13 +55,14 @@
                     size="mini"
                     @click="handlerChange"
                     v-if="checkUnique(unique.exchange_orders_update_channel)"
-                    >{{ $t("common.determine") }}</el-button
+                    >{{ LangUtil("确定") }}</el-button
                 >
             </div>
         </div>
     </el-dialog>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import { Component } from "vue-property-decorator";
@@ -74,18 +71,19 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class ChangeDialog extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: ExchangeOrdersProxy = this.getProxy(ExchangeOrdersProxy);
+    myProxy: ExchangeOrdersProxy = this.getProxy(ExchangeOrdersProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.changeDialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.changeDialogData.form;
 
-    private handlerChange() {
+    handlerChange() {
         this.myProxy.onUpdateChannel();
     }
 }

@@ -3,7 +3,7 @@
         <el-form ref="form" :rules="rules" :model="form" label-width="125px" v-loading="net_status.loading">
             <el-scrollbar style="height: 430px">
                 <el-form-item size="mini" :label="tableColumns['plat_name'].name" prop="plat_name">
-                    <el-input v-model="form.plat_name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                    <el-input v-model="form.plat_name" :placeholder="LangUtil('请输入')"></el-input>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['app_types'].name" prop="app_types">
                     <el-checkbox-group v-model="form.app_types">
@@ -84,7 +84,7 @@
                             <el-select
                                 v-model="form.water_config[key].type"
                                 filterable
-                                :placeholder="$t('common.pleaseChoose')"
+                                :placeholder="LangUtil('请选择')"
                             >
                                 <el-option
                                     v-for="(value, key) in tableColumns.vendor_type.options_type[0]"
@@ -155,7 +155,7 @@
                                 ></el-option>
                             </el-select>
                             <span class="desc" v-if="form.is_promotion_same == 0"
-                                >({{ $t("plat.promotionDesc") }})</span
+                                >({{ LangUtil("设置保底金额不能与上级相同") }})</span
                             >
                         </div>
                     </div>
@@ -177,7 +177,7 @@
                 <el-form-item size="mini" class="switch_setting" :label="tableColumns['is_agent_bonus'].name">
                     <div class="el_select_group">
                         <div>
-                            <span class="title">{{ $t("plat.switchSetting") }}</span>
+                            <span class="title">{{ LangUtil("开关设定") }}</span>
                             <el-select class="select" v-model="form.is_agent_bonus">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_agent_bonus.options"
@@ -227,7 +227,7 @@
                     </div>
                 </el-form-item>
                 <!--开关设定 -->
-                <el-form-item size="mini" :label="$t('plat.switchSetting')" prop="">
+                <el-form-item size="mini" :label="LangUtil('开关设定')" prop="">
                     <div class="el_select_group">
                         <div>
                             <span class="title">{{ tableColumns["is_bind_phone_award"].name }}</span>
@@ -459,9 +459,8 @@
                             </el-select>
                         </div>
                     </div>
-
                 </el-form-item>
-                <el-form-item size="mini" :label="$t('plat.goldTransfer')" prop="">
+                <el-form-item size="mini" :label="LangUtil('金币划转')" prop="">
                     <div class="item-content">
                         <span>{{ tableColumns["is_gold_transfer"].name }}：</span>
                         <el-select v-model="form.is_gold_transfer" class="select">
@@ -508,10 +507,10 @@
                     type="danger"
                     size="mini"
                     @click="handleDelete(form)"
-                    >{{ $t("common.delete") }}</el-button
+                    >{{ LangUtil("删除") }}</el-button
                 >
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
-                    $t("common.save")
+                    LangUtil("确认保存")
                 }}</el-button>
             </el-form-item>
         </el-form>
@@ -519,6 +518,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatProxy from "@/views/plat/proxy/PlatProxy";
@@ -534,26 +534,27 @@ import JsonEditor from "@/components/JsonEditor/index.vue";
     },
 })
 export default class PlatDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatProxy = this.getProxy(PlatProxy);
+    myProxy: PlatProxy = this.getProxy(PlatProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
     get form() {
         return this.myProxy.dialogData.form;
     }
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -575,18 +576,18 @@ export default class PlatDialog extends AbstractView {
 
     get rules() {
         return {
-            register_types: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            plat_name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            app_types: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            status: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            currency_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            language: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            api_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            validate_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            register_types: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            plat_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            app_types: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            status: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            currency_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            language: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            api_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            validate_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -594,7 +595,7 @@ export default class PlatDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -602,7 +603,7 @@ export default class PlatDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.plat_id);
     }
 

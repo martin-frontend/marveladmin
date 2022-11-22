@@ -118,7 +118,7 @@ export default {
         },
         moveToCurrentTag() {
             const tags = this.$refs.tag;
-            if(!tags)return;
+            if (!tags) return;
             this.$nextTick(() => {
                 for (const tag of tags) {
                     if (tag.to.path === this.$route.path) {
@@ -144,10 +144,14 @@ export default {
         },
         closeSelectedTag(view) {
             // 移除该页面的proxy
-            const routeName =  view.fullPath.split("/").pop();
-            const proxyName = routeName.split("_").map(value => value.firstUpperCase()).join("") + "Proxy";
+            const routeName = view.fullPath.split("/").pop();
+            const proxyName =
+                routeName
+                    .split("_")
+                    .map(value => value.firstUpperCase())
+                    .join("") + "Proxy";
             window.puremvc.Facade.getInstance().removeProxy(proxyName);
-            
+
             this.$emit("delView", view);
             this.$nextTick(() => {
                 if (this.isActive(view)) {

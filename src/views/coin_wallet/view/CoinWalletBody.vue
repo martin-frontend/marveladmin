@@ -34,28 +34,28 @@
                     {{ tableColumns.type.options[row.type] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" :width="width">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" :width="width">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
                         type="success"
                         @click="onDeposit(row)"
                         v-if="checkUnique(unique.coin_wallet_deposit)"
-                        >{{ $t("common.deposit") }}</el-button
+                        >{{ LangUtil("上分") }}</el-button
                     >
                     <el-button
                         size="mini"
                         type="info"
                         @click="onWithdraw(row)"
                         v-if="checkUnique(unique.coin_wallet_withdraw)"
-                        >{{ $t("common.withdraw") }}</el-button
+                        >{{ LangUtil("下分") }}</el-button
                     >
                     <el-button
                         size="mini"
                         type="primary"
                         @click="onRecord(row.admin_user_id)"
                         v-if="checkUnique(unique.coin_wallet_log)"
-                        >{{ $t("common.recordQuery") }}</el-button
+                        >{{ LangUtil("记录查询") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -67,6 +67,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -89,29 +90,30 @@ import Cookies from "js-cookie";
     },
 })
 export default class CoinWalletBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
+    myProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    // private tableData = this.myProxy.tableData.list;
+    tableColumns = this.myProxy.tableData.columns;
+    //  tableData = this.myProxy.tableData.list;
     get tableData() {
         this.$forceUpdate();
         return this.myProxy.tableData.list;
     }
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }

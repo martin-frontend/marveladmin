@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -97,7 +98,10 @@ export default class SystemFagProxy extends AbstractProxy implements ISystemFagP
     onAdd() {
         const { name, content, id, module } = this.dialogData.form;
         const formCopy: any = {
-            name, content, id, module
+            name,
+            content,
+            id,
+            module,
         };
         this.sendNotification(HttpType.admin_system_fag_store, objectRemoveNull(formCopy));
     }
@@ -118,15 +122,15 @@ export default class SystemFagProxy extends AbstractProxy implements ISystemFagP
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_system_fag_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**是否重新排序 */

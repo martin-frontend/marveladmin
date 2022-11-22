@@ -89,14 +89,14 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="160px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="160px">
                 <template slot-scope="{ row }">
                     <el-button
                         v-if="checkUnique(unique.lobby_model_product_update)"
                         size="mini"
                         type="primary"
                         @click="handleEdit(row)"
-                        >{{ $t("common.update") }}
+                        >{{ LangUtil("编辑") }}
                     </el-button>
                     <!--                    <el-button size="mini" type="danger" @click="onDelete(scope.$index, scope.row)"> 删除 </el-button>-->
                 </template>
@@ -105,6 +105,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -125,33 +126,34 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class LobbyModelProductBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: LobbyModelProductProxy = this.getProxy(LobbyModelProductProxy);
+    myProxy: LobbyModelProductProxy = this.getProxy(LobbyModelProductProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    // private tableData = this.myProxy.tableDataFilter;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    //  tableData = this.myProxy.tableDataFilter;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
     get tableData() {
         return this.myProxy.tableDataFilter;
     }
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 }

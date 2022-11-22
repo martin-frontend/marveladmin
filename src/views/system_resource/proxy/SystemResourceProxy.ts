@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -118,15 +119,15 @@ export default class SystemResourceProxy extends AbstractProxy implements ISyste
 
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_system_resource_update, { id: id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**图片批次处理弹窗相关数据 */
@@ -163,7 +164,7 @@ export default class SystemResourceProxy extends AbstractProxy implements ISyste
         const item = this.imgBatchDialogData.fileList.shift();
         this.sendNotification(HttpType.admin_system_resource_store, {
             file: item.raw,
-            type: this.dialogData.form.type
+            type: this.dialogData.form.type,
         });
     }
     /**批次删除 */

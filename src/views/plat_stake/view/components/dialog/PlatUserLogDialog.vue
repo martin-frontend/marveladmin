@@ -68,6 +68,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import { Component, Vue, Watch } from "vue-property-decorator";
@@ -82,36 +83,37 @@ import i18n from "@/lang";
     },
 })
 export default class PlatUserLogDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
+    myProxy: PlatStakeProxy = this.getProxy(PlatStakeProxy);
     // proxy property
-    private tableColumns = this.myProxy.stakeUserLogTableData.columns;
-    private tableData = this.myProxy.stakeUserLogTableData.list;
-    private listQuery = this.myProxy.stakeUserLogTableData.listQuery;
-    private pageInfo = this.myProxy.stakeUserLogTableData.pageInfo;
-    private dialogData = this.myProxy.stakeUserLogTableData.dialogData;
+    tableColumns = this.myProxy.stakeUserLogTableData.columns;
+    tableData = this.myProxy.stakeUserLogTableData.list;
+    listQuery = this.myProxy.stakeUserLogTableData.listQuery;
+    pageInfo = this.myProxy.stakeUserLogTableData.pageInfo;
+    dialogData = this.myProxy.stakeUserLogTableData.dialogData;
 
-    private title = i18n.t("user_detail.pledgeDetails");
+    title = LangUtil("质押详情");
 
     get rules() {
         return {};
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onStakeUserLogQuery();
     }
     // 打开用户详情
-    private showUserDetail(user_id: number) {
+    showUserDetail(user_id: number) {
         this.myProxy.onShowDetail(user_id);
     }
     // 排序
-    private tableSortChange(column: any) {
+    tableSortChange(column: any) {
         let order_by = {};
         if (column.order === "descending") {
             order_by = {

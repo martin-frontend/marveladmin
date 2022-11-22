@@ -1,8 +1,8 @@
 <template>
     <div class="content coin_receive_recharge_order">
-        <CoinReceiveRechargeOrderDialog/>
-        <CoinReceiveRechargeOrderHeader/>
-        <CoinReceiveRechargeOrderBody/>
+        <CoinReceiveRechargeOrderDialog />
+        <CoinReceiveRechargeOrderHeader />
+        <CoinReceiveRechargeOrderBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import CoinReceiveRechargeOrderBody from "./CoinReceiveRechargeOrderBody.vue";
         CoinReceiveRechargeOrderDialog,
         CoinReceiveRechargeOrderHeader,
         CoinReceiveRechargeOrderBody,
-    }
+    },
 })
 export default class CoinReceiveRechargeOrder extends AbstractView {
-
     constructor() {
         super(CoinReceiveRechargeOrderMediator);
     }

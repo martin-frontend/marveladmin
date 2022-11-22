@@ -26,8 +26,10 @@ export var EventType = {
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_index_statistic_table_columns, cmd_admin_index_statistic_table_columns);
-facade.registerCommand(HttpType.admin_index_statistic_yesterday_statistic, cmd_admin_index_statistic_yesterday_statistic);
+facade.registerCommand(
+    HttpType.admin_index_statistic_yesterday_statistic,
+    cmd_admin_index_statistic_yesterday_statistic
+);
 facade.registerCommand(HttpType.admin_index_statistic_today_statistic, cmd_admin_index_statistic_today_statistic);
 facade.registerCommand(HttpType.admin_index_statistic_recharge_statistic, cmd_admin_index_statistic_recharge_statistic);
 facade.registerCommand(HttpType.admin_index_statistic_exchange_statistic, cmd_admin_index_statistic_exchange_statistic);
-

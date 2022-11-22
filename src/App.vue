@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import { Component } from "vue-property-decorator";
 import AbstractView from "./core/abstract/AbstractView";
 import MessagePanel from "./views/layout/view/components/MessagePanel.vue";
@@ -24,7 +25,7 @@ import PreviewImageDialog from "@/components/PreviewImageDialog.vue";
 import i18n from "@/lang";
 import GlobalVar from "./core/global/GlobalVar";
 import CommonLangDialog from "./views/language_dialog/view/CommonLangDialog.vue";
-import CommonLangImgDialog from "./views/lang_img_dialog/view/CommonLangImgDialog.vue"
+import CommonLangImgDialog from "./views/lang_img_dialog/view/CommonLangImgDialog.vue";
 
 @Component({
     components: {
@@ -35,12 +36,13 @@ import CommonLangImgDialog from "./views/lang_img_dialog/view/CommonLangImgDialo
     },
 })
 export default class App extends AbstractView {
+    LangUtil = LangUtil;
     constructor() {
         super(AppMediator);
     }
-    private GlobalVar = GlobalVar;
-    private title = i18n.t("dashboard.untreated");
-    private messageNotify: any;
+    GlobalVar = GlobalVar;
+    title = LangUtil("最新未处理");
+    messageNotify: any;
     showMessagePanel(data: any) {
         if (this.messageNotify) this.messageNotify.close();
         this.messageNotify = this.$notify({

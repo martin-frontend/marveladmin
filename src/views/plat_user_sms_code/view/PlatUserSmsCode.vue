@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatUserSmsCodeDialog/>
-        <PlatUserSmsCodeHeader/>
-        <PlatUserSmsCodeBody/>
+        <PlatUserSmsCodeDialog />
+        <PlatUserSmsCodeHeader />
+        <PlatUserSmsCodeBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import PlatUserSmsCodeBody from "./PlatUserSmsCodeBody.vue";
         PlatUserSmsCodeDialog,
         PlatUserSmsCodeHeader,
         PlatUserSmsCodeBody,
-    }
+    },
 })
 export default class PlatUserSmsCode extends AbstractView {
-
     constructor() {
         super(PlatUserSmsCodeMediator);
     }

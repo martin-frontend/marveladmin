@@ -135,14 +135,14 @@
                     type="danger"
                     size="mini"
                     @click="handleDelete()"
-                    >{{ $t("common.delete") }}</el-button
+                    >{{ LangUtil("删除") }}</el-button
                 >
                 <el-button
                     type="primary"
                     @click="
                         isStatusUpdate && checkUnique(unique.lobby_model_product_update) ? handleUpdate() : handleAdd()
                     "
-                    >{{ $t("common.save") }}</el-button
+                    >{{ LangUtil("确认保存") }}</el-button
                 >
             </el-form-item>
         </el-form>
@@ -150,6 +150,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import LobbyModelProductProxy from "@/views/lobby_model_product/proxy/LobbyModelProductProxy";
@@ -161,15 +162,16 @@ import i18n from "@/lang";
 
 @Component
 export default class LobbyModelProductDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: LobbyModelProductProxy = this.getProxy(LobbyModelProductProxy);
+    myProxy: LobbyModelProductProxy = this.getProxy(LobbyModelProductProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
 
     get form() {
         return this.myProxy.dialogData.form;
@@ -187,13 +189,13 @@ export default class LobbyModelProductDialog extends AbstractView {
         return this.myProxy.dialogData.form.vendor_languages;
     }
 
-    private textMap = {
-        update: i18n.t("common.update"),
-        create: i18n.t("common.create"),
+    textMap = {
+        update: LangUtil("编辑"),
+        create: LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -217,31 +219,31 @@ export default class LobbyModelProductDialog extends AbstractView {
 
     get rules() {
         const rules = {
-            currency_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            vendor_id: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            vendor_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            app_types: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            show_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            category: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            vendor_product_name: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
-            // icon: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
-            list_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
+            currency_type: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            vendor_id: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            vendor_type: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            app_types: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            show_type: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            category: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            vendor_product_name: [{ required: true, message: LangUtil("必须填写"), trigger: "change" }],
+            // icon: [{ required: true, message: LangUtil('必须填写'), trigger: "change" }],
+            list_type: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
         };
         const rules1 = {
-            currency_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            vendor_id: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            vendor_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            app_types: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            show_type: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            category: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            vendor_product_id: [{ required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            languages: [{ type: "array", required: true, message: i18n.t("common.requiredSelect"), trigger: "change" }],
-            // icon: [{ required: true, message: i18n.t("common.requiredInput"), trigger: "change" }],
+            currency_type: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            vendor_id: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            vendor_type: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            app_types: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            show_type: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            category: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            vendor_product_id: [{ required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            languages: [{ type: "array", required: true, message: LangUtil("必须选择"), trigger: "change" }],
+            // icon: [{ required: true, message: LangUtil('必须填写'), trigger: "change" }],
         };
         return { rules, rules1 };
     }
 
-    private handlerDialogVendorChange() {
+    handlerDialogVendorChange() {
         this.myProxy.onGetVendor();
     }
 
@@ -249,7 +251,7 @@ export default class LobbyModelProductDialog extends AbstractView {
         this.myProxy.getVendorId();
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -257,7 +259,7 @@ export default class LobbyModelProductDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -265,7 +267,7 @@ export default class LobbyModelProductDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.lobby_model_product_id);
     }
 

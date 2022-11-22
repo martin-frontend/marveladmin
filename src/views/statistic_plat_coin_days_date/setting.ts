@@ -16,6 +16,11 @@ export var EventType = {
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(HttpType.admin_statistic_plat_coin_days_table_columns, cmd_admin_statistic_plat_coin_days_table_columns);
-facade.registerCommand(HttpType.admin_statistic_plat_coin_days_statistic_by_date, cmd_admin_statistic_plat_coin_days_statistic_by_date);
-
+facade.registerCommand(
+    HttpType.admin_statistic_plat_coin_days_table_columns,
+    cmd_admin_statistic_plat_coin_days_table_columns
+);
+facade.registerCommand(
+    HttpType.admin_statistic_plat_coin_days_statistic_by_date,
+    cmd_admin_statistic_plat_coin_days_statistic_by_date
+);

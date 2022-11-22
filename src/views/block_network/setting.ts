@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_block_network_index, cmd_admin_block_netwo
 facade.registerCommand(HttpType.admin_block_network_show, cmd_admin_block_network_show);
 facade.registerCommand(HttpType.admin_block_network_store, cmd_admin_block_network_store);
 facade.registerCommand(HttpType.admin_block_network_update, cmd_admin_block_network_update);
-

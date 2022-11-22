@@ -179,7 +179,7 @@ export default class PlatBonusAllProxy extends AbstractProxy implements IPlatBon
         this.dividendDialogData.form.id = id;
         this.dividendDialogData.form.type = type.toString();
         this.dividendDialogData.form.plat_id = plat_id;
-        this.dividendDialogData.form.auto_rate = auto_rate * 100 >> 0;
+        this.dividendDialogData.form.auto_rate = (auto_rate * 100) >> 0;
         this.dividendDialogData.form.bonus_all_gold = bonus_all_gold;
         this.dividendDialogData.formSource = JSON.parse(JSON.stringify(this.dividendDialogData.form));
         this.dividendDialogData.bShow = true;

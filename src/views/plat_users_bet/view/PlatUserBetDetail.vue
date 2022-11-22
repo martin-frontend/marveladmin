@@ -1,7 +1,7 @@
 <template>
-    <el-dialog :title="$t('plat_users_bet.betDetail')" :append-to-body="true" :visible.sync="data.bShow">
+    <el-dialog :title="LangUtil('投注详情')" :append-to-body="true" :visible.sync="data.bShow">
         <el-tabs v-model="activeName" style="margin-left: 20px; margin-right: 20px">
-            <el-tab-pane :label="$t('common.baseInfo')" name="first">
+            <el-tab-pane :label="LangUtil('基本信息')" name="first">
                 <el-form label-position="right" label-width="100px">
                     <el-form-item size="mini" :label="tableColumns['order_no'].name" prop="order_no">
                         {{ data.data["order_no"] }}
@@ -13,7 +13,7 @@
                         {{ data.data["user_id"] }}
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['is_credit_user'].name" prop="is_credit_user">
-                        {{ tableColumns['is_credit_user'].options[data.data["is_credit_user"]] }}
+                        {{ tableColumns["is_credit_user"].options[data.data["is_credit_user"]] }}
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['vendor_id'].name" prop="vendor_id">
                         {{ tableColumns["vendor_id"].options[data.data["vendor_id"]] }}
@@ -66,7 +66,7 @@
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
-            <el-tab-pane :label="$t('plat_users_bet.vendorData')" name="second">
+            <el-tab-pane :label="LangUtil('厂商数据')" name="second">
                 <div v-if="data.data" style="min-height: 200px">
                     <pre>{{ gameInfo }}</pre>
                 </div>
@@ -76,6 +76,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
@@ -85,16 +86,17 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
     },
 })
 export default class PlatUserBetDetail extends Vue {
+    LangUtil = LangUtil;
     @Prop()
     tableColumns: any;
     @Prop()
     data: any;
 
-    private activeName = "first";
+    activeName = "first";
 
-    private gameInfo: string = "";
+    gameInfo: string = "";
 
-    private formatGameInfo() {
+    formatGameInfo() {
         let json: any;
         try {
             json = JSON.parse(this.data.data.game_info);
@@ -104,7 +106,7 @@ export default class PlatUserBetDetail extends Vue {
         this.gameInfo = JSON.stringify(json, null, 2);
     }
     @Watch("data.data")
-    private onWatchData() {
+    onWatchData() {
         this.activeName = "first";
         this.formatGameInfo();
     }

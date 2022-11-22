@@ -42,7 +42,7 @@ export default class PlatBackwaterBody extends AbstractView {
     // proxy property
     private listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page:number){
+    private handlerPageSwitch(page: number) {
         this.myProxy.onQuery();
     }
 }

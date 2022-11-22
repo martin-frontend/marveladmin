@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, jsonStringify, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
@@ -179,7 +180,7 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             formCopy.ori_vendor_extend = extendsStr;
             this.sendNotification(HttpType.admin_vendor_product_store, objectRemoveNull(formCopy));
         } catch (error) {
-            Message.warning(<string>i18n.t("common.jsonError"));
+            Message.warning(<string>LangUtil("json格式不正确"));
         }
     }
     /**更新数据 */
@@ -198,14 +199,14 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
             // 发送消息
             this.sendNotification(HttpType.admin_vendor_product_update, temp);
         } catch (error) {
-            Message.warning(<string>i18n.t("common.jsonError"));
+            Message.warning(<string>LangUtil("json格式不正确"));
         }
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm(<string>i18n.t("common.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
-            confirmButtonText: <string>i18n.t("common.determine"),
-            cancelButtonText: <string>i18n.t("common.cancel"),
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {

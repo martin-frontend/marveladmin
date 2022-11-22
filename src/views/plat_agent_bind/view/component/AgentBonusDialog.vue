@@ -12,14 +12,15 @@
                 ></el-input>
             </el-form-item>
             <div class="dialog-footer">
-                <el-button @click="myProxy.agentBonusDialogData.bShow = false">{{ $t("common.cancel") }}</el-button>
-                <el-button type="primary" @click="handleSave()">{{ $t("common.save") }}</el-button>
+                <el-button @click="myProxy.agentBonusDialogData.bShow = false">{{ LangUtil("取消") }}</el-button>
+                <el-button type="primary" @click="handleSave()">{{ LangUtil("确认保存") }}</el-button>
             </div>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatAgentBindProxy from "@/views/plat_agent_bind/proxy/PlatAgentBindProxy";
@@ -30,19 +31,20 @@ import i18n from "@/lang";
 import { inputOnlyPositive } from "@/core/global/Functions";
 @Component
 export default class AgentBonusDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
+    myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.agentBonusDialogData.form;
-    private inputLimit = inputOnlyPositive;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.agentBonusDialogData.form;
+    inputLimit = inputOnlyPositive;
 
-    private handleSave() {
+    handleSave() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.updateAgentBonus();

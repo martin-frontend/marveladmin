@@ -84,7 +84,7 @@
                         @click="handlerEdit('credit_rate')"
                         style="margin-left: 20px"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
 
@@ -117,7 +117,7 @@
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.plat_user_update_real_name)"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['nick_name'].name" prop="nick_name">
@@ -129,7 +129,7 @@
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.plat_user_update_phone)"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['phone'].name" prop="phone">
@@ -145,7 +145,7 @@
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.plat_user_update_phone) && userInfo.phone && userInfo.phone != ''"
                     >
-                        {{ $t("common.lookOver") }}
+                        {{ LangUtil("查看") }}
                     </el-button>
                     <el-button
                         class="item"
@@ -154,7 +154,7 @@
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.plat_user_update_phone)"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['email'].name" prop="email">
@@ -166,7 +166,7 @@
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.plat_user_update_email)"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['pretty_user_id'].name" prop="pretty_user_id">
@@ -177,7 +177,7 @@
                         @click="handlerEdit('pretty_user_id')"
                         style="margin-left: 20px"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
                 <!-- <el-form-item size="mini" :label="tableColumns['wechat'].name" prop="wechat">
@@ -189,7 +189,7 @@
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.plat_user_update_wechat)"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil('编辑') }}
                     </el-button>
                 </el-form-item> -->
                 <!-- <el-form-item size="mini" :label="tableColumns['qq'].name" prop="qq">
@@ -201,7 +201,7 @@
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.plat_user_update_qq)"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil('编辑') }}
                     </el-button>
                 </el-form-item> -->
                 <el-form-item size="mini" :label="tableColumns['password'].name" prop="password">
@@ -213,7 +213,7 @@
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.plat_user_update_password)"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['base_recharge'].name" prop="base_recharge">
@@ -225,7 +225,7 @@
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.update_level_exp)"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['base_water'].name" prop="base_water">
@@ -237,7 +237,7 @@
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.update_level_exp)"
                     >
-                        {{ $t("common.update") }}
+                        {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
                 <div class="row_display">
@@ -252,7 +252,7 @@
                     <el-form-item
                         size="mini"
                         label-width="120px"
-                        :label="$t(`plat.clearCache`)"
+                        :label="LangUtil('清除缓存')"
                         prop="status"
                         class="btn"
                     >
@@ -261,7 +261,7 @@
                             @click="handlerClear()"
                             v-if="checkUnique(unique.plat_user_clear_cache)"
                         >
-                            {{ $t("admin_user.clear") }}
+                            {{ LangUtil("清除") }}
                         </el-button>
                     </el-form-item>
                 </div>
@@ -287,7 +287,7 @@
                     >
                         <label slot="label">
                             <el-tooltip placement="top-start">
-                                <div slot="content">{{ $t("user_detail.displayTip") }}</div>
+                                <div slot="content">{{ LangUtil('客户端APP是否展示渠道统计数据') }}</div>
                                 <i class="el-icon-question" />
                             </el-tooltip>
                             {{ tableColumns["is_channel_statistic_display"].name }}
@@ -404,12 +404,12 @@
                     <el-form-item
                         size="mini"
                         label-width="120px"
-                        :label="$t(`plat.clearGoogle`)"
+                        :label="LangUtil('清除谷歌验证码')"
                         prop="status"
                         class="btn"
                     >
                         <el-button type="primary" @click="handlerGoogleClear()">
-                            {{ $t("admin_user.clear") }}
+                            {{ LangUtil("清除") }}
                         </el-button>
                     </el-form-item>
                 </div>
@@ -417,7 +417,7 @@
                 <el-form-item size="mini" :label="tableColumns.gold_columns_disable.name" prop="gold_columns_disable">
                     <label slot="label">
                         <el-tooltip placement="top-start">
-                            <div slot="content">{{ $t("user_detail.disableTip") }}</div>
+                            <div slot="content">{{ LangUtil("客户端APP金币明细,屏蔽该选择类型选项") }}</div>
                             <i class="el-icon-question" />
                         </el-tooltip>
                         {{ tableColumns.gold_columns_disable.name }}
@@ -425,7 +425,7 @@
                     <div class="gold_columns">
                         <div class="content">{{ userInfo.gold_columns_disable_list }}</div>
                         <el-button class="btn" type="primary" @click="handlerEdit('gold_columns_disable')">
-                            {{ $t("common.update") }}
+                            {{ LangUtil("编辑") }}
                         </el-button>
                     </div>
                 </el-form-item>
@@ -434,12 +434,12 @@
                     <div class="remark_group">
                         <div class="content">{{ userInfo.remark | remarkFilter }}</div>
                         <el-button class="btn" type="primary" @click="handlerEdit('remark')">
-                            {{ $t("common.update") }}
+                            {{ LangUtil("编辑") }}
                         </el-button>
                     </div>
                 </el-form-item>
                 <div class="bind_relation" v-if="checkUnique(unique.plat_agent_bind)">
-                    <div>{{ $t("user_detail.parentKey") }}</div>
+                    <div>{{ LangUtil("上级关系键条") }}</div>
                     <p>
                         <span v-for="(value, key) in relationChain" :key="key" :value="key"
                             ><span style="cursor: pointer; text-decoration: underline" @click="showUserDetail(value)"
@@ -456,6 +456,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -479,6 +480,7 @@ import EditDialog from "./EditDialog.vue";
     },
 })
 export default class TabUserInfo extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
     unique = unique;
     checkUnique = checkUnique;

@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_marquee/setting";
 import { Message } from "element-ui";
 import PlatMarqueeProxy from "../proxy/PlatMarqueeProxy";
 
-interface IPlatMarquee extends IEventDispatcher {
-    
-}
+interface IPlatMarquee extends IEventDispatcher {}
 
 export default class PlatMarqueeMediator extends AbstractMediator {
     private myProxy: PlatMarqueeProxy = <any>this.getProxy(PlatMarqueeProxy);
@@ -31,7 +29,6 @@ export default class PlatMarqueeMediator extends AbstractMediator {
             EventType.admin_plats_marquee_show,
             EventType.admin_plats_marquee_store,
             EventType.admin_plats_marquee_update,
-
         ];
     }
 

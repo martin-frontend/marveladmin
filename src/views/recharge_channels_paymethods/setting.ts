@@ -37,9 +37,14 @@ const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_recharge_channels_table_columns, cmd_admin_recharge_channels_table_columns);
 facade.registerCommand(HttpType.admin_recharge_channels_index, cmd_admin_recharge_channels_index);
 facade.registerCommand(HttpType.admin_recharge_channels_update, cmd_admin_recharge_channels_update);
-facade.registerCommand(HttpType.admin_recharge_channels_paymethods_table_columns, cmd_admin_recharge_channels_paymethods_table_columns);
+facade.registerCommand(
+    HttpType.admin_recharge_channels_paymethods_table_columns,
+    cmd_admin_recharge_channels_paymethods_table_columns
+);
 facade.registerCommand(HttpType.admin_recharge_channels_paymethods_index, cmd_admin_recharge_channels_paymethods_index);
 facade.registerCommand(HttpType.admin_recharge_channels_paymethods_show, cmd_admin_recharge_channels_paymethods_show);
 facade.registerCommand(HttpType.admin_recharge_channels_paymethods_store, cmd_admin_recharge_channels_paymethods_store);
-facade.registerCommand(HttpType.admin_recharge_channels_paymethods_update, cmd_admin_recharge_channels_paymethods_update);
-
+facade.registerCommand(
+    HttpType.admin_recharge_channels_paymethods_update,
+    cmd_admin_recharge_channels_paymethods_update
+);

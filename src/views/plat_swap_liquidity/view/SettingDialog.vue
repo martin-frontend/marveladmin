@@ -66,13 +66,14 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleUpdate">{{ $t("common.save") }}</el-button>
+                <el-button type="primary" size="mini" @click="handleUpdate">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatSwapLiquidityProxy from "@/views/plat_swap_liquidity/proxy/PlatSwapLiquidityProxy";
@@ -83,20 +84,21 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class PlatSwapLiquidityDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatSwapLiquidityProxy = this.getProxy(PlatSwapLiquidityProxy);
+    myProxy: PlatSwapLiquidityProxy = this.getProxy(PlatSwapLiquidityProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogSetting.form;
-    private source = this.myProxy.dialogSetting.source;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogSetting.form;
+    source = this.myProxy.dialogSetting.source;
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -124,7 +126,7 @@ export default class PlatSwapLiquidityDialog extends AbstractView {
         };
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onSetting();

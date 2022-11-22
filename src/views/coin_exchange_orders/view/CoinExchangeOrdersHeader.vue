@@ -10,7 +10,7 @@
             />
             <div>
                 <el-button class="header-button" @click="exportExcel" type="primary" icon="el-icon-download">{{
-                    $t("statistic_plat_days.export")
+                    LangUtil("导出")
                 }}</el-button>
             </div>
         </div>
@@ -41,35 +41,36 @@
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
                     <!-- 查询 -->
-                    {{ $t("common.search") }}
+                    {{ LangUtil("查询") }}
                 </el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
                     <!-- 重置 -->
-                    {{ $t("common.reset") }}
+                    {{ LangUtil("重置") }}
                 </el-button>
             </div>
         </div>
         <div class="autoReload">
             <div class="statistics">
-                <span>{{ $t("common.tableInfoTitle") }}</span>
-                <span>{{ $t("exchange_orders.tableInfoTotalGold") }}:{{ tableData.total_gold }}</span>
-                <span>{{ $t("exchange_orders.tableInfoTotalNum") }}:{{ tableData.total_num }}</span>
-                <span>{{ $t("exchange_orders.tableInfoSuccessTotalGold") }}:{{ tableData.success_total_gold }}</span>
-                <span>{{ $t("exchange_orders.tableInfoSuccessTotalNum") }}:{{ tableData.success_total_num }}</span>
+                <span>{{ LangUtil("查询汇总") }}</span>
+                <span>{{ LangUtil("兑换总金额") }}:{{ tableData.total_gold }}</span>
+                <span>{{ LangUtil("兑换订单数") }}:{{ tableData.total_num }}</span>
+                <span>{{ LangUtil("兑换成功金额") }}:{{ tableData.success_total_gold }}</span>
+                <span>{{ LangUtil("兑换成功订单数") }}:{{ tableData.success_total_num }}</span>
             </div>
             <SearchSelect
-                :title="$t('common.autoRefresh')"
+                :title="LangUtil('自动刷新')"
                 v-model="reloadData.autoTime"
                 :options="reloadData.options"
                 @change="handlerAutoReload"
-                :placeholder="$t('common.notAutoRefresh')"
-                :tip="$t('common.autoRefreshTip')"
+                :placeholder="LangUtil('不自动刷新')"
+                :tip="LangUtil('列表在第1页的时候，自动刷新才生效')"
             />
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import CoinExchangeOrdersProxy from "../proxy/CoinExchangeOrdersProxy";
@@ -88,31 +89,32 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class CoinExchangeOrdersHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: CoinExchangeOrdersProxy = this.getProxy(CoinExchangeOrdersProxy);
+    myProxy: CoinExchangeOrdersProxy = this.getProxy(CoinExchangeOrdersProxy);
     // proxy property
-    private tableData = this.myProxy.tableData;
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
-    private reloadData = this.myProxy.reloadData;
+    tableData = this.myProxy.tableData;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
+    reloadData = this.myProxy.reloadData;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerAutoReload() {
+    handlerAutoReload() {
         this.myProxy.autoReload();
     }
 
-    private exportExcel() {
+    exportExcel() {
         this.myProxy.onQueryAll();
     }
 }

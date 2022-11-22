@@ -24,16 +24,14 @@
             <div class="btn-group">
                 <div>
                     <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                        $t("common.search")
+                        LangUtil("查询")
                     }}</el-button>
                     <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                        $t("common.reset")
+                        LangUtil("重置")
                     }}</el-button>
                 </div>
                 <div>
-                    <el-button @click="heandlerExport()" type="primary">{{
-                        $t("statistic_plat_days.export")
-                    }}</el-button>
+                    <el-button @click="heandlerExport()" type="primary">{{ LangUtil("导出") }}</el-button>
                 </div>
             </div>
         </div>
@@ -41,6 +39,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import StatisticPlatCoinDaysProxy from "../proxy/StatisticPlatCoinDaysProxy";
@@ -58,16 +57,17 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class StatisticPlatCoinDaysHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: StatisticPlatCoinDaysProxy = this.getProxy(StatisticPlatCoinDaysProxy);
+    myProxy: StatisticPlatCoinDaysProxy = this.getProxy(StatisticPlatCoinDaysProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch(resetCoinNameUnique: boolean = false) {
+    handlerSearch(resetCoinNameUnique: boolean = false) {
         this.listQuery.page_count = 1;
 
         if (resetCoinNameUnique) {
@@ -77,10 +77,10 @@ export default class StatisticPlatCoinDaysHeader extends AbstractView {
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
-    private heandlerExport() {
+    heandlerExport() {
         this.myProxy.onExportExcel();
     }
 }

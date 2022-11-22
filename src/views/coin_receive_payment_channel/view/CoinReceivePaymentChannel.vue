@@ -1,8 +1,8 @@
 <template>
     <div class="content coin_receive_payment_channel">
-        <CoinReceivePaymentChannelDialog/>
-        <CoinReceivePaymentChannelHeader/>
-        <CoinReceivePaymentChannelBody/>
+        <CoinReceivePaymentChannelDialog />
+        <CoinReceivePaymentChannelHeader />
+        <CoinReceivePaymentChannelBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import CoinReceivePaymentChannelBody from "./CoinReceivePaymentChannelBody.vue";
         CoinReceivePaymentChannelDialog,
         CoinReceivePaymentChannelHeader,
         CoinReceivePaymentChannelBody,
-    }
+    },
 })
 export default class CoinReceivePaymentChannel extends AbstractView {
-
     constructor() {
         super(CoinReceivePaymentChannelMediator);
     }

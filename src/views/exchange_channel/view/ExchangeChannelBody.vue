@@ -61,7 +61,7 @@
                     ></el-switch>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" width="120px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="120px">
                 <template slot-scope="{ row }">
                     <el-button
                         class="item"
@@ -69,7 +69,7 @@
                         icon="el-icon-edit"
                         v-if="checkUnique(unique.exchange_channel_update)"
                         @click="handleEdit(row)"
-                        >{{ $t("common.update") }}</el-button
+                        >{{ LangUtil("编辑") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -78,6 +78,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -92,33 +93,34 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class ExchangeChannelBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: ExchangeChannelProxy = this.getProxy(ExchangeChannelProxy);
+    myProxy: ExchangeChannelProxy = this.getProxy(ExchangeChannelProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerQuery() {
+    handlerQuery() {
         this.myProxy.onQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
 
@@ -137,7 +139,7 @@ export default class ExchangeChannelBody extends AbstractView {
         }
     }
 
-    private switchEvent(row: any) {
+    switchEvent(row: any) {
         this.myProxy.updateStatus(row);
     }
 

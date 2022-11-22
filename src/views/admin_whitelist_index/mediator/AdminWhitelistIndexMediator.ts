@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/admin_whitelist_index/setting";
 import { Message } from "element-ui";
 import AdminWhitelistIndexProxy from "../proxy/AdminWhitelistIndexProxy";
 
-interface IAdminWhitelistIndex extends IEventDispatcher {
-    
-}
+interface IAdminWhitelistIndex extends IEventDispatcher {}
 
 export default class AdminWhitelistIndexMediator extends AbstractMediator {
     private myProxy: AdminWhitelistIndexProxy = <any>this.getProxy(AdminWhitelistIndexProxy);
@@ -30,7 +28,6 @@ export default class AdminWhitelistIndexMediator extends AbstractMediator {
             EventType.admin_admin_whitelist_index,
             EventType.admin_admin_whitelist_store,
             EventType.admin_admin_whitelist_update,
-
         ];
     }
 

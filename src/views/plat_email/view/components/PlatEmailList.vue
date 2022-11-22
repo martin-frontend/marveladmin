@@ -4,37 +4,37 @@
             <div class="group">
                 <SearchInput
                     :title="tableColumns.content_id.name"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     v-model="listQuery.content_id"
                 />
                 <SearchInput
                     :title="tableColumns.title.name"
-                    :placeholder="$t('common.pleaseEnter')"
+                    :placeholder="LangUtil('请输入')"
                     v-model="listQuery.title"
                 />
                 <SearchSelect
                     v-model="listQuery.send_type"
                     :title="tableColumns.send_type.name"
                     :options="tableColumns.send_type.options"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 />
                 <SearchSelect
                     v-model="listQuery.type"
                     :title="tableColumns.type.name"
                     :options="tableColumns.type.options"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 />
                 <SearchSelect
                     v-model="listQuery.cate"
                     :title="tableColumns.cate.name"
                     :options="tableColumns.cate.options"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 />
                 <SearchSelect
                     v-model="listQuery.status"
                     :title="tableColumns.status.name"
                     :options="tableColumns.status.options"
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 />
                 <SearchDatePicker
                     :title="tableColumns['created_at'].name"
@@ -44,10 +44,10 @@
                 />
                 <div class="header-button">
                     <el-button @click="handlerSearch" type="primary" icon="el-icon-search">{{
-                        $t("common.search")
+                        LangUtil("查询")
                     }}</el-button>
                     <el-button @click="handlerReset" type="primary" icon="el-icon-refresh">{{
-                        $t("common.reset")
+                        LangUtil("重置")
                     }}</el-button>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="$t('plat_email.receiveReadRewardSend')" class-name="status-col" width="140px">
+            <el-table-column :label="LangUtil('收到/阅读/奖励/发送')" class-name="status-col" width="140px">
                 <template slot-scope="{ row }">
                     {{ row.member_analyze }}
                 </template>
@@ -121,21 +121,21 @@
                     </el-tag>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.operating')" class-name="status-col" min-width="150px">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="150px">
                 <template slot-scope="{ row }">
                     <el-button
                         size="mini"
                         type="primary"
                         @click="handleEdit(row)"
                         v-if="checkUnique(unique.plat_email_show)"
-                        >{{ $t("common.detail") }}</el-button
+                        >{{ LangUtil("详情") }}</el-button
                     >
                     <el-button
                         v-if="EmailStatus.Sended == row.status && checkUnique(unique.plat_email_update)"
                         size="mini"
                         type="danger"
                         @click="handlerDelete(row)"
-                        >{{ $t("common.revoke") }}</el-button
+                        >{{ LangUtil("撤销") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -145,6 +145,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -175,40 +176,41 @@ import { EmailStatus } from "../../proxy/IPlatEmailProxy";
     },
 })
 export default class PlatEmailList extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
+    myProxy: PlatEmailProxy = this.getProxy(PlatEmailProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
     // Iproxy property
-    private EmailStatus = EmailStatus;
+    EmailStatus = EmailStatus;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handlerDelete(data: any) {
+    handlerDelete(data: any) {
         this.myProxy.onDelete(data.content_id);
     }
 }

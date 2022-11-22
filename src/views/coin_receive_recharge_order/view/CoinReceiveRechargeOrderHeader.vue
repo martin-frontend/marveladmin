@@ -11,7 +11,7 @@
             />
             <div>
                 <el-button class="header-button" @click="exportExcel" type="primary" icon="el-icon-download">{{
-                    $t("statistic_plat_days.export")
+                    LangUtil("导出")
                 }}</el-button>
             </div>
         </div>
@@ -49,48 +49,49 @@
             <SearchInput
                 :title="tableColumns.payment_channel_id.name"
                 v-model="listQuery.payment_channel_id"
-                :tip="$t('coin_receive_recharge_order.channelIdTip')"
+                :tip="LangUtil('币商收款通道查询通道ID')"
             />
-            <SearchInput :title="$t('common.operationUser')" v-model="listQuery.updated_by" />
+            <SearchInput :title="LangUtil('操作用户')" v-model="listQuery.updated_by" />
             <SearchRange
                 :title="tableColumns.gold.name"
                 :minValue.sync="listQuery['gold-{>=}']"
                 :maxValue.sync="listQuery['gold-{<=}']"
-                :placeholders="[$t('common.minMoney'), $t('common.maxMoney')]"
+                :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             />
             <div>
                 <el-button @click="handlerSearch" class="item" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button @click="handlerReset" class="item" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
 
         <div class="autoReload">
             <div class="now_gold">
-                {{ $t("coin_receive_recharge_order.accountHaveMoney") }}: {{ myProxy.coinWallet }}
-                <span>{{ $t("common.tableInfoTitle") }}</span>
-                <span>{{ $t("recharge_orders.tableInfoTotalGold") }}:{{ tableData.total_gold }}</span>
-                <span>{{ $t("recharge_orders.tableInfoTotalNum") }}:{{ tableData.total_num }}</span>
-                <span>{{ $t("recharge_orders.tableInfoSuccessTotalGold") }}:{{ tableData.success_total_gold }}</span>
-                <span>{{ $t("recharge_orders.tableInfoSuccessTotalNum") }}:{{ tableData.success_total_num }}</span>
-                <span>{{ $t("recharge_orders.tableInfoTotalUserNum") }}:{{ tableData.total_user_num }}</span>
+                {{ LangUtil("账号当持有金币") }}: {{ myProxy.coinWallet }}
+                <span>{{ LangUtil("查询汇总") }}</span>
+                <span>{{ LangUtil("充值总金额") }}:{{ tableData.total_gold }}</span>
+                <span>{{ LangUtil("充值订单数") }}:{{ tableData.total_num }}</span>
+                <span>{{ LangUtil("充值成功金额") }}:{{ tableData.success_total_gold }}</span>
+                <span>{{ LangUtil("充值成功订单数") }}:{{ tableData.success_total_num }}</span>
+                <span>{{ LangUtil("充值人数") }}:{{ tableData.total_user_num }}</span>
             </div>
             <SearchSelect
-                :title="$t('common.autoRefresh')"
+                :title="LangUtil('自动刷新')"
                 v-model="reloadData.autoTime"
                 :options="reloadData.options"
                 @change="handlerAutoReload"
-                :placeholder="$t('common.notAutoRefresh')"
-                :tip="$t('common.autoRefreshTip')"
+                :placeholder="LangUtil('不自动刷新')"
+                :tip="LangUtil('列表在第1页的时候，自动刷新才生效')"
             />
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import CoinReceiveRechargeOrderProxy from "../proxy/CoinReceiveRechargeOrderProxy";
@@ -110,40 +111,41 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class CoinReceiveRechargeOrderHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: CoinReceiveRechargeOrderProxy = this.getProxy(CoinReceiveRechargeOrderProxy);
+    myProxy: CoinReceiveRechargeOrderProxy = this.getProxy(CoinReceiveRechargeOrderProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData;
-    private listQuery = this.myProxy.listQuery;
-    private reloadData = this.myProxy.reloadData;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData;
+    listQuery = this.myProxy.listQuery;
+    reloadData = this.myProxy.reloadData;
 
-    private handlerChangePlat() {
+    handlerChangePlat() {
         this.myProxy.onQuery();
         this.myProxy.onWallet();
     }
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
 
-    private handlerAutoReload() {
+    handlerAutoReload() {
         this.myProxy.autoReload();
     }
 
-    private exportExcel() {
+    exportExcel() {
         this.myProxy.onQueryAll();
     }
 }

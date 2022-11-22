@@ -49,4 +49,3 @@ facade.registerCommand(HttpType.admin_plat_lang_import, cmd_admin_plat_lang_impo
 facade.registerCommand(HttpType.admin_system_lang_store, cmd_admin_system_lang_store);
 facade.registerCommand(HttpType.admin_system_lang_check, cmd_admin_system_lang_check);
 facade.registerCommand(HttpType.admin_system_lang_update, cmd_admin_plat_lang_update);
-

@@ -1,9 +1,9 @@
 <template>
     <div class="content">
-        <ExchangeChannelDialog v-if="myProxy.dialogData.bShow"/>
+        <ExchangeChannelDialog v-if="myProxy.dialogData.bShow" />
         <ExchangeChannelHeader />
         <ExchangeChannelBody />
-        <PayMethodDialog v-if="myProxy.payMethodDialogData.bShow"/>
+        <PayMethodDialog v-if="myProxy.payMethodDialogData.bShow" />
     </div>
 </template>
 

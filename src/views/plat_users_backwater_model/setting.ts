@@ -28,10 +28,12 @@ export var EventType = {
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(HttpType.admin_plat_users_backwater_model_table_columns, cmd_admin_plat_users_backwater_model_table_columns);
+facade.registerCommand(
+    HttpType.admin_plat_users_backwater_model_table_columns,
+    cmd_admin_plat_users_backwater_model_table_columns
+);
 facade.registerCommand(HttpType.admin_plat_users_backwater_model_index, cmd_admin_plat_users_backwater_model_index);
 facade.registerCommand(HttpType.admin_plat_users_backwater_model_show, cmd_admin_plat_users_backwater_model_show);
 facade.registerCommand(HttpType.admin_plat_users_backwater_model_store, cmd_admin_plat_users_backwater_model_store);
 facade.registerCommand(HttpType.admin_plat_users_backwater_model_update, cmd_admin_plat_users_backwater_model_update);
 facade.registerCommand(HttpType.admin_plat_users_backwater_model_destroy, cmd_admin_plat_users_backwater_model_destroy);
-

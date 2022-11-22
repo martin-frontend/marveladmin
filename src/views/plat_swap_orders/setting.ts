@@ -18,4 +18,3 @@ export var EventType = {
 const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_plat_swap_orders_table_columns, cmd_admin_plat_swap_orders_table_columns);
 facade.registerCommand(HttpType.admin_plat_swap_orders_index, cmd_admin_plat_swap_orders_index);
-

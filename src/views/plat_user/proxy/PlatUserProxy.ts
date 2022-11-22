@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -25,7 +26,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             pageCount: 1,
         });
     }
-  
+
     /**表格相关数据 */
     tableData = {
         columns: {
@@ -78,7 +79,6 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             wechat: { name: "微信", options: {} },
             is_credit_user: { name: "信用用户", options: {} },
             is_gold_exchange: { name: "是否货币互转", options: {} },
-
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -106,9 +106,9 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         max_level: "",
         min_level: "",
         order_by: <any>null,
-        remark: '',
-        is_credit_user: '',
-        is_gold_exchange: '',
+        remark: "",
+        is_credit_user: "",
+        is_gold_exchange: "",
 
         page_count: 1,
         page_size: 20,
@@ -137,7 +137,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     }
     /**表格数据 */
     setTableData(data: any) {
-        for(const item of data.list){
+        for (const item of data.list) {
             item.plat_money = "-";
             item.sum_money = "-";
             item.vendors_money = "-";
@@ -153,7 +153,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             if (item.user_id == data.user_id && data.gold_info_summary) {
                 item.plat_money = data.gold_info_summary.plat_money;
                 item.sum_money = data.gold_info_summary.sum_money;
-                item.vendors_money = data.gold_info_summary.vendors_money
+                item.vendors_money = data.gold_info_summary.vendors_money;
             }
             temp.push(item);
         }
@@ -192,8 +192,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             max_level: "",
             min_level: "",
             order_by: <any>null,
-            is_credit_user: '',
-            
+            is_credit_user: "",
         });
     }
 
@@ -240,20 +239,16 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     onDeductGold() {
         const { user_id, gold, deductGold } = this.dialogData.form;
         if (deductGold != "" && parseFloat(deductGold) > 0 && parseFloat(deductGold) <= gold) {
-            MessageBox.confirm(
-                <string>i18n.t("common.confirmDeductMoney", { "0": deductGold }),
-                <string>i18n.t("common.prompt"),
-                {
-                    confirmButtonText: <string>i18n.t("common.determine"),
-                    cancelButtonText: <string>i18n.t("common.cancel"),
-                    type: "warning",
-                    center: true,
-                }
-            ).then(() => {
+            MessageBox.confirm(<string>LangUtil("undefined"), <string>LangUtil("提示"), {
+                confirmButtonText: <string>LangUtil("确定"),
+                cancelButtonText: <string>LangUtil("取消"),
+                type: "warning",
+                center: true,
+            }).then(() => {
                 this.sendNotification(HttpType.admin_plat_user_update_user_gold, { user_id, gold: deductGold });
             });
         } else {
-            let error: any = i18n.t("common.moneyInputError");
+            let error: any = LangUtil("请输入正确的扣除金额，大于0，小于平台余额");
             Message.error({
                 type: "error",
                 message: error,

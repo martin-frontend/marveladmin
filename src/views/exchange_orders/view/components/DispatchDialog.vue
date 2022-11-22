@@ -1,9 +1,5 @@
 <template>
-    <el-dialog
-        :title="$t(`exchange_orders.coin_user_pay`)"
-        :visible.sync="myProxy.dispatchDialogData.bShow"
-        width="500px"
-    >
+    <el-dialog :title="LangUtil('平台币商代付')" :visible.sync="myProxy.dispatchDialogData.bShow" width="500px">
         <div v-loading="net_status.loading">
             <el-form
                 ref="form"
@@ -26,7 +22,7 @@
                         v-model="form.coin_user_id"
                         filterable
                         clearable
-                        :placeholder="$t('common.pleaseChoose')"
+                        :placeholder="LangUtil('请选择')"
                     >
                         <el-option
                             v-for="(value, key) in tableColumns.coin_user_id.options[form.plat_id]"
@@ -38,10 +34,10 @@
                 </el-form-item>
                 <el-form-item class="dialog-footer">
                     <el-button @click="myProxy.hideDispatchDialog()">
-                        {{ $t("common.cancel") }}
+                        {{ LangUtil("取消") }}
                     </el-button>
                     <el-button type="primary" @click="handleUpdate">
-                        {{ $t("common.determine") }}
+                        {{ LangUtil("确定") }}
                     </el-button>
                 </el-form-item>
             </el-form>
@@ -49,6 +45,7 @@
     </el-dialog>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
 import ExchangeOrdersProxy from "../../proxy/ExchangeOrdersProxy";
@@ -58,27 +55,28 @@ import i18n from "@/lang";
 
 @Component
 export default class DispatchDialog extends AbstractView {
+    LangUtil = LangUtil;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: ExchangeOrdersProxy = this.getProxy(ExchangeOrdersProxy);
+    myProxy: ExchangeOrdersProxy = this.getProxy(ExchangeOrdersProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dispatchDialogData.form;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dispatchDialogData.form;
+    listQuery = this.myProxy.listQuery;
 
     get rules() {
         return {
-            coin_user_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "blur" }],
+            coin_user_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
         };
     }
 
-    private type = {
+    type = {
         1: i18n.t(`exchange_orders.coin_random`),
         2: i18n.t(`exchange_orders.coin_assigned`),
     };
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onDispatch();
@@ -86,7 +84,7 @@ export default class DispatchDialog extends AbstractView {
         });
     }
 
-    private onChange() {
+    onChange() {
         if (this.form.type == 1) {
             this.form.coin_user_id = "";
         }

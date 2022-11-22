@@ -12,9 +12,7 @@ export default class TabTeamProxy extends AbstractProxy implements ITabTeamProxy
     }
 
     /**离开页面时调用 */
-    leave() {
-
-    }
+    leave() {}
 
     /**团队树 */
     private _memberTree: MemberTree = new MemberTree();
@@ -35,7 +33,7 @@ export default class TabTeamProxy extends AbstractProxy implements ITabTeamProxy
         this.sendNotification(HttpType.admin_plat_user_agent_bind_index, {
             invite_user_id: invite_user_id,
             page_count: page_count,
-            page_size: 10
+            page_size: 10,
         });
     }
     /**增加节点 */

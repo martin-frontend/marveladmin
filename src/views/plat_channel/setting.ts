@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_plat_channel_index, cmd_admin_plat_channel
 facade.registerCommand(HttpType.admin_plat_channel_store, cmd_admin_plat_channel_store);
 facade.registerCommand(HttpType.admin_plat_channel_show, cmd_admin_plat_channel_show);
 facade.registerCommand(HttpType.admin_plat_channel_update, cmd_admin_plat_channel_update);
-

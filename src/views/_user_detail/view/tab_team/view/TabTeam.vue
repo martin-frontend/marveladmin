@@ -1,8 +1,8 @@
 <template>
     <div class="content">
         <div class="total" v-loading="net_status.loading">
-            <span>{{ $t("user_detail.directMember") }}：{{ directlyUsers }}</span>
-            <span>{{ $t("user_detail.teamMember") }}：{{ groupUsers }}</span>
+            <span>{{ LangUtil("直属成员") }}：{{ directlyUsers }}</span>
+            <span>{{ LangUtil("团队成员") }}：{{ groupUsers }}</span>
         </div>
         <el-tree
             :data="teamMemberList"
@@ -18,15 +18,15 @@
             <span class="custom_tree_node" slot-scope="{ data }">
                 <template v-if="data.hasMore && !data.user_id"
                     ><span class="get_more" @click="getMore(data)"
-                        >{{ data.level }}-{{ $t("user_detail.loadMore") }}</span
+                        >{{ data.level }}-{{ LangUtil("加载更多") }}</span
                     ></template
                 >
                 <template v-else
-                    ><span>{{ data.level }}-{{ $t("common.nickName") }}：{{ data.nick_name }}</span>
+                    ><span>{{ data.level }}-{{ LangUtil("昵称") }}：{{ data.nick_name }}</span>
                     <span>ID：{{ data.user_id }}</span>
-                    <span>({{ $t("user_detail.directMember") }}:{{ data.directly_users }})</span>
+                    <span>({{ LangUtil("直属成员") }}:{{ data.directly_users }})</span>
                     <span v-if="isShowDetailBtn" class="detail" @click="getMemberDetail(data.user_id)">{{
-                        $t("common.detail")
+                        LangUtil("详情")
                     }}</span>
                 </template>
             </span>
@@ -35,6 +35,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -45,13 +46,14 @@ import GlobalVar from "@/core/global/GlobalVar";
 
 @Component
 export default class TabTeam extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabTeamProxy = getProxy(TabTeamProxy);
+    myProxy: TabTeamProxy = getProxy(TabTeamProxy);
 
     constructor() {
         super(TabTeamMediator);
@@ -78,13 +80,13 @@ export default class TabTeam extends AbstractView {
     }
 
     // 展开节点
-    private expandedList: string[] = [];
+    expandedList: string[] = [];
     // 节点展开时
-    private nodeExpand(data: any) {
+    nodeExpand(data: any) {
         this.expandedList.push(data.user_id); // 在节点展开是添加到默认展开数组
     }
     // 节点收起时
-    private nodeCollapse(data: any) {
+    nodeCollapse(data: any) {
         const idx = this.expandedList.indexOf(data.user_id);
         this.expandedList.splice(idx, 1); // 收起时删除数组里对应选项
         for (const item of data.children) {

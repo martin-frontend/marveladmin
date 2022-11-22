@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import GlobalEventType from "@/core/global/GlobalEventType";
@@ -7,9 +8,7 @@ import { EventType, HttpType } from "@/views/vendor/setting";
 import { Message } from "element-ui";
 import VendorProxy from "../proxy/VendorProxy";
 
-interface IVendor extends IEventDispatcher {
-
-}
+interface IVendor extends IEventDispatcher {}
 
 export default class VendorMediator extends AbstractMediator {
     private myProxy: VendorProxy = <any>this.getProxy(VendorProxy);
@@ -34,7 +33,7 @@ export default class VendorMediator extends AbstractMediator {
             EventType.admin_vendor_show,
             EventType.admin_vendor_update,
             GlobalEventType.REQUEST_ERROR,
-            EventType.admin_vendor_test_vendor
+            EventType.admin_vendor_test_vendor,
         ];
     }
 
@@ -66,7 +65,7 @@ export default class VendorMediator extends AbstractMediator {
             case GlobalEventType.REQUEST_ERROR:
                 break;
             case EventType.admin_vendor_test_vendor:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 break;
         }
     }

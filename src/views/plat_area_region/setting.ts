@@ -1,6 +1,6 @@
 /**
  * description: 平台地区管理
- * document: 
+ * document:
  */
 import cmd_admin_plat_area_region_table_columns from "@/views/plat_area_region/command/cmd_admin_plat_area_region_table_columns";
 import cmd_admin_plat_area_region_index from "@/views/plat_area_region/command/cmd_admin_plat_area_region_index";
@@ -30,4 +30,3 @@ facade.registerCommand(HttpType.admin_plat_area_region_index, cmd_admin_plat_are
 facade.registerCommand(HttpType.admin_plat_area_region_store, cmd_admin_plat_area_region_store);
 facade.registerCommand(HttpType.admin_plat_area_region_update, cmd_admin_plat_area_region_update);
 facade.registerCommand(HttpType.admin_plat_area_region_delete, cmd_admin_plat_area_region_delete);
-

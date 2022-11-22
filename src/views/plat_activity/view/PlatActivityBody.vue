@@ -75,7 +75,7 @@
                     ></el-table-column>
                     <el-table-column :label="tableColumns['model_id'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
-                            {{ tableColumns["model_id"].options[row.model_id] || $t("plat_activity.customize") }}
+                            {{ tableColumns["model_id"].options[row.model_id] || LangUtil("自定义") }}
                         </template>
                     </el-table-column>
                     <el-table-column :label="tableColumns['award_type'].name" align="center" width="80px">
@@ -93,25 +93,25 @@
                             {{ row.model_id ? row.bonus_multiple : "-" }}
                         </template>
                     </el-table-column>
-                    <el-table-column :label="$t('common.operating')" width="110px" class-name="status-col">
+                    <el-table-column :label="LangUtil('操作')" width="110px" class-name="status-col">
                         <template slot-scope="{ row }">
                             <el-button
                                 size="mini"
                                 type="primary"
                                 @click="handleEdit(row)"
                                 v-if="checkUnique(unique.plat_activity_show)"
-                                >{{ $t("common.update") }}</el-button
+                                >{{ LangUtil("编辑") }}</el-button
                             >
                         </template>
                     </el-table-column>
-                    <el-table-column :label="$t('common.sort')" class-name="status-col" :width="width">
+                    <el-table-column :label="LangUtil('排序')" class-name="status-col" :width="width">
                         <template slot-scope="{ row }">
                             <div v-if="checkUnique(unique.plat_activity_order)">
                                 <el-button size="mini" @click="handlerOrder(row.id, 1)">{{
-                                    $t("common.setTop")
+                                    LangUtil("置顶")
                                 }}</el-button>
                                 <el-button size="mini" @click="handlerOrder(row.id, 2)">{{
-                                    $t("common.setBottom")
+                                    LangUtil("置底")
                                 }}</el-button>
                                 <el-button size="mini" icon="el-icon-top" @click="handlerOrder(row.id, 3)"></el-button>
                                 <el-button
@@ -129,6 +129,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -143,20 +144,21 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class PlatActivityBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
+    myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
@@ -171,17 +173,17 @@ export default class PlatActivityBody extends AbstractView {
         return _w;
     }
 
-    private handleEdit(data: any) {
+    handleEdit(data: any) {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    private handleClick(type: any) {
+    handleClick(type: any) {
         this.listQuery.model_type = type.name;
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerOrder(id: any, opt: string) {
+    handlerOrder(id: any, opt: string) {
         this.myProxy.tableData.orderData.id = id;
         this.myProxy.tableData.orderData.opt = opt;
         this.myProxy.tableData.orderData.plat_id = this.listQuery.plat_id;

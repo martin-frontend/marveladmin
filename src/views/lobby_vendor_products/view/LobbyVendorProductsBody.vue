@@ -61,10 +61,10 @@
                                 editWaterRateID = null;
                                 isWaterRate = false;
                             "
-                            >{{ $t("common.cancel") }}</el-button
+                            >{{ LangUtil("取消") }}</el-button
                         >
                         <el-button class="item" type="success" size="mini" @click="onEditWaterRate(row)">{{
-                            $t("common.determine")
+                            LangUtil("确定")
                         }}</el-button>
                     </div>
                     <div v-else>
@@ -78,7 +78,7 @@
                                 isWaterRate = true;
                                 editWaterRateValue = (row.water_rate * 100) >> 0;
                             "
-                            >{{ $t("common.update") }}</el-button
+                            >{{ LangUtil("编辑") }}</el-button
                         >
                     </div>
                 </template>
@@ -104,14 +104,14 @@
                                 editWaterRateID = null;
                                 isWaterRateAccelerate = false;
                             "
-                            >{{ $t("common.cancel") }}</el-button
+                            >{{ LangUtil("取消") }}</el-button
                         >
                         <el-button
                             class="item"
                             type="success"
                             size="mini"
                             @click="onEditWaterRateAccelerateValue(row)"
-                            >{{ $t("common.determine") }}</el-button
+                            >{{ LangUtil("确定") }}</el-button
                         >
                     </div>
                     <div v-else>
@@ -125,7 +125,7 @@
                                 isWaterRateAccelerate = true;
                                 editWaterRateAccelerateValue = (row.water_rate_accelerate * 100) >> 0;
                             "
-                            >{{ $t("common.update") }}</el-button
+                            >{{ LangUtil("编辑") }}</el-button
                         >
                     </div>
                 </template>
@@ -136,7 +136,7 @@
                         tableColumns["languages"].options[item]
                     }}</el-tag>
                     <el-button class="item ml-1" type="primary" size="mini" @click="onUpdateLanguages(row)">{{
-                        $t("common.update")
+                        LangUtil("编辑")
                     }}</el-button>
                 </template>
             </el-table-column>
@@ -152,7 +152,7 @@
                     }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.status')" class-name="status-col" width="240px">
+            <el-table-column :label="LangUtil('状态')" class-name="status-col" width="240px">
                 <template slot-scope="{ row }">
                     <el-radio-group v-model="row.status" @change="onUpdateStatus(row)" class="row_status">
                         <el-radio v-for="(value, key) in tableColumns.status.options" :key="key" :label="Number(key)">{{
@@ -161,7 +161,7 @@
                     </el-radio-group>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('common.sort')" class-name="status-col" width="140px">
+            <el-table-column :label="LangUtil('排序')" class-name="status-col" width="140px">
                 <template slot-scope="{ row }">
                     <div>
                         <el-button size="mini" icon="el-icon-top" @click="onUpdate(row, 3)"></el-button>
@@ -174,6 +174,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -198,45 +199,46 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class VendorProductBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: LobbyVendorProductsProxy = this.getProxy(LobbyVendorProductsProxy);
+    myProxy: LobbyVendorProductsProxy = this.getProxy(LobbyVendorProductsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
 
-    private editWaterRateID: any = null;
-    private isWaterRate = false;
-    private isWaterRateAccelerate = false;
-    private editWaterRateValue = "";
-    private editWaterRateAccelerateValue = "";
+    editWaterRateID: any = null;
+    isWaterRate = false;
+    isWaterRateAccelerate = false;
+    editWaterRateValue = "";
+    editWaterRateAccelerateValue = "";
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    private onUpdate(row: any, opt: any) {
+    onUpdate(row: any, opt: any) {
         this.myProxy.tableData.ctrlData.lobby_vendor_product_id = row.lobby_vendor_product_id;
         this.myProxy.tableData.ctrlData.opt = opt;
         this.myProxy.tableData.ctrlData.status = "";
         this.myProxy.onUpdate();
     }
 
-    private onUpdateStatus(row: any) {
+    onUpdateStatus(row: any) {
         this.myProxy.tableData.ctrlData.lobby_vendor_product_id = row.lobby_vendor_product_id;
         this.myProxy.tableData.ctrlData.status = row.status;
         this.myProxy.tableData.ctrlData.opt = "0";
         this.myProxy.onUpdate();
     }
 
-    private onEditWaterRate(row: any) {
+    onEditWaterRate(row: any) {
         this.myProxy.rowRateData.lobby_vendor_product_id = row.lobby_vendor_product_id;
         this.myProxy.rowRateData.water_rate = parseInt(this.editWaterRateValue) / 100;
         this.editWaterRateID = null;
@@ -244,7 +246,7 @@ export default class VendorProductBody extends AbstractView {
         this.myProxy.onUpdateWaterRate();
     }
 
-    private onEditWaterRateAccelerateValue(row: any) {
+    onEditWaterRateAccelerateValue(row: any) {
         this.myProxy.rowRateAccelerateData.lobby_vendor_product_id = row.lobby_vendor_product_id;
         this.myProxy.rowRateAccelerateData.water_rate_accelerate = parseInt(this.editWaterRateAccelerateValue) / 100;
         this.editWaterRateID = null;

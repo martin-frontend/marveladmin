@@ -8,17 +8,18 @@
             />
             <div>
                 <el-button class="header-button" @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button class="header-button" @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
-            <div class="description">{{ $t("user_detail.userDataHint") }}</div>
+            <div class="description">{{ LangUtil("用户数据最多保留30天") }}</div>
         </div>
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import TabWaterProxy from "../proxy/TabWaterProxy";
@@ -32,19 +33,20 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class TabWaterHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: TabWaterProxy = getProxy(TabWaterProxy);
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    myProxy: TabWaterProxy = getProxy(TabWaterProxy);
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 }

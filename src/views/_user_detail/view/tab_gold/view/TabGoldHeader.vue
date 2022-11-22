@@ -20,16 +20,17 @@
             />
             <div>
                 <el-button class="header-button" type="primary" icon="el-icon-search" @click="handlerSearch">{{
-                    $t("common.search")
+                    LangUtil("查询")
                 }}</el-button>
                 <el-button class="header-button" type="primary" icon="el-icon-refresh" @click="handlerReset">{{
-                    $t("common.reset")
+                    LangUtil("重置")
                 }}</el-button>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import TabGoldProxy from "../proxy/TabGoldProxy";
@@ -45,19 +46,20 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class TabGoldHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: TabGoldProxy = getProxy(TabGoldProxy);
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    myProxy: TabGoldProxy = getProxy(TabGoldProxy);
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 }

@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -5,7 +6,6 @@ import { HttpType } from "@/views/statistic_plat_days/setting";
 import { MessageBox } from "element-ui";
 import IStatisticPlatDaysProxy from "./IStatisticPlatDaysProxy";
 import { exportJson2Excel } from "@/core/global/Excel";
-import i18n from "@/lang";
 
 export default class StatisticPlatDaysProxy extends AbstractProxy implements IStatisticPlatDaysProxy {
     static NAME = "StatisticPlatDaysProxy";
@@ -74,7 +74,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         form: [
             {
                 category: "player",
-                title: i18n.t("statistic_plat_days.player"),
+                title: LangUtil("玩家数据"),
                 options: {
                     new_register: {
                         name: this.tableData.columns.new_register.name,
@@ -100,7 +100,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             },
             {
                 category: "recharge",
-                title: i18n.t("statistic_plat_days.recharge"),
+                title: LangUtil("充值兑换数据"),
                 options: {
                     recharge: {
                         name: this.tableData.columns.recharge.name,
@@ -130,7 +130,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             },
             {
                 category: "game",
-                title: i18n.t("statistic_plat_days.game"),
+                title: LangUtil("游戏数据"),
                 options: {
                     win_loss: {
                         name: this.tableData.columns.win_loss.name,
@@ -163,7 +163,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         backwater_gold: "",
         commission_gold: "",
         new_user: "",
-        agent_bonus_gold:"",
+        agent_bonus_gold: "",
     };
 
     /**导出 相关数据 */
@@ -213,7 +213,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
-        this.summaryData["plat_id"] = <any>i18n.t("common.total");
+        this.summaryData["plat_id"] = <any>LangUtil("合计");
         this.summaryData["active_user"] = "--";
         this.summaryData["recharge_user"] = "--";
         this.summaryData["exchange_user"] = "--";
@@ -264,7 +264,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         this.dialogData.form = [
             {
                 category: "player",
-                title: i18n.t("statistic_plat_days.player"),
+                title: LangUtil("玩家数据"),
                 options: {
                     new_register: {
                         name: this.tableData.columns.new_register.name,
@@ -290,7 +290,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             },
             {
                 category: "recharge",
-                title: i18n.t("statistic_plat_days.recharge"),
+                title: LangUtil("充值兑换数据"),
                 options: {
                     recharge: {
                         name: this.tableData.columns.recharge.name,
@@ -320,7 +320,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             },
             {
                 category: "game",
-                title: i18n.t("statistic_plat_days.game"),
+                title: LangUtil("游戏数据"),
                 options: {
                     win_loss: {
                         name: this.tableData.columns.win_loss.name,
@@ -403,7 +403,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any) {
-        return arr1.concat(arr2).filter(function (v: any, i: any, arr: any) {
+        return arr1.concat(arr2).filter(function(v: any, i: any, arr: any) {
             return arr.indexOf(v) === arr.lastIndexOf(v);
         });
     }
@@ -438,18 +438,19 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         let fileFirstName: any = "";
         let fileLastName: any = "";
         if (this.listQuery["created_date-{<=}"]) {
-            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${this.listQuery["created_date-{<=}"].split(" ")[0]
-                }]`;
+            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${
+                this.listQuery["created_date-{<=}"].split(" ")[0]
+            }]`;
         }
         if (this.listQuery.plat_id !== "0") {
             let str: any =
                 this.listQuery.plat_id == "0"
-                    ? i18n.t("common.platIdAll")
+                    ? LangUtil("所有平台")
                     : this.tableData.columns["plat_id"].options[this.listQuery.plat_id];
             // fileFirstName = `平台每日统计[${str}]`;
-            fileFirstName = i18n.t("exportFileNamePart1.exportFileName", { "0": str });
+            fileFirstName = LangUtil("平台每日统计[{0}]", str);
         } else {
-            fileFirstName = i18n.t("statistic_plat_days.exportFileName");
+            fileFirstName = LangUtil("平台每日统计[所有平台]");
         }
         return `${fileFirstName}${fileLastName}`;
     }

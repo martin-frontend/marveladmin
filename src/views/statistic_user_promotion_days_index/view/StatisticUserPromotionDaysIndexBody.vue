@@ -2,24 +2,24 @@
     <div>
         <div v-if="tableData.length > 0">
             <el-tabs v-model="myProxy.tabData.activeName" @tab-click="handleClick">
-                <el-tab-pane :label="$t('statistic_user_promotion_days_index.group')" name="group"></el-tab-pane>
-                <el-tab-pane :label="$t('statistic_user_promotion_days_index.groupAll')" name="group_all"></el-tab-pane>
-                <el-tab-pane :label="$t('statistic_user_promotion_days_index.directly')" name="directly"></el-tab-pane>
+                <el-tab-pane :label="LangUtil('团队统计')" name="group"></el-tab-pane>
+                <el-tab-pane :label="LangUtil('总团队统计')" name="group_all"></el-tab-pane>
+                <el-tab-pane :label="LangUtil('直属统计')" name="directly"></el-tab-pane>
             </el-tabs>
             <div>
                 <div class="user_info">
                     <span v-if="userInfo.startTime">
                         <span>{{ userInfo.startTime }}</span>
-                        <span>{{ $t("common.to") }}</span>
+                        <span>{{ LangUtil("至") }}</span>
                         <span>{{ userInfo.endTime }}</span>
                     </span>
-                    <span>{{ $t("common.userID") }} </span>
+                    <span>{{ LangUtil("用户ID") }} </span>
                     <span>{{ userInfo.user_id }} </span>
-                    <span>{{ $t("statistic_user_promotion_days_index.userName") }} </span>
+                    <span>{{ LangUtil("用户账号") }} </span>
                     <span>{{ userInfo.username }} </span>
-                    <span>{{ $t("common.userNickName") }} </span>
+                    <span>{{ LangUtil("用户昵称") }} </span>
                     <span>{{ userInfo.nick_name }} </span>
-                    <span>{{ $t("statistic_user_promotion_days_index.channelId") }} </span>
+                    <span>{{ LangUtil("所属渠道") }} </span>
                     <span>{{ userInfo.channel_id }} </span>
                 </div>
                 <el-table
@@ -31,7 +31,7 @@
                     size="mini"
                     v-loading="net_status.loading"
                 >
-                    <el-table-column prop="created_date" :label="$t('common.date')" align="center" width="160px">
+                    <el-table-column prop="created_date" :label="LangUtil('日期')" align="center" width="160px">
                     </el-table-column>
                     <!-- 总盈利 -->
                     <el-table-column :label="tableColumns[activeName + '_profit'].name" align="center" width="160px">
@@ -253,11 +253,12 @@
                 </el-table>
             </div>
         </div>
-        <p v-else class="note">{{ $t("statistic_user_promotion_days_index.notice") }}</p>
+        <p v-else class="note">{{ LangUtil("输入用户ID可查询用户代理统计") }}</p>
         <Pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch" />
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -274,17 +275,18 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class StatisticUserPromotionDaysIndexBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: StatisticUserPromotionDaysIndexProxy = this.getProxy(StatisticUserPromotionDaysIndexProxy);
+    myProxy: StatisticUserPromotionDaysIndexProxy = this.getProxy(StatisticUserPromotionDaysIndexProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private pageInfo = this.myProxy.tableData.pageInfo;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
     get activeName() {
         return this.myProxy.tabData.activeName;
     }
@@ -292,9 +294,9 @@ export default class StatisticUserPromotionDaysIndexBody extends AbstractView {
         return this.myProxy.tableData.userInfo;
     }
 
-    private listQuery = this.myProxy.listQuery;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page: number) {
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }

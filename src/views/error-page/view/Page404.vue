@@ -14,17 +14,19 @@
                     Please check that the URL you entered is correct, or click the button below to return to the
                     homepage.
                 </div>
-                <a href="" class="bullshit__return-home">{{ $t("error_page.backHome") }}</a>
+                <a href="" class="bullshit__return-home">{{ LangUtil("回首页") }}</a>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import { Vue } from "vue-property-decorator";
 
 export default class Page404 extends Vue {
-    private message: any = this.$t("error_page.pageText5");
+    LangUtil = LangUtil;
+    message: any = this.LangUtil("您无法进入此页面...");
 }
 </script>
 

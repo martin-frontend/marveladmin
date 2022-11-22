@@ -14,7 +14,7 @@ export default interface ITabBetProxy {
     /**弹窗相关数据 */
     dialogData: {
         bShow: boolean;
-        data: any
+        data: any;
     };
 
     /**设置表头数据 */

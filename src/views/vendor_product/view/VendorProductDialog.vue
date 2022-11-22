@@ -5,7 +5,7 @@
                 <el-select
                     v-model="form.vendor_id"
                     filterable
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                     @change="handlerVendorChange"
                 >
                     <el-option
@@ -17,7 +17,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['vendor_type'].name" prop="vendor_type">
-                <el-select v-model="form.vendor_type" filterable :placeholder="$t('common.pleaseChoose')">
+                <el-select v-model="form.vendor_type" filterable :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in myProxy.vendorTypesOptions"
                         :key="key"
@@ -27,7 +27,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['vendor_product_name'].name" prop="vendor_product_name">
-                <!-- <el-input v-model="form.vendor_product_name" :placeholder="$t('common.pleaseEnter')"></el-input> -->
+                <!-- <el-input v-model="form.vendor_product_name" :placeholder="LangUtil('请输入')"></el-input> -->
 
                 <div class="flex d-flex">
                     <el-input
@@ -35,7 +35,7 @@
                         type="textarea"
                         filterable
                         clearable
-                        :placeholder="$t('common.pleaseEnter')"
+                        :placeholder="LangUtil('请输入')"
                         v-model="form.vendor_product_name"
                     ></el-input>
                     <el-button
@@ -45,7 +45,7 @@
                         @click="handleTranslate(form.vendor_product_name)"
                     >
                         <!-- 翻译 -->
-                        {{ $t("user_detail.translate") }}
+                        {{ LangUtil("翻译") }}
                     </el-button>
                 </div>
             </el-form-item>
@@ -57,10 +57,10 @@
                 </el-checkbox-group>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['ori_product_id'].name" prop="ori_product_id">
-                <el-input v-model="form.ori_product_id" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.ori_product_id" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['icon'].name" prop="icon">
-                <el-input v-model="form.icon" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.icon" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['ori_vendor_extend'].name" prop="ori_vendor_extend">
                 <div class="editor-container">
@@ -87,14 +87,14 @@
                     type="danger"
                     size="mini"
                     @click="handleDelete(form)"
-                    >{{ $t("common.delete") }}</el-button
+                    >{{ LangUtil("删除") }}</el-button
                 >
                 <el-button
                     v-if="checkUnique(unique.vendor_product_update)"
                     type="primary"
                     size="mini"
                     @click="isStatusUpdate ? handleUpdate() : handleAdd()"
-                    >{{ $t("common.save") }}</el-button
+                    >{{ LangUtil("确认保存") }}</el-button
                 >
             </el-form-item>
         </el-form>
@@ -102,6 +102,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import VendorProductProxy from "@/views/vendor_product/proxy/VendorProductProxy";
@@ -119,28 +120,29 @@ import { LanguageType } from "@/core/enum/UserType";
     },
 })
 export default class VendorProductDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: VendorProductProxy = this.getProxy(VendorProductProxy);
-    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+    myProxy: VendorProductProxy = this.getProxy(VendorProductProxy);
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
     // get form() {
     // return this.myProxy.dialogData.form;
     // }
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
-    private extendsData = {};
+    extendsData = {};
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -161,16 +163,16 @@ export default class VendorProductDialog extends AbstractView {
 
     get rules() {
         return {
-            vendor_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            vendor_type: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            vendor_product_name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            ori_product_id: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            icon: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            languages: [{ type: "array", required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            vendor_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            vendor_type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            vendor_product_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            ori_product_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            icon: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            languages: [{ type: "array", required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -178,7 +180,7 @@ export default class VendorProductDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -186,7 +188,7 @@ export default class VendorProductDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.vendor_product_id);
     }
 

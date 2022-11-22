@@ -6,7 +6,7 @@
                     v-model="form.plat_id"
                     :disabled="isStatusUpdate"
                     filterable
-                    :placeholder="$t('common.pleaseChoose')"
+                    :placeholder="LangUtil('请选择')"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns.plat_id.options"
@@ -22,18 +22,18 @@
                     <el-input
                         clearable
                         maxlength="30"
-                        :placeholder="$t('common.pleaseEnter')"
+                        :placeholder="LangUtil('请输入')"
                         v-model="form.name"
                         style="margin-right: 0.8rem"
                     ></el-input>
                     <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)">
-                        {{ $t("user_detail.translate") }}
+                        {{ LangUtil("翻译") }}
                     </el-button>
                 </div>
             </el-form-item>
 
             <el-form-item :label="tableColumns.type.name" prop="type">
-                <el-select v-model="form.type" filterable :placeholder="$t('common.pleaseChoose')">
+                <el-select v-model="form.type" filterable :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in tableColumns.type.options"
                         :key="key"
@@ -48,7 +48,7 @@
                     <el-input
                         clearable
                         maxlength="30"
-                        :placeholder="$t('common.pleaseEnter')"
+                        :placeholder="LangUtil('请输入')"
                         v-model="form.subject"
                         style="margin-right: 0.8rem"
                     ></el-input>
@@ -58,7 +58,7 @@
                         size="mini"
                         @click="handleTranslate(form.subject)"
                     >
-                        {{ $t("user_detail.translate") }}</el-button
+                        {{ LangUtil("翻译") }}</el-button
                     >
                 </div>
             </el-form-item>
@@ -83,19 +83,19 @@
                         size="mini"
                         @click="handleTranslate(form.content)"
                     >
-                        {{ $t("user_detail.translate") }}</el-button
+                        {{ LangUtil("翻译") }}</el-button
                     >
                 </div>
             </el-form-item>
 
             <el-form-item :label="tableColumns.replaceable_text.name" prop="replaceable_text">
-                <el-input clearable :placeholder="$t('common.pleaseEnter')" v-model="form.replaceable_text"></el-input>
+                <el-input clearable :placeholder="LangUtil('请输入')" v-model="form.replaceable_text"></el-input>
             </el-form-item>
 
             <el-form-item class="dialog-footer">
-                <el-button type="danger" size="mini" @click="handleDelete()">{{ $t("common.delete") }}</el-button>
+                <el-button type="danger" size="mini" @click="handleDelete()">{{ LangUtil("删除") }}</el-button>
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
-                    $t("common.save")
+                    LangUtil("确认保存")
                 }}</el-button>
             </el-form-item>
         </el-form>
@@ -103,6 +103,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
@@ -119,25 +120,26 @@ import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
     },
 })
 export default class EmailTemplateDialog extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: EmailTemplateProxy = this.getProxy(EmailTemplateProxy);
-    private langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+    myProxy: EmailTemplateProxy = this.getProxy(EmailTemplateProxy);
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -153,17 +155,17 @@ export default class EmailTemplateDialog extends AbstractView {
 
     get rules() {
         return {
-            type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            plat_id: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
-            name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            content: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            area_code: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            subject: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            replaceable_text: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
+            type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            plat_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            area_code: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            subject: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            replaceable_text: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -171,7 +173,7 @@ export default class EmailTemplateDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -179,7 +181,7 @@ export default class EmailTemplateDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 

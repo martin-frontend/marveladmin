@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/block_transfer_account/setting";
 import { Message } from "element-ui";
 import BlockTransferAccountProxy from "../proxy/BlockTransferAccountProxy";
 
-interface IBlockTransferAccount extends IEventDispatcher {
-
-}
+interface IBlockTransferAccount extends IEventDispatcher {}
 
 export default class BlockTransferAccountMediator extends AbstractMediator {
     private myProxy: BlockTransferAccountProxy = <any>this.getProxy(BlockTransferAccountProxy);
@@ -32,7 +30,6 @@ export default class BlockTransferAccountMediator extends AbstractMediator {
             EventType.admin_block_transfer_account_store,
             EventType.admin_block_transfer_account_update,
             EventType.admin_block_transfer_account_balance,
-
         ];
     }
 
@@ -63,7 +60,6 @@ export default class BlockTransferAccountMediator extends AbstractMediator {
                 break;
             case EventType.admin_block_transfer_account_balance:
                 break;
-
         }
     }
 }

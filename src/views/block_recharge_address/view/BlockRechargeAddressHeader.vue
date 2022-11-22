@@ -18,30 +18,32 @@
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
                     <!-- 查询 -->
-                    {{ $t("common.search") }}
+                    {{ LangUtil("查询") }}
                 </el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
                     <!-- 重置 -->
-                    {{ $t("common.reset") }}
+                    {{ LangUtil("重置") }}
                 </el-button>
             </div>
         </div>
         <div class="group">
             <div class="summary-text">
                 <!-- 账号使用情况 -->
-                {{ $t("user_detail.accountUsage") }}
-                ：{{ summary.total_used }}/{{ summary.total_record_count }}
-                {{ $t("user_detail.accountUSDTAmount") }}：{{ summary.amount }}
+                {{ LangUtil("账号使用情况") }}
+                ：{{ summary.total_used }}/{{ summary.total_record_count }} {{ LangUtil("账号USDT金额") }}：{{
+                    summary.amount
+                }}
             </div>
             <el-button @click="handlerRefrush()" type="primary" icon="el-icon-refresh">
                 <!-- 刷新 -->
-                {{ $t("common.reset") }}
+                {{ LangUtil("重置") }}
             </el-button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import BlockRechargeAddressProxy from "../proxy/BlockRechargeAddressProxy";
@@ -59,30 +61,31 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class BlockRechargeAddressHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: BlockRechargeAddressProxy = this.getProxy(BlockRechargeAddressProxy);
+    myProxy: BlockRechargeAddressProxy = this.getProxy(BlockRechargeAddressProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private summary = this.myProxy.tableData.summary;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    summary = this.myProxy.tableData.summary;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
-    private handlerRefrush() {
+    handlerRefrush() {
         this.myProxy.onQuery();
     }
 
-    // private handlerCreate() {
+    //  handlerCreate() {
     //     this.myProxy.showDialog(DialogStatus.create);
     // }
 }

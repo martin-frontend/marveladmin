@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
@@ -61,7 +62,7 @@ export default class PlatVendorsWalletMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_vendors_wallet_update:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
@@ -69,7 +70,7 @@ export default class PlatVendorsWalletMediator extends AbstractMediator {
                 myProxy.setCreateData(body);
                 break;
             case EventType.admin_plat_vendors_wallet_update_gold:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
@@ -82,7 +83,7 @@ export default class PlatVendorsWalletMediator extends AbstractMediator {
             case EventType.admin_plat_vendors_wallet_log_show:
                 break;
             case EventType.admin_plat_wallet_update_gold:
-                Message.success(<any>i18n.t("successMessage.operation"));
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;

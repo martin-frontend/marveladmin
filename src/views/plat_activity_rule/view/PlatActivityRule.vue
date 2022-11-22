@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <PlatActivityRuleDialog/>
-        <PlatActivityRuleHeader/>
-        <PlatActivityRuleBody/>
+        <PlatActivityRuleDialog />
+        <PlatActivityRuleHeader />
+        <PlatActivityRuleBody />
     </div>
 </template>
 
@@ -19,10 +19,9 @@ import PlatActivityRuleBody from "./PlatActivityRuleBody.vue";
         PlatActivityRuleDialog,
         PlatActivityRuleHeader,
         PlatActivityRuleBody,
-    }
+    },
 })
 export default class PlatActivityRule extends AbstractView {
-
     constructor() {
         super(PlatActivityRuleMediator);
     }

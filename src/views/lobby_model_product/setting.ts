@@ -42,4 +42,3 @@ facade.registerCommand(HttpType.admin_lobby_model_product_update, cmd_admin_lobb
 facade.registerCommand(HttpType.admin_vendor_show, cmd_admin_vendor_show);
 facade.registerCommand(HttpType.admin_vendor_index, cmd_admin_vendor_index);
 facade.registerCommand(HttpType.admin_vendor_product_show, cmd_admin_vendor_product_show);
-

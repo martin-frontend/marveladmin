@@ -9,18 +9,13 @@
             v-loading="net_status.loading"
         >
             <el-form-item size="mini" :label="tableColumns.name.name" prop="name">
-                <el-input v-model="form.name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.name" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns.english_name.name" prop="english_name">
-                <el-input v-model="form.english_name" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.english_name" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item :label="tableColumns.currency_type.name" prop="currency_type">
-                <el-select
-                    v-model="form.currency_type"
-                    filterable
-                    class="select"
-                    :placeholder="$t('common.pleaseChoose')"
-                >
+                <el-select v-model="form.currency_type" filterable class="select" :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in tableColumns.currency_type.options"
                         :key="key"
@@ -51,13 +46,13 @@
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns.callback_url.name" prop="callback_url">
-                <el-input v-model="form.callback_url" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.callback_url" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns.api_url.name" prop="api_url">
-                <el-input v-model="form.api_url" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.api_url" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns.refund_url.name" prop="refund_url">
-                <el-input v-model="form.refund_url" :placeholder="$t('common.pleaseEnter')"></el-input>
+                <el-input v-model="form.refund_url" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns.extend_params.name" prop="extend_params">
                 <div class="editor-container">
@@ -65,7 +60,7 @@
                 </div>
             </el-form-item>
 
-            <el-form-item size="mini" :label="$t('common.status')" prop="status">
+            <el-form-item size="mini" :label="LangUtil('状态')" prop="status">
                 <el-radio-group v-model="form.status">
                     <el-radio v-for="(value, key) in tableColumns.status.options" :key="key" :label="key">{{
                         value
@@ -78,14 +73,14 @@
                     type="danger"
                     size="mini"
                     @click="handleDelete(form)"
-                    >{{ $t("common.delete") }}</el-button
+                    >{{ LangUtil("删除") }}</el-button
                 >
                 <el-button
                     type="primary"
                     size="mini"
                     @click="isStatusUpdate ? handleUpdate() : handleAdd()"
                     v-if="checkUnique(unique.exchange_vendors_update)"
-                    >{{ $t("common.save") }}</el-button
+                    >{{ LangUtil("确认保存") }}</el-button
                 >
             </el-form-item>
         </el-form>
@@ -93,6 +88,7 @@
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import ExchangeVendorsProxy from "@/views/exchange_vendors/proxy/ExchangeVendorsProxy";
@@ -108,24 +104,25 @@ import GlobalVar from "@/core/global/GlobalVar";
     },
 })
 export default class ExchangeVendorsDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: ExchangeVendorsProxy = this.getProxy(ExchangeVendorsProxy);
+    myProxy: ExchangeVendorsProxy = this.getProxy(ExchangeVendorsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
 
-    private textMap = {
-        update: this.$t("common.update"),
-        create: this.$t("common.create"),
+    textMap = {
+        update: this.LangUtil("编辑"),
+        create: this.LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -141,18 +138,18 @@ export default class ExchangeVendorsDialog extends AbstractView {
 
     get rules() {
         return {
-            name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            english_name: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            payment_method_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "blur" }],
-            callback_url: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            api_url: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            refund_url: [{ required: true, message: this.$t("common.requiredInput"), trigger: "blur" }],
-            currency_scale: [{ required: true, message: this.$t("common.requiredInput"), trigger: "change" }],
-            currency_type: [{ required: true, message: this.$t("common.requiredSelect"), trigger: "change" }],
+            name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            english_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            payment_method_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
+            callback_url: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            api_url: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            refund_url: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            currency_scale: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            currency_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -160,7 +157,7 @@ export default class ExchangeVendorsDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -168,7 +165,7 @@ export default class ExchangeVendorsDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 }

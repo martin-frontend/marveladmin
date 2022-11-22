@@ -48,10 +48,10 @@
                 min-width="80px"
             >
             </el-table-column>
-            <el-table-column prop="date" :label="$t('common.operating')" class-name="status-col" min-width="80px">
+            <el-table-column prop="date" :label="LangUtil('操作')" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
                     <el-button v-if="row.date != `合计`" type="primary" @click="handlerDetail(row)" size="small">{{
-                        $t("common.detail")
+                        LangUtil("详情")
                     }}</el-button>
                     <template v-else> - </template>
                 </template>
@@ -60,6 +60,7 @@
     </div>
 </template>
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -69,19 +70,20 @@ import { getProxy } from "@/views/_user_detail/PageSetting";
 
 @Component
 export default class TabCommissionBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: TabCommissionProxy = getProxy(TabCommissionProxy);
+    myProxy: TabCommissionProxy = getProxy(TabCommissionProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private tableData = this.myProxy.tableData.list;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerDetail(row: any) {
+    handlerDetail(row: any) {
         this.myProxy.showDetail(row);
     }
 
