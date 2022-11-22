@@ -3,9 +3,9 @@
         <!-- 新的页面 -->
         <div>
             <div class="title">
-                平台资产
+                {{ $t("user_detail.platformAssets") }}
                 <el-button class="title-btn" type="primary" @click="refreshMoney">
-                    刷新
+                    {{ $t("coin_receive_payment_channel.refresh") }}
                 </el-button>
             </div>
             <el-table
@@ -22,7 +22,7 @@
                 <el-table-column label="币种" prop="coin_name_unique" class-name="status-col"> </el-table-column>
                 <el-table-column label="账户余额" prop="sum_money" class-name="status-col"> </el-table-column>
                 <el-table-column label="平台余额" prop="plat_money" class-name="status-col"> </el-table-column>
-                <el-table-column label="操作" class-name="status-col" width="300">
+                <el-table-column :label="$t('common.operating')" class-name="status-col" width="300">
                     <template slot-scope="{ row }">
                         <el-button
                             class="item"
@@ -30,13 +30,14 @@
                             @click="handlerTransfer(row)"
                             v-if="myProxy.userInfo.is_credit_user == 1"
                         >
-                            划转
+                            {{ $t("user_detail.userTransfer") }}
                         </el-button>
                         <el-button class="item" type="primary" @click="handlerDeductGold(row)">
-                            扣款
+                            {{ $t("user_detail.debit") }}
                         </el-button>
                         <el-button class="item" type="primary" @click="handlerRechargeAddress(row)">
-                            充值地址
+                            <!-- 充值地址 -->
+                            {{ $t("user_detail.rechargeAddress") }}
                         </el-button>
                     </template>
                 </el-table-column>
@@ -44,7 +45,8 @@
         </div>
         <div>
             <div class="title">
-                厂商资产
+                <!-- 厂商资产 -->
+                {{ $t("user_detail.manufacturerAssets") }}
             </div>
             <el-table
                 :data="myProxy.vendorMoney"
@@ -60,10 +62,11 @@
                 <el-table-column label="游戏厂商" prop="vendor_name" class-name="status-col"> </el-table-column>
                 <el-table-column label="余额" prop="currency" class-name="status-col"> </el-table-column>
                 <el-table-column label="币种" prop="coin_name_unique" class-name="status-col"> </el-table-column>
-                <el-table-column label="操作" class-name="status-col">
+                <el-table-column :label="$t('common.operating')" class-name="status-col">
                     <template slot-scope="{ row }">
                         <el-button class="item" type="primary" @click="withdrawVendor(row)">
-                            提取
+                            <!-- 提取 -->
+                            {{ $t("user_detail.withdraw") }}
                         </el-button>
                     </template>
                 </el-table-column>

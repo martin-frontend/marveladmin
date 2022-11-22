@@ -142,7 +142,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         validate_type: [],
         register_types: [],
         is_show_commission: 1,
-        is_gold_exchange : 98,
+        is_gold_exchange: 98,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -452,7 +452,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_update, { plat_id: id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**Vip Model弹窗相关数据 */
@@ -604,7 +604,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                     plat_id: plat_id,
                 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**显示折扣返佣弹窗 */
@@ -672,7 +672,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     /**初始化基础设置 */
     onInitSetting() {
         const platName = this.allBonusModelDialogData.form.plat_name;
-        MessageBox.confirm(`【${platName}】质押分红是否初始化`, <string>i18n.t("common.prompt"), {
+        MessageBox.confirm(`【${platName}】${i18n.t("user_detail.whetherToInit")}`, <string>i18n.t("common.prompt"), {
             confirmButtonText: <string>i18n.t("common.determine"),
             cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
@@ -682,7 +682,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                     plat_id: this.allBonusModelDialogData.form.plat_id,
                 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**取得全盘分红配置 */

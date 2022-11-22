@@ -1,16 +1,21 @@
 <template>
-    <el-dialog :append-to-body="true" :title="`返佣详情`" :visible.sync="myProxy.dialogData.bShow" width="1410px">
+    <el-dialog
+        :append-to-body="true"
+        :title="$t('user_detail.returnDetail')"
+        :visible.sync="myProxy.dialogData.bShow"
+        width="1410px"
+    >
         <el-tabs v-model="activeName">
-            <el-tab-pane label="业绩详情" name="tab1">
+            <el-tab-pane :label="$t('user_detail.serformanceDetails')" name="tab1">
                 <Detail v-if="activeName == `tab1`" />
             </el-tab-pane>
-            <el-tab-pane label="直属详情" name="tab2">
-                <DirectWater v-if="activeName ==`tab2`" />
+            <el-tab-pane :label="$t('user_detail.immediateDetails')" name="tab2">
+                <DirectWater v-if="activeName == `tab2`" />
             </el-tab-pane>
         </el-tabs>
     </el-dialog>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Watch } from "vue-property-decorator";
 import { checkUnique, unique } from "@/core/global/Permission";
@@ -49,6 +54,6 @@ export default class TabCommissionDialog extends AbstractView {
     }
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/styles/common.scss";
 </style>

@@ -33,7 +33,8 @@
             <el-table-column :label="$t('common.operating')" class-name="status-col" width="150px">
                 <template slot-scope="{ row }">
                     <el-button type="primary" size="mini" @click="handleSetting(row)">
-                        兑换参数设置
+                        <!-- 兑换参数设置 -->
+                        {{ $t("user_detail.exchangeParametersettings") }}
                     </el-button>
                 </template>
             </el-table-column>

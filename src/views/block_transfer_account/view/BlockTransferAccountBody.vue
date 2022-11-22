@@ -66,9 +66,12 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="查看余额" class-name="status-col" min-width="90px">
+            <el-table-column :label="$t('user_detail.checkBalance')" class-name="status-col" min-width="90px">
                 <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="handleBalance(row)">查看</el-button>
+                    <el-button size="mini" type="primary" @click="handleBalance(row)">
+                        <!-- 查看 -->
+                        {{ $t("common.lookOver") }}
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>

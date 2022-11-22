@@ -7,7 +7,8 @@
 
             <el-form-item class="dialog-footer">
                 <el-button v-if="checkUnique(unique.plat_update)" type="primary" size="mini" @click="handlerInit">
-                    初始化基础设置
+                    <!-- 初始化基础设置 -->
+                    {{ $t("user_detail.initialization") }}
                 </el-button>
             </el-form-item>
         </el-form>

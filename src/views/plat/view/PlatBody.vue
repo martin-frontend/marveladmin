@@ -90,7 +90,8 @@
                                 ? tableColumns.all_bonus_model_id.options[row.all_bonus_model_id]
                                 : $t("plat.noModule")
                         }} -->
-                        分红初始化
+                        <!-- 分红初始化 -->
+                        {{ $t("user_detail.dividendInitialization") }}
                     </el-button>
                 </template>
             </el-table-column>

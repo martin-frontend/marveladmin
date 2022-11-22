@@ -247,8 +247,10 @@
                             type="primary"
                             size="mini"
                             @click="handleLangImg()"
-                            >多语言图片</el-button
                         >
+                            <!-- 多语言图片 -->
+                            {{ $t("user_detail.multilingualPictures") }}
+                        </el-button>
                     </div>
                 </el-form-item>
                 <el-form-item
@@ -385,6 +387,7 @@ import { LanguageType } from "@/core/enum/UserType";
 import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 import { Message } from "element-ui";
 import CommonLangImgProxy from "@/views/lang_img_dialog/proxy/CommonLangImgProxy";
+import i18n from "@/lang";
 
 @Component
 export default class PlatActivityDialog extends AbstractView {
@@ -594,7 +597,8 @@ export default class PlatActivityDialog extends AbstractView {
         data.plat_id = this.form.plat_id;
         data.key = this.myProxy.dialogData.form.link_url;
         if (!data.key) {
-            Message.warning("请先上传默认图片");
+            const str: any = i18n.t("user_detail.uploadDefaultImg");
+            Message.warning(str);
             return;
         }
         this.langImgProxy.showDialog(data);

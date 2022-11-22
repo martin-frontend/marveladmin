@@ -6,8 +6,8 @@
             </el-radio>
         </el-radio-group>
         <PlatStakeLog v-if="isStakeLog" />
-        <PlatStakePoolLog v-if="isStakePoolLog"/>
-        <PlatStakeBonusLog v-if="isStakeBonusLog"/>
+        <PlatStakePoolLog v-if="isStakePoolLog" />
+        <PlatStakeBonusLog v-if="isStakeBonusLog" />
     </div>
 </template>
 <script lang="ts">
@@ -21,6 +21,7 @@ import GlobalVar from "@/core/global/GlobalVar";
 import PlatStakeLog from "./components/PlatStakeLog.vue";
 import PlatStakePoolLog from "./components/PlatStakePoolLog.vue";
 import PlatStakeBonusLog from "./components/PlatStakeBonusLog.vue";
+import i18n from "@/lang";
 
 @Component({
     components: {
@@ -44,17 +45,17 @@ export default class PlatStakeBody extends AbstractView {
     get isStakeLog() {
         return this.stakeType == StakeType.StakeLog;
     }
-    get isStakePoolLog(){
+    get isStakePoolLog() {
         return this.stakeType == StakeType.StakePool;
     }
-    get isStakeBonusLog(){
+    get isStakeBonusLog() {
         return this.stakeType == StakeType.Bonus;
     }
     private stakeType = 0;
     private stakeOptions: any = {
-        0: "质押",
-        1: "奖池",
-        2: "分红",
+        0: i18n.t("user_detail.pledge"),
+        1: i18n.t("user_detail.pool"),
+        2: i18n.t("user_detail.dividend"),
     };
 
     @Watch("stakeType")

@@ -24,7 +24,7 @@
                 <template slot-scope="{ row }">
                     <div>
                         <div v-if="row.plat_id === '合计' || row.plat_id === $t('common.total')">
-                            {{ "合计" }}
+                            {{ $t("common.total") }}
                         </div>
                         <div v-else>
                             <div>{{ tableColumns["plat_id"].options[row.plat_id] }}</div>

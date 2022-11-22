@@ -52,9 +52,10 @@
                         :placeholder="$t('common.pleaseEnter')"
                         v-model="form.name"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)"
-                        >翻译</el-button
-                    >
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)">
+                        <!-- 翻译 -->
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
             </el-form-item>
 
@@ -141,8 +142,10 @@
                         type="primary"
                         size="mini"
                         @click="handleTranslate(form.content)"
-                        >翻译</el-button
                     >
+                        <!-- 翻译 -->
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
             </el-form-item>
 
@@ -190,8 +193,10 @@
                     type="primary"
                     size="mini"
                     @click="handleLangImg()"
-                    >多语言图片</el-button
                 >
+                    <!-- 多语言图片 -->
+                    {{ $t("user_detail.multilingualPictures") }}
+                </el-button>
             </el-form-item>
 
             <el-form-item
@@ -243,8 +248,10 @@
                     type="primary"
                     size="mini"
                     @click="handleLangImg1()"
-                    >多语言图片</el-button
                 >
+                    <!-- 多语言图片 -->
+                    {{ $t("user_detail.multilingualPictures") }}
+                </el-button>
             </el-form-item>
 
             <el-form-item class="dialog-footer">
@@ -268,6 +275,7 @@ import { LanguageType } from "@/core/enum/UserType";
 import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 import CommonLangImgProxy from "@/views/lang_img_dialog/proxy/CommonLangImgProxy";
 import { Message } from "element-ui";
+import i18n from "@/lang";
 
 @Component
 export default class PlatsNoticeDialog extends AbstractView {
@@ -421,7 +429,8 @@ export default class PlatsNoticeDialog extends AbstractView {
             }
         }
         if (!data.key) {
-            Message.warning("请先上传默认图片");
+            const str: any = i18n.t("user_detail.uploadDefaultImg");
+            Message.warning(str);
             return;
         }
         this.langImgProxy.showDialog(data);
@@ -439,7 +448,8 @@ export default class PlatsNoticeDialog extends AbstractView {
             }
         }
         if (!data.key) {
-            Message.warning("请先上传默认图片");
+            const str: any = i18n.t("user_detail.uploadDefaultImg");
+            Message.warning(str);
             return;
         }
         this.langImgProxy.showDialog(data);

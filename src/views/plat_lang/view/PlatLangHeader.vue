@@ -38,13 +38,17 @@
                 @change="handleClick"
             />
 
-            <el-button style="margin-left: 8px" @click="heandlerImport()" type="primary" icon="">导入</el-button>
+            <el-button style="margin-left: 8px" @click="heandlerImport()" type="primary" icon="">
+                <!-- 导入 -->
+                {{ $t("user_detail.import") }}
+            </el-button>
 
             <el-button @click="heandlerExport()" type="primary">{{ $t("statistic_plat_days.export") }}</el-button>
 
-            <el-button style="margin-left: 8px" @click="heandlerGenerate()" type="primary" icon=""
-                >生成语言包</el-button
-            >
+            <el-button style="margin-left: 8px" @click="heandlerGenerate()" type="primary" icon="">
+                <!-- 生成语言包 -->
+                {{ $t("user_detail.languagePack") }}
+            </el-button>
         </div>
     </div>
 </template>

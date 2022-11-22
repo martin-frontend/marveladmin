@@ -42,7 +42,7 @@
                     maxlength="6"
                     show-word-limit
                     class="dialog_input"
-                    :placeholder="`${tableColumns.pretty_user_id.name}最多六位数`"
+                    :placeholder="`${tableColumns.pretty_user_id.name} ${$t('user_detail.maxLang6')}`"
                 ></el-input>
             </template>
 

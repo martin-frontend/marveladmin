@@ -40,7 +40,8 @@
                     type="warning"
                     icon="el-icon-refresh"
                 >
-                    返佣恢復
+                    {{ $t("user_detail.rebateRecovery") }}
+                    <!-- 返佣恢復 -->
                 </el-button>
                 <el-button
                     v-if="checkUnique(unique.store_fake_bet)"
@@ -48,7 +49,8 @@
                     type="primary"
                     icon="el-icon-circle-plus-outline"
                 >
-                    添加投注记录
+                    {{ $t("user_detail.addBetHistory") }}
+                    <!-- 添加投注记录 -->
                 </el-button>
             </div>
         </div>

@@ -86,8 +86,8 @@ export default class PlatBlockCoinsDialog extends AbstractView {
     private form = this.myProxy.dialogData.form;
 
     private textMap = {
-        update: "编辑",
-        create: "新增",
+        update: this.$t("common.update"),
+        create: this.$t("common.create"),
     };
 
     @Watch("myProxy.dialogData.bShow")

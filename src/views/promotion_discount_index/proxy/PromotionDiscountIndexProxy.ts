@@ -79,7 +79,7 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
             water: "",
             win_gold: "",
         },
-    }
+    };
 
     /**日期快捷 */
     pickerOptions = {
@@ -145,7 +145,7 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
         form: {
             user_id: "",
             plat_id: "",
-            order_ids: ""
+            order_ids: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -205,7 +205,7 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
         Object.assign(this.dialogData.form, {
             user_id: "",
             plat_id: "",
-            order_ids: ""
+            order_ids: "",
         });
     }
 
@@ -216,18 +216,19 @@ export default class PromotionDiscountIndexProxy extends AbstractProxy implement
 
     /**返佣恢复 */
     recover() {
-        MessageBox.confirm(
-            "您是否需要恢复列表当前返佣记录",
-            <string>i18n.t("common.prompt"),
-            {
-                confirmButtonText: <string>i18n.t("common.determine"),
-                cancelButtonText: <string>i18n.t("common.cancel"),
-                type: "warning",
-                center: true,
-            }
-        ).then(() => {
-            this.sendNotification(HttpType.admin_plat_users_bet_promotion_discount_recover, objectRemoveNull(this.listQuery));
-        }).catch(() => { });
+        MessageBox.confirm(<string>i18n.t("user_detail.recoverRecords"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
+            type: "warning",
+            center: true,
+        })
+            .then(() => {
+                this.sendNotification(
+                    HttpType.admin_plat_users_bet_promotion_discount_recover,
+                    objectRemoveNull(this.listQuery)
+                );
+            })
+            .catch(() => {});
     }
     /**添加投注记录 */
     store_fake_bet() {

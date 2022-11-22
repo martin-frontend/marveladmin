@@ -15,14 +15,20 @@
                         v-model="form.change_coin_a_amount"
                         onkeyup="this.value=(this.value.match(/\d+(.\d{0,2})?/)||[''])[0]"
                     ></el-input>
-                    <p>输入数字，最多保留2位小数</p>
+                    <p>
+                        <!-- 输入数字，最多保留2位小数 -->
+                        {{ $t("user_detail.maxLengthPoint2") }}
+                    </p>
                 </el-form-item>
                 <el-form-item :label="`${source.coin_b}数量`" prop="change_coin_b_amount">
                     <el-input
                         v-model="form.change_coin_b_amount"
                         onkeyup="this.value=(this.value.match(/\d+(.\d{0,2})?/)||[''])[0]"
                     ></el-input>
-                    <p>输入数字，最多保留2位小数</p>
+                    <p>
+                        <!-- 输入数字，最多保留2位小数 -->
+                        {{ $t("user_detail.maxLengthPoint2") }}
+                    </p>
                 </el-form-item>
             </div>
             <el-form-item v-else :label="`${source.coin_a}数量`" prop="change_coin_a_amount">
@@ -30,7 +36,10 @@
                     v-model="form.change_coin_a_amount"
                     onkeyup="this.value=(this.value.match(/\d+(.\d{0,2})?/)||[''])[0]"
                 ></el-input>
-                <p>输入数字，最多保留2位小数</p>
+                <p>
+                    <!-- 输入数字，最多保留2位小数 -->
+                    {{ $t("user_detail.maxLengthPoint2") }}
+                </p>
             </el-form-item>
 
             <el-form-item class="dialog-footer">
@@ -48,6 +57,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import i18n from "@/lang";
 
 @Component
 export default class PlatSwapLiquidityDialog extends AbstractView {
@@ -71,14 +81,14 @@ export default class PlatSwapLiquidityDialog extends AbstractView {
     }
 
     private title = {
-        1: "添加流动性",
-        2: "减少流动性",
+        1: i18n.t("user_detail.addLiquidity"),
+        2: i18n.t("user_detail.reduceLiquidity"),
     };
 
     get rules() {
         return {
-            change_coin_a_amount: [{ required: true, trigger: "blur", message: "必须填写" }],
-            change_coin_b_amount: [{ required: true, trigger: "blur", message: "必须填写" }],
+            change_coin_a_amount: [{ required: true, trigger: "blur", message: i18n.t("common.requiredInput") }],
+            change_coin_b_amount: [{ required: true, trigger: "blur", message: i18n.t("common.requiredInput") }],
         };
     }
 

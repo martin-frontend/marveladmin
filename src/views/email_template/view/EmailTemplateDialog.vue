@@ -26,9 +26,9 @@
                         v-model="form.name"
                         style="margin-right: 0.8rem"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)"
-                        >翻译</el-button
-                    >
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)">
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
             </el-form-item>
 
@@ -57,7 +57,8 @@
                         type="primary"
                         size="mini"
                         @click="handleTranslate(form.subject)"
-                        >翻译</el-button
+                    >
+                        {{ $t("user_detail.translate") }}</el-button
                     >
                 </div>
             </el-form-item>
@@ -81,7 +82,8 @@
                         type="primary"
                         size="mini"
                         @click="handleTranslate(form.content)"
-                        >翻译</el-button
+                    >
+                        {{ $t("user_detail.translate") }}</el-button
                     >
                 </div>
             </el-form-item>

@@ -31,6 +31,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import GlobalVar from "@/core/global/GlobalVar";
 import PlatStakeProxy from "../../../proxy/PlatStakeProxy";
 import Pagination from "@/components/Pagination.vue";
+import i18n from "@/lang";
 
 @Component({
     components: {
@@ -50,16 +51,16 @@ export default class PlatUserLogDialog extends AbstractView {
     private dialogData = this.myProxy.stakePooltableData.dialogData;
     private form = this.myProxy.stakePooltableData.dialogData.form;
 
-    private title = "奖池设定";
-    private pool_type_title = "设定方式";
+    private title = i18n.t("user_detail.prizePoolSettings");
+    private pool_type_title = i18n.t("user_detail.howToSet");
     private poolType = 1;
     private poolTypeOptions: any = {
-        1: "手动输入",
-        2: "百分比自动",
+        1: i18n.t("user_detail.manualEntry"),
+        2: i18n.t("user_detail.percentageAuto"),
     };
     private poolTypeMap = {
-        1: "分红金额",
-        2: "百分比%",
+        1: i18n.t("user_detail.dividendAmount"),
+        2: i18n.t("user_detail.percentage") + "%",
     };
     get rules() {
         return {

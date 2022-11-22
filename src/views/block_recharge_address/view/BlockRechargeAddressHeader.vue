@@ -16,15 +16,27 @@
             />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">查询</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">重置</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                    <!-- 查询 -->
+                    {{ $t("common.search") }}
+                </el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                    <!-- 重置 -->
+                    {{ $t("common.reset") }}
+                </el-button>
             </div>
         </div>
         <div class="group">
             <div class="summary-text">
-                账号使用情况：{{ summary.total_used }}/{{ summary.total_record_count }}   账号USDT金额：{{ summary.amount }}
+                <!-- 账号使用情况 -->
+                {{ $t("user_detail.accountUsage") }}
+                ：{{ summary.total_used }}/{{ summary.total_record_count }}
+                {{ $t("user_detail.accountUSDTAmount") }}：{{ summary.amount }}
             </div>
-            <el-button @click="handlerRefrush()" type="primary" icon="el-icon-refresh">刷新</el-button>
+            <el-button @click="handlerRefrush()" type="primary" icon="el-icon-refresh">
+                <!-- 刷新 -->
+                {{ $t("common.reset") }}
+            </el-button>
         </div>
     </div>
 </template>
@@ -43,7 +55,7 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
 @Component({
     components: {
         SearchInput,
-        SearchSelect
+        SearchSelect,
     },
 })
 export default class BlockRechargeAddressHeader extends AbstractView {

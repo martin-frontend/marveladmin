@@ -26,7 +26,7 @@
                     filterable
                     clearable
                     class="select"
-                    placeholder="请选择"
+                    :placeholder="$t('common.pleaseChoose')"
                     @change="getBlockNetworkOptions"
                 >
                     <el-option
@@ -52,35 +52,43 @@
             <!-- 充值说明 -->
             <el-form-item :label="`${tableColumns.subtitle.name}`">
                 <div class="flex d-flex">
-                <el-input v-model="addFrom.subtitle" :placeholder="$t('common.pleaseEnter')" style="margin-right: 0.8rem"></el-input>
-                <el-button
+                    <el-input
+                        v-model="addFrom.subtitle"
+                        :placeholder="$t('common.pleaseEnter')"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
                         @click="handleTranslate(addFrom.subtitle)"
-                        >翻译</el-button
                     >
+                        <!-- 翻译 -->
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
             </el-form-item>
             <!-- 提示信息 -->
             <el-form-item :label="`${tableColumns.notice.name}`">
                 <div class="flex d-flex">
-                <el-input
-                    v-model="addFrom.notice"
-                    :placeholder="$t('common.pleaseEnter')"
-                    type="textarea"
-                    filterable
-                    clearable
-                    class="select"
-                    style="margin-right: 0.8rem"
-                ></el-input>
-                <el-button
+                    <el-input
+                        v-model="addFrom.notice"
+                        :placeholder="$t('common.pleaseEnter')"
+                        type="textarea"
+                        filterable
+                        clearable
+                        class="select"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
                         @click="handleTranslate(addFrom.notice)"
-                        >翻译</el-button
                     >
+                        <!-- 翻译 -->
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
             </el-form-item>
             <!-- 充值最小额度 -->

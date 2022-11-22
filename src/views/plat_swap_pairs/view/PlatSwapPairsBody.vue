@@ -40,9 +40,12 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="操作" class-name="status-col" width="160px">
+            <el-table-column :label="$t('common.operating')" class-name="status-col" width="160px">
                 <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="handleEdit(row)">查看</el-button>
+                    <el-button size="mini" type="primary" @click="handleEdit(row)">
+                        <!-- 查看 -->
+                        {{ $t("common.lookOver") }}
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>

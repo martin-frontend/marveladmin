@@ -14,7 +14,7 @@
             <el-form-item :label="tableColumns.user_id.name" prop="user_id">
                 <el-input v-model="form.user_id" :placeholder="$t('common.pleaseEnter')"></el-input>
             </el-form-item>
-            <el-form-item label="添加投注纪录" prop="order_ids">
+            <el-form-item :label="$t('user_detail.addBetHistory')" prop="order_ids">
                 <el-input
                     :rows="3"
                     type="textarea"
@@ -61,8 +61,8 @@ export default class PromotionDiscountIndexDialog extends AbstractView {
     private form = this.myProxy.dialogData.form;
 
     private textMap = {
-        update: "编辑",
-        create: "新增",
+        update: this.$t("common.update"),
+        create: this.$t("common.create"),
     };
 
     @Watch("myProxy.dialogData.bShow")

@@ -24,7 +24,7 @@
                 <el-select
                     v-model="form.coin_name_unique"
                     class="select"
-                    placeholder="请选择"
+                    :placeholder="$t('common.pleaseChoose')"
                     @change="getBlockNetworkOptions"
                 >
                     <el-option
@@ -73,14 +73,16 @@
 
             <el-form-item size="mini" :label="methodTableColumns['explain'].name" prop="explain">
                 <div class="flex d-flex">
-                <el-input type="textarea" v-model="form.explain" style="margin-right: 0.8rem"></el-input>
-                <el-button
+                    <el-input type="textarea" v-model="form.explain" style="margin-right: 0.8rem"></el-input>
+                    <el-button
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
                         @click="handleTranslate(form.explain)"
-                        >翻译</el-button
                     >
+                        <!-- 翻译 -->
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
             </el-form-item>
 

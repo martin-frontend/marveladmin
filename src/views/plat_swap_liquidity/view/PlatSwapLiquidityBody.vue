@@ -20,24 +20,24 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="交易币对" class-name="status-col" min-width="90px">
+            <el-table-column :label="$t('user_detail.tradingCurrencyPair')" class-name="status-col" min-width="90px">
                 <template slot-scope="{ row }"> {{ row.coin_a }} / {{ row.coin_b }} </template>
             </el-table-column>
 
             <el-table-column prop="price" :label="`${tableColumns.price.name}`" class-name="status-col">
             </el-table-column>
 
-            <el-table-column label="流动性池数量" class-name="status-col" min-width="90px">
+            <el-table-column :label="$t('user_detail.numberLiquidityPools')" class-name="status-col" min-width="90px">
                 <template slot-scope="{ row }"> {{ row.coin_a_amount }} / {{ row.coin_b_amount }} </template>
             </el-table-column>
 
-            <el-table-column label="系统添加" class-name="status-col" min-width="90px">
+            <el-table-column :label="$t('user_detail.systemAdd')" class-name="status-col" min-width="90px">
                 <template slot-scope="{ row }">
                     {{ row.system_coin_a_amount }} / {{ row.system_coin_b_amount }}
                 </template>
             </el-table-column>
 
-            <el-table-column label="用户添加" class-name="status-col" min-width="90px">
+            <el-table-column :label="$t('user_detail.userAdd')" class-name="status-col" min-width="90px">
                 <template slot-scope="{ row }"> {{ row.user_coin_a_amount }} / {{ row.user_coin_b_amount }} </template>
             </el-table-column>
 
@@ -59,11 +59,19 @@
                 <template slot-scope="{ row }"> {{ row.swap_fee_ratio }} </template>
             </el-table-column>
 
-            <el-table-column label="操作" class-name="status-col" width="300px">
+            <el-table-column :label="$t('common.operating')" class-name="status-col" width="300px">
                 <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="handleLiquidity(row, 1)">添加流动性</el-button>
-                    <el-button size="mini" type="primary" @click="handleLiquidity(row, 2)">减少流动性</el-button>
-                    <el-button size="mini" type="primary" @click="handleSetting(row)">设置</el-button>
+                    <el-button size="mini" type="primary" @click="handleLiquidity(row, 1)">
+                        <!-- 添加流动性 -->
+                        {{ $t("user_detail.addLiquidity") }}
+                    </el-button>
+                    <el-button size="mini" type="primary" @click="handleLiquidity(row, 2)">
+                        <!-- 减少流动性 -->
+                        {{ $t("user_detail.reduceLiquidity") }}
+                    </el-button>
+                    <el-button size="mini" type="primary" @click="handleSetting(row)">
+                        {{ $t("common.setting") }}
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>

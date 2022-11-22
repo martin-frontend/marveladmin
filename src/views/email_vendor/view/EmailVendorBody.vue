@@ -46,14 +46,9 @@
                     }}</el-button>
                 </template>
             </el-table-column> -->
-            <el-table-column label="操作" class-name="status-col" width="200px">
+            <el-table-column :label="$t('common.operating')" class-name="status-col" width="200px">
                 <template slot-scope="{ row }">
-                    <el-button
-                        size="mini"
-                        type="primary"
-                        @click="handleEdit(row)"
-                        >{{ $t("common.update") }}</el-button
-                    >
+                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -108,9 +103,9 @@ export default class EmailVendorBody extends AbstractView {
     }
 
     handleEdit(data: any) {
-        console.log("data=====",data);
-        console.log("status.options====",this.myProxy.tableData.columns.status.options);
-        
+        console.log("data=====", data);
+        console.log("status.options====", this.myProxy.tableData.columns.status.options);
+
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 

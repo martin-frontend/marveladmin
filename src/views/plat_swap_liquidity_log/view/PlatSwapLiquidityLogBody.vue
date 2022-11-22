@@ -54,7 +54,7 @@
                 min-width="100px"
             ></el-table-column>
 
-            <el-table-column label="添加数量" prop="type" class-name="status-col" min-width="110px">
+            <el-table-column :label="$t('user_detail.addCount')" prop="type" class-name="status-col" min-width="110px">
                 <template slot-scope="{ row }"> {{ row.coin_a_amount }} / {{ row.coin_b_amount }} </template>
             </el-table-column>
 

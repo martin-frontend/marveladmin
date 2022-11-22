@@ -37,9 +37,15 @@
                         v-model="form.tpl_id"
                         style="margin-right: 0.8rem"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.tpl_id)"
-                        >翻译</el-button
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.tpl_id)"
                     >
+                        <!-- 翻译 -->
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
             </el-form-item>
             <el-form-item :label="`${tableColumns.type.name}`" prop="type">
@@ -72,8 +78,10 @@
                         type="primary"
                         size="mini"
                         @click="handleTranslate(form.head_sign)"
-                        >翻译</el-button
                     >
+                        <!-- 翻译 -->
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
             </el-form-item>
             <el-form-item :label="`${tableColumns.template.name}`" prop="template">
@@ -90,8 +98,10 @@
                         type="primary"
                         size="mini"
                         @click="handleTranslate(form.template)"
-                        >翻译</el-button
                     >
+                        <!-- 翻译 -->
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
             </el-form-item>
             <el-form-item :label="`${tableColumns.status.name}`" prop="status">

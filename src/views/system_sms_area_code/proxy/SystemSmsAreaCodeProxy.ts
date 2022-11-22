@@ -1,6 +1,7 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import i18n from "@/lang";
 import { HttpType } from "@/views/system_sms_area_code/setting";
 import { MessageBox } from "element-ui";
 import ISystemSmsAreaCodeProxy from "./ISystemSmsAreaCodeProxy";
@@ -41,7 +42,7 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
-        isResort: false,    // 是否重新排序
+        isResort: false, // 是否重新排序
     };
     /**查询条件 */
     listQuery = {
@@ -145,15 +146,15 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
     }
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm("您是否删除该记录", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
+        MessageBox.confirm(<string>i18n.t("admin_user.deleteConfirmStr"), <string>i18n.t("common.prompt"), {
+            confirmButtonText: <string>i18n.t("common.determine"),
+            cancelButtonText: <string>i18n.t("common.cancel"),
             type: "warning",
         })
             .then(() => {
                 this.sendNotification(HttpType.admin_system_sms_area_code_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**重新排序 */

@@ -127,7 +127,7 @@
                     {{ row.remark }}
                 </template>
             </el-table-column>
-            <el-table-column label="操作" class-name="status-col" width="120px">
+            <el-table-column :label="$t('common.operating')" class-name="status-col" width="120px">
                 <template slot-scope="{ row }">
                     <el-button v-if="row.status == 11" size="mini" type="primary" @click="handleEdit(row)">{{
                         $t(`coin_exchange_orders.orders_operation`)
@@ -150,6 +150,7 @@ import GlobalVar from "@/core/global/GlobalVar";
 //@ts-ignore
 import Clipboard from "clipboard";
 import { Message } from "element-ui";
+import i18n from "@/lang";
 
 @Component({
     components: {
@@ -183,12 +184,14 @@ export default class CoinExchangeOrdersBody extends AbstractView {
     onCopy(target: any) {
         const clipboard = new Clipboard(`#${target}`);
         clipboard.on("success", () => {
-            Message.info("复制成功");
+            const str: any = i18n.t("user_detail.copySuccess");
+            Message.info(str);
             clipboard.destroy(); // 释放内存
         });
         clipboard.on("error", () => {
             // 不支持复制
-            Message.info("该浏览器不支持自动复制");
+            const str: any = i18n.t("user_detail.browserDoesCopying");
+            Message.info(str);
             clipboard.destroy(); // 释放内存
         });
     }

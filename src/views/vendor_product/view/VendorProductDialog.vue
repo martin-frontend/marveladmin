@@ -43,8 +43,10 @@
                         type="primary"
                         size="mini"
                         @click="handleTranslate(form.vendor_product_name)"
-                        >翻译</el-button
                     >
+                        <!-- 翻译 -->
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['languages'].name" prop="languages" v-if="isStatusUpdate">

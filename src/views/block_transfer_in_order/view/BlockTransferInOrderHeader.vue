@@ -16,8 +16,14 @@
                 clearable
             />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">查询</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">重置</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                    <!-- 查询 -->
+                    {{ $t("common.search") }}
+                </el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                    <!-- 重置 -->
+                    {{ $t("common.reset") }}
+                </el-button>
             </div>
         </div>
     </div>
@@ -35,10 +41,10 @@ import SearchRange from "@/components/SearchRange.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
-    components:{
+    components: {
         SearchInput,
-        SearchSelect
-    }
+        SearchSelect,
+    },
 })
 export default class BlockTransferInOrderHeader extends AbstractView {
     //权限标识

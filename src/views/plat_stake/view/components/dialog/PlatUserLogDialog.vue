@@ -74,6 +74,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import GlobalVar from "@/core/global/GlobalVar";
 import PlatStakeProxy from "../../../proxy/PlatStakeProxy";
 import Pagination from "@/components/Pagination.vue";
+import i18n from "@/lang";
 
 @Component({
     components: {
@@ -95,7 +96,7 @@ export default class PlatUserLogDialog extends AbstractView {
     private pageInfo = this.myProxy.stakeUserLogTableData.pageInfo;
     private dialogData = this.myProxy.stakeUserLogTableData.dialogData;
 
-    private title = "质押详情";
+    private title = i18n.t("user_detail.pledgeDetails");
 
     get rules() {
         return {};

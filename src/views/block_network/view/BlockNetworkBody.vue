@@ -76,7 +76,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="操作" class-name="status-col" width="90px">
+            <el-table-column :label="$t('common.operating')" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
                     <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
                 </template>

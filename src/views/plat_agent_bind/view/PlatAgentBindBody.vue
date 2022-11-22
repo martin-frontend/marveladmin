@@ -143,6 +143,7 @@ import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import Cookies from "js-cookie";
 import { MessageBox } from "element-ui";
+import i18n from "@/lang";
 
 @Component({
     components: {
@@ -184,7 +185,8 @@ export default class PlatAgentBindBody extends AbstractView {
 
     onSwitchAgentBonus(row: any) {
         if (row.is_agent_bonus == 98) {
-            MessageBox.confirm("该操作会清空所有直属分红比例，确认关闭总代分红吗？")
+            const str: any = i18n.t("user_detail.confirmClear");
+            MessageBox.confirm(str)
                 .then(() => {
                     this.updateAgentBonus(row);
                 })

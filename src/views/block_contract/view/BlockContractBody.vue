@@ -1,13 +1,15 @@
 <template>
     <div>
-        <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini" v-loading="net_status.loading">
-
-            <el-table-column
-                prop="id"
-                :label="`${tableColumns.id.name}`"
-                class-name="status-col"
-                min-width="30px"
-            >
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
+            <el-table-column prop="id" :label="`${tableColumns.id.name}`" class-name="status-col" min-width="30px">
             </el-table-column>
             <el-table-column
                 prop="coin_name_unique"
@@ -50,12 +52,7 @@
                 min-width="90px"
             >
             </el-table-column>
-            <el-table-column
-                prop="type"
-                :label="`${tableColumns.type.name}`"
-                class-name="status-col"
-                min-width="90px"
-            >
+            <el-table-column prop="type" :label="`${tableColumns.type.name}`" class-name="status-col" min-width="90px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.type.options[row.type] }}
                 </template>
@@ -68,14 +65,9 @@
             >
             </el-table-column>
 
-            <el-table-column label="操作" class-name="status-col" width="90px">
+            <el-table-column :label="$t('common.operating')" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
-                    <el-button
-                        size="mini"
-                        type="primary"
-                        @click="handleEdit(row)"
-                        >{{ $t("common.update") }}</el-button
-                    >
+                    <el-button size="mini" type="primary" @click="handleEdit(row)">{{ $t("common.update") }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -94,7 +86,7 @@ import GlobalVar from "@/core/global/GlobalVar";
 @Component({
     components: {
         Pagination,
-    }
+    },
 })
 export default class BlockContractBody extends AbstractView {
     //权限标识
@@ -110,7 +102,7 @@ export default class BlockContractBody extends AbstractView {
     private pageInfo = this.myProxy.tableData.pageInfo;
     private listQuery = this.myProxy.listQuery;
 
-    private handlerPageSwitch(page:number){
+    private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }

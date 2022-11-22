@@ -8,7 +8,8 @@
         </div>
         <RecordQueryDialog v-if="!coinWalletProxy.logDialogData.isCoinWalletShow" />
         <div v-if="selfModel.userInfo.type == 64 && checkUnique(unique.coin_wallet_log)">
-            状态:
+            <!-- 状态 -->
+            {{ $t("user_detail.status") }}:
             <el-switch @change="onSwitch()" v-model="status" :active-value="1" :inactive-value="99"></el-switch>
         </div>
         <div>
@@ -47,18 +48,18 @@ export default class BasicOperationIndex extends AbstractView {
         super.destroyed();
     }
 
-    private cate_options:any = { 1: i18n.t("dashboard.system"), 2: i18n.t("common.plat") };
-    private type_options:any= {
-                1: i18n.t("dashboard.superAdmin"),
-                2: i18n.t("dashboard.admin"),
-                4: i18n.t("dashboard.user"),
-                8: i18n.t("dashboard.channelUser"),
-                32: i18n.t("dashboard.coinUser"),
-                64: i18n.t("dashboard.coinUserExchange")
-            }
+    private cate_options: any = { 1: i18n.t("dashboard.system"), 2: i18n.t("common.plat") };
+    private type_options: any = {
+        1: i18n.t("dashboard.superAdmin"),
+        2: i18n.t("dashboard.admin"),
+        4: i18n.t("dashboard.user"),
+        8: i18n.t("dashboard.channelUser"),
+        32: i18n.t("dashboard.coinUser"),
+        64: i18n.t("dashboard.coinUserExchange"),
+    };
 
     private status: any = this.userGold.status;
-    private userInfo =  this.selfModel.userInfo
+    private userInfo = this.selfModel.userInfo;
     get userGold() {
         return this.selfModel.userInfo.coin_user;
     }

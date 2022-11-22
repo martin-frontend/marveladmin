@@ -8,12 +8,7 @@
                 <el-input-number v-model="form.put_out_ratio" :min="0" :max="100" :step="1"></el-input-number>
             </el-form-item>
             <el-form-item :label="`${tableColumns.auto_withdraw_stake_fee.name}%`" prop="auto_withdraw_stake_fee">
-                <el-input-number
-                    v-model="form.auto_withdraw_stake_fee"
-                    :min="0"
-                    :max="100"
-                    :step="1"
-                ></el-input-number>
+                <el-input-number v-model="form.auto_withdraw_stake_fee" :min="0" :max="100" :step="1"></el-input-number>
             </el-form-item>
             <el-form-item :label="`${tableColumns.manual_withdraw_stake_fee.name}%`" prop="manual_withdraw_stake_fee">
                 <el-input-number
@@ -44,6 +39,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import i18n from "@/lang";
 
 @Component
 export default class PlatStakeDialog extends AbstractView {
@@ -58,7 +54,7 @@ export default class PlatStakeDialog extends AbstractView {
     private tableColumns = this.myProxy.stakeLogtableData.columns;
     private form = this.myProxy.dialogData.form;
 
-    private title = "质押分红配置";
+    private title = i18n.t("user_detail.dividendConfiguration");
 
     @Watch("myProxy.dialogData.bShow")
     private onWatchShow() {

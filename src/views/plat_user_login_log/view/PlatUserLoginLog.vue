@@ -7,7 +7,8 @@
                 type="primary"
                 icon="el-icon-circle-plus-outline"
                 @click="createDialogVisible = true"
-            >新增</el-button>
+                >新增</el-button
+            >
         </div>
         <div class="row">
             <div class="item">
@@ -23,13 +24,7 @@
             </div>
             <div class="item">
                 <span>所属平台：</span>
-                <el-select
-                    v-model="plat_id_select"
-                    filterable
-                    size="mini"
-                    class="select"
-                    placeholder="--请选择--"
-                >
+                <el-select v-model="plat_id_select" filterable size="mini" class="select" placeholder="--请选择--">
                     <el-option
                         v-for="(value, key) in plat_id_options"
                         :key="key"
@@ -58,15 +53,12 @@
             <el-table-column label="设备号" prop="device"></el-table-column>
             <el-table-column label="IP" prop="ip"></el-table-column>
             <el-table-column label="创建时间" prop="created_at"></el-table-column>
-            <el-table-column label="操作" width="90px">
+            <el-table-column :label="$t('common.operating')" width="90px">
                 <template slot-scope="scope">
                     <el-button-group size="mini">
-                        <el-button
-                            plain
-                            size="mini"
-                            type="info"
-                            @click="onCheck(scope.$index, scope.row)"
-                        >查看</el-button>
+                        <el-button plain size="mini" type="info" @click="onCheck(scope.$index, scope.row)"
+                            >查看</el-button
+                        >
                     </el-button-group>
                 </template>
             </el-table-column>
@@ -84,8 +76,8 @@ import Pagination from "@/components/Pagination.vue";
 
 @Component({
     components: {
-        Pagination
-    }
+        Pagination,
+    },
 })
 export default class PlatUserLoginLog extends AbstractView {
     // 表

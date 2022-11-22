@@ -59,8 +59,10 @@
                         type="primary"
                         size="mini"
                         @click="handleTranslate(form.content)"
-                        >翻译</el-button
                     >
+                        <!-- 翻译 -->
+                        {{ $t("user_detail.translate") }}
+                    </el-button>
                 </div>
                 <div class="contentDesc">
                     {{ $t("plat_marquee.contentDesc1")

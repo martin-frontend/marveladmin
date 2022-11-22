@@ -18,7 +18,10 @@
                 </div>
                 <div class="group">
                     <div class="group">
-                        <div class="title">折扣数量</div>
+                        <div class="title">
+                            <!-- 折扣数量 -->
+                            {{ $t("user_detail.discountQuantity") }}
+                        </div>
                         <div>
                             <el-input
                                 type="number"
@@ -29,7 +32,10 @@
                         </div>
                     </div>
                     <div class="group">
-                        <div class="title">每日玩家条数</div>
+                        <div class="title">
+                            <!-- 每日玩家条数 -->
+                            {{ $t("user_detail.dailyPlayerCount") }}
+                        </div>
                         <div>
                             <el-input
                                 type="number"
@@ -40,7 +46,10 @@
                         </div>
                     </div>
                     <div class="group">
-                        <div class="title">流水限制金额</div>
+                        <div class="title">
+                            <!-- 流水限制金额 -->
+                            {{ $t("user_detail.limitAmount") }}
+                        </div>
                         <div>
                             <el-input
                                 type="number"
