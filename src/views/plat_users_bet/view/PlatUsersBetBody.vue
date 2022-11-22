@@ -125,7 +125,7 @@
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["bet_gold"].name }}：{{ row.bet_gold }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("下注内容") }}：{{ row.content }}</p>
-                    <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type }}</p>
+                    <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type_text }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("赔率") }}：{{ row.odds }}</p>
                 </template>
             </el-table-column>
