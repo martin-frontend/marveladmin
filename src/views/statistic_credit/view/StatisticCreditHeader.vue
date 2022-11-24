@@ -84,7 +84,7 @@
             </div>
         </div>
         <div class="row" v-if="isTipsShow">
-            <div>{{ LangUtil("用户{0} 统计时间{1}至{2}", timeObj) }}</div>
+            <div>{{ LangUtil("用户{0} 统计时间{1}至{2}", ...timeObj) }}</div>
         </div>
     </div>
 </template>
@@ -123,12 +123,8 @@ export default class NicoTestHeader extends AbstractView {
     // searchInfo = JSON.parse( JSON.stringify( this.listQuery));
     searchInfo = this.myProxy.tableData.info_head;
 
-    public get timeObj(): object {
-        return {
-            0: this.searchInfo.user_id,
-            1: this.searchInfo.start_date,
-            2: this.searchInfo.end_date,
-        };
+    public get timeObj(): any {
+        return [this.searchInfo.user_id, this.searchInfo.start_date, this.searchInfo.end_date];
     }
 
     public get isTipsShow(): boolean {
