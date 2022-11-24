@@ -237,11 +237,15 @@ export default class CoinReceiveRechargeOrderProxy extends AbstractProxy impleme
     /**关闭订单 */
     onOrderClose(data: any) {
         const { id, user_id, nick_name, gold } = data;
-        MessageBox.confirm(<string>LangUtil("undefined"), <string>LangUtil("提示"), {
-            confirmButtonText: <string>LangUtil("确定"),
-            cancelButtonText: <string>LangUtil("取消"),
-            type: "warning",
-        })
+        MessageBox.confirm(
+            <string>LangUtil("是否取消【用户ID:{0},昵称:{1},订单金额:{2}】充值订单", user_id, nick_name, gold),
+            <string>LangUtil("提示"),
+            {
+                confirmButtonText: <string>LangUtil("确定"),
+                cancelButtonText: <string>LangUtil("取消"),
+                type: "warning",
+            }
+        )
             .then(() => {
                 this.sendNotification(HttpType.admin_coin_receive_recharge_order_close, { id });
             })

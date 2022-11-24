@@ -49,7 +49,12 @@ export default class VipRechargeMediator extends AbstractMediator {
                 myProxy.setDetail(body);
                 break;
             case EventType.admin_vip_recharge_recharge:
-                this.str = LangUtil("undefined");
+                this.str = LangUtil(
+                    "玩家 {0} 成功充值 {1} {2}",
+                    myProxy.bodyData.form.user_id,
+                    myProxy.bodyData.form.amount,
+                    myProxy.bodyData.form.coin_name_unique
+                );
                 Message.success(this.str);
                 myProxy.resetForm();
                 myProxy.bodyData.isRechargeSuccess = +new Date();

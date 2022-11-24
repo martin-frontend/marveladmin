@@ -14,6 +14,7 @@ import mediator, { IView } from "../mediator/QRcodeMediator";
 
 @Component
 export default class QRcode extends AbstractView implements IView {
+    LangUtil = LangUtil;
     constructor() {
         super(mediator);
     }

@@ -100,7 +100,7 @@ export default class SystemResourceDialog extends AbstractView {
         determine: this.LangUtil("确定"),
         cancel: this.LangUtil("取消"),
         errorCode1: this.LangUtil("上传图片大小不能超过 2MB!"),
-        errorCode2: this.LangUtil("undefined"),
+        errorCode2: this.LangUtil("上传文件只能是 jpeg/jpg/png"),
     };
 
     handleAdd() {

@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="desc" v-loading="net_status.loading">
-            <p>{{ LangUtil("undefined") }}</p>
+            <p>{{ LangUtil("最多只展示{0}天内容", tableColumns.keep_time) }}</p>
             <p>
                 {{ tableColumns.commission_history_num }}：<span
                     v-html="getAccessInfo(tableData.commission_history_num)"

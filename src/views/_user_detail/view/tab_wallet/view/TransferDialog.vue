@@ -102,7 +102,7 @@ export default class DeductGoldDialog extends AbstractView {
                 ) {
                     MessageBox.confirm(
                         //@ts-ignore
-                        this.LangUtil("undefined"),
+                        this.LangUtil("您确认划转该用户{0}{1}？", transferGold, this.dialogTransferData.coin_name_unique),
                         this.LangUtil("提示"),
                         {
                             confirmButtonText: this.LangUtil("确定"),

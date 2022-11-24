@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="notic">
-            <p>{{ LangUtil("undefined") }}</p>
-            <p>{{ LangUtil("undefined") }}</p>
+            <p>{{ LangUtil("数据每天{0}更新", tableColumns.update_time) }}</p>
+            <p>{{ LangUtil("用户数据最多保留{0}天", tableColumns.keep_time) }}</p>
         </div>
     </div>
 </template>

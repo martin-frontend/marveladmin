@@ -379,7 +379,7 @@ export default class ExchangeOrdersBody extends AbstractView {
             return false;
         }
 
-        let confirmStr: any = type === "4" ? this.LangUtil("确定平台已付款给该玩家?") : this.LangUtil("undefined");
+        let confirmStr: any = type === "4" ? this.LangUtil("确定平台已付款给该玩家?") : this.LangUtil("是否{0}", this.ctrlStr[type]);
         let confitmContent: any = {
             prompt: this.LangUtil("提示"),
             confirm: this.LangUtil("确定"),
