@@ -44,6 +44,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             username: { name: "", options: {} },
             searchtime: { name: "结算时间", options: {} },
             coin_name_unique: { name: "币种", options: {} },
+            vendor_type: { name: "游戏类型", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -78,6 +79,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         start_date: dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
         end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
         coin_name_unique: "USDT",
+        vendor_type: 0,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -148,6 +150,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             start_date: dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
             end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
             coin_name_unique: "USDT",
+            vendor_type: 0,
         });
     }
 

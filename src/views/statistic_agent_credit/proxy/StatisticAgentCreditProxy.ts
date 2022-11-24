@@ -45,6 +45,7 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
             coin_name_unique: { name: "币种", options: {} },
             remark: { name: "备注", options: {} },
             valid_bet_gold: { name: "备注", options: {} },
+            vendor_type: { name: "游戏类型", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -57,6 +58,7 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
         start_date: dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
         end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
         coin_name_unique: "USDT",
+        vendor_type: 0,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -99,6 +101,7 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
             start_date: dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),
             end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
             coin_name_unique: "USDT",
+            vendor_type: 0,
         });
     }
 

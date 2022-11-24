@@ -56,6 +56,22 @@
                     />
                 </div>
 
+                <div class="item_group">
+                    <div class="cust_title">{{ tableColumns["vendor_type"].name }}</div>
+                    <el-select
+                        v-model="listQuery.vendor_type"
+                        filterable
+                        class="select"
+                        :placeholder="LangUtil('请选择')"
+                    >
+                        <el-option
+                            v-for="(value, key) in tableColumns.vendor_type.options"
+                            :key="Number(key)"
+                            :label="value"
+                            :value="Number(key)"
+                        ></el-option>
+                    </el-select>
+                </div>
                 <!-- 搜索、重置 按钮 -->
                 <div>
                     <el-button @click="handlerSearch" type="primary" icon="el-icon-search" class="item">{{
