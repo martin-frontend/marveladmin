@@ -84,7 +84,7 @@
             </div>
         </div>
         <div class="row" v-if="isTipsShow">
-            <div>{{ LangUtil("用户{0} 统计时间{1}至{2}") }}</div>
+            <div>{{ LangUtil("用户{0} 统计时间{1}至{2}", timeObj) }}</div>
         </div>
     </div>
 </template>
