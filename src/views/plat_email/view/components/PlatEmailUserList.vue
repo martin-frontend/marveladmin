@@ -49,7 +49,7 @@
         </div>
         <div class="statistics">
             <div>
-                {{ LangUtil("undefined") }}
+                {{ LangUtil("统计用户一共收到{0}封邮件，{1}封已阅读，{2}封已领取附件", statistic.total_num, statistic.read_num, statistic.total_attachment_read) }}
             </div>
             <div>
                 {{ LangUtil("附件奖励") }}

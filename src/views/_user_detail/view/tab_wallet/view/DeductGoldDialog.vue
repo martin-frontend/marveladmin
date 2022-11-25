@@ -68,12 +68,16 @@ export default class DeductGoldDialog extends AbstractView {
             deductGold > 0 &&
             deductGold <= parseFloat(this.userInfo.gold_info[this.dialogDeductGoldData.coin_name_unique].plat_money)
         ) {
-            MessageBox.confirm(this.LangUtil("undefined"), this.LangUtil("提示"), {
-                confirmButtonText: this.LangUtil("确定"),
-                cancelButtonText: this.LangUtil("取消"),
-                type: "warning",
-                center: true,
-            }).then(() => {
+            MessageBox.confirm(
+                this.LangUtil("您是否扣除该玩家{0}{1}", deductGold, this.dialogDeductGoldData.coin_name_unique),
+                this.LangUtil("提示"),
+                {
+                    confirmButtonText: this.LangUtil("确定"),
+                    cancelButtonText: this.LangUtil("取消"),
+                    type: "warning",
+                    center: true,
+                }
+            ).then(() => {
                 this.myProxy.onUpdateGold(deductGold, this.dialogDeductGoldData.coin_name_unique);
             });
         } else {

@@ -305,7 +305,7 @@ export default class RechargeOrdersBody extends AbstractView {
     // 补单
     makeUpClickHandler(row: any) {
         // this.$confirm(`是否对订单号 "${row.order_no}"，进行补单`, "提示", {
-        this.$confirm(this.LangUtil("undefined"), this.LangUtil("提示"), {
+        this.$confirm(this.LangUtil(`是否对订单号 "{0}"，进行补单`, row.order_no), this.LangUtil("提示"), {
             confirmButtonText: this.LangUtil("确定"),
             cancelButtonText: this.LangUtil("取消"),
             type: "warning",

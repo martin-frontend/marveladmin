@@ -19,9 +19,11 @@ export default class TabWaterRateProxy extends AbstractProxy implements ITabWate
         columns: {
             vendor_type: { name: "", options: {} },
             water_config: { name: "", options: {} },
+            vendor_type_switch: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 10 },
+        showSwtich: false,
     };
 
     water_config = <any>{};
@@ -42,19 +44,37 @@ export default class TabWaterRateProxy extends AbstractProxy implements ITabWate
 
         let list = <any>[];
         Object.keys(data.water_config).forEach(element => {
-            list.push({ type: element, water_rate: data.water_config[element] });
+            list.push({
+                type: element,
+                water_rate: data.water_config[element],
+                vendor_type_switch: data.vendor_type_switch[element],
+            });
         });
+
+        this.tableData.showSwtich = Object.keys(data.vendor_type_switch).length > 0;
+
         this.tableData.list.length = 0;
         this.tableData.list.push(...list);
     }
 
     /**更新流水配置 */
     onUpdateWaterRate() {
-        console.error(this.water_config);
-
         this.sendNotification(HttpType.admin_plat_user_update, {
             user_id: getPageSetting().user_id,
             water_config: JSON.stringify(this.water_config),
+        });
+    }
+
+    onSwitch() {
+        const obj = <any>{};
+        // @ts-ignore
+        this.tableData.list.forEach(({ type, vendor_type_switch }) => {
+            obj[type] = vendor_type_switch;
+        });
+
+        this.sendNotification(HttpType.admin_plat_user_update, {
+            user_id: getPageSetting().user_id,
+            vendor_type_switch: JSON.stringify(obj),
         });
     }
 }

@@ -89,6 +89,7 @@ import SearchSelect from "@/components/SearchSelect.vue";
     },
 })
 export default class VipRechargeBody extends AbstractView implements IVipRecharge {
+    LangUtil = LangUtil;
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
@@ -129,13 +130,14 @@ export default class VipRechargeBody extends AbstractView implements IVipRecharg
         (this.$refs["form"] as any & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 // this.$confirm(`您是否要给玩家${this.form.user_id}充值${this.form.amount}金币`, "提示", {
-                let str: any = this.LangUtil("undefined");
+                let str: any = LangUtil("您是否要给玩家{0}充值{1} {2}", this.form.user_id, this.form.amount, this.listQuery.coin_name_unique);
                 let obj: any = {
-                    str1: this.LangUtil("undefined"),
+                    str1: str,
                     str2: this.LangUtil("提示"),
                     str3: this.LangUtil("确定"),
                     str4: this.LangUtil("取消"),
                 };
+
                 this.$confirm(obj.str1, obj.str2, {
                     confirmButtonText: obj.str3,
                     cancelButtonText: obj.str4,

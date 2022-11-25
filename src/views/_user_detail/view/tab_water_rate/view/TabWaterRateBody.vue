@@ -28,7 +28,7 @@
             </el-table-column>
             <el-table-column :label="tableColumns.water_config.name" prop="water_rate">
                 <template slot-scope="{ row }">
-                    <div v-if="editWaterRateID == row.type">
+                    <template v-if="editWaterRateID == row.type">
                         <el-input
                             v-model="editWaterRateValue"
                             style="width: 80px; margin-right: 10px"
@@ -40,8 +40,8 @@
                         <el-button class="item" type="success" size="mini" @click="onEditWaterRate(row)">{{
                             LangUtil("确定")
                         }}</el-button>
-                    </div>
-                    <div v-else>
+                    </template>
+                    <template v-else>
                         <span style="margin-right: 10px">{{ (row.water_rate * 100).toFixed(2) }}%</span>
                         <el-button
                             class="item"
@@ -53,7 +53,25 @@
                             "
                             >{{ LangUtil("编辑") }}</el-button
                         >
-                    </div>
+                    </template>
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="showSwitch"
+                :label="tableColumns.vendor_type_switch.name"
+                prop="vendor_type_switch"
+                width="120"
+            >
+                <template slot-scope="{ row }">
+                    <el-switch
+                        v-if="row.vendor_type_switch != undefined"
+                        @change="onSwitch"
+                        v-model="row.vendor_type_switch"
+                        style="margin-left: 10px"
+                        :active-value="1"
+                        :inactive-value="0"
+                        :disabled="row.vendor_type_switch == -1"
+                    ></el-switch>
                 </template>
             </el-table-column>
         </el-table>
@@ -88,6 +106,10 @@ export default class TabWaterRateBody extends AbstractView {
     editWaterRateID = null;
     editWaterRateValue = "";
 
+    get showSwitch() {
+        return this.myProxy.tableData.showSwtich;
+    }
+
     ChangeNumValue() {
         if (this.editWaterRateValue) {
             this.editWaterRateValue = this.editWaterRateValue.replace(/[^\d\.]/g, "");
@@ -120,6 +142,10 @@ export default class TabWaterRateBody extends AbstractView {
         this.myProxy.water_config[row.type] = parseFloat((parseFloat(this.editWaterRateValue) / 100).toFixed(4));
 
         this.myProxy.onUpdateWaterRate();
+    }
+
+    onSwitch() {
+        this.myProxy.onSwitch();
     }
 }
 </script>
