@@ -37,6 +37,7 @@
                 v-model="listQuery.vendor_type"
                 :options="tableColumns.vendor_type.options"
             />
+            <SearchInput :title="tableColumns.agent_user_id.name" v-model="listQuery.agent_user_id" />
             <SearchInput :title="tableColumns.vendor_product_name.name" v-model="listQuery.vendor_product_name" />
             <SearchInput :title="tableColumns.ori_product_id.name" v-model="listQuery.ori_product_id" />
             <SearchSelect

@@ -30,6 +30,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     /**表格相关数据 */
     tableData = {
         columns: {
+            agent_user_id: { name: "", options: {} },
             backwater: { name: "", options: {} },
             backwater_id: { name: "", options: {} },
             backwater_rate: { name: "", options: {} },
@@ -90,6 +91,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     };
     /**查询条件 */
     listQuery = {
+        agent_user_id: "",
         plat_id: "",
         "settlement_at-{>=}": "",
         "settlement_at-{<=}": "",
@@ -171,6 +173,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
+            agent_user_id: "",
             "settlement_at-{>=}": "",
             "settlement_at-{<=}": "",
             "bet_at-{>=}": dateFormat(new Date(), "yyyy-MM-dd 00:00:00"),

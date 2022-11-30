@@ -33,6 +33,7 @@
                 :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             />
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
+            <SearchInput :title="tableColumns.agent_user_id.name" v-model="listQuery.agent_user_id" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")
