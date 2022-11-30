@@ -30,6 +30,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     /**表格相关数据 */
     tableData = {
         columns: {
+            agent_user_id: { name: "代理ID", options: {} },
             area_code: { name: "手机区号", options: {} },
             balance: { name: "账户余额", options: {}, tips: "" },
             channel_id: { name: "所属渠道", options: {} },
@@ -85,6 +86,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     };
     /**查询条件 */
     listQuery = <any>{
+        agent_user_id: "",
         plat_id: "",
         username: "",
         channel_id: "",
@@ -172,6 +174,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
+            agent_user_id: "",
             username: "",
             channel_id: "",
             status: "",
