@@ -249,7 +249,7 @@ export default class CoinReceiveRechargeOrderProxy extends AbstractProxy impleme
             .then(() => {
                 this.sendNotification(HttpType.admin_coin_receive_recharge_order_close, { id });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
     /**获取账号当前持有金币 */
     onWallet() {

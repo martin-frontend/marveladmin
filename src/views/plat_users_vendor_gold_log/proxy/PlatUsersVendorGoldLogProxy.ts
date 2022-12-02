@@ -135,7 +135,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
 
     /**更新数据 */
     onUpdate() {
-        MessageBox.confirm(<string>LangUtil("undefined"), <string>LangUtil("提示"), {
+        MessageBox.confirm(<string>LangUtil("确认此下分/上分记录处理为 {0} 吗？处理后无法修改。", this.confirmData.title), <string>LangUtil("提示"), {
             confirmButtonText: <string>LangUtil("确定"),
             cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
@@ -147,7 +147,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
                     status,
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**用户详情 */

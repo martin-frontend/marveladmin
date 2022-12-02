@@ -242,7 +242,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     onDeductGold() {
         const { user_id, gold, deductGold } = this.dialogData.form;
         if (deductGold != "" && parseFloat(deductGold) > 0 && parseFloat(deductGold) <= gold) {
-            MessageBox.confirm(<string>LangUtil("undefined"), <string>LangUtil("提示"), {
+            MessageBox.confirm(<string>LangUtil("您是否扣除该玩家{0}金币", deductGold), <string>LangUtil("提示"), {
                 confirmButtonText: <string>LangUtil("确定"),
                 cancelButtonText: <string>LangUtil("取消"),
                 type: "warning",
