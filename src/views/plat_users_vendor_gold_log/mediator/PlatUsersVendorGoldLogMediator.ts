@@ -7,7 +7,7 @@ import { Message, MessageBox } from "element-ui";
 import PlatUsersVendorGoldLogProxy from "../proxy/PlatUsersVendorGoldLogProxy";
 import i18n from "@/lang";
 
-interface IPlatUsersVendorGoldLog extends IEventDispatcher {}
+interface IPlatUsersVendorGoldLog extends IEventDispatcher { }
 
 export default class PlatUsersVendorGoldLogMediator extends AbstractMediator {
     private myProxy: PlatUsersVendorGoldLogProxy = <any>this.getProxy(PlatUsersVendorGoldLogProxy);
@@ -58,7 +58,12 @@ export default class PlatUsersVendorGoldLogMediator extends AbstractMediator {
                 break;
             case EventType.admin_plat_users_vendor_gold_log_auto_check:
                 myProxy.onQuery();
-                MessageBox.alert(body.error, <string>LangUtil("undefined"));
+                MessageBox.alert(body.error, <string>[
+                    LangUtil("交易成功"),
+                    LangUtil("交易状态未知"),
+                    LangUtil("交易失败"),
+                ][body.status - 1]
+                );
                 break;
         }
     }

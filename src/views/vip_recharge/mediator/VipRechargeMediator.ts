@@ -7,7 +7,7 @@ import { Message } from "element-ui";
 import VipRechargeProxy from "../proxy/VipRechargeProxy";
 import i18n from "@/lang";
 
-export interface IVipRecharge extends IEventDispatcher {}
+export interface IVipRecharge extends IEventDispatcher { }
 
 export default class VipRechargeMediator extends AbstractMediator {
     private myProxy: VipRechargeProxy = <any>this.getProxy(VipRechargeProxy);

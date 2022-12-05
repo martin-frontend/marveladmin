@@ -29,6 +29,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     tableData = {
         columns: <any>{
             // TODO
+            agent_user_id: { name: "代理ID", options: {} },
             binded_at: { name: "绑定时间", options: {} },
             bonus_ratio: { name: "分红统计比例" },
             channel_id: <any>{ name: "所属渠道", options: {} },
@@ -65,6 +66,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
 
     /**查询条件 */
     listQuery = {
+        agent_user_id: "",
         page_count: 1,
         page_size: 20,
         plat_id: "",
@@ -318,6 +320,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     resetListQuery() {
         Object.assign(this.listQuery, {
             // TODO
+            agent_user_id: "",
             page_count: 1,
             page_size: 20,
             binded_start: "",

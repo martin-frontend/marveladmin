@@ -30,6 +30,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     /**表格相关数据 */
     tableData = {
         columns: {
+            agent_user_id: { name: "代理ID", options: {} },
             area_code: { name: "手机区号", options: {} },
             balance: { name: "账户余额", options: {}, tips: "" },
             channel_id: { name: "所属渠道", options: {} },
@@ -85,6 +86,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     };
     /**查询条件 */
     listQuery = <any>{
+        agent_user_id: "",
         plat_id: "",
         username: "",
         channel_id: "",
@@ -172,6 +174,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
+            agent_user_id: "",
             username: "",
             channel_id: "",
             status: "",
@@ -239,7 +242,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     onDeductGold() {
         const { user_id, gold, deductGold } = this.dialogData.form;
         if (deductGold != "" && parseFloat(deductGold) > 0 && parseFloat(deductGold) <= gold) {
-            MessageBox.confirm(<string>LangUtil("undefined"), <string>LangUtil("提示"), {
+            MessageBox.confirm(<string>LangUtil("您是否扣除该玩家{0}金币", deductGold), <string>LangUtil("提示"), {
                 confirmButtonText: <string>LangUtil("确定"),
                 cancelButtonText: <string>LangUtil("取消"),
                 type: "warning",

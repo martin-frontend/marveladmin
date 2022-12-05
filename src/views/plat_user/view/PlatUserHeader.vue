@@ -28,6 +28,7 @@
                 v-model="listQuery.is_credit_user"
                 :options="tableColumns.is_credit_user.options"
             />
+            <SearchInput :title="tableColumns.agent_user_id.name" v-model="listQuery.agent_user_id" />
         </div>
         <div class="group">
             <SearchRange
