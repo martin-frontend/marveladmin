@@ -68,7 +68,11 @@ export function dateFormat(d: Date, fmt: string): string {
  * @offsetSecond 偏移秒
  */
 export function getTodayOffset(offset: number = 0, offsetSecond: number = 0): Date {
-    const d = new Date(new Date().toLocaleDateString());
+    const d = new Date();
+    d.setHours(0);
+    d.setMinutes(0);
+    d.setSeconds(0);
+    d.setMilliseconds(0);
     d.setTime(d.getTime() + 3600 * 1000 * 24 * offset - offsetSecond);
     return d;
 }
