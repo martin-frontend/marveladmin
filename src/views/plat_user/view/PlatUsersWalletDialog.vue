@@ -22,7 +22,7 @@
                 ></el-table-column>
                 <el-table-column
                     :label="LangUtil('余额')"
-                    prop="total_currency"
+                    prop="total_curreny"
                     min-width="100px"
                     class-name="status-col"
                 ></el-table-column>
