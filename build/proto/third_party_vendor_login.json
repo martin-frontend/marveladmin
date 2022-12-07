@@ -1,0 +1,12 @@
+{
+    "name": "第三方登录厂商 ",
+    "description": "第三方登录厂商 ",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47776603",
+    "list": [
+        "admin/third_party_vendor_login/table_columns",
+        "admin/third_party_vendor_login/index",
+        "admin/third_party_vendor_login/show/{id}",
+        "admin/third_party_vendor_login/store",
+        "admin/third_party_vendor_login/update/{id}"
+    ]
+}

@@ -698,6 +698,14 @@ const layoutRouter = {
                 ),
         },
         {
+            path: "third_party_vendor_login",
+            name: "第三方登录厂商 ",
+            component: () =>
+                import(
+                    /* webpackChunkName: "third_party_vendor_login" */ "@/views/third_party_vendor_login/view/ThirdPartyVendorLogin.vue"
+                ),
+        },
+        {
             path: "vendor",
             name: "厂商管理",
             component: () => import(/* webpackChunkName: "vendor" */ "@/views/vendor/view/Vendor.vue"),
