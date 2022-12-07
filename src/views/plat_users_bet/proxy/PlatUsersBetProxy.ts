@@ -53,6 +53,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             plat_id: { name: "", options: {} },
             pull_at: { name: "", options: {} },
             promotion_type: { name: "", options: {} },
+            resettlement_status: { name: "", options: {} },
             settlement_at: { name: "", options: {} },
             settlement_status: { name: "", options: {} },
             settlement_water: { name: "", options: {} },
@@ -112,6 +113,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         coin_name_unique: "",
         username: "",
         is_credit_user: "",
+        resettlement_status: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -191,13 +193,12 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             coin_name_unique: "",
             username: "",
             is_credit_user: "",
+            resettlement_status: "",
         });
     }
 
     /**取得excel 挡案名称 */
     get getExcelOutputName() {
-        //let ssss = new Date()
-
         let times = dateFormat(new Date(), "yyyy-MM-dd hh:mm:ss");
         let name: string =
             LangUtil("投注明细") + "-" + times + "-" + this.tableData.columns.plat_id.options[this.listQuery.plat_id];
