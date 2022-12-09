@@ -167,6 +167,11 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_credit_user: "98",
         is_gold_exchange: "98",
         is_login_need_google: "0",
+        login_device_counts: 0,
+        last_login_ip_counts: 0,
+        register_ip_counts: 0,
+        register_ip_location: "",
+        last_ip_location: "",
     };
     /**代理关系链 */
     relationChain: string[] = [];

@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <div class="layout" v-loading="net_status.loading">
-            <el-form ref="form" label-position="right" label-width="120px" :model="userInfo">
+            <el-form ref="form" label-position="right" label-width="200px" :model="userInfo">
                 <el-form-item size="mini" :label="tableColumns['plat_id'].name" prop="plat_id">
                     {{ tableColumns["plat_id"].options[userInfo.plat_id] }}
                 </el-form-item>
@@ -23,11 +23,46 @@
                 <el-form-item size="mini" :label="tableColumns['register_ip'].name" prop="register_ip">
                     {{ userInfo.register_ip }}
                 </el-form-item>
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['register_ip'].name + '（' + LangUtil('人数') + '）'"
+                    prop="register_ip_counts"
+                >
+                    {{ userInfo.register_ip_counts }}
+                </el-form-item>
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['register_ip'].name + '（' + LangUtil('国家地区') + '）'"
+                    prop="register_ip_location"
+                >
+                    {{ userInfo.register_ip_location }}
+                </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['last_login_ip'].name" prop="last_login_ip">
                     {{ userInfo.last_login_ip }}
                 </el-form-item>
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['last_login_ip'].name + '（' + LangUtil('人数') + '）'"
+                    prop="last_login_ip_counts"
+                >
+                    {{ userInfo.last_login_ip_counts }}
+                </el-form-item>
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['last_login_ip'].name + '（' + LangUtil('国家地区') + '）'"
+                    prop="last_ip_location"
+                >
+                    {{ userInfo.last_ip_location }}
+                </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['last_login_device'].name" prop="last_login_device">
                     {{ userInfo.last_login_device }}
+                </el-form-item>
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['last_login_device'].name + '（' + LangUtil('人数') + '）'"
+                    prop="last_login_ip_counts"
+                >
+                    {{ userInfo.last_login_ip_counts }}
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['vip_level'].name" prop="vip_level">
                     {{ userInfo.vip_level }}
