@@ -10,9 +10,9 @@
             <el-form-item size="mini" :label="tableColumns['app_key'].name" prop="app_key">
                 <el-input v-model="form.app_key" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
-            <el-form-item size="mini" :label="tableColumns['app_secret'].name" prop="app_secret">
+            <!-- <el-form-item size="mini" :label="tableColumns['app_secret'].name" prop="app_secret">
                 <el-input v-model="form.app_secret" :placeholder="LangUtil('请输入')"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item size="mini" :label="tableColumns['redirect_url'].name" prop="redirect_url">
                 <el-input v-model="form.redirect_url" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
@@ -93,7 +93,7 @@ export default class ThirdPartyVendorLoginDialog extends AbstractView {
             api_url: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             vendor_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             app_key: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
-            app_secret: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            // app_secret: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             redirect_url: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             unique_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             extend_params: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],

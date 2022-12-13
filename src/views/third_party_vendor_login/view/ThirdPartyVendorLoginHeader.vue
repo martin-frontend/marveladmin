@@ -6,7 +6,7 @@
             <SearchInput :title="tableColumns.api_url.name" v-model="listQuery.api_url" />
             <SearchInput :title="tableColumns.redirect_url.name" v-model="listQuery.redirect_url" />
             <SearchInput :title="tableColumns.app_key.name" v-model="listQuery.app_key" />
-            <SearchInput :title="tableColumns.app_secret.name" v-model="listQuery.app_secret" />
+            <!-- <SearchInput :title="tableColumns.app_secret.name" v-model="listQuery.app_secret" /> -->
             <SearchInput :title="tableColumns.data_belong.name" v-model="listQuery.data_belong" />
             <SearchInput :title="tableColumns.redirect_url.name" v-model="listQuery.redirect_url" />
             
