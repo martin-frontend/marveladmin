@@ -50,12 +50,6 @@ export default class ThirdPartyVendorLoginProxy extends AbstractProxy implements
     listQuery = {
         page_count: 1,
         page_size: 20,
-        api_url: "",
-        app_key: "",
-        // app_secret: "",
-        redirect_url: "",
-        data_belong: "",
-        extend_params: "",
         unique_name: "",
         vendor_name: "",
         status: "",
@@ -65,7 +59,7 @@ export default class ThirdPartyVendorLoginProxy extends AbstractProxy implements
         id: null,
         api_url: "",
         app_key: "",
-        // app_secret: "",
+        app_secret: "",
         redirect_url: "",
         extend_params: {},
         unique_name: "",
@@ -104,12 +98,6 @@ export default class ThirdPartyVendorLoginProxy extends AbstractProxy implements
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
-            api_url: "",
-            app_key: "",
-            // app_secret: "",
-            redirect_url: "",
-            data_belong: "",
-            extend_params: "",
             unique_name: "",
             vendor_name: "",
             status: "",
@@ -147,7 +135,7 @@ export default class ThirdPartyVendorLoginProxy extends AbstractProxy implements
         const {
             api_url,
             app_key,
-            // app_secret,
+            app_secret,
             redirect_url,
             extend_params,
             unique_name,
@@ -157,7 +145,7 @@ export default class ThirdPartyVendorLoginProxy extends AbstractProxy implements
         const formCopy: any = {
             api_url,
             app_key,
-            // app_secret,
+            app_secret,
             redirect_url,
             extend_params,
             unique_name,

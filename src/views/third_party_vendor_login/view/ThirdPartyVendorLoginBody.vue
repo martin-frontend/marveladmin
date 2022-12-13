@@ -32,41 +32,6 @@
                 min-width="150px"
             ></el-table-column>
             <el-table-column :label="tableColumns['app_key'].name" prop="app_key" min-width="150px"></el-table-column>
-            <!-- <el-table-column
-                :label="tableColumns['app_secret'].name"
-                prop="app_secret"
-                min-width="150px"
-            ></el-table-column> -->
-            <el-table-column
-                :label="tableColumns['data_belong'].name"
-                prop="data_belong"
-                min-width="150px"
-            ></el-table-column>
-            <!-- <el-table-column
-                :label="tableColumns['extend_params'].name"
-                prop="extend_params"
-                min-width="150px"
-            ></el-table-column> -->
-            <!-- <el-table-column
-                :label="tableColumns['created_by'].name"
-                prop="created_by"
-                min-width="150px"
-            ></el-table-column>
-            <el-table-column
-                :label="tableColumns['created_at'].name"
-                prop="created_at"
-                min-width="180px"
-            ></el-table-column>
-            <el-table-column
-                :label="tableColumns['updated_by'].name"
-                prop="updated_by"
-                min-width="150px"
-            ></el-table-column>
-            <el-table-column
-                :label="tableColumns['updated_at'].name"
-                prop="updated_at"
-                min-width="180px"
-            ></el-table-column> -->
             <el-table-column :label="tableColumns['status'].name" prop="status" min-width="150px">
                 <template slot-scope="{ row }">
                     <el-tag :type="row.status | statusFilter">
