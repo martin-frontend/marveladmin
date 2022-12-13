@@ -55,6 +55,11 @@
                 v-model="listQuery.is_credit_user"
                 :options="tableColumns.is_credit_user.options"
             />
+            <SearchSelect
+                :title="tableColumns.resettlement_status.name"
+                v-model="listQuery.resettlement_status"
+                :options="tableColumns.resettlement_status.options"
+            />
             <SearchRange
                 :title="tableColumns.win_gold.name"
                 min="-9999999"

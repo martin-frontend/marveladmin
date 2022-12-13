@@ -127,6 +127,11 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         formSource: null, // 表单的原始数据
     };
 
+    walletDialogData = {
+        bShow: false,
+        data: <any>{},
+    };
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -261,5 +266,20 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     // 状态切换
     onToggleStatus(user_id: number, status: number) {
         this.facade.sendNotification(HttpType.admin_plat_user_update, { user_id, status });
+    }
+    showWallet() {
+        // this.walletDialogData.bShow = true;
+        const { user_id, plat_id } = this.listQuery;
+        this.sendNotification(
+            HttpType.admin_plat_users_wallet_show_plat,
+            objectRemoveNull({
+                plat_id,
+                // user_id,
+            })
+        );
+    }
+    setWallet(data: any) {
+        this.walletDialogData.bShow = true;
+        this.walletDialogData.data = data;
     }
 }

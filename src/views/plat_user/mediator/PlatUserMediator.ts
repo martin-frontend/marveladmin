@@ -32,6 +32,7 @@ export default class PlatUserMediator extends AbstractMediator {
             EventType.admin_plat_user_vendor_withdraw,
             EventType.admin_plat_user_update_safe_gold,
             EventType.admin_plat_user_update_user_gold,
+            EventType.admin_plat_users_wallet_show_plat,
         ];
     }
 
@@ -67,6 +68,9 @@ export default class PlatUserMediator extends AbstractMediator {
             case EventType.admin_plat_user_update_user_gold:
                 myProxy.hideDialog();
                 myProxy.onQuery();
+                break;
+            case EventType.admin_plat_users_wallet_show_plat:
+                myProxy.setWallet(body);
                 break;
         }
     }

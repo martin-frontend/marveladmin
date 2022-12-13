@@ -735,7 +735,34 @@ const layoutRouter = {
         {
             path: "vip_recharge",
             name: "VIP充值中心",
-            component: () => import(/* webpackChunkName: "vip_recharge" */ "@/views/vip_recharge/view/VipRecharge.vue"),
+            component: () =>
+                import(
+                    /* webpackChunkName: "vip_recharge" */ "@/views/vip_recharge/view/VipRecharge.vue"
+                ),
+        },
+        {
+            path: "channel_plat_user",
+            name: "渠道用户",
+            component: () =>
+                import(
+                    /* webpackChunkName: "plat_user" */ "@/views/plat_user/view/PlatUser.vue"
+                ),
+        },
+        {
+            path: "channel_statistic_plat_days",
+            name: "渠道每日统计",
+            component: () =>
+                import(
+                    /* webpackChunkName: "statistic_plat_days" */ "@/views/statistic_plat_days/view/StatisticPlatDays.vue"
+                ),
+        },
+        {
+            path: "channel_statistic_user_promotion_days_index",
+            name: "渠道代理统计",
+            component: () =>
+                import(
+                    /* webpackChunkName: "statistic_user_promotion_days_index" */ "@/views/statistic_user_promotion_days_index/view/StatisticUserPromotionDaysIndex.vue"
+                ),
         },
     ],
 };
