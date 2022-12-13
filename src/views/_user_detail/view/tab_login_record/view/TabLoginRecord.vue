@@ -20,11 +20,11 @@
         >
             <el-table-column :label="tableColumns['created_at'].name" prop="created_at"></el-table-column>
             <el-table-column :label="tableColumns['device'].name" prop="device">
-                <template slot-scope="{ row }"> {{ row.device }} ({{ row.user_device_count }})</template>
+                <template slot-scope="{ row }"> {{ row.device }} ({{ LangUtil("人数") }} {{ row.user_device_count }})</template>
             </el-table-column>
             <el-table-column :label="tableColumns['login_ip'].name" prop="login_ip">
                 <template slot-scope="{ row }">
-                    {{ row.login_ip }} ({{ row.user_login_ip_count }}/{{ row.ip_location }})
+                    {{ row.login_ip }} ({{ LangUtil("人数") }} {{ row.user_login_ip_count }} / {{ row.ip_location }})
                 </template>
             </el-table-column>
         </el-table>

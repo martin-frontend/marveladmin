@@ -21,7 +21,7 @@
                     {{ userInfo.last_login_at }}
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['register_ip'].name" prop="register_ip">
-                    {{ userInfo.register_ip }} ({{ userInfo.register_ip_counts }}/{{ userInfo.register_ip_location }})
+                    {{ userInfo.register_ip }} ({{ LangUtil("人数") }} {{ userInfo.register_ip_counts }} / {{ userInfo.register_ip_location }})
                 </el-form-item>
                 <!-- <el-form-item
                     size="mini"
@@ -38,7 +38,9 @@
                     {{ userInfo.register_ip_location }}
                 </el-form-item> -->
                 <el-form-item size="mini" :label="tableColumns['last_login_ip'].name" prop="last_login_ip">
-                    {{ userInfo.last_login_ip }} ({{ userInfo.last_login_ip_counts }}/{{ userInfo.last_ip_location }})
+                    {{ userInfo.last_login_ip }} ({{ LangUtil("人数") }} {{ userInfo.last_login_ip_counts }} / {{
+                        userInfo.last_ip_location
+                    }})
                 </el-form-item>
                 <!-- <el-form-item
                     size="mini"
@@ -55,7 +57,7 @@
                     {{ userInfo.last_ip_location }}
                 </el-form-item> -->
                 <el-form-item size="mini" :label="tableColumns['last_login_device'].name" prop="last_login_device">
-                    {{ userInfo.last_login_device }} ({{ userInfo.login_device_counts }})
+                    {{ userInfo.last_login_device }} ({{ LangUtil("人数") }} {{ userInfo.login_device_counts }})
                 </el-form-item>
                 <!-- <el-form-item
                     size="mini"
