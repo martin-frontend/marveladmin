@@ -495,6 +495,31 @@
                         ></el-input>
                     </div>
                 </el-form-item>
+                <el-form-item size="mini" :label="LangUtil('投注记录')">
+                    <div class="item-content">
+                        <span>{{ tableColumns["bet_log_keep_days"].name }}：</span>
+                        <el-input
+                            class="select"
+                            type="number"
+                            min="0"
+                            max="999"
+                            v-model="form.bet_log_keep_days"
+                            oninput="value=value.replace(/[^\d]/g,'');if(value >999)value=999"
+                        ></el-input>
+                    </div>
+                    <div class="item-content">
+                        <span>{{ tableColumns["bet_log_search_days"].name }}：</span>
+                        <el-input
+                            class="select"
+                            type="number"
+                            min="0"
+                            max="999"
+                            v-model="form.bet_log_search_days"
+                            oninput="value=value.replace(/[^\d]/g,'');if(value >999)value=999"
+                        ></el-input>
+                    </div>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="tableColumns['extends'].name" prop="extends">
                     <div class="editor-container">
                         <json-editor ref="jsonEditor" v-model="form.extends" />

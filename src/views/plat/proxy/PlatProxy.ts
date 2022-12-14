@@ -88,6 +88,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             stake_bonus_model_id: { name: "", options: {} },
             is_show_commission: { name: "显示推广赚钱", options: {} },
             is_gold_exchange: { name: "货币互转", options: {} },
+            bet_log_keep_days: { name: "投注记录保留天数", options: {} },
+            bet_log_search_days: { name: "投注记录搜索天数", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -144,6 +146,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         register_types: [],
         is_show_commission: 1,
         is_gold_exchange: 98,
+        bet_log_keep_days: 0,
+        bet_log_search_days: 0,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -344,6 +348,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             validate_type,
             register_types, //注册方式
             is_show_commission,
+            bet_log_keep_days,
+            bet_log_search_days,
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -384,6 +390,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             validate_type,
             register_types,
             is_show_commission,
+            bet_log_keep_days,
+            bet_log_search_days,
         };
 
         formCopy.app_types = JSON.stringify(formCopy.app_types);
