@@ -20,6 +20,8 @@
             </el-table-column>
             <el-table-column prop="vendor_name" :label="tableColumns['vendor_name'].name" align="center" width="150px">
             </el-table-column>
+            <el-table-column prop="vendor_desc" :label="tableColumns['vendor_desc'].name" align="center" width="150px">
+            </el-table-column>
             <el-table-column prop="gold" :label="tableColumns['gold'].name" align="center" width="200px">
             </el-table-column>
             <el-table-column prop="type" :label="tableColumns['type'].name" align="center" width="120px">

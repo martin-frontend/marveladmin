@@ -44,6 +44,7 @@ export default class PlatVendorsWalletProxy extends AbstractProxy implements IPl
             vendor_id: { name: "厂商ID", options: {} },
             vendor_name: { name: "厂商名称", options: {} },
             currency_type: { name: "结算方式", options: {} },
+            vendor_desc: { name: '厂商描述', options: {} },
         },
         list: <any>[],
         platInfo: {
@@ -286,7 +287,7 @@ export default class PlatVendorsWalletProxy extends AbstractProxy implements IPl
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_vendors_wallet_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**操作-> 设这数据 */
