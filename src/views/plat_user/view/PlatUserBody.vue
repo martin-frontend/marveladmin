@@ -47,7 +47,7 @@
             <el-table-column :label="tableColumns['status'].name" min-width="60px" class-name="status-col">
                 <template slot-scope="{ row }">
                     <el-switch
-                        @change="handleToggle(row.user_id, row.status)"
+                        @change="handleToggle(row.user_id, row.status, row.is_credit_user)"
                         v-model="row.status"
                         :active-value="1"
                         :inactive-value="98"
@@ -175,6 +175,7 @@ import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import Cookies from "js-cookie";
 import WinLossDisplay from "@/components/WinLossDisplay.vue";
+import { MessageBox } from "element-ui";
 
 @Component({
     components: {
@@ -243,8 +244,23 @@ export default class PlatUserBody extends AbstractView {
         this.myProxy.onQuery();
     }
     // 状态切换
-    handleToggle(user_id: number, status: number) {
-        this.myProxy.onToggleStatus(user_id, status);
+    handleToggle(user_id: number, status: number, is_credit_user: number) {
+        if (status == 98 && is_credit_user == 1) {
+            MessageBox.confirm(LangUtil("您是否禁用此帐号，如果禁用，该用户所有下级都禁用"), LangUtil("提示"), {
+                confirmButtonText: LangUtil("确定"),
+                cancelButtonText: LangUtil("取消"),
+                type: "warning",
+                center: true,
+            })
+                .then(() => {
+                    this.myProxy.onToggleStatus(user_id, status);
+                })
+                .catch(() => {
+                    this.myProxy.onQuery();
+                });
+        } else {
+            this.myProxy.onToggleStatus(user_id, status);
+        }
     }
 }
 </script>
