@@ -19,6 +19,16 @@
                 prop="channel_name"
                 align="center"
             ></el-table-column>
+            <el-table-column
+                :label="`${tableColumns.ios_download_link.name}`"
+                prop="ios_download_link"
+                align="center"
+            ></el-table-column>
+            <el-table-column
+                :label="`${tableColumns.android_download_link.name}`"
+                prop="android_download_link"
+                align="center"
+            ></el-table-column>
             <el-table-column :label="`${tableColumns.plat_id.name}`" prop="plat_id" align="center">
                 <template slot-scope="{ row }">
                     {{ tableColumns.plat_id.options[row.plat_id] }}

@@ -39,6 +39,8 @@ export default class PlatChannelProxy extends AbstractProxy implements IPlatChan
             plat_id: { name: "所属平台", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
+            ios_download_link: { name: "ios下载地址", options: {} },
+            android_download_link: { name: "安卓下载地址", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -60,6 +62,8 @@ export default class PlatChannelProxy extends AbstractProxy implements IPlatChan
             // TODO
             channel_name: "",
             plat_id: "",
+            ios_download_link: "",
+            android_download_link: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -107,6 +111,8 @@ export default class PlatChannelProxy extends AbstractProxy implements IPlatChan
             // TODO
             channel_name: "",
             plat_id: "",
+            ios_download_link: "",
+            android_download_link: "",
         });
     }
 
@@ -117,11 +123,13 @@ export default class PlatChannelProxy extends AbstractProxy implements IPlatChan
 
     /**添加数据 */
     onAdd() {
-        const { channel_name, plat_id } = this.dialogData.form;
+        const { channel_name, plat_id, ios_download_link, android_download_link } = this.dialogData.form;
         const formCopy: any = {
             // TODO
             channel_name,
             plat_id,
+            ios_download_link,
+            android_download_link,
         };
         this.sendNotification(HttpType.admin_plat_channel_store, objectRemoveNull(formCopy));
     }
@@ -151,6 +159,6 @@ export default class PlatChannelProxy extends AbstractProxy implements IPlatChan
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_channel_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 }

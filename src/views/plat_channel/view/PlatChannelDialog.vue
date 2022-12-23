@@ -1,6 +1,6 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="450px">
-        <el-form ref="form" :rules="rules" :model="form" label-width="90px" v-loading="net_status.loading">
+    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="550px">
+        <el-form ref="form" :rules="rules" :model="form" label-width="120px" v-loading="net_status.loading">
             <!--  -->
             <el-form-item size="mini" :label="tableColumns['plat_id'].name" prop="plat_id">
                 <el-select v-model="form.plat_id" filterable class="select" :placeholder="LangUtil('请选择')">
@@ -14,6 +14,12 @@
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['channel_name'].name" prop="channel_name">
                 <el-input v-model="form.channel_name" :placeholder="LangUtil('请输入')"></el-input>
+            </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['ios_download_link'].name" prop="ios_download_link">
+                <el-input v-model="form.ios_download_link" :placeholder="LangUtil('请输入')"></el-input>
+            </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['android_download_link'].name" prop="android_download_link">
+                <el-input v-model="form.android_download_link" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <div class="dialog-footer">
                 <el-button
