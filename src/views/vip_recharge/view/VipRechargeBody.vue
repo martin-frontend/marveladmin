@@ -48,7 +48,14 @@
                     style="width: 200px"
                 ></el-input>
             </el-form-item>
-
+            <el-form-item :label="platTableColumns.bonus_multiple.name" prop="bonus_multiple">
+                <el-input
+                    v-model="form.bonus_multiple"
+                    :placeholder="LangUtil('请输入')"
+                    oninput="value=value.replace(/[^\d]/g,'');"
+                    style="width: 200px"
+                ></el-input>
+            </el-form-item>
             <el-form-item :label="LangUtil('备注')" prop="remark">
                 <el-input
                     v-model="form.remark"
@@ -130,7 +137,12 @@ export default class VipRechargeBody extends AbstractView implements IVipRecharg
         (this.$refs["form"] as any & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 // this.$confirm(`您是否要给玩家${this.form.user_id}充值${this.form.amount}金币`, "提示", {
-                let str: any = LangUtil("您是否要给玩家{0}充值{1} {2}", this.form.user_id, this.form.amount, this.listQuery.coin_name_unique);
+                let str: any = LangUtil(
+                    "您是否要给玩家{0}充值{1} {2}",
+                    this.form.user_id,
+                    this.form.amount,
+                    this.listQuery.coin_name_unique
+                );
                 let obj: any = {
                     str1: str,
                     str2: this.LangUtil("提示"),

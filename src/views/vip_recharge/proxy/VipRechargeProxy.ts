@@ -20,7 +20,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
     }
 
     /**离开页面时调用 */
-    leave() {}
+    leave() { }
 
     /**表格相关数据 */
     tableData = {
@@ -34,6 +34,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
             plat_id: { name: "", options: {} },
             coin_name_unique: { name: "", options: {} },
             coin_name_unique_option: {},
+            bonus_multiple: { name: "", options: {} },
         },
     };
 
@@ -62,6 +63,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
             amount: "",
             coin_name_unique: "",
             remark: "",
+            bonus_multiple: 0,
         },
         isRechargeSuccess: +new Date(),
     };
@@ -113,6 +115,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
             user_id: "",
             amount: "",
             remark: "",
+            bonus_multiple: "",
         });
         Object.assign(this.listQuery, {
             plat_id: "",
