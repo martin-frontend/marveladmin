@@ -21,6 +21,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     tableColumns: any = {
         area_code: { name: "手机区号", options: {} },
         avatar: { name: "头像", options: {} },
+        backup_phone: { name: '手机号(选填)', options: {} },
         balance: { name: "账户余额", options: {}, tips: "账户余额=平台余额+厂商钱包金币总和" },
         channel_id: { name: "所属渠道", options: {} },
         created_at: { name: "创建时间", options: {} },
@@ -95,6 +96,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     userInfo = {
         area_code: "",
         avatar: "",
+        backup_phone: "",
         balance: "-",
         channel_id: 0,
         created_at: "",

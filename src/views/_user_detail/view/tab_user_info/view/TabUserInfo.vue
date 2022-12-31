@@ -14,6 +14,9 @@
                 <el-form-item size="mini" :label="tableColumns['user_id'].name" prop="user_id">
                     {{ userInfo.user_id }}
                 </el-form-item>
+                <el-form-item size="mini" :label="tableColumns['backup_phone'].name" prop="backup_phone">
+                    {{ userInfo.backup_phone }}
+                </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['created_at'].name" prop="created_at">
                     {{ userInfo.created_at }}
                 </el-form-item>
