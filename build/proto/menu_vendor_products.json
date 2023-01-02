@@ -1,0 +1,16 @@
+{
+    "name": "游戏类型管理",
+    "description": "游戏类型管理",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766268",
+    "list": [
+        "admin/menu_vendor_products/table_columns",
+        "admin/menu_vendor_products/index",
+        "admin/menu_vendor_products/show/{id}",
+        "admin/menu_vendor_products/store",
+        "admin/menu_vendor_products/update/{id}",
+        "admin/resource/upload",
+        "admin/plat/update/{id}",
+        "admin/plat/show/{id}"
+    ]
+}
+
