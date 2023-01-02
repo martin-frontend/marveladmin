@@ -276,6 +276,12 @@
                             >
                         </div>
                     </div>
+                    <div v-else-if="row.status == 12">
+                        <el-button type="primary" size="small" @click="handleEditRemark({ type: '7', row })">{{
+                            ctrlStr[7]
+                        }}</el-button>
+                        <p>{{ row.updated_by }}</p>
+                    </div>
                     <div v-else>
                         {{ row.updated_by }}
                     </div>
@@ -328,7 +334,7 @@ export default class ExchangeOrdersBody extends AbstractView {
     ctrlStr: any = this.myProxy.ctrlStr;
 
     get width() {
-        let _w: string = "150px";
+        let _w: string = "170px";
         if (Cookies.get("language") === "vi") {
             _w = "250px";
         }
@@ -379,7 +385,8 @@ export default class ExchangeOrdersBody extends AbstractView {
             return false;
         }
 
-        let confirmStr: any = type === "4" ? this.LangUtil("确定平台已付款给该玩家?") : this.LangUtil("是否{0}", this.ctrlStr[type]);
+        let confirmStr: any =
+            type === "4" ? this.LangUtil("确定平台已付款给该玩家?") : this.LangUtil("是否{0}", this.ctrlStr[type]);
         let confitmContent: any = {
             prompt: this.LangUtil("提示"),
             confirm: this.LangUtil("确定"),
@@ -405,7 +412,7 @@ export default class ExchangeOrdersBody extends AbstractView {
             type: type,
             desc: this.ctrlStr[type],
         });
-        this.myProxy.showRemarkDialog();
+        this.myProxy.showRemarkDialog(row.remark);
     }
     /**编辑备注 */
     handerEditRemark(row: any) {
@@ -416,7 +423,7 @@ export default class ExchangeOrdersBody extends AbstractView {
             type: "",
             desc: "",
         });
-        this.myProxy.showRemarkDialog();
+        this.myProxy.showRemarkDialog(row.remark);
     }
     // 自动刷新
     handlerAutoReload(o: any) {

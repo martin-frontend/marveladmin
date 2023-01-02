@@ -48,7 +48,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             payment_method: { name: "", options: <any>{} },
             payment_method_id: { name: "", options: {} },
             plat_id: { name: "", options: {} },
-            receive_payment_type: { name: "", options: {} },
+            receive_payment_type: <any>{ name: "", options: {} },
             remark: { name: "", options: {} },
             status: { name: "", options: {} },
             third_order_no: { name: "", options: {} },
@@ -126,6 +126,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         "4": LangUtil("平台已完成订单"), //平台已完成订单
         "5": LangUtil("更换兑换渠道"), //更换兑换渠道
         "6": LangUtil("冲正"), //冲正
+        "7": LangUtil("订单失败[手动退款]"), //订单失败[手动退款]
     };
 
     /**更换通道弹窗 */
@@ -150,8 +151,9 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         formSource: null,
     };
     /**显示备注弹窗 */
-    showRemarkDialog() {
+    showRemarkDialog(remark: any) {
         this.remarkDialogData.bShow = true;
+        this.remarkDialogData.form.remark = remark;
     }
     /**隐藏备注弹窗 */
     hideRemarkDialog() {
@@ -306,6 +308,13 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
                 // 冲正
                 this.sendNotification(
                     HttpType.admin_exchange_orders_rush,
+                    objectRemoveNull({ id: row.id, remark: row.remark })
+                );
+                break;
+            case "7":
+                // 订单失败[手动退款]
+                this.sendNotification(
+                    HttpType.admin_exchange_orders_manual_refund,
                     objectRemoveNull({ id: row.id, remark: row.remark })
                 );
                 break;

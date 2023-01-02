@@ -8,7 +8,7 @@ import ExchangeOrdersProxy from "../proxy/ExchangeOrdersProxy";
 import ExchangeAutoCheckProxy from "../proxy/ExchangeAutoCheckProxy";
 import i18n from "@/lang";
 
-interface IExchangeOrders extends IEventDispatcher {}
+interface IExchangeOrders extends IEventDispatcher { }
 
 export default class ExchangeOrdersMediator extends AbstractMediator {
     private myProxy: ExchangeOrdersProxy = <any>this.getProxy(ExchangeOrdersProxy);
@@ -44,6 +44,7 @@ export default class ExchangeOrdersMediator extends AbstractMediator {
             EventType.admin_exchange_orders_update_remark,
             EventType.admin_exchange_orders_dispatch,
             EventType.admin_exchange_orders_dispatch_cancel,
+            EventType.admin_exchange_orders_manual_refund,
         ];
     }
 
@@ -120,6 +121,11 @@ export default class ExchangeOrdersMediator extends AbstractMediator {
             case EventType.admin_exchange_orders_dispatch_cancel:
                 Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideDispatchDialog();
+                myProxy.onQuery();
+                break;
+            case EventType.admin_exchange_orders_manual_refund:
+                Message.success(<any>LangUtil("操作成功"));
+                myProxy.hideRemarkDialog();
                 myProxy.onQuery();
                 break;
         }

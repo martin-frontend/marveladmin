@@ -458,6 +458,17 @@
                                 ></el-option>
                             </el-select>
                         </div>
+                        <div>
+                            <span class="title_1">{{ tableColumns["is_exchange_fail_automatic_refund"].name }}</span>
+                            <el-select class="select" v-model="form.is_exchange_fail_automatic_refund">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_exchange_fail_automatic_refund.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
                     </div>
                 </el-form-item>
                 <el-form-item size="mini" :label="LangUtil('金币划转')" prop="">
@@ -673,7 +684,7 @@ export default class PlatDialog extends AbstractView {
     .title_1 {
         margin-left: 32px;
         display: inline-block;
-        width: 100px;
+        width: 120px;
     }
     .title_2 {
         margin-left: 12px;

@@ -88,6 +88,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             stake_bonus_model_id: { name: "", options: {} },
             is_show_commission: { name: "显示推广赚钱", options: {} },
             is_gold_exchange: { name: "货币互转", options: {} },
+            is_exchange_fail_automatic_refund: { name: "", options: {} },
             bet_log_keep_days: { name: "投注记录保留天数", options: {} },
             bet_log_search_days: { name: "投注记录搜索天数", options: {} },
         },
@@ -146,6 +147,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         register_types: [],
         is_show_commission: 1,
         is_gold_exchange: 98,
+        is_exchange_fail_automatic_refund: 98,
         bet_log_keep_days: 0,
         bet_log_search_days: 0,
     };
@@ -461,7 +463,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_update, { plat_id: id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**Vip Model弹窗相关数据 */
@@ -609,7 +611,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                     plat_id: plat_id,
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**显示折扣返佣弹窗 */
@@ -687,7 +689,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                     plat_id: this.allBonusModelDialogData.form.plat_id,
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**取得全盘分红配置 */
