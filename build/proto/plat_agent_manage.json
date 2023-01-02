@@ -1,0 +1,14 @@
+{
+    "name": "代理人员管理",
+    "description": "代理人员管理",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47776701",
+    "list": [
+        "admin/plat_agent_manage/table_columns",
+        "admin/plat_agent_manage/index",
+        "admin/plat_agent_manage/store",
+        "admin/plat_agent_manage/update/{user_id}",
+        "admin/plat_agent_manage/update/user/{customer_user_id}",
+        "admin/plat_agent_manage/delete/{user_id}",
+        "admin/plat_agent_manage/change_bind/{user_id}"
+    ]
+}

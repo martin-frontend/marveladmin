@@ -64,7 +64,7 @@
                         }}</el-button>
                     </div>
                     <div v-else>
-                        <span style="margin-right: 10px">{{ (row.fee_rate * 100) >> 0 }}%</span>
+                        <span style="margin-right: auto">{{ (row.fee_rate * 100) >> 0 }}%</span>
                         <el-button
                             class="item"
                             type="primary"

@@ -1,0 +1,10 @@
+{
+    "name": "人员修改记录",
+    "description": "人员修改记录",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47776663",
+    "list": [
+        "admin/admin_user_log/user/table_columns",
+        "admin/admin_user_log/user/index",
+        "admin/admin_user_log/user/show/{id}"
+    ]
+}

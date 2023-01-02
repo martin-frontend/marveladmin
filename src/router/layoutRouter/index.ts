@@ -770,7 +770,17 @@ const layoutRouter = {
                     /* webpackChunkName: "statistic_user_promotion_days_index" */ "@/views/statistic_user_promotion_days_index/view/StatisticUserPromotionDaysIndex.vue"
                 ),
         },
-    ],
-};
+        {
+            path: "plat_agent_manage",
+            name: "代理人员管理",
+            component: () => import(/* webpackChunkName: "plat_agent_manage" */"@/views/plat_agent_manage/view/PlatAgentManage.vue")
+        },
+        {
+            path: "admin_user_log_user",
+            name: "人员修改记录",
+            component: () => import(/* webpackChunkName: "admin_user_log_user" */"@/views/admin_user_log_user/view/AdminUserLogUser.vue")
+        },
+    ]
+}
 
 export default layoutRouter;
