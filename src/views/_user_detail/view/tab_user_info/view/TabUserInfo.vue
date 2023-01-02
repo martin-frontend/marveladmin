@@ -14,7 +14,12 @@
                 <el-form-item size="mini" :label="tableColumns['user_id'].name" prop="user_id">
                     {{ userInfo.user_id }}
                 </el-form-item>
-                <el-form-item size="mini" :label="tableColumns['backup_phone'].name" prop="backup_phone">
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['backup_phone'].name"
+                    prop="backup_phone"
+                    v-if="!isChannelPlatUser"
+                >
                     {{ userInfo.backup_phone }}
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['created_at'].name" prop="created_at">
@@ -661,7 +666,9 @@ export default class TabUserInfo extends AbstractView {
     }
 
     get isChannelPlatUser() {
-        return this.$route.name == "渠道用户";
+        return (
+            this.$route.name == "渠道用户" || this.$route.name == "渠道代理用户" || this.$route.name == "代理人员管理"
+        );
     }
 }
 </script>
