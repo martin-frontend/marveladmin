@@ -21,7 +21,8 @@
                     {{ userInfo.last_login_at }}
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['register_ip'].name" prop="register_ip">
-                    {{ userInfo.register_ip }} ({{ LangUtil("人数") }} {{ userInfo.register_ip_counts }} / {{ userInfo.register_ip_location }})
+                    {{ userInfo.register_ip }} ({{ LangUtil("人数") }} {{ userInfo.register_ip_counts }} /
+                    {{ userInfo.register_ip_location }})
                 </el-form-item>
                 <!-- <el-form-item
                     size="mini"
@@ -38,9 +39,8 @@
                     {{ userInfo.register_ip_location }}
                 </el-form-item> -->
                 <el-form-item size="mini" :label="tableColumns['last_login_ip'].name" prop="last_login_ip">
-                    {{ userInfo.last_login_ip }} ({{ LangUtil("人数") }} {{ userInfo.last_login_ip_counts }} / {{
-                        userInfo.last_ip_location
-                    }})
+                    {{ userInfo.last_login_ip }} ({{ LangUtil("人数") }} {{ userInfo.last_login_ip_counts }} /
+                    {{ userInfo.last_ip_location }})
                 </el-form-item>
                 <!-- <el-form-item
                     size="mini"
@@ -81,67 +81,72 @@
                 <el-form-item size="mini" :label="tableColumns['total_win'].name" prop="total_win">
                     {{ userInfo.total_win }}
                 </el-form-item>
+                <template v-if="!isChannelPlatUser">
+                    <el-form-item size="mini" :label="tableColumns['is_gold_exchange'].name" prop="is_gold_exchange">
+                        <el-switch
+                            @change="onSwitchGoldExchange()"
+                            v-model="userInfo.is_gold_exchange"
+                            :active-value="1"
+                            :inactive-value="98"
+                        ></el-switch>
+                    </el-form-item>
 
-                <el-form-item size="mini" :label="tableColumns['is_gold_exchange'].name" prop="is_gold_exchange">
-                    <el-switch
-                        @change="onSwitchGoldExchange()"
-                        v-model="userInfo.is_gold_exchange"
-                        :active-value="1"
-                        :inactive-value="98"
-                    ></el-switch>
-                </el-form-item>
+                    <el-form-item size="mini" :label="tableColumns['is_credit_user'].options[1]" prop="is_credit_user">
+                        <el-switch
+                            @change="onSwitchCreditUser()"
+                            v-model="userInfo.is_credit_user"
+                            :active-value="1"
+                            :inactive-value="98"
+                        ></el-switch>
+                    </el-form-item>
 
-                <el-form-item size="mini" :label="tableColumns['is_credit_user'].options[1]" prop="is_credit_user">
-                    <el-switch
-                        @change="onSwitchCreditUser()"
-                        v-model="userInfo.is_credit_user"
-                        :active-value="1"
-                        :inactive-value="98"
-                    ></el-switch>
-                </el-form-item>
-
-                <el-form-item
-                    size="mini"
-                    :label="tableColumns['show_credit_statistic'].name"
-                    prop="show_credit_statistic"
-                >
-                    <el-switch
-                        @change="onSwitchCreditStatistic()"
-                        v-model="userInfo.show_credit_statistic"
-                        :active-value="1"
-                        :inactive-value="98"
-                    ></el-switch>
-                </el-form-item>
-
-                <el-form-item size="mini" :label="tableColumns['credit_rate'].name" prop="credit_rate">
-                    <el-input disabled v-model="userInfo.credit_rate" style="width: 100px"></el-input>%
-                    <el-button
-                        class="item"
-                        type="primary"
-                        @click="handlerEdit('credit_rate')"
-                        style="margin-left: 20px"
+                    <el-form-item
+                        size="mini"
+                        :label="tableColumns['show_credit_statistic'].name"
+                        prop="show_credit_statistic"
                     >
-                        {{ LangUtil("编辑") }}
-                    </el-button>
-                </el-form-item>
+                        <el-switch
+                            @change="onSwitchCreditStatistic()"
+                            v-model="userInfo.show_credit_statistic"
+                            :active-value="1"
+                            :inactive-value="98"
+                        ></el-switch>
+                    </el-form-item>
 
-                <el-form-item size="mini" :label="tableColumns['show_credit_report'].name" prop="show_credit_report">
-                    <el-switch
-                        @change="onSwitchCreditReport()"
-                        v-model="userInfo.show_credit_report"
-                        :active-value="1"
-                        :inactive-value="98"
-                    ></el-switch>
-                </el-form-item>
+                    <el-form-item size="mini" :label="tableColumns['credit_rate'].name" prop="credit_rate">
+                        <el-input disabled v-model="userInfo.credit_rate" style="width: 100px"></el-input>%
+                        <el-button
+                            class="item"
+                            type="primary"
+                            @click="handlerEdit('credit_rate')"
+                            style="margin-left: 20px"
+                        >
+                            {{ LangUtil("编辑") }}
+                        </el-button>
+                    </el-form-item>
 
-                <el-form-item size="mini" :label="tableColumns['show_credit_set'].name" prop="show_credit_set">
-                    <el-switch
-                        @change="onSwitchCreditSet()"
-                        v-model="userInfo.show_credit_set"
-                        :active-value="1"
-                        :inactive-value="98"
-                    ></el-switch>
-                </el-form-item>
+                    <el-form-item
+                        size="mini"
+                        :label="tableColumns['show_credit_report'].name"
+                        prop="show_credit_report"
+                    >
+                        <el-switch
+                            @change="onSwitchCreditReport()"
+                            v-model="userInfo.show_credit_report"
+                            :active-value="1"
+                            :inactive-value="98"
+                        ></el-switch>
+                    </el-form-item>
+
+                    <el-form-item size="mini" :label="tableColumns['show_credit_set'].name" prop="show_credit_set">
+                        <el-switch
+                            @change="onSwitchCreditSet()"
+                            v-model="userInfo.show_credit_set"
+                            :active-value="1"
+                            :inactive-value="98"
+                        ></el-switch>
+                    </el-form-item>
+                </template>
             </el-form>
 
             <el-form ref="form" label-position="left" label-width="130px" :model="userInfo">
@@ -152,7 +157,7 @@
                         type="primary"
                         @click="handlerEdit('real_name')"
                         style="margin-left: 20px"
-                        v-if="checkUnique(unique.plat_user_update_real_name)"
+                        v-if="checkUnique(unique.plat_user_update_real_name) && !isChannelPlatUser"
                     >
                         {{ LangUtil("编辑") }}
                     </el-button>
@@ -164,12 +169,12 @@
                         type="primary"
                         @click="handlerEdit('nick_name')"
                         style="margin-left: 20px"
-                        v-if="checkUnique(unique.plat_user_update_phone)"
+                        v-if="checkUnique(unique.plat_user_update_phone) && !isChannelPlatUser"
                     >
                         {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
-                <el-form-item size="mini" :label="tableColumns['phone'].name" prop="phone">
+                <el-form-item size="mini" :label="tableColumns['phone'].name" prop="phone" v-if="!isChannelPlatUser">
                     <el-input
                         disabled
                         v-model="userInfo.phone"
@@ -201,7 +206,7 @@
                         type="primary"
                         @click="handlerEdit('email')"
                         style="margin-left: 20px"
-                        v-if="checkUnique(unique.plat_user_update_email)"
+                        v-if="checkUnique(unique.plat_user_update_email) && !isChannelPlatUser"
                     >
                         {{ LangUtil("编辑") }}
                     </el-button>
@@ -213,6 +218,7 @@
                         type="primary"
                         @click="handlerEdit('pretty_user_id')"
                         style="margin-left: 20px"
+                        v-if="!isChannelPlatUser"
                     >
                         {{ LangUtil("编辑") }}
                     </el-button>
@@ -248,7 +254,7 @@
                         type="primary"
                         @click="handlerEdit('password')"
                         style="margin-left: 20px"
-                        v-if="checkUnique(unique.plat_user_update_password)"
+                        v-if="checkUnique(unique.plat_user_update_password) && !isChannelPlatUser"
                     >
                         {{ LangUtil("编辑") }}
                     </el-button>
@@ -277,195 +283,201 @@
                         {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
-                <div class="row_display">
-                    <el-form-item size="mini" :label="tableColumns['status'].name" prop="status">
-                        <el-switch
-                            @change="onSwitch()"
-                            v-model="userInfo.status"
-                            :active-value="1"
-                            :inactive-value="98"
-                        ></el-switch>
-                    </el-form-item>
-                    <el-form-item
-                        size="mini"
-                        label-width="120px"
-                        :label="LangUtil('清除缓存')"
-                        prop="status"
-                        class="btn"
-                    >
-                        <el-button
-                            type="primary"
-                            @click="handlerClear()"
-                            v-if="checkUnique(unique.plat_user_clear_cache)"
+                <template v-if="!isChannelPlatUser">
+                    <div class="row_display">
+                        <el-form-item size="mini" :label="tableColumns['status'].name" prop="status">
+                            <el-switch
+                                @change="onSwitch()"
+                                v-model="userInfo.status"
+                                :active-value="1"
+                                :inactive-value="98"
+                            ></el-switch>
+                        </el-form-item>
+                        <el-form-item
+                            size="mini"
+                            label-width="120px"
+                            :label="LangUtil('清除缓存')"
+                            prop="status"
+                            class="btn"
                         >
-                            {{ LangUtil("清除") }}
-                        </el-button>
-                    </el-form-item>
-                </div>
-                <!-- <div class="row_display">
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['is_promotion_statistics_display'].name"
-                        prop="is_promotion_statistics_display"
-                    >
-                        <el-switch
-                            @change="onSwitchPromotion()"
-                            v-model="userInfo.is_promotion_statistics_display"
-                            :active-value="1"
-                            :inactive-value="0"
-                        ></el-switch>
-                    </el-form-item>
+                            <el-button
+                                type="primary"
+                                @click="handlerClear()"
+                                v-if="checkUnique(unique.plat_user_clear_cache)"
+                            >
+                                {{ LangUtil("清除") }}
+                            </el-button>
+                        </el-form-item>
+                    </div>
+                    <!-- <div class="row_display">
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['is_promotion_statistics_display'].name"
+                            prop="is_promotion_statistics_display"
+                        >
+                            <el-switch
+                                @change="onSwitchPromotion()"
+                                v-model="userInfo.is_promotion_statistics_display"
+                                :active-value="1"
+                                :inactive-value="0"
+                            ></el-switch>
+                        </el-form-item>
+
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['is_channel_statistic_display'].name"
+                            prop="is_channel_statistic_display"
+                            class="second"
+                        >
+                            <label slot="label">
+                                <el-tooltip placement="top-start">
+                                    <div slot="content">{{ LangUtil('客户端APP是否展示渠道统计数据') }}</div>
+                                    <i class="el-icon-question" />
+                                </el-tooltip>
+                                {{ tableColumns["is_channel_statistic_display"].name }}
+                            </label>
+                            <el-switch
+                                @change="onSwitchChannel()"
+                                v-model="userInfo.is_channel_statistic_display"
+                                :active-value="1"
+                                :inactive-value="0"
+                            ></el-switch>
+                        </el-form-item>
+                    </div> -->
+
+                    <div class="row_display">
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['is_receive_commission'].name"
+                            prop="is_receive_commission"
+                        >
+                            <el-switch
+                                @change="onSwitchCommission()"
+                                v-model="userInfo.is_receive_commission"
+                                :active-value="1"
+                                :inactive-value="98"
+                            ></el-switch>
+                        </el-form-item>
+
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['is_check_gold_water'].name"
+                            prop="is_check_gold_water"
+                            class="second"
+                        >
+                            <el-switch
+                                @change="onSwitchGold_water()"
+                                v-model="userInfo.is_check_gold_water"
+                                :active-value="1"
+                                :inactive-value="98"
+                            ></el-switch>
+                        </el-form-item>
+                    </div>
+
+                    <div class="row_display">
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['is_exchange_order_auto_check'].name"
+                            prop="is_exchange_order_auto_check"
+                        >
+                            <el-switch
+                                @change="onSwitchExchange_order_auto_check()"
+                                v-model="userInfo.is_exchange_order_auto_check"
+                                :active-value="1"
+                                :inactive-value="98"
+                            ></el-switch>
+                        </el-form-item>
+
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['is_can_game'].name"
+                            prop="is_can_game"
+                            class="second"
+                        >
+                            <el-switch
+                                @change="onSwitchCan_game()"
+                                v-model="userInfo.is_can_game"
+                                :active-value="1"
+                                :inactive-value="98"
+                            ></el-switch>
+                        </el-form-item>
+                    </div>
+
+                    <div class="row_display">
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['is_receive_reward'].name"
+                            prop="is_receive_reward"
+                            class="second"
+                        >
+                            <el-switch
+                                @change="onSwitchReceive_reward()"
+                                v-model="userInfo.is_receive_reward"
+                                :active-value="1"
+                                :inactive-value="98"
+                            ></el-switch>
+                        </el-form-item>
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['is_gold_transfer'].name"
+                            prop="is_gold_transfer"
+                            class="second"
+                        >
+                            <el-switch
+                                @change="onSwitchGold_transfer()"
+                                v-model="userInfo.is_gold_transfer"
+                                :active-value="1"
+                                :inactive-value="98"
+                            ></el-switch>
+                        </el-form-item>
+                    </div>
+
+                    <div class="row_display">
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['is_login_need_google'].name"
+                            prop="is_login_need_google"
+                        >
+                            <el-switch
+                                @change="onSwitchLogin_need_google()"
+                                v-model="userInfo.is_login_need_google"
+                                :active-value="1"
+                                :inactive-value="0"
+                            ></el-switch>
+                        </el-form-item>
+                        <el-form-item
+                            size="mini"
+                            label-width="120px"
+                            :label="LangUtil('清除谷歌验证码')"
+                            prop="status"
+                            class="btn"
+                        >
+                            <el-button type="primary" @click="handlerGoogleClear()">
+                                {{ LangUtil("清除") }}
+                            </el-button>
+                        </el-form-item>
+                    </div>
 
                     <el-form-item
                         size="mini"
-                        :label="tableColumns['is_channel_statistic_display'].name"
-                        prop="is_channel_statistic_display"
-                        class="second"
+                        :label="tableColumns.gold_columns_disable.name"
+                        prop="gold_columns_disable"
                     >
                         <label slot="label">
                             <el-tooltip placement="top-start">
-                                <div slot="content">{{ LangUtil('客户端APP是否展示渠道统计数据') }}</div>
+                                <div slot="content">{{ LangUtil("客户端APP金币明细,屏蔽该选择类型选项") }}</div>
                                 <i class="el-icon-question" />
                             </el-tooltip>
-                            {{ tableColumns["is_channel_statistic_display"].name }}
+                            {{ tableColumns.gold_columns_disable.name }}
                         </label>
-                        <el-switch
-                            @change="onSwitchChannel()"
-                            v-model="userInfo.is_channel_statistic_display"
-                            :active-value="1"
-                            :inactive-value="0"
-                        ></el-switch>
+                        <div class="gold_columns">
+                            <div class="content">{{ userInfo.gold_columns_disable_list }}</div>
+                            <el-button class="btn" type="primary" @click="handlerEdit('gold_columns_disable')">
+                                {{ LangUtil("编辑") }}
+                            </el-button>
+                        </div>
                     </el-form-item>
-                </div> -->
-
-                <div class="row_display">
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['is_receive_commission'].name"
-                        prop="is_receive_commission"
-                    >
-                        <el-switch
-                            @change="onSwitchCommission()"
-                            v-model="userInfo.is_receive_commission"
-                            :active-value="1"
-                            :inactive-value="98"
-                        ></el-switch>
-                    </el-form-item>
-
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['is_check_gold_water'].name"
-                        prop="is_check_gold_water"
-                        class="second"
-                    >
-                        <el-switch
-                            @change="onSwitchGold_water()"
-                            v-model="userInfo.is_check_gold_water"
-                            :active-value="1"
-                            :inactive-value="98"
-                        ></el-switch>
-                    </el-form-item>
-                </div>
-
-                <div class="row_display">
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['is_exchange_order_auto_check'].name"
-                        prop="is_exchange_order_auto_check"
-                    >
-                        <el-switch
-                            @change="onSwitchExchange_order_auto_check()"
-                            v-model="userInfo.is_exchange_order_auto_check"
-                            :active-value="1"
-                            :inactive-value="98"
-                        ></el-switch>
-                    </el-form-item>
-
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['is_can_game'].name"
-                        prop="is_can_game"
-                        class="second"
-                    >
-                        <el-switch
-                            @change="onSwitchCan_game()"
-                            v-model="userInfo.is_can_game"
-                            :active-value="1"
-                            :inactive-value="98"
-                        ></el-switch>
-                    </el-form-item>
-                </div>
-
-                <div class="row_display">
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['is_receive_reward'].name"
-                        prop="is_receive_reward"
-                        class="second"
-                    >
-                        <el-switch
-                            @change="onSwitchReceive_reward()"
-                            v-model="userInfo.is_receive_reward"
-                            :active-value="1"
-                            :inactive-value="98"
-                        ></el-switch>
-                    </el-form-item>
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['is_gold_transfer'].name"
-                        prop="is_gold_transfer"
-                        class="second"
-                    >
-                        <el-switch
-                            @change="onSwitchGold_transfer()"
-                            v-model="userInfo.is_gold_transfer"
-                            :active-value="1"
-                            :inactive-value="98"
-                        ></el-switch>
-                    </el-form-item>
-                </div>
-
-                <div class="row_display">
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['is_login_need_google'].name"
-                        prop="is_login_need_google"
-                    >
-                        <el-switch
-                            @change="onSwitchLogin_need_google()"
-                            v-model="userInfo.is_login_need_google"
-                            :active-value="1"
-                            :inactive-value="0"
-                        ></el-switch>
-                    </el-form-item>
-                    <el-form-item
-                        size="mini"
-                        label-width="120px"
-                        :label="LangUtil('清除谷歌验证码')"
-                        prop="status"
-                        class="btn"
-                    >
-                        <el-button type="primary" @click="handlerGoogleClear()">
-                            {{ LangUtil("清除") }}
-                        </el-button>
-                    </el-form-item>
-                </div>
-
-                <el-form-item size="mini" :label="tableColumns.gold_columns_disable.name" prop="gold_columns_disable">
-                    <label slot="label">
-                        <el-tooltip placement="top-start">
-                            <div slot="content">{{ LangUtil("客户端APP金币明细,屏蔽该选择类型选项") }}</div>
-                            <i class="el-icon-question" />
-                        </el-tooltip>
-                        {{ tableColumns.gold_columns_disable.name }}
-                    </label>
-                    <div class="gold_columns">
-                        <div class="content">{{ userInfo.gold_columns_disable_list }}</div>
-                        <el-button class="btn" type="primary" @click="handlerEdit('gold_columns_disable')">
-                            {{ LangUtil("编辑") }}
-                        </el-button>
-                    </div>
-                </el-form-item>
+                </template>
 
                 <el-form-item size="mini" :label="tableColumns['remark'].name" prop="remark">
                     <div class="remark_group">
@@ -643,6 +655,10 @@ export default class TabUserInfo extends AbstractView {
 
     destroyed() {
         super.destroyed();
+    }
+
+    get isChannelPlatUser() {
+        return this.$route.name == "渠道用户";
     }
 }
 </script>
