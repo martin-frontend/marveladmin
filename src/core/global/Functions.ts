@@ -114,7 +114,7 @@ export function moneyFormat(s: any, symbol: string = "¥"): string {
  */
 export function generateUUID() {
     var d = new Date().getTime();
-    var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+    var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
         var r = (d + Math.random() * 16) % 16 | 0;
         d = Math.floor(d / 16);
         return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
@@ -229,6 +229,16 @@ export function checkPhone(value: string): boolean {
     // const Regx = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
     const Regx = /^[1-9]+[0-9]*]*$/;
     return value.length >= 7 && value.length <= 11 && Regx.test(value);
+}
+
+/**
+ * 验证手机号是否合法
+ * @param value
+ */
+export function checkPhoneSms(value: string): boolean {
+    // const Regx = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
+    const Regx = /^[1-9]+[0-9]*]*$/;
+    return value.length >= 7 && Regx.test(value);
 }
 
 /**
@@ -460,8 +470,8 @@ export function inputOnlyPositive(e: any) {
     return true;
 }
 // 首字大写
-String.prototype.firstUpperCase = function() {
-    return this.replace(/^\S/, function(s) {
+String.prototype.firstUpperCase = function () {
+    return this.replace(/^\S/, function (s) {
         return s.toUpperCase();
     });
 };

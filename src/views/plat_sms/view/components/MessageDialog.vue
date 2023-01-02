@@ -2,12 +2,7 @@
     <el-dialog :title="LangUtil('短信测试')" :visible="myProxy.messageDialogData.bShow" width="500px" @close="hide">
         <el-form ref="refForm" :rules="rules" :model="form">
             <el-form-item :label="LangUtil('输入接受测试短信手机号码')" prop="mobile">
-                <el-input
-                    clearable
-                    maxlength="11"
-                    :placeholder="LangUtil('请输入手机号码')"
-                    v-model="form.mobile"
-                ></el-input>
+                <el-input clearable :placeholder="LangUtil('请输入手机号码')" v-model="form.mobile"></el-input>
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button @click="onConfirm" class="item" type="primary" icon="">{{ LangUtil("确定") }}</el-button>
@@ -22,7 +17,7 @@ import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
 import PlatSmsProxy from "../../proxy/PlatSmsProxy";
 import GlobalVar from "@/core/global/GlobalVar";
-import { checkPhone } from "@/core/global/Functions";
+import { checkPhoneSms } from "@/core/global/Functions";
 
 @Component
 export default class MessageDialog extends AbstractView {
@@ -43,7 +38,7 @@ export default class MessageDialog extends AbstractView {
     onConfirm() {
         (this.$refs["refForm"] as any & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
-                if (!checkPhone(this.form.mobile)) {
+                if (!checkPhoneSms(this.form.mobile)) {
                     let error: any = this.LangUtil("请输入正确的手机号码");
                     this.$message({
                         type: "error",
