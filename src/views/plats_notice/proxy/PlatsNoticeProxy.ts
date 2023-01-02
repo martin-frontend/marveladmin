@@ -49,6 +49,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             type_position: { name: "位置类型", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
+            video_uris: { name: "视频播放URL地址", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -83,6 +84,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             thumbnail_urls: "",
             languages: [],
             type_position: "",
+            video_uris: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -128,6 +130,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.form.open_mode = this.dialogData.form.open_mode.toString();
         this.appType = data.app_types[0].toString();
+        this.dialogData.form.video_uris = this.dialogData.form.video_uris[this.appType];
     }
 
     /**显示弹窗 */
@@ -170,6 +173,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             language: null,
             type_position: "",
             languages: [],
+            video_uris: "",
         });
     }
 
@@ -195,20 +199,31 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             thumbnail_urls,
             languages,
             type_position,
+            video_uris,
         } = this.dialogData.form;
         app_types = JSON.stringify(app_types);
         img_uris = JSON.stringify(img_uris);
         img_urls = JSON.stringify(img_urls);
         thumbnail_uris = JSON.stringify(thumbnail_uris);
         thumbnail_urls = JSON.stringify(thumbnail_urls);
+        video_uris = JSON.stringify({ [this.appType]: video_uris });
         if (type == 1) {
             img_uris = "";
             img_urls = "";
             thumbnail_uris = "";
             thumbnail_urls = "";
+            video_uris = "";
         }
         if (type == 2) {
             content = "";
+            video_uris = "";
+        }
+        if (type == 3) {
+            content = "";
+            img_uris = "";
+            img_urls = "";
+            thumbnail_uris = "";
+            thumbnail_urls = "";
         }
         const formCopy: any = {
             // TODO
@@ -227,6 +242,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             thumbnail_urls,
             languages: jsonStringify(languages),
             type_position,
+            video_uris,
         };
 
         this.sendNotification(HttpType.admin_plats_notice_store, objectRemoveNull(formCopy));
@@ -239,8 +255,10 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             formCopy = objectRemoveNull(this.tableCtrlData);
             console.log(formCopy);
         } else {
+            const { type } = this.dialogData.form;
             // 删除多余无法去除的参数
             formCopy = formCompared(this.dialogData.form, this.dialogData.formSource);
+
             // 如果没有修改，就直接关闭弹窗
             if (Object.keys(formCopy).length == 0) {
                 this.dialogData.bShow = false;
@@ -254,9 +272,28 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                 formCopy.start_time = this.dialogData.form.start_time;
             }
 
+            if (type == 1) {
+                formCopy.img_uris = "";
+                formCopy.img_urls = "";
+                formCopy.thumbnail_uris = "";
+                formCopy.thumbnail_urls = "";
+                formCopy.video_uris = "";
+            }
+            if (type == 2) {
+                formCopy.content = "";
+                formCopy.video_uris = "";
+            }
+            if (type == 3) {
+                formCopy.content = "";
+                formCopy.img_uris = "";
+                formCopy.img_urls = "";
+                formCopy.thumbnail_uris = "";
+                formCopy.thumbnail_urls = "";
+                formCopy.video_uris = JSON.stringify({ [this.appType]: formCopy.video_uris });
+            }
+
             formCopy.id = this.dialogData.form.id;
         }
-        console.warn(formCopy);
 
         this.sendNotification(HttpType.admin_plats_notice_update, formCopy);
     }

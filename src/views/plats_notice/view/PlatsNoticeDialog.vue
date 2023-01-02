@@ -1,6 +1,6 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
-        <el-form ref="form" :rules="rules" :model="form" label-width="120px" v-loading="net_status.loading">
+        <el-form ref="form" :rules="rules" :model="form" label-width="140px" v-loading="net_status.loading">
             <!--  -->
             <el-form-item size="mini" :label="LangUtil('发布平台')" prop="plat_id">
                 <el-select v-model="form.plat_id" :placeholder="LangUtil('请选择')" filterable style="width: 300px">
@@ -247,6 +247,10 @@
                     <!-- 多语言图片 -->
                     {{ LangUtil("多语言图片") }}
                 </el-button>
+            </el-form-item>
+
+            <el-form-item size="mini" :label="tableColumns['video_uris'].name" prop="video_uris"  v-if="form.type == 3">
+                <el-input v-model="form.video_uris" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
 
             <el-form-item class="dialog-footer">
