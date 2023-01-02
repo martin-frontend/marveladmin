@@ -127,7 +127,7 @@
                 width="200px"
             >
             </el-table-column>
-            <el-table-column v-if="show_is_agent_bonus" :label="tableColumns.is_agent_bonus.name" width="150px">
+            <!-- <el-table-column v-if="show_is_agent_bonus" :label="tableColumns.is_agent_bonus.name" width="150px">
                 <template slot-scope="scope">
                     <div class="agent_bonus" v-if="scope.row.agent_bonus_status != 0">
                         <el-switch
@@ -144,8 +144,8 @@
                         </template>
                     </div>
                 </template>
-            </el-table-column>
-            <el-table-column :label="LangUtil('操作')" :min-width="width" align="center">
+            </el-table-column> -->
+            <!-- <el-table-column :label="LangUtil('操作')" :min-width="width" align="center">
                 <template slot-scope="{ row }">
                     <el-button
                         v-if="checkUnique(unique.plat_agent_bonus_config_show)"
@@ -167,7 +167,7 @@
                         {{ LangUtil("绑定") }}
                     </el-button>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
         </el-table>
         <Pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch" />
     </div>
@@ -175,88 +175,37 @@
 <script lang="ts">
 import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
-import { Component, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
-import PlatAgentBindProxy from "../proxy/PlatAgentBindProxy";
+import PlatAgentManageBindProxy from "../proxy/PlatAgentManageBindProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import Cookies from "js-cookie";
-import { MessageBox } from "element-ui";
-import i18n from "@/lang";
 
 @Component({
     components: {
         Pagination,
     },
 })
-export default class PlatAgentBindBody extends AbstractView {
+export default class PlatAgentManageBindBody extends AbstractView {
     LangUtil = LangUtil;
     //权限标识
-    unique = unique;
-    checkUnique = checkUnique;
+    private unique = unique;
+    private checkUnique = checkUnique;
     //网络状态
-    net_status = GlobalVar.net_status;
+    private net_status = GlobalVar.net_status;
     // proxy
-    myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
+    private myProxy: PlatAgentManageBindProxy = this.getProxy(PlatAgentManageBindProxy);
     // proxy property
-    tableColumns = this.myProxy.tableData.columns;
-    tableData = this.myProxy.tableData.list;
-    pageInfo = this.myProxy.tableData.pageInfo;
-    listQuery = this.myProxy.listQuery;
-    agentBonusData = this.myProxy.agentBonusDialogData.form;
+    private tableColumns = this.myProxy.tableData.columns;
+    private tableData = this.myProxy.tableData.list;
+    private pageInfo = this.myProxy.tableData.pageInfo;
+    private listQuery = this.myProxy.listQuery;
 
-    get show_is_agent_bonus() {
-        return this.myProxy.tableData.extra_info.show_is_agent_bonus;
-    }
-
-    handlerPageSwitch(page: number) {
+    private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
-    }
-
-    handlerPromotionFloor(row: any) {
-        this.myProxy.promotionFloorDialogData.user_id = row.user_id;
-        this.myProxy.showSettingDialog(DialogStatus.create);
-    }
-
-    handlerBind(row: any) {
-        this.myProxy.showBindDialog(row);
-    }
-
-    onSwitchAgentBonus(row: any) {
-        if (row.is_agent_bonus == 98) {
-            const str: any = LangUtil("该操作会清空所有直属分红比例，确认关闭总代分红吗？");
-            MessageBox.confirm(str)
-                .then(() => {
-                    this.updateAgentBonus(row);
-                })
-                .catch(() => {
-                    row.is_agent_bonus = 1;
-                });
-        } else {
-            this.updateAgentBonus(row);
-        }
-    }
-
-    updateAgentBonus(row: any) {
-        this.myProxy.agentBonusDialogData.form.user_id = row.user_id;
-        this.myProxy.agentBonusDialogData.form.is_agent_bonus = row.is_agent_bonus;
-        this.myProxy.updateAgentBonus();
-    }
-
-    // 分红比例弹窗
-    showAgentBonusDialog(row: any) {
-        this.myProxy.agentBonusDialogData.form.user_id = row.user_id;
-        this.myProxy.agentBonusDialogData.form.agent_bonus_rate = row.agent_bonus_rate;
-        this.myProxy.agentBonusDialogData.bShow = true;
-    }
-
-    // 分红统计弹窗
-    showBonusConifgDialog(row: any) {
-        this.myProxy.bonusConfigDialogData.bShow = true;
-        this.myProxy.api_admin_plat_agent_bonus_config_table_columns();
-        this.myProxy.api_admin_plat_agent_bonus_config_show(row.user_id);
     }
 
     // 打开用户详情
@@ -285,10 +234,4 @@ export default class PlatAgentBindBody extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
-
-.agent_bonus {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
 </style>

@@ -57,7 +57,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
-import PlatAgentBindProxy from "../proxy/PlatAgentBindProxy";
+import PlatAgentManageBindProxy from "../proxy/PlatAgentManageBindProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SearchSelect from "@/components/SearchSelect.vue";
@@ -73,18 +73,18 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
         SearchRange,
     },
 })
-export default class PlatAgentBindHeader extends AbstractView {
+export default class PlatAgentManageBindHeader extends AbstractView {
     LangUtil = LangUtil;
     //权限标识
-    unique = unique;
-    checkUnique = checkUnique;
+    private unique = unique;
+    private checkUnique = checkUnique;
     // proxy
-    myProxy: PlatAgentBindProxy = this.getProxy(PlatAgentBindProxy);
+    private myProxy: PlatAgentManageBindProxy = this.getProxy(PlatAgentManageBindProxy);
     // proxy property
-    tableColumns = this.myProxy.tableData.columns;
-    listQuery = this.myProxy.listQuery;
+    private tableColumns = this.myProxy.tableData.columns;
+    private listQuery = this.myProxy.listQuery;
 
-    handlerSearch() {
+    private handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
@@ -99,7 +99,7 @@ export default class PlatAgentBindHeader extends AbstractView {
         });
     }
 
-    handlerReset() {
+    private handlerReset() {
         this.myProxy.resetListQuery();
     }
 }

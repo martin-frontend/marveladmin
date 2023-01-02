@@ -266,6 +266,12 @@ const layoutRouter = {
                 import(/* webpackChunkName: "plat_agent_bind" */ "@/views/plat_agent_bind/view/PlatAgentBind.vue"),
         },
         {
+            path: "plat_agent_manage_bind",
+            name: "渠道代理用户",
+            component: () =>
+                import(/* webpackChunkName: "plat_agent_manage_bind" */"@/views/plat_agent_manage_bind/view/PlatAgentManageBind.vue"),
+        },
+        {
             path: "plat_agent_bonus",
             name: "总代分红",
             component: () =>

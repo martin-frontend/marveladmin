@@ -1,0 +1,9 @@
+{
+    "name": "渠道代理用户",
+    "description": "渠道代理用户",
+    "document": "",
+    "list": [
+        "admin/plat_agent_manage_bind/table_columns",
+        "admin/plat_agent_manage_bind/index"
+    ]
+}
