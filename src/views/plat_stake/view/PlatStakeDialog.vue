@@ -1,7 +1,34 @@
 <template>
     <el-dialog :title="title" :visible.sync="myProxy.dialogData.bShow" width="500px">
         <el-form ref="form" :rules="rules" :model="form" label-width="180px" v-loading="net_status.loading">
-            <el-form-item :label="`${tableColumns.put_in_ratio.name}%`" prop="put_in_ratio">
+            <el-form-item :label="`${tableColumns.stake_coin_name_unique.name}`" prop="stake_coin_name_unique">
+                <el-select v-model="form.stake_coin_name_unique_options" filterable :placeholder="LangUtil('请选择')">
+                    <el-option
+                        v-for="(value, key) in tableColumns.stake_coin_name_unique_options"
+                        :key="key"
+                        :label="value"
+                        :value="key"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item :label="`${tableColumns.bonus_coin_name_unique.name}`" prop="bonus_coin_name_unique">
+                <el-select v-model="form.bonus_coin_name_unique_options" filterable :placeholder="LangUtil('请选择')">
+                    <el-option
+                        v-for="(value, key) in tableColumns.bonus_coin_name_unique_options"
+                        :key="key"
+                        :label="value"
+                        :value="key"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item :label="`${tableColumns.bonus_coin_scale.name}`" prop="bonus_coin_scale">
+                <el-input
+                    v-model="form.bonus_coin_scale"
+                    :placeholder="LangUtil('请输入')"
+                    style="width: 200px"
+                ></el-input>
+            </el-form-item>
+            <el-form-item :label="`${tableColumns.put_in_ratio.name}`" prop="put_in_ratio">
                 <el-input-number v-model="form.put_in_ratio" :min="0" :max="100" :step="1"></el-input-number>
             </el-form-item>
             <el-form-item :label="`${tableColumns.put_out_ratio.name}%`" prop="put_out_ratio">

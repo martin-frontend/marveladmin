@@ -4,7 +4,7 @@
             :title="tableColumns.plat_id.name"
             v-model="listQuery.plat_id"
             :options="tableColumns.plat_id.options"
-            @change="handlerSearch"
+            @change="handlerSearch(), changePlat()"
             :clearable="false"
         />
         <el-row class="analystics">
@@ -88,6 +88,7 @@ export default class PlatStakeHeader extends AbstractView {
     tableColumns = this.myProxy.stakeLogtableData.columns;
     listQuery = this.myProxy.listQuery;
     span: number = 5;
+    form = this.myProxy.dialogData.form;
 
     get stake_config() {
         return this.myProxy.stake_bonus_config;
@@ -98,6 +99,18 @@ export default class PlatStakeHeader extends AbstractView {
     }
     handlerSetting() {
         this.myProxy.showBonusConfigDialog();
+    }
+
+    //更换平台切换
+    changePlat() {
+        this.form.bonus_coin_name_unique_options = "";
+        this.form.stake_coin_name_unique_options = "";
+        this.tableColumns.bonus_coin_name_unique_options = this.tableColumns.bonus_coin_name_unique.options[
+            this.listQuery.plat_id
+        ];
+        this.tableColumns.stake_coin_name_unique_options = this.tableColumns.stake_coin_name_unique.options[
+            this.listQuery.plat_id
+        ];
     }
 }
 </script>

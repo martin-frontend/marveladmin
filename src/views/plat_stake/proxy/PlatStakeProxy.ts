@@ -1,4 +1,5 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
+import LangConfig from "@/core/config/LangConfig";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import GlobalEventType from "@/core/global/GlobalEventType";
@@ -38,6 +39,9 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             manual_withdraw_stake_fee: 0, // 手动解质押费
             min_coin_count: 0, // 最小质押解质押金额
             is_open_stake: 0, // 是否允许质押
+            bonus_coin_name_unique_options: "",
+            stake_coin_name_unique_options: "",
+            bonus_coin_scale: 0,
         },
     };
     /**质押分红配置 */
@@ -48,6 +52,11 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         manual_withdraw_stake_fee: 0, // 手动解质押费
         auto_withdraw_stake_fee: 0, // 自动解质押费
         is_open_stake: 0, // 是否允许质押
+        bonus_coin_name_unique: "",
+        stake_coin_name_unique: "",
+        bonus_coin_name_unique_options: "",
+        stake_coin_name_unique_options: "",
+        bonus_coin_scale: 0,
     };
     /**质押表格相关数据 */
     stakeLogtableData = {
@@ -66,7 +75,7 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             put_in_ratio: { name: "", options: [] },
             put_out_amount: { name: "", options: [] },
             put_out_ratio: { name: "", options: [] },
-            stake_coin_name_unique: { name: "", options: [] },
+            stake_coin_name_unique: <any>{ name: "", options: [] },
             stake_count: { name: "", options: [] },
             start_date: { name: "", options: [] },
             status: { name: "", options: [] },
@@ -77,6 +86,10 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             validate_stake_amount: { name: "", options: [] },
             bonus_pool_amount: { name: "", options: [] },
             bonus_pool_amount_expect: { name: "", options: [] },
+            bonus_coin_name_unique: <any>{ name: "", options: [] },
+            bonus_coin_scale: { name: "", options: [] },
+            bonus_coin_name_unique_options: {},
+            stake_coin_name_unique_options: {},
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -126,6 +139,15 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
 
     /**设置质押配置 */
     setStakeBonusConfig(data: any) {
+        if (data.stake_coin_name_unique === undefined) {
+            this.stake_bonus_config.stake_coin_name_unique = "";
+        }
+        if (data.bonus_coin_name_unique === undefined) {
+            this.stake_bonus_config.bonus_coin_name_unique = "";
+        }
+        if (data.bonus_coin_scale === undefined) {
+            this.stake_bonus_config.bonus_coin_scale = 1;
+        }
         Object.assign(this.stake_bonus_config, data);
     }
     /**显示质押配置弹窗 */
@@ -139,6 +161,9 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         this.dialogData.form.manual_withdraw_stake_fee = Math.floor(
             this.stake_bonus_config.manual_withdraw_stake_fee * 100
         );
+        this.dialogData.form.bonus_coin_name_unique_options = this.stake_bonus_config.bonus_coin_name_unique;
+        this.dialogData.form.stake_coin_name_unique_options = this.stake_bonus_config.stake_coin_name_unique;
+        this.dialogData.form.bonus_coin_scale = this.stake_bonus_config.bonus_coin_scale;
         this.dialogData.bShow = true;
     }
     /**隐藏质押配置弹窗 */
@@ -154,6 +179,9 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
             manual_withdraw_stake_fee: (this.dialogData.form.manual_withdraw_stake_fee * 0.01).toFixed(4),
             min_coin_count: this.dialogData.form.min_coin_count,
             is_open_stake: this.dialogData.form.is_open_stake,
+            bonus_coin_name_unique: this.dialogData.form.bonus_coin_name_unique_options,
+            stake_coin_name_unique: this.dialogData.form.stake_coin_name_unique_options,
+            bonus_coin_scale: this.dialogData.form.bonus_coin_scale,
         };
         // console.error(config);
 
@@ -168,8 +196,17 @@ export default class PlatStakeProxy extends AbstractProxy implements IPlatStakeP
         Object.assign(this.stakeLogtableData.columns, data);
         const plat_id_options_keys = Object.keys(this.stakeLogtableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
-            if (!plat_id_options_keys.includes(this.listQuery.plat_id))
+            if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
                 this.listQuery.plat_id = plat_id_options_keys[0];
+            }
+            if (this.listQuery.plat_id) {
+                this.stakeLogtableData.columns.bonus_coin_name_unique_options = this.stakeLogtableData.columns.bonus_coin_name_unique.options[
+                    this.listQuery.plat_id
+                ];
+                this.stakeLogtableData.columns.stake_coin_name_unique_options = this.stakeLogtableData.columns.stake_coin_name_unique.options[
+                    this.listQuery.plat_id
+                ];
+            }
             this.onQuery();
         }
     }
