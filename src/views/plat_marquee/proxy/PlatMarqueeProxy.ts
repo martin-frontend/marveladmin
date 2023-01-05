@@ -61,7 +61,7 @@ export default class PlatMarqueeProxy extends AbstractProxy implements IPlatMarq
             status: StatusType.disactivated,
         },
         formSource: null, // 表单的原始数据
-        contetnMaxLength: 100, // 内容长度限制
+        contetnMaxLength: 500, // 内容长度限制
     };
 
     /**设置表头数据 */
@@ -176,6 +176,6 @@ export default class PlatMarqueeProxy extends AbstractProxy implements IPlatMarq
             .then(() => {
                 this.sendNotification(HttpType.admin_plats_marquee_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 }

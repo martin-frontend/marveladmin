@@ -49,7 +49,7 @@
                         filterable
                         clearable
                         class="select"
-                        maxlength="100"
+                        maxlength="500"
                         :placeholder="LangUtil('请输入')"
                         v-model="form.content"
                         style="margin-right: 0.8rem"
