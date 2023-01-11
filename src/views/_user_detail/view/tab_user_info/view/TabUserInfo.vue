@@ -667,7 +667,7 @@ export default class TabUserInfo extends AbstractView {
 
     get isChannelPlatUser() {
         return (
-            this.$route.name == "渠道用户" || this.$route.name == "渠道代理用户" || this.$route.name == "代理人员管理"
+            this.$route.path == "/layout/channel_plat_user" || this.$route.path == "/layout/plat_agent_manage_bind" || this.$route.path == "/layout/plat_agent_manage"
         );
     }
 }
