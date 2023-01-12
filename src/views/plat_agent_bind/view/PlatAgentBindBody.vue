@@ -57,7 +57,7 @@
                 align="center"
             ></el-table-column>
             <el-table-column
-                :label="tableColumns.total_group_all_users.name"
+                :label="LangUtil('团队人数')"
                 align="center"
                 prop="total_group_all_users"
                 width="110px"
