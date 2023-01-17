@@ -57,14 +57,16 @@
             style="width: 100%"
             size="mini"
             v-loading="net_status.loading"
+            @selection-change="handleSelectionChange"
         >
+            <el-table-column type="selection" class-name="status-col"> </el-table-column>
             <el-table-column :label="LangUtil('平台信息')" align="left" min-width="160px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns["plat_id"].name }}：{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
                     <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('用户信息')" align="left" min-width="150px">
+            <el-table-column :label="LangUtil('用户信息')" align="left" min-width="160px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
                         {{ tableColumns["user_id"].name }}：{{ row.user_id }}
@@ -74,6 +76,17 @@
                     <div>
                         {{ tableColumns["user_remark"].name }}：<span class="user_remark">{{ row.user_remark }}</span>
                     </div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="LangUtil('接单状态')" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <span v-if="row.accept_admin_user_id == 0">
+                        -
+                    </span>
+                    <span v-else>
+                        <div>{{ LangUtil("接单人") }}：{{ row.accept_admin_user_id }}</div>
+                        <div>{{ LangUtil("接单人名称") }}：{{ row.accept_admin_username }}</div>
+                    </span>
                 </template>
             </el-table-column>
             <el-table-column prop="order_no" :label="tableColumns['order_no'].name" align="center" min-width="90px">
@@ -304,7 +317,9 @@ import GlobalVar from "@/core/global/GlobalVar";
 import mediator from "@/views/exchange_orders/mediator/TableListMediator";
 import SearchSelect from "@/components/SearchSelect.vue";
 import Cookies from "js-cookie";
-import { Dialog } from "element-ui";
+import { Dialog, Message } from "element-ui";
+import SelfModel from "@/core/model/SelfModel";
+import { UserType } from "@/core/enum/UserType";
 
 @Component({
     components: {
@@ -332,6 +347,7 @@ export default class ExchangeOrdersBody extends AbstractView {
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
     ctrlStr: any = this.myProxy.ctrlStr;
+    SelfModel: SelfModel = this.getProxy(SelfModel);
 
     get width() {
         let _w: string = "170px";
@@ -380,39 +396,47 @@ export default class ExchangeOrdersBody extends AbstractView {
     }
 
     handleEdit({ type, row }: any) {
-        if (type == "5") {
-            this.myProxy.showChangeDialog(row);
-            return false;
-        }
+        if (row.accept_admin_user_id == 0 && this.SelfModel.userInfo.type == UserType.CHANNEL) {
+            Message.warning(LangUtil("尚未接单"));
+        } else {
+            if (type == "5") {
+                this.myProxy.showChangeDialog(row);
+                return false;
+            }
 
-        let confirmStr: any =
-            type === "4" ? this.LangUtil("确定平台已付款给该玩家?") : this.LangUtil("是否{0}", this.ctrlStr[type]);
-        let confitmContent: any = {
-            prompt: this.LangUtil("提示"),
-            confirm: this.LangUtil("确定"),
-            cancel: this.LangUtil("取消"),
-        };
-        this.$confirm(confirmStr, confitmContent.prompt, {
-            confirmButtonText: confitmContent.confirm,
-            cancelButtonText: confitmContent.cancenl,
-            type: "warning",
-        })
-            .then(() => {
-                this.myProxy.onUpdate({ type, row });
+            let confirmStr: any =
+                type === "4" ? this.LangUtil("确定平台已付款给该玩家?") : this.LangUtil("是否{0}", this.ctrlStr[type]);
+            let confitmContent: any = {
+                prompt: this.LangUtil("提示"),
+                confirm: this.LangUtil("确定"),
+                cancel: this.LangUtil("取消"),
+            };
+            this.$confirm(confirmStr, confitmContent.prompt, {
+                confirmButtonText: confitmContent.confirm,
+                cancelButtonText: confitmContent.cancenl,
+                type: "warning",
             })
-            .catch(() => {});
+                .then(() => {
+                    this.myProxy.onUpdate({ type, row });
+                })
+                .catch(() => {});
+        }
     }
 
     //关闭| 退回金币 /关闭| 不退回金币 //冲正
     handleEditRemark({ type, row }: any) {
-        this.myProxy.remarkDialogData.status = DialogStatus.create;
-        Object.assign(this.myProxy.remarkDialogData.form, {
-            id: row.id,
-            remark: "",
-            type: type,
-            desc: this.ctrlStr[type],
-        });
-        this.myProxy.showRemarkDialog(row.remark);
+        if (row.accept_admin_user_id == 0 && this.SelfModel.userInfo.type == UserType.CHANNEL) {
+            Message.warning(LangUtil("尚未接单"));
+        } else {
+            this.myProxy.remarkDialogData.status = DialogStatus.create;
+            Object.assign(this.myProxy.remarkDialogData.form, {
+                id: row.id,
+                remark: "",
+                type: type,
+                desc: this.ctrlStr[type],
+            });
+            this.myProxy.showRemarkDialog(row.remark);
+        }
     }
     /**编辑备注 */
     handerEditRemark(row: any) {
@@ -458,6 +482,13 @@ export default class ExchangeOrdersBody extends AbstractView {
 
     destroyed() {
         super.destroyed();
+    }
+
+    handleSelectionChange(row: any) {
+        this.myProxy.tableData.multipleSelection = [];
+        row.forEach((item: any) => {
+            this.myProxy.tableData.multipleSelection.push(item.id);
+        });
     }
 }
 </script>

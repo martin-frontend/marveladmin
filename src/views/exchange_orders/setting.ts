@@ -18,6 +18,8 @@ import cmd_admin_exchange_orders_update_remark from "@/views/exchange_orders/com
 import cmd_admin_exchange_orders_dispatch from "@/views/exchange_orders/command/cmd_admin_exchange_orders_dispatch";
 import cmd_admin_exchange_orders_dispatch_cancel from "@/views/exchange_orders/command/cmd_admin_exchange_orders_dispatch_cancel";
 import cmd_admin_exchange_orders_manual_refund from "@/views/exchange_orders/command/cmd_admin_exchange_orders_manual_refund";
+import cmd_admin_exchange_orders_batch_accept from "@/views/exchange_orders/command/cmd_admin_exchange_orders_batch_accept";
+import cmd_admin_exchange_orders_batch_cancel_accept from "@/views/exchange_orders/command/cmd_admin_exchange_orders_batch_cancel_accept";
 /**协议*/
 export var HttpType = {
     admin_exchange_orders_table_columns: "admin/exchange_orders/table_columns",
@@ -36,6 +38,8 @@ export var HttpType = {
     admin_exchange_orders_dispatch: "admin/exchange_orders/dispatch/{id}",
     admin_exchange_orders_dispatch_cancel: "admin/exchange_orders/dispatch_cancel/{id}",
     admin_exchange_orders_manual_refund: "admin/exchange_orders/manual_refund/{id}",
+    admin_exchange_orders_batch_accept: "admin/exchange_orders/batch_accept",
+    admin_exchange_orders_batch_cancel_accept: "admin/exchange_orders/batch_cancel_accept",
 };
 /**事件*/
 export var EventType = {
@@ -55,6 +59,8 @@ export var EventType = {
     admin_exchange_orders_dispatch: "admin_exchange_orders_dispatch",
     admin_exchange_orders_dispatch_cancel: "admin_exchange_orders_dispatch_cancel",
     admin_exchange_orders_manual_refund: "admin_exchange_orders_manual_refund",
+    admin_exchange_orders_batch_accept: "admin_exchange_orders_batch_accept",
+    admin_exchange_orders_batch_cancel_accept: "admin_exchange_orders_batch_cancel_accept",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -74,4 +80,6 @@ facade.registerCommand(HttpType.admin_exchange_orders_update_remark, cmd_admin_e
 facade.registerCommand(HttpType.admin_exchange_orders_dispatch, cmd_admin_exchange_orders_dispatch);
 facade.registerCommand(HttpType.admin_exchange_orders_dispatch_cancel, cmd_admin_exchange_orders_dispatch_cancel);
 facade.registerCommand(HttpType.admin_exchange_orders_manual_refund, cmd_admin_exchange_orders_manual_refund);
+facade.registerCommand(HttpType.admin_exchange_orders_batch_accept, cmd_admin_exchange_orders_batch_accept);
+facade.registerCommand(HttpType.admin_exchange_orders_batch_cancel_accept, cmd_admin_exchange_orders_batch_cancel_accept);
 

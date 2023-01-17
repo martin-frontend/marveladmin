@@ -67,6 +67,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
+        multipleSelection: <any>[],
     };
 
     /**查询条件 */
@@ -418,6 +419,16 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             HttpType.admin_exchange_orders_dispatch_cancel,
             objectRemoveNull(this.dispatchDialogData.form)
         );
+    }
+
+    onBatchAccept() {
+        const data = JSON.stringify(this.tableData.multipleSelection);
+        this.sendNotification(HttpType.admin_exchange_orders_batch_accept, { order_ids: data });
+    }
+
+    onBatchCancel() {
+        const data = JSON.stringify(this.tableData.multipleSelection);
+        this.sendNotification(HttpType.admin_exchange_orders_batch_cancel_accept, { order_ids: data });
     }
 
     /**显示派发弹窗 */

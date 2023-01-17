@@ -244,6 +244,7 @@ export var unique = {
     exchange_orders_return: "exchange_orders_return", //用户兑换订单退回金币
     exchange_orders_finish_order_manually: "exchange_orders_finish_order_manually", //用户手动兑换订单退回金币
     exchange_orders_close: "exchange_orders_close", //用户兑换订单关闭|不退回金币
+    exchange_orders_batch_cancel_accept: "exchange_orders_batch_cancel_accept", //批量取消接单
     //用户充值订单
     recharge_orders_complete: "recharge_orders_complete", //用户充值订单补单
     //支付方式管理

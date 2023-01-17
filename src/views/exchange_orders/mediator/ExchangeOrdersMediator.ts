@@ -45,6 +45,8 @@ export default class ExchangeOrdersMediator extends AbstractMediator {
             EventType.admin_exchange_orders_dispatch,
             EventType.admin_exchange_orders_dispatch_cancel,
             EventType.admin_exchange_orders_manual_refund,
+            EventType.admin_exchange_orders_batch_accept,
+            EventType.admin_exchange_orders_batch_cancel_accept,
         ];
     }
 
@@ -126,6 +128,14 @@ export default class ExchangeOrdersMediator extends AbstractMediator {
             case EventType.admin_exchange_orders_manual_refund:
                 Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideRemarkDialog();
+                myProxy.onQuery();
+                break;
+            case EventType.admin_exchange_orders_batch_accept:
+                Message.success(<any>LangUtil("操作成功"));
+                myProxy.onQuery();
+                break;
+            case EventType.admin_exchange_orders_batch_cancel_accept:
+                Message.success(<any>LangUtil("操作成功"));
                 myProxy.onQuery();
                 break;
         }

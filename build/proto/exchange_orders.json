@@ -18,6 +18,8 @@
         "admin/exchange_orders/update_remark/{id}",
         "admin/exchange_orders/dispatch/{id}",
         "admin/exchange_orders/dispatch_cancel/{id}",
-        "admin/exchange_orders/manual_refund/{id}"
+        "admin/exchange_orders/manual_refund/{id}",
+        "admin/exchange_orders/batch_accept",
+        "admin/exchange_orders/batch_cancel_accept"
     ]
 }

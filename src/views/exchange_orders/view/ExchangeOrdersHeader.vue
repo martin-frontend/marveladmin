@@ -73,12 +73,24 @@
                 :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    LangUtil("查询")
-                }}</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    LangUtil("重置")
-                }}</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                    {{ LangUtil("查询") }}
+                </el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                    {{ LangUtil("重置") }}
+                </el-button>
+                <el-button @click="accept()" type="primary" icon="el-icon-refresh" :disabled="hasSelection">
+                    {{ LangUtil("接单") }}
+                </el-button>
+                <el-button
+                    @click="cancel()"
+                    type="primary"
+                    icon="el-icon-refresh"
+                    :disabled="hasSelection"
+                    v-if="checkUnique(unique.exchange_orders_batch_cancel_accept)"
+                >
+                    {{ LangUtil("取消接单") }}
+                </el-button>
             </div>
         </div>
     </div>
@@ -118,6 +130,10 @@ export default class ExchangeOrdersHeader extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
 
+    get hasSelection() {
+        return this.myProxy.tableData.multipleSelection.length == 0;
+    }
+
     handlerSearch() {
         this.listQuery.page_count = 1;
         this.autoProxy.listQuery.plat_id = this.listQuery.plat_id;
@@ -132,6 +148,14 @@ export default class ExchangeOrdersHeader extends AbstractView {
 
     exportExcel() {
         this.myProxy.onQueryAll();
+    }
+
+    accept() {
+        this.myProxy.onBatchAccept();
+    }
+
+    cancel() {
+        this.myProxy.onBatchCancel();
     }
 }
 </script>
