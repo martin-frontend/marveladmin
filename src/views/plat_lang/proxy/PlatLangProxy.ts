@@ -62,6 +62,9 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
         type: "",
         key: "",
         plat_id: "",
+        zh_CN: "",
+        vi_VN: "",
+        en_EN: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -119,11 +122,13 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
+            key: "",
             module: "",
             type: "",
-            plat_id: "",
+            zh_CN: "",
+            vi_VN: "",
+            en_EN: "",
         });
-        console.log(this.listQuery);
     }
 
     /**显示弹窗 */

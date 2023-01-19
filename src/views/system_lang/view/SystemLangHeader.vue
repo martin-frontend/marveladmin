@@ -8,6 +8,7 @@
             />
             <SearchInput :title="tableColumns.key.name" v-model="listQuery.key" />
             <SearchInput :title="tableColumns.zh_CN.name" v-model="listQuery.zh_CN" />
+            <SearchInput :title="LangUtil('越南文')" v-model="listQuery.vi_VN" />
             <SearchInput :title="tableColumns.en_EN.name" v-model="listQuery.en_EN" />
             <div class="btn-group">
                 <div>

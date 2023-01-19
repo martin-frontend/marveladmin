@@ -61,6 +61,9 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         page_size: 20,
         type: "",
         key: "",
+        zh_CN: "",
+        vi_VN: "",
+        en_EN: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -112,10 +115,13 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
+            key: "",
             module: "",
             type: "",
+            zh_CN: "",
+            vi_VN: "",
+            en_EN: "",
         });
-        console.log(this.listQuery);
     }
 
     /**显示弹窗 */
