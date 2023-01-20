@@ -60,6 +60,7 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
             gift_gold: { name: "平台赠送", options: {} },
             id: { name: "用户统计ID", options: {} },
             is_first_recharge: { name: "是否首充", options: {} },
+            is_credit_user:{ name: "用户类型", options: {} },
             keep_time: "30",
             nick_name: { name: "用户昵称", options: {} },
             plat_id: { name: "平台", options: {} },
@@ -101,6 +102,7 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
         username: "",
         nick_name: "",
         user_id: "",
+        is_credit_user: "",
     };
 
     /**设置表头数据 */
@@ -136,6 +138,7 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
             username: "",
             nick_name: "",
             user_id: "",
+            is_credit_user: "",
         });
     }
 
