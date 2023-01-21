@@ -60,6 +60,9 @@
                 <el-button @click="handlerReset" type="primary" icon="el-icon-refresh" class="item">{{
                     LangUtil("重置")
                 }}</el-button>
+                <el-button @click="handlerFilter" type="primary" class="item">{{
+                    LangUtil("用户筛选")
+                }}</el-button>
             </div>
         </div>
     </div>
@@ -110,8 +113,8 @@ export default class StatisticAgentCreditHeader extends AbstractView {
         this.myProxy.resetListQuery();
     }
 
-    handlerCreate() {
-        this.myProxy.showDialog(DialogStatus.create);
+    handlerFilter() {
+        this.myProxy.showDialog();
     }
 }
 </script>

@@ -4,6 +4,8 @@
     "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47776426",
     "list": [
         "admin/statistic_credit/table_columns",
-        "admin/statistic_agent_credit/index"
+        "admin/statistic_agent_credit/index",
+        "admin/statistic_agent_credit/user/show",
+        "admin/statistic_agent_credit/user/update"
     ]
 }

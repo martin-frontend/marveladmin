@@ -49,6 +49,16 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        summary: {
+            agent_amount: "",
+            back_water: "",
+            back_water_except_user: "",
+            bet_gold: "",
+            plat_amount: "",
+            record_count: "",
+            valid_bet_gold: "",
+            win_gold: "",
+        },
     };
     /**查询条件 */
     listQuery = {
@@ -59,14 +69,16 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
         end_date: dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
         coin_name_unique: "USDT",
         vendor_type: 0,
+        order_by: "",
     };
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
         form: {
-            id: null,
-            // TODO
+            formCopy: <any>{},
+            show: <any>[],
+            options: <any>{},
         },
         formSource: null, // 表单的原始数据
     };
@@ -84,13 +96,43 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
+        if (data.list.length > 0) {
+            let sumdata = this.setSummaryData(data.summary);
+            data.list.unshift(sumdata);
+        }
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
+    setSummaryData(data: any) {
+        let sumData = JSON.parse(JSON.stringify(this.tableData.columns));
+        sumData.plat_id = this.listQuery.plat_id;
+        sumData.user_id = <string>LangUtil("合计");
+        sumData.username = "-";
+        sumData.credit_rate = "-";
+        sumData.remark = "-";
+        sumData.agent_amount = data.agent_amount.toString();
+        sumData.back_water = data.back_water;
+        sumData.back_water_except_user = data.back_water_except_user;
+        sumData.bet_gold = data.bet_gold;
+        sumData.plat_amount = data.plat_amount.toString();
+        sumData.record_count = data.record_count;
+        sumData.valid_bet_gold = data.valid_bet_gold;
+        sumData.win_gold = data.win_gold.toString();
+        return sumData;
+    }
     /**详细数据 */
     setDetail(data: any) {
-        this.dialogData.formSource = data;
-        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        this.dialogData.form.show = [];
+        this.dialogData.form.formCopy = {};
+        this.dialogData.form.options = {};
+        Object.assign(this.dialogData.form.formCopy, data);
+        Object.assign(this.dialogData.form.options, data);
+        for (const key in this.dialogData.form.options) {
+            if(this.dialogData.form.options[key].show == 1){
+                this.dialogData.form.show.push(key);
+            }
+            this.dialogData.form.options[key] = key + '(' + this.dialogData.form.options[key].username + ')';
+        }
     }
 
     /**重置查询条件 */
@@ -106,7 +148,10 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
     }
 
     /**显示弹窗 */
-    showDialog(status: string, data?: any) {}
+    showDialog() {
+        this.dialogData.bShow = true;
+        this.sendNotification(HttpType.admin_statistic_agent_credit_user_show, { plat_id: this.listQuery.plat_id });
+    }
 
     /**隐藏弹窗 */
     hideDialog() {
@@ -175,7 +220,28 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
     onAdd() {}
 
     /**更新数据 */
-    onUpdate() {}
+    onUpdate() {
+        let formCopy: any = {};
+        formCopy = JSON.parse(JSON.stringify(objectRemoveNull(this.dialogData.form.options)));
+        for (const key in this.dialogData.form.options) {
+            if (this.dialogData.form.show.includes(key)) {
+                formCopy[key] = 1;
+            } else {
+                formCopy[key] = 98;
+            }
+        }
+        for (const key in formCopy) {
+            if(formCopy[key] == this.dialogData.form.formCopy[key].show) {
+                delete formCopy[key];
+            }
+        }
+        // 如果没有修改，就直接关闭弹窗
+        if (Object.keys(formCopy).length == 0) {
+            this.dialogData.bShow = false;
+            return;
+        }
+        this.sendNotification(HttpType.admin_statistic_agent_credit_user_update, { plat_id: this.listQuery.plat_id, user_ids: JSON.stringify(formCopy)});
+    }
 
     /**删除数据 */
     onDelete(id: any) {}

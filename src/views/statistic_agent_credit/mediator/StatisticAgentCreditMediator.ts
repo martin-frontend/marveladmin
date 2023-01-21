@@ -23,7 +23,12 @@ export default class StatisticAgentCreditMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [EventType.admin_statistic_credit_table_columns, EventType.admin_statistic_agent_credit_index];
+        return [
+            EventType.admin_statistic_credit_table_columns,
+            EventType.admin_statistic_agent_credit_index,
+            EventType.admin_statistic_agent_credit_user_show,
+            EventType.admin_statistic_agent_credit_user_update,
+        ];
     }
 
     handleNotification(notification: puremvc.INotification) {
@@ -36,6 +41,14 @@ export default class StatisticAgentCreditMediator extends AbstractMediator {
                 break;
             case EventType.admin_statistic_agent_credit_index:
                 myProxy.setTableData(body);
+                break;
+            case EventType.admin_statistic_agent_credit_user_show:
+                myProxy.setDetail(body);
+                break;
+            case EventType.admin_statistic_agent_credit_user_update:
+                Message.success(SuccessMessage.update);
+                myProxy.hideDialog();
+                myProxy.onQuery();
                 break;
         }
     }

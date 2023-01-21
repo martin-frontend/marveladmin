@@ -8,6 +8,7 @@
             style="width: 100%"
             size="mini"
             v-loading="net_status.loading"
+            @sort-change="tableSortChange"
         >
             <el-table-column :label="tableColumns['plat_id'].name" prop="plat_id" class-name="status-col" width="130">
                 <template slot-scope="{ row }">
@@ -35,41 +36,42 @@
             <el-table-column :label="tableColumns['username'].name" prop="username" class-name="status-col">
             </el-table-column>
 
-            <el-table-column :label="tableColumns['record_count'].name" prop="record_count" class-name="status-col">
+            <el-table-column :label="tableColumns['record_count'].name" prop="record_count" class-name="status-col" sortable="custom">
             </el-table-column>
 
             <el-table-column :label="tableColumns['remark'].name" prop="remark" class-name="status-col">
             </el-table-column>
 
-            <el-table-column :label="tableColumns['bet_gold'].name" prop="bet_gold" class-name="status-col">
+            <el-table-column :label="tableColumns['bet_gold'].name" prop="bet_gold" class-name="status-col" sortable="custom">
             </el-table-column>
 
-            <el-table-column prop="win_gold" :label="tableColumns['win_gold'].name" align="center">
+            <el-table-column prop="win_gold" :label="tableColumns['win_gold'].name" align="center" sortable="custom">
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.win_gold" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['valid_bet_gold'].name" prop="valid_bet_gold" class-name="status-col">
+            <el-table-column :label="tableColumns['valid_bet_gold'].name" prop="valid_bet_gold" class-name="status-col" sortable="custom">
             </el-table-column>
 
-            <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col">
+            <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col" sortable="custom">
             </el-table-column>
 
             <el-table-column
                 :label="tableColumns['back_water_except_user'].name"
                 prop="back_water_except_user"
                 class-name="status-col"
+                sortable="custom"
             >
             </el-table-column>
 
-            <el-table-column prop="agent_amount" :label="tableColumns['agent_amount'].name" align="center">
+            <el-table-column prop="agent_amount" :label="tableColumns['agent_amount'].name" align="center" sortable="custom" width="120px">
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.agent_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="plat_amount" :label="tableColumns['plat_amount'].name" align="center">
+            <el-table-column prop="plat_amount" :label="tableColumns['plat_amount'].name" align="center" sortable="custom">
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.plat_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
@@ -77,7 +79,10 @@
 
             <el-table-column :label="tableColumns['credit_rate'].name" prop="credit_rate" class-name="status-col">
                 <template slot-scope="{ row }">
-                    <div>{{ row.credit_rate }}%</div>
+                    <div v-if="row.user_id === '合计' || row.user_id === LangUtil('合计')">
+                        -
+                    </div>
+                    <div v-else>{{ row.credit_rate }}%</div>
                 </template>
             </el-table-column>
         </el-table>
@@ -125,12 +130,25 @@ export default class StatisticAgentCreditBody extends AbstractView {
         this.myProxy.showUserDetail(user_id);
     }
 
-    handleEdit(data: any) {
-        this.myProxy.showDialog(DialogStatus.update, data);
-    }
-
     handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
+    }
+
+    // 排序
+    tableSortChange(column: any) {
+        let order_by = {};
+        if (column.order === "descending") {
+            order_by = {
+                [column.prop]: "DESC",
+            };
+        } else {
+            order_by = {
+                [column.prop]: "ASC",
+            };
+        }
+        this.listQuery.page_count = 1;
+        this.listQuery.order_by = JSON.stringify(order_by);
+        this.myProxy.onQuery();
     }
 }
 </script>
