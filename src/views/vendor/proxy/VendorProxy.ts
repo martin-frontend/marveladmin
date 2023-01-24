@@ -61,7 +61,6 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     listQuery = {
         page_count: 1,
         page_size: 20,
-        currency_type: "CNY",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -76,7 +75,6 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             status: 1,
             vendor_desc: "",
             is_save_bet_info: 1,
-            currency_type: "CNY",
             proxy_key: "",
             time_region_hour_interval: 0,
             languages: [],
@@ -121,7 +119,6 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         this.listQuery = {
             page_count: 1,
             page_size: 20,
-            currency_type: "CNY",
         };
     }
 
@@ -180,7 +177,6 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             vendor_types,
             status,
             vendor_desc,
-            currency_type,
             proxy_key,
             time_region_hour_interval,
             languages,
@@ -196,7 +192,6 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             vendor_types,
             status,
             vendor_desc,
-            currency_type,
             proxy_key,
             time_region_hour_interval,
             languages,

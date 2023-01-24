@@ -2,10 +2,10 @@
     <div>
         <div class="group">
             <SearchSelect
-                :title="tableColumns.currency_type.name"
-                v-model="listQuery.currency_type"
-                :options="tableColumns.currency_type.options"
-                :clearable="false"
+                :title="tableColumns.settle_coin_name_unique.name"
+                v-model="listQuery.settle_coin_name_unique"
+                :options="tableColumns.settle_coin_name_unique.options"
+                clearable
                 @change="handlerSearch"
             />
         </div>
