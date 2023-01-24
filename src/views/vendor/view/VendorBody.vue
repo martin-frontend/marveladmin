@@ -47,8 +47,8 @@
                 </template>
             </el-table-column>
             <el-table-column
-                :label="tableColumns['currency_type'].name"
-                prop="currency_type"
+                :label="tableColumns['settle_coin_name_unique'].name"
+                prop="settle_coin_name_unique"
                 width="100px"
                 align="center"
             >

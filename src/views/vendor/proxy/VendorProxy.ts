@@ -52,6 +52,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             url_get_balance: { name: "", options: {} },
             url_update_balance: { name: "", options: {} },
             vendor_wallet_type: { name: "", options: {} },
+            settle_coin_name_unique: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -82,6 +83,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             url_get_balance: "",
             url_update_balance: "",
             vendor_wallet_type: "",
+            settle_coin_name_unique: "",
         },
         formSource: null, // 表单的原始数据
         // 扩展数据
@@ -160,6 +162,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             url_get_balance: "",
             url_update_balance: "",
             vendor_wallet_type: 1,
+            settle_coin_name_unique: "",
         });
         this.dialogData.extendsData = {};
     }
@@ -184,6 +187,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             url_get_balance,
             url_update_balance,
             vendor_wallet_type,
+            settle_coin_name_unique,
         } = this.dialogData.form;
         const formCopy: any = {
             vendor_id,
@@ -199,6 +203,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             url_get_balance,
             url_update_balance,
             vendor_wallet_type,
+            settle_coin_name_unique,
         };
         formCopy.vendor_types = JSON.stringify(formCopy.vendor_types);
         formCopy.languages = JSON.stringify(formCopy.languages);

@@ -39,13 +39,16 @@
             <el-form-item size="mini" :label="tableColumns['is_save_bet_info'].name" prop="is_save_bet_info">
                 <el-switch v-model="form.is_save_bet_info" :active-value="1" :inactive-value="98"></el-switch>
             </el-form-item>
-            <!-- 结算方式 -->
-            <el-form-item size="mini" :label="tableColumns['currency_type'].name" prop="currency_type">
-                <el-radio-group v-model="form.currency_type">
-                    <el-radio v-for="(value, key) in tableColumns.currency_type.options" :key="key" :label="key">
-                        {{ value }}
-                    </el-radio>
-                </el-radio-group>
+            <!-- 结算币种 -->
+            <el-form-item size="mini" :label="tableColumns['settle_coin_name_unique'].name" prop="settle_coin_name_unique">
+                <el-select v-model="form.settle_coin_name_unique" clearable filterable class="select" :placeholder="LangUtil('请选择')">
+                    <el-option
+                        v-for="(value, key) in tableColumns.settle_coin_name_unique.options"
+                        :key="key"
+                        :label="value"
+                        :value="key"
+                    ></el-option>
+                </el-select>
             </el-form-item>
             <!-- 系统参数id -->
             <el-form-item :label="tableColumns.proxy_key.name" prop="proxy_key">
