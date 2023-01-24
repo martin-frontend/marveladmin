@@ -243,6 +243,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         Object.assign(this.listQuery, {
             page_count: 1,
             page_size: 20,
+            username: "",
         });
         this.listQuery.user_id = user_id;
         this.sendNotification(HttpType.admin_statistic_credit_index, objectRemoveNull(this.listQuery));
