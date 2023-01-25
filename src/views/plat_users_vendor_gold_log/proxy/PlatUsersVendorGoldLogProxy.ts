@@ -54,6 +54,8 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
             scale: { name: "游戏比率", options: {} },
             gold_scale: { name: "金额[乘比率后]", options: {} },
             username: { name: "用户账号", options: {} },
+            exchange_scale: { name: '代币转换比率', options: {} },
+            target_coin_name_unique: { name: '目标币种', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },

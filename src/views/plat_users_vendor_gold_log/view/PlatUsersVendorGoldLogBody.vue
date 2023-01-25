@@ -40,11 +40,13 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['coin_name_unique'].name" min-width="180px" align="center">
+            <el-table-column :label="tableColumns['coin_name_unique'].name" min-width="240px" align="center">
                 <template slot-scope="{ row }">
                     <div align="left">{{ tableColumns["coin_name_unique"].name }}：{{ row.coin_name_unique }}</div>
                     <div align="left">{{ tableColumns["scale"].name }}：{{ row.scale }}</div>
                     <div align="left">{{ tableColumns["gold_scale"].name }}：{{ row.gold_scale }}</div>
+                    <div align="left">{{ tableColumns["exchange_scale"].name }}：{{ row.exchange_scale }}</div>
+                    <div align="left">{{ tableColumns["target_coin_name_unique"].name }}：{{ row.target_coin_name_unique }}</div>
                 </template>
             </el-table-column>
 
