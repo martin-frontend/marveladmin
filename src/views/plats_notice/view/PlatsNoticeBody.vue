@@ -17,22 +17,23 @@
                 </template>
             </el-table-column>
             <el-table-column
-                :label="tableColumns['app_types'].name"
-                prop="app_types"
+                :label="tableColumns['app_platform'].name"
+                prop="app_platform"
                 class-name="status-col"
-                width="90"
+                width="150"
                 align="center"
             >
                 <template slot-scope="scope" align="center">
                     <div>
-                        <span v-for="(item, index) in scope.row.app_types" :key="index">
+                        <span v-for="(item, index) in scope.row.app_platform" :key="index">
                             <el-tag
                                 type="primary"
                                 effect="dark"
                                 size="mini"
-                                v-if="tableColumns.app_types.options[item]"
+                                v-if="tableColumns.app_platform.options[item]"
+                                style="margin-right: 5px"
                             >
-                                {{ tableColumns["app_types"].options[item] }}
+                                {{ tableColumns["app_platform"].options[item] }}
                             </el-tag>
                         </span>
                     </div>

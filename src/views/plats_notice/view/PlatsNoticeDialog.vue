@@ -14,10 +14,10 @@
                 </el-select>
             </el-form-item>
 
-            <el-form-item size="mini" :label="tableColumns['app_types'].name" prop="app_types">
-                <el-checkbox-group v-model="form.app_types" @change="onAppTypesChange">
+            <el-form-item size="mini" :label="tableColumns['app_platform'].name" prop="app_platform">
+                <el-checkbox-group v-model="form.app_platform" @change="onAppTypesChange">
                     <el-checkbox
-                        v-for="(value, key) in tableColumns['app_types'].options"
+                        v-for="(value, key) in tableColumns['app_platform'].options"
                         :key="key"
                         :label="Number(key)"
                     >
@@ -147,9 +147,9 @@
             <el-form-item size="mini" :label="tableColumns['img_uris'].name" prop="img_urls" v-if="form.type == 2">
                 <el-tabs type="border-card" v-model="myProxy.appType">
                     <el-tab-pane
-                        :label="tableColumns['app_types'].options[item]"
+                        :label="tableColumns['app_platform'].options[item]"
                         :name="`${item}`"
-                        v-for="item in form['app_types']"
+                        v-for="item in form['app_platform']"
                         :key="item"
                     >
                         <div style="display: flex">
@@ -202,9 +202,9 @@
             >
                 <el-tabs type="border-card" v-model="myProxy.appType">
                     <el-tab-pane
-                        :label="tableColumns['app_types'].options[item]"
+                        :label="tableColumns['app_platform'].options[item]"
                         :name="`${item}`"
-                        v-for="item in form['app_types']"
+                        v-for="item in form['app_platform']"
                         :key="item"
                     >
                         <div style="display: flex">
@@ -249,7 +249,7 @@
                 </el-button>
             </el-form-item>
 
-            <el-form-item size="mini" :label="tableColumns['video_uris'].name" prop="video_uris"  v-if="form.type == 3">
+            <el-form-item size="mini" :label="tableColumns['video_uris'].name" prop="video_uris" v-if="form.type == 3">
                 <el-input v-model="form.video_uris" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
 
@@ -319,7 +319,7 @@ export default class PlatsNoticeDialog extends AbstractView {
     get rules() {
         return {
             plat_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
-            app_types: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            app_platform: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             start_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             end_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
@@ -363,8 +363,8 @@ export default class PlatsNoticeDialog extends AbstractView {
                 if (!types.find((item: any) => item == key)) this.form.img_uris[key] = "";
             }
         }
-        if (this.form.app_types.length > 0 && this.form.app_types.indexOf(this.myProxy.appType) == -1) {
-            this.myProxy.appType = this.form.app_types[0].toString();
+        if (this.form.app_platform.length > 0 && this.form.app_platform.indexOf(this.myProxy.appType) == -1) {
+            this.myProxy.appType = this.form.app_platform[0].toString();
         }
     }
 
@@ -424,7 +424,7 @@ export default class PlatsNoticeDialog extends AbstractView {
         data.plat_id = this.form.plat_id;
         for (const key in this.form.img_uris) {
             if (Object.prototype.hasOwnProperty.call(this.form.img_uris, key)) {
-                if (this.form.app_types.find((item: any) => item == key)) {
+                if (this.form.app_platform.find((item: any) => item == key)) {
                     data.key = this.form.img_uris[key];
                 }
             }
@@ -443,7 +443,7 @@ export default class PlatsNoticeDialog extends AbstractView {
         data.plat_id = this.form.plat_id;
         for (const key in this.form.thumbnail_uris) {
             if (Object.prototype.hasOwnProperty.call(this.form.thumbnail_uris, key)) {
-                if (this.form.app_types.find((item: any) => item == key)) {
+                if (this.form.app_platform.find((item: any) => item == key)) {
                     data.key = this.form.thumbnail_uris[key];
                 }
             }
