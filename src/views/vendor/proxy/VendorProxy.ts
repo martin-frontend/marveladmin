@@ -11,7 +11,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     static NAME = "VendorProxy";
 
     /**在这里获取基础数据，退出页面时，proxy不会销毁，所以只会获取一次 */
-    onRegister() {}
+    onRegister() { }
 
     /**进入页面时调用 */
     enter() {
@@ -31,6 +31,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     /**表格相关数据 */
     tableData = {
         columns: {
+            bet_code_content: { name: '下注内容映射关系', options: {} },
+            bet_result_content: { name: '下注结果映射关系', options: {} },
             created_at: { name: "", options: {} },
             created_by: { name: "", options: {} },
             extends: { name: "", options: {} },
@@ -67,6 +69,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         bShow: false,
         status: DialogStatus.create,
         form: {
+            bet_code_content: "",
+            bet_result_content: "",
             vendor_id: null,
             vendor_name: "",
             vendor_name_unique: "",
@@ -86,6 +90,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         formSource: null, // 表单的原始数据
         // 扩展数据
         extendsData: {},
+        betCodeContentData: {},
+        betResultContentData: {},
     };
     /**测试弹窗 */
     testDialogData = {
@@ -111,6 +117,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     setDetail(data: any) {
         this.dialogData.formSource = data;
         this.dialogData.extendsData = jsonToObject(data.extends);
+        this.dialogData.betCodeContentData = jsonToObject(data.bet_code_content);
+        this.dialogData.betResultContentData = jsonToObject(data.bet_result_content);
         Object.assign(this.dialogData.form, data);
     }
 
@@ -130,7 +138,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             this.dialogData.extendsData = jsonToObject(data.extends);
-
+            this.dialogData.betCodeContentData = jsonToObject(data.bet_code_content);
+            this.dialogData.betResultContentData = jsonToObject(data.bet_result_content);
             Object.assign(this.dialogData.form, data);
             this.sendNotification(HttpType.admin_vendor_show, { vendor_id: data.vendor_id });
         } else {
@@ -162,6 +171,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             settle_coin_name_unique: "",
         });
         this.dialogData.extendsData = {};
+        this.dialogData.betCodeContentData = {};
+        this.dialogData.betResultContentData = {};
     }
 
     /**查询 */
@@ -203,11 +214,15 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         formCopy.vendor_types = JSON.stringify(formCopy.vendor_types);
         formCopy.languages = JSON.stringify(formCopy.languages);
         formCopy.extends = jsonStringify(this.dialogData.extendsData);
+        formCopy.bet_code_content = jsonStringify(this.dialogData.betCodeContentData);
+        formCopy.bet_result_content = jsonStringify(this.dialogData.betResultContentData);
         this.sendNotification(HttpType.admin_vendor_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
     onUpdate() {
         this.dialogData.form.extends = jsonStringify(this.dialogData.extendsData);
+        this.dialogData.form.bet_code_content = jsonStringify(this.dialogData.betCodeContentData);
+        this.dialogData.form.bet_result_content = jsonStringify(this.dialogData.betResultContentData);
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
         // 如果没有修改，就直接关闭弹窗
         if (Object.keys(formCopy).length == 0) {
@@ -229,7 +244,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             .then(() => {
                 this.sendNotification(HttpType.admin_vendor_update, { vendor_id: id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
     /**测试数据 */
     onTest(value: string) {

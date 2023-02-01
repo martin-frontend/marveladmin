@@ -35,8 +35,10 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             backwater_id: { name: "", options: {} },
             backwater_rate: { name: "", options: {} },
             bet_at: { name: "", options: {} },
+            bet_code: { name: "下注内容" },
             bet_gold: { name: "", options: {} },
             bet_id: { name: "", options: {} },
+            bet_result: { name: "下注结果" },
             bonus_gold: { name: "", options: {} },
             channel_id: { name: "", options: {} },
             commission_at: { name: "", options: {} },
@@ -338,5 +340,11 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     /**显示用户详情弹窗 */
     showUserDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
+    }
+
+    /**跳转详情 */
+    showDetailPage(data: any) {
+        const { plat_id, bet_id } = data;
+        this.sendNotification(HttpType.admin_plat_users_bet_show_url, { plat_id, bet_id });
     }
 }

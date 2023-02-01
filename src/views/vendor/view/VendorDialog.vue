@@ -112,6 +112,16 @@
                     <json-editor ref="jsonEditor" v-model="myProxy.dialogData.extendsData" />
                 </div>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['bet_code_content'].name" prop="bet_code_content">
+                <div class="editor-container">
+                    <json-editor ref="jsonEditor" v-model="myProxy.dialogData.betCodeContentData" />
+                </div>
+            </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['bet_result_content'].name" prop="bet_result_content">
+                <div class="editor-container">
+                    <json-editor ref="jsonEditor" v-model="myProxy.dialogData.betResultContentData" />
+                </div>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['status'].name" prop="status">
                 <el-radio-group v-model="form.status">
                     <el-radio v-for="(value, key) in tableColumns.status.options" :key="key" :label="Number(key)">

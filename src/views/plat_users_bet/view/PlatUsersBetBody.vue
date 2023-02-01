@@ -124,9 +124,11 @@
             <el-table-column :label="LangUtil('投注内容')" header-align="center" align="left" min-width="215px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["bet_gold"].name }}：{{ row.bet_gold }}</p>
-                    <p v-if="row.vendor_type == 64">{{ LangUtil("下注内容") }}：{{ row.content }}</p>
+                    <p>{{ tableColumns["bet_code"].name }}：{{ row.bet_code }}</p>
+                    <p>{{ tableColumns["bet_result"].name }}：{{ row.bet_result }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type_text }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("赔率") }}：{{ row.odds }}</p>
+                    <el-button @click="showDetailPage(row)" type="text">{{ LangUtil("跳转详情") }}</el-button>
                 </template>
             </el-table-column>
             <el-table-column
@@ -229,6 +231,11 @@ export default class PlatUsersBetBody extends AbstractView {
 
     showUserDetail(user_id: number) {
         this.myProxy.showUserDetail(user_id);
+    }
+
+    showDetailPage(data: any) {
+        this.myProxy.showDetailPage(data);
+
     }
 }
 </script>
