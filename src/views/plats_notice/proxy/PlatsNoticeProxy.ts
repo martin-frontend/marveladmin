@@ -27,7 +27,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
     /**表格相关数据 */
     tableData = {
         columns: {
-            app_types: { name: "应用平台", options: {} },
+            app_platform: { name: "应用平台", options: {} },
             content: { name: "公告内容", options: {} },
             created_at: { name: "创建时间", options: {} },
             created_by: { name: "创建人", options: {} },
@@ -70,7 +70,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             id: null,
             // TODO
             plat_id: "",
-            app_types: <any>[],
+            app_platform: <any>[],
             name: "",
             start_time: "",
             end_time: "",
@@ -129,7 +129,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.form.open_mode = this.dialogData.form.open_mode.toString();
-        this.appType = data.app_types[0].toString();
+        this.appType = data.app_platform[0].toString();
         this.dialogData.form.video_uris = this.dialogData.form.video_uris[this.appType];
     }
 
@@ -158,7 +158,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             id: null,
             // TODO
             plat_id: "",
-            app_types: <any>[],
+            app_platform: <any>[],
             name: "",
             start_time: "",
             end_time: "",
@@ -185,7 +185,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
     onAdd() {
         let {
             plat_id,
-            app_types,
+            app_platform,
             name,
             start_time,
             end_time,
@@ -201,7 +201,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             type_position,
             video_uris,
         } = this.dialogData.form;
-        app_types = JSON.stringify(app_types);
+        app_platform = JSON.stringify(app_platform);
         img_uris = JSON.stringify(img_uris);
         img_urls = JSON.stringify(img_urls);
         thumbnail_uris = JSON.stringify(thumbnail_uris);
@@ -228,7 +228,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         const formCopy: any = {
             // TODO
             plat_id,
-            app_types,
+            app_platform,
             name,
             start_time,
             end_time,
@@ -308,7 +308,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             .then(() => {
                 this.sendNotification(HttpType.admin_plats_notice_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     onRemoveItem() {
@@ -321,7 +321,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                 this.tableCtrlData.opt = null;
                 this.onUpdate(true);
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**图片上传 */

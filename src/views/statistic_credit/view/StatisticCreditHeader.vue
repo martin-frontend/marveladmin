@@ -83,7 +83,22 @@
                 </div>
             </div>
         </div>
-        <div class="row" v-if="isTipsShow">
+        <div v-if="isTipsShow">
+            <template v-if="bind_relation.length > 2">
+                <span 
+                    v-for="n in bind_relation.length-2" 
+                    :key="n" 
+                >
+                    <span 
+                        @click="handlerQuery(bind_relation[n])" 
+                        class="bind"
+                    >
+                        {{ bind_relation[n] + '(' + bind_relation_username[n] + ')' }}
+                    </span>
+                    {{ ' - ' }} 
+                </span>
+            </template>
+            <span>{{ agent.user_id + '(' + agent.username + ')' }}</span>
             <div>{{ LangUtil("用户{0} 统计时间{1}至{2}", ...timeObj) }}</div>
         </div>
     </div>
@@ -119,9 +134,26 @@ export default class NicoTestHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    agent = this.myProxy.tableData.agent;
 
     // searchInfo = JSON.parse( JSON.stringify( this.listQuery));
     searchInfo = this.myProxy.tableData.info_head;
+
+    get bind_relation(){
+        if (this.myProxy.tableData.bind_relation == '-') {
+            return [];
+        } else {
+            return this.myProxy.tableData.bind_relation.split('-');
+        }
+    }
+
+    get bind_relation_username(){
+        if (this.myProxy.tableData.bind_relation_username == '--') {
+            return [];
+        } else {
+            return this.myProxy.tableData.bind_relation_username.split('-');
+        }
+    }
 
     public get timeObj(): any {
         return [this.searchInfo.user_id, this.searchInfo.start_date, this.searchInfo.end_date];
@@ -172,9 +204,18 @@ export default class NicoTestHeader extends AbstractView {
     handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
+
+    handlerQuery(user_id: any) {
+        this.myProxy.onQueryUser(user_id);
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.bind{
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: underline;
+}
 </style>

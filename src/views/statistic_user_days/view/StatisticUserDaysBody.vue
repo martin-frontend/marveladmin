@@ -38,6 +38,10 @@
                             <span>{{ tableColumns["username"].name }}:</span>
                             <span>{{ row.username }}</span>
                         </div>
+                        <div>
+                            <span>{{ tableColumns["is_credit_user"].name }}:</span>
+                            <span>{{ tableColumns["is_credit_user"].options[row.is_credit_user] }}</span>
+                        </div>
                     </div>
                     <div v-show="row.display === true">{{ LangUtil("合计") }}</div>
                 </template>

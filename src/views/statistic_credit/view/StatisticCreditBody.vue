@@ -26,7 +26,7 @@
                             @click="showUserDetail(row.user_id)"
                             style="cursor: pointer; text-decoration: underline"
                         >
-                            <div :class="row.user_id == listQuery.user_id ? 'selfid' : ''">{{ row.user_id }}</div>
+                            <div :class="row.user_id == info_head.user_id ? 'selfid' : ''">{{ row.user_id }}</div>
                         </div>
                     </div>
                 </template>
@@ -74,7 +74,19 @@
 
             <el-table-column :label="tableColumns['credit_rate'].name" prop="credit_rate" class-name="status-col">
                 <template slot-scope="{ row }">
-                    <div>{{ row.credit_rate }}%</div>
+                    <div class="flex">
+                        <span style="margin-right: auto;margin-left: auto">{{ row.credit_rate }}%</span>
+                        <el-button
+                            v-if="row.user_id !== LangUtil('合计') && row.user_id != info_head.user_id"
+                            class="item"
+                            type="primary"
+                            size="mini"
+                            style="height: 30px; margin-left: 5px"
+                            @click="handlerQuery(row.user_id)"
+                        >
+                            {{ LangUtil("查看") }}
+                        </el-button>
+                    </div>
                 </template>
             </el-table-column>
         </el-table>
@@ -123,9 +135,10 @@ export default class StatisticCreditBody extends AbstractView {
     tableData = this.myProxy.tableData;
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
+    info_head = this.myProxy.tableData.info_head;
 
-    handlerQuery() {
-        this.myProxy.onQuery();
+    handlerQuery(user_id: any) {
+        this.myProxy.onQueryUser(user_id);
     }
 
     showUserDetail(user_id: number) {
@@ -136,14 +149,6 @@ export default class StatisticCreditBody extends AbstractView {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
-
-    handleEdit(data: any) {
-        this.myProxy.showDialog(DialogStatus.update, data);
-    }
-
-    handlerDelete(data: any) {
-        //this.myProxy.onDelete(data.admin_user_id);
-    }
 }
 </script>
 
@@ -151,5 +156,9 @@ export default class StatisticCreditBody extends AbstractView {
 @import "@/styles/common.scss";
 .selfid {
     font-weight: bold;
+}
+.flex {
+    display: flex;
+    align-items: center;
 }
 </style>

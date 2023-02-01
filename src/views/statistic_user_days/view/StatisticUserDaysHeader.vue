@@ -20,6 +20,12 @@
                 <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
                 <SearchInput :title="tableColumns.nick_name.name" v-model="listQuery.nick_name" />
                 <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
+                <SearchSelect 
+                    :title="tableColumns.is_credit_user.name"
+                    :options="tableColumns.is_credit_user.options"
+                    v-model="listQuery.is_credit_user"
+                    @change="handlerSearch"
+                />
                 <div>
                     <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                         LangUtil("查询")

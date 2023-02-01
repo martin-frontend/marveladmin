@@ -18,6 +18,14 @@
                 :class="enabledSound2 ? 'el-icon-bell' : 'el-icon-close-notification'"
             ></div>
         </div>
+        <div class="item" v-if="checkUnique(unique.exchange_orders)">
+            <el-link href="#/layout/exchange_orders?flag=12">{{ textGroup.orderError }}： {{ messageInfo[4] }}</el-link>
+            <!-- <div
+                class="bell"
+                @click="handlerChange(2)"
+                :class="enabledSound2 ? 'el-icon-bell' : 'el-icon-close-notification'"
+            ></div> -->
+        </div>
         <div class="item" v-if="checkUnique(unique.plat_message)">
             <el-link href="#/layout/plat_message">{{ textGroup.stationLetter }}： {{ messageInfo[3] }}</el-link>
         </div>
@@ -46,6 +54,7 @@ export default class MessagePanel extends AbstractView {
     textGroup = {
         paymentReview: LangUtil("出款审核"),
         order: LangUtil("币商充值订单"),
+        orderError: LangUtil("订单失败"),
         stationLetter: LangUtil("站内信"),
     };
 

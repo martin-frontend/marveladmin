@@ -48,10 +48,16 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        bind_relation: "",
+        bind_relation_username: "",
         info_head: {
             end_date: "",
             start_date: "",
             user_id: null,
+        },
+        agent: {
+            user_id: "",
+            username: "",
         },
         summary: {
             plat_id: "",
@@ -129,6 +135,9 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
         Object.assign(this.tableData.info_head, data.info_head);
+        Object.assign(this.tableData.agent, data.agent);
+        this.tableData.bind_relation = data.bind_relation;
+        this.tableData.bind_relation_username = data.bind_relation_username;
     }
     /**详细数据 */
     setDetail(data: any) {
@@ -227,6 +236,16 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
 
     /**查询 */
     onQuery() {
+        this.sendNotification(HttpType.admin_statistic_credit_index, objectRemoveNull(this.listQuery));
+    }
+
+    onQueryUser(user_id: any){
+        Object.assign(this.listQuery, {
+            page_count: 1,
+            page_size: 20,
+            username: "",
+        });
+        this.listQuery.user_id = user_id;
         this.sendNotification(HttpType.admin_statistic_credit_index, objectRemoveNull(this.listQuery));
     }
 
