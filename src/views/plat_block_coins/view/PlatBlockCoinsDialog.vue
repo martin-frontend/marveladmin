@@ -46,6 +46,9 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item :label="tableColumns.show_scale.name" prop="show_scale">
+                <el-input-number v-model="form.show_scale" :min="0" :precision="10" :step="0.001"></el-input-number>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['languages'].name" prop="languages">
                 <el-checkbox-group v-model="form.languages">
                     <el-checkbox v-for="(value, key) in tableColumns['languages'].options" :key="key" :label="key">

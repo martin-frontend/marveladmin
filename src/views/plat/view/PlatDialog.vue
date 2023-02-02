@@ -48,6 +48,17 @@
                     </el-checkbox-group>
                 </el-form-item>
 
+                <el-form-item size="mini" :label="tableColumns['main_language'].name" prop="main_language">
+                    <el-select v-model="form.main_language" filterable class="select" :placeholder="LangUtil('请选择')">
+                        <el-option
+                            v-for="(value, key) in tableColumns.main_language.options"
+                            :key="key"
+                            :label="value"
+                            :value="key"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="`${tableColumns.status.name}`" prop="status">
                     <el-radio-group v-model="form.status">
                         <el-radio v-for="(value, key) in tableColumns.status.options" :key="key" :label="Number(key)">
@@ -620,6 +631,7 @@ export default class PlatDialog extends AbstractView {
             language: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             api_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             validate_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            main_language: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 

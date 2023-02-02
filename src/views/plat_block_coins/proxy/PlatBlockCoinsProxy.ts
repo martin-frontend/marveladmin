@@ -43,6 +43,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             remark: { name: "描述", options: {} },
             type: { name: "类型", options: {} },
             scale: { name: "比例", options: {} },
+            show_scale: { name: '显示比例', options: {} },
             languages: { name: "语言", options: {} },
         },
         list: <any>[],
@@ -67,6 +68,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             game_scale: 1,
             type: null,
             scale: 0,
+            show_scale: 0,
             languages: <any>[],
         },
         formSource: <any>null, // 表单的原始数据
@@ -132,6 +134,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             game_scale: 1,
             type: null,
             scale: null,
+            show_scale: null,
             languages: <any>[],
         });
     }
@@ -151,6 +154,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             game_scale: form.game_scale,
             type: form.type,
             scale: form.scale,
+            show_scale: form.show_scale,
             languages: JSON.stringify(form.languages),
         };
 

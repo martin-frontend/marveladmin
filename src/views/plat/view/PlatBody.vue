@@ -103,6 +103,11 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column :label="`${tableColumns.main_language.name}`" prop="main_language" align="center">
+                <template slot-scope="{ row }">
+                    {{ tableColumns.main_language.options[row.main_language] }}
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns['currency_type'].name"
                 prop="currency_type"
