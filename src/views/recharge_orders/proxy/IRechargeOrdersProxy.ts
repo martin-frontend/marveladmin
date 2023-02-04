@@ -44,7 +44,7 @@ export default interface IRechargeOrdersProxy {
     onQuery(): void;
 
     /**更新数据 */
-    onUpdate({ type, row }: any): void;
+    onUpdate(): void;
     /**自动刷新 */
     autoReload(): void;
 

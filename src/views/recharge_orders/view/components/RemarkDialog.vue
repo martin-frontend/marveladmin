@@ -59,7 +59,7 @@ export default class RemarkDialog extends AbstractView {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 if (this.myProxy.remarkDialogData.status == DialogStatus.create) {
-                    this.myProxy.onUpdate({ type: this.form.type, row: this.form });
+                    this.myProxy.onUpdate();
                 } else {
                     this.myProxy.onUpdateReamrk();
                 }
