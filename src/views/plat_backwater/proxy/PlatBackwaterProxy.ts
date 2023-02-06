@@ -138,24 +138,20 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
 
     /**更新数据 */
     onUpdate() {
-        if (this.checkRate(this.backWaterData.backWaterConfig)) {
-            MessageBox.confirm(<string>LangUtil("您是否保存本次编辑"), <string>LangUtil("提示"), {
-                confirmButtonText: <string>LangUtil("确定"),
-                cancelButtonText: <string>LangUtil("取消"),
-                type: "warning",
+        MessageBox.confirm(<string>LangUtil("您是否保存本次编辑"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
+            type: "warning",
+        })
+            .then(() => {
+                let data = {
+                    plat_id: this.backWaterData.saveId,
+                    backwater_config: JSON.stringify(this.backWaterData.backWaterConfig),
+                };
+                this.backWaterData.isEdit = false;
+                this.sendNotification(HttpType.admin_plat_update, data);
             })
-                .then(() => {
-                    let data = {
-                        plat_id: this.backWaterData.saveId,
-                        backwater_config: JSON.stringify(this.backWaterData.backWaterConfig),
-                    };
-                    this.backWaterData.isEdit = false;
-                    this.sendNotification(HttpType.admin_plat_update, data);
-                })
-                .catch(() => {});
-        } else {
-            Message.info(<string>LangUtil("返水必须为大于0小于1的数字"));
-        }
+            .catch(() => { });
     }
     updateSuccess() {
         this.sendNotification(HttpType.admin_plat_show, {
@@ -175,7 +171,7 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
                     this.backWaterData.isEdit = false;
                     this.updateSuccess();
                 })
-                .catch(() => {});
+                .catch(() => { });
         } else {
             this.backWaterData.isEdit = !this.backWaterData.isEdit;
         }
@@ -196,7 +192,7 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
             .then(() => {
                 this.backWaterData.backWaterConfig = JSON.parse(JSON.stringify(this.backWaterData.copybackWaterData));
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     checkRate(obj: any): boolean {
