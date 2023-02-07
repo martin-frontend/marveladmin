@@ -102,8 +102,10 @@
 
             <!-- 是否固定充值额度 -->
             <el-form-item :label="`${tableColumns.is_fixed_gold.name}`">
-                <el-radio v-model="addFrom.is_fixed_gold" label="1">{{ LangUtil("是") }}</el-radio>
-                <el-radio v-model="addFrom.is_fixed_gold" label="0">{{ LangUtil("否") }}</el-radio>
+                <el-radio-group v-model="addFrom.is_fixed_gold">
+                    <el-radio :label="1">{{ LangUtil("是") }}</el-radio>
+                    <el-radio :label="0">{{ LangUtil("否") }}</el-radio>
+                </el-radio-group>
             </el-form-item>
             <!-- 充值金额 -->
             <div class="recharge_amount">
