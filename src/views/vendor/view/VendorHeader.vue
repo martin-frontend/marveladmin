@@ -1,13 +1,35 @@
 <template>
-    <div>
+    <div class="header-content">
         <div class="group">
+            <SearchInput :title="tableColumns.vendor_id.name" v-model="listQuery.vendor_id" />
+            <SearchInput :title="tableColumns.vendor_name.name" v-model="listQuery.vendor_name" />
+            <SearchInput :title="tableColumns.vendor_name_unique.name" v-model="listQuery.vendor_name_unique" />
             <SearchSelect
                 :title="tableColumns.settle_coin_name_unique.name"
                 v-model="listQuery.settle_coin_name_unique"
                 :options="tableColumns.settle_coin_name_unique.options"
                 clearable
-                @change="handlerSearch"
             />
+            <SearchSelect
+                :title="tableColumns.vendor_wallet_type.name"
+                v-model="listQuery.vendor_wallet_type"
+                :options="tableColumns.vendor_wallet_type.options"
+                clearable
+            />
+            <SearchSelect
+                :title="tableColumns.status.name"
+                v-model="listQuery.status"
+                :options="tableColumns.status.options"
+                clearable
+            />
+            <div>
+                <el-button @click="handlerSearch()" class="header-button" type="primary" icon="el-icon-search">{{
+                    LangUtil("查询")
+                }}</el-button>
+                <el-button @click="handlerReset()" class="header-button" type="primary" icon="el-icon-refresh">{{
+                    LangUtil("重置")
+                }}</el-button>
+            </div>
         </div>
         <div class="row">
             <el-button
@@ -30,10 +52,12 @@ import VendorProxy from "../proxy/VendorProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SearchSelect from "@/components/SearchSelect.vue";
+import SearchInput from "@/components/SearchInput.vue";
 
 @Component({
     components: {
         SearchSelect,
+        SearchInput,
     },
 })
 export default class VendorHeader extends AbstractView {
@@ -53,6 +77,10 @@ export default class VendorHeader extends AbstractView {
     handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
+    }
+
+    private handlerReset() {
+        this.myProxy.resetListQuery();
     }
 
     handlerTest() {

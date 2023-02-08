@@ -61,6 +61,12 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     };
     /**查询条件 */
     listQuery = {
+        settle_coin_name_unique: "",
+        status: "",
+        vendor_id: "",
+        vendor_name: "",
+        vendor_name_unique: "",
+        vendor_wallet_type: "",
         page_count: 1,
         page_size: 20,
     };
@@ -124,10 +130,16 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
 
     /**重置查询条件 */
     resetListQuery() {
-        this.listQuery = {
+        Object.assign(this.listQuery, {
+            settle_coin_name_unique: "",
+            status: "",
+            vendor_id: "",
+            vendor_name: "",
+            vendor_name_unique: "",
+            vendor_wallet_type: "",
             page_count: 1,
             page_size: 20,
-        };
+        });
     }
 
     /**显示弹窗 */

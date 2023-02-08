@@ -13,7 +13,7 @@
                 <el-button @click="handlerSearch()" class="header-button" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")
                 }}</el-button>
-                <el-button @click="handlerReset()" class="header-button" type="primary" icon="el-icon-search">{{
+                <el-button @click="handlerReset()" class="header-button" type="primary" icon="el-icon-refresh">{{
                     LangUtil("重置")
                 }}</el-button>
             </div>
