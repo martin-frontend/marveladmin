@@ -1,9 +1,13 @@
 <template>
     <div class="app-operation" v-if="selfModel.userInfo.type == 32 || selfModel.userInfo.type == 64">
-        <div>{{ LangUtil("余额") }}: {{ userGold.gold }}</div>
+        <div>
+            <el-button size="mini" type="primary" @click="handlerShowBalance()">
+                {{ LangUtil("余额") }}
+            </el-button>
+        </div>
         <div v-if="checkUnique(unique.coin_wallet_log)">
             <el-button size="mini" type="primary" @click="handlerShowGoldDetail()">
-                {{ LangUtil("金币明细") }}
+                {{ LangUtil("金额明细") }}
             </el-button>
         </div>
         <RecordQueryDialog v-if="!coinWalletProxy.logDialogData.isCoinWalletShow" />
@@ -17,6 +21,9 @@
 
             &nbsp;<span>{{ userInfo.admin_username }}</span>
         </div>
+        <BalanceDialog
+            v-if="coinWalletProxy.balanceData.bShow"
+        />
     </div>
 </template>
 
@@ -30,9 +37,12 @@ import CoinWalletProxy from "@/views/coin_wallet/proxy/CoinWalletProxy";
 import CoinWalletMediator from "@/views/coin_wallet/mediator/CoinWalletMediator";
 import i18n from "@/lang";
 import { checkUnique, unique } from "@/core/global/Permission";
+import BalanceDialog from "@/views/coin_wallet/view/BalanceDialog.vue";
+
 @Component({
     components: {
         RecordQueryDialog,
+        BalanceDialog,
     },
 })
 export default class BasicOperationIndex extends AbstractView {
@@ -42,7 +52,8 @@ export default class BasicOperationIndex extends AbstractView {
     checkUnique = checkUnique;
 
     selfModel = this.getProxy(SelfModel);
-
+    
+    coinWalletProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
     constructor() {
         super(CoinWalletMediator);
     }
@@ -62,19 +73,26 @@ export default class BasicOperationIndex extends AbstractView {
 
     status: any = this.userGold.status;
     userInfo = this.selfModel.userInfo;
+
+    dialogData = {
+        bShow: false,
+    };
+
     get userGold() {
         return this.selfModel.userInfo.coin_user;
     }
 
     handlerShowGoldDetail() {
-        const coinWalletProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
-        coinWalletProxy.logDialogData.isCoinWalletShow = false;
-        coinWalletProxy.showLog(this.selfModel.userInfo.admin_user_id);
+        this.coinWalletProxy.logDialogData.isCoinWalletShow = false;
+        this.coinWalletProxy.showLog(this.selfModel.userInfo.admin_user_id);
+    }
+
+    handlerShowBalance() {
+        this.coinWalletProxy.getUserInfo();
     }
 
     onSwitch() {
-        const coinWalletProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
-        coinWalletProxy.onUpdateStatus({
+        this.coinWalletProxy.onUpdateStatus({
             status: this.status,
             id: this.userGold.id,
         });

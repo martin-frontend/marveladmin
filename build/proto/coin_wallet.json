@@ -10,6 +10,7 @@
         "admin/coin_wallet/withdraw/{id}",
         "admin/coin_wallet_log/table_columns",
         "admin/coin_wallet_log/index",
-        "admin/coin_wallet/update/{id}"
+        "admin/coin_wallet/update/{id}",
+        "admin/admin_user/mine"
     ]
 }

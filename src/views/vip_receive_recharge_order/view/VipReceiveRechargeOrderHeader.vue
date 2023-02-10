@@ -5,7 +5,10 @@
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
-                @change="handlerSearch"
+                @change="
+                    changePlat();
+                    handlerSearch();
+                "
                 :clearable="false"
             />
             <div>
@@ -22,6 +25,11 @@
                 :showTime="true"
             />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                :options="tableColumns.coin_name_unique_options"
+                v-model="listQuery.coin_name_unique"
+            />
             <SearchInput :title="tableColumns.order_no.name" v-model="listQuery.order_no" :width="340" />
             <SearchInput :title="tableColumns.created_by.name" v-model="listQuery.created_by" />
             <div>
@@ -31,14 +39,16 @@
                 <el-button @click="handlerReset()" class="item" type="primary" icon="el-icon-refresh">{{
                     LangUtil("重置")
                 }}</el-button>
-
-                <span>{{ LangUtil("查询汇总") }}</span>
-                <span>{{ LangUtil("充值总金额") }}:{{ tableData.total_gold }}</span>
-                <span>{{ LangUtil("充值订单数") }}:{{ tableData.total_num }}</span>
-                <span>{{ LangUtil("充值成功金额") }}:{{ tableData.success_total_gold }}</span>
-                <span>{{ LangUtil("充值成功订单数") }}:{{ tableData.success_total_num }}</span>
-                <span>{{ LangUtil("充值人数") }}:{{ tableData.total_user_num }}</span>
             </div>
+        </div>
+        <div class="statistics">{{ LangUtil("查询汇总") }}</div>
+        <div class="statistics" v-for="(value, key) in myProxy.tableData.total_coin_sum" :key="key">
+            {{ key }}
+            <span>{{ LangUtil("充值总金额") }}:{{ value.total_gold }}</span>
+            <span>{{ LangUtil("充值订单数") }}:{{ value.total_num }}</span>
+            <span>{{ LangUtil("充值成功金额") }}:{{ value.success_total_gold }}</span>
+            <span>{{ LangUtil("充值成功订单数") }}:{{ value.success_total_num }}</span>
+            <span>{{ LangUtil("充值人数") }}:{{ value.total_user_num }}</span>
         </div>
     </div>
 </template>
@@ -72,7 +82,6 @@ export default class VipReceiveRechargeOrderHeader extends AbstractView {
     myProxy: VipReceiveRechargeOrderProxy = this.getProxy(VipReceiveRechargeOrderProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
-    tableData = this.myProxy.tableData;
     listQuery = this.myProxy.listQuery;
 
     handlerSearch() {
@@ -87,6 +96,12 @@ export default class VipReceiveRechargeOrderHeader extends AbstractView {
     exportExcel() {
         this.myProxy.onQueryAll();
     }
+
+    //更换平台切换对应渠道
+    changePlat() {
+        this.listQuery.coin_name_unique = "";
+        this.tableColumns.coin_name_unique_options = this.tableColumns.coin_name_unique.options[this.listQuery.plat_id];
+    }
 }
 </script>
 
@@ -95,7 +110,13 @@ export default class VipReceiveRechargeOrderHeader extends AbstractView {
 .space_between {
     justify-content: space-between;
 }
-span {
-    margin-left: 20px;
+.statistics {
+    margin-bottom: 16px;
+    span {
+        margin-left: 20px;
+        :nth-child(1) {
+            margin-left: 0;
+        }
+    }
 }
 </style>

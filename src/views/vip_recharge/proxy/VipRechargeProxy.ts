@@ -70,7 +70,6 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        this.setUserInfo();
     }
     /**设置表头数据 */
     setPlatTableColumns(data: any) {
@@ -89,6 +88,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
                 ];
                 const coin_name_unique_options_keys = Object.keys(this.tableData.plat_columns.coin_name_unique_option);
                 this.listQuery.coin_name_unique = coin_name_unique_options_keys[0];
+                this.getCoinGold();
             }
         }
     }
@@ -124,7 +124,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
     }
     /**取得玩家金币 */
     getCoinGold() {
-        this.sendNotification(HttpType.admin_coin_wallet_wallet);
+        this.sendNotification(HttpType.admin_coin_wallet_wallet, { coin_name_unique: this.listQuery.coin_name_unique });
     }
     /**取得玩家资讯 */
     setUserInfo() {

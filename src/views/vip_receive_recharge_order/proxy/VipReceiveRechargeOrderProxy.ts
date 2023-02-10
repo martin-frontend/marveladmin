@@ -28,7 +28,8 @@ export default class VipReceiveRechargeOrderProxy extends AbstractProxy implemen
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
+            coin_name_unique: { name: "币种", options: {} },
             actual_gold: { name: "实际到帐金额", options: {} },
             channel_id: { name: "渠道ID", options: {} },
             created_at: { name: "创建时间", options: {} },
@@ -51,13 +52,9 @@ export default class VipReceiveRechargeOrderProxy extends AbstractProxy implemen
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        total_coin_sum: {},
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
-        success_total_gold: "", //充值成功金额
-        success_total_num: 0, //充值成功订单数
-        total_gold: "", //充值总金额
-        total_num: 0, //充值订单数
-        total_user_num: 0, //充值人数
     };
 
     /**查询条件 */
@@ -70,15 +67,22 @@ export default class VipReceiveRechargeOrderProxy extends AbstractProxy implemen
         user_id: "",
         order_no: "",
         created_by: "",
+        coin_name_unique: "",
     };
 
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
         const PLAT_ID_OPTIONS_KEY = Object.keys(this.tableData.columns["plat_id"].options);
-        if (PLAT_ID_OPTIONS_KEY.length > 0) {
+        const coin_name_unique_options_keys = Object.keys(this.tableData.columns.coin_name_unique.options);
+        if (PLAT_ID_OPTIONS_KEY.length > 0 && coin_name_unique_options_keys.length > 0) {
             if (!PLAT_ID_OPTIONS_KEY.includes(this.listQuery.plat_id)) {
                 this.listQuery.plat_id = PLAT_ID_OPTIONS_KEY[0];
+            }
+            if (this.listQuery.plat_id) {
+                this.tableData.columns.coin_name_unique_options = this.tableData.columns.coin_name_unique.options[
+                    this.listQuery.plat_id
+                ];
             }
             this.onQuery();
         }
@@ -88,11 +92,7 @@ export default class VipReceiveRechargeOrderProxy extends AbstractProxy implemen
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
-        this.tableData.success_total_gold = data.success_total_gold;
-        this.tableData.success_total_num = data.success_total_num;
-        this.tableData.total_gold = data.total_gold;
-        this.tableData.total_num = data.total_num;
-        this.tableData.total_user_num = data.total_user_num;
+        this.tableData.total_coin_sum = data.total_coin_sum;
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
 
@@ -104,6 +104,7 @@ export default class VipReceiveRechargeOrderProxy extends AbstractProxy implemen
             user_id: "",
             order_no: "",
             created_by: "",
+            coin_name_unique: "",
         });
     }
 

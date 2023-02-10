@@ -79,6 +79,13 @@
                     </template>
                 </el-table-column>
                 <el-table-column
+                    :label="`${columnInfo.coin_name_unique.name}`"
+                    class-name="status-col"
+                    prop="coin_name_unique"
+                    min-width="100px"
+                >
+                </el-table-column>
+                <el-table-column
                     :label="`${columnInfo.gold_before.name}`"
                     class-name="status-col"
                     min-width="80px"

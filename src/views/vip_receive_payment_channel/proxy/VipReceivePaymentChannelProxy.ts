@@ -5,7 +5,7 @@ import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/vip_receive_payment_channel/setting";
 import { MessageBox } from "element-ui";
 import IVipReceivePaymentChannelProxy from "./IVipReceivePaymentChannelProxy";
-import i18n from "@/lang";
+
 
 export default class VipReceivePaymentChannelProxy extends AbstractProxy implements IVipReceivePaymentChannelProxy {
     static NAME = "VipReceivePaymentChannelProxy";

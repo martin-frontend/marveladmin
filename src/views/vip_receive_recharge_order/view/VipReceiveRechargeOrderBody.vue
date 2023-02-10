@@ -64,6 +64,13 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column
+                :label="`${tableColumns.coin_name_unique.name}`"
+                class-name="status-col"
+                prop="coin_name_unique"
+                min-width="100px"
+            >
+            </el-table-column>
             <el-table-column prop="gold" :label="LangUtil('订单金额')" align="center"></el-table-column>
             <el-table-column
                 prop="gold"

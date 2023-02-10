@@ -5,7 +5,6 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/coin_wallet/setting";
 import { Message } from "element-ui";
 import CoinWalletProxy from "../proxy/CoinWalletProxy";
-import i18n from "@/lang";
 
 interface ICoinWallet extends IEventDispatcher {}
 
@@ -34,6 +33,7 @@ export default class CoinWalletMediator extends AbstractMediator {
             EventType.admin_coin_wallet_log_table_columns,
             EventType.admin_coin_wallet_log_index,
             EventType.admin_coin_wallet_update,
+            EventType.admin_admin_user_mine,
         ];
     }
 
@@ -72,7 +72,11 @@ export default class CoinWalletMediator extends AbstractMediator {
                 break;
             case EventType.admin_coin_wallet_update:
                 Message.success(SuccessMessage.update);
+                myProxy.hideGoldLimitDialog();
+                myProxy.onQuery();
                 break;
+            case EventType.admin_admin_user_mine:
+                myProxy.showBalance();
         }
     }
 }

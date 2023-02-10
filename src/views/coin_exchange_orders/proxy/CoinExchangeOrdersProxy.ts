@@ -4,7 +4,6 @@ import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import SelfModel from "@/core/model/SelfModel";
-import i18n from "@/lang";
 import router from "@/router";
 import { HttpType } from "@/views/coin_exchange_orders/setting";
 import { MessageBox } from "element-ui";

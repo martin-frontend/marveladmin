@@ -39,14 +39,8 @@
                 :options="tableColumns.coin_user_id.options[listQuery.plat_id]"
             />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
-                    <!-- 查询 -->
-                    {{ LangUtil("查询") }}
-                </el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
-                    <!-- 重置 -->
-                    {{ LangUtil("重置") }}
-                </el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{ LangUtil("查询") }}</el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{ LangUtil("重置") }}</el-button>
             </div>
         </div>
         <div class="autoReload">

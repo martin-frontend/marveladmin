@@ -6,7 +6,6 @@ import GlobalEventType from "@/core/global/GlobalEventType";
 import { HttpType } from "@/views/coin_receive_recharge_order/setting";
 import { MessageBox, TimelineItem } from "element-ui";
 import ICoinReceiveRechargeOrderProxy from "./ICoinReceiveRechargeOrderProxy";
-import i18n from "@/lang";
 import router from "@/router";
 import { BaseInfo } from "@/components/vo/commonVo";
 import SelfModel from "@/core/model/SelfModel";
@@ -62,6 +61,7 @@ export default class CoinReceiveRechargeOrderProxy extends AbstractProxy impleme
             user_recharge_certificate: { name: "用户支付凭证", options: {} },
             user_recharge_certificate_type: { name: "用户支付凭证类型", options: {} },
             user_remark: { name: "", options: {} },
+            real_name: { name: "真实姓名" },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -237,19 +237,15 @@ export default class CoinReceiveRechargeOrderProxy extends AbstractProxy impleme
     /**关闭订单 */
     onOrderClose(data: any) {
         const { id, user_id, nick_name, gold } = data;
-        MessageBox.confirm(
-            <string>LangUtil("是否取消【用户ID:{0},昵称:{1},订单金额:{2}】充值订单", user_id, nick_name, gold),
-            <string>LangUtil("提示"),
-            {
-                confirmButtonText: <string>LangUtil("确定"),
-                cancelButtonText: <string>LangUtil("取消"),
-                type: "warning",
-            }
-        )
+        MessageBox.confirm(<string>LangUtil("您是否扣除该玩家{0}金币", user_id), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
+            type: "warning",
+        })
             .then(() => {
                 this.sendNotification(HttpType.admin_coin_receive_recharge_order_close, { id });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
     /**获取账号当前持有金币 */
     onWallet() {

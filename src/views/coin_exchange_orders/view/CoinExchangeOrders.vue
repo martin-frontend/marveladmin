@@ -31,7 +31,7 @@ export default class CoinExchangeOrders extends AbstractView {
         super.destroyed();
     }
     // proxy
-    private myProxy: CoinExchangeOrdersProxy = this.getProxy(CoinExchangeOrdersProxy);
+    myProxy: CoinExchangeOrdersProxy = this.getProxy(CoinExchangeOrdersProxy);
 }
 </script>
 

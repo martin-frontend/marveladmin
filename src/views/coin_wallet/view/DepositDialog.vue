@@ -5,6 +5,7 @@
             <el-form-item :label="tableColumns.plat_id.name"
                 >{{ tableColumns.plat_id.options[form.plat_id] }}
             </el-form-item>
+            <el-form-item :label="tableColumns.coin_name_unique.name">{{ form.coin_name_unique }} </el-form-item>
             <el-form-item :label="tableColumns.gold.name">{{ form.gold }} </el-form-item>
             <el-form-item :label="LangUtil('上分金额')" prop="amount">
                 <el-input

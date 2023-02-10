@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="`订单操作`" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="LangUtil('订单操作')" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item size="mini" :label="tableColumns.order_no.name" prop="order_no">
                 {{ form.order_no }}
@@ -87,9 +87,9 @@
                 <el-input show-word-limit maxlength="30" v-model="form.remark"></el-input>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button @click="handleReturn(form.id)" type="danger">{{ `关闭(退还)` }}</el-button>
-                <!-- <el-button @click="handleUnreturn(form.id)" type="danger">{{ `关闭(不退还)` }}</el-button> -->
-                <el-button @click="handleFinish(form.id)" type="success">{{ `完成订单` }}</el-button>
+                <el-button @click="handleReturn(form.id)" type="danger">{{ LangUtil("关闭(退还)") }}</el-button>
+                <!-- <el-button @click="handleUnreturn(form.id)" type="danger">{{ "关闭(不退还)" }}</el-button> -->
+                <el-button @click="handleFinish(form.id)" type="success">{{ LangUtil("完成订单") }}</el-button>
                 <el-button @click="handleClose" type="primary">{{ LangUtil("取消") }}</el-button>
             </el-form-item>
         </el-form>
@@ -108,7 +108,6 @@ import GlobalVar from "@/core/global/GlobalVar";
 //@ts-ignore
 import Clipboard from "clipboard";
 import { Message } from "element-ui";
-import i18n from "@/lang";
 
 @Component
 export default class CoinExchangeOrdersDialog extends AbstractView {
@@ -135,14 +134,12 @@ export default class CoinExchangeOrdersDialog extends AbstractView {
     onCopy(target: any) {
         const clipboard = new Clipboard(`#${target}`);
         clipboard.on("success", () => {
-            const str: any = LangUtil("复制成功");
-            Message.info(str);
+            Message.info(LangUtil("复制成功"));
             clipboard.destroy(); // 释放内存
         });
         clipboard.on("error", () => {
             // 不支持复制
-            const str: any = LangUtil("该浏览器不支持自动复制");
-            Message.info(str);
+            Message.info(LangUtil("该浏览器不支持自动复制"));
             clipboard.destroy(); // 释放内存
         });
     }
