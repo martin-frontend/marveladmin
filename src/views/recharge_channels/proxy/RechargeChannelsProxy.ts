@@ -190,8 +190,16 @@ export default class RechargeChannelsProxy extends AbstractProxy implements IRec
             block_network_id,
         };
         formCopy.support_paymethods = JSON.stringify(formCopy.support_paymethods);
-        // formCopy.extend_params = JSON.stringify(formCopy.extend_params);
-        this.sendNotification(HttpType.admin_recharge_channels_store, objectRemoveNull(formCopy));
+        try {
+            let extendsStr: any = "{}";
+            if (Object.keys(formCopy.extend_params).length > 0) {
+                extendsStr = JSON.stringify(JSON.parse(formCopy.extend_params));
+            }
+            formCopy.extend_params = extendsStr;
+            this.sendNotification(HttpType.admin_recharge_channels_store, objectRemoveNull(formCopy));
+        } catch (error) {
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
+        }
     }
     /**更新数据 */
     onUpdate() {
@@ -231,6 +239,6 @@ export default class RechargeChannelsProxy extends AbstractProxy implements IRec
             .then(() => {
                 this.sendNotification(HttpType.admin_recharge_channels_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 }

@@ -168,39 +168,50 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
     }
     /**添加数据 */
     onAdd() {
-        const form = Object.assign({}, this.dialogData.form);
-        const { plat_id, exchange_vendors_id, name, account, secret, status, extend_params } = form;
-        const formCopy: any = {
-            plat_id,
-            exchange_vendors_id,
-            name,
-            account,
-            secret,
-            status,
-            extend_params,
-        };
-        this.sendNotification(HttpType.admin_exchange_channel_store, objectRemoveNull(formCopy));
+        let formCopy = Object.assign({}, this.dialogData.form);
+
+        try {
+            let extendsStr: any = "{}";
+            if (Object.keys(formCopy.extend_params).length > 0) {
+                extendsStr = JSON.stringify(JSON.parse(formCopy.extend_params));
+            }
+            formCopy.extend_params = extendsStr;
+            this.sendNotification(HttpType.admin_exchange_channel_store, objectRemoveNull(formCopy));
+        } catch (error) {
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
+        }
     }
     /**更新数据 */
     onUpdate() {
         const copyExtendParams = JSON.parse(JSON.stringify(this.dialogData.form.extend_params));
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
-        delete formCopy.english_name;
-        delete formCopy.payment_method_type;
-        delete formCopy.payment_method_detail;
-        delete formCopy.vendor_name;
-        // 删除多余无法去除的参数
-        // TODO
-        // 如果没有修改，就直接关闭弹窗
-        if (Object.keys(formCopy).length == 0) {
-            this.dialogData.form.extend_params = copyExtendParams;
-            this.dialogData.bShow = false;
-            return;
+        try {
+            delete formCopy.english_name;
+            delete formCopy.payment_method_type;
+            delete formCopy.payment_method_detail;
+            delete formCopy.vendor_name;
+            // 删除多余无法去除的参数
+            // TODO
+            // 如果没有修改，就直接关闭弹窗
+            if (Object.keys(formCopy).length == 0) {
+                this.dialogData.form.extend_params = copyExtendParams;
+                this.dialogData.bShow = false;
+                return;
+            }
+            let extendsStr: any = "{}";
+            if (formCopy.extend_params) {
+                if (Object.keys(formCopy.extend_params).length > 0) {
+                    extendsStr = JSON.stringify(JSON.parse(formCopy.extend_params));
+                }
+                formCopy.extend_params = extendsStr;
+            }
+            // 添加必填参数
+            formCopy.id = this.dialogData.form.id;
+            // 发送消息
+            this.sendNotification(HttpType.admin_exchange_channel_update, formCopy);
+        } catch (error) {
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
-        // 添加必填参数
-        formCopy.id = this.dialogData.form.id;
-        // 发送消息
-        this.sendNotification(HttpType.admin_exchange_channel_update, formCopy);
     }
     /**删除数据 */
     onDelete(id: any) {
@@ -212,7 +223,7 @@ export default class ExchangeChannelProxy extends AbstractProxy implements IExch
             .then(() => {
                 this.sendNotification(HttpType.admin_exchange_channel_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**更新使用狀態 */
