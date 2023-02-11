@@ -22,6 +22,7 @@
                             ID：<span @click="showUserDetail(row.user_id)" class="user_id">{{ row.user_id }}</span>
                         </p>
                         <p v-if="!isCoinUser">{{ LangUtil("昵称") }}：{{ row.nick_name }}</p>
+                        <p>{{ tableColumns.real_name.name }}: {{ row.real_name }}</p>
                         <p>{{ LangUtil("支付凭证") }}：{{ row.user_recharge_certificate }}</p>
                         <p>{{ LangUtil("订单号") }}：{{ row.order_no }}</p>
                         <p v-if="isShowRemark">

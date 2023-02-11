@@ -130,7 +130,7 @@
             <el-table-column :label="LangUtil('操作')" class-name="status-col" width="120px">
                 <template slot-scope="{ row }">
                     <el-button v-if="row.status == 11" size="mini" type="primary" @click="handleEdit(row)">{{
-                        LangUtil("订单操作")
+                        LangUtil('订单操作')
                     }}</el-button>
                     <template v-else>-</template>
                 </template>
@@ -151,7 +151,6 @@ import GlobalVar from "@/core/global/GlobalVar";
 //@ts-ignore
 import Clipboard from "clipboard";
 import { Message } from "element-ui";
-import i18n from "@/lang";
 
 @Component({
     components: {
@@ -186,14 +185,12 @@ export default class CoinExchangeOrdersBody extends AbstractView {
     onCopy(target: any) {
         const clipboard = new Clipboard(`#${target}`);
         clipboard.on("success", () => {
-            const str: any = LangUtil("复制成功");
-            Message.info(str);
+            Message.info(LangUtil("复制成功"));
             clipboard.destroy(); // 释放内存
         });
         clipboard.on("error", () => {
             // 不支持复制
-            const str: any = LangUtil("该浏览器不支持自动复制");
-            Message.info(str);
+            Message.info(LangUtil("该浏览器不支持自动复制"));
             clipboard.destroy(); // 释放内存
         });
     }

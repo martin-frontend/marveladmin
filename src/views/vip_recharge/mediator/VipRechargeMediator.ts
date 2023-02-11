@@ -5,7 +5,9 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/vip_recharge/setting";
 import { Message } from "element-ui";
 import VipRechargeProxy from "../proxy/VipRechargeProxy";
-import i18n from "@/lang";
+import SelfModel from "@/core/model/SelfModel";
+import { UserInfoVO } from "@/core/vo/UserInfoVO";
+import { UserType } from "@/core/enum/UserType";
 
 export interface IVipRecharge extends IEventDispatcher { }
 
@@ -37,6 +39,8 @@ export default class VipRechargeMediator extends AbstractMediator {
     handleNotification(notification: puremvc.INotification) {
         const myProxy: VipRechargeProxy = <any>this.facade.retrieveProxy(VipRechargeProxy.NAME);
         const myView: IVipRecharge = this.viewComponent;
+        const selfModel: SelfModel = <any>this.facade.retrieveProxy(SelfModel.NAME);
+        const userInfo: UserInfoVO = selfModel.userInfo;
         const body = notification.getBody();
         switch (notification.getName()) {
             case EventType.admin_plat_user_table_columns:
@@ -61,7 +65,14 @@ export default class VipRechargeMediator extends AbstractMediator {
                 myProxy.setUserInfo();
                 break;
             case EventType.admin_coin_wallet_wallet:
-                myProxy.bodyData.gold = body;
+                switch (userInfo.type) {
+                    case UserType.COIN:
+                    case UserType.COINUSEREXCHANGE:
+                        myProxy.bodyData.gold = body;
+                        break;
+                    default:
+                        myProxy.bodyData.gold = <string>LangUtil("无限制");
+                }
                 break;
         }
     }

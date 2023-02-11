@@ -35,7 +35,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
-import i18n from "@/lang";
+
 
 @Component
 export default class VipReceivePaymentChannelDialog extends AbstractView {

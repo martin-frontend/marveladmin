@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div style="margin-left: 10px">{{ LangUtil("账号当前持有金币") }}：{{ myProxy.bodyData.gold }}</div>
+        <div style="margin-left: 10px">{{ LangUtil("账号当前持有金额") }}：{{ myProxy.bodyData.gold }}</div>
         <el-form
             ref="form"
             :model="form"
@@ -38,6 +38,7 @@
                 :title="LangUtil('币种')"
                 :options="platTableColumns.coin_name_unique_option"
                 v-model="listQuery.coin_name_unique"
+                @change="changeCoin()"
                 :clearable="false"
             />
             <el-form-item :label="LangUtil('充值金额')" prop="amount">
@@ -184,6 +185,10 @@ export default class VipRechargeBody extends AbstractView implements IVipRecharg
         //设定选取币种第一个
         const coin_name_unique_options_keys = Object.keys(this.platTableColumns.coin_name_unique_option);
         this.listQuery.coin_name_unique = coin_name_unique_options_keys[0];
+    }
+
+    changeCoin(){
+        this.myProxy.getCoinGold();
     }
 }
 </script>

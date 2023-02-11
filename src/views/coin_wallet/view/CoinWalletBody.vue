@@ -24,6 +24,18 @@
                     {{ row.admin_username }}
                 </template>
             </el-table-column>
+            <el-table-column :label="`${tableColumns.single_order_gold_limit.name}`" class-name="status-col" width>
+                <template slot-scope="{ row }">
+                    {{ row.single_order_gold_min - 0 }} - {{ row.single_order_gold_max - 0 }}
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="`${tableColumns.coin_name_unique.name}`"
+                class-name="status-col"
+                prop="coin_name_unique"
+                min-width="100px"
+            >
+            </el-table-column>
             <el-table-column :label="`${tableColumns.gold.name}`" class-name="status-col" min-width="100px">
                 <template slot-scope="{ row }">
                     {{ row.gold }}
@@ -36,6 +48,9 @@
             </el-table-column>
             <el-table-column :label="LangUtil('操作')" class-name="status-col" :width="width">
                 <template slot-scope="{ row }">
+                    <el-button size="mini" type="primary" @click="onGoldLimit(row)">{{
+                        LangUtil("单笔限额")
+                    }}</el-button>
                     <el-button
                         size="mini"
                         type="success"
@@ -62,6 +77,7 @@
         </el-table>
         <DepositDialog></DepositDialog>
         <WithdrawDialog></WithdrawDialog>
+        <SingleOrder v-if="myProxy.goldLimitData.bShow" />
         <RecordQueryDialog v-if="myProxy.logDialogData.isCoinWalletShow" ref="record"></RecordQueryDialog>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>
@@ -81,12 +97,15 @@ import RecordQueryDialog from "./RecordQueryDialog.vue";
 import Pagination from "@/components/Pagination.vue";
 import Cookies from "js-cookie";
 
+import SingleOrder from "./SingleOrder.vue";
+
 @Component({
     components: {
         DepositDialog,
         WithdrawDialog,
         RecordQueryDialog,
         Pagination,
+        SingleOrder,
     },
 })
 export default class CoinWalletBody extends AbstractView {
@@ -119,9 +138,9 @@ export default class CoinWalletBody extends AbstractView {
     }
 
     get width() {
-        let _w: string = "270px";
+        let _w: string = "370px";
         if (Cookies.get("language") === "vi") {
-            _w = "330px";
+            _w = "430px";
         }
         return _w;
     }
@@ -140,6 +159,11 @@ export default class CoinWalletBody extends AbstractView {
     onRecord(admin_user_id: string) {
         this.myProxy.logDialogData.isCoinWalletShow = true;
         this.myProxy.showLog(admin_user_id);
+    }
+
+    //单笔限额
+    onGoldLimit(row: any) {
+        this.myProxy.onGoldLimit(row);
     }
 }
 </script>

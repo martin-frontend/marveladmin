@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts">
-import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import CoinWalletProxy from "@/views/coin_wallet/proxy/CoinWalletProxy";
@@ -13,6 +12,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import LangUtil from "@/core/global/LangUtil";
 
 @Component
 export default class CoinWalletDialog extends AbstractView {
@@ -29,8 +29,8 @@ export default class CoinWalletDialog extends AbstractView {
     form = this.myProxy.dialogData.form;
 
     textMap = {
-        update: this.LangUtil("编辑"),
-        create: this.LangUtil("新增"),
+        update: LangUtil("编辑"),
+        create: LangUtil("新增"),
     };
 
     @Watch("myProxy.dialogData.bShow")

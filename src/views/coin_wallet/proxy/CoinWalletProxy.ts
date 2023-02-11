@@ -1,8 +1,9 @@
 import { BaseInfo } from "@/components/vo/commonVo";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
+import { UserType } from "@/core/enum/UserType";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
-import { checkUnique, unique } from "@/core/global/Permission";
+import SelfModel from "@/core/model/SelfModel";
 import router from "@/router";
 import CoinReceivePaymentChannelMediator from "@/views/coin_receive_payment_channel/mediator/CoinReceivePaymentChannelMediator";
 import { HttpType } from "@/views/coin_wallet/setting";
@@ -14,9 +15,14 @@ export default class CoinWalletProxy extends AbstractProxy implements ICoinWalle
 
     /**进入页面时调用 */
     enter() {
-        if (checkUnique(unique.coin_wallet_log)) {
-            this.sendNotification(HttpType.admin_coin_wallet_table_columns);
-            this.sendNotification(HttpType.admin_coin_wallet_log_table_columns);
+        const selfModel: SelfModel = <any>this.facade.retrieveProxy(SelfModel.NAME);
+        if (selfModel.userInfo.type != UserType.CHANNEL) {
+            if (selfModel.userInfo.type != UserType.COIN && selfModel.userInfo.type != UserType.COINUSEREXCHANGE) {
+                this.sendNotification(HttpType.admin_coin_wallet_table_columns);
+                this.sendNotification(HttpType.admin_coin_wallet_log_table_columns);
+            } else {
+                this.sendNotification(HttpType.admin_coin_wallet_log_table_columns);
+            }
         }
     }
 
@@ -33,11 +39,15 @@ export default class CoinWalletProxy extends AbstractProxy implements ICoinWalle
     /**表格相关数据 */
     tableData = {
         columns: {
+            coin_name_unique: { name: "", options: {} },
             plat_id: { name: "", options: {} },
             admin_user_id: { name: "", options: {} },
             admin_username: { name: "", options: {} },
             gold: { name: "", options: {} },
             type: { name: "", options: {} },
+            single_order_gold_limit: { name: "单笔限额", options: {} },
+            single_order_gold_max: { name: "最大单笔限额", options: {} },
+            single_order_gold_min: { name: "最小单笔限额", options: {} },
         },
         list: <any>[],
         isCoinWalletIndex: true,
@@ -80,6 +90,7 @@ export default class CoinWalletProxy extends AbstractProxy implements ICoinWalle
             plat_id: "",
             gold: "",
             amount: "",
+            coin_name_unique: "",
         },
     };
     /**下分相关数据 */
@@ -96,6 +107,7 @@ export default class CoinWalletProxy extends AbstractProxy implements ICoinWalle
     logDialogData = {
         bShow: false,
         columns: {
+            coin_name_unique: { name: "", options: {} },
             plat_id: { name: "", options: {} },
             admin_user_id: { name: "", options: {} },
             admin_username: { name: "", options: {} },
@@ -114,8 +126,24 @@ export default class CoinWalletProxy extends AbstractProxy implements ICoinWalle
         excelPageSize: 1000000, //excel 资料长度
     };
 
+    /**单笔限额 数据 */
+    goldLimitData: any = {
+        bShow: false,
+        form: {
+            id: "",
+            single_order_gold_min: "",
+            single_order_gold_max: "",
+        },
+    };
+
+    balanceData = {
+        bShow: false,
+    };
+
     /**设置表头数据 */
     setTableColumns(data: any) {
+        console.log("/**设置表头数据 */ >>>", data);
+
         Object.assign(this.tableData.columns, data);
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
@@ -285,5 +313,26 @@ export default class CoinWalletProxy extends AbstractProxy implements ICoinWalle
             [],
             []
         );
+    }
+
+    //单笔限额
+    onGoldLimit(row: any) {
+        this.goldLimitData.bShow = true;
+        this.goldLimitData.form.id = row.id;
+        this.goldLimitData.form.single_order_gold_max = row.single_order_gold_max - 0;
+        this.goldLimitData.form.single_order_gold_min = row.single_order_gold_min - 0;
+    }
+    onGoldLimitUpdate() {
+        this.sendNotification(HttpType.admin_coin_wallet_update, { ...this.goldLimitData.form });
+    }
+    hideGoldLimitDialog() {
+        this.goldLimitData.bShow = false;
+    }
+
+    getUserInfo() {
+        this.sendNotification(HttpType.admin_admin_user_mine, { modules: "[1, 3, 4]" });
+    }
+    showBalance() {
+        this.balanceData.bShow = true;
     }
 }

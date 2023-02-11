@@ -41,7 +41,7 @@ export default class SelfModel extends puremvc.Proxy {
         vendor_ids: {},
 
         coin_user_gold: "",
-        coin_user: {},
+        coin_user: [],
         sidebar: [],
         permission: [],
         permissions_unique: [],

@@ -5,7 +5,6 @@ import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/coin_receive_payment_channel/setting";
 import { MessageBox } from "element-ui";
 import ICoinReceivePaymentChannelProxy from "./ICoinReceivePaymentChannelProxy";
-import i18n from "@/lang";
 export default class CoinReceivePaymentChannelProxy extends AbstractProxy implements ICoinReceivePaymentChannelProxy {
     static NAME = "CoinReceivePaymentChannelProxy";
 

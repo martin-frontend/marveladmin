@@ -180,7 +180,7 @@
                     <el-input
                         min="0"
                         step="1"
-                        style="width: 80px"
+                        style="width: 120px"
                         type="number"
                         v-model="item.amount"
                         @keydown.native="inputOnlyPositive"

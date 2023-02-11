@@ -21,7 +21,7 @@ import CoinWalletProxy from "../proxy/CoinWalletProxy";
 })
 export default class CoinWallet extends AbstractView {
     // proxy
-    private myProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
+    myProxy: CoinWalletProxy = this.getProxy(CoinWalletProxy);
 
     constructor() {
         super(CoinWalletMediator);

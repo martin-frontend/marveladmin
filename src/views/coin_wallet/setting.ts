@@ -10,6 +10,7 @@ import cmd_admin_coin_wallet_withdraw from "@/views/coin_wallet/command/cmd_admi
 import cmd_admin_coin_wallet_log_table_columns from "@/views/coin_wallet/command/cmd_admin_coin_wallet_log_table_columns";
 import cmd_admin_coin_wallet_log_index from "@/views/coin_wallet/command/cmd_admin_coin_wallet_log_index";
 import cmd_admin_coin_wallet_update from "@/views/coin_wallet/command/cmd_admin_coin_wallet_update";
+import cmd_admin_admin_user_mine from "@/views/coin_wallet/command/cmd_admin_admin_user_mine";
 /**协议*/
 export var HttpType = {
     admin_coin_wallet_table_columns: "admin/coin_wallet/table_columns",
@@ -20,6 +21,7 @@ export var HttpType = {
     admin_coin_wallet_log_table_columns: "admin/coin_wallet_log/table_columns",
     admin_coin_wallet_log_index: "admin/coin_wallet_log/index",
     admin_coin_wallet_update: "admin/coin_wallet/update/{id}",
+    admin_admin_user_mine: "admin/admin_user/mine",
 };
 /**事件*/
 export var EventType = {
@@ -31,6 +33,7 @@ export var EventType = {
     admin_coin_wallet_log_table_columns: "admin_coin_wallet_log_table_columns",
     admin_coin_wallet_log_index: "admin_coin_wallet_log_index",
     admin_coin_wallet_update: "admin_coin_wallet_update",
+    admin_admin_user_mine: "admin_admin_user_mine",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -42,3 +45,5 @@ facade.registerCommand(HttpType.admin_coin_wallet_withdraw, cmd_admin_coin_walle
 facade.registerCommand(HttpType.admin_coin_wallet_log_table_columns, cmd_admin_coin_wallet_log_table_columns);
 facade.registerCommand(HttpType.admin_coin_wallet_log_index, cmd_admin_coin_wallet_log_index);
 facade.registerCommand(HttpType.admin_coin_wallet_update, cmd_admin_coin_wallet_update);
+facade.registerCommand(HttpType.admin_admin_user_mine, cmd_admin_admin_user_mine);
+
