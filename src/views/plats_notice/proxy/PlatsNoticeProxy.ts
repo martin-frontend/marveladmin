@@ -104,6 +104,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
 
     /**应用平台 类型 */
     appType = "2";
+    type = "2";
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -130,7 +131,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.form.open_mode = this.dialogData.form.open_mode.toString();
         this.appType = data.app_platform[0].toString();
-        this.dialogData.form.video_uris = this.dialogData.form.video_uris[this.appType];
+        this.dialogData.form.video_uris = this.dialogData.form.video_uris[this.type];
     }
 
     /**显示弹窗 */
@@ -206,7 +207,6 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         img_urls = JSON.stringify(img_urls);
         thumbnail_uris = JSON.stringify(thumbnail_uris);
         thumbnail_urls = JSON.stringify(thumbnail_urls);
-        video_uris = JSON.stringify({ [this.appType]: video_uris });
         if (type == 1) {
             img_uris = "";
             img_urls = "";
@@ -244,7 +244,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             type_position,
             video_uris,
         };
-
+        formCopy.video_uris = JSON.stringify({ [this.type]: formCopy.video_uris });
         this.sendNotification(HttpType.admin_plats_notice_store, objectRemoveNull(formCopy));
     }
 
@@ -253,7 +253,6 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         let formCopy: any = null;
         if (fromTable) {
             formCopy = objectRemoveNull(this.tableCtrlData);
-            console.log(formCopy);
         } else {
             const { type } = this.dialogData.form;
             // 删除多余无法去除的参数
@@ -289,7 +288,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                 formCopy.img_urls = "";
                 formCopy.thumbnail_uris = "";
                 formCopy.thumbnail_urls = "";
-                formCopy.video_uris = JSON.stringify({ [this.appType]: formCopy.video_uris });
+                formCopy.video_uris = JSON.stringify({ [this.type]: formCopy.video_uris });
             }
 
             formCopy.id = this.dialogData.form.id;
