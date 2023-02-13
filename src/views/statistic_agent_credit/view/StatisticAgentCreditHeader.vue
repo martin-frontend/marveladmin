@@ -16,7 +16,7 @@
             <!-- 结算时间 -->
             <div class="item_group">
                 <SearchDatePicker
-                    :title="tableColumns.searchtime.name"
+                    :title="LangUtil('结算时间')"
                     :startDate.sync="listQuery.start_date"
                     :endDate.sync="listQuery.end_date"
                     :showTime="true"
@@ -60,9 +60,7 @@
                 <el-button @click="handlerReset" type="primary" icon="el-icon-refresh" class="item">{{
                     LangUtil("重置")
                 }}</el-button>
-                <el-button @click="handlerFilter" type="primary" class="item">{{
-                    LangUtil("用户筛选")
-                }}</el-button>
+                <el-button @click="handlerFilter" type="primary" class="item">{{ LangUtil("用户筛选") }}</el-button>
             </div>
         </div>
     </div>

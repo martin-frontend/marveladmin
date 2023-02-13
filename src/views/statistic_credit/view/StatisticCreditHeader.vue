@@ -47,7 +47,7 @@
                 <!-- 结算时间 -->
                 <div class="item_group">
                     <SearchDatePicker
-                        :title="tableColumns.searchtime.name"
+                        :title="LangUtil('结算时间')"
                         :startDate.sync="listQuery.start_date"
                         :endDate.sync="listQuery.end_date"
                         :showTime="true"
