@@ -97,9 +97,9 @@
                     min-width="110px"
                 >
                     <template slot-scope="{ row }">
-                        <span :style="row.total_win >= 0 ? 'color:green' : 'color:red'">{{
-                            row.total_win | hasPlus
-                        }}</span>
+                        <span>
+                            <WinLossDisplay :amount="row.total_win" />
+                        </span>
                     </template>
                 </el-table-column>
                 <el-table-column :label="LangUtil('操作')" :min-width="width" class-name="status-col">
@@ -156,10 +156,12 @@ import { getPageSetting, getProxy, page1 } from "@/views/_user_detail/PageSettin
 import GlobalVar from "@/core/global/GlobalVar";
 import Cookies from "js-cookie";
 import UpdateGoldDialog from "./UpdateGoldDialog.vue";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
         UpdateGoldDialog,
+        WinLossDisplay,
     },
     filters: {
         hasPlus(value: number) {
