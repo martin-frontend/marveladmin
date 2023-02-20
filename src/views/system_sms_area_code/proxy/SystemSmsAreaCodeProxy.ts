@@ -122,11 +122,12 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
     }
     /**添加数据 */
     onAdd() {
-        const { icon, name, area_code } = this.dialogData.form;
+        const { icon, name, area_code, area_region } = this.dialogData.form;
         const formCopy: any = {
             icon,
             name,
             area_code,
+            area_region,
         };
         this.sendNotification(HttpType.admin_system_sms_area_code_store, objectRemoveNull(formCopy));
     }
@@ -155,7 +156,7 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
             .then(() => {
                 this.sendNotification(HttpType.admin_system_sms_area_code_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**重新排序 */
