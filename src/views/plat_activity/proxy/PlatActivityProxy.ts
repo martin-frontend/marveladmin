@@ -174,8 +174,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
         // 取 模板描述
-        this.getModelDetail(data.model_id);
-
+        if (data.model_id != 0) {
+            this.getModelDetail(data.model_id);
+        }
         this.dialogData.formSource["award_type_map"] = this.dialogData.form.award_type_map;
         this.dialogData.formSource["award_timing_map"] = this.dialogData.form.award_timing_map;
         this.dialogData.formSource["type"] = this.dialogData.form.type;
@@ -373,7 +374,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_activity_store, objectRemoveNull(formCopy));
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**关闭该活动 */
@@ -400,7 +401,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 };
                 this.facade.sendNotification(HttpType.admin_plat_activity_update, copyForm);
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**更新活动*/
@@ -435,7 +436,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     /**取活动模版数据数据 */
     getActivityModel(data: any) {
         this.dialogData.form.model_id = "";
-        this.dialogData.form.rules.length = 0;
+        if (this.dialogData.form.rules) {
+            this.dialogData.form.rules.length = 0;
+        }
         this.sendNotification(HttpType.admin_plat_activity_model_index, data);
     }
     /**写入活动模版数据数据 */
