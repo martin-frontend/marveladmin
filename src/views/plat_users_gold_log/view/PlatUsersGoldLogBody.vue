@@ -43,13 +43,31 @@
                 prop="coin_name_unique"
                 min-width="110px"
             ></el-table-column>
-            <el-table-column
-                :label="tableColumns['gold_before'].name"
-                prop="gold_before"
-                min-width="110px"
-            ></el-table-column>
-            <el-table-column :label="tableColumns['gold'].name" prop="gold" min-width="100px"></el-table-column>
-            <el-table-column :label="tableColumns['balance'].name" prop="balance" min-width="90px"></el-table-column>
+            <el-table-column :label="tableColumns['gold_before'].name" prop="gold_before" min-width="110px">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.gold_before"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns['gold'].name" prop="gold" min-width="100px">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.gold" :isShowColor="false" :isShowPlus="false" :isShowDollar="false" />
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns['balance'].name" prop="balance" min-width="90px">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.balance"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
+            </el-table-column>
             <el-table-column :label="tableColumns['remark'].name" prop="remark" min-width="80px"></el-table-column>
             <el-table-column
                 :label="tableColumns['created_at'].name"
@@ -67,9 +85,11 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import PlatUsersGoldLogProxy from "../proxy/PlatUsersGoldLogProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
+        WinLossDisplay,
         Pagination,
     },
 })

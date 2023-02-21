@@ -22,8 +22,24 @@
                 <el-table-column :label="LangUtil('币种')" prop="coin_name_unique" class-name="status-col">
                 </el-table-column>
                 <el-table-column :label="LangUtil('账户余额')" prop="sum_money" class-name="status-col">
+                    <template slot-scope="{ row }">
+                        <WinLossDisplay
+                            :amount="row.sum_money"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </template>
                 </el-table-column>
                 <el-table-column :label="LangUtil('平台余额')" prop="plat_money" class-name="status-col">
+                    <template slot-scope="{ row }">
+                        <WinLossDisplay
+                            :amount="row.plat_money"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </template>
                 </el-table-column>
                 <el-table-column :label="LangUtil('操作')" class-name="status-col" width="300">
                     <template slot-scope="{ row }">
@@ -64,7 +80,16 @@
             >
                 <el-table-column :label="LangUtil('游戏厂商')" prop="vendor_name" class-name="status-col">
                 </el-table-column>
-                <el-table-column :label="LangUtil('余额')" prop="currency" class-name="status-col"> </el-table-column>
+                <el-table-column :label="LangUtil('余额')" prop="currency" class-name="status-col">
+                    <template slot-scope="{ row }">
+                        <WinLossDisplay
+                            :amount="row.currency"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </template>
+                </el-table-column>
                 <el-table-column :label="LangUtil('币种')" prop="coin_name_unique" class-name="status-col">
                 </el-table-column>
                 <el-table-column :label="LangUtil('操作')" class-name="status-col">
@@ -96,9 +121,11 @@ import GlobalVar from "@/core/global/GlobalVar";
 import DeductGoldDialog from "./DeductGoldDialog.vue";
 import RechargeAddressDialog from "./RechargeAddressDialog.vue";
 import TransferDialog from "./TransferDialog.vue";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
+        WinLossDisplay,
         DeductGoldDialog,
         RechargeAddressDialog,
         TransferDialog,

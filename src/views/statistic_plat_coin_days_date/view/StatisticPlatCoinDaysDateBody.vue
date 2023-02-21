@@ -15,6 +15,14 @@
             <el-table-column prop="coin_name_unique" :label="tableColumns['coin_name_unique'].name" align="center">
             </el-table-column>
             <el-table-column prop="recharge_amount" :label="tableColumns['recharge_amount'].name" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.recharge_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="recharge_fee_amount"
@@ -22,6 +30,14 @@
                 min-width="110px"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.recharge_fee_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="recharge_third_fee_amount"
@@ -29,8 +45,24 @@
                 min-width="110px"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.recharge_third_fee_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column prop="exchange_amount" :label="tableColumns['exchange_amount'].name" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.exchange_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="exchange_fee_amount"
@@ -38,6 +70,14 @@
                 min-width="110px"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.exchange_fee_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="exchange_third_fee_amount"
@@ -45,6 +85,14 @@
                 min-width="110px"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.exchange_third_fee_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="swap_amount"
@@ -52,6 +100,14 @@
                 min-width="110px"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.swap_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
 
             <el-table-column
@@ -60,8 +116,24 @@
                 min-width="130px"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.swap_fee_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column prop="commission_amount" :label="tableColumns['commission_amount'].name" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.commission_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="commission_received_amount"
@@ -69,10 +141,34 @@
                 align="center"
                 min-width="130px"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.commission_received_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column prop="backwater_amount" :label="tableColumns['backwater_amount'].name" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.backwater_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column prop="stake_bonus_amount" :label="tableColumns['stake_bonus_amount'].name" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.stake_bonus_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="stake_bonus_received_amount"
@@ -80,6 +176,14 @@
                 align="center"
                 min-width="130px"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.stake_bonus_received_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="stake_bonus_fee_amount"
@@ -87,6 +191,14 @@
                 align="center"
                 min-width="130px"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.stake_bonus_fee_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="stake_bonus_pool_amount"
@@ -94,6 +206,14 @@
                 align="center"
                 min-width="130px"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.stake_bonus_pool_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="mail_awards_amount"
@@ -101,6 +221,14 @@
                 align="center"
                 min-width="130px"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.mail_awards_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="mail_awards_received_amount"
@@ -108,6 +236,14 @@
                 align="center"
                 min-width="140px"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.mail_awards_received_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
 
             <el-table-column
@@ -115,6 +251,14 @@
                 :label="tableColumns['activity_awards_amount'].name"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.activity_awards_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
 
             <el-table-column
@@ -123,12 +267,28 @@
                 align="center"
                 min-width="130px"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.activity_awards_received_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 prop="manual_deduct_amount"
                 :label="tableColumns['manual_deduct_amount'].name"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.manual_deduct_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column prop="win_loss_amount" :label="tableColumns['win_loss_amount'].name" align="center">
                 <template slot-scope="{ row }">
@@ -151,8 +311,8 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
-        Pagination,
         WinLossDisplay,
+        Pagination,
     },
 })
 export default class StatisticPlatCoinDaysDateBody extends AbstractView {

@@ -25,7 +25,17 @@
                     prop="total_curreny"
                     min-width="100px"
                     class-name="status-col"
-                ></el-table-column>
+                >
+                    <template slot-scope="{ row }">
+                        <WinLossDisplay
+                            :amount="row.total_curreny"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                            :isShowAllDecimal="true"
+                        />
+                    </template>
+                </el-table-column>
             </el-table>
         </div>
     </el-dialog>
@@ -40,8 +50,13 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
-@Component
+@Component({
+    components: {
+        WinLossDisplay,
+    },
+})
 export default class PlatUserDialog extends AbstractView {
     LangUtil = LangUtil;
     // 权限标识

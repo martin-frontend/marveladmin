@@ -46,7 +46,9 @@
                     <div align="left">{{ tableColumns["scale"].name }}：{{ row.scale }}</div>
                     <div align="left">{{ tableColumns["gold_scale"].name }}：{{ row.gold_scale }}</div>
                     <div align="left">{{ tableColumns["exchange_scale"].name }}：{{ row.exchange_scale }}</div>
-                    <div align="left">{{ tableColumns["target_coin_name_unique"].name }}：{{ row.target_coin_name_unique }}</div>
+                    <div align="left">
+                        {{ tableColumns["target_coin_name_unique"].name }}：{{ row.target_coin_name_unique }}
+                    </div>
                 </template>
             </el-table-column>
 
@@ -57,8 +59,16 @@
                     </div>
                 </template>
             </el-table-column>
-
             <el-table-column prop="gold" :label="tableColumns['gold'].name" align="center" width="120px">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                        :isShowAllDecimal="true"
+                    />
+                </template>
             </el-table-column>
             <el-table-column prop="status" :label="tableColumns['status'].name" align="center" width="65">
                 <template slot-scope="{ row }">
@@ -111,9 +121,11 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import PlatUsersVendorGoldLogProxy from "../proxy/PlatUsersVendorGoldLogProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
+        WinLossDisplay,
         Pagination,
     },
 })

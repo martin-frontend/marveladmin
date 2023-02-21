@@ -67,25 +67,57 @@
                 align="center"
                 prop="group_all_recharge"
                 width="110px"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.group_all_recharge"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    ></WinLossDisplay>
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.group_all_exchange.name"
                 align="center"
                 prop="group_all_exchange"
                 width="110px"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.group_all_exchange"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    ></WinLossDisplay>
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.group_all_total_water.name"
                 align="center"
                 prop="group_all_total_water"
                 width="110px"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.group_all_total_water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    ></WinLossDisplay>
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.directly_total_water.name"
                 align="center"
                 prop="directly_total_water"
                 width="110px"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.directly_total_water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    ></WinLossDisplay>
+                </template>
+            </el-table-column>
             <!-- 当前可领取佣金 -->
             <el-table-column
                 :label="tableColumns.commission_awaiting_num.name"
@@ -183,10 +215,11 @@ import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import Cookies from "js-cookie";
 import { MessageBox } from "element-ui";
-import i18n from "@/lang";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
+        WinLossDisplay,
         Pagination,
     },
 })
@@ -276,7 +309,7 @@ export default class PlatAgentBindBody extends AbstractView {
     formatObject(obj: any) {
         let result = "";
         Object.keys(obj).forEach((key: any) => {
-            result += `<div>${key}: ${obj[key]}</div>`;
+            result += `<div>${key}: ${obj[key].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>`;
         });
         return result;
     }

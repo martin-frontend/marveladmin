@@ -52,6 +52,14 @@
                 prop="total_water"
                 min-width="80px"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.total_water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 :label="`${tableColumns.total_backwater.name}`"
@@ -96,9 +104,11 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import PlatUsersBackwaterLogProxy from "../proxy/PlatUsersBackwaterLogProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
+        WinLossDisplay,
         Pagination,
     },
 })
@@ -140,7 +150,7 @@ export default class PlatUsersBackwaterLogBody extends AbstractView {
             const keys = Object.keys(data);
             for (const key of keys) {
                 infoStr += key + "：";
-                infoStr += data[key] + "<br>";
+                infoStr += data[key].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br>";
             }
         }
         return infoStr;

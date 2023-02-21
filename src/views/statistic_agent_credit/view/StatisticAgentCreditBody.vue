@@ -36,13 +36,31 @@
             <el-table-column :label="tableColumns['username'].name" prop="username" class-name="status-col">
             </el-table-column>
 
-            <el-table-column :label="tableColumns['record_count'].name" prop="record_count" class-name="status-col" sortable="custom">
+            <el-table-column
+                :label="tableColumns['record_count'].name"
+                prop="record_count"
+                class-name="status-col"
+                sortable="custom"
+            >
             </el-table-column>
 
             <el-table-column :label="tableColumns['remark'].name" prop="remark" class-name="status-col">
             </el-table-column>
 
-            <el-table-column :label="tableColumns['bet_gold'].name" prop="bet_gold" class-name="status-col" sortable="custom">
+            <el-table-column
+                :label="tableColumns['bet_gold'].name"
+                prop="bet_gold"
+                class-name="status-col"
+                sortable="custom"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    ></WinLossDisplay>
+                </template>
             </el-table-column>
 
             <el-table-column prop="win_gold" :label="tableColumns['win_gold'].name" align="center" sortable="custom">
@@ -51,10 +69,36 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['valid_bet_gold'].name" prop="valid_bet_gold" class-name="status-col" sortable="custom">
+            <el-table-column
+                :label="tableColumns['valid_bet_gold'].name"
+                prop="valid_bet_gold"
+                class-name="status-col"
+                sortable="custom"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.valid_bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    ></WinLossDisplay>
+                </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col" sortable="custom">
+            <el-table-column
+                :label="tableColumns['back_water'].name"
+                prop="back_water"
+                class-name="status-col"
+                sortable="custom"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.back_water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    ></WinLossDisplay>
+                </template>
             </el-table-column>
 
             <el-table-column
@@ -63,15 +107,34 @@
                 class-name="status-col"
                 sortable="custom"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.back_water_except_user"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    ></WinLossDisplay>
+                </template>
             </el-table-column>
 
-            <el-table-column prop="agent_amount" :label="tableColumns['agent_amount'].name" align="center" sortable="custom" width="120px">
+            <el-table-column
+                prop="agent_amount"
+                :label="tableColumns['agent_amount'].name"
+                align="center"
+                sortable="custom"
+                width="120px"
+            >
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.agent_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
-            <el-table-column prop="plat_amount" :label="tableColumns['plat_amount'].name" align="center" sortable="custom">
+            <el-table-column
+                prop="plat_amount"
+                :label="tableColumns['plat_amount'].name"
+                align="center"
+                sortable="custom"
+            >
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.plat_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
@@ -102,8 +165,8 @@ import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
-        Pagination,
         WinLossDisplay,
+        Pagination,
     },
 })
 export default class StatisticAgentCreditBody extends AbstractView {

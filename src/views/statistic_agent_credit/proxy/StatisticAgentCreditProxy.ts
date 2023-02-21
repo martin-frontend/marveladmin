@@ -111,12 +111,12 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
         sumData.credit_rate = "-";
         sumData.remark = "-";
         sumData.agent_amount = data.agent_amount.toString();
-        sumData.back_water = data.back_water;
-        sumData.back_water_except_user = data.back_water_except_user;
-        sumData.bet_gold = data.bet_gold;
+        sumData.back_water = data.back_water.toString();
+        sumData.back_water_except_user = data.back_water_except_user.toString();
+        sumData.bet_gold = data.bet_gold.toString();
         sumData.plat_amount = data.plat_amount.toString();
         sumData.record_count = data.record_count;
-        sumData.valid_bet_gold = data.valid_bet_gold;
+        sumData.valid_bet_gold = data.valid_bet_gold.toString();
         sumData.win_gold = data.win_gold.toString();
         return sumData;
     }
@@ -128,7 +128,7 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
         Object.assign(this.dialogData.form.formCopy, data);
         Object.assign(this.dialogData.form.options, data);
         for (const key in this.dialogData.form.options) {
-            if(this.dialogData.form.options[key].show == 1){
+            if (this.dialogData.form.options[key].show == 1) {
                 this.dialogData.form.show.push(key);
             }
             this.dialogData.form.options[key] = key + '(' + this.dialogData.form.options[key].username + ')';
@@ -217,7 +217,7 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
     }
 
     /**添加数据 */
-    onAdd() {}
+    onAdd() { }
 
     /**更新数据 */
     onUpdate() {
@@ -231,7 +231,7 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
             }
         }
         for (const key in formCopy) {
-            if(formCopy[key] == this.dialogData.form.formCopy[key].show) {
+            if (formCopy[key] == this.dialogData.form.formCopy[key].show) {
                 delete formCopy[key];
             }
         }
@@ -240,11 +240,11 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
             this.dialogData.bShow = false;
             return;
         }
-        this.sendNotification(HttpType.admin_statistic_agent_credit_user_update, { plat_id: this.listQuery.plat_id, user_ids: JSON.stringify(formCopy)});
+        this.sendNotification(HttpType.admin_statistic_agent_credit_user_update, { plat_id: this.listQuery.plat_id, user_ids: JSON.stringify(formCopy) });
     }
 
     /**删除数据 */
-    onDelete(id: any) {}
+    onDelete(id: any) { }
 
     /**显示用户详情 */
     showUserDetail(user_id: number) {

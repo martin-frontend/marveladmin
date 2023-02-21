@@ -58,6 +58,9 @@
                 :label="tableColumns['recharge'].name"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.recharge" :isShowColor="false" :isShowPlus="false" />
+                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.recharge_user.display"
@@ -79,6 +82,9 @@
                 :label="tableColumns['exchange'].name"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.exchange" :isShowColor="false" :isShowPlus="false" />
+                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.exchange_user.display"
@@ -110,6 +116,9 @@
                         </div>
                     </el-tooltip>
                 </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.gift_gold" :isShowColor="false" :isShowPlus="false" />
+                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.backwater_gold.display"
@@ -131,8 +140,14 @@
                         </div>
                     </el-tooltip>
                 </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.backwater_gold" :isShowColor="false" :isShowPlus="false" />
+                </template>
             </el-table-column>
             <el-table-column prop="agent_bonus_gold" :label="tableColumns['agent_bonus_gold'].name" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.agent_bonus_gold" :isShowColor="false" :isShowPlus="false" />
+                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.commission_gold.display"
@@ -154,6 +169,9 @@
                         </div>
                     </el-tooltip>
                 </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.commission_gold" :isShowColor="false" :isShowPlus="false" />
+                </template>
             </el-table-column>
 
             <el-table-column
@@ -172,6 +190,14 @@
                 :label="tableColumns['water'].name"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>

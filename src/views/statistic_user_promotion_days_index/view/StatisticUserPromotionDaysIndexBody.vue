@@ -90,6 +90,13 @@
                         align="center"
                         min-width="180px"
                     >
+                        <template slot-scope="{ row }">
+                            <WinLossDisplay
+                                :amount="row[activeName + `_recharge`]"
+                                :isShowColor="false"
+                                :isShowPlus="false"
+                            />
+                        </template>
                     </el-table-column>
                     <!-- 兑换笔数 -->
                     <el-table-column
@@ -105,6 +112,13 @@
                         :label="tableColumns[`${activeName}_exchange`].name"
                         align="center"
                     >
+                        <template slot-scope="{ row }">
+                            <WinLossDisplay
+                                :amount="row[activeName + `_exchange`]"
+                                :isShowColor="false"
+                                :isShowPlus="false"
+                            />
+                        </template>
                     </el-table-column>
                     <!-- 推广佣金 -->
                     <el-table-column
@@ -116,11 +130,23 @@
                         <template slot-scope="{ row }">
                             <div class="text-left">
                                 <span>{{ tableColumns[`${activeName}_commission`].name }}:</span>
-                                <span>{{ row[`${activeName}_commission`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_commission`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_commission_${i}`].name }}:</span>
-                                <span>{{ row[`${activeName}_commission_${i}`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_commission_${i}`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                         </template>
                     </el-table-column>
@@ -143,6 +169,13 @@
                                 </div>
                             </el-tooltip>
                         </template>
+                        <template slot-scope="{ row }">
+                            <WinLossDisplay
+                                :amount="row[activeName + `_gift_gold`]"
+                                :isShowColor="false"
+                                :isShowPlus="false"
+                            />
+                        </template>
                     </el-table-column>
                     <!-- 时时反水 -->
                     <el-table-column
@@ -154,11 +187,23 @@
                         <template slot-scope="{ row }">
                             <div class="text-left">
                                 <span>{{ tableColumns[`${activeName}_backwater_gold`].name }}:</span>
-                                <span>{{ row[`${activeName}_backwater_gold`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_backwater_gold`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_backwater_${i}`].name }}:</span>
-                                <span>{{ row[`${activeName}_backwater_${i}`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_backwater_${i}`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                         </template>
                     </el-table-column>
@@ -172,11 +217,23 @@
                         <template slot-scope="{ row }">
                             <div class="text-left">
                                 <span>{{ tableColumns[`${activeName}_total_bet`].name }}:</span>
-                                <span>{{ row[`${activeName}_total_bet`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_total_bet`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_bet_${i}`].name }}:</span>
-                                <span>{{ row[`${activeName}_bet_${i}`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_bet_${i}`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                         </template>
                     </el-table-column>
@@ -190,11 +247,23 @@
                         <template slot-scope="{ row }">
                             <div class="text-left">
                                 <span>{{ tableColumns[`${activeName}_total_win_loss`].name }}:</span>
-                                <span>{{ row[`${activeName}_total_win_loss`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_total_win_loss`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_win_loss_${i}`].name }}:</span>
-                                <span>{{ row[`${activeName}_win_loss_${i}`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_win_loss_${i}`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                         </template>
                     </el-table-column>
@@ -208,11 +277,23 @@
                         <template slot-scope="{ row }">
                             <div class="text-left">
                                 <span>{{ tableColumns[`${activeName}_total_water`].name }}:</span>
-                                <span>{{ row[`${activeName}_total_water`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_total_water`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_water_${i}`].name }}:</span>
-                                <span>{{ row[`${activeName}_water_${i}`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_water_${i}`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                         </template>
                     </el-table-column>
@@ -226,11 +307,23 @@
                         <template slot-scope="{ row }">
                             <div class="text-left">
                                 <span>{{ tableColumns[`${activeName}_bonus_pool`].name }}:</span>
-                                <span>{{ row[`${activeName}_bonus_pool`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_bonus_pool`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_bonus_pool_${i}`].name }}:</span>
-                                <span>{{ row[`${activeName}_bonus_pool_${i}`] }}</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_bonus_pool_${i}`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
                             </div>
                         </template>
                     </el-table-column>
@@ -241,6 +334,13 @@
                         align="center"
                         min-width="100px"
                     >
+                        <template slot-scope="{ row }">
+                            <WinLossDisplay
+                                :amount="row[activeName + `_recharge_fee`]"
+                                :isShowColor="false"
+                                :isShowPlus="false"
+                            />
+                        </template>
                     </el-table-column>
                     <!-- 兑换手续费 -->
                     <el-table-column
@@ -249,6 +349,13 @@
                         align="center"
                         min-width="100px"
                     >
+                        <template slot-scope="{ row }">
+                            <WinLossDisplay
+                                :amount="row[activeName + `_exchange_fee`]"
+                                :isShowColor="false"
+                                :isShowPlus="false"
+                            />
+                        </template>
                     </el-table-column>
                 </el-table>
             </div>

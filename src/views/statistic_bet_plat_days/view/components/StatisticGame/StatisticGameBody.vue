@@ -55,6 +55,14 @@
                 prop="bet_gold"
                 class-name="status-col"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 sortable="custom"
@@ -62,6 +70,14 @@
                 prop="valid_bet_gold"
                 class-name="status-col"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.valid_bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 sortable="custom"
@@ -70,7 +86,7 @@
                 class-name="status-col"
             >
                 <template slot-scope="{ row }">
-                    <WinLoss :amount="row.win_gold" />
+                    <WinLossDisplay :amount="row.win_gold" />
                 </template>
             </el-table-column>
             <el-table-column
@@ -79,6 +95,14 @@
                 prop="water"
                 class-name="status-col"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
@@ -90,13 +114,13 @@ import { Component } from "vue-property-decorator";
 import StatisticBetPlatDaysProxy from "../../../proxy/StatisticBetPlatDaysProxy";
 import { checkUnique, unique } from "@/core/global/Permission";
 import GlobalVar from "@/core/global/GlobalVar";
-import WinLoss from "@/components/WinLossDisplay.vue";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 import Pagination from "@/components/Pagination.vue";
 import { jsonStringify } from "@/core/global/Functions";
 
 @Component({
     components: {
-        WinLoss,
+        WinLossDisplay,
         Pagination,
     },
 })

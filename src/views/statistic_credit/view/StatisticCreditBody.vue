@@ -39,6 +39,14 @@
             </el-table-column>
 
             <el-table-column :label="tableColumns['bet_gold'].name" prop="bet_gold" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    ></WinLossDisplay>
+                </template>
             </el-table-column>
 
             <el-table-column prop="win_gold" :label="tableColumns['win_gold'].name" align="center">
@@ -48,9 +56,25 @@
             </el-table-column>
 
             <el-table-column :label="tableColumns['valid_bet_gold'].name" prop="valid_bet_gold" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.valid_bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    ></WinLossDisplay>
+                </template>
             </el-table-column>
 
             <el-table-column :label="tableColumns['back_water'].name" prop="back_water" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.back_water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    ></WinLossDisplay>
+                </template>
             </el-table-column>
 
             <el-table-column
@@ -58,6 +82,14 @@
                 prop="back_water_except_user"
                 class-name="status-col"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.back_water_except_user"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    ></WinLossDisplay>
+                </template>
             </el-table-column>
 
             <el-table-column prop="agent_amount" :label="tableColumns['agent_amount'].name" align="center">

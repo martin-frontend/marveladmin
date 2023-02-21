@@ -37,6 +37,14 @@
                 prop="total_recharge"
                 sortable="custom"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.total_recharge"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 :label="`${tableColumns.total_exchange.name}`"
@@ -44,6 +52,14 @@
                 prop="total_exchange"
                 sortable="custom"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.total_exchange"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 :label="`${tableColumns.total_water.name}`"
@@ -51,6 +67,14 @@
                 class-name="status-col"
                 prop="total_water"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.total_water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
             </el-table-column>
             <el-table-column
                 sortable="custom"
