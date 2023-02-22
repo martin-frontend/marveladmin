@@ -46,6 +46,13 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item :label="tableColumns.is_display.name" prop="is_display">
+                <el-radio-group v-model="form.is_display">
+                    <el-radio v-for="(value, key) in tableColumns.is_display.options" :key="key" :label="Number(key)">
+                        {{ value }}
+                    </el-radio>
+                </el-radio-group>
+            </el-form-item>
             <el-form-item :label="tableColumns.show_scale.name" prop="show_scale">
                 <el-input-number v-model="form.show_scale" :min="0" :precision="10" :step="0.001"></el-input-number>
             </el-form-item>

@@ -37,6 +37,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             gold: { name: "公共钱包", options: {} },
             id: { name: "主键", options: {} },
             is_delete: { name: "是否删除", options: {} },
+            is_display: { name: '是否显示', options: {} },
             plat_id: { name: "平台ID", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
@@ -64,6 +65,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             plat_id: <any>null,
             coin_name_unique: null,
             can_play_game: null,
+            is_display: null,
             remark: null,
             game_scale: 1,
             type: null,
@@ -130,6 +132,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             plat_id: <any>null,
             coin_name_unique: null,
             can_play_game: null,
+            is_display: null,
             remark: null,
             game_scale: 1,
             type: null,
@@ -150,6 +153,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             plat_id: form.plat_id,
             coin_name_unique: form.coin_name_unique,
             can_play_game: form.can_play_game,
+            is_display: form.is_display,
             remark: form.remark,
             game_scale: form.game_scale,
             type: form.type,
@@ -186,7 +190,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_block_coins_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**排序 */

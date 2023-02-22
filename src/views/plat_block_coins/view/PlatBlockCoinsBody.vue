@@ -54,10 +54,20 @@
                 prop="can_play_game"
                 :label="`${tableColumns.can_play_game.name}`"
                 class-name="status-col"
-                min-width="30px"
+                min-width="35px"
             >
                 <template slot-scope="{ row }">
                     {{ tableColumns.can_play_game.options[row.can_play_game] }}
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="is_display"
+                :label="`${tableColumns.is_display.name}`"
+                class-name="status-col"
+                min-width="30px"
+            >
+                <template slot-scope="{ row }">
+                    {{ tableColumns.is_display.options[row.is_display] }}
                 </template>
             </el-table-column>
             <el-table-column
