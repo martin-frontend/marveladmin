@@ -4,15 +4,26 @@
             <div v-if="Object.keys(form.options).length == 0">
                 {{ LangUtil("暂无数据") }}
             </div>
-            <el-checkbox-group v-model="form.show" v-else>
-                <el-checkbox v-for="(value, key) in form.options" :key="key" :label="key">
-                    {{ value }}
-                </el-checkbox>
-            </el-checkbox-group>
-            <el-form-item class="dialog-footer">
-                <el-button type="primary" @click="handleUpdate()">{{
-                    LangUtil("确认保存")
+            <div v-else>
+                <el-button
+                    v-if="form.show.length == Object.keys(form.options).length"
+                    type="primary"
+                    size="mini"
+                    style="margin-bottom: 10px"
+                    @click="checkedAll(false)"
+                    >{{ LangUtil("全部不选择") }}</el-button
+                >
+                <el-button v-else type="primary" size="mini" style="margin-bottom: 10px" @click="checkedAll(true)">{{
+                    LangUtil("全选")
                 }}</el-button>
+                <el-checkbox-group v-model="form.show">
+                    <el-checkbox v-for="(value, key) in form.options" :key="key" :label="key">
+                        {{ value }}
+                    </el-checkbox>
+                </el-checkbox-group>
+            </div>
+            <el-form-item class="dialog-footer">
+                <el-button type="primary" @click="handleUpdate()">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -81,12 +92,21 @@ export default class StatisticAgentCreditDialog extends AbstractView {
             }
         });
     }
+
+    // 全选/取消全选
+    checkedAll(selected: boolean) {
+        if (selected) {
+            this.form.show = Object.keys(this.form.options);
+        } else {
+            this.form.show = [];
+        }
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
-.el-checkbox{
+.el-checkbox {
     min-inline-size: 182px;
 }
 </style>
