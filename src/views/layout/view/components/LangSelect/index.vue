@@ -7,20 +7,16 @@
         <span class="lang"> <img :src="getImage" class="img" /> {{ languageText }}</span>
         <el-dropdown-menu slot="dropdown">
             <el-dropdown-item :disabled="language === 'zh'" command="zh" class="flex">
-                <img :src="imageBox.zh" class="img" />
-                <a>简体中文</a>
+                <span class="lang"> <img :src="imageBox.zh" class="img" /> 简体中文 </span>
             </el-dropdown-item>
             <el-dropdown-item :disabled="language === 'vi'" command="vi" class="flex">
-                <img :src="imageBox.vi" class="img" />
-                <a>Tiếng Việt</a>
+                <span class="lang"> <img :src="imageBox.vi" class="img" /> Tiếng Việt </span>
             </el-dropdown-item>
             <el-dropdown-item :disabled="language === 'en'" command="en" class="flex">
-                <img :src="imageBox.en" class="img" />
-                <a>English</a>
+                <span class="lang"> <img :src="imageBox.en" class="img" /> English </span>
             </el-dropdown-item>
             <el-dropdown-item :disabled="language === 'jp'" command="jp" class="flex">
-                <img :src="imageBox.jp" class="img" />
-                <a>Japanese</a>
+                <span class="lang"> <img :src="imageBox.jp" class="img" /> Japanese </span>
             </el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
@@ -71,15 +67,14 @@ export default {
     font-size: 16px;
     user-select: none;
     display: flex;
-
-    .img {
-        margin-top: 13px;
-    }
+    align-items: center;
+    // padding: 4px 0;
+    // background-color: white;
+    cursor: pointer;
 }
 .img {
     width: 31px;
     height: 20px;
-    margin-top: 5px;
     margin-right: 5px;
 }
 .flex {

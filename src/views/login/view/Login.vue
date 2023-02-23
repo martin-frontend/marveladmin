@@ -11,7 +11,9 @@
             <div class="title-container">
                 <h3 class="title">Login Form</h3>
             </div>
-
+            <div class="lang-box">
+                <LangSelect class="lang hover-effect" />
+            </div>
             <el-form-item prop="username">
                 <el-input
                     prefix-icon="el-icon-user"
@@ -80,10 +82,12 @@ import LoginMediator from "../mediator/LoginMediator";
 import { MD5 } from "@/core/global/MD5";
 import { Form } from "element-ui";
 import QRCode from "./QRCode.vue";
+import LangSelect from "@/views/layout/view/components/LangSelect/index.vue";
 
 @Component({
     components: {
         QRCode,
+        LangSelect,
     },
 })
 export default class Login extends AbstractView {
@@ -247,7 +251,7 @@ $light_gray: #eee;
         .title {
             font-size: 26px;
             color: $light_gray;
-            margin: 0px auto 40px auto;
+            margin: 0px auto 7px auto;
             text-align: center;
             font-weight: bold;
         }
@@ -291,6 +295,33 @@ $light_gray: #eee;
         ::v-deep span {
             color: #abb4bf;
             text-decoration: underline;
+        }
+    }
+}
+
+.lang-box {
+    text-align: right;
+    margin-bottom: 5px;
+
+    &:focus {
+        outline: none;
+    }
+
+    .lang {
+        display: inline-block;
+        padding: 8px;
+        height: 100%;
+        font-size: 18px;
+        color: #5a5e66;
+        background-color: white;
+        border-radius: 5px;
+
+        &.hover-effect {
+            transition: background 0.3s;
+
+            &:hover {
+                background: rgba(255,255,255,0.9);
+            }
         }
     }
 }
