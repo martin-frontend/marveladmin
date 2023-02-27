@@ -240,6 +240,13 @@
                         {{ tableColumns["bet_gold"].name }}：
                         <WinLossDisplay :amount="row.bet_gold" :isShowColor="false" :isShowPlus="false" />
                     </p>
+                    <p v-if="row.vendor_type == 64">
+                        {{ LangUtil("联赛") }}：
+                        <span v-if="row.league">
+                            {{ row.league.substring(0, row.league.indexOf("-")) }}<br />
+                            {{ row.league.substring(row.league.indexOf("-") + 1) }}
+                        </span>
+                    </p>
                     <p>{{ tableColumns["bet_code"].name }}：{{ row.bet_code }}</p>
                     <p>{{ tableColumns["bet_result"].name }}：{{ row.bet_result }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type_text }}</p>
