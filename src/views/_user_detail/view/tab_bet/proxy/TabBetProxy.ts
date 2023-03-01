@@ -14,7 +14,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
     }
 
     /**离开页面时调用 */
-    leave() {}
+    leave() { }
 
     /**表格相关数据 */
     tableData = {
@@ -174,5 +174,11 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
     /**查询 */
     onQuery() {
         this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(this.listQuery));
+    }
+
+    /**跳转详情 */
+    showDetailPage(data: any) {
+        const { plat_id, bet_id } = data;
+        this.sendNotification(HttpType.admin_plat_users_bet_show_url, { plat_id, bet_id });
     }
 }

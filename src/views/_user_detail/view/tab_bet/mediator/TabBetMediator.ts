@@ -20,6 +20,7 @@ export default class TabBetMediator extends AbstractMediator {
             EventType.admin_plat_users_bet_table_columns,
             EventType.admin_plat_users_bet_index,
             EventType.admin_plat_users_bet_show,
+            EventType.admin_plat_users_bet_show_url,
         ];
     }
 
@@ -36,6 +37,9 @@ export default class TabBetMediator extends AbstractMediator {
                     break;
                 case EventType.admin_plat_users_bet_show:
                     this.myProxy.setDetail(body);
+                    break;
+                case EventType.admin_plat_users_bet_show_url:
+                    window.open(body);
                     break;
             }
         }

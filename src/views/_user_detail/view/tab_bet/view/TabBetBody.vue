@@ -99,12 +99,26 @@
                     <p>{{ tableColumns["pull_at"].name }}：<br />{{ row.pull_at }}</p>
                 </template>
             </el-table-column>
-            <el-table-column
-                :label="tableColumns['bet_gold'].name"
-                prop="bet_gold"
-                class-name="status-col"
-                min-width="70px"
-            ></el-table-column>
+            <el-table-column :label="LangUtil('投注内容')" header-align="center" align="left" min-width="215px">
+                <template slot-scope="{ row }">
+                    <p>
+                        {{ tableColumns["bet_gold"].name }}：
+                        <WinLossDisplay :amount="row.bet_gold" :isShowColor="false" :isShowPlus="false" />
+                    </p>
+                    <p v-if="row.vendor_type == 64">
+                        {{ LangUtil("联赛") }}：
+                        <span v-if="row.league">
+                            {{ row.league.substring(0, row.league.indexOf("-")) }}<br />
+                            {{ row.league.substring(row.league.indexOf("-") + 1) }}
+                        </span>
+                    </p>
+                    <p>{{ tableColumns["bet_code"].name }}：{{ row.bet_code }}</p>
+                    <p>{{ tableColumns["bet_result"].name }}：{{ row.bet_result }}</p>
+                    <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type_text }}</p>
+                    <p v-if="row.vendor_type == 64">{{ LangUtil("赔率") }}：{{ row.odds }}</p>
+                    <el-button @click="showDetailPage(row)" type="text">{{ LangUtil("跳转详情") }}</el-button>
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns['valid_bet_gold'].name"
                 prop="valid_bet_gold"
@@ -197,6 +211,10 @@ export default class TabBetBody extends AbstractView {
 
     handlerDetail(data: any) {
         this.myProxy.showDialog(data);
+    }
+
+    showDetailPage(data: any) {
+        this.myProxy.showDetailPage(data);
     }
 }
 </script>
