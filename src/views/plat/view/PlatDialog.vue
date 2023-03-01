@@ -132,13 +132,7 @@
                             :key="key"
                         >
                             <div style="margin-right: 10px; width: 40px">{{ value }}</div>
-                            <el-input
-                                type="number"
-                                min="0"
-                                max="999"
-                                v-model="form.promotion_floor[key]"
-                                oninput="value=value.replace(/[^\d]/g,'');if(value >999)value=999"
-                            ></el-input>
+                            <el-input type="number" min="0" v-model="form.promotion_floor[key]"></el-input>
                         </div>
                     </div>
                     <div class="el_select_group">
