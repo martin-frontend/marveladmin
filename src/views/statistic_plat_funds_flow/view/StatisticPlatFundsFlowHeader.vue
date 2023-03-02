@@ -6,7 +6,10 @@
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
                 :clearable="false"
-                @change="handlerSearch"
+                @change="
+                    changePlat();
+                    handlerSearch();
+                "
             />
         </div>
         <div class="group">
@@ -19,6 +22,12 @@
             <SearchInput :title="tableColumns.directly_user_id.name" v-model="listQuery.directly_user_id" />
             <SearchInput :title="tableColumns.team_user_id.name" v-model="listQuery.team_user_id" />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
+            <SearchSelect
+                :title="LangUtil('币种')"
+                :options="tableColumns.coin_name_unique_option"
+                v-model="listQuery.coin_name_unique"
+                :clearable="false"
+            />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")
@@ -67,6 +76,15 @@ export default class StatisticPlatFundsFlowHeader extends AbstractView {
 
     handlerReset() {
         this.myProxy.resetListQuery();
+    }
+
+    //更换平台切换对应渠道
+    changePlat() {
+        //@ts-ignore
+        this.tableColumns.coin_name_unique_option = this.tableColumns.coin_name_unique.options[this.listQuery.plat_id];
+        //设定选取币种第一个
+        const coin_name_unique_options_keys = Object.keys(this.tableColumns.coin_name_unique_option);
+        this.listQuery.coin_name_unique = coin_name_unique_options_keys[0];
     }
 }
 </script>

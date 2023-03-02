@@ -36,6 +36,8 @@ export default class StatisticPlatFundsFlowProxy extends AbstractProxy implement
             profit: { name: "" },
             deposit_summary: { name: "" },
             withdraw_summary: { name: "" },
+            coin_name_unique: { name: "", options: {} },
+            coin_name_unique_option: {},
         },
         data: <any>{
             plat_deposit: "",
@@ -63,6 +65,7 @@ export default class StatisticPlatFundsFlowProxy extends AbstractProxy implement
         directly_user_id: "",
         team_user_id: "",
         user_id: "",
+        coin_name_unique: "",
     };
 
     /**设置表头数据 */
@@ -71,7 +74,16 @@ export default class StatisticPlatFundsFlowProxy extends AbstractProxy implement
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
+                //设定选取平台第一个
                 this.listQuery.plat_id = plat_id_options_keys[0];
+            if (this.listQuery.plat_id) {
+                //@ts-ignore
+                this.tableData.columns.coin_name_unique_option = this.tableData.columns.coin_name_unique.options[
+                    this.listQuery.plat_id
+                ];
+                const coin_name_unique_options_keys = Object.keys(this.tableData.columns.coin_name_unique_option);
+                this.listQuery.coin_name_unique = coin_name_unique_options_keys[0];
+            }
             this.onQuery();
         }
     }
@@ -88,7 +100,6 @@ export default class StatisticPlatFundsFlowProxy extends AbstractProxy implement
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
-            plat_id: "",
             "created_date-{>=}": dateFormat(getTodayOffset(), this.tableData.format),
             "created_date-{<=}": dateFormat(getTodayOffset(1, 1), this.tableData.format),
             directly_user_id: "",
