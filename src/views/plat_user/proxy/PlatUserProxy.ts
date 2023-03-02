@@ -8,6 +8,7 @@ import { Message, MessageBox } from "element-ui";
 import IPlatUserProxy from "./IPlatUserProxy";
 import i18n from "@/lang";
 import ExchangeOrdersProxy from "@/views/exchange_orders/proxy/ExchangeOrdersProxy";
+import { MD5 } from "@/core/global/MD5";
 
 export default class PlatUserProxy extends AbstractProxy implements IPlatUserProxy {
     static NAME = "PlatUserProxy";
@@ -80,6 +81,20 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             wechat: { name: "微信", options: {} },
             is_credit_user: { name: "信用用户", options: {} },
             is_gold_exchange: { name: "是否货币互转", options: {} },
+            vendor_type: {
+                name: "产品类型",
+                options: {
+                    "0": "所有",
+                    "2": "棋牌",
+                    "4": "彩票",
+                    "8": "捕鱼",
+                    "16": "电子",
+                    "32": "真人",
+                    "64": "体育电竞",
+                    "128": "链游",
+                },
+            },
+            water_config: { name: "流水配置", optiosn: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -130,6 +145,18 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     walletDialogData = {
         bShow: false,
         data: <any>{},
+    };
+
+    creditUserDialogData = {
+        bShow: false,
+        form: <any>{
+            username: "",
+            password: "",
+            water_config: { "0": 0, "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0 },
+            credit_rate_min: "",
+            credit_rate_max: "",
+        },
+        backwater_config: <any>{ "0": 0, "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0 },
     };
 
     /**设置表头数据 */
@@ -222,6 +249,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
+        this.creditUserDialogData.bShow = false;
     }
     /**重置弹窗表单 */
     resetDialogForm() {
@@ -281,5 +309,46 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     setWallet(data: any) {
         this.walletDialogData.bShow = true;
         this.walletDialogData.data = data;
+    }
+
+    showCreditUserDialog() {
+        const { plat_id } = this.listQuery;
+        this.sendNotification(HttpType.admin_plat_user_backwater_config, { plat_id });
+        this.resetCreditUserForm();
+    }
+
+    setPlatUserBackwaterConfig(data: any) {
+        Object.assign(this.creditUserDialogData.backwater_config, data);
+        this.creditUserDialogData.bShow = true;
+    }
+
+    resetCreditUserForm() {
+        Object.assign(this.creditUserDialogData.form, {
+            username: "",
+            password: "",
+            water_config: { "0": 0, "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0 },
+            credit_rate_min: "",
+            credit_rate_max: "",
+        });
+    }
+
+    onAddCreditUser() {
+        const { plat_id } = this.listQuery;
+        let { username, password, credit_rate_min, credit_rate_max } = this.creditUserDialogData.form;
+        let water_config = JSON.parse(JSON.stringify(this.creditUserDialogData.form.water_config))
+        password = MD5.createInstance().hex_md5(password);
+        Object.keys(water_config).forEach(key => {
+            water_config[key] = water_config[key] / 100;
+        });
+        water_config = JSON.stringify(water_config);
+        const formCopy = {
+            username,
+            password,
+            water_config,
+            credit_rate_min,
+            credit_rate_max,
+            plat_id,
+        };
+        this.sendNotification(HttpType.admin_plat_user_store_credit_user, objectRemoveNull(formCopy));
     }
 }

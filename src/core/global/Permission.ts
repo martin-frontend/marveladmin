@@ -195,6 +195,7 @@ export var unique = {
     update_level_exp: "update_level_exp", //更新用户基础经验值
     plat_user_refresh: "plat_user_refresh", //用户钱包-金币刷新
     plat_user_withdraw: "plat_user_withdraw", //用户钱包-提取
+    plat_user_store_credit_user: "plat_user_store_credit_user", //添加信用用户
     //上下分记录
     plat_users_vendor_gold_log_update_manual: "plat_users_vendor_gold_log_update_manual", //上下分手动处理
     //操作日志

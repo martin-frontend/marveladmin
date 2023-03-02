@@ -1,5 +1,13 @@
 <template>
     <div>
+        <div style="margin-bottom: 8px; text-align: right">
+            <el-button
+                v-if="checkUnique(unique.plat_user_store_credit_user)"
+                @click="handlerAddCreditUser()"
+                type="primary"
+                >{{ LangUtil("新增信用用户") }}</el-button
+            >
+        </div>
         <el-table
             @sort-change="tableSortChange"
             :data="tableData"
@@ -278,6 +286,10 @@ export default class PlatUserBody extends AbstractView {
         } else {
             this.myProxy.onToggleStatus(user_id, status);
         }
+    }
+
+    handlerAddCreditUser() {
+        this.myProxy.showCreditUserDialog();
     }
 }
 </script>

@@ -2,7 +2,8 @@ import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/plat_user/setting";
-import { Message } from "element-ui";
+import { Message, MessageBox } from "element-ui";
+import LangUtil from "@/core/global/LangUtil";
 import PlatUserProxy from "../proxy/PlatUserProxy";
 
 interface IPlatUser extends IEventDispatcher {}
@@ -33,6 +34,8 @@ export default class PlatUserMediator extends AbstractMediator {
             EventType.admin_plat_user_update_safe_gold,
             EventType.admin_plat_user_update_user_gold,
             EventType.admin_plat_users_wallet_show_plat,
+            EventType.admin_plat_user_backwater_config,
+            EventType.admin_plat_user_store_credit_user,
         ];
     }
 
@@ -71,6 +74,30 @@ export default class PlatUserMediator extends AbstractMediator {
                 break;
             case EventType.admin_plat_users_wallet_show_plat:
                 myProxy.setWallet(body);
+                break;
+            case EventType.admin_plat_user_backwater_config:
+                myProxy.setPlatUserBackwaterConfig(body);
+                break;
+            case EventType.admin_plat_user_store_credit_user:
+                MessageBox.confirm(
+                    <string>(
+                        LangUtil(
+                            "添加账户成功，帐号{0}，密码{1}",
+                            myProxy.creditUserDialogData.form.username,
+                            myProxy.creditUserDialogData.form.password
+                        )
+                    ),
+                    <string>LangUtil("提示"),
+                    {
+                        confirmButtonText: <string>LangUtil("确定"),
+                        showCancelButton: false,
+                        type: "warning",
+                        center: true,
+                    }
+                ).then(() => {
+                    myProxy.hideDialog();
+                    myProxy.onQuery();
+                });
                 break;
         }
     }

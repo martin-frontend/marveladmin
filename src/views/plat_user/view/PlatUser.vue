@@ -1,6 +1,7 @@
 <template>
     <div class="content plat_user">
         <PlatUserDialog v-if="myProxy.dialogData.bShow" />
+        <PlatCreditUserDialog v-if="myProxy.creditUserDialogData.bShow" />
         <PlatUsersWalletDialog v-if="myProxy.walletDialogData.bShow" />
         <PlatUserHeader />
         <PlatUserBody />
@@ -16,6 +17,7 @@ import PlatUsersWalletDialog from "./PlatUsersWalletDialog.vue";
 import PlatUserHeader from "./PlatUserHeader.vue";
 import PlatUserBody from "./PlatUserBody.vue";
 import PlatUserProxy from "../proxy/PlatUserProxy";
+import PlatCreditUserDialog from "./PlatCreditUserDialog.vue";
 
 @Component({
     components: {
@@ -23,6 +25,7 @@ import PlatUserProxy from "../proxy/PlatUserProxy";
         PlatUserHeader,
         PlatUserBody,
         PlatUsersWalletDialog,
+        PlatCreditUserDialog,
     },
 })
 export default class PlatUser extends AbstractView {

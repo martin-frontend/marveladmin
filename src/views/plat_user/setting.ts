@@ -12,6 +12,8 @@ import cmd_admin_plat_user_update_safe_gold from "@/views/plat_user/command/cmd_
 import cmd_admin_plat_user_update_user_gold from "@/views/plat_user/command/cmd_admin_plat_user_update_user_gold";
 import cmd_admin_plat_user_recharge_address from "@/views/plat_user/command/cmd_admin_plat_user_recharge_address";
 import cmd_admin_plat_users_wallet_show_plat from "@/views/plat_user/command/cmd_admin_plat_users_wallet_show_plat";
+import cmd_admin_plat_user_backwater_config from "@/views/plat_user/command/cmd_admin_plat_user_backwater_config";
+import cmd_admin_plat_user_store_credit_user from "@/views/plat_user/command/cmd_admin_plat_user_store_credit_user";
 /**协议*/
 export var HttpType = {
     admin_plat_user_table_columns: "admin/plat_user/table_columns",
@@ -24,6 +26,8 @@ export var HttpType = {
     admin_plat_user_update_user_gold: "admin/plat_user/update_user_gold/{user_id}",
     admin_plat_user_recharge_address: "admin/plat_user/recharge_address/{user_id}",
     admin_plat_users_wallet_show_plat: "admin/plat_users_wallet/show_plat",
+    admin_plat_user_backwater_config: "admin/plat_user/{plat_id}/backwater_config",
+    admin_plat_user_store_credit_user: "admin/plat_user/store_credit_user",
 };
 /**事件*/
 export var EventType = {
@@ -37,6 +41,8 @@ export var EventType = {
     admin_plat_user_update_user_gold: "admin_plat_user_update_user_gold",
     admin_plat_user_recharge_address: "admin_plat_user_recharge_address",
     admin_plat_users_wallet_show_plat: "admin_plat_users_wallet_show_plat",
+    admin_plat_user_backwater_config: "admin_plat_user_backwater_config",
+    admin_plat_user_store_credit_user: "admin_plat_user_store_credit_user",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -50,4 +56,6 @@ facade.registerCommand(HttpType.admin_plat_user_update_safe_gold, cmd_admin_plat
 facade.registerCommand(HttpType.admin_plat_user_update_user_gold, cmd_admin_plat_user_update_user_gold);
 facade.registerCommand(HttpType.admin_plat_user_recharge_address, cmd_admin_plat_user_recharge_address);
 facade.registerCommand(HttpType.admin_plat_users_wallet_show_plat, cmd_admin_plat_users_wallet_show_plat);
+facade.registerCommand(HttpType.admin_plat_user_backwater_config, cmd_admin_plat_user_backwater_config);
+facade.registerCommand(HttpType.admin_plat_user_store_credit_user, cmd_admin_plat_user_store_credit_user);
 
