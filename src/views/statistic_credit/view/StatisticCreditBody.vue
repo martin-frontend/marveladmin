@@ -96,8 +96,6 @@
                 <template slot-scope="{ row }">
                     <WinLossDisplay
                         :amount="row.self_amount"
-                        :isShowColor="false"
-                        :isShowPlus="false"
                         :isShowDollar="false"
                     ></WinLossDisplay>
                 </template>
