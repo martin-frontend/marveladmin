@@ -45,6 +45,10 @@
         "admin/plat_vendor_user/table_columns",
         "admin/plat_vendor_user/index",
         "admin/plat_vendor_user/show/{vendor_user_id}",
-        "admin/plat_vendor_user/money/{vendor_user_id}"
+        "admin/plat_vendor_user/money/{vendor_user_id}",
+        "--信用代理&credit",
+        "admin/plat_user/direct_users",
+        "admin/plat_users_credit_log/table_columns",
+        "admin/plat_users_credit_log/index"
     ]
 }

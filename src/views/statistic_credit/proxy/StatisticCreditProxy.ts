@@ -45,6 +45,10 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             searchtime: { name: "结算时间", options: {} },
             coin_name_unique: { name: "币种", options: {} },
             vendor_type: { name: "游戏类型", options: {} },
+            self_amount: { name: "我的金额", options: {} },
+            credit_rate_self: { name: "我的占成", options: {} },
+            credit_rate_subordinate: { name: "代理商占成", options: {} },
+            credit_rate_superior: { name: "平台占成", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -72,11 +76,15 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             credit_rate: "",
             user_id: "-",
             valid_bet_gold: "",
+            self_amount: "",
+            credit_rate_self: "",
+            credit_rate_subordinate: "",
+            credit_rate_superior: "",
         },
     };
 
     /**查询条件 */
-    listQuery = {
+    listQuery = <any>{
         plat_id: "",
         user_id: null,
         username: null,
@@ -110,6 +118,10 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         sumData.plat_amount = data.plat_amount;
         sumData.credit_rate = data.credit_rate;
         sumData.valid_bet_gold = data.valid_bet_gold;
+        sumData.self_amount = data.self_amount;
+        sumData.credit_rate_self = data.credit_rate_self;
+        sumData.credit_rate_subordinate = data.credit_rate_subordinate;
+        sumData.credit_rate_superior = data.credit_rate_superior;
         return sumData;
     }
     /**设置表头数据 */
@@ -239,7 +251,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         this.sendNotification(HttpType.admin_statistic_credit_index, objectRemoveNull(this.listQuery));
     }
 
-    onQueryUser(user_id: any){
+    onQueryUser(user_id: any) {
         Object.assign(this.listQuery, {
             page_count: 1,
             page_size: 20,

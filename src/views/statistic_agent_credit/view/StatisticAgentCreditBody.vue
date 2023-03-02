@@ -140,14 +140,14 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['credit_rate'].name" prop="credit_rate" class-name="status-col">
+            <!-- <el-table-column :label="tableColumns['credit_rate'].name" prop="credit_rate" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div v-if="row.user_id === '合计' || row.user_id === LangUtil('合计')">
                         -
                     </div>
                     <div v-else>{{ row.credit_rate }}%</div>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>

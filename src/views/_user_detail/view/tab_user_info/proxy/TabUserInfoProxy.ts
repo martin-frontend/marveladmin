@@ -86,10 +86,13 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         pretty_user_id: { name: "推广靓号", options: {} },
 
         credit_rate: { name: "信用占比", options: {} },
+        credit_rate_invited: { name: "上级占成", options: {}},
         show_credit_statistic: { name: '"显示信用统计"', options: {} },
         show_credit_report: { name: "信用报表", options: {} },
         is_credit_user: { name: "信用用户", options: {} },
         is_gold_exchange: { name: "是否货币互转", options: {} },
+        credit_rate_max: { name: "信用占成-最大", options: {} },
+        credit_rate_min: { name: "信用占成-最小", options: {} },
         show_credit_set: { name: "允许多层", options: {} },
     };
     /**用户详情 */
@@ -174,6 +177,8 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         register_ip_counts: 0,
         register_ip_location: "",
         last_ip_location: "",
+        credit_rate_max: 0,
+        credit_rate_min: 0,
     };
     /**代理关系链 */
     relationChain: string[] = [];

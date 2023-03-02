@@ -8,8 +8,8 @@ import GlobalEventType from "@/core/global/GlobalEventType";
 import i18n from "@/lang";
 
 export default class TabUserUnfoMediator extends AbstractMediator {
-    private myProxy: TabUserInfoProxy = <any>getProxy(TabUserInfoProxy);
-    private pageSetting = getPageSetting();
+    myProxy: TabUserInfoProxy = <any>getProxy(TabUserInfoProxy);
+    pageSetting = getPageSetting();
 
     onRegister() {
         this.myProxy.enter();
@@ -29,6 +29,7 @@ export default class TabUserUnfoMediator extends AbstractMediator {
             EventType.admin_plat_user_update_level_exp,
             EventType.admin_plat_user_clear_cache,
             GlobalEventType.REFRESH_PAGE,
+            GlobalEventType.REQUEST_ERROR,
         ];
     }
 
@@ -76,6 +77,9 @@ export default class TabUserUnfoMediator extends AbstractMediator {
                     break;
                 case GlobalEventType.REFRESH_PAGE:
                     this.myProxy.getUserDetail(getPageSetting().user_id);
+                    break;
+                case GlobalEventType.REQUEST_ERROR:
+                    this.myProxy.getUserDetail(this.myProxy.userInfo.user_id);
                     break;
             }
         }

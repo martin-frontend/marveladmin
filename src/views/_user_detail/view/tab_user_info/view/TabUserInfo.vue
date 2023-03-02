@@ -99,7 +99,7 @@
                         ></el-switch>
                     </el-form-item>
 
-                    <el-form-item size="mini" :label="tableColumns['is_credit_user'].options[1]" prop="is_credit_user">
+                    <!-- <el-form-item size="mini" :label="tableColumns['is_credit_user'].options[1]" prop="is_credit_user">
                         <el-switch
                             @change="onSwitchCreditUser()"
                             v-model="userInfo.is_credit_user"
@@ -153,7 +153,7 @@
                             :active-value="1"
                             :inactive-value="98"
                         ></el-switch>
-                    </el-form-item>
+                    </el-form-item> -->
                 </template>
             </el-form>
 
@@ -562,28 +562,28 @@ export default class TabUserInfo extends AbstractView {
         this.myProxy.onEdit("status", this.userInfo.status);
     }
 
-    onSwitchCreditReport() {
-        this.myProxy.dialogData.filed = "show_credit_report";
-        this.myProxy.onEdit("show_credit_report", this.userInfo.show_credit_report);
-    }
+    // onSwitchCreditReport() {
+    //     this.myProxy.dialogData.filed = "show_credit_report";
+    //     this.myProxy.onEdit("show_credit_report", this.userInfo.show_credit_report);
+    // }
 
-    onSwitchCreditSet() {
-        this.myProxy.dialogData.filed = "show_credit_set";
-        this.myProxy.onEdit("show_credit_set", this.userInfo.show_credit_set);
-    }
+    // onSwitchCreditSet() {
+    //     this.myProxy.dialogData.filed = "show_credit_set";
+    //     this.myProxy.onEdit("show_credit_set", this.userInfo.show_credit_set);
+    // }
 
-    onSwitchCreditStatistic() {
-        this.myProxy.dialogData.filed = "show_credit_statistic";
-        this.myProxy.onEdit("show_credit_statistic", this.userInfo.show_credit_statistic);
+    // onSwitchCreditStatistic() {
+    //     this.myProxy.dialogData.filed = "show_credit_statistic";
+    //     this.myProxy.onEdit("show_credit_statistic", this.userInfo.show_credit_statistic);
 
-        console.log(">>>>>>>>", this.userInfo.show_credit_statistic);
-    }
+    //     console.log(">>>>>>>>", this.userInfo.show_credit_statistic);
+    // }
 
-    onSwitchCreditUser() {
-        this.myProxy.dialogData.filed = "is_credit_user";
-        this.myProxy.onEdit("is_credit_user", this.userInfo.is_credit_user);
-        console.log(">>>>>>>>切换信用用户<<", this.userInfo.is_credit_user);
-    }
+    // onSwitchCreditUser() {
+    //     this.myProxy.dialogData.filed = "is_credit_user";
+    //     this.myProxy.onEdit("is_credit_user", this.userInfo.is_credit_user);
+    //     console.log(">>>>>>>>切换信用用户<<", this.userInfo.is_credit_user);
+    // }
 
     onSwitchGoldExchange() {
         this.myProxy.dialogData.filed = "is_gold_exchange";

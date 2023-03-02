@@ -1,6 +1,7 @@
 <template>
     <div class="content">
-        <PlatUserBetDetail :tableColumns="tableColumns" :data="myProxy.dialogData"></PlatUserBetDetail>
+        <PlatUserBetDetail  v-if="myProxy.dialogData.bShow"></PlatUserBetDetail>
+        <JsonEditorDialog  v-if="myProxy.jsonEditorDialog.bShow"></JsonEditorDialog>
         <PlatUsersBetHeader />
         <PlatUsersBetBody />
     </div>
@@ -12,6 +13,7 @@ import PlatUsersBetMediator from "@/views/plat_users_bet/mediator/PlatUsersBetMe
 import PlatUsersBetProxy from "@/views/plat_users_bet/proxy/PlatUsersBetProxy";
 import { Component } from "vue-property-decorator";
 import PlatUserBetDetail from "@/views/plat_users_bet/view/PlatUserBetDetail.vue";
+import JsonEditorDialog from "@/views/plat_users_bet/view/JsonEditorDialog.vue";
 import PlatUsersBetHeader from "./PlatUsersBetHeader.vue";
 import PlatUsersBetBody from "./PlatUsersBetBody.vue";
 
@@ -20,6 +22,7 @@ import PlatUsersBetBody from "./PlatUsersBetBody.vue";
         PlatUserBetDetail,
         PlatUsersBetHeader,
         PlatUsersBetBody,
+        JsonEditorDialog,
     },
 })
 export default class PlatUsersBet extends AbstractView {

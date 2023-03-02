@@ -12,7 +12,7 @@ export default interface IPlatUsersBetProxy {
     /**弹窗相关数据 */
     dialogData: {
         bShow: boolean;
-        data: any;
+        form: any;
     };
 
     /**设置表头数据 */

@@ -92,9 +92,46 @@
                 </template>
             </el-table-column>
 
+            <el-table-column :label="tableColumns['self_amount'].name" prop="self_amount" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.self_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    ></WinLossDisplay>
+                </template>
+            </el-table-column>
+
+            <el-table-column
+                :label="tableColumns['credit_rate_self'].name"
+                prop="credit_rate_self"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ row.credit_rate_self }}
+                        <span v-if="row.credit_rate_self != '-'">%</span>
+                    </div>
+                </template>
+            </el-table-column>
+
             <el-table-column prop="agent_amount" :label="tableColumns['agent_amount'].name" align="center">
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.agent_amount" :isShowDollar="false"></WinLossDisplay>
+                </template>
+            </el-table-column>
+
+            <el-table-column
+                :label="tableColumns['credit_rate_subordinate'].name"
+                prop="credit_rate_subordinate"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ row.credit_rate_subordinate }}
+                        <span v-if="row.credit_rate_subordinate != '-'">%</span>
+                    </div>
                 </template>
             </el-table-column>
 
@@ -104,21 +141,31 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['credit_rate'].name" prop="credit_rate" class-name="status-col">
+            <el-table-column
+                :label="tableColumns['credit_rate_superior'].name"
+                prop="credit_rate_superior"
+                class-name="status-col"
+            >
                 <template slot-scope="{ row }">
-                    <div class="flex">
-                        <span style="margin-right: auto;margin-left: auto">{{ row.credit_rate }}%</span>
-                        <el-button
-                            v-if="row.user_id !== LangUtil('合计') && row.user_id != info_head.user_id"
-                            class="item"
-                            type="primary"
-                            size="mini"
-                            style="height: 30px; margin-left: 5px"
-                            @click="handlerQuery(row.user_id)"
-                        >
-                            {{ LangUtil("查看") }}
-                        </el-button>
+                    <div>
+                        {{ row.credit_rate_superior }}
+                        <span v-if="row.credit_rate_superior != '-'">%</span>
                     </div>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="LangUtil('操作')" prop="credit_rate" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <el-button
+                        v-if="row.user_id !== LangUtil('合计') && row.user_id != info_head.user_id"
+                        class="item"
+                        type="primary"
+                        size="mini"
+                        style="height: 30px; margin-left: 5px"
+                        @click="handlerQuery(row.user_id)"
+                    >
+                        {{ LangUtil("查看") }}
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
