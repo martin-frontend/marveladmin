@@ -30,7 +30,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
     }
 
     /**表格相关数据 */
-    tableData = {
+    tableData: any = {
         columns: {
             actual_gold: { name: "到账金额", options: {} },
             agent_pay_account_id: { name: "代理支付账号", options: {} },
@@ -100,6 +100,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
 
     /**查询条件 */
     listQuery: any = {
+        plat_id: "",
         page_count: 1,
         page_size: 20,
         "created_at-{>}": dateFormat(getTodayOffset(-1), "yyyy-MM-dd hh:mm:ss"),
@@ -251,7 +252,6 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         const data: any = JSON.parse(JSON.stringify(this.listQuery));
         data.plat_id = data.plat_id === "0" ? "" : data.plat_id;
         data.hideLoading = hideLoading;
-        console.log("data=====", data);
 
         this.sendNotification(HttpType.admin_recharge_orders_index, objectRemoveNull(data));
     }
