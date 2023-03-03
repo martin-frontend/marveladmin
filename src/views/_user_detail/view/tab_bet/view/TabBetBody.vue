@@ -156,7 +156,6 @@
             </el-table-column>
         </el-table>
         <Pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></Pagination>
-        <PlatUserBetDetail :tableColumns="tableColumns" :data="myProxy.dialogData"></PlatUserBetDetail>
     </div>
 </template>
 <script lang="ts">
@@ -169,13 +168,11 @@ import GlobalVar from "@/core/global/GlobalVar";
 import { getProxy } from "@/views/_user_detail/PageSetting";
 import Pagination from "@/components/Pagination.vue";
 import WinLossDisplay from "@/components/WinLossDisplay.vue";
-import PlatUserBetDetail from "@/views/plat_users_bet/view/PlatUserBetDetail.vue";
 
 @Component({
     components: {
         Pagination,
         WinLossDisplay,
-        PlatUserBetDetail,
     },
     filters: {
         statusFilter(status: any) {

@@ -23,6 +23,9 @@ import cmd_admin_plat_users_bet_table_columns from "@/views/_user_detail/command
 import cmd_admin_plat_users_bet_index from "@/views/_user_detail/command/cmd_admin_plat_users_bet_index";
 import cmd_admin_plat_users_bet_show from "@/views/_user_detail/command/cmd_admin_plat_users_bet_show";
 import cmd_admin_plat_users_bet_show_url from "@/views/_user_detail/command/cmd_admin_plat_users_bet_show_url";
+import cmd_admin_plat_user_bet_index from "@/views/_user_detail/command/cmd_admin_plat_user_bet_index";
+import cmd_admin_plat_users_bet_credit_log_table_columns from "@/views/_user_detail/command/cmd_admin_plat_users_bet_credit_log_table_columns";
+import cmd_admin_plat_users_bet_credit_log_index from "@/views/_user_detail/command/cmd_admin_plat_users_bet_credit_log_index";
 // --流水打码&water
 import cmd_admin_statistic_user_days_table_columns from "@/views/_user_detail/command/cmd_admin_statistic_user_days_table_columns";
 import cmd_admin_statistic_user_days_index from "@/views/_user_detail/command/cmd_admin_statistic_user_days_index";
@@ -71,6 +74,9 @@ export var HttpType = {
     admin_plat_users_bet_index: "admin/plat_users_bet/index ",
     admin_plat_users_bet_show: "admin/plat_users_bet/show/{plat_id}/{bet_id} ",
     admin_plat_users_bet_show_url: "admin/plat_users_bet/show_url/{plat_id}/{bet_id} ",
+    admin_plat_user_bet_index: "admin/plat_user_bet/index ",
+    admin_plat_users_bet_credit_log_table_columns: "admin/plat_users_bet_credit_log/table_columns ",
+    admin_plat_users_bet_credit_log_index: "admin/plat_users_bet_credit_log/index ",
     // --流水打码&water
     admin_statistic_user_days_table_columns: "admin/statistic_user_days/table_columns ",
     admin_statistic_user_days_index: "admin/statistic_user_days/index ",
@@ -120,6 +126,9 @@ export var EventType = {
     admin_plat_users_bet_index: "_admin_plat_users_bet_index",
     admin_plat_users_bet_show: "_admin_plat_users_bet_show",
     admin_plat_users_bet_show_url: "_admin_plat_users_bet_show_url",
+    admin_plat_user_bet_index: "_admin_plat_user_bet_index",
+    admin_plat_users_bet_credit_log_table_columns: "_admin_plat_users_bet_credit_log_table_columns",
+    admin_plat_users_bet_credit_log_index: "_admin_plat_users_bet_credit_log_index",
     // --流水打码&water
     admin_statistic_user_days_table_columns: "_admin_statistic_user_days_table_columns",
     admin_statistic_user_days_index: "_admin_statistic_user_days_index",
@@ -169,6 +178,12 @@ facade.registerCommand(HttpType.admin_plat_users_bet_table_columns, cmd_admin_pl
 facade.registerCommand(HttpType.admin_plat_users_bet_index, cmd_admin_plat_users_bet_index);
 facade.registerCommand(HttpType.admin_plat_users_bet_show, cmd_admin_plat_users_bet_show);
 facade.registerCommand(HttpType.admin_plat_users_bet_show_url, cmd_admin_plat_users_bet_show_url);
+facade.registerCommand(HttpType.admin_plat_user_bet_index, cmd_admin_plat_user_bet_index);
+facade.registerCommand(
+    HttpType.admin_plat_users_bet_credit_log_table_columns,
+    cmd_admin_plat_users_bet_credit_log_table_columns
+);
+facade.registerCommand(HttpType.admin_plat_users_bet_credit_log_index, cmd_admin_plat_users_bet_credit_log_index);
 // --流水打码&water
 facade.registerCommand(HttpType.admin_statistic_user_days_table_columns, cmd_admin_statistic_user_days_table_columns);
 facade.registerCommand(HttpType.admin_statistic_user_days_index, cmd_admin_statistic_user_days_index);
@@ -179,11 +194,17 @@ facade.registerCommand(HttpType.admin_plat_user_agent_bind_show, cmd_admin_plat_
 facade.registerCommand(HttpType.admin_plat_user_commission_table_columns, cmd_admin_plat_user_commission_table_columns);
 facade.registerCommand(HttpType.admin_plat_user_commission_index, cmd_admin_plat_user_commission_index);
 facade.registerCommand(HttpType.admin_plat_user_commission_show, cmd_admin_plat_user_commission_show);
-facade.registerCommand(HttpType.admin_plat_user_commission_show_directs_water, cmd_admin_plat_user_commission_show_directs_water);
+facade.registerCommand(
+    HttpType.admin_plat_user_commission_show_directs_water,
+    cmd_admin_plat_user_commission_show_directs_water
+);
 // --关联查询&related_users
 facade.registerCommand(HttpType.admin_plat_user_related_users, cmd_admin_plat_user_related_users);
 // --登入日志&login_record
-facade.registerCommand(HttpType.admin_plat_user_login_record_table_columns, cmd_admin_plat_user_login_record_table_columns);
+facade.registerCommand(
+    HttpType.admin_plat_user_login_record_table_columns,
+    cmd_admin_plat_user_login_record_table_columns
+);
 facade.registerCommand(HttpType.admin_plat_user_login_record_index, cmd_admin_plat_user_login_record_index);
 // --用户厂商&plat_vendor_user
 facade.registerCommand(HttpType.admin_plat_vendor_user_table_columns, cmd_admin_plat_vendor_user_table_columns);
@@ -192,6 +213,8 @@ facade.registerCommand(HttpType.admin_plat_vendor_user_show, cmd_admin_plat_vend
 facade.registerCommand(HttpType.admin_plat_vendor_user_money, cmd_admin_plat_vendor_user_money);
 // --信用代理&credit
 facade.registerCommand(HttpType.admin_plat_user_direct_users, cmd_admin_plat_user_direct_users);
-facade.registerCommand(HttpType.admin_plat_users_credit_log_table_columns, cmd_admin_plat_users_credit_log_table_columns);
+facade.registerCommand(
+    HttpType.admin_plat_users_credit_log_table_columns,
+    cmd_admin_plat_users_credit_log_table_columns
+);
 facade.registerCommand(HttpType.admin_plat_users_credit_log_index, cmd_admin_plat_users_credit_log_index);
-

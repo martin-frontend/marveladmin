@@ -1,5 +1,7 @@
 <template>
     <div class="content">
+        <TabBetDetail v-if="myProxy.dialogData.bShow"></TabBetDetail>
+        <JsonEditorDialog v-if="myProxy.jsonEditorDialog.bShow"></JsonEditorDialog>
         <TabBetHeader />
         <TabBetBody />
     </div>
@@ -15,11 +17,15 @@ import { getProxy } from "@/views/_user_detail/PageSetting";
 import GlobalVar from "@/core/global/GlobalVar";
 import TabBetHeader from "../view/TabBetHeader.vue";
 import TabBetBody from "../view/TabBetBody.vue";
+import JsonEditorDialog from "./JsonEditorDialog.vue";
+import TabBetDetail from "./TabBetDetail.vue";
 
 @Component({
     components: {
         TabBetHeader,
         TabBetBody,
+        JsonEditorDialog,
+        TabBetDetail,
     },
 })
 export default class TabBet extends AbstractView {
