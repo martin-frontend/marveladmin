@@ -44,7 +44,7 @@
                         v-for="(value, key) in blockNetworkOptions"
                         :key="key"
                         :label="value"
-                        :value="key"
+                        :value="Number(key)"
                     ></el-option>
                 </el-select>
             </el-form-item>
@@ -101,7 +101,7 @@
             </el-form-item>
 
             <!-- 是否固定充值额度 -->
-            <el-form-item :label="`${tableColumns.is_fixed_gold.name}`">
+            <el-form-item :label="`${tableColumns.is_fixed_gold.name}`" prop="is_fixed_gold">
                 <el-radio-group v-model="addFrom.is_fixed_gold">
                     <el-radio :label="1">{{ LangUtil("是") }}</el-radio>
                     <el-radio :label="0">{{ LangUtil("否") }}</el-radio>
@@ -235,6 +235,7 @@ export default class RechargeChannelsPaymethodsEditDialog extends AbstractView {
             title: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
             min_gold: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
             max_gold: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            is_fixed_gold: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
         };
     }
 

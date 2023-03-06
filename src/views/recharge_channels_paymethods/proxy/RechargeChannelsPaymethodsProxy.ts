@@ -103,7 +103,7 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             diy_paytype: "-",
             status: "1",
             is_fixed_gold: "1",
-            fixed_gold_list: "-",
+            fixed_gold_list: [],
             block_network_id: "",
             coin_name_unique: "",
         },
@@ -198,12 +198,11 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
         this.addDialogData.bShow = true;
         this.addDialogData.status = status;
         if (status == DialogStatus.update) {
-            this.addDialogData.formSource = JSON.parse(JSON.stringify(data));
+            this.addDialogData.formSource = data;
             data.paymethod_id = data.paymethod_id.toString();
             data.status = data.status.toString();
-            data.block_network_id = data.block_network_id.toString();
 
-            Object.assign(this.addDialogData.form, data);
+            Object.assign(this.addDialogData.form, JSON.parse(JSON.stringify(data)));
         } else {
             this.resetDialogForm();
             this.addDialogData.formSource = null;
@@ -235,7 +234,7 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             block_network_id: "",
             coin_name_unique: "",
             is_fixed_gold: "",
-            fixed_gold_list: "-",
+            fixed_gold_list: [],
             diy_paytype: "-",
         });
     }
@@ -278,7 +277,7 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             fixed_gold_list,
             diy_paytype,
         };
-
+        formCopy.fixed_gold_list = JSON.stringify(fixed_gold_list);
         formCopy.paychannel_id = this.paychannel_id;
         this.sendNotification(HttpType.admin_recharge_channels_paymethods_store, formCopy);
     }
@@ -314,7 +313,7 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             .then(() => {
                 this.sendNotification(HttpType.admin_recharge_channels_paymethods_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**设置dialog 表头数据 */
