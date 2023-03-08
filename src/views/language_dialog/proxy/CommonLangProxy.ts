@@ -57,6 +57,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             zh_CN: { name: "", options: {} },
             zh_TW: { name: "", options: {} },
             es_ES: { name: "", options: {} },
+            pt_PT: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -117,6 +118,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             zh_CN: "",
             zh_TW: "",
             es_ES: "",
+            pt_PT: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -155,6 +157,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             zh_CN: "",
             zh_TW: "",
             es_ES: "",
+            pt_PT: "",
         });
         this.dialogData.status = DialogStatus.create;
     }
