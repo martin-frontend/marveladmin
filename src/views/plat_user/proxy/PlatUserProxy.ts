@@ -95,6 +95,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 },
             },
             water_config: { name: "流水配置", optiosn: {} },
+            show_credit_report: { name: '信用报表', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -138,6 +139,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             user_id: "",
             gold: 0,
             deductGold: "",
+            show_credit_report: 0,
         },
         formSource: null, // 表单的原始数据
     };
@@ -150,6 +152,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     creditUserDialogData = {
         bShow: false,
         form: <any>{
+            show_credit_report: 0,
             username: "",
             password: "",
             water_config: { "0": 0, "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0 },
@@ -324,6 +327,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
     resetCreditUserForm() {
         Object.assign(this.creditUserDialogData.form, {
+            show_credit_report: 0,
             username: "",
             password: "",
             water_config: { "0": 0, "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0 },
@@ -334,7 +338,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
     onAddCreditUser() {
         const { plat_id } = this.listQuery;
-        let { username, password, credit_rate_min, credit_rate_max } = this.creditUserDialogData.form;
+        let { username, password, credit_rate_min, credit_rate_max, show_credit_report } = this.creditUserDialogData.form;
         let water_config = JSON.parse(JSON.stringify(this.creditUserDialogData.form.water_config))
         password = MD5.createInstance().hex_md5(password);
         Object.keys(water_config).forEach(key => {
@@ -348,6 +352,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             credit_rate_min,
             credit_rate_max,
             plat_id,
+            show_credit_report,
         };
         this.sendNotification(HttpType.admin_plat_user_store_credit_user, objectRemoveNull(formCopy));
     }
