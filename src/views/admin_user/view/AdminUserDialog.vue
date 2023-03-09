@@ -144,6 +144,9 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['diff_ip_login'].name" prop="diff_ip_login">
+                <el-switch v-model="form.diff_ip_login" :active-value="1" :inactive-value="0"> </el-switch>
+            </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button
                     v-if="isStatusUpdate && checkUnique(unique.admin_user_delete)"

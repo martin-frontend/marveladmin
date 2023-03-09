@@ -43,6 +43,7 @@ export default class AdminUserProxy extends AbstractProxy implements IAdminUserP
             password: { name: "", options: {} },
             channel_id: { name: "", options: {} },
             google_key: { name: "", options: {} },
+            diff_ip_login: { name: "", options: {}},
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -75,6 +76,7 @@ export default class AdminUserProxy extends AbstractProxy implements IAdminUserP
             google_key: "",
             status: 1,
             channel_ids: [],
+            diff_ip_login: 0,
         },
         formSource: null, // 表单的原始数据
     };
@@ -159,6 +161,7 @@ export default class AdminUserProxy extends AbstractProxy implements IAdminUserP
             google_key: "",
             status: 1,
             channel_ids: [],
+            diff_ip_login: 0,
         });
     }
     /**筛选渠道列表 */
@@ -187,6 +190,7 @@ export default class AdminUserProxy extends AbstractProxy implements IAdminUserP
             channel_ids,
             password,
             status,
+            diff_ip_login,
         } = this.dialogData.form;
         const formCopy: any = {
             admin_username,
@@ -198,6 +202,7 @@ export default class AdminUserProxy extends AbstractProxy implements IAdminUserP
             channel_ids,
             password,
             status,
+            diff_ip_login,
         };
         formCopy.plat_ids = JSON.stringify(formCopy.plat_ids);
         formCopy.role_ids = JSON.stringify(formCopy.role_ids);
