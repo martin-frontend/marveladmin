@@ -36,12 +36,25 @@
                     </el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['bet_detail_url'].name" prop="bet_detail_url">
+                <el-switch v-model="form.bet_detail_url" :active-value="1" :inactive-value="0"></el-switch>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['is_save_bet_info'].name" prop="is_save_bet_info">
                 <el-switch v-model="form.is_save_bet_info" :active-value="1" :inactive-value="98"></el-switch>
             </el-form-item>
             <!-- 结算币种 -->
-            <el-form-item size="mini" :label="tableColumns['settle_coin_name_unique'].name" prop="settle_coin_name_unique">
-                <el-select v-model="form.settle_coin_name_unique" clearable filterable class="select" :placeholder="LangUtil('请选择')">
+            <el-form-item
+                size="mini"
+                :label="tableColumns['settle_coin_name_unique'].name"
+                prop="settle_coin_name_unique"
+            >
+                <el-select
+                    v-model="form.settle_coin_name_unique"
+                    clearable
+                    filterable
+                    class="select"
+                    :placeholder="LangUtil('请选择')"
+                >
                     <el-option
                         v-for="(value, key) in tableColumns.settle_coin_name_unique.options"
                         :key="key"
@@ -60,6 +73,9 @@
                         :value="key"
                     ></el-option>
                 </el-select>
+            </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['cron_id'].name" prop="cron_id">
+                <el-input v-model="form.cron_id" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
             <!-- 统计与东8区差值 -->
             <el-form-item

@@ -251,7 +251,9 @@
                     <p>{{ tableColumns["bet_result"].name }}：{{ row.bet_result }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type_text }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("赔率") }}：{{ row.odds }}</p>
-                    <el-button @click="showDetailPage(row)" type="text">{{ LangUtil("跳转详情") }}</el-button>
+                    <el-button v-if="row.bet_detail_url" @click="showDetailPage(row)" type="text">{{
+                        LangUtil("跳转详情")
+                    }}</el-button>
                 </template>
             </el-table-column>
             <el-table-column

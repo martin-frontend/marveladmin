@@ -63,6 +63,8 @@
                     {{ tableColumns.proxy_key.options[row.proxy_key] }}
                 </template>
             </el-table-column>
+            <el-table-column :label="tableColumns['cron_id'].name" class-name="status-col" prop="cron_id" width="100px">
+            </el-table-column>
             <el-table-column
                 :label="tableColumns['time_region_hour_interval'].name"
                 class-name="status-col"

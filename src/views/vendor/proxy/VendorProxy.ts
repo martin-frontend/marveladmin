@@ -31,10 +31,12 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     /**表格相关数据 */
     tableData = {
         columns: {
+            bet_detail_url: { name: '投注记录详情链接', options: {} },
             bet_code_content: { name: '下注内容映射关系', options: {} },
             bet_result_content: { name: '下注结果映射关系', options: {} },
             created_at: { name: "", options: {} },
             created_by: { name: "", options: {} },
+            cron_id: { name: '定时任务编号', options: {} },
             extends: { name: "", options: {} },
             is_delete: { name: "", options: {} },
             status: { name: "", options: {} },
@@ -75,8 +77,10 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         bShow: false,
         status: DialogStatus.create,
         form: {
+            bet_detail_url: 0,
             bet_code_content: "",
             bet_result_content: "",
+            cron_id: "",
             vendor_id: null,
             vendor_name: "",
             vendor_name_unique: "",
@@ -166,6 +170,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
+            bet_detail_url: 0,
+            cron_id: "",
             vendor_id: null,
             vendor_name: "",
             vendor_name_unique: "",
@@ -194,6 +200,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     /**添加数据 */
     onAdd() {
         const {
+            cron_id,
             vendor_id,
             vendor_name,
             vendor_name_unique,
@@ -209,6 +216,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             settle_coin_name_unique,
         } = this.dialogData.form;
         const formCopy: any = {
+            cron_id,
             vendor_id,
             vendor_name,
             vendor_name_unique,
