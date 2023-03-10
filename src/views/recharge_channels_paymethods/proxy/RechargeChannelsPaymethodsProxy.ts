@@ -64,6 +64,11 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
                 },
             },
         },
+        orderData: {
+            id: "",
+            opt: "", //操作:1-置顶 |2-置底 |3-上调 |4-下调
+            plat_id: "",
+        },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
@@ -327,5 +332,11 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             item.status = item.status.toString(); // status 转字串
         });
         this.channelList.list = JSON.parse(JSON.stringify(data.list));
+    }
+
+    /**排序 */
+    onOrderList() {
+        const formCopy = this.tableData.orderData;
+        this.sendNotification(HttpType.admin_recharge_channels_paymethods_update, formCopy);
     }
 }

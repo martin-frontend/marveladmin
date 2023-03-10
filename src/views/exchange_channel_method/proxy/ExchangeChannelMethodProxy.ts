@@ -51,6 +51,11 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
             updated_by: { name: "修改人", options: {} },
             vendor_name: { name: "厂商名称", options: {} },
         },
+        orderData: {
+            id: "",
+            opt: "", //操作:1-置顶 |2-置底 |3-上调 |4-下调
+            plat_id: "",
+        },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
@@ -257,7 +262,7 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
                     is_delete: 1,
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
     /**get 显示参数设置 */
     api_admin_exchange_channel_method_index() {
@@ -269,5 +274,11 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
         this.dialogDataChannelData.list.push(...data.list);
         Object.assign(this.dialogDataChannelData.pageInfo, data.pageInfo);
         this.dialogDataChannelData.bShow = true;
+    }
+
+    /**排序 */
+    onOrderList() {
+        const formCopy = this.tableData.orderData;
+        this.sendNotification(HttpType.admin_exchange_channel_method_update, formCopy);
     }
 }

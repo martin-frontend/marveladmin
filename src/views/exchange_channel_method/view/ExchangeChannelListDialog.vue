@@ -64,6 +64,16 @@
                     }}</el-button>
                 </template>
             </el-table-column>
+            <el-table-column :label="LangUtil('排序')" class-name="status-col" width="320px">
+                <template slot-scope="{ row }">
+                    <div v-if="checkUnique(unique.plat_activity_order)">
+                        <el-button size="mini" @click="handlerOrder(row.id, 1)">{{ LangUtil("置顶") }}</el-button>
+                        <el-button size="mini" @click="handlerOrder(row.id, 2)">{{ LangUtil("置底") }}</el-button>
+                        <el-button size="mini" icon="el-icon-top" @click="handlerOrder(row.id, 3)"></el-button>
+                        <el-button size="mini" icon="el-icon-bottom" @click="handlerOrder(row.id, 4)"></el-button>
+                    </div>
+                </template>
+            </el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </el-dialog>
@@ -103,7 +113,8 @@ export default class ExchangeChannelListDialog extends AbstractView {
     //网络状态
     net_status = GlobalVar.net_status;
 
-    listQuery = this.myProxy.methodQuery;
+    methodQuery = this.myProxy.methodQuery;
+    listQuery = this.myProxy.listQuery;
 
     textMap = {
         update: this.LangUtil("编辑"),
@@ -118,7 +129,7 @@ export default class ExchangeChannelListDialog extends AbstractView {
         return this.status == DialogStatus.update;
     }
     handlerPageSwitch(page: number) {
-        this.listQuery.page_count = page;
+        this.methodQuery.page_count = page;
         this.myProxy.api_admin_exchange_channel_method_index();
     }
 
@@ -130,6 +141,13 @@ export default class ExchangeChannelListDialog extends AbstractView {
     handleEdit(data: any) {
         console.log("handleEdit ---");
         this.myProxy.showDialog(DialogStatus.update, data);
+    }
+
+    handlerOrder(id: any, opt: string) {
+        this.myProxy.tableData.orderData.id = id;
+        this.myProxy.tableData.orderData.opt = opt;
+        this.myProxy.tableData.orderData.plat_id = this.listQuery.plat_id;
+        this.myProxy.onOrderList();
     }
 }
 </script>
