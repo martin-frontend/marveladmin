@@ -7,16 +7,11 @@ import { jsonStringify, jsonToObject } from "@/core/global/Functions";
 import { exportJson2Excel } from "@/core/global/Excel";
 import i18n from "@/lang";
 import { HttpType } from "../setting";
-import ICommonLangProxy from "./ICommonLangProxy";
+import ICommonLangTinymceProxy from "./ICommonLangTinymceProxy";
 import GlobalVar from "@/core/global/GlobalVar";
 
-export default class CommonLangProxy extends AbstractProxy implements ICommonLangProxy {
-    static NAME = "CommonLangProxy";
-
-    //要翻译的原始文字
-    private sentence = "";
-    //管理类型，options: {1: '前端WEB皮肤1语言', 2: '后端管理语言', 3: '服务器数据语言', 4: '厂商游戏', 5: '平台公告', 6: '常见问题', 7: '平台邮件', 8: '平台活动'}
-    private type = "";
+export default class CommonLangTinymceProxy extends AbstractProxy implements ICommonLangTinymceProxy {
+    static NAME = "CommonLangTinymceProxy";
 
     /**进入页面时调用 */
     enter() {
@@ -68,45 +63,19 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        this.dialogData.form.key = this.sentence;
-        this.dialogData.form.type = this.type;
-        if (this.tableData.columns.language.options) {
-            for (let key in this.tableData.columns.language.options) {
-                this.dialogData.form[key] = this.sentence;
-            }
-        }
+
         if (this.dialogData.bShow) {
             this.translateLangCheck();
         }
-    }
-
-    /**表格数据 */
-    setTableData(data: any) {
-        this.tableData.list.length = 0;
-        this.tableData.list.push(...data.list);
-        let newTableData = this.tableData.list.map(({ language, ...data }) => ({
-            ...data,
-            language: jsonToObject(language),
-        }));
-        Object.assign(this.tableData.pageInfo, data.pageInfo);
-        Object.assign(this.tableData.list, newTableData);
-    }
-    /**详细数据 */
-    setDetail(data: any) {
-        this.dialogData.formSource = data;
-        data.language = jsonToObject(data.language);
-        Object.assign(this.dialogData.form, data);
     }
 
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        form: {
-            id: "",
-            language: "",
-            module: "",
-            type: "",
+        form: <any>{
+            language: "zh_CN",
+            type: 8,
             plat_id: "",
             key: "",
             ar_AR: "",
@@ -119,7 +88,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             zh_TW: "",
             es_ES: "",
             pt_PT: "",
-            config: {
+            config: <any>{
                 ar_AR: [],
                 en_EN: [],
                 jp_JP: [],
@@ -140,9 +109,8 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
         //清除数据
         this.resetDialogForm();
         this.dialogData.formSource = null;
-
-        this.sentence = data.sentence;
-        this.type = data.type;
+        this.dialogData.form.type = data.type;
+        this.dialogData.form.key = data.key;
         this.dialogData.form.plat_id = data.plat_id != undefined ? data.plat_id : 0;
         this.dialogData.bShow = true;
         this.enter();
@@ -154,10 +122,8 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
-            id: "",
-            language: {},
-            module: "",
-            type: 1,
+            language: "zh_CN",
+            type: 8,
             plat_id: "",
             key: "",
             ar_AR: "",
@@ -189,6 +155,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     /**添加平台的数据 */
     onAdd() {
         let formCopy: any = Object.assign({}, this.dialogData.form);
+        delete formCopy.id;
         formCopy.config = JSON.stringify(formCopy.config);
         try {
             if (formCopy.plat_id) {
@@ -204,33 +171,27 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     /**更新数据 */
     onUpdate() {
         const formCopy: any = Object.assign({}, this.dialogData.form);
-        formCopy.config = JSON.stringify(formCopy.config);
         try {
-            if (formCopy.plat_id) {
-                console.log("admin_plat_lang_update========", formCopy);
-                this.sendNotification(HttpType.admin_plat_lang_update, formCopy);
-            } else {
-                console.log("admin_system_lang_update========", formCopy);
-
-                this.sendNotification(HttpType.admin_system_lang_update, formCopy);
+            const id = formCopy.id;
+            const temp = formCompared(formCopy, this.dialogData.formSource);
+            // 如果没有修改，就直接关闭弹窗
+            if (Object.keys(temp).length == 0) {
+                this.dialogData.bShow = false;
+                return false;
             }
+
+            temp.id = id;
+            temp.type = formCopy.type;
+            temp.key = formCopy.key;
+            this.sendNotification(HttpType.admin_plat_lang_update, temp);
         } catch (error) {
             MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
-
-    /**
-     * 获取全部翻译
-     * @param data
-     * source	string	源语言: en_EN   sentence	string	要翻译的语句
-     */
-    translate(data: any): void {
-        this.sendNotification(HttpType.admin_system_lang_translate, data);
-    }
-
     /**获取全部翻译返回更新表单 */
     updateForm(data: any): void {
-        Object.assign(this.dialogData.form, data);
+        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        this.dialogData.formSource = data;
         if (data.config?.length == 0) {
             this.dialogData.form.config = {
                 ar_AR: [],

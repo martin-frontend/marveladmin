@@ -41,6 +41,15 @@
                             >一键翻译成其他语言</el-button
                         >
                     </div>
+                    <div>
+                        <el-checkbox-group v-model="form.config[key]">
+                            <el-checkbox
+                                v-for="(value, key) in tableColumns.language.options"
+                                :key="key"
+                                :label="key"
+                            >{{ value }}</el-checkbox>
+                        </el-checkbox-group>
+                    </div>
                 </el-form-item>
             </div>
 

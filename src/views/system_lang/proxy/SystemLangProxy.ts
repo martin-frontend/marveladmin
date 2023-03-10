@@ -87,6 +87,18 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             zh_TW: "",
             es_ES: "",
             pt_PT: "",
+            config: {
+                ar_AR: [],
+                en_EN: [],
+                jp_JP: [],
+                ko_Kr: [],
+                th_TH: [],
+                vi_VN: [],
+                zh_CN: [],
+                zh_TW: [],
+                es_ES: [],
+                pt_PT: [],
+            },
         },
         formSource: null, // 表单的原始数据
     };
@@ -133,6 +145,20 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+            if (data.config.length == 0) {
+                this.dialogData.form.config = {
+                    ar_AR: [],
+                    en_EN: [],
+                    jp_JP: [],
+                    ko_Kr: [],
+                    th_TH: [],
+                    vi_VN: [],
+                    zh_CN: [],
+                    zh_TW: [],
+                    es_ES: [],
+                    pt_PT: [],
+                };
+            }
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -161,6 +187,18 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             zh_TW: "",
             es_ES: "",
             pt_PT: "",
+            config: {
+                ar_AR: [],
+                en_EN: [],
+                jp_JP: [],
+                ko_Kr: [],
+                th_TH: [],
+                vi_VN: [],
+                zh_CN: [],
+                zh_TW: [],
+                es_ES: [],
+                pt_PT: [],
+            },
         });
     }
 
@@ -171,6 +209,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     /**添加数据 */
     onAdd() {
         let formCopy: any = Object.assign({}, this.dialogData.form);
+        formCopy.config = JSON.stringify(formCopy.config);
         try {
             this.sendNotification(HttpType.admin_system_lang_store, objectRemoveNull(formCopy));
         } catch (error) {
@@ -192,7 +231,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             temp.id = id;
             temp.type = formCopy.type;
             temp.key = formCopy.key;
-            this.sendNotification(HttpType.admin_system_lang_update, objectRemoveNull(temp));
+            this.sendNotification(HttpType.admin_system_lang_update, temp);
         } catch (error) {
             MessageBox.alert(<string>LangUtil("json格式不正确"));
         }

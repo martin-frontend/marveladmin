@@ -9,10 +9,10 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column prop="key" :label="tableColumns.key.name" align="center" min-width="120"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="key" :label="tableColumns.key.name" align="center" min-width="150"></el-table-column>
 
             <!-- 参数类型 -->
-            <el-table-column prop="type" :label="tableColumns.type.name" align="center" min-width="90">
+            <el-table-column show-overflow-tooltip prop="type" :label="tableColumns.type.name" align="center" min-width="150">
                 <template slot-scope="{ row }">
                     <div>
                         {{ tableColumns.type.options[row.type] }}
@@ -22,7 +22,7 @@
 
             <!-- 动态添加表头 -->
             <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value">
-                <el-table-column :label="value" :property="key" align="center" min-width="120"> </el-table-column>
+                <el-table-column show-overflow-tooltip :label="value" :property="key" align="center" min-width="150"> </el-table-column>
             </div>
 
             <el-table-column :label="LangUtil('操作')" class-name="status-col" width="160px">

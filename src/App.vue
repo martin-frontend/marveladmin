@@ -11,6 +11,7 @@
         <PreviewImageDialog />
         <CommonLangDialog />
         <CommonLangImgDialog />
+        <CommonLangTinymceDialog />
         <router-view></router-view>
     </div>
 </template>
@@ -26,6 +27,7 @@ import i18n from "@/lang";
 import GlobalVar from "./core/global/GlobalVar";
 import CommonLangDialog from "./views/language_dialog/view/CommonLangDialog.vue";
 import CommonLangImgDialog from "./views/lang_img_dialog/view/CommonLangImgDialog.vue";
+import CommonLangTinymceDialog from "./views/lang_tinymce_dialog/view/CommonLangTinymceDialog.vue";
 
 @Component({
     components: {
@@ -33,6 +35,7 @@ import CommonLangImgDialog from "./views/lang_img_dialog/view/CommonLangImgDialo
         PreviewImageDialog,
         CommonLangDialog,
         CommonLangImgDialog,
+        CommonLangTinymceDialog,
     },
 })
 export default class App extends AbstractView {

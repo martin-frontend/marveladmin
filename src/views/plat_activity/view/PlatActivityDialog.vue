@@ -36,6 +36,42 @@
                     </div>
                 </el-form-item>
 
+                <el-form-item size="mini" :label="tableColumns['icon'].name" prop="icon">
+                    <div style="display: flex">
+                        <el-upload
+                            action="#"
+                            list-type="picture-card"
+                            :on-change="handleChange1"
+                            :auto-upload="false"
+                            :multiple="false"
+                            :show-file-list="false"
+                            ref="upload"
+                            v-if="!myProxy.dialogData.fileList1[0].url"
+                        >
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <div class="upload-box" @mouseover="showMask1 = true" @mouseleave="showMask1 = false" v-else>
+                            <div class="mask" v-show="showMask1">
+                                <div class="icon-bar">
+                                    <i class="el-icon-delete" @click="handleRemove1"></i>
+                                    <i class="el-icon-zoom-in" @click="handlePictureCardPreview1"></i>
+                                </div>
+                            </div>
+
+                            <img :src="formatImageUrl(myProxy.dialogData.fileList1[0].url)" />
+                        </div>
+                        <el-button
+                            style="max-height: 35px; margin-left: 10px"
+                            type="primary"
+                            size="mini"
+                            @click="handleLangImg1()"
+                        >
+                            <!-- 多语言图片 -->
+                            {{ LangUtil("多语言图片") }}
+                        </el-button>
+                    </div>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="LangUtil('活动模板')">
                     <div class="d-flex">
                         <el-select
@@ -133,13 +169,25 @@
                     ></el-input>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['activity_category'].name">
-                    <el-input
-                        v-model="form.activity_category"
-                        :placeholder="LangUtil('请输入')"
-                        maxlength="30"
-                        show-word-limit
-                        clearable
-                    ></el-input>
+                    <div class="flex d-flex">
+                        <el-input
+                            v-model="form.activity_category"
+                            :placeholder="LangUtil('请输入')"
+                            style="margin-right: 0.8rem"
+                            maxlength="30"
+                            show-word-limit
+                            clearable
+                            type="textarea"
+                            rows="3"
+                        ></el-input>
+                        <el-button
+                            style="max-height: 35px"
+                            type="primary"
+                            size="mini"
+                            @click="handleTranslate(form.activity_category)"
+                            >翻译</el-button
+                        >
+                    </div>
                 </el-form-item>
                 <el-form-item
                     size="mini"
@@ -174,13 +222,14 @@
                         :disabled="isStatusUpdate"
                     ></el-input>
                 </el-form-item>
+                <!-- 展示方式 -->
                 <el-form-item
                     size="mini"
                     :label="tableColumns['show_type'].name"
                     prop="show_type"
                     v-if="!form.model_id"
                 >
-                    <el-radio-group v-model="form.show_type" @change="showTypeChange">
+                    <el-radio-group :disabled="isStatusUpdate" v-model="form.show_type" @change="showTypeChange">
                         <el-radio
                             v-for="(value, key) in spliceShowTypes(tableColumns['show_type'].options)"
                             :key="key"
@@ -196,7 +245,7 @@
                     prop="show_type"
                     v-if="!isStatusUpdate && form.model_id"
                 >
-                    <el-radio-group v-model="form.show_type" @change="showTypeChange">
+                    <el-radio-group :disabled="isStatusUpdate" v-model="form.show_type" @change="showTypeChange">
                         <el-radio v-for="(value, key) in form.show_types" :key="key" :label="Number(value)">
                             {{ tableColumns["show_type"].options[value] }}
                         </el-radio>
@@ -208,7 +257,7 @@
                     prop="show_type"
                     v-if="isStatusUpdate && form.model_id"
                 >
-                    <el-radio-group v-model="form.show_type" @change="showTypeChange">
+                    <el-radio-group :disabled="isStatusUpdate" v-model="form.show_type" @change="showTypeChange">
                         <el-radio
                             v-for="(item, index) in getShowTypes(form.model_id)"
                             :key="index"
@@ -248,10 +297,14 @@
                             size="mini"
                             @click="handleLangImg()"
                         >
-                            <!-- 多语言图片 -->
                             {{ LangUtil("多语言图片") }}
                         </el-button>
                     </div>
+                </el-form-item>
+                <el-form-item size="mini" v-if="form.show_type == 1">
+                    <el-button size="mini" type="primary" @click="handleLangTinymce">
+                        {{ LangUtil("添加内容") }}
+                    </el-button>
                 </el-form-item>
                 <el-form-item
                     size="mini"
@@ -388,6 +441,7 @@ import { LanguageType } from "@/core/enum/UserType";
 import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 import { Message } from "element-ui";
 import CommonLangImgProxy from "@/views/lang_img_dialog/proxy/CommonLangImgProxy";
+import CommonLangTinymceProxy from "@/views/lang_tinymce_dialog/proxy/CommonLangTinymceProxy";
 import i18n from "@/lang";
 
 @Component
@@ -402,6 +456,7 @@ export default class PlatActivityDialog extends AbstractView {
     myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
     langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     langImgProxy: CommonLangImgProxy = this.getProxy(CommonLangImgProxy);
+    langTinymceProxy: CommonLangTinymceProxy = this.getProxy(CommonLangTinymceProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     get form() {
@@ -443,6 +498,7 @@ export default class PlatActivityDialog extends AbstractView {
     formatImageUrl = formatImageUrl;
 
     showMask = false;
+    showMask1 = false;
     dialogImageUrl = "";
     dialogVisible = false;
 
@@ -518,6 +574,7 @@ export default class PlatActivityDialog extends AbstractView {
     }
     //图片相关---
     handleChange(file: any) {
+        this.myProxy.dialogData.uploadType = "link_url";
         const data = {
             type: 2,
             file: file.raw,
@@ -526,12 +583,29 @@ export default class PlatActivityDialog extends AbstractView {
     }
 
     handleRemove(file: any) {
-        this.myProxy.dialogData.form.link_url = "";
         this.myProxy.dialogData.fileList = [{ rul: "" }];
         this.showMask = false;
     }
     handlePictureCardPreview() {
         GlobalVar.preview_image.url = this.myProxy.dialogData.fileList[0].url;
+    }
+
+    handleChange1(file: any) {
+        this.myProxy.dialogData.uploadType = "icon";
+        const data = {
+            type: 2,
+            file: file.raw,
+        };
+        this.myProxy.uploadImage(data);
+    }
+
+    handleRemove1(file: any) {
+        this.myProxy.dialogData.form.icon = "";
+        this.myProxy.dialogData.fileList1 = [{ rul: "" }];
+        this.showMask1 = false;
+    }
+    handlePictureCardPreview1() {
+        GlobalVar.preview_image.url = this.myProxy.dialogData.fileList1[0].url;
     }
     //---图片相关
 
@@ -567,6 +641,7 @@ export default class PlatActivityDialog extends AbstractView {
     spliceShowTypes(showTypes: any) {
         if (!showTypes) return "";
         return {
+            1: showTypes[1],
             2: showTypes[2],
             4: showTypes[4],
         };
@@ -604,6 +679,30 @@ export default class PlatActivityDialog extends AbstractView {
             return;
         }
         this.langImgProxy.showDialog(data);
+    }
+    
+    handleLangImg1() {
+        const data: any = {};
+        data.plat_id = this.form.plat_id;
+        data.key = this.myProxy.dialogData.form.icon;
+        if (!data.key) {
+            const str: any = LangUtil("请先上传默认图片");
+            Message.warning(str);
+            return;
+        }
+        this.langImgProxy.showDialog(data);
+    }
+
+    handleLangTinymce() {
+        if (!this.isStatusUpdate) {
+            Message.warning(LangUtil("新建活动时不能编辑，请在编辑活动时使用"));
+            return;
+        }
+        const data: any = {};
+        data.type = LanguageType.TYPE_PLAT_ACTIVITY;
+        data.plat_id = this.form.plat_id;
+        data.key = this.myProxy.dialogData.form.link_url;
+        this.langTinymceProxy.showDialog(data);
     }
 }
 </script>

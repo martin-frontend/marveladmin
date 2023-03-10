@@ -129,10 +129,14 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             award_tpl: "",
             award_type_map: "",
             award_timing_map: "",
+            icon: "",
+            icon_url: "",
         },
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据
         fileList: <any>[{ url: "" }],
+        fileList1: <any>[{ url: "" }],
+        uploadType: "",
         update: 0,
     };
 
@@ -186,6 +190,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.formSource["des"] = this.dialogData.form.des;
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
+        this.dialogData.fileList1[0].url = this.dialogData.form.icon_url;
     }
 
     /**重置查询条件 */
@@ -258,15 +263,17 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             settlement_period: "",
             des: "",
             show_types: [],
-            show_type: <any>2,
+            show_type: <any>1,
             is_once: "",
             rules: [],
             award_tpl: "",
             award_type_map: "",
+            icon: "",
         });
 
         this.activeModelData.options.length = 0;
         this.dialogData.fileList = [{ url: "" }];
+        this.dialogData.fileList1 = [{ url: "" }];
     }
 
     /**取活动规则 */
@@ -310,6 +317,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             award_tpl,
             show_type,
             is_once,
+            icon,
         } = this.dialogData.form;
         for (const item of rules) {
             for (const child of item.list) {
@@ -338,6 +346,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 settlement_type,
                 award_tpl,
                 show_type,
+                icon,
             };
         } else {
             formCopy = {
@@ -352,6 +361,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 bonus_multiple,
                 link_url,
                 show_type,
+                icon,
             };
         }
         /**
@@ -374,7 +384,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_activity_store, objectRemoveNull(formCopy));
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**关闭该活动 */
@@ -401,7 +411,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 };
                 this.facade.sendNotification(HttpType.admin_plat_activity_update, copyForm);
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**更新活动*/
@@ -429,6 +439,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
          */
         formCopy["publish_status"] = Object.keys(this.tableData.columns.publish_status.options)[1];
         formCopy.id = this.dialogData.form.id;
+        if (formCopy.show_type == 2) {
+            formCopy.link_url = this.dialogData.form.link_url;
+        }
         // 发送消息
         this.sendNotification(HttpType.admin_plat_activity_update, formCopy);
     }
@@ -443,6 +456,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     }
     /**写入活动模版数据数据 */
     setActivityModelList(data: any) {
+        this.activeModelData.options.length = 0;
         this.activeModelData.options.push(...data.list);
     }
 
@@ -511,8 +525,13 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
 
     /**图片上传 写入图片url*/
     uploadSuccess(body: any) {
-        this.dialogData.form.link_url = body.uri;
-        this.dialogData.fileList = [{ url: body.url }];
+        if (this.dialogData.uploadType == "icon") {
+            this.dialogData.form.icon = body.uri;
+            this.dialogData.fileList1 = [{ url: body.url }];
+        } else {
+            this.dialogData.form.link_url = body.uri;
+            this.dialogData.fileList = [{ url: body.url }];
+        }
     }
 
     /**排序 */

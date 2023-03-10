@@ -51,7 +51,7 @@ export default class SystemLangMediator extends AbstractMediator {
                 }
                 break;
             case EventType.admin_system_lang_store:
-                Message.success(SuccessMessage.create);
+                // Message.success(SuccessMessage.create);
                 myProxy.hideDialog();
                 myProxy.listQuery.page_count = 1;
                 myProxy.onQuery();

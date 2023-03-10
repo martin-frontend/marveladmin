@@ -51,13 +51,13 @@ export default class PlatLangMediator extends AbstractMediator {
                 }
                 break;
             case EventType.admin_plat_lang_store:
-                Message.success(SuccessMessage.create);
+                // Message.success(SuccessMessage.create);
                 myProxy.hideDialog();
                 myProxy.listQuery.page_count = 1;
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_lang_update:
-                Message.success(SuccessMessage.update);
+                // Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
