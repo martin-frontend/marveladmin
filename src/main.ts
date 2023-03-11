@@ -35,23 +35,23 @@ if (!device) {
     window.localStorage.setItem("device", device);
 }
 GlobalVar.device = device;
-LangConfig.load(GlobalVar.lang);
+LangConfig.load(GlobalVar.lang).then(() => {
+    AppFacade.inst.startUp();
 
-AppFacade.inst.startUp();
+    new Vue({
+        router,
+        i18n,
+        render: h => h(App),
+    }).$mount("#app");
 
-new Vue({
-    router,
-    i18n,
-    render: h => h(App),
-}).$mount("#app");
+    //临时
+    // if(qa != "2") router.addRoutes([layoutRouter]);
 
-//临时
-// if(qa != "2") router.addRoutes([layoutRouter]);
-
-// 如果没有登录，直接进入登录页
-if (!GlobalVar.token) {
-    router.push("/login");
-}
+    // 如果没有登录，直接进入登录页
+    if (!GlobalVar.token) {
+        router.push("/login");
+    }
+});
 
 window.onerror = function(message, source, lineno, colno, error) {
     if (message != "" && message != "ResizeObserver loop limit exceeded") alert(message);

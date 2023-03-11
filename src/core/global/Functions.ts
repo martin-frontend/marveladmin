@@ -479,3 +479,8 @@ String.prototype.firstUpperCase = function () {
 export function convertToNum(value: string): number {
     return parseFloat(value.replace("$", ""));
 }
+/**临时，获取文件版本号 */
+export function getFileVersion(): string {
+    const min = (new Date().getTime() / 1000 / 60) >> 0;
+    return ((min / 60) >> 0).toString() + (((min % 60) / 15) >> 0).toString();
+}
