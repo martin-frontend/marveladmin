@@ -42,6 +42,9 @@
             <el-form-item size="mini" :label="tableColumns['is_save_bet_info'].name" prop="is_save_bet_info">
                 <el-switch v-model="form.is_save_bet_info" :active-value="1" :inactive-value="98"></el-switch>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['visitor_allowed'].name" prop="visitor_allowed">
+                <el-switch v-model="form.visitor_allowed" :active-value="1" :inactive-value="98"></el-switch>
+            </el-form-item>
             <!-- 结算币种 -->
             <el-form-item
                 size="mini"

@@ -57,6 +57,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             url_update_balance: { name: "", options: {} },
             vendor_wallet_type: { name: "", options: {} },
             settle_coin_name_unique: { name: "", options: {} },
+            visitor_allowed: { name: '游客登录', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -96,6 +97,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             url_update_balance: "",
             vendor_wallet_type: "",
             settle_coin_name_unique: "",
+            visitor_allowed: 98,
         },
         formSource: null, // 表单的原始数据
         // 扩展数据
@@ -187,6 +189,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             url_update_balance: "",
             vendor_wallet_type: 1,
             settle_coin_name_unique: "",
+            visitor_allowed: 98,
         });
         this.dialogData.extendsData = {};
         this.dialogData.betCodeContentData = {};
@@ -200,6 +203,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
     /**添加数据 */
     onAdd() {
         const {
+            bet_detail_url,
             cron_id,
             vendor_id,
             vendor_name,
@@ -214,8 +218,11 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             url_update_balance,
             vendor_wallet_type,
             settle_coin_name_unique,
+            is_save_bet_info,
+            visitor_allowed,
         } = this.dialogData.form;
         const formCopy: any = {
+            bet_detail_url,
             cron_id,
             vendor_id,
             vendor_name,
@@ -230,6 +237,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             url_update_balance,
             vendor_wallet_type,
             settle_coin_name_unique,
+            is_save_bet_info,
+            visitor_allowed,
         };
         formCopy.vendor_types = JSON.stringify(formCopy.vendor_types);
         formCopy.languages = JSON.stringify(formCopy.languages);
