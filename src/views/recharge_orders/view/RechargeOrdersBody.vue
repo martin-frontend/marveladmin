@@ -137,6 +137,16 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column prop="extends" :label="LangUtil('用户充值信息')" min-width="180px" align="center">
+                <template slot-scope="{ row }">
+                    <div align="left" v-if="row.paymethod_id == 9 && row.extends.length != 0">
+                        <p v-for="(value, key) of row.extends" :key="key">{{ key }}：{{ value }}</p>
+                    </div>
+                    <div v-else>
+                        -
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column prop="gold" :label="tableColumns['gold'].name" align="center" min-width="140px">
                 <template slot="header">
                     <el-tooltip
