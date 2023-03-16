@@ -1,0 +1,13 @@
+{
+    "name": "大额爆奖图管理",
+    "description": "大额爆奖图管理",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47776945",
+    "list": [
+        "admin/plat_big_award/table_columns",
+        "admin/plat_big_award/index",
+        "admin/plat_big_award/show/{id}",
+        "admin/plat_big_award/store",
+        "admin/plat_big_award/update/{id}",
+        "admin/resource/upload"
+    ]
+}

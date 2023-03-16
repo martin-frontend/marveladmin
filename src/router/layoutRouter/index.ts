@@ -202,6 +202,10 @@ const layoutRouter = {
             name: "实时返水",
             component: () => import(/* webpackChunkName: "plat_backwater" */"@/views/plat_backwater/view/PlatBackwater.vue")
         },        {
+            path: "plat_big_award",
+            name: "大额爆奖图管理",
+            component: () => import(/* webpackChunkName: "plat_big_award" */"@/views/plat_big_award/view/PlatBigAward.vue")
+        },        {
             path: "plat_blacklist",
             name: "黑名单管理",
             component: () => import(/* webpackChunkName: "plat_blacklist" */"@/views/plat_blacklist/view/PlatBlacklist.vue")
