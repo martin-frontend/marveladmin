@@ -307,7 +307,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             .then(() => {
                 this.sendNotification(HttpType.admin_plats_notice_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     onRemoveItem() {
@@ -320,7 +320,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                 this.tableCtrlData.opt = null;
                 this.onUpdate(true);
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**图片上传 */

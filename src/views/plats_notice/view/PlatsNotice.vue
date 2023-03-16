@@ -1,6 +1,6 @@
 <template>
     <div class="content plats_notice">
-        <PlatsNoticeDialog />
+        <PlatsNoticeDialog  v-if="myProxy.dialogData.bShow"/>
         <PlatsNoticeHeader />
         <PlatsNoticeBody />
         <PreviewImageDialog />
@@ -15,6 +15,7 @@ import PlatsNoticeDialog from "./PlatsNoticeDialog.vue";
 import PlatsNoticeHeader from "./PlatsNoticeHeader.vue";
 import PlatsNoticeBody from "./PlatsNoticeBody.vue";
 import PreviewImageDialog from "./components/PreviewImageDialog.vue";
+import PlatsNoticeProxy from "@/views/plats_notice/proxy/PlatsNoticeProxy";
 
 @Component({
     components: {
@@ -25,6 +26,8 @@ import PreviewImageDialog from "./components/PreviewImageDialog.vue";
     },
 })
 export default class PlatsNotice extends AbstractView {
+    myProxy: PlatsNoticeProxy = this.getProxy(PlatsNoticeProxy);
+
     constructor() {
         super(PlatsNoticeMediator);
     }

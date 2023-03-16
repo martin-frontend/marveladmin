@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="textMap[status]" width="850px" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="140px" v-loading="net_status.loading">
             <!--  -->
             <el-form-item size="mini" :label="LangUtil('发布平台')" prop="plat_id">
@@ -123,7 +123,7 @@
 
             <el-form-item size="mini" :label="tableColumns['content'].name" prop="content" v-if="form.type == 1">
                 <div class="flex d-flex">
-                    <el-input
+                    <!-- <el-input
                         style="margin-right: 0.8rem"
                         type="textarea"
                         filterable
@@ -131,16 +131,16 @@
                         rows="5"
                         :placeholder="LangUtil('请输入')"
                         v-model="form.content"
-                    ></el-input>
-                    <el-button
+                    ></el-input> -->
+                    <TinymceUpload v-model="form.content"/>
+                    <!-- <el-button
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
                         @click="handleTranslate(form.content)"
                     >
-                        <!-- 翻译 -->
                         {{ LangUtil("翻译") }}
-                    </el-button>
+                    </el-button> -->
                 </div>
             </el-form-item>
 
@@ -275,9 +275,14 @@ import { LanguageType } from "@/core/enum/UserType";
 import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 import CommonLangImgProxy from "@/views/lang_img_dialog/proxy/CommonLangImgProxy";
 import { Message } from "element-ui";
+import TinymceUpload from "@/components/TinymceUpload/index.vue";
 import i18n from "@/lang";
 
-@Component
+@Component({
+    components: {
+        TinymceUpload,
+    },
+})
 export default class PlatsNoticeDialog extends AbstractView {
     LangUtil = LangUtil;
     // 权限标识
