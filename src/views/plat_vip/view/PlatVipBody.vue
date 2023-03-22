@@ -6,12 +6,12 @@
                     <el-input
                         class="input"
                         clearable
-                        :placeholder="LangUtil('有效流水')"
                         v-model="item.total_water"
                         :disabled="!myProxy.isEdit"
                         oninput="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')"
                         @keydown.native="inputLimit"
                     >
+                        <template slot="prepend">{{ LangUtil("有效流水") }}</template>
                     </el-input>
 
                     <el-input
@@ -19,12 +19,12 @@
                         class="input"
                         type="number"
                         clearable
-                        :placeholder="LangUtil('总充值')"
                         v-model="item.total_recharge"
                         :disabled="!myProxy.isEdit"
                         oninput="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')"
                         @keydown.native="inputLimit"
                     >
+                        <template slot="prepend">{{ LangUtil("总充值") }}</template>
                     </el-input>
                 </el-form-item>
 
