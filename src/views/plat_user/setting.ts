@@ -14,6 +14,7 @@ import cmd_admin_plat_user_recharge_address from "@/views/plat_user/command/cmd_
 import cmd_admin_plat_users_wallet_show_plat from "@/views/plat_user/command/cmd_admin_plat_users_wallet_show_plat";
 import cmd_admin_plat_user_backwater_config from "@/views/plat_user/command/cmd_admin_plat_user_backwater_config";
 import cmd_admin_plat_user_store_credit_user from "@/views/plat_user/command/cmd_admin_plat_user_store_credit_user";
+import cmd_admin_plat_user_change_channel from "@/views/plat_user/command/cmd_admin_plat_user_change_channel";
 /**协议*/
 export var HttpType = {
     admin_plat_user_table_columns: "admin/plat_user/table_columns",
@@ -28,6 +29,7 @@ export var HttpType = {
     admin_plat_users_wallet_show_plat: "admin/plat_users_wallet/show_plat",
     admin_plat_user_backwater_config: "admin/plat_user/{plat_id}/backwater_config",
     admin_plat_user_store_credit_user: "admin/plat_user/store_credit_user",
+    admin_plat_user_change_channel: "admin/plat_user/change_channel/{user_id}",
 };
 /**事件*/
 export var EventType = {
@@ -43,6 +45,7 @@ export var EventType = {
     admin_plat_users_wallet_show_plat: "admin_plat_users_wallet_show_plat",
     admin_plat_user_backwater_config: "admin_plat_user_backwater_config",
     admin_plat_user_store_credit_user: "admin_plat_user_store_credit_user",
+    admin_plat_user_change_channel: "admin_plat_user_change_channel",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -58,4 +61,5 @@ facade.registerCommand(HttpType.admin_plat_user_recharge_address, cmd_admin_plat
 facade.registerCommand(HttpType.admin_plat_users_wallet_show_plat, cmd_admin_plat_users_wallet_show_plat);
 facade.registerCommand(HttpType.admin_plat_user_backwater_config, cmd_admin_plat_user_backwater_config);
 facade.registerCommand(HttpType.admin_plat_user_store_credit_user, cmd_admin_plat_user_store_credit_user);
+facade.registerCommand(HttpType.admin_plat_user_change_channel, cmd_admin_plat_user_change_channel);
 

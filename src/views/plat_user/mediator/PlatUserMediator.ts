@@ -36,6 +36,7 @@ export default class PlatUserMediator extends AbstractMediator {
             EventType.admin_plat_users_wallet_show_plat,
             EventType.admin_plat_user_backwater_config,
             EventType.admin_plat_user_store_credit_user,
+            EventType.admin_plat_user_change_channel,
         ];
     }
 
@@ -98,6 +99,11 @@ export default class PlatUserMediator extends AbstractMediator {
                     myProxy.hideDialog();
                     myProxy.onQuery();
                 });
+                break;
+            case EventType.admin_plat_user_change_channel:
+                Message.success(SuccessMessage.update);
+                myProxy.hideDialog();
+                myProxy.onQuery();
                 break;
         }
     }

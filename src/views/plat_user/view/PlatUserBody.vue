@@ -172,6 +172,16 @@
                             {{ LangUtil("刷新资产") }}
                         </el-button>
                     </div>
+                    <div>
+                        <el-button
+                            class="item op-btn"
+                            size="mini"
+                            type="success"
+                            @click="changeChannel(row)"
+                        >
+                            {{ LangUtil("更换渠道") }}
+                        </el-button>
+                    </div>
                     <!-- <div>
                         <el-button
                             class="item op-btn"
@@ -290,6 +300,10 @@ export default class PlatUserBody extends AbstractView {
 
     handlerAddCreditUser() {
         this.myProxy.showCreditUserDialog();
+    }
+
+    changeChannel(data: any) {
+        this.myProxy.showChangeChannelDialog(data);
     }
 }
 </script>

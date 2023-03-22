@@ -14,6 +14,7 @@
         "admin/plat_user/recharge_address/{user_id}",
         "admin/plat_users_wallet/show_plat",
         "admin/plat_user/{plat_id}/backwater_config",
-        "admin/plat_user/store_credit_user"
+        "admin/plat_user/store_credit_user",
+        "admin/plat_user/change_channel/{user_id}"
     ]
 }

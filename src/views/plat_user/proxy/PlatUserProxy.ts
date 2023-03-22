@@ -95,7 +95,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 },
             },
             water_config: { name: "流水配置", optiosn: {} },
-            show_credit_report: { name: '信用报表', options: {} },
+            show_credit_report: { name: "信用报表", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -160,6 +160,13 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             credit_rate_max: "",
         },
         backwater_config: <any>{ "0": 0, "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0 },
+    };
+
+    changeChannelDialogData = {
+        bShow: false,
+        form: <any>{
+            channel_id: "",
+        },
     };
 
     /**设置表头数据 */
@@ -253,6 +260,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     hideDialog() {
         this.dialogData.bShow = false;
         this.creditUserDialogData.bShow = false;
+        this.changeChannelDialogData.bShow = false;
     }
     /**重置弹窗表单 */
     resetDialogForm() {
@@ -338,8 +346,14 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
     onAddCreditUser() {
         const { plat_id } = this.listQuery;
-        let { username, password, credit_rate_min, credit_rate_max, show_credit_report } = this.creditUserDialogData.form;
-        let water_config = JSON.parse(JSON.stringify(this.creditUserDialogData.form.water_config))
+        let {
+            username,
+            password,
+            credit_rate_min,
+            credit_rate_max,
+            show_credit_report,
+        } = this.creditUserDialogData.form;
+        let water_config = JSON.parse(JSON.stringify(this.creditUserDialogData.form.water_config));
         password = MD5.createInstance().hex_md5(password);
         Object.keys(water_config).forEach(key => {
             water_config[key] = water_config[key] / 100;
@@ -355,5 +369,22 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             show_credit_report,
         };
         this.sendNotification(HttpType.admin_plat_user_store_credit_user, objectRemoveNull(formCopy));
+    }
+
+    showChangeChannelDialog(data: any) {
+        this.changeChannelDialogData.form = JSON.parse(JSON.stringify(data));
+        this.changeChannelDialogData.bShow = true;
+    }
+
+    onChangeChannel() {
+        MessageBox.confirm(<string>LangUtil("是否确认更换"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
+            type: "warning",
+        })
+            .then(() => {
+                const { channel_id, user_id } = this.changeChannelDialogData.form;
+                this.sendNotification(HttpType.admin_plat_user_change_channel, { channel_id, user_id });            })
+            .catch(() => {});
     }
 }
