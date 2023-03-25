@@ -148,6 +148,7 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
         bShow: false,
         gold: "",
         coin_name_unique: "",
+        remark: "",
     };
     /**用户充值地址数据 */
     dialogRechargeAddress = {
@@ -166,6 +167,7 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
     showDialog(coin_name_unique: string) {
         this.dialogDeductGoldData.coin_name_unique = coin_name_unique;
         this.dialogDeductGoldData.gold = "";
+        this.dialogDeductGoldData.remark = "";
         this.dialogDeductGoldData.bShow = true;
     }
     /**打开用户充值地址弹窗 */
@@ -236,10 +238,12 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
     }
     /**扣除金币 */
     onUpdateGold(gold: number, coin_name_unique: string) {
+        const { remark } = this.dialogDeductGoldData;
         this.sendNotification(HttpType.admin_plat_user_update_user_gold, {
             user_id: this.userInfo.user_id,
             gold,
             coin_name_unique,
+            remark,
         });
     }
     /**提取厂商金币 */
