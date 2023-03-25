@@ -53,6 +53,9 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
             zh_TW: { name: "", options: {} },
             es_ES: { name: "", options: {} },
             pt_PT: { name: "", options: {} },
+            hi_IN: { name: "", options: {} },
+            de_DE: { name: "", options: {} },
+            fr_FR: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -88,6 +91,9 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
             zh_TW: "",
             es_ES: "",
             pt_PT: "",
+            hi_IN: "",
+            de_DE: "",
+            fr_FR: "",
             config: <any>{
                 ar_AR: [],
                 en_EN: [],
@@ -99,6 +105,9 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
                 zh_TW: [],
                 es_ES: [],
                 pt_PT: [],
+                hi_IN: [],
+                de_DE: [],
+                fr_FR: [],
             },
         },
         formSource: null, // 表单的原始数据
@@ -136,6 +145,9 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
             zh_TW: "",
             es_ES: "",
             pt_PT: "",
+            hi_IN: "",
+            de_DE: "",
+            fr_FR: "",
             config: {
                 ar_AR: [],
                 en_EN: [],
@@ -147,6 +159,9 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
                 zh_TW: [],
                 es_ES: [],
                 pt_PT: [],
+                hi_IN: [],
+                de_DE: [],
+                fr_FR: [],
             },
         });
         this.dialogData.status = DialogStatus.create;
@@ -190,22 +205,13 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
     }
     /**获取全部翻译返回更新表单 */
     updateForm(data: any): void {
-        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        const copyData = JSON.parse(JSON.stringify(data));
+        Object.keys(this.dialogData.form.config).forEach(key => {
+            this.dialogData.form.config[key] = copyData.config[key] ?? [];
+        });
+        delete copyData.config;
+        Object.assign(this.dialogData.form, copyData);
         this.dialogData.formSource = data;
-        if (data.config?.length == 0) {
-            this.dialogData.form.config = {
-                ar_AR: [],
-                en_EN: [],
-                jp_JP: [],
-                ko_Kr: [],
-                th_TH: [],
-                vi_VN: [],
-                zh_CN: [],
-                zh_TW: [],
-                es_ES: [],
-                pt_PT: [],
-            };
-        }
     }
 
     /**

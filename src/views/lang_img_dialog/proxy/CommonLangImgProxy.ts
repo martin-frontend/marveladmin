@@ -109,6 +109,9 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
             zh_TW: { uris: "", urls: "" },
             es_ES: { uris: "", urls: "" },
             pt_PT: { uris: "", urls: "" },
+            hi_IN: { uris: "", urls: "" },
+            de_DE: { uris: "", urls: "" },
+            fr_FR: { uris: "", urls: "" },
         },
         formSource: null, // 表单的原始数据
     };
@@ -146,6 +149,9 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
             zh_TW: { uris: "", urls: "" },
             es_ES: { uris: "", urls: "" },
             pt_PT: { uris: "", urls: "" },
+            hi_IN: { uris: "", urls: "" },
+            de_DE: { uris: "", urls: "" },
+            fr_FR: { uris: "", urls: "" },
         });
         this.dialogData.status = DialogStatus.create;
         this.source = "";

@@ -50,6 +50,9 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             zh_TW: { name: "", options: {} },
             es_ES: { name: "", options: {} },
             pt_PT: { name: "", options: {} },
+            hi_IN: { name: "", options: {} },
+            de_DE: { name: "", options: {} },
+            fr_FR: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -71,7 +74,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        form: {
+        form: <any>{
             id: "",
             language: "",
             module: "",
@@ -88,7 +91,10 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             zh_TW: "",
             es_ES: "",
             pt_PT: "",
-            config: {
+            hi_IN: "",
+            de_DE: "",
+            fr_FR: "",
+            config: <any>{
                 ar_AR: [],
                 en_EN: [],
                 jp_JP: [],
@@ -99,6 +105,9 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
                 zh_TW: [],
                 es_ES: [],
                 pt_PT: [],
+                hi_IN: [],
+                de_DE: [],
+                fr_FR: [],
             },
         },
         formSource: null, // 表单的原始数据
@@ -151,21 +160,12 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
-            Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            if (data.config.length == 0) {
-                this.dialogData.form.config = {
-                    ar_AR: [],
-                    en_EN: [],
-                    jp_JP: [],
-                    ko_Kr: [],
-                    th_TH: [],
-                    vi_VN: [],
-                    zh_CN: [],
-                    zh_TW: [],
-                    es_ES: [],
-                    pt_PT: [],
-                };
-            }
+            const copyData = JSON.parse(JSON.stringify(data));
+            Object.keys(this.dialogData.form.config).forEach(key => {
+                this.dialogData.form.config[key] = copyData.config[key] ?? [];
+            });
+            delete copyData.config;
+            Object.assign(this.dialogData.form, copyData);
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -194,7 +194,10 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             zh_TW: "",
             es_ES: "",
             pt_PT: "",
-            config: {
+            hi_IN: "",
+            de_DE: "",
+            fr_FR: "",
+            config: <any>{
                 ar_AR: [],
                 en_EN: [],
                 jp_JP: [],
@@ -205,6 +208,9 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
                 zh_TW: [],
                 es_ES: [],
                 pt_PT: [],
+                hi_IN: [],
+                de_DE: [],
+                fr_FR: [],
             },
         });
     }
@@ -253,7 +259,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_lang_delete, { id });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     onQueryAll() {
