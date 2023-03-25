@@ -4,6 +4,7 @@ import { EventType, HttpType } from "@/views/plat_load_page_domain/setting";
 import PlatLoadPageDomainProxy from "../proxy/PlatLoadPageDomainProxy";
 import { Message } from "element-ui";
 import { SuccessMessage } from "@/core/global/Constant";
+import LangUtil from "@/core/global/LangUtil";
 
 interface IPlatLoadPageDomain extends IEventDispatcher {}
 
@@ -31,6 +32,7 @@ export default class PlatLoadPageDomainMediator extends AbstractMediator {
             EventType.admin_plat_load_page_domain_update,
             EventType.admin_plat_show,
             EventType.admin_plat_upload_load_page,
+            EventType.admin_plat_load_page_domain_uploadTemplate,
         ];
     }
 
@@ -64,6 +66,12 @@ export default class PlatLoadPageDomainMediator extends AbstractMediator {
                 myProxy.setLoadPage(body.load_page_extend);
                 break;
             case EventType.admin_plat_upload_load_page:
+                Message.success(SuccessMessage.update);
+                myProxy.onQueryLoadPage();
+                break;
+            case EventType.admin_plat_load_page_domain_uploadTemplate:
+                Message.success(LangUtil("上传成功"));
+                myProxy.templateDialogData.fileList = [];
                 break;
         }
     }

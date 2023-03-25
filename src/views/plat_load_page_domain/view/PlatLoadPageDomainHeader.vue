@@ -9,12 +9,29 @@
         />
         <div class="editor-container config">
             {{ LangUtil("落地页文件配置") }}
+            <div style="float: right; margin-top: -15px;">
+                <el-button :disabled="myProxy.isEdited" @click="handlerEdit" type="primary" class="item">{{
+                    LangUtil("编辑")
+                }}</el-button>
+                <el-button
+                    :disabled="!myProxy.isEdited"
+                    @click="handlerSave"
+                    icon="el-icon-circle-plus-outline"
+                    type="primary"
+                    class="item"
+                    >{{ LangUtil("确认保存") }}</el-button
+                >
+                <el-button :disabled="!myProxy.isEdited" @click="handlerCancel" type="danger" class="item">{{
+                    LangUtil("取消")
+                }}</el-button>
+            </div>
             <el-form ref="form" class="border" :model="form" v-loading="net_status.loading">
-                <json-editor ref="jsonEditor" v-model="form.load_page_extend" />
+                <json-editor
+                    :class="{ 'pointer-none': !myProxy.isEdited }"
+                    ref="jsonEditor"
+                    v-model="form.load_page_extend"
+                />
             </el-form>
-            <el-button @click="handlerSave" icon="el-icon-circle-plus-outline" type="primary" class="item save">{{
-                LangUtil("确认保存")
-            }}</el-button>
         </div>
 
         <div class="row domain-config">
@@ -57,6 +74,15 @@ export default class PlatLoadPageDomainHeader extends AbstractView {
     listQuery = this.myProxy.listQuery;
     form = this.myProxy.form;
 
+    handlerEdit() {
+        this.myProxy.isEdited = true;
+    }
+
+    handlerCancel() {
+        this.myProxy.isEdited = false;
+        this.myProxy.reset_load_page_extend();
+    }
+
     handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
@@ -91,5 +117,9 @@ export default class PlatLoadPageDomainHeader extends AbstractView {
 }
 .create {
     margin-left: 10px;
+}
+
+.pointer-none {
+    pointer-events: none;
 }
 </style>

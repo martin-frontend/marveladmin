@@ -1,7 +1,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, isJsonString, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, isJsonString, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_load_page_domain/setting";
 import { MessageBox } from "element-ui";
 import IPlatLoadPageDomainProxy from "./IPlatLoadPageDomainProxy";
@@ -28,16 +28,22 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
     /**表格相关数据 */
     tableData = {
         columns: {
-            created_at: { name: "创建人", options: {} },
-            created_by: { name: "创建时间", options: {} },
-            data_belong: { name: "数据归属标记", options: {} },
-            domain: { name: "域名地址", options: {} },
-            id: { name: "主键", options: {} },
-            md5_tag: { name: "cdn文件标识", options: {} },
+            id: { name: "主键", options: [] },
+            data_belong: { name: "数据归属标记", options: [] },
             plat_id: { name: "平台ID", options: {} },
-            remark: { name: "备注", options: {} },
-            updated_at: { name: "修改人", options: {} },
-            updated_by: { name: "修改时间", options: {} },
+            channel_id: { name: "渠道ID", options: {} },
+            domain: { name: "域名地址", options: [] },
+            version: { name: "发布版本", options: [] },
+            template: { name: "模板", options: [] },
+            model_type: { name: "模板类型", options: {} },
+            remark: { name: "备注", options: [] },
+            md5_tag: { name: "cdn文件标识", options: [] },
+            channel_config: { name: "渠道参数配置", options: [] },
+            is_delete: { name: "是否删除", options: [] },
+            created_by: { name: "创建时间", options: [] },
+            created_at: { name: "创建人", options: [] },
+            updated_by: { name: "修改时间", options: [] },
+            updated_at: { name: "修改人", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -49,9 +55,11 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
         page_size: 20,
     };
 
+    isEdited = false;
     form = {
         load_page_extend: {},
     };
+    copy_load_page_extend = {};
 
     /**弹窗相关数据 */
     dialogData = {
@@ -59,10 +67,19 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
         status: DialogStatus.create,
         form: <any>{
             plat_id: "",
+            channel_id: "",
             domain: "",
+            model_type: "",
+            template: "",
             remark: "",
+            channel_config: {},
         },
         formSource: null, // 表单的原始数据
+    };
+
+    templateDialogData = {
+        bShow: false,
+        fileList: <any>[],
     };
 
     /**设置表头数据 */
@@ -85,8 +102,12 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
 
     /**详细数据 */
     setDetail(data: any) {
+        const { channel_config } = data;
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        if (isJsonString(channel_config)) {
+            this.dialogData.form.channel_config = jsonToObject(channel_config);
+        }
     }
 
     /**显示弹窗 */
@@ -100,20 +121,32 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
+            this.dialogData.form.plat_id = this.listQuery.plat_id;
         }
+    }
+
+    /**显示弹窗 */
+    showTemplateDialog(data?: any) {
+        this.templateDialogData.bShow = true;
+        this.dialogData.formSource = data;
+        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
     }
 
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
+        this.templateDialogData.bShow = false;
     }
 
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
             plat_id: "",
+            channel_id: "",
             domain: "",
+            template: "",
             remark: "",
+            channel_config: {},
         });
     }
 
@@ -123,11 +156,14 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
     }
 
     onAdd() {
-        const { plat_id, domain, remark } = this.dialogData.form;
+        const { plat_id, domain, remark, channel_id, channel_config, template } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
+            channel_id,
             domain,
             remark,
+            template,
+            channel_config: jsonStringify(channel_config),
         };
         formCopy.app_types = JSON.stringify(formCopy.app_types);
         this.sendNotification(HttpType.admin_plat_load_page_domain_store, objectRemoveNull(formCopy));
@@ -140,6 +176,7 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
         // 如果没有修改，就直接关闭弹窗
         if (Object.keys(formCopy).length == 0) {
             this.dialogData.bShow = false;
+            this.templateDialogData.bShow = false;
             return;
         }
         // 添加必填参数
@@ -165,11 +202,14 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
     }
 
     setLoadPage(data: any) {
-        this.form.load_page_extend = jsonToObject(data);
+        this.isEdited = false;
+        this.form.load_page_extend = data ? jsonToObject(data) : {};
+        this.copy_load_page_extend = JSON.parse(JSON.stringify(this.form.load_page_extend));
     }
 
     onSaveLoadPage() {
-        if (isJsonString(<any>this.form.load_page_extend)) {
+        const jsonString = jsonStringify(this.form.load_page_extend);
+        if (isJsonString(jsonString)) {
             this.sendNotification(HttpType.admin_plat_upload_load_page, {
                 plat_id: this.listQuery.plat_id,
                 load_page_extend: this.form.load_page_extend,
@@ -177,5 +217,15 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
         } else {
             MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
+    }
+
+    uploadTemplate() {
+        const { id } = this.dialogData.form;
+        const file = this.templateDialogData.fileList[0];
+        this.sendNotification(HttpType.admin_plat_load_page_domain_uploadTemplate, { id, file });
+    }
+
+    reset_load_page_extend() {
+        this.form.load_page_extend = JSON.parse(JSON.stringify(this.copy_load_page_extend));
     }
 }

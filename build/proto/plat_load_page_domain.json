@@ -9,6 +9,7 @@
         "admin/plat_load_page_domain/store",
         "admin/plat_load_page_domain/update/{id}",
         "admin/plat/show/{plat_id}",
-        "admin/plat/upload_load_page/{plat_id}"
+        "admin/plat/upload_load_page/{plat_id}",
+        "admin/plat_load_page_domain/uploadTemplate/{id}"
     ]
 }

@@ -9,20 +9,29 @@
             v-loading="net_status.loading"
         >
             <el-form-item size="mini" :label="tableColumns.plat_id.name" prop="plat_id">
-                <el-select v-model="form.plat_id" filterable clearable :placeholder="LangUtil('请选择')">
+                {{ tableColumns["plat_id"].options[form.plat_id] }}
+            </el-form-item>
+            <el-form-item size="mini" :label="tableColumns.channel_id.name" prop="channel_id">
+                <el-select v-model="form.channel_id" :placeholder="LangUtil('请选择')">
                     <el-option
-                        v-for="(value, key) in tableColumns.plat_id.options"
-                        :key="key"
+                        v-for="value in tableColumns.channel_id.options[form.plat_id]"
+                        :key="value"
                         :label="value"
-                        :value="Number(key)"
+                        :value="Number(value)"
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item size="mini" :label="tableColumns['domain'].name" prop="domain">
+            <el-form-item v-if="!isStatusUpdate" size="mini" :label="tableColumns['domain'].name" prop="domain">
                 <el-input v-model.trim="form.domain" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
-            <el-form-item size="mini" :label="tableColumns['remark'].name" prop="domain">
+            <el-form-item size="mini" :label="tableColumns['template'].name" prop="template">
+                <el-input v-model.trim="form.template" :placeholder="LangUtil('请输入')"></el-input>
+            </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['remark'].name" prop="remark">
                 <el-input v-model="form.remark" :placeholder="LangUtil('请输入')"></el-input>
+            </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['channel_config'].name" prop="channel_config">
+                <json-editor ref="jsonEditor" v-model="form.channel_config" />
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button v-if="isStatusUpdate" type="danger" size="mini" @click="handleDelete(form)">{{
@@ -45,9 +54,14 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import JsonEditor from "@/components/JsonEditor/index.vue";
 
-@Component
-export default class PlatLoadPageDomainBody extends AbstractView {
+@Component({
+    components: {
+        JsonEditor
+    },
+})
+export default class PlatLoadPageDomainDialog extends AbstractView {
     LangUtil = LangUtil;
     // 权限标识
     unique = unique;
@@ -82,9 +96,9 @@ export default class PlatLoadPageDomainBody extends AbstractView {
 
     get rules() {
         return {
-            plat_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
-            name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
-            content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            channel_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            domain: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            template: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
