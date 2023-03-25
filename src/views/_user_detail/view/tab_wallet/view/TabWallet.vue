@@ -22,24 +22,8 @@
                 <el-table-column :label="LangUtil('币种')" prop="coin_name_unique" class-name="status-col">
                 </el-table-column>
                 <el-table-column :label="LangUtil('账户余额')" prop="sum_money" class-name="status-col">
-                    <template slot-scope="{ row }">
-                        <WinLossDisplay
-                            :amount="row.sum_money"
-                            :isShowColor="false"
-                            :isShowPlus="false"
-                            :isShowDollar="false"
-                        />
-                    </template>
                 </el-table-column>
                 <el-table-column :label="LangUtil('平台余额')" prop="plat_money" class-name="status-col">
-                    <template slot-scope="{ row }">
-                        <WinLossDisplay
-                            :amount="row.plat_money"
-                            :isShowColor="false"
-                            :isShowPlus="false"
-                            :isShowDollar="false"
-                        />
-                    </template>
                 </el-table-column>
                 <el-table-column :label="LangUtil('操作')" class-name="status-col" width="300">
                     <template slot-scope="{ row }">

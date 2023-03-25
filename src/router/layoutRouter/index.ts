@@ -26,6 +26,10 @@ const layoutRouter = {
             name: "操作日志",
             component: () => import(/* webpackChunkName: "admin_user_log" */"@/views/admin_user_log/view/AdminUserLog.vue")
         },        {
+            path: "admin_user_login_record",
+            name: "用户登陸记录表",
+            component: () => import(/* webpackChunkName: "admin_user_login_record" */"@/views/admin_user_login_record/view/AdminUserLoginRecord.vue")
+        },        {
             path: "admin_user_log_user",
             name: "人员修改记录",
             component: () => import(/* webpackChunkName: "admin_user_log_user" */"@/views/admin_user_log_user/view/AdminUserLogUser.vue")

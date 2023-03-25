@@ -1,0 +1,9 @@
+{
+    "name": "用户登陸记录表",
+    "description": "用户登陸记录表",
+    "document": "",
+    "list": [
+        "admin/admin_user_login_record/table_columns",
+        "admin/admin_user_login_record/index"
+    ]
+}
