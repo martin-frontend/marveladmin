@@ -206,10 +206,12 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
     /**获取全部翻译返回更新表单 */
     updateForm(data: any): void {
         const copyData = JSON.parse(JSON.stringify(data));
-        Object.keys(this.dialogData.form.config).forEach(key => {
-            this.dialogData.form.config[key] = copyData.config[key] ?? [];
-        });
-        delete copyData.config;
+        if (data.config) {
+            Object.keys(this.dialogData.form.config).forEach(key => {
+                this.dialogData.form.config[key] = copyData.config[key] ?? [];
+            });
+            delete copyData.config;
+        }
         Object.assign(this.dialogData.form, copyData);
         this.dialogData.formSource = data;
     }
