@@ -52,10 +52,21 @@
                     <el-col :span="10">
                         <el-input size="small" v-model="rule.name" :placeholder="LangUtil('请输入规则名称')"></el-input>
                     </el-col>
-                    <el-col :span="4">
+                    <el-col :span="5">
                         <el-button size="mini" icon="el-icon-delete" @click="onDelSecondLevel(index, secondIndex)"
                             >{{ LangUtil("删除") }}
                         </el-button>
+                    </el-col>
+                    <el-col :span="3">
+                        <div>{{ tableColumns["bonus_multiple"].name }}</div>
+                    </el-col>
+                    <el-col :span="2">
+                        <el-input
+                            size="small"
+                            v-model="rule.bonus_multiple"
+                            :placeholder="LangUtil('请输入')"
+                            style="width: 80px"
+                        ></el-input>
                     </el-col>
                 </el-row>
                 <div class="child_rule_list" v-for="(childRule, thirdIndex) in rule.list" :key="thirdIndex">

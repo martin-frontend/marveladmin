@@ -339,8 +339,20 @@
                             <el-col :span="3">
                                 <div>{{ LangUtil("ID") }}: {{ secondIndex + 1 }}</div>
                             </el-col>
-                            <el-col :span="10">
+                            <el-col :span="13">
                                 <div>{{ rule.name }}</div>
+                            </el-col>
+                            <el-col :span="4">
+                                <div>{{ tableColumns["bonus_multiple"].name }}</div>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-input
+                                    size="small"
+                                    :placeholder="LangUtil('请输入')"
+                                    v-model="rule.bonus_multiple"
+                                    :disabled="isStatusUpdate"
+                                    style="width: 80px"
+                                ></el-input>
                             </el-col>
                         </el-row>
                         <div class="child-rule-list" v-for="(childRule, thirdIndex) in rule.list" :key="thirdIndex">
@@ -680,7 +692,7 @@ export default class PlatActivityDialog extends AbstractView {
         }
         this.langImgProxy.showDialog(data);
     }
-    
+
     handleLangImg1() {
         const data: any = {};
         data.plat_id = this.form.plat_id;
