@@ -15,6 +15,9 @@
                     style="width: 100%"
                     size="mini"
                     v-loading="net_status.loading"
+                    :header-cell-style="{
+                        'text-align': 'center',
+                    }"
                 >
                     <el-table-column
                         :label="tableColumns['id'].name"
@@ -91,6 +94,21 @@
                     <el-table-column :label="tableColumns['bonus_multiple'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
                             {{ row.model_id ? row.bonus_multiple : "-" }}
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        aling="left"
+                        :label="tableColumns['languages'].name"
+                        prop="languages"
+                        min-width="260px"
+                    >
+                        <template slot-scope="{ row }">
+                            <el-tag v-for="item of row.languages" :key="item">{{
+                                tableColumns["languages"].options[item]
+                            }}</el-tag>
+                            <el-button class="item ml-1" type="primary" size="mini" @click="onUpdateLanguages(row)">{{
+                                LangUtil("编辑")
+                            }}</el-button>
                         </template>
                     </el-table-column>
                     <el-table-column :label="LangUtil('操作')" width="110px" class-name="status-col">
@@ -189,9 +207,16 @@ export default class PlatActivityBody extends AbstractView {
         this.myProxy.tableData.orderData.plat_id = this.listQuery.plat_id;
         this.myProxy.onOrderList();
     }
+
+    onUpdateLanguages(row: any) {
+        this.myProxy.showLanguagesDialog(DialogStatus.update, row);
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.ml-1 {
+    margin-left: 12px;
+}
 </style>

@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/plat_activity/setting";
 import { Message } from "element-ui";
 import PlatActivityProxy from "../proxy/PlatActivityProxy";
 
-interface IPlatActivity extends IEventDispatcher {}
+interface IPlatActivity extends IEventDispatcher { }
 
 export default class PlatActivityMediator extends AbstractMediator {
     private myProxy: PlatActivityProxy = <any>this.getProxy(PlatActivityProxy);
@@ -60,6 +60,7 @@ export default class PlatActivityMediator extends AbstractMediator {
             case EventType.admin_plat_activity_update:
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
+                myProxy.hideLanguagesDialog();
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_index:

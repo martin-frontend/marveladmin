@@ -3,6 +3,7 @@
         <PlatActivityDialog v-if="myProxy.dialogData.bShow" />
         <PlatActivityHeader />
         <PlatActivityBody />
+        <PlatActivityLanguagesDialog />
     </div>
 </template>
 
@@ -14,12 +15,14 @@ import { Component } from "vue-property-decorator";
 import PlatActivityDialog from "./PlatActivityDialog.vue";
 import PlatActivityHeader from "./PlatActivityHeader.vue";
 import PlatActivityBody from "./PlatActivityBody.vue";
+import PlatActivityLanguagesDialog from "./PlatActivityLanguagesDialog.vue";
 
 @Component({
     components: {
         PlatActivityDialog,
         PlatActivityHeader,
         PlatActivityBody,
+        PlatActivityLanguagesDialog,
     },
 })
 export default class PlatActivity extends AbstractView {

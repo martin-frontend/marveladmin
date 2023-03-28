@@ -70,6 +70,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
             reward_coin: { name: "", options: {} },
+            languages: { name: "", options: {} },
         },
         orderData: {
             id: "",
@@ -94,6 +95,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         publish_status: "",
         process_status: "",
         model_type: "",
+        languages: "",
     };
 
     /**弹窗相关数据 */
@@ -139,6 +141,18 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         uploadType: "",
         update: 0,
     };
+
+    /**弹窗相关数据 */
+    dialogLanguagesData = {
+        bShow: false,
+        status: DialogStatus.update,
+        form: <any>{
+            languages: [],
+        },
+        formSource: <any>null, // 表单的原始数据
+    };
+
+
 
     /**活动 数据 */
     activeModelData = {
@@ -235,9 +249,27 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         }
     }
 
+    /**显示弹窗 */
+    showLanguagesDialog(status: string, data?: any) {
+        this.dialogLanguagesData.bShow = true;
+
+        if (status == DialogStatus.update) {
+            this.dialogLanguagesData.formSource = data;
+            Object.assign(this.dialogLanguagesData.form, JSON.parse(JSON.stringify(data)));
+        } else {
+            this.dialogLanguagesData.form.languages = [];
+            this.dialogLanguagesData.formSource = null;
+        }
+    }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
+    }
+
+    /**隐藏弹窗 */
+    hideLanguagesDialog() {
+        this.dialogLanguagesData.bShow = false;
     }
 
     /**重置弹窗表单 */
@@ -384,7 +416,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_activity_store, objectRemoveNull(formCopy));
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**关闭该活动 */
@@ -411,7 +443,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 };
                 this.facade.sendNotification(HttpType.admin_plat_activity_update, copyForm);
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**更新活动*/
@@ -537,6 +569,17 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     /**排序 */
     onOrderList() {
         const formCopy = this.tableData.orderData;
+        this.sendNotification(HttpType.admin_plat_activity_update, formCopy);
+    }
+
+    /**更新数据 */
+    onUpdateLanguages(id: any) {
+        const formCopy: any = formCompared(this.dialogLanguagesData.form, this.dialogLanguagesData.formSource);
+        if (Object.keys(formCopy).length == 0) {
+            this.dialogLanguagesData.bShow = false;
+            return false;
+        }
+        formCopy.id = id;
         this.sendNotification(HttpType.admin_plat_activity_update, formCopy);
     }
 }
