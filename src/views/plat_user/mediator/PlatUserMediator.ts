@@ -6,7 +6,7 @@ import { Message, MessageBox } from "element-ui";
 import LangUtil from "@/core/global/LangUtil";
 import PlatUserProxy from "../proxy/PlatUserProxy";
 
-interface IPlatUser extends IEventDispatcher {}
+interface IPlatUser extends IEventDispatcher { }
 
 export default class PlatUserMediator extends AbstractMediator {
     private myProxy: PlatUserProxy = <any>this.getProxy(PlatUserProxy);
@@ -49,7 +49,11 @@ export default class PlatUserMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_user_index:
-                myProxy.setTableData(body);
+                if (this.myProxy.listQuery.page_size == 100000) {
+                    myProxy.onSetExcelData(body.list);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_plat_user_show:
                 myProxy.setDetail(body);

@@ -159,6 +159,7 @@ export default class StatisticPlatCoinDaysDateProxy extends AbstractProxy implem
         exportColumn.forEach((column: any) => {
             exportHeader.push(this.tableData.columns[column].name);
         });
+        console.log(data);
         // 导出资料
         let exportData = this.dataMatching(exportColumn, data);
 
@@ -169,13 +170,14 @@ export default class StatisticPlatCoinDaysDateProxy extends AbstractProxy implem
 
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any) {
-        return arr1.concat(arr2).filter(function(v: any, i: any, arr: any) {
+        return arr1.concat(arr2).filter(function (v: any, i: any, arr: any) {
             return arr.indexOf(v) === arr.lastIndexOf(v);
         });
     }
 
     /**导出资料合并 */
     dataMatching(filterKeys: any, listData: any) {
+        console.log(listData);
         return listData.map((data: any) =>
             filterKeys.map((key: string) => {
                 if (key === "plat_id") {

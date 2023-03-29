@@ -9,6 +9,7 @@ import IPlatUserProxy from "./IPlatUserProxy";
 import i18n from "@/lang";
 import ExchangeOrdersProxy from "@/views/exchange_orders/proxy/ExchangeOrdersProxy";
 import { MD5 } from "@/core/global/MD5";
+import { exportJson2Excel } from "@/core/global/Excel";
 
 export default class PlatUserProxy extends AbstractProxy implements IPlatUserProxy {
     static NAME = "PlatUserProxy";
@@ -30,7 +31,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             agent_user_id: { name: "代理ID", options: {} },
             area_code: { name: "手机区号", options: {} },
             balance: { name: "账户余额", options: {}, tips: "" },
@@ -131,6 +132,35 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         page_count: 1,
         page_size: 20,
     };
+
+    /**导出 相关数据 */
+    exportData = {
+        fieldOrder: [
+            "plat_id",
+            "channel_id",
+            "user_id",
+            "username",
+            "nick_name",
+            "remark",
+            "vip_level",
+            "is_credit_user",
+            "phone",
+            "balance",
+            "gold",
+            "vendors_money",
+            "safe_gold",
+            "total_recharge",
+            "total_exchange",
+            "total_water",
+            "total_win",
+            "last_login_device",
+            "created_at",
+            "last_online_at",
+            "register_ip",
+            "last_login_ip",
+        ],
+    };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -384,7 +414,56 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         })
             .then(() => {
                 const { channel_id, user_id } = this.changeChannelDialogData.form;
-                this.sendNotification(HttpType.admin_plat_user_change_channel, { channel_id, user_id });            })
-            .catch(() => {});
+                this.sendNotification(HttpType.admin_plat_user_change_channel, { channel_id, user_id });
+            })
+            .catch(() => { });
+    }
+
+    /**取导出资料 */
+    onExportExcel() {
+        this.listQuery.page_size = 100000;
+        this.onQuery();
+    }
+
+    /**导出 Excel */
+    onSetExcelData(body: any) {
+        let data = JSON.parse(JSON.stringify(body));
+
+        // 要导出的栏位
+        let exportColumn = this.exportData.fieldOrder;
+        // 栏位中文名称
+        let exportHeader = <any>[];
+        exportColumn.forEach((column: any) => {
+            exportHeader.push(this.tableData.columns[column].name);
+        });
+        // 导出资料
+        let exportData = this.dataMatching(exportColumn, data);
+        exportJson2Excel(exportHeader, exportData, this.getFileName, undefined, undefined);
+        // 改回来page size
+        this.listQuery.page_size = 20;
+    }
+
+    /**导出资料合并 */
+    dataMatching(filterKeys: any, listData: any) {
+        return listData.map((data: any) =>
+            filterKeys.map((key: string) => {
+                if (key === "plat_id") {
+                    return this.tableData.columns["plat_id"].options[data.plat_id];
+                }
+                if (key === "is_credit_user") {
+                    return this.tableData.columns["is_credit_user"].options[data.is_credit_user];
+                }
+                return data[key];
+            })
+        );
+    }
+
+    // 导出挡案名
+    get getFileName() {
+        let fileFirstName: any = "";
+        let fileLastName: any = "";
+        let str: any = this.tableData.columns["plat_id"].options[this.listQuery.plat_id];
+        fileFirstName = LangUtil("平台用户[{0}]", str);
+        return `${fileFirstName}${fileLastName}`;
     }
 }
