@@ -25,8 +25,7 @@
             </el-table-column>
             <el-table-column :label="tableColumns['model_type'].name" prop="model_type" align="center">
                 <template slot-scope="{ row }">
-                    <div v-if="row.model_type != 2">{{ tableColumns["model_type"].options[row.model_type] }}</div>
-                    <el-button v-else type="text" @click="handleDownloadTemplate(row.template_uri_url)">{{ tableColumns["model_type"].options[row.model_type] }}</el-button>
+                    <div>{{ tableColumns["model_type"].options[row.model_type] }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns['remark'].name" prop="remark" align="center"> </el-table-column>

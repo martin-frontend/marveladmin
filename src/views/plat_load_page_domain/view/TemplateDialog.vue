@@ -32,7 +32,7 @@
                 action="#"
                 :http-request="handleUpload"
                 :show-file-list="false"
-                accept=".gz"
+                accept=".gz,.zip"
             >
                 <el-button size="small" type="primary">{{ LangUtil("上传自定义内容") }}</el-button>
             </el-upload>

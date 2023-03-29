@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="500px">
+    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="800px">
         <el-form
             ref="form"
             :rules="rules"
