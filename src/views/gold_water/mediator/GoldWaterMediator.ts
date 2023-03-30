@@ -41,7 +41,11 @@ export default class GoldWaterMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_gold_water_index:
-                myProxy.setTableData(body);
+                if (myProxy.tableData.isExportExcel) {
+                    myProxy.onExportExcel(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_gold_water_approved:
                 Message.success(<any>LangUtil("操作成功"));

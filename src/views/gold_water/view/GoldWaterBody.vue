@@ -38,10 +38,14 @@
                     {{ tableColumns["type"].options[row.type] }}
                 </template>
             </el-table-column>
+            <el-table-column :label="tableColumns.coin_name_unique.name" class-name="status-col" min-width="100px" prop="coin_name_unique">
+            </el-table-column>
             <el-table-column :label="tableColumns.gold.name" class-name="status-col" min-width="100px">
                 <template slot-scope="{ row }">
                     {{ row.gold }}
                 </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns.scale.name" class-name="status-col" min-width="100px" prop="scale">
             </el-table-column>
             <el-table-column :label="tableColumns.water_multiple.name" class-name="status-col" min-width="100px">
                 <template slot-scope="{ row }">

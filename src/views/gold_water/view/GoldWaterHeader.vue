@@ -16,6 +16,25 @@
                 :options="tableColumns['status'].options"
                 v-model="listQuery.status"
             />
+            <SearchSelect
+                :title="tableColumns['type'].name"
+                :options="tableColumns['type'].options"
+                v-model="listQuery.type"
+            />
+            <SearchRange
+                :title="tableColumns.water_multiple.name"
+                min="0"
+                max="9999999"
+                :minValue.sync="listQuery['water_multiple-{>=}']"
+                :maxValue.sync="listQuery['water_multiple-{<=}']"
+                :placeholders="[LangUtil('最小'), LangUtil('最大')]"
+            />
+            <SearchDatePicker
+                :title="tableColumns.created_at.name"
+                :startDate.sync="listQuery['created_at-{>=}']"
+                :endDate.sync="listQuery['created_at-{<=}']"
+                :showTime="true"
+            />
             <div>
                 <el-button @click="handlerSearch()" class="item" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")
@@ -23,6 +42,7 @@
                 <el-button @click="handlerReset()" class="item" type="primary" icon="el-icon-refresh">{{
                     LangUtil("重置")
                 }}</el-button>
+                <el-button @click="heandlerExport()" type="primary">{{ LangUtil("导出") }}</el-button>
             </div>
         </div>
     </div>
@@ -38,12 +58,14 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import SearchSelect from "@/components/SearchSelect.vue";
 import SearchInput from "@/components/SearchInput.vue";
 import SearchRange from "@/components/SearchRange.vue";
+import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
     components: {
         SearchSelect,
         SearchInput,
         SearchRange,
+        SearchDatePicker,
     },
 })
 export default class GoldWaterHeader extends AbstractView {
@@ -64,6 +86,10 @@ export default class GoldWaterHeader extends AbstractView {
 
     handlerReset() {
         this.myProxy.resetListQuery();
+    }
+
+    heandlerExport() {
+        this.myProxy.onQueryAll();
     }
 }
 </script>
