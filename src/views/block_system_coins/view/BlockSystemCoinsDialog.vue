@@ -1,6 +1,6 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
-        <el-form ref="form" :rules="rules" :model="form" label-width="60px" v-loading="net_status.loading">
+        <el-form ref="form" :rules="rules" :model="form" label-width="105px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.coin_name.name" prop="coin_name">
                 <el-input v-model="form.coin_name"></el-input>
             </el-form-item>
@@ -10,7 +10,17 @@
             <el-form-item :label="tableColumns.icon.name" prop="icon">
                 <el-input v-model="form.icon"></el-input>
             </el-form-item>
-
+            <el-form-item :label="tableColumns.is_digital_currency.name" prop="is_digital_currency">
+                <el-radio-group v-model="form.is_digital_currency">
+                    <el-radio
+                        v-for="(value, key) in tableColumns.is_digital_currency.options"
+                        :key="key"
+                        :label="Number(key)"
+                    >
+                        {{ value }}
+                    </el-radio>
+                </el-radio-group>
+            </el-form-item>
             <el-form-item :label="tableColumns.remark.name" prop="remark">
                 <el-input v-model="form.remark"></el-input>
             </el-form-item>

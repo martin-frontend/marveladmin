@@ -45,27 +45,6 @@
             <el-form-item size="mini" :label="tableColumns['visitor_allowed'].name" prop="visitor_allowed">
                 <el-switch v-model="form.visitor_allowed" :active-value="1" :inactive-value="98"></el-switch>
             </el-form-item>
-            <!-- 结算币种 -->
-            <el-form-item
-                size="mini"
-                :label="tableColumns['settle_coin_name_unique'].name"
-                prop="settle_coin_name_unique"
-            >
-                <el-select
-                    v-model="form.settle_coin_name_unique"
-                    clearable
-                    filterable
-                    class="select"
-                    :placeholder="LangUtil('请选择')"
-                >
-                    <el-option
-                        v-for="(value, key) in tableColumns.settle_coin_name_unique.options"
-                        :key="key"
-                        :label="value"
-                        :value="key"
-                    ></el-option>
-                </el-select>
-            </el-form-item>
             <!-- 系统参数id -->
             <el-form-item :label="tableColumns.proxy_key.name" prop="proxy_key">
                 <el-select v-model="form.proxy_key" filterable class="select" :placeholder="LangUtil('必须选择')">
@@ -109,12 +88,33 @@
             <el-form-item size="mini" :label="tableColumns['url_update_balance'].name" prop="url_update_balance">
                 <el-input v-model="form.url_update_balance" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
+            <!-- 结算币种 -->
+            <el-form-item
+                size="mini"
+                :label="tableColumns['settle_coin_name_unique'].name"
+                prop="settle_coin_name_unique"
+            >
+                <el-select
+                    v-model="form.settle_coin_name_unique"
+                    clearable
+                    filterable
+                    class="select"
+                    :placeholder="LangUtil('请选择')"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns.settle_coin_name_unique.options"
+                        :key="key"
+                        :label="value"
+                        :value="key"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
             <!-- 钱包类型 -->
             <el-form-item :label="tableColumns.vendor_wallet_type.name" prop="vendor_wallet_type">
                 <el-select
                     v-model="form.vendor_wallet_type"
                     filterable
-                    class="select"
+                    class="select mr-2"
                     :placeholder="LangUtil('必须选择')"
                 >
                     <el-option
@@ -124,7 +124,38 @@
                         :value="Number(key)"
                     ></el-option>
                 </el-select>
+                <el-button type="primary" @click="handleAddCoin()">{{ LangUtil("添加币种") }}</el-button>
             </el-form-item>
+            <div class="table">
+                <el-table :data="list.list" border style="width: 100%" v-loading="net_status.loading">
+                    <el-table-column
+                        prop="coin_name_unique"
+                        :label="tableColumns['coin_name_unique'].name"
+                        align="center"
+                    ></el-table-column>
+                    <el-table-column
+                        prop="is_digital_currency"
+                        :label="tableColumns['is_digital_currency'].name"
+                        align="center"
+                    >
+                        <template slot-scope="{ row }">
+                            <div>{{ tableColumns.is_digital_currency.options[row.is_digital_currency] }}</div>
+                        </template></el-table-column
+                    >
+                    <el-table-column
+                        prop="vendor_coin_name_unique"
+                        :label="tableColumns['vendor_coin_name_unique'].name"
+                        align="center"
+                    ></el-table-column>
+                    <el-table-column :label="LangUtil('操作')" class-name="status-col" width="150px">
+                        <template slot-scope="{ row }">
+                            <el-button size="mini" type="primary" @click="handleEditCoin(row)">
+                                {{ LangUtil("编辑") }}
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
             <el-form-item size="mini" :label="tableColumns['extends'].name" prop="extends">
                 <!-- <el-input type="textarea" v-model="form.extends" placeholder="接入厂商所需配置"></el-input> -->
                 <div class="editor-container">
@@ -195,6 +226,7 @@ export default class VendorDialog extends AbstractView {
     myProxy: VendorProxy = this.getProxy(VendorProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
+    list = this.myProxy.coinList;
     form = this.myProxy.dialogData.form;
 
     textMap = {
@@ -247,9 +279,23 @@ export default class VendorDialog extends AbstractView {
     handleDelete() {
         this.myProxy.onDelete(this.form.vendor_id);
     }
+
+    handleAddCoin() {
+        this.myProxy.showCoinDialog(DialogStatus.create);
+    }
+
+    handleEditCoin(data: any) {
+        this.myProxy.showCoinDialog(DialogStatus.update, data);
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.mr-2 {
+    margin-right: 8px;
+}
+.table {
+    margin: 16px 0;
+}
 </style>

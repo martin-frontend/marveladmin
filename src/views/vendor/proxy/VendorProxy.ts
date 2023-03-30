@@ -38,6 +38,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             created_by: { name: "", options: {} },
             cron_id: { name: '定时任务编号', options: {} },
             extends: { name: "", options: {} },
+            extends_coin: { name: '厂商币种映射', options: {} },
             is_delete: { name: "", options: {} },
             status: { name: "", options: {} },
             updated_at: { name: "", options: {} },
@@ -58,10 +59,20 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             vendor_wallet_type: { name: "", options: {} },
             settle_coin_name_unique: { name: "", options: {} },
             visitor_allowed: { name: '游客登录', options: {} },
+            coin_name_unique: { name: '可配置币种', options: {} },
+            is_digital_currency: { name: '币种类型', options: {} },
+            coin_tag: { name: '币种前缀' },
+            vendor_coin_name_unique: { name: '厂商币种编号' },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
+
+    /**币种数据 */
+    coinList = {
+        list: <any>[],
+    };
+
     /**查询条件 */
     listQuery = {
         settle_coin_name_unique: "",
@@ -98,6 +109,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             vendor_wallet_type: "",
             settle_coin_name_unique: "",
             visitor_allowed: 98,
+            extends_coin: "",
         },
         formSource: null, // 表单的原始数据
         // 扩展数据
@@ -105,6 +117,16 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         betCodeContentData: {},
         betResultContentData: {},
     };
+    /**支持币种相关数据 */
+    dialogCoinData = {
+        bShow: false,
+        status: DialogStatus.create,
+        form: {
+            coin_name_unique: "",
+            vendor_coin_name_unique: "",
+        },
+        formSource: null, // 表单的原始数据
+    }
     /**测试弹窗 */
     testDialogData = {
         bShow: false,
@@ -131,6 +153,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         this.dialogData.extendsData = jsonToObject(data.extends);
         this.dialogData.betCodeContentData = jsonToObject(data.bet_code_content);
         this.dialogData.betResultContentData = jsonToObject(data.bet_result_content);
+        this.coinList.list = JSON.parse(JSON.stringify(data.extends_coin));
         Object.assign(this.dialogData.form, data);
     }
 
@@ -190,12 +213,19 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             vendor_wallet_type: 1,
             settle_coin_name_unique: "",
             visitor_allowed: 98,
+            extends_coin: "",
         });
         this.dialogData.extendsData = {};
         this.dialogData.betCodeContentData = {};
         this.dialogData.betResultContentData = {};
     }
-
+    /**重置币种弹窗表单 */
+    resetCoinDialogForm() {
+        Object.assign(this.dialogCoinData.form, {
+            coin_name_unique: "",
+            vendor_coin_name_unique: "",
+        });
+    }
     /**查询 */
     onQuery() {
         this.sendNotification(HttpType.admin_vendor_index, objectRemoveNull(this.listQuery));
@@ -245,6 +275,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         formCopy.extends = jsonStringify(this.dialogData.extendsData);
         formCopy.bet_code_content = jsonStringify(this.dialogData.betCodeContentData);
         formCopy.bet_result_content = jsonStringify(this.dialogData.betResultContentData);
+        formCopy.extends_coin = jsonStringify(this.coinList.list);
         this.sendNotification(HttpType.admin_vendor_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
@@ -252,6 +283,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         this.dialogData.form.extends = jsonStringify(this.dialogData.extendsData);
         this.dialogData.form.bet_code_content = jsonStringify(this.dialogData.betCodeContentData);
         this.dialogData.form.bet_result_content = jsonStringify(this.dialogData.betResultContentData);
+        this.dialogData.form.extends_coin = jsonStringify(this.coinList.list);
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
         // 如果没有修改，就直接关闭弹窗
         if (Object.keys(formCopy).length == 0) {
@@ -281,5 +313,22 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             vendor_id: this.testDialogData.form.vendor_id,
             value: value,
         });
+    }
+    /**添加币种数据 */
+    showCoinDialog(status: string, data?: any) {
+        this.dialogCoinData.bShow = true;
+        this.dialogCoinData.status = status;
+
+        if (status == DialogStatus.update) {
+            this.dialogCoinData.formSource = data;
+            Object.assign(this.dialogCoinData.form, JSON.parse(JSON.stringify(data)));
+        } else {
+            this.resetCoinDialogForm();
+            this.dialogCoinData.formSource = null;
+        }
+    }
+    /**隐藏币种弹窗 */
+    hideCoinDialog() {
+        this.dialogCoinData.bShow = false;
     }
 }

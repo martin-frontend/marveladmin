@@ -31,6 +31,14 @@
                     {{ tableColumns.coin_name_unique.options[row.coin_name_unique] }}
                 </template>
             </el-table-column>
+            <el-table-column
+                prop="is_digital_currency"
+                :label="`${tableColumns.is_digital_currency.name}`"
+                class-name="status-col"
+                ><template slot-scope="{ row }">
+                    <div>{{ tableColumns.is_digital_currency.options[row.is_digital_currency] }}</div>
+                </template>
+            </el-table-column>
             <el-table-column prop="type" :label="`${tableColumns.type.name}`" class-name="status-col" min-width="30px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.type.options[row.type] }}

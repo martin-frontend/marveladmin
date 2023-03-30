@@ -41,6 +41,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             icon: { name: "图片", options: {} },
             icon_url: { name: "图片", options: {} },
             coin_tag: { name: "三方游戏用户前缀", options: {} },
+            is_digital_currency: { name: '币种类型', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -60,6 +61,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             coin_name_unique: "",
             remark: "",
             icon: "",
+            is_digital_currency: "",
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -113,6 +115,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             coin_name_unique: "",
             remark: "",
             icon: "",
+            is_digital_currency: 0,
         });
     }
 
@@ -128,6 +131,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             coin_name_unique: form.coin_name_unique,
             remark: form.remark,
             icon: form.icon,
+            is_digital_currency: form.is_digital_currency,
         };
         this.sendNotification(HttpType.admin_block_system_coins_store, objectRemoveNull(formCopy));
     }
@@ -156,6 +160,6 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             .then(() => {
                 this.sendNotification(HttpType.admin_block_system_coins_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 }

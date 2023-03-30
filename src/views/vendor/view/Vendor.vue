@@ -4,6 +4,7 @@
         <VendorHeader />
         <VendorBody />
         <VendorTestDialog />
+        <VendorCoinDialog />
     </div>
 </template>
 
@@ -15,6 +16,7 @@ import VendorDialog from "./VendorDialog.vue";
 import VendorHeader from "./VendorHeader.vue";
 import VendorBody from "./VendorBody.vue";
 import VendorTestDialog from "./components/VendorTestDialog.vue";
+import VendorCoinDialog from "./components/VendorCoinDialog.vue";
 
 @Component({
     components: {
@@ -22,6 +24,7 @@ import VendorTestDialog from "./components/VendorTestDialog.vue";
         VendorHeader,
         VendorBody,
         VendorTestDialog,
+        VendorCoinDialog,
     },
 })
 export default class Vendor extends AbstractView {

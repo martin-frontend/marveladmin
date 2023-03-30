@@ -46,13 +46,14 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             scale: { name: "比例", options: {} },
             show_scale: { name: '显示比例', options: {} },
             languages: { name: "语言", options: {} },
+            is_digital_currency: { name: '币种类型', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
     /**查询条件 */
     listQuery = {
-        plat_id: null,
+        plat_id: "",
         page_count: 1,
         page_size: 20,
     };
@@ -64,6 +65,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             id: null,
             plat_id: <any>null,
             coin_name_unique: null,
+            is_digital_currency: 1,
             can_play_game: null,
             is_display: null,
             remark: null,
@@ -85,7 +87,12 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        this.onQuery();
+        const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
+        if (plat_id_options_keys.length > 0) {
+            if (!plat_id_options_keys.includes(this.listQuery.plat_id))
+                this.listQuery.plat_id = plat_id_options_keys[0];
+            this.onQuery();
+        }
     }
     /**表格数据 */
     setTableData(data: any) {
@@ -131,13 +138,14 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             id: null,
             plat_id: <any>null,
             coin_name_unique: null,
-            can_play_game: null,
-            is_display: null,
+            can_play_game: 1,
+            is_digital_currency: 1,
+            is_display: 1,
             remark: null,
             game_scale: 1,
             type: null,
-            scale: null,
-            show_scale: null,
+            scale: 1,
+            show_scale: 1,
             languages: <any>[],
         });
     }
@@ -153,6 +161,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             plat_id: form.plat_id,
             coin_name_unique: form.coin_name_unique,
             can_play_game: form.can_play_game,
+            is_digital_currency: form.is_digital_currency,
             is_display: form.is_display,
             remark: form.remark,
             game_scale: form.game_scale,

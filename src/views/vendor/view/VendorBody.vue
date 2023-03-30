@@ -52,6 +52,21 @@
                 width="100px"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    {{ row.settle_coin_name_unique || "-" }}
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns['extends_coin'].name"
+                prop="extends_coin"
+                width="100px"
+                align="center"
+            >
+                <template slot-scope="{ row }">
+                    <span v-for="(item, index) of row.extends_coin" :key="index">
+                        {{ item.coin_name_unique }} <span v-if="index != row.extends_coin.length - 1">/</span>
+                    </span>
+                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns['proxy_key'].name"
