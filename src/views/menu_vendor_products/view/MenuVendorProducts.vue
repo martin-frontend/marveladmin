@@ -4,6 +4,7 @@
         <MenuVendorProductsSortDialog v-if="myProxy.sortDialogData.bShow" />
         <MenuVendorProductsHeader />
         <MenuVendorProductsBody />
+        <MenuVendorProductsLanguagesDialog />
     </div>
 </template>
 
@@ -16,6 +17,7 @@ import MenuVendorProductsDialog from "./MenuVendorProductsDialog.vue";
 import MenuVendorProductsHeader from "./MenuVendorProductsHeader.vue";
 import MenuVendorProductsBody from "./MenuVendorProductsBody.vue";
 import MenuVendorProductsSortDialog from "./MenuVendorProductsSortDialog.vue";
+import MenuVendorProductsLanguagesDialog from "./MenuVendorProductsLanguagesDialog.vue";
 
 @Component({
     components: {
@@ -23,6 +25,7 @@ import MenuVendorProductsSortDialog from "./MenuVendorProductsSortDialog.vue";
         MenuVendorProductsHeader,
         MenuVendorProductsBody,
         MenuVendorProductsSortDialog,
+        MenuVendorProductsLanguagesDialog,
     },
 })
 export default class MenuVendorProducts extends AbstractView {

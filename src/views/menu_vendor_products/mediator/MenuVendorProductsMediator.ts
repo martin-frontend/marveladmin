@@ -60,6 +60,7 @@ export default class MenuVendorProductsMediator extends AbstractMediator {
             case EventType.admin_menu_vendor_products_update:
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
+                myProxy.hideLanguagesDialog();
                 myProxy.onQuery();
                 break;
             case EventType.admin_resource_upload:

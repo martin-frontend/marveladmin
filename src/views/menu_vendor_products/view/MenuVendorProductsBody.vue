@@ -8,6 +8,9 @@
             style="width: 100%"
             size="mini"
             v-loading="net_status.loading"
+            :header-cell-style="{
+                'text-align': 'center',
+            }"
         >
             <el-table-column
                 prop="plat_id"
@@ -73,6 +76,16 @@
                 <template slot-scope="{ row }">
                     <span v-if="row.menu_icon_url[0] == ''">-</span>
                     <img v-else :src="row.menu_icon_url" class="pic" />
+                </template>
+            </el-table-column>
+            <el-table-column aling="left" :label="tableColumns['languages'].name" prop="languages">
+                <template slot-scope="{ row }">
+                    <el-tag v-for="item of row.languages" :key="item">{{
+                        tableColumns["languages"].options[item]
+                    }}</el-tag>
+                    <el-button class="item ml-1" type="primary" size="mini" @click="onUpdateLanguages(row)">{{
+                        LangUtil("编辑")
+                    }}</el-button>
                 </template>
             </el-table-column>
             <el-table-column
@@ -214,6 +227,10 @@ export default class MenuVendorProductsBody extends AbstractView {
             },
         });
     }
+
+    onUpdateLanguages(row: any) {
+        this.myProxy.showLanguagesDialog(DialogStatus.update, row);
+    }
 }
 </script>
 
@@ -225,5 +242,8 @@ export default class MenuVendorProductsBody extends AbstractView {
 .pic {
     max-width: 135px;
     max-height: 135px;
+}
+.ml-1 {
+    margin-left: 12px;
 }
 </style>

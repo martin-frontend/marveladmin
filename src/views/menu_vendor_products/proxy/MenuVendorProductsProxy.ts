@@ -46,6 +46,7 @@ export default class MenuVendorProductsProxy extends AbstractProxy implements IM
             vendor_id: { name: '游戏厂商', options: {}, options_key: <any>{} },
             vendor_type: { name: '游戏类型', options: {} },
             vendor_id_option: {},
+            languages: { name: "", options: {} },
         },
         entrance_game_options: {},
         list: <any>[],
@@ -58,6 +59,7 @@ export default class MenuVendorProductsProxy extends AbstractProxy implements IM
         page_size: 20,
         plat_id: "",
         vendor_type: "",
+        languages: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -80,6 +82,17 @@ export default class MenuVendorProductsProxy extends AbstractProxy implements IM
         },
         formSource: null, // 表单的原始数据
     };
+
+    /**弹窗相关数据 */
+    dialogLanguagesData = {
+        bShow: false,
+        status: DialogStatus.update,
+        form: <any>{
+            languages: [],
+        },
+        formSource: <any>null, // 表单的原始数据
+    };
+
     /**排序数据 */
     sortData = {
         id: null,
@@ -147,6 +160,7 @@ export default class MenuVendorProductsProxy extends AbstractProxy implements IM
             menu_icon: "",
             entrance_icon: "",
             vendor_icon: "",
+            languages: "",
         });
     }
 
@@ -163,13 +177,34 @@ export default class MenuVendorProductsProxy extends AbstractProxy implements IM
             this.dialogData.formSource = null;
         }
     }
+
+    /**显示弹窗 */
+    showLanguagesDialog(status: string, data?: any) {
+        this.dialogLanguagesData.bShow = true;
+
+        if (status == DialogStatus.update) {
+            this.dialogLanguagesData.formSource = data;
+            Object.assign(this.dialogLanguagesData.form, JSON.parse(JSON.stringify(data)));
+        } else {
+            this.dialogLanguagesData.form.languages = [];
+            this.dialogLanguagesData.formSource = null;
+        }
+    }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
     }
+
+    /**隐藏弹窗 */
+    hideLanguagesDialog() {
+        this.dialogLanguagesData.bShow = false;
+    }
+
     hideSortDialog() {
         this.sortDialogData.bShow = false;
     }
+
     showSort() {
         const { plat_id } = this.listQuery;
         this.sendNotification(HttpType.admin_plat_show, objectRemoveNull({ id: plat_id }));
@@ -311,5 +346,16 @@ export default class MenuVendorProductsProxy extends AbstractProxy implements IM
         const { plat_id } = this.listQuery;
         let menu_order = JSON.stringify(list);
         this.sendNotification(HttpType.admin_plat_update, { id: plat_id, menu_order: menu_order });
+    }
+
+    /**更新数据 */
+    onUpdateLanguages(id: any) {
+        const formCopy: any = formCompared(this.dialogLanguagesData.form, this.dialogLanguagesData.formSource);
+        if (Object.keys(formCopy).length == 0) {
+            this.dialogLanguagesData.bShow = false;
+            return false;
+        }
+        formCopy.id = id;
+        this.sendNotification(HttpType.admin_menu_vendor_products_update, formCopy);
     }
 }
