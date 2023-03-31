@@ -88,6 +88,13 @@
 
             <el-table-column :label="LangUtil('操作')" align="center" width="320px">
                 <template slot-scope="{ row }">
+                    <el-button
+                        type="primary"
+                        size="small"
+                        @click="showStatus(row.vendor_gold_log_id)"
+                    >
+                        {{ LangUtil("交易状态") }}
+                    </el-button>
                     <div v-if="checkUnique(unique.plat_users_vendor_gold_log_update_manual) && row.status === 1">
                         <el-button type="primary" size="small" @click="handlerAutoCheck(row.vendor_gold_log_id)">{{
                             buttonParam.check
@@ -105,7 +112,6 @@
                             >{{ buttonParam.success }}</el-button
                         >
                     </div>
-                    <div v-else>-</div>
                 </template>
             </el-table-column>
         </el-table>
@@ -169,6 +175,10 @@ export default class PlatUsersVendorGoldLogBody extends AbstractView {
     // 打开用户详情
     showUserDetail(user_id: number) {
         this.myProxy.onShowUserDetail(user_id);
+    }
+
+    showStatus(vendor_gold_log_id: any) {
+        this.myProxy.admin_plat_users_vendor_gold_log_status(vendor_gold_log_id);
     }
 }
 </script>

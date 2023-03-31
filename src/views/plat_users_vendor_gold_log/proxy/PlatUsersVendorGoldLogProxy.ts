@@ -54,8 +54,8 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
             scale: { name: "游戏比率", options: {} },
             gold_scale: { name: "金额[乘比率后]", options: {} },
             username: { name: "用户账号", options: {} },
-            exchange_scale: { name: '代币转换比率', options: {} },
-            target_coin_name_unique: { name: '目标币种', options: {} },
+            exchange_scale: { name: "代币转换比率", options: {} },
+            target_coin_name_unique: { name: "目标币种", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -86,6 +86,11 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
         title: "",
         status: "",
         vendor_gold_log_id: "",
+    };
+
+    statusDialog = {
+        bShow: false,
+        form: <any>{},
     };
 
     /**设置表头数据 */
@@ -137,11 +142,15 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
 
     /**更新数据 */
     onUpdate() {
-        MessageBox.confirm(<string>LangUtil("确认此下分/上分记录处理为 {0} 吗？处理后无法修改。", this.confirmData.title), <string>LangUtil("提示"), {
-            confirmButtonText: <string>LangUtil("确定"),
-            cancelButtonText: <string>LangUtil("取消"),
-            type: "warning",
-        })
+        MessageBox.confirm(
+            <string>LangUtil("确认此下分/上分记录处理为 {0} 吗？处理后无法修改。", this.confirmData.title),
+            <string>LangUtil("提示"),
+            {
+                confirmButtonText: <string>LangUtil("确定"),
+                cancelButtonText: <string>LangUtil("取消"),
+                type: "warning",
+            }
+        )
             .then(() => {
                 const { vendor_gold_log_id, status } = this.confirmData;
                 this.sendNotification(HttpType.admin_plat_users_vendor_gold_log_update_manual, {
@@ -149,7 +158,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
                     status,
                 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**用户详情 */
@@ -210,5 +219,15 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
     /**检测错误 */
     admin_plat_users_vendor_gold_log_auto_check(vendor_gold_log_id: any) {
         this.sendNotification(HttpType.admin_plat_users_vendor_gold_log_auto_check, { vendor_gold_log_id });
+    }
+
+    /**交易狀態 */
+    admin_plat_users_vendor_gold_log_status(vendor_gold_log_id: any) {
+        this.sendNotification(HttpType.admin_plat_users_vendor_gold_log_status, { vendor_gold_log_id });
+    }
+
+    showStatusDialog(data: any) {
+        this.statusDialog.bShow = true;
+        this.statusDialog.form = data;
     }
 }
