@@ -26,7 +26,7 @@ export default class MenuVendorProductsProxy extends AbstractProxy implements IM
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             alias: { name: '别名', options: {} },
             created_at: { name: '创建时间', options: {} },
             created_by: { name: '创建人', options: {} },
@@ -46,6 +46,7 @@ export default class MenuVendorProductsProxy extends AbstractProxy implements IM
             vendor_id: { name: '游戏厂商', options: {}, options_key: <any>{} },
             vendor_type: { name: '游戏类型', options: {} },
             vendor_id_option: {},
+            vendor_id_options_key: {},
             languages: { name: "", options: {} },
         },
         entrance_game_options: {},
@@ -109,26 +110,48 @@ export default class MenuVendorProductsProxy extends AbstractProxy implements IM
         //首页设定选取平台第一个与游戏类型第一个
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         const vendor_type_options_keys = Object.keys(this.tableData.columns.vendor_type.options);
-        const vendor_id_options_keys = Object.keys(this.tableData.columns.vendor_id.options_key);
         if (plat_id_options_keys.length > 0 && vendor_type_options_keys.length > 0) {
+            //平台选取
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
                 this.listQuery.plat_id = plat_id_options_keys[0];
             }
+            //游戏类型选取
             if (!vendor_type_options_keys.includes(this.listQuery.vendor_type)) {
                 this.listQuery.vendor_type = vendor_type_options_keys[0];
             }
             this.onQuery();
         }
-        //新增 Dialog 设定游戏类型第一个
+        //表单设定游戏类型第一个
         if (vendor_type_options_keys.length > 0) {
             this.dialogData.form.vendor_type = Number(vendor_type_options_keys[0]);
             if (this.dialogData.form.vendor_type) {
-                this.tableData.columns.vendor_id_option = this.tableData.columns.vendor_id.options_key[
-                    this.dialogData.form.vendor_type
-                ];
-                const vendor_id_options_keys = Object.keys(this.tableData.columns.vendor_id_option);
-                this.dialogData.form.vendor_id = Number(vendor_id_options_keys[0]);
+                //依选定平台设定游戏厂商
+                this.tableData.columns.vendor_id_option = this.tableData.columns.vendor_id.options_key[this.listQuery.plat_id];
+                //依选定游戏类型设定游戏厂商
+                this.tableData.columns.vendor_id_options_key = this.tableData.columns.vendor_id_option[this.dialogData.form.vendor_type];
             }
+        }
+    }
+
+    /**更换平台切换游戏资料 */
+    changePlat() {
+        const vendor_type_options_keys = Object.keys(this.tableData.columns.vendor_type.options);
+        //表单设定游戏类型第一个
+        if (vendor_type_options_keys.length > 0) {
+            this.dialogData.form.vendor_type = Number(vendor_type_options_keys[0]);
+            if (this.dialogData.form.vendor_type) {
+                //依平台与游戏类型设定游戏厂商
+                this.tableData.columns.vendor_id_option = this.tableData.columns.vendor_id.options_key[this.listQuery.plat_id];
+                this.tableData.columns.vendor_id_options_key = this.tableData.columns.vendor_id_option[this.dialogData.form.vendor_type];
+            }
+        }
+    }
+    //更换游戏类型切换对应游戏厂商
+    changeVendorType() {
+        if (this.dialogData.form.vendor_type) {
+            //依平台与游戏类型设定游戏厂商
+            this.tableData.columns.vendor_id_option = this.tableData.columns.vendor_id.options_key[this.listQuery.plat_id];
+            this.tableData.columns.vendor_id_options_key = this.tableData.columns.vendor_id_option[this.dialogData.form.vendor_type];
         }
     }
 

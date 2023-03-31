@@ -27,7 +27,7 @@
                     @change="onChangeVendorId()"
                 >
                     <el-option
-                        v-for="(value, key) in tableColumns.vendor_id_option"
+                        v-for="(value, key) in tableColumns.vendor_id_options_key"
                         :key="key"
                         :label="value"
                         :value="Number(key)"
@@ -296,6 +296,7 @@ export default class MenuVendorProductsDialog extends AbstractView {
                 this.form.vendor_type
             ];
         }
+        this.myProxy.changeVendorType();
     }
 
     private onChangeVendorId() {
@@ -391,9 +392,6 @@ export default class MenuVendorProductsDialog extends AbstractView {
     handlePictureCardPreviewEntrance() {
         GlobalVar.preview_image.url = this.form.entrance_icon_url[0];
     }
-
-    //更换游戏类型切换对应游戏厂商
-    changeVendorType() {}
 }
 </script>
 

@@ -5,7 +5,10 @@
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
-                @change="handlerSearch"
+                @change="
+                    handlerSearch();
+                    changePlat();
+                "
                 :clearable="false"
             />
             <div>
@@ -64,6 +67,11 @@ export default class MenuVendorProductsHeader extends AbstractView {
     handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
+    }
+
+    //更换平台切换游戏资料
+    changePlat() {
+        this.myProxy.changePlat();
     }
 
     private handlerCreate() {
