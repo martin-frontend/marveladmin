@@ -143,6 +143,11 @@
                         </template></el-table-column
                     >
                     <el-table-column
+                        prop="coin_tag"
+                        :label="tableColumns['coin_tag'].name"
+                        align="center"
+                    ></el-table-column>
+                    <el-table-column
                         prop="vendor_coin_name_unique"
                         :label="tableColumns['vendor_coin_name_unique'].name"
                         align="center"

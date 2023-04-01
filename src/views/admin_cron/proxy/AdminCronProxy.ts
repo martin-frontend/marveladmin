@@ -47,6 +47,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             name: { name: "任务名称", options: {} },
             status: { name: "是否开启", options: {} },
             timeout: { name: "超时时间", options: {} },
+            type: { name: '类型', options: {} },
             next_run_date: { name: "预计执行时间", options: {} },
             updated_at: { name: "更新时间", options: {} },
             updated_by: { name: "更新人", options: {} },
@@ -120,6 +121,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             desc: "",
             is_ordered_exec: "0",
             status: "0",
+            type: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -265,6 +267,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             desc: "",
             is_ordered_exec: 1,
             status: 1,
+            type: "",
         });
         Object.assign(this.cronQueueBatchDialogData.form, {
             // TODO
@@ -298,7 +301,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
 
     /**定时任务 添加数据 */
     onAdd() {
-        const { frequency, name, content, timeout, desc, is_ordered_exec, status } = this.cronDialogData.form;
+        const { frequency, name, content, timeout, desc, is_ordered_exec, status, type } = this.cronDialogData.form;
         const formCopy: any = {
             // TODO
             frequency,
@@ -308,6 +311,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             desc,
             is_ordered_exec,
             status,
+            type,
         };
         this.sendNotification(HttpType.admin_admin_cron_store, objectRemoveNull(formCopy));
     }
@@ -364,7 +368,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             .then(() => {
                 this.sendNotification(HttpType.admin_admin_cron_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**tabs 切换 */

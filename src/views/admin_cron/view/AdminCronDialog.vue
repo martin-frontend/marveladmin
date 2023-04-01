@@ -1,9 +1,20 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.cronDialogData.bShow" width="550px">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
-            <!-- 任务平率  -->
+            <!-- 任务频率  -->
             <el-form-item :label="tableColumns.frequency.name" prop="frequency">
                 <el-input type="text" v-model="listQuery.frequency"></el-input>
+            </el-form-item>
+            <!-- 类型  -->
+            <el-form-item :label="tableColumns.type.name" prop="type">
+                <el-select v-model="form.type" filterable :placeholder="LangUtil('请选择')">
+                    <el-option
+                        v-for="(item, key) of tableColumns.type.options"
+                        :key="key"
+                        :label="item"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
             </el-form-item>
             <!-- 任务名称 -->
             <el-form-item :label="tableColumns.name.name" prop="name">
@@ -102,6 +113,7 @@ export default class AdminCronDialog extends AbstractView {
             desc: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
             is_ordered_exec: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
             status: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
+            type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "blur" }],
         };
     }
 
