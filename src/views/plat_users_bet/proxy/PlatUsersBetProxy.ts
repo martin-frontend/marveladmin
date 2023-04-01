@@ -318,6 +318,15 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             bet_result: {
                 name: "下注结果",
             },
+            league: {
+                name: "联赛",
+            },
+            market_type_text: {
+                name: "盘口",
+            },
+            odds: {
+                name: "赔率",
+            },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -526,7 +535,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     /**详细数据 */
     setDetail(data: any) {
         const { nick_name } = this.dialogData.form;
-        if(data.game_info) {
+        if (data.game_info) {
             data.game_info = JSON.parse(data.game_info);
         }
         Object.assign(this.dialogData, {
@@ -584,6 +593,10 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         "bet_at",
         "settlement_at",
         "pull_at",
+        "league",
+        "bet_code",
+        "market_type_text",
+        "odds",
         "bet_gold",
         "valid_bet_gold",
         "water",
@@ -610,6 +623,10 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         let summary = this.addSummary(data);
         summary.map((element: any) => {
             element.win_gold = Number(element.win_gold) > 0 ? `+${element.win_gold}` : element.win_gold;
+            element.market_type_text = element.vendor_type == 64 ? element.market_type_text : `-`;
+            element.odds = element.vendor_type == 64 ? element.odds : `-`;
+            element.league = element.vendor_type == 64 ? element.league : `-`;
+            element.bet_code = element.bet_code ? element.bet_code : `-`;
         });
 
         new BaseInfo.ExportExcel(
