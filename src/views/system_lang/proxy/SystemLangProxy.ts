@@ -252,7 +252,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             .then(() => {
                 this.sendNotification(HttpType.admin_system_lang_delete, { id });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     onQueryAll() {
@@ -316,5 +316,9 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
 
     generate(): void {
         this.sendNotification(HttpType.admin_system_lang_generate);
+    }
+
+    translateAllLang() {
+        this.sendNotification(HttpType.admin_system_lang_translate_all_error_lang);
     }
 }
