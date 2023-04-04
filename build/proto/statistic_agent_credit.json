@@ -6,6 +6,12 @@
         "admin/statistic_credit/table_columns",
         "admin/statistic_agent_credit/index",
         "admin/statistic_agent_credit/user/show",
-        "admin/statistic_agent_credit/user/update"
+        "admin/statistic_agent_credit/user/update",
+        "admin/credit_dividend_period/table_columns",
+        "admin/credit_dividend_period/index",
+        "admin/credit_dividend_period/show/{id}",
+        "admin/credit_dividend_period/store",
+        "admin/credit_dividend_period/update/{id}",
+        "admin/credit_dividend_period/delete/{id}"
     ]
 }

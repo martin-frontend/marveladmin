@@ -83,6 +83,11 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
         formSource: null, // 表单的原始数据
     };
 
+    /**信用分红期管理 */
+    manageDialogData = {
+        bShow: false,
+    }
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -118,6 +123,8 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
         sumData.record_count = data.record_count;
         sumData.valid_bet_gold = data.valid_bet_gold.toString();
         sumData.win_gold = data.win_gold.toString();
+        sumData.contribute_to_the_company = data.contribute_to_the_company.toString();
+        sumData.amount_to_the_company = data.amount_to_the_company.toString();
         return sumData;
     }
     /**详细数据 */
@@ -249,5 +256,9 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
     /**显示用户详情 */
     showUserDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
+    }
+
+    showManageDialog() {
+        this.manageDialogData.bShow = true;
     }
 }

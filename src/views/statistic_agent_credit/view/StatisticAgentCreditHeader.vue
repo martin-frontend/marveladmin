@@ -53,14 +53,19 @@
                 </el-select>
             </div>
             <!-- 搜索、重置 按钮 -->
-            <div>
-                <el-button @click="handlerSearch" type="primary" icon="el-icon-search" class="item">{{
-                    LangUtil("查询")
+            <div class="button-group">
+                <div>
+                    <el-button @click="handlerSearch" type="primary" icon="el-icon-search" class="item">{{
+                        LangUtil("查询")
+                    }}</el-button>
+                    <el-button @click="handlerReset" type="primary" icon="el-icon-refresh" class="item">{{
+                        LangUtil("重置")
+                    }}</el-button>
+                    <el-button @click="handlerFilter" type="primary" class="item">{{ LangUtil("用户筛选") }}</el-button>
+                </div>
+                <el-button @click="handlerManage" type="primary" class="item">{{
+                    LangUtil("信用分红期管理")
                 }}</el-button>
-                <el-button @click="handlerReset" type="primary" icon="el-icon-refresh" class="item">{{
-                    LangUtil("重置")
-                }}</el-button>
-                <el-button @click="handlerFilter" type="primary" class="item">{{ LangUtil("用户筛选") }}</el-button>
             </div>
         </div>
     </div>
@@ -87,7 +92,6 @@ export default class StatisticAgentCreditHeader extends AbstractView {
     checkUnique = checkUnique;
     // proxy
     myProxy: StatisticAgentCreditProxy = this.getProxy(StatisticAgentCreditProxy);
-    // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
 
@@ -114,9 +118,18 @@ export default class StatisticAgentCreditHeader extends AbstractView {
     handlerFilter() {
         this.myProxy.showDialog();
     }
+
+    handlerManage() {
+        this.myProxy.showManageDialog();
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.button-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
 </style>

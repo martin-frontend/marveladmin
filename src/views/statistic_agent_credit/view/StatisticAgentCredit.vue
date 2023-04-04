@@ -1,5 +1,6 @@
 <template>
     <div class="content">
+        <StatisticAgentCreditManageDialog v-if="myProxy.manageDialogData.bShow" />
         <StatisticAgentCreditFilterDialog v-if="myProxy.dialogData.bShow" />
         <StatisticAgentCreditHeader />
         <StatisticAgentCreditBody />
@@ -14,12 +15,14 @@ import { Component } from "vue-property-decorator";
 import StatisticAgentCreditFilterDialog from "./StatisticAgentCreditFilterDialog.vue";
 import StatisticAgentCreditHeader from "./StatisticAgentCreditHeader.vue";
 import StatisticAgentCreditBody from "./StatisticAgentCreditBody.vue";
+import StatisticAgentCreditManageDialog from "./StatisticAgentCreditManageDialog.vue";
 
 @Component({
     components: {
         StatisticAgentCreditFilterDialog,
         StatisticAgentCreditHeader,
         StatisticAgentCreditBody,
+        StatisticAgentCreditManageDialog,
     },
 })
 export default class StatisticAgentCredit extends AbstractView {

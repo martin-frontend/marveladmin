@@ -122,6 +122,8 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         sumData.credit_rate_self = data.credit_rate_self;
         sumData.credit_rate_subordinate = data.credit_rate_subordinate;
         sumData.credit_rate_superior = data.credit_rate_superior;
+        sumData.contribute_to_the_company = data.contribute_to_the_company;
+        sumData.amount_to_the_company = data.amount_to_the_company;
         return sumData;
     }
     /**设置表头数据 */
@@ -196,9 +198,9 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         this.dialogData.bShow = false;
     }
     /**重置弹窗表单 */
-    resetDialogForm() {}
+    resetDialogForm() { }
     /**筛选渠道列表 */
-    channelListFilter() {}
+    channelListFilter() { }
 
     /**日期快捷 */
     pickerOptions = {
@@ -262,11 +264,11 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
     }
 
     /**添加数据 */
-    onAdd() {}
+    onAdd() { }
     /**更新数据 */
-    onUpdate() {}
+    onUpdate() { }
     /**删除数据 */
-    onDelete(admin_user_id: any) {}
+    onDelete(admin_user_id: any) { }
     /**显示用户详情 */
     showUserDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
