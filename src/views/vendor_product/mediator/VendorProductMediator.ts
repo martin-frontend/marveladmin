@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/vendor_product/setting";
 import { Message } from "element-ui";
 import VendorProductProxy from "../proxy/VendorProductProxy";
 
-interface IVendorProduct extends IEventDispatcher {}
+interface IVendorProduct extends IEventDispatcher { }
 
 export default class VendorProductMediator extends AbstractMediator {
     private myProxy: VendorProductProxy = <any>this.getProxy(VendorProductProxy);
@@ -43,7 +43,12 @@ export default class VendorProductMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_vendor_product_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
+                break;
                 break;
             case EventType.admin_vendor_product_show:
                 myProxy.setDetail(body);

@@ -47,6 +47,10 @@
             >
                 {{ LangUtil("新增") }}
             </el-button>
+            <el-button style="margin-left: 8px" type="primary" class="item" icon="">
+                {{ LangUtil("导入") }}
+            </el-button>
+            <el-button @click="heandlerExport()" type="primary" class="item">{{ LangUtil("导出") }}</el-button>
         </div>
     </div>
 </template>
@@ -97,6 +101,10 @@ export default class VendorProductHeader extends AbstractView {
 
     onGetVendorId() {
         this.myProxy.getVendorId();
+    }
+
+    heandlerExport() {
+        this.myProxy.onQueryExportData();
     }
 }
 </script>
