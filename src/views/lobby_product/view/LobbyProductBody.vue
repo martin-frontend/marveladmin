@@ -121,17 +121,19 @@
             </el-table-column>
 
             <el-table-column align="center" :label="LangUtil('操作')" class-name="status-col" width="350px">
-                <template slot-scope="{ row }">
+                <template slot-scope="{ row, $index }">
                     <el-button
                         v-if="checkUnique(unique.lobby_product_order)"
                         size="mini"
                         @click="handlerOpt(row, { opt: 1 })"
-                        >{{ LangUtil("置顶") }}</el-button
-                    >
+                        :disabled="$index == 0"
+                        >{{ LangUtil("置顶") }}
+                    </el-button>
                     <el-button
                         v-if="checkUnique(unique.lobby_product_order)"
                         size="mini"
                         @click="handlerOpt(row, { opt: 2 })"
+                        :disabled="$index == myProxy.tableData.tableDataFilter.length - 1"
                         >{{ LangUtil("置底") }}</el-button
                     >
                     <el-button
@@ -139,12 +141,14 @@
                         size="mini"
                         icon="el-icon-top"
                         @click="handlerOpt(row, { opt: 3 })"
+                        :disabled="$index == 0"
                     ></el-button>
                     <el-button
                         v-if="checkUnique(unique.lobby_product_order)"
                         size="mini"
                         icon="el-icon-bottom"
                         @click="handlerOpt(row, { opt: 4 })"
+                        :disabled="$index == myProxy.tableData.tableDataFilter.length - 1"
                     ></el-button>
 
                     <el-button
