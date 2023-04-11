@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="兑换参数设置" :visible.sync="myProxy.dialogDataChannelData.bShow" width="80%">
+    <el-dialog :title="LangUtil('兑换参数设置')" :visible.sync="myProxy.dialogDataChannelData.bShow" width="80%">
         <div class="header">
             <!-- 所属平台 -->
             <div>
@@ -108,7 +108,7 @@ export default class ExchangeChannelListDialog extends AbstractView {
     // table Data
     tableData = this.myProxy.dialogDataChannelData.list;
     row = this.myProxy.dialogDataChannelData.row;
-    pageInfo = this.myProxy.tableData.pageInfo;
+    pageInfo = this.myProxy.dialogDataChannelData.pageInfo;
 
     //网络状态
     net_status = GlobalVar.net_status;
