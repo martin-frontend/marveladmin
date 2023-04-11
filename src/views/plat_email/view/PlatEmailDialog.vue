@@ -111,17 +111,17 @@
                             @change="handleClick"
                         />
 
-                        <el-button @click="onImportUser()" type="primary" icon="">{{ LangUtil("导入用户") }}</el-button>
-                        <el-button @click="onLoadModule()" type="primary" icon="">{{
+                        <el-button @click="onImportUser" type="primary" icon="">{{ LangUtil("导入用户") }}</el-button>
+                        <el-button @click="onLoadModule" type="primary" icon="">{{
                             LangUtil("下载导入模版")
                         }}</el-button>
                     </div>
                     <div class="mark_font">{{ LangUtil("用户ID, 多个用户使用英文逗号", "区分") }}</div>
                 </el-form-item>
             </template>
-            <template v-if="!readonly && checkUnique(unique.plat_email_store_attachment)">
+            <template v-if="!readonly && checkUnique(unique.plat_email_store_attachment) && !isAllPlatNew">
                 <el-form-item size="mini" :label="tableColumns.attachment_content.name" class="additional-bonus">
-                    <el-button @click="onAddBonus()" type="success">{{ LangUtil("添加奖励") }}</el-button>
+                    <el-button @click="onAddBonus" type="success">{{ LangUtil("添加奖励") }}</el-button>
                     <span class="mark_font">{{ LangUtil("最多增加五个奖励") }}</span>
                 </el-form-item>
             </template>
@@ -189,17 +189,13 @@
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <div class="delete">
-                    <el-button
-                        v-if="readonly && this.form.status != 99"
-                        @click="handleDelete()"
-                        type="danger"
-                        icon=""
-                        >{{ LangUtil("撤销邮件") }}</el-button
-                    >
+                    <el-button v-if="readonly && this.form.status != 99" @click="handleDelete" type="danger" icon="">{{
+                        LangUtil("撤销邮件")
+                    }}</el-button>
                 </div>
                 <div class="submit">
                     <div style="">
-                        <el-button v-if="!readonly" @click="handleAdd()" type="primary" icon="">{{
+                        <el-button v-if="!readonly" @click="handleAdd" type="primary" icon="">{{
                             LangUtil("发送邮件")
                         }}</el-button>
                     </div>
@@ -280,6 +276,9 @@ export default class PlatEmailDialog extends AbstractView {
     }
     get isGroupMail() {
         return this.myProxy.isGroupMail;
+    }
+    get isAllPlatNew() {
+        return this.myProxy.isAllPlatNew;
     }
     get hasAttachmentContent() {
         return this.form.attachment_content.length != 0;

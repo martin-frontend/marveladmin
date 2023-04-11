@@ -247,7 +247,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_mail_content_update, { content_id: id, status: 99 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**用户邮件表格相关数据 */
@@ -303,6 +303,10 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
     // 是否为群发
     get isGroupMail() {
         return this.dialogData.form.type == EmailType.Group;
+    }
+    // 是否为全平台邮件（新用户）
+    get isAllPlatNew() {
+        return this.dialogData.form.type == EmailType.AllPlatNew;
     }
     /**设置用户邮件表头 */
     setPlatUserTableColumns(data?: any) {
