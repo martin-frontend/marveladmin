@@ -68,9 +68,15 @@
             />
             <el-button class="header-button" @click="handlerSearch()" type="primary">{{ LangUtil("查询") }}</el-button>
             <el-button class="header-button" @click="handlerReset()" type="primary">{{ LangUtil("重置") }}</el-button>
-            <el-button class="header-button" @click="handlerExport()" type="primary" icon="el-icon-download">{{
-                LangUtil("导出")
-            }}</el-button>
+            <el-button
+                class="header-button"
+                @click="handlerExport()"
+                type="primary"
+                icon="el-icon-download"
+                :disabled="list.length == 0"
+            >
+                {{ LangUtil("导出") }}
+            </el-button>
             <el-button class="header-button" @click="handlerSearchWallet()" type="primary">{{
                 LangUtil("平台当前用户余额")
             }}</el-button>
@@ -108,6 +114,7 @@ export default class PlatUserHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
     winLoss: string = "";
     onWinLossChange(value: any) {
@@ -134,7 +141,7 @@ export default class PlatUserHeader extends AbstractView {
     }
 
     handlerExport() {
-        this.myProxy.onExportExcel();
+        this.myProxy.onQueryExportData();
     }
 }
 </script>

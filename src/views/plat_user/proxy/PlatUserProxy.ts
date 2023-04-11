@@ -159,6 +159,12 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "register_ip",
             "last_login_ip",
         ],
+        stop: false,
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
+        isSearch: true,
     };
 
     /**弹窗相关数据 */
@@ -304,6 +310,16 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull(this.listQuery));
     }
 
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
     // 打开用户详情页
     onShowDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
@@ -416,19 +432,39 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 const { channel_id, user_id } = this.changeChannelDialogData.form;
                 this.sendNotification(HttpType.admin_plat_user_change_channel, { channel_id, user_id });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
-    /**取导出资料 */
-    onExportExcel() {
-        this.listQuery.page_size = 100000;
-        this.onQuery();
+    /**取得所有资料 */
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        this.exportData.isSearch = false;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.is_export = true;
+        this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
     }
 
     /**导出 Excel */
-    onSetExcelData(body: any) {
-        let data = JSON.parse(JSON.stringify(body));
-
+    exportExcel() {
+        const data = JSON.parse(JSON.stringify(this.exportData.list));
         // 要导出的栏位
         let exportColumn = this.exportData.fieldOrder;
         // 栏位中文名称
@@ -465,5 +501,10 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         let str: any = this.tableData.columns["plat_id"].options[this.listQuery.plat_id];
         fileFirstName = LangUtil("平台用户[{0}]", str);
         return `${fileFirstName}${fileLastName}`;
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
     }
 }
