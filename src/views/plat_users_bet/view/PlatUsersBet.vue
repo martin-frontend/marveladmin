@@ -1,9 +1,10 @@
 <template>
     <div class="content">
-        <PlatUserBetDetail  v-if="myProxy.dialogData.bShow"></PlatUserBetDetail>
-        <JsonEditorDialog  v-if="myProxy.jsonEditorDialog.bShow"></JsonEditorDialog>
+        <PlatUserBetDetail v-if="myProxy.dialogData.bShow"></PlatUserBetDetail>
+        <JsonEditorDialog v-if="myProxy.jsonEditorDialog.bShow"></JsonEditorDialog>
         <PlatUsersBetHeader />
         <PlatUsersBetBody />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
     </div>
 </template>
 
@@ -16,6 +17,7 @@ import PlatUserBetDetail from "@/views/plat_users_bet/view/PlatUserBetDetail.vue
 import JsonEditorDialog from "@/views/plat_users_bet/view/JsonEditorDialog.vue";
 import PlatUsersBetHeader from "./PlatUsersBetHeader.vue";
 import PlatUsersBetBody from "./PlatUsersBetBody.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
 
 @Component({
     components: {
@@ -23,6 +25,7 @@ import PlatUsersBetBody from "./PlatUsersBetBody.vue";
         PlatUsersBetHeader,
         PlatUsersBetBody,
         JsonEditorDialog,
+        ProgressDialog,
     },
 })
 export default class PlatUsersBet extends AbstractView {

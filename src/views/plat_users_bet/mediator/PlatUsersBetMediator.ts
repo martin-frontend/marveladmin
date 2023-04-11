@@ -3,7 +3,7 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/plat_users_bet/setting";
 import PlatUsersBetProxy from "../proxy/PlatUsersBetProxy";
 
-interface IPlatUsersBet extends IEventDispatcher {}
+interface IPlatUsersBet extends IEventDispatcher { }
 
 export default class PlatUsersBetMediator extends AbstractMediator {
     private myProxy: PlatUsersBetProxy = <any>this.getProxy(PlatUsersBetProxy);
@@ -40,13 +40,16 @@ export default class PlatUsersBetMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_users_bet_index:
-                //myProxy.setTableData(body);
-                if (myProxy.tableData.isExportExcel) {
-                    myProxy.exportExcel(body);
+                myProxy.exportData.isSearch = true;
+                if (myProxy.exportData.stop) {
+                    myProxy.exportData.stop = false;
                 } else {
-                    myProxy.setTableData(body);
+                    if (myProxy.exportData.isExportExcel) {
+                        myProxy.onSaveExportData(body);
+                    } else {
+                        myProxy.setTableData(body);
+                    }
                 }
-
                 break;
             case EventType.admin_plat_users_bet_show:
                 myProxy.setDetail(body);

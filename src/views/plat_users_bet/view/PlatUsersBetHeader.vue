@@ -75,16 +75,20 @@
             </SearchRange>
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    LangUtil("查询")
-                }}</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    LangUtil("重置")
-                }}</el-button>
-
-                <el-button @click="exportExcel()" type="primary" icon="el-icon-download">{{
-                    LangUtil("导出")
-                }}</el-button>
+                <el-button
+                    @click="handlerSearch()"
+                    type="primary"
+                    icon="el-icon-search"
+                    :disabled="!myProxy.exportData.isSearch"
+                >
+                    {{ LangUtil("查询") }}
+                </el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                    {{ LangUtil("重置") }}
+                </el-button>
+                <el-button @click="exportExcel()" type="primary" icon="el-icon-download" :disabled="list.length == 0">
+                    {{ LangUtil("导出") }}
+                </el-button>
             </div>
         </div>
     </div>
@@ -120,6 +124,7 @@ export default class PlatUsersBetHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
     winLoss: string = "";
     onWinLossChange(value: any) {
@@ -128,7 +133,7 @@ export default class PlatUsersBetHeader extends AbstractView {
     }
 
     exportExcel() {
-        this.myProxy.onQueryAll();
+        this.myProxy.onQueryExportData();
     }
 
     handlerSearch() {

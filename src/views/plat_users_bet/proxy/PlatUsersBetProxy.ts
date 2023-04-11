@@ -339,8 +339,6 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             water_accelerate: "",
         },
         summary_coin: [],
-        isExportExcel: false, //是否导出excel
-        excelPageSize: 1000000, //excel 资料长度
     };
     /**查询条件 */
     listQuery = {
@@ -366,6 +364,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         username: "",
         is_credit_user: "",
         resettlement_status: "",
+        is_export: false,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -512,6 +511,15 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         data: <any>{},
     };
 
+    exportData = {
+        stop: false,
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
+        isSearch: true,
+    };
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -608,32 +616,48 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         return this._gameKeyList;
     }
     /**取得所有资料 */
-    onQueryAll() {
-        this.tableData.isExportExcel = true;
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        this.exportData.isSearch = false;
         let queryCopy: any = {};
         queryCopy = JSON.parse(JSON.stringify(this.listQuery));
-        queryCopy.page_size = this.tableData.excelPageSize;
-        queryCopy.page_count = 1;
-        //this.facade.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(queryCopy));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.is_export = true;
         this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(queryCopy));
     }
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
+    }
     /**导出excel */
-    exportExcel(data: any) {
-        this.tableData.isExportExcel = false;
-        let summary = this.addSummary(data);
-        summary.map((element: any) => {
-            element.win_gold = Number(element.win_gold) > 0 ? `+${element.win_gold}` : element.win_gold;
-            element.market_type_text = element.vendor_type == 64 ? element.market_type_text : `-`;
-            element.odds = element.vendor_type == 64 ? element.odds : `-`;
-            element.league = element.vendor_type == 64 ? element.league : `-`;
-            element.bet_code = element.bet_code ? element.bet_code : `-`;
-        });
+    exportExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        // let summary = this.addSummary(data);
+        // summary.map((element: any) => {
+        //     element.win_gold = Number(element.win_gold) > 0 ? `+${element.win_gold}` : element.win_gold;
+        //     element.market_type_text = element.vendor_type == 64 ? element.market_type_text : `-`;
+        //     element.odds = element.vendor_type == 64 ? element.odds : `-`;
+        //     element.league = element.vendor_type == 64 ? element.league : `-`;
+        //     element.bet_code = element.bet_code ? element.bet_code : `-`;
+        // });
 
         new BaseInfo.ExportExcel(
             `${this.getExcelOutputName}`,
             this.curKeyList,
             this.tableData.columns,
-            summary,
+            // summary,
+            newData,
             ["plat_id", "is_credit_user", "vendor_id", "vendor_type", "settlement_status"],
             []
         );
@@ -668,7 +692,19 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
 
     /**查询 */
     onQuery() {
-        this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(this.listQuery));
+        const query = JSON.parse(JSON.stringify(this.listQuery));
+        delete query.is_export
+        this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(query));
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
     }
 
     /**日期快捷 */
@@ -745,5 +781,10 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     setCreditLogList(data: any) {
         this.dialogData.log.list.length = 0;
         this.dialogData.log.list.push(...data.list);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
     }
 }
