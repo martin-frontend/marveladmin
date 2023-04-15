@@ -57,6 +57,8 @@
                     <div>{{ tableColumns.is_digital_currency.options[row.is_digital_currency] }}</div>
                 </template>
             </el-table-column>
+            <el-table-column prop="symbol" :label="`${tableColumns.symbol.name}`" class-name="status-col">
+            </el-table-column>
             <el-table-column prop="remark" :label="`${tableColumns.remark.name}`" class-name="status-col">
             </el-table-column>
             <el-table-column :label="LangUtil('操作')" class-name="status-col" width="90px">

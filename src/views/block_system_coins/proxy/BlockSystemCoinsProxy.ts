@@ -42,6 +42,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             icon_url: { name: "图片", options: {} },
             coin_tag: { name: "三方游戏用户前缀", options: {} },
             is_digital_currency: { name: '币种类型', options: {} },
+            symbol: { name: '符号', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -62,6 +63,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             remark: "",
             icon: "",
             is_digital_currency: "",
+            symbol: "",
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -114,6 +116,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             coin_name: "",
             coin_name_unique: "",
             remark: "",
+            symbol: "",
             icon: "",
             is_digital_currency: 0,
         });
@@ -130,6 +133,7 @@ export default class BlockSystemCoinsProxy extends AbstractProxy implements IBlo
             coin_name: form.coin_name,
             coin_name_unique: form.coin_name_unique,
             remark: form.remark,
+            symbol: form.symbol,
             icon: form.icon,
             is_digital_currency: form.is_digital_currency,
         };

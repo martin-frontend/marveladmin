@@ -21,6 +21,9 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item :label="tableColumns.symbol.name" prop="symbol">
+                <el-input v-model="form.symbol"></el-input>
+            </el-form-item>
             <el-form-item :label="tableColumns.remark.name" prop="remark">
                 <el-input v-model="form.remark"></el-input>
             </el-form-item>
