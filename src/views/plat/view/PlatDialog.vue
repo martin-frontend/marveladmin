@@ -450,7 +450,6 @@
                             </el-select>
                         </div>
                     </div>
-
                     <div class="el_select_group">
                         <div>
                             <span class="title">{{ tableColumns["is_gold_exchange"].name }}</span>
@@ -468,6 +467,19 @@
                             <el-select class="select" v-model="form.is_exchange_fail_automatic_refund">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_exchange_fail_automatic_refund.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
+                    </div>
+                    <div class="el_select_group">
+                        <div>
+                            <span class="title">{{ tableColumns["is_user_manual_refund"].name }}</span>
+                            <el-select class="select" v-model="form.is_user_manual_refund">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_user_manual_refund.options"
                                     :key="key"
                                     :label="value"
                                     :value="Number(key)"
