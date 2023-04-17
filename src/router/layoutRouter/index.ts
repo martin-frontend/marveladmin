@@ -302,6 +302,10 @@ const layoutRouter = {
             name: "投注明细",
             component: () => import(/* webpackChunkName: "plat_users_bet" */"@/views/plat_users_bet/view/PlatUsersBet.vue")
         },        {
+            path: "plat_users_event_record",
+            name: "事件统计",
+            component: () => import(/* webpackChunkName: "plat_users_event_record" */"@/views/plat_users_event_record/view/PlatUsersEventRecord.vue")
+        },        {
             path: "plat_users_gold_log",
             name: "金币明细",
             component: () => import(/* webpackChunkName: "plat_users_gold_log" */"@/views/plat_users_gold_log/view/PlatUsersGoldLog.vue")

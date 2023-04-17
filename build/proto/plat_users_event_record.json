@@ -1,0 +1,10 @@
+{
+    "name": "事件统计",
+    "description": "事件统计",
+    "document": "",
+    "list": [
+        "admin/plat_users_event_record/table_columns",
+        "admin/plat_users_event_record/index"
+    ]
+    
+}
