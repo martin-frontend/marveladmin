@@ -66,6 +66,10 @@ const layoutRouter = {
             name: "数字兑换订单",
             component: () => import(/* webpackChunkName: "block_transfer_out_order" */"@/views/block_transfer_out_order/view/BlockTransferOutOrder.vue")
         },        {
+            path: "cate_vendor_products",
+            name: "首页分类游戏",
+            component: () => import(/* webpackChunkName: "cate_vendor_products" */"@/views/cate_vendor_products/view/CateVendorProducts.vue")
+        },        {
             path: "coin_exchange_orders",
             name: "定时任务",
             component: () => import(/* webpackChunkName: "coin_exchange_orders" */"@/views/coin_exchange_orders/view/CoinExchangeOrders.vue")

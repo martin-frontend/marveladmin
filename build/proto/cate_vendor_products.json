@@ -1,0 +1,11 @@
+{
+    "name": "首页分类游戏",
+    "description": "首页分类游戏",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47777155",
+    "list": [
+        "admin/cate_vendor_products/table_columns",
+        "admin/cate_vendor_products/index",
+        "admin/cate_vendor_products/store",
+        "admin/cate_vendor_products/update/{id}"
+    ]
+}
