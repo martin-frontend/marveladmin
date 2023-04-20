@@ -10,9 +10,15 @@
                 :width="350"
             />
             <div>
-                <el-button class="header-button" @click="exportExcel" type="primary" icon="el-icon-download">{{
-                    LangUtil("导出")
-                }}</el-button>
+                <el-button
+                    class="header-button"
+                    @click="exportExcel"
+                    type="primary"
+                    icon="el-icon-download"
+                    :disabled="list.length == 0"
+                >
+                    {{ LangUtil("导出") }}
+                </el-button>
             </div>
         </div>
         <div class="group">
@@ -73,17 +79,17 @@
                 :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                <el-button @click="handlerSearch" type="primary" icon="el-icon-search">
                     {{ LangUtil("查询") }}
                 </el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                <el-button @click="handlerReset" type="primary" icon="el-icon-refresh">
                     {{ LangUtil("重置") }}
                 </el-button>
-                <el-button @click="accept()" type="primary" icon="el-icon-refresh" :disabled="hasSelection">
+                <el-button @click="accept" type="primary" icon="el-icon-refresh" :disabled="hasSelection">
                     {{ LangUtil("接单") }}
                 </el-button>
                 <el-button
-                    @click="cancel()"
+                    @click="cancel"
                     type="primary"
                     icon="el-icon-refresh"
                     :disabled="hasSelection"
@@ -129,6 +135,7 @@ export default class ExchangeOrdersHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
     get hasSelection() {
         return this.myProxy.tableData.multipleSelection.length == 0;
@@ -147,7 +154,7 @@ export default class ExchangeOrdersHeader extends AbstractView {
     }
 
     exportExcel() {
-        this.myProxy.onQueryAll();
+        this.myProxy.showFieldSelectionDialog();
     }
 
     accept() {

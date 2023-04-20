@@ -133,7 +133,7 @@ export default class PlatUsersBetHeader extends AbstractView {
     }
 
     exportExcel() {
-        this.myProxy.onQueryExportData();
+        this.myProxy.showFieldSelectionDialog();
     }
 
     handlerSearch() {

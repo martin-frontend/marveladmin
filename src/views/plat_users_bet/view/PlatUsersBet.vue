@@ -5,6 +5,7 @@
         <PlatUsersBetHeader />
         <PlatUsersBetBody />
         <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -18,6 +19,7 @@ import JsonEditorDialog from "@/views/plat_users_bet/view/JsonEditorDialog.vue";
 import PlatUsersBetHeader from "./PlatUsersBetHeader.vue";
 import PlatUsersBetBody from "./PlatUsersBetBody.vue";
 import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 
 @Component({
     components: {
@@ -26,6 +28,7 @@ import ProgressDialog from "./components/ProgressDialog.vue";
         PlatUsersBetBody,
         JsonEditorDialog,
         ProgressDialog,
+        FieldSelectionDialog,
     },
 })
 export default class PlatUsersBet extends AbstractView {

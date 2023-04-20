@@ -60,8 +60,8 @@ export default class ExchangeOrdersMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_exchange_orders_index:
-                if (myProxy.tableData.isExportExcel) {
-                    myProxy.exportExcel(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
                 } else {
                     myProxy.setTableData(body);
                 }

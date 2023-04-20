@@ -141,7 +141,7 @@ export default class PlatUserHeader extends AbstractView {
     }
 
     handlerExport() {
-        this.myProxy.onQueryExportData();
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>

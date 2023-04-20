@@ -18,7 +18,7 @@
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
-import PlatUsersBetProxy from "../../proxy/PlatUsersBetProxy";
+import RechargeOrdersProxy from "../../proxy/RechargeOrdersProxy";
 import LangUtil from "@/core/global/LangUtil";
 import { MessageBox } from "element-ui";
 
@@ -26,7 +26,7 @@ import { MessageBox } from "element-ui";
 export default class ProgressDialog extends AbstractView {
     LangUtil = LangUtil;
     // proxy
-    myProxy: PlatUsersBetProxy = this.getProxy(PlatUsersBetProxy);
+    myProxy: RechargeOrdersProxy = this.getProxy(RechargeOrdersProxy);
 
     cancel() {
         MessageBox.confirm(String(this.LangUtil("确定要取消汇出")), String(this.LangUtil("提示")), {
@@ -35,7 +35,6 @@ export default class ProgressDialog extends AbstractView {
             type: "warning",
         })
             .then(() => {
-                this.myProxy.exportData.stop = true;
                 this.myProxy.resetExportData(0);
             })
             .catch(() => {});
