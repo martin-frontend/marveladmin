@@ -543,29 +543,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
     showFieldSelectionDialog() {
         this.fieldSelectionData.bShow = true;
-        this.exportData.fieldOrder = [
-            "plat_id",
-            "channel_id",
-            "user_id",
-            "username",
-            "nick_name",
-            "remark",
-            "vip_level",
-            "is_credit_user",
-            "phone",
-            "balance",
-            "gold",
-            "vendors_money",
-            "safe_gold",
-            "total_recharge",
-            "total_exchange",
-            "total_water",
-            "total_win",
-            "last_login_device",
-            "created_at",
-            "last_online_at",
-            "register_ip",
-            "last_login_ip",
-        ];
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }
+ 

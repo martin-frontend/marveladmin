@@ -12,9 +12,11 @@
         </el-checkbox>
         <el-checkbox-group v-model="myProxy.exportData.fieldOrder" @change="handleCheckedFieldsChange">
             <el-row>
-                <el-col :span="8" v-for="key in fieldOptions" :key="key">
-                    <el-checkbox :label="key">{{ tableColumns[key].name }}</el-checkbox>
-                </el-col>
+                <template v-for="key in fieldOptions">
+                    <el-col :span="8" :key="key" v-if="tableColumns[key]">
+                        <el-checkbox :label="key">{{ tableColumns[key].name }}</el-checkbox>
+                    </el-col>
+                </template>
             </el-row>
         </el-checkbox-group>
         <div class="group">
