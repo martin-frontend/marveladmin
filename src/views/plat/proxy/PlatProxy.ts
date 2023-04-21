@@ -92,6 +92,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             bet_log_keep_days: { name: "投注记录保留天数", options: {} },
             bet_log_search_days: { name: "投注记录搜索天数", options: {} },
             main_language: { name: '主语言', options: {} },
+            is_first_login_send_sms: { name: '首次登入发送短信', options: {} },
             is_user_manual_refund: { name: '用户手动退款', options: {} },
         },
         list: <any>[],
@@ -132,6 +133,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_password_gold_transfer: 98, // 1:是 98:否
         is_show_message_win: 1, // 1:是 98:否
         is_agent_bonus: 98, // 1:是 98:否
+        is_first_login_send_sms: 98, // 1:是 98:否
         is_user_manual_refund: 98, // 1:是 98:否
         recharge_cost_rate: 0,
         game_cost_rate: 0,
@@ -350,6 +352,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_win_leaderboard_display,
             is_water_leaderboard_display,
             is_recharge_leaderboard_display,
+            is_first_login_send_sms, //首次登入发送短信
             is_user_manual_refund, //用户手动退款
             is_bind_phone_recharge, //绑定手机充值
             validate_type,
@@ -390,6 +393,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_show_message_win, //显示中讲信息
             is_bet_gold_display, // 输赢投注显示
             is_open_registration, // 注册开关
+            is_first_login_send_sms, //首次登入发送短信
             is_user_manual_refund, //用户手动退款
             is_win_leaderboard_display,
             is_water_leaderboard_display,

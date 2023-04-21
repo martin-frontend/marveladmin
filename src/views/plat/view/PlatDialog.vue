@@ -476,7 +476,18 @@
                     </div>
                     <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_user_manual_refund"].name }}</span>
+                            <span class="title">{{ tableColumns["is_first_login_send_sms"].name }}</span>
+                            <el-select class="select" v-model="form.is_first_login_send_sms">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_first_login_send_sms.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
+                        <div>
+                            <span class="title_1">{{ tableColumns["is_user_manual_refund"].name }}</span>
                             <el-select class="select" v-model="form.is_user_manual_refund">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_user_manual_refund.options"
