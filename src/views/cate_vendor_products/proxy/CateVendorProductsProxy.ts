@@ -49,6 +49,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 100 },
+        isResort: false, // 是否重新排序
     };
     /**查询条件 */
     listQuery = {
@@ -85,6 +86,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        this.tableData.isResort = true;
     }
 
     /**重置查询条件 */
@@ -160,10 +162,15 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             .then(() => {
                 this.sendNotification(HttpType.admin_cate_vendor_products_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
     /**更新排序 */
     onUpdateOpt(data: any) {
         this.sendNotification(HttpType.admin_cate_vendor_products_update, data);
+    }
+
+    /**重新排序 */
+    onResort({ id, next_id }: { [key: string]: number }) {
+        this.facade.sendNotification(HttpType.admin_cate_vendor_products_update, { id: id, next_id: next_id, opt: 11 });
     }
 }
