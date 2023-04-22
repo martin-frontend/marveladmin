@@ -157,13 +157,17 @@ export default class PlatVipProxy extends AbstractProxy implements IPlatVipProxy
                 };
                 this.sendNotification(HttpType.admin_plat_update, data);
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**vip model 叙述 */
     setVipModel(value: any) {
         this.copyVipData = JSON.parse(JSON.stringify(value.vip_config));
         this.vipModeDesc = value;
+        const { vip_config } = value;
+        this.vipData = [];
+        this.vipData = vip_config;
+
     }
 
     /**初始化模版 */
@@ -177,7 +181,7 @@ export default class PlatVipProxy extends AbstractProxy implements IPlatVipProxy
                 this.vipData = JSON.parse(JSON.stringify(this.copyVipData));
                 this.maxLevel = this.copyVipData.length.toString();
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**最高等级切换 */

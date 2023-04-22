@@ -4,6 +4,7 @@
             <el-form label-width="70px" :inline="false" v-loading="net_status.loading">
                 <el-form-item :label="LangUtil('等级') + (index + 1)">
                     <el-input
+                        v-if="item.total_water"
                         class="input"
                         clearable
                         v-model="item.total_water"
