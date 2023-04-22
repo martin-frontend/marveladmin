@@ -4,7 +4,7 @@
             <el-form label-width="70px" :inline="false" v-loading="net_status.loading">
                 <el-form-item :label="LangUtil('等级') + (index + 1)">
                     <el-input
-                        v-if="item.total_water"
+                        v-if="types.indexOf(1) != -1"
                         class="input"
                         clearable
                         v-model="item.total_water"
@@ -16,7 +16,7 @@
                     </el-input>
 
                     <el-input
-                        v-if="item.total_recharge"
+                        v-if="types.indexOf(2) != -1"
                         class="input"
                         type="number"
                         clearable
@@ -77,6 +77,10 @@ export default class PlatVipBody extends AbstractView {
 
     get vipConfig() {
         return this.myProxy.vipData;
+    }
+
+    get types() {
+        return this.myProxy.types;
     }
 
     handlerQuery() {

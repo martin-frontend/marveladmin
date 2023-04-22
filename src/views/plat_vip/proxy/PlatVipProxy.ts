@@ -79,6 +79,8 @@ export default class PlatVipProxy extends AbstractProxy implements IPlatVipProxy
     /**vip 数据 */
     vipData = <any>[];
 
+    types = [];
+
     /**备份 初始化vip */
     copyVipData = [];
 
@@ -164,10 +166,10 @@ export default class PlatVipProxy extends AbstractProxy implements IPlatVipProxy
     setVipModel(value: any) {
         this.copyVipData = JSON.parse(JSON.stringify(value.vip_config));
         this.vipModeDesc = value;
-        const { vip_config } = value;
+        const { vip_config, types } = value;
         this.vipData = [];
         this.vipData = vip_config;
-
+        this.types = types;
     }
 
     /**初始化模版 */
