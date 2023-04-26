@@ -102,9 +102,9 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             agent_user_id: { name: "代理ID" },
             bet_code: { name: "下注内容" },
             bet_result: { name: "下注结果" },
-            league: { name: "联赛" },
-            market_type_text: { name: "盘口" },
-            odds: { name: "赔率" },
+            league: { name: LangUtil("联赛") },
+            market_type_text: { name: LangUtil("盘口") },
+            odds: { name: LangUtil("赔率") },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -246,6 +246,8 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
+        this.tableData.columns.win_gold.name = LangUtil("输赢金额$");
+        this.tableData.columns.valid_bet_gold.name = LangUtil("有效投注$");
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
