@@ -1,6 +1,6 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
-import { formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, getTodayOffset, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/exchange_orders/setting";
 import IExchangeOrdersProxy from "./IExchangeOrdersProxy";
 import router from "@/router";
@@ -74,6 +74,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             username: { name: "用户账号", options: [] },
             nick_name: { name: "用户昵称", options: [] },
             user_remark: { name: "用户备注", options: [] },
+            extends: { name: LangUtil('用户兑换信息'), options: [] },
         },
         list: <any>[],
         message: {},
@@ -101,6 +102,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             "coin_username",
             "coin_name_unique",
             "block_network_id",
+            "extends",
             "receive_payment_type",
             "payment_method",
             "gold",
@@ -445,13 +447,21 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         const newData = JSON.parse(JSON.stringify(this.exportData.list));
         //资料列表处理
         for (const item of newData) {
+            if ((item.receive_payment_type == 7 || item.receive_payment_type == 8) && item.payment_method.length != 0) {
+                item.extends = jsonStringify(item.payment_method);
+            } else {
+                item.extends = "-";
+            }
+
             //@ts-ignore
             let str =
                 this.tableData.columns["receive_payment_type"].name +
                 ": " +
                 this.tableData.columns["receive_payment_type"].options[item.receive_payment_type] +
                 "\n";
-            str += this.getAccessInfo(item);
+            if (item.receive_payment_type != 8) {
+                str += this.getAccessInfo(item);
+            }
             item.payment_method = str;
             // item.exchange_channel = this.tableData.columns["exchange_channel"].options[item.exchange_channel];
             // item.exchange_vendors_id = this.tableData.columns["exchange_vendors_id"].options[item.exchange_vendors_id];
@@ -471,6 +481,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
                 "auto_check_status",
                 "exchange_channel",
                 "exchange_vendors_id",
+                "block_network_id",
             ],
             [""]
         );

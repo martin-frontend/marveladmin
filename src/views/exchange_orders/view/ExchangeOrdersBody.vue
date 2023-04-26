@@ -134,9 +134,12 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="extends" :label="LangUtil('用户兑换信息')" min-width="180px" align="center">
+            <el-table-column prop="extends" :label="tableColumns['extends'].name" min-width="180px" align="center">
                 <template slot-scope="{ row }">
                     <div align="left" v-if="row.receive_payment_type == 7 && row.payment_method.length != 0">
+                        <p v-for="(value, key) of row.payment_method" :key="key">{{ key }}：{{ value }}</p>
+                    </div>
+                    <div align="left" v-else-if="row.receive_payment_type == 8 && row.payment_method.length != 0">
                         <p v-for="(value, key) of row.payment_method" :key="key">{{ key }}：{{ value }}</p>
                     </div>
                     <div v-else>
@@ -157,7 +160,7 @@
                                 tableColumns["receive_payment_type"].options[row.receive_payment_type]
                             }}
                         </div>
-                        <span v-html="getAccessInfo(row)"></span>
+                        <span v-if="row.receive_payment_type != 8" v-html="getAccessInfo(row)"></span>
                     </div>
                 </template>
             </el-table-column>
