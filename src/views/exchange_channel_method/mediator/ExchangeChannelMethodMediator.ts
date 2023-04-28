@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/exchange_channel_method/setting";
 import { Message } from "element-ui";
 import ExchangeChannelMethodProxy from "../proxy/ExchangeChannelMethodProxy";
 
-interface IExchangeChannelMethod extends IEventDispatcher {}
+interface IExchangeChannelMethod extends IEventDispatcher { }
 
 export default class ExchangeChannelMethodMediator extends AbstractMediator {
     private myProxy: ExchangeChannelMethodProxy = <any>this.getProxy(ExchangeChannelMethodProxy);
@@ -31,6 +31,7 @@ export default class ExchangeChannelMethodMediator extends AbstractMediator {
             EventType.admin_exchange_channel_method_store,
             EventType.admin_exchange_channel_method_update,
             EventType.admin_exchange_channel_method_index,
+            EventType.admin_exchange_channel_update,
         ];
     }
 
@@ -65,6 +66,10 @@ export default class ExchangeChannelMethodMediator extends AbstractMediator {
                 break;
             case EventType.admin_exchange_channel_method_index:
                 myProxy.set_exchange_channel_method_index(body);
+                break;
+            case EventType.admin_exchange_channel_update:
+                Message.success(SuccessMessage.update);
+                myProxy.onQuery();
                 break;
         }
     }

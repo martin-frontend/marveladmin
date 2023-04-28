@@ -93,19 +93,29 @@
                         </template>
                     </el-table-column>
                     <el-table-column :label="LangUtil('排序')" class-name="status-col" width="320px">
-                        <template slot-scope="{ row }">
+                        <template slot-scope="{ row, $index }">
                             <div v-if="checkUnique(unique.plat_activity_order)">
-                                <el-button size="mini" @click="handlerOrder(row.id, 1)">{{
-                                    LangUtil("置顶")
-                                }}</el-button>
-                                <el-button size="mini" @click="handlerOrder(row.id, 2)">{{
-                                    LangUtil("置底")
-                                }}</el-button>
-                                <el-button size="mini" icon="el-icon-top" @click="handlerOrder(row.id, 3)"></el-button>
+                                <el-button size="mini" @click="handlerOrder(row.id, 1)" :disabled="$index == 0">
+                                    {{ LangUtil("置顶") }}
+                                </el-button>
+                                <el-button
+                                    size="mini"
+                                    @click="handlerOrder(row.id, 2)"
+                                    :disabled="$index == list.list.length - 1"
+                                >
+                                    {{ LangUtil("置底") }}
+                                </el-button>
+                                <el-button
+                                    size="mini"
+                                    icon="el-icon-top"
+                                    @click="handlerOrder(row.id, 3)"
+                                    :disabled="$index == 0"
+                                ></el-button>
                                 <el-button
                                     size="mini"
                                     icon="el-icon-bottom"
                                     @click="handlerOrder(row.id, 4)"
+                                    :disabled="$index == list.list.length - 1"
                                 ></el-button>
                             </div>
                         </template>
@@ -157,10 +167,10 @@ export default class RechargeChannelsPaymethodsDialog extends AbstractView {
     }
 
     handlerOrder(id: any, opt: string) {
-        this.myProxy.tableData.orderData.id = id;
-        this.myProxy.tableData.orderData.opt = opt;
-        this.myProxy.tableData.orderData.plat_id = this.listQuery.plat_id;
-        this.myProxy.onOrderList();
+        this.myProxy.tableData.orderDialogData.id = id;
+        this.myProxy.tableData.orderDialogData.opt = opt;
+        this.myProxy.tableData.orderDialogData.plat_id = this.listQuery.plat_id;
+        this.myProxy.onOrderDialogList();
     }
 }
 </script>

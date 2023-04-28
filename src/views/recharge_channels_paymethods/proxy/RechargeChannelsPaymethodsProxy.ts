@@ -69,6 +69,11 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
             opt: "", //操作:1-置顶 |2-置底 |3-上调 |4-下调
             plat_id: "",
         },
+        orderDialogData: {
+            id: "",
+            opt: "", //操作:1-置顶 |2-置底 |3-上调 |4-下调
+            plat_id: "",
+        },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
@@ -334,9 +339,15 @@ export default class RechargeChannelsPaymethodsProxy extends AbstractProxy imple
         this.channelList.list = JSON.parse(JSON.stringify(data.list));
     }
 
+    /**dialog 排序 */
+    onOrderDialogList() {
+        const formCopy = this.tableData.orderDialogData;
+        this.sendNotification(HttpType.admin_recharge_channels_paymethods_update, formCopy);
+    }
+
     /**排序 */
     onOrderList() {
         const formCopy = this.tableData.orderData;
-        this.sendNotification(HttpType.admin_recharge_channels_paymethods_update, formCopy);
+        this.sendNotification(HttpType.admin_recharge_channels_update, formCopy);
     }
 }
