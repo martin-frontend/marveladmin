@@ -94,6 +94,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             main_language: { name: '主语言', options: {} },
             is_first_login_send_sms: { name: '首次登入发送短信', options: {} },
             is_user_manual_refund: { name: '用户手动退款', options: {} },
+            client_config: { name: 'Client 配置参数', options: {} },
+            other_config: { name: '配置参数', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -156,6 +158,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         bet_log_keep_days: 0,
         bet_log_search_days: 0,
         main_language: "",
+        client_config: {},
+        other_config: {},
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -243,8 +247,18 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     setDetail(data: any) {
         data.extends = jsonToObject(data.extends);
         this.dialogData.formSource = data;
-        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
 
+        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        // client_config
+        Object.assign(this.dialogData.form.client_config, JSON.parse(JSON.stringify(
+            {
+                client_config:
+                    data.extends.client_config
+            }
+        )));
+        delete data.extends["client_config"]
+
+        Object.assign(this.dialogData.form.other_config, JSON.parse(JSON.stringify(data.extends)));
         this.promotionDiscountDialogData.form.promotion_discount = JSON.parse(
             JSON.stringify(this.defaultPromotionConfig)
         );
@@ -262,6 +276,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             arr.push(idx);
         }
         this.dialogData.form.language = arr;
+        this.dialogData.bShow = true;
         // console.log(">>>>>>>", this.dialogData.form.language)
     }
     /**设置配置初始数据 */
@@ -290,13 +305,15 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
 
     /**显示弹窗 */
     showDialog(status: string, data?: any) {
-        this.dialogData.bShow = true;
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
+            this.dialogData.form.client_config = {};
+            this.dialogData.form.other_config = {};
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
             this.sendNotification(HttpType.admin_plat_show, { plat_id: data.plat_id });
         } else {
+            this.dialogData.bShow = true;
             this.resetDialogForm();
             this.dialogData.formSource = null;
         }
@@ -361,6 +378,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             bet_log_keep_days,
             bet_log_search_days,
             main_language,
+            client_config,
+            other_config,
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -405,6 +424,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             bet_log_keep_days,
             bet_log_search_days,
             main_language,
+            client_config,
+            other_config,
         };
 
         formCopy.app_types = JSON.stringify(formCopy.app_types);
@@ -412,6 +433,20 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         formCopy.promotion_floor = JSON.stringify(formCopy.promotion_floor);
         formCopy.validate_type = JSON.stringify(formCopy.validate_type);
         formCopy.register_types = JSON.stringify(formCopy.register_types);
+
+        //组回原始 extends
+        if (typeof this.dialogData.form.client_config == 'string') {
+            this.dialogData.form.client_config = JSON.parse(this.dialogData.form.client_config)
+        }
+        if (typeof this.dialogData.form.other_config == 'string') {
+            this.dialogData.form.other_config = JSON.parse(this.dialogData.form.other_config)
+        }
+        formCopy.extends = {};
+        formCopy.extends = {
+            ...this.dialogData.form.client_config,
+            ...this.dialogData.form.other_config
+        }
+        formCopy.extends = JSON.stringify(formCopy.extends)
         try {
             let extendsStr: any = "{}";
             if (Object.keys(this.dialogData.form.extends).length > 0) {
@@ -434,6 +469,19 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     /**更新数据 */
     onUpdate() {
         const formCopy: any = Object.assign({}, this.dialogData.form);
+        //组回原始 extends
+        if (typeof this.dialogData.form.client_config == 'string') {
+            this.dialogData.form.client_config = JSON.parse(this.dialogData.form.client_config)
+        }
+        if (typeof this.dialogData.form.other_config == 'string') {
+            this.dialogData.form.other_config = JSON.parse(this.dialogData.form.other_config)
+        }
+        formCopy.extends = {};
+        formCopy.extends = {
+            ...this.dialogData.form.client_config,
+            ...this.dialogData.form.other_config
+        }
+        formCopy.extends = JSON.stringify(formCopy.extends)
         try {
             formCopy.extends = JSON.parse(formCopy.extends);
             const temp = formCompared(formCopy, this.dialogData.formSource);

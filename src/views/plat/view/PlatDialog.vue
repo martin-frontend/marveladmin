@@ -1,7 +1,7 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="900px">
+    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="90%">
         <el-form ref="form" :rules="rules" :model="form" label-width="125px" v-loading="net_status.loading">
-            <el-scrollbar style="height: 430px">
+            <el-scrollbar>
                 <el-form-item size="mini" :label="tableColumns['plat_name'].name" prop="plat_name">
                     <el-input v-model="form.plat_name" :placeholder="LangUtil('请输入')"></el-input>
                 </el-form-item>
@@ -89,32 +89,34 @@
 
                 <!--流水配置 -->
                 <el-form-item size="mini" :label="tableColumns['water_config'].name" prop="water_config">
-                    <div class="water_config_item" v-for="(value, key) in waterData" :key="key">
-                        <div class="title">{{ value }}</div>
-                        <template v-if="form.water_config[key]">
-                            <el-select
-                                v-model="form.water_config[key].type"
-                                filterable
-                                :placeholder="LangUtil('请选择')"
-                            >
-                                <el-option
-                                    v-for="(value, key) in tableColumns.vendor_type.options_type[0]"
-                                    :key="key"
-                                    :label="value"
-                                    :value="key"
-                                ></el-option>
-                            </el-select>
-                            <el-input-number
-                                size="mini"
-                                :min="Number(tableColumns.vendor_type.options_rate[0].min)"
-                                :max="Number(tableColumns.vendor_type.options_rate[0].max)"
-                                :step="0.01"
-                                :precision="2"
-                                controls-position="right"
-                                v-model="form.water_config[key].rate"
-                            >
-                            </el-input-number>
-                        </template>
+                    <div class="water_config">
+                        <div class="water_config_item" v-for="(value, key) in waterData" :key="key">
+                            <div class="title">{{ value }}</div>
+                            <template v-if="form.water_config[key]">
+                                <el-select
+                                    v-model="form.water_config[key].type"
+                                    filterable
+                                    :placeholder="LangUtil('请选择')"
+                                >
+                                    <el-option
+                                        v-for="(value, key) in tableColumns.vendor_type.options_type[0]"
+                                        :key="key"
+                                        :label="value"
+                                        :value="key"
+                                    ></el-option>
+                                </el-select>
+                                <el-input-number
+                                    size="mini"
+                                    :min="Number(tableColumns.vendor_type.options_rate[0].min)"
+                                    :max="Number(tableColumns.vendor_type.options_rate[0].max)"
+                                    :step="0.01"
+                                    :precision="2"
+                                    controls-position="right"
+                                    v-model="form.water_config[key].rate"
+                                >
+                                </el-input-number>
+                            </template>
+                        </div>
                     </div>
                 </el-form-item>
                 <!--代理保底 -->
@@ -127,11 +129,11 @@
                     <div class="vendor_type">
                         <div
                             class="dropdown-item"
-                            style="width: 180px"
+                            style="width: 400px"
                             v-for="(value, key) in tableColumns.vendor_type.options"
                             :key="key"
                         >
-                            <div style="margin-right: 10px; width: 40px">{{ value }}</div>
+                            <div style="margin-right: 10px; min-width: 140px; text-align: right;">{{ value }}</div>
                             <el-input type="number" min="0" v-model="form.promotion_floor[key]"></el-input>
                         </div>
                     </div>
@@ -148,9 +150,7 @@
                             ></el-input>
                         </div>
                         <div>
-                            <span class="title_1" style="margin-left: 10px">{{
-                                tableColumns.is_promotion_same.name
-                            }}</span>
+                            <span class="title_1">{{ tableColumns.is_promotion_same.name }}</span>
                             <el-select class="select" v-model="form.is_promotion_same">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_promotion_same.options"
@@ -203,10 +203,8 @@
                                 @keydown.native="inputLimit"
                             ></el-input>
                         </div>
-                    </div>
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns.game_cost_rate.name }}</span>
+                            <span class="title_1">{{ tableColumns.game_cost_rate.name }}</span>
                             <el-input
                                 style="width: 90px"
                                 type="number"
@@ -217,7 +215,7 @@
                             ></el-input>
                         </div>
                         <div>
-                            <span class="title_2">{{ tableColumns.agent_bonus_rate_limit.name }}</span>
+                            <span class="title_1">{{ tableColumns.agent_bonus_rate_limit.name }}</span>
                             <el-input
                                 style="width: 90px"
                                 type="number"
@@ -230,12 +228,13 @@
                             ></el-input>
                         </div>
                     </div>
+                    <div class="el_select_group"></div>
                 </el-form-item>
                 <!--开关设定 -->
                 <el-form-item size="mini" :label="LangUtil('开关设定')" prop="">
                     <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_bind_phone_award"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_bind_phone_award"].name }}</span>
                             <el-select class="select" v-model="form.is_bind_phone_award">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_bind_phone_award.options"
@@ -246,7 +245,7 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_bind_phone_exchange"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_bind_phone_exchange"].name }}</span>
                             <el-select class="select" v-model="form.is_bind_phone_exchange">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_bind_phone_exchange.options"
@@ -256,10 +255,8 @@
                                 ></el-option>
                             </el-select>
                         </div>
-                    </div>
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_bet_water_display"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_bet_water_display"].name }}</span>
                             <el-select class="select" v-model="form.is_bet_water_display">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_bet_water_display.options"
@@ -270,7 +267,7 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_promotion_statistics_display"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_promotion_statistics_display"].name }}</span>
                             <el-select class="select" v-model="form.is_promotion_statistics_display">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_promotion_statistics_display.options"
@@ -280,10 +277,8 @@
                                 ></el-option>
                             </el-select>
                         </div>
-                    </div>
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_bind_phone_transfer"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_bind_phone_transfer"].name }}</span>
                             <el-select class="select" v-model="form.is_bind_phone_transfer">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_bind_phone_transfer.options"
@@ -294,7 +289,7 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_bind_real_name"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_bind_real_name"].name }}</span>
                             <el-select class="select" v-model="form.is_bind_real_name">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_bind_real_name.options"
@@ -304,10 +299,8 @@
                                 ></el-option>
                             </el-select>
                         </div>
-                    </div>
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_password_gold_transfer"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_password_gold_transfer"].name }}</span>
                             <el-select class="select" v-model="form.is_password_gold_transfer">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_password_gold_transfer.options"
@@ -318,7 +311,7 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_show_message_win"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_show_message_win"].name }}</span>
                             <el-select class="select" v-model="form.is_show_message_win">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_show_message_win.options"
@@ -328,10 +321,8 @@
                                 ></el-option>
                             </el-select>
                         </div>
-                    </div>
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_bet_gold_display"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_bet_gold_display"].name }}</span>
                             <el-select class="select" v-model="form.is_bet_gold_display">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_bet_gold_display.options"
@@ -342,7 +333,7 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_win_gold_display"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_win_gold_display"].name }}</span>
                             <el-select class="select" v-model="form.is_win_gold_display">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_win_gold_display.options"
@@ -352,10 +343,8 @@
                                 ></el-option>
                             </el-select>
                         </div>
-                    </div>
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_open_registration"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_open_registration"].name }}</span>
                             <el-select class="select" v-model="form.is_open_registration">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_open_registration.options"
@@ -366,7 +355,7 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_force_short_chain"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_force_short_chain"].name }}</span>
                             <el-select class="select" v-model="form.is_force_short_chain">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_force_short_chain.options"
@@ -376,10 +365,8 @@
                                 ></el-option>
                             </el-select>
                         </div>
-                    </div>
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_game_with_parent"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_game_with_parent"].name }}</span>
                             <el-select class="select" v-model="form.is_game_with_parent">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_game_with_parent.options"
@@ -390,7 +377,7 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_bind_phone_recharge"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_bind_phone_recharge"].name }}</span>
                             <el-select class="select" v-model="form.is_bind_phone_recharge">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_bind_phone_recharge.options"
@@ -400,11 +387,8 @@
                                 ></el-option>
                             </el-select>
                         </div>
-                    </div>
-                    <!--  -->
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_win_leaderboard_display"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_win_leaderboard_display"].name }}</span>
                             <el-select class="select" v-model="form.is_win_leaderboard_display">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_win_leaderboard_display.options"
@@ -415,7 +399,7 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_water_leaderboard_display"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_water_leaderboard_display"].name }}</span>
                             <el-select class="select" v-model="form.is_water_leaderboard_display">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_water_leaderboard_display.options"
@@ -425,10 +409,8 @@
                                 ></el-option>
                             </el-select>
                         </div>
-                    </div>
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_recharge_leaderboard_display"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_recharge_leaderboard_display"].name }}</span>
                             <el-select class="select" v-model="form.is_recharge_leaderboard_display">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_recharge_leaderboard_display.options"
@@ -439,7 +421,7 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_show_commission"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_show_commission"].name }}</span>
                             <el-select v-model="form.is_show_commission" class="select">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_show_commission.options"
@@ -449,10 +431,8 @@
                                 ></el-option>
                             </el-select>
                         </div>
-                    </div>
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_gold_exchange"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_gold_exchange"].name }}</span>
                             <el-select class="select" v-model="form.is_gold_exchange">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_gold_exchange.options"
@@ -463,7 +443,9 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_exchange_fail_automatic_refund"].name }}</span>
+                            <span class="title_switch">{{
+                                tableColumns["is_exchange_fail_automatic_refund"].name
+                            }}</span>
                             <el-select class="select" v-model="form.is_exchange_fail_automatic_refund">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_exchange_fail_automatic_refund.options"
@@ -473,10 +455,8 @@
                                 ></el-option>
                             </el-select>
                         </div>
-                    </div>
-                    <div class="el_select_group">
                         <div>
-                            <span class="title">{{ tableColumns["is_first_login_send_sms"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_first_login_send_sms"].name }}</span>
                             <el-select class="select" v-model="form.is_first_login_send_sms">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_first_login_send_sms.options"
@@ -487,7 +467,7 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_1">{{ tableColumns["is_user_manual_refund"].name }}</span>
+                            <span class="title_switch">{{ tableColumns["is_user_manual_refund"].name }}</span>
                             <el-select class="select" v-model="form.is_user_manual_refund">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_user_manual_refund.options"
@@ -559,9 +539,14 @@
                     </div>
                 </el-form-item>
 
-                <el-form-item size="mini" :label="tableColumns['extends'].name" prop="extends">
+                <el-form-item size="mini" :label="tableColumns['client_config'].name" prop="client_config">
                     <div class="editor-container">
-                        <json-editor ref="jsonEditor" v-model="form.extends" />
+                        <json-editor ref="jsonEditor" v-model="form.client_config" />
+                    </div>
+                </el-form-item>
+                <el-form-item size="mini" :label="tableColumns['other_config'].name" prop="other_config">
+                    <div class="editor-container">
+                        <json-editor ref="jsonEditor" v-model="form.other_config" />
                     </div>
                 </el-form-item>
             </el-scrollbar>
@@ -685,11 +670,17 @@ export default class PlatDialog extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.water_config {
+    display: flex;
+    flex-wrap: wrap;
+}
 .water_config_item {
     display: flex;
     margin-bottom: 10px;
     .title {
-        width: 60px;
+        margin-right: 8px;
+        text-align: right;
+        min-width: 150px;
     }
     .el-select {
         margin-right: 10px;
@@ -706,11 +697,23 @@ export default class PlatDialog extends AbstractView {
     display: flex;
     flex-direction: row;
     margin-bottom: 5px;
+    flex-wrap: wrap;
     .title {
+        text-align: right;
         display: inline-block;
         width: 120px;
+        margin-right: 8px;
+    }
+    .title_switch {
+        display: inline-block;
+        min-width: 320px;
+        text-align: right;
+        margin-right: 8px;
+        margin-bottom: 5px;
     }
     .title_1 {
+        margin-right: 8px;
+        text-align: right;
         margin-left: 32px;
         display: inline-block;
         width: 120px;
@@ -721,7 +724,7 @@ export default class PlatDialog extends AbstractView {
         width: 100px;
     }
     .select {
-        width: 70px;
+        width: 90px;
     }
     .desc {
         color: red;
@@ -741,5 +744,21 @@ export default class PlatDialog extends AbstractView {
 }
 ::v-deep .el-scrollbar__wrap {
     overflow-x: auto;
+}
+
+::v-deep .el-scrollbar {
+    height: 100%;
+}
+::v-deep .el-dialog {
+    margin-top: 0 !important;
+    height: 99%;
+}
+
+::v-deep .el-dialog__body {
+    height: 95%;
+}
+
+::v-deep .el-form {
+    height: 90%;
 }
 </style>
