@@ -16,7 +16,7 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
     }
 
     /**离开页面时调用 */
-    leave() {}
+    leave() { }
 
     /**表格相关数据 */
     tableData = {
@@ -36,6 +36,12 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
     /**查询条件 */
     listQuery = {
         plat_id: "",
+    };
+
+    /**统计条件 */
+    statsQuery = {
+        start_date: "",
+        end_date: "",
     };
 
     /**昨天统计数据 */
@@ -153,6 +159,13 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
             ],
         },
         number: 0,
+    };
+
+    /**日期快捷 */
+    pickerOptions = {
+        disabledDate(time: any) {
+            return time.getTime() > Date.now();
+        },
     };
 
     get getXAxisData() {
