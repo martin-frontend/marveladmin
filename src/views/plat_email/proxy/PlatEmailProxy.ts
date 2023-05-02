@@ -262,8 +262,6 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             cate: { name: "", options: {} },
             is_read: { name: "", options: {} },
             read_at: { name: "", options: {} },
-            attachment_gold: { name: "", options: {} },
-            attachment_score: { name: "", options: {} },
             attachment_status: { name: "", options: {} },
             attachment_open_at: { name: "", options: {} },
             attachment_content: { name: "", options: {} },
@@ -381,7 +379,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
     /**取得excel 挡案名称 */
     getExcelOutputName() {
         const plat_name = this.tableData.columns.plat_id.options[this.listQuery.plat_id];
-        let name = `${<string>i18n.t(`plat_email.UserMail`)}-${plat_name}`;
+        let name = `${<string>LangUtil("用户邮件列表")}-${plat_name}`;
         if (this.userListQuery["created_at-{>=}"] && this.userListQuery["created_at-{<=}"] != "") {
             name += `-${this.userListQuery["created_at-{>=}"]}～${this.userListQuery["created_at-{<=}"]}`;
         }
@@ -390,16 +388,14 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
     /**导出excel */
     onExportExcel(data: any) {
         this.platUserTableData.isExportExcel = false;
-        let list = data.list.filter((data: any) => {
-            return parseInt(data.attachment_gold) > 0;
-        });
+        let list = data.list;
 
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
             Object.keys(this.platUserTableData.columns),
             this.platUserTableData.columns,
             list,
-            [],
+            ["plat_id", "cate", "is_read", "attachment_status"],
             []
         );
     }
