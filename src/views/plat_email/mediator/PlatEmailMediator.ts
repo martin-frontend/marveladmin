@@ -6,7 +6,7 @@ import { EventType, HttpType } from "@/views/plat_email/setting";
 import { Message } from "element-ui";
 import PlatEmailProxy from "../proxy/PlatEmailProxy";
 
-interface IPlatEmail extends IEventDispatcher {}
+interface IPlatEmail extends IEventDispatcher { }
 
 export default class PlatEmailMediator extends AbstractMediator {
     private myProxy: PlatEmailProxy = <any>this.getProxy(PlatEmailProxy);
@@ -67,8 +67,8 @@ export default class PlatEmailMediator extends AbstractMediator {
                 this.myProxy.setPlatUserTableColumns(body);
                 break;
             case EventType.admin_plat_users_mail_index:
-                if (myProxy.platUserTableData.isExportExcel) {
-                    myProxy.onExportExcel(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
                 } else {
                     myProxy.setUserTableData(body);
                 }

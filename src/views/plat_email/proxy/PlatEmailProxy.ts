@@ -30,7 +30,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             attachment_content: { name: "", options: {} },
             bonus_multiple: { name: "", options: {} },
             cate: { name: "", options: {} },
@@ -53,6 +53,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         platEmailTag: EmailTab.Plat,
         userEmailTag: EmailTab.User,
     };
+
     /**查询条件 */
     listQuery = {
         plat_id: "",
@@ -67,6 +68,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         page_count: 1,
         page_size: 20,
     };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -103,6 +105,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             this.onQuery();
         }
     }
+
     /**表格数据 */
     setTableData(data: any) {
         data.list.forEach((element: any) => {
@@ -113,6 +116,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
+
     /**详细数据 */
     setDetail(data: any) {
         // let attachment_content = <any>[];
@@ -158,10 +162,12 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             this.dialogData.readonly = false;
         }
     }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
     }
+
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
@@ -183,6 +189,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
     onQuery() {
         this.sendNotification(HttpType.admin_plat_mail_content_index, objectRemoveNull(this.listQuery));
     }
+
     /**添加数据 */
     onAdd() {
         const {
@@ -212,7 +219,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             attachment_content,
         };
         let attachment_content_copy = [];
-        let bonus = {};
+        let bonus: any = {};
         formCopy.attachment_content.forEach((element: any) => {
             if (bonus[element.type]) {
                 //防止有傻逼选择多个相同的币种
@@ -237,6 +244,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
         }
     }
+
     /**删除数据 */
     onDelete(id: any) {
         MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
@@ -285,6 +293,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
     };
+
     /**用戶郵件查询条件 */
     userListQuery = {
         plat_id: "",
@@ -298,18 +307,51 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         page_count: 1,
         page_size: 20,
     };
+
+    fieldSelectionData = {
+        bShow: false,
+        fieldOptions: [
+            "content_id",
+            "plat_id",
+            "user_id",
+            "nick_name",
+            "title",
+            "send_type",
+            "type",
+            "cate",
+            "is_read",
+            "created_by",
+            "created_at",
+            "attachment_content",
+            "attachment_status",
+            "attachment_open_at",
+        ],
+    };
+
+    /**导出 相关数据 */
+    exportData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
+    };
+
     // 是否为群发
     get isGroupMail() {
         return this.dialogData.form.type == EmailType.Group;
     }
+
     // 是否为全平台邮件（新用户）
     get isAllPlatNew() {
         return this.dialogData.form.type == EmailType.AllPlatNew;
     }
+
     /**设置用户邮件表头 */
     setPlatUserTableColumns(data?: any) {
         Object.assign(this.platUserTableData.columns, data);
     }
+
     /**用户邮件列表查询 */
     onUserQuery() {
         const queryCopy = JSON.parse(JSON.stringify(this.userListQuery));
@@ -323,6 +365,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         }
         this.sendNotification(HttpType.admin_plat_users_mail_index, objectRemoveNull(queryCopy));
     }
+
     /**重置用户邮件查询 */
     resetUserListQuery() {
         Object.assign(this.userListQuery, {
@@ -337,6 +380,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             page_size: 20,
         });
     }
+
     /**设置用户邮件列表数据 */
     setUserTableData(data: any) {
         // this.platUserTableData = JSON.parse(JSON.stringify(data));
@@ -352,6 +396,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             total_num: data.total_num,
         });
     }
+
     /**错误讯息弹窗数据 */
     alertDialogData = {
         bShow: false,
@@ -359,15 +404,18 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             content: "",
         },
     };
+
     /**显示发送错误弹窗 */
     showAlertDialog(data: any) {
         this.alertDialogData.bShow = true;
         this.alertDialogData.form.content = data;
     }
+
     /**隐藏发送错误弹窗 */
     hideAlertDialog() {
         this.alertDialogData.bShow = false;
     }
+
     /**搜寻全部资料 */
     onQueryAll() {
         this.platUserTableData.isExportExcel = true;
@@ -376,27 +424,79 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         queryCopy.page_count = 1;
         this.sendNotification(HttpType.admin_plat_users_mail_index, objectRemoveNull(queryCopy));
     }
+
     /**取得excel 挡案名称 */
     getExcelOutputName() {
         const plat_name = this.tableData.columns.plat_id.options[this.listQuery.plat_id];
         let name = `${<string>LangUtil("用户邮件列表")}-${plat_name}`;
-        if (this.userListQuery["created_at-{>=}"] && this.userListQuery["created_at-{<=}"] != "") {
-            name += `-${this.userListQuery["created_at-{>=}"]}～${this.userListQuery["created_at-{<=}"]}`;
-        }
         return name;
     }
-    /**导出excel */
-    onExportExcel(data: any) {
-        this.platUserTableData.isExportExcel = false;
-        let list = data.list;
 
+    /**取得所有资料 */
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.userListQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        this.sendNotification(HttpType.admin_plat_users_mail_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
+    }
+
+    /**导出excel */
+    exportExcel() {
+        this.exportData.isExportExcel = true;
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        // @ts-ignore
+        newData.forEach(element => {
+            if (element.attachment_content.length == 0) {
+                element.attachment_content = '';
+            } else {
+                element.attachment_content = jsonStringify(element.attachment_content);
+            }
+        });
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
-            Object.keys(this.platUserTableData.columns),
+            // Object.keys(this.platUserTableData.columns),
+            this.exportData.fieldOrder,
             this.platUserTableData.columns,
-            list,
-            ["plat_id", "cate", "is_read", "attachment_status"],
+            newData,
+            ["plat_id", "send_type", "type", "cate", "is_read", "attachment_status"],
             []
         );
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }
