@@ -59,6 +59,13 @@
             >
             </el-table-column>
             <el-table-column
+                prop="bonus_multiple"
+                :label="`${tableColumns.bonus_multiple.name}`"
+                class-name="status-col"
+                min-width="30px"
+            >
+            </el-table-column>
+            <el-table-column
                 prop="can_play_game"
                 :label="`${tableColumns.can_play_game.name}`"
                 class-name="status-col"

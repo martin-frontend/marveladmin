@@ -28,6 +28,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
     /**表格相关数据 */
     tableData = {
         columns: {
+            bonus_multiple: { name: '充值流水倍数', options: {} },
             can_play_game: { name: "是否允许游戏", options: {} },
             coin_name_unique: { name: "币种", options: {} },
             created_at: { name: "创建时间", options: {} },
@@ -74,6 +75,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             scale: 0,
             show_scale: 0,
             languages: <any>[],
+            bonus_multiple: 0,
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -147,6 +149,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             scale: 1,
             show_scale: 1,
             languages: <any>[],
+            bonus_multiple: 1,
         });
     }
 
@@ -168,6 +171,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             type: form.type,
             scale: form.scale,
             show_scale: form.show_scale,
+            bonus_multiple: form.bonus_multiple,
             languages: JSON.stringify(form.languages),
         };
 

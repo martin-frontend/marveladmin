@@ -35,6 +35,9 @@
             <el-form-item :label="tableColumns.remark.name" prop="remark">
                 <el-input type="textarea" v-model="form.remark"></el-input>
             </el-form-item>
+            <el-form-item :label="tableColumns.bonus_multiple.name" prop="bonus_multiple">
+                <el-input-number v-model="form.bonus_multiple" :min="0" :precision="10" :step="0.001"></el-input-number>
+            </el-form-item>
             <el-form-item :label="tableColumns.can_play_game.name" prop="can_play_game">
                 <el-radio-group v-model="form.can_play_game">
                     <el-radio
