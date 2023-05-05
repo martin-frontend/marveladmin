@@ -24,6 +24,16 @@
             <el-form-item v-if="!isStatusUpdate" size="mini" :label="tableColumns['domain'].name" prop="domain">
                 <el-input v-model.trim="form.domain" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns.model_type.name" prop="model_type">
+                <el-select v-model="form.model_type" :placeholder="LangUtil('请选择')">
+                    <el-option
+                        v-for="(item, key) of tableColumns.model_type.options"
+                        :key="key"
+                        :label="item"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['template'].name" prop="template">
                 <el-input v-model.trim="form.template" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
@@ -58,7 +68,7 @@ import JsonEditor from "@/components/JsonEditor/index.vue";
 
 @Component({
     components: {
-        JsonEditor
+        JsonEditor,
     },
 })
 export default class PlatLoadPageDomainDialog extends AbstractView {
@@ -99,6 +109,7 @@ export default class PlatLoadPageDomainDialog extends AbstractView {
             channel_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             domain: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             template: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            model_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 

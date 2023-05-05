@@ -146,6 +146,7 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
             domain: "",
             template: "",
             remark: "",
+            model_type: "",
             channel_config: {},
         });
     }
@@ -156,13 +157,14 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
     }
 
     onAdd() {
-        const { plat_id, domain, remark, channel_id, channel_config, template } = this.dialogData.form;
+        const { plat_id, domain, remark, channel_id, channel_config, template, model_type } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
             channel_id,
             domain,
             remark,
             template,
+            model_type,
             channel_config: jsonStringify(channel_config),
         };
         formCopy.app_types = JSON.stringify(formCopy.app_types);
@@ -194,7 +196,7 @@ export default class PlatLoadPageDomainProxy extends AbstractProxy implements Pl
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_load_page_domain_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     onQueryLoadPage() {
