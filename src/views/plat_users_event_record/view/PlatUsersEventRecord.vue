@@ -2,6 +2,8 @@
     <div class="content">
         <PlatUsersEventRecordHeader />
         <PlatUsersEventRecordBody />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -13,12 +15,16 @@ import { Component } from "vue-property-decorator";
 import PlatUsersEventRecordDialog from "./PlatUsersEventRecordDialog.vue";
 import PlatUsersEventRecordHeader from "./PlatUsersEventRecordHeader.vue";
 import PlatUsersEventRecordBody from "./PlatUsersEventRecordBody.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 
 @Component({
     components: {
         PlatUsersEventRecordDialog,
         PlatUsersEventRecordHeader,
         PlatUsersEventRecordBody,
+        ProgressDialog,
+        FieldSelectionDialog,
     },
 })
 export default class PlatUsersEventRecord extends AbstractView {
@@ -30,7 +36,7 @@ export default class PlatUsersEventRecord extends AbstractView {
         super.destroyed();
     }
     // proxy
-    private myProxy: PlatUsersEventRecordProxy = this.getProxy(PlatUsersEventRecordProxy);
+    myProxy: PlatUsersEventRecordProxy = this.getProxy(PlatUsersEventRecordProxy);
 }
 </script>
 

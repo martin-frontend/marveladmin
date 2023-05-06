@@ -41,7 +41,11 @@ export default class PlatUsersEventRecordMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_users_event_record_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
         }
     }

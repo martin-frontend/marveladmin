@@ -1,9 +1,12 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_users_event_record/setting";
 import { MessageBox } from "element-ui";
 import IPlatUsersEventRecordProxy from "./IPlatUsersEventRecordProxy";
+import { dateFormat, getTodayOffset } from "@/core/global/Functions";
+import { BaseInfo } from "@/components/vo/commonVo";
 
 export default class PlatUsersEventRecordProxy extends AbstractProxy implements IPlatUsersEventRecordProxy {
     static NAME = "PlatUsersEventRecordProxy";
@@ -43,6 +46,7 @@ export default class PlatUsersEventRecordProxy extends AbstractProxy implements 
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
+
     /**查询条件 */
     listQuery = {
         page_count: 1,
@@ -51,7 +55,33 @@ export default class PlatUsersEventRecordProxy extends AbstractProxy implements 
         channel_id: "",
         user_id: "",
         event_type: "",
+        "event_time-{>=}": dateFormat(getTodayOffset(0), "yyyy-MM-dd hh:mm:ss"),
+        "event_time-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
     };
+
+    fieldSelectionData = {
+        bShow: false,
+        fieldOptions: [
+            "plat_id",
+            "channel_id",
+            "user_id",
+            "username",
+            "event_type",
+            "coin_name_unique",
+            "gold",
+            "event_time",
+            "event_status"
+        ],
+    };
+
+    exportData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
+    };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -85,6 +115,7 @@ export default class PlatUsersEventRecordProxy extends AbstractProxy implements 
             this.onQuery();
         }
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
@@ -105,6 +136,8 @@ export default class PlatUsersEventRecordProxy extends AbstractProxy implements 
             channel_id: "",
             user_id: "",
             event_type: "",
+            "event_time-{>=}": dateFormat(getTodayOffset(0), "yyyy-MM-dd hh:mm:ss"),
+            "event_time-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
         });
     }
 
@@ -136,4 +169,72 @@ export default class PlatUsersEventRecordProxy extends AbstractProxy implements 
 
     /**删除数据 */
     onDelete(id: any) { }
+
+
+    /**取得excel 挡案名称 */
+    getExcelOutputName() {
+        const plat_name = this.tableData.columns.plat_id.options[this.listQuery.plat_id];
+        let name = `${<string>LangUtil("事件统计")}-${plat_name}`;
+        return name;
+    }
+
+    /**取得所有资料 */
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        this.sendNotification(HttpType.admin_plat_users_event_record_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
+    }
+
+    /**导出excel */
+    exportExcel() {
+        this.exportData.isExportExcel = true;
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+
+        new BaseInfo.ExportExcel(
+            this.getExcelOutputName(),
+            this.exportData.fieldOrder,
+            this.tableData.columns,
+            newData,
+            ["plat_id", "event_type", "event_status"],
+            []
+        );
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
+    }
 }

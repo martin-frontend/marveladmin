@@ -22,14 +22,23 @@
                 :options="tableColumns.event_type.options"
                 v-model="listQuery.event_type"
             />
-            <div>
-                <el-button @click="handlerSearch" type="primary" icon="el-icon-search">
-                    {{ LangUtil("查询") }}
-                </el-button>
-                <el-button @click="handlerReset" type="primary" icon="el-icon-refresh">
-                    {{ LangUtil("重置") }}
-                </el-button>
-            </div>
+            <SearchDatePicker
+                :title="tableColumns.event_time.name"
+                :startDate.sync="listQuery['event_time-{>=}']"
+                :endDate.sync="listQuery['event_time-{<=}']"
+                :showTime="true"
+            />
+        </div>
+        <div>
+            <el-button @click="handlerSearch" type="primary" icon="el-icon-search">
+                {{ LangUtil("查询") }}
+            </el-button>
+            <el-button @click="handlerReset" type="primary" icon="el-icon-refresh">
+                {{ LangUtil("重置") }}
+            </el-button>
+            <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 0">
+                {{ LangUtil("导出") }}
+            </el-button>
         </div>
     </div>
 </template>
@@ -50,6 +59,7 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     components: {
         SearchSelect,
         SearchInput,
+        SearchDatePicker,
     },
 })
 export default class PlatUsersEventRecordHeader extends AbstractView {
@@ -62,6 +72,7 @@ export default class PlatUsersEventRecordHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
     handlerSearch() {
         this.listQuery.page_count = 1;
@@ -79,6 +90,10 @@ export default class PlatUsersEventRecordHeader extends AbstractView {
         channel_id_keys.forEach((key: any) => {
             this.tableColumns.channel_id_options[key] = key;
         });
+    }
+
+    exportExcel() {
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>
