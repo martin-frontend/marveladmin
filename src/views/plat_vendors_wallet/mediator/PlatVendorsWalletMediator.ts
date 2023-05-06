@@ -7,7 +7,7 @@ import { Message } from "element-ui";
 import PlatVendorsWalletProxy from "../proxy/PlatVendorsWalletProxy";
 import i18n from "@/lang";
 
-interface IPlatVendorsWallet extends IEventDispatcher {}
+interface IPlatVendorsWallet extends IEventDispatcher { }
 
 export default class PlatVendorsWalletMediator extends AbstractMediator {
     private myProxy: PlatVendorsWalletProxy = <any>this.getProxy(PlatVendorsWalletProxy);
@@ -56,12 +56,14 @@ export default class PlatVendorsWalletMediator extends AbstractMediator {
                 // myProxy.setDetail(body);
                 break;
             case EventType.admin_plat_vendors_wallet_store:
+                this.onRegister();
                 Message.success(SuccessMessage.create);
                 myProxy.hideDialog();
                 myProxy.listQuery.page_count = 1;
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_vendors_wallet_update:
+                this.onRegister();
                 Message.success(<any>LangUtil("操作成功"));
                 myProxy.hideDialog();
                 myProxy.onQuery();

@@ -45,6 +45,7 @@ export default class PlatVendorsWalletProxy extends AbstractProxy implements IPl
             vendor_name: { name: "厂商名称", options: {} },
             currency_type: { name: "结算方式", options: {} },
             vendor_desc: { name: '厂商描述', options: {} },
+            vendor_id_options: {},
         },
         list: <any>[],
         platInfo: {
@@ -158,9 +159,16 @@ export default class PlatVendorsWalletProxy extends AbstractProxy implements IPl
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
-        if (plat_id_options_keys.length > 0) {
+        const vendor_id_options_keys = Object.keys(this.tableData.columns.vendor_id.options);
+        if (plat_id_options_keys.length > 0 && vendor_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
+                //设定选取平台第一个
                 this.listQuery.plat_id = plat_id_options_keys[0];
+            }
+            if (this.listQuery.plat_id) {
+                this.tableData.columns.vendor_id_options = this.tableData.columns.vendor_id.options[
+                    this.listQuery.plat_id
+                ];
             }
             this.onQuery();
         }
@@ -363,9 +371,15 @@ export default class PlatVendorsWalletProxy extends AbstractProxy implements IPl
     /**新增钱包 数据 */
     onCreateWallet() {
         this.resetDialogForm();
-        this.sendNotification(HttpType.admin_plat_vendors_wallet_index_vendors, {
-            plat_id: this.listQuery.plat_id,
-        });
+        const vendor_options_keys = <any>Object.keys(this.tableData.columns.vendor_id.options[this.listQuery.plat_id]);
+        vendor_options_keys.forEach((item: any) => {
+            this.vendorDialogData.create.form.checkboxData.push({
+                key: item,
+                value: this.tableData.columns.vendor_id.options[this.listQuery.plat_id][item],
+            });
+
+        })
+        this.vendorDialogData.create.bShow = true;
     }
 
     /**新增钱包 数据存挡 */

@@ -96,6 +96,9 @@
                         v-if="checkUnique(unique.plat_vendors_wallet_setting)"
                         >{{ LangUtil("设定") }}</el-button
                     >
+                    <el-button size="mini" type="danger" @click="handlerDelete(scope.row.id)">{{
+                        LangUtil("删除")
+                    }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -161,11 +164,15 @@ export default class PlatVendorsWalletBody extends AbstractView {
         this.myProxy.onShowVendorLimitDialog();
     }
     get width() {
-        let _w: string = "420px";
+        let _w: string = "500px";
         if (Cookies.get("language") === "vi") {
-            _w = "520px";
+            _w = "600px";
         }
         return _w;
+    }
+
+    handlerDelete(id: any) {
+        this.myProxy.onDelete(id);
     }
 }
 </script>

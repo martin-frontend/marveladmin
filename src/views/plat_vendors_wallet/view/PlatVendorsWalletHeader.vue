@@ -5,14 +5,17 @@
                 :title="tableColumns.plat_id.name"
                 :options="tableColumns.plat_id.options"
                 v-model="listQuery.plat_id"
-                @change="handlerSearch"
+                @change="
+                    changePlat();
+                    handlerSearch();
+                "
                 :clearable="false"
             />
         </div>
         <div class="group">
             <SearchSelect
                 :title="tableColumns.vendor_id.name"
-                :options="tableColumns.vendor_id.options"
+                :options="tableColumns.vendor_id_options"
                 v-model="listQuery.vendor_id"
             />
             <div>
@@ -109,6 +112,12 @@ export default class PlatVendorsWalletHeader extends AbstractView {
         this.myProxy.publicDialogData.wallet.form.type = type;
         this.myProxy.publicDialogData.wallet.form.plat_id = this.listQuery.plat_id;
         this.myProxy.showPublicWalletDialog();
+    }
+
+    //更换平台切换对应厂商
+    changePlat() {
+        //@ts-ignore
+        this.tableColumns.vendor_id_options = this.tableColumns.vendor_id.options[this.listQuery.plat_id];
     }
 }
 </script>
