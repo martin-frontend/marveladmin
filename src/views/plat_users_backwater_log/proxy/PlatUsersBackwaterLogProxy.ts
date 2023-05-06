@@ -1,11 +1,11 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { dateFormat, objectRemoveNull } from "@/core/global/Functions";
+import { dateFormat, objectRemoveNull, jsonStringify } from "@/core/global/Functions";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import { HttpType } from "@/views/plat_users_backwater_log/setting";
-import { MessageBox } from "element-ui";
 import IPlatUsersBackwaterLogProxy from "./IPlatUsersBackwaterLogProxy";
-
+import { BaseInfo } from "@/components/vo/commonVo";
 export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements IPlatUsersBackwaterLogProxy {
     static NAME = "PlatUsersBackwaterLogProxy";
 
@@ -26,7 +26,7 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             plat_id: { name: "", options: {} },
             backwater_id: { name: "", options: {} },
             backwater_config: { name: "", options: {} },
@@ -67,6 +67,30 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
         page_size: 20,
         username: "",
     };
+
+    fieldSelectionData = {
+        bShow: false,
+        fieldOptions: [
+            "backwater_id",
+            "plat_id",
+            "user_id",
+            "nick_name",
+            "settlement_type",
+            "total_water",
+            "total_backwater",
+            "created_at"
+        ],
+    };
+
+    /**导出 相关数据 */
+    exportData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
+    };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -102,6 +126,7 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
             this.onQuery();
         }
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
@@ -114,6 +139,7 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
         });
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
+
     /**详细数据 */
     setDetail(data: any) {
         this.dialogData.formSource = data;
@@ -145,6 +171,7 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
             this.dialogData.formSource = null;
         }
     }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
@@ -158,5 +185,73 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
     /**显示用户详情弹窗 */
     showUserDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
+    }
+
+    /**取得excel 挡案名称 */
+    getExcelOutputName() {
+        const plat_name = this.tableData.columns.plat_id.options[this.listQuery.plat_id];
+        let name = `${<string>LangUtil("挖矿明细")}-${plat_name}`;
+        return name;
+    }
+
+    /**取得所有资料 */
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.is_export = true;
+        this.sendNotification(HttpType.admin_plat_users_backwater_log_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
+    }
+
+    /**导出excel */
+    exportExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        // @ts-ignore
+        newData.forEach(element => { element.total_backwater = jsonStringify(element.total_backwater); });
+        new BaseInfo.ExportExcel(
+            this.getExcelOutputName(),
+            this.exportData.fieldOrder,
+            this.tableData.columns,
+            newData,
+            ["plat_id", "settlement_type"],
+            []
+        );
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }

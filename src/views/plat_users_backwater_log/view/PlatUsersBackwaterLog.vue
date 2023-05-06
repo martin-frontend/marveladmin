@@ -3,6 +3,8 @@
         <PlatUsersBackwaterLogDialog v-if="myProxy.dialogData.bShow" />
         <PlatUsersBackwaterLogHeader />
         <PlatUsersBackwaterLogBody />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -14,12 +16,16 @@ import { Component } from "vue-property-decorator";
 import PlatUsersBackwaterLogDialog from "./PlatUsersBackwaterLogDialog.vue";
 import PlatUsersBackwaterLogHeader from "./PlatUsersBackwaterLogHeader.vue";
 import PlatUsersBackwaterLogBody from "./PlatUsersBackwaterLogBody.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 
 @Component({
     components: {
         PlatUsersBackwaterLogDialog,
         PlatUsersBackwaterLogHeader,
         PlatUsersBackwaterLogBody,
+        ProgressDialog,
+        FieldSelectionDialog,
     },
 })
 export default class PlatUsersBackwaterLog extends AbstractView {
@@ -31,7 +37,7 @@ export default class PlatUsersBackwaterLog extends AbstractView {
         super.destroyed();
     }
     // proxy
-    private myProxy: PlatUsersBackwaterLogProxy = this.getProxy(PlatUsersBackwaterLogProxy);
+    myProxy: PlatUsersBackwaterLogProxy = this.getProxy(PlatUsersBackwaterLogProxy);
 }
 </script>
 

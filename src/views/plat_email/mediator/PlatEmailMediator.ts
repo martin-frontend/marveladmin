@@ -46,7 +46,11 @@ export default class PlatEmailMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_mail_content_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportEmailData.isExportExcel) {
+                    myProxy.onSaveExportEmailData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_plat_mail_content_show:
                 myProxy.setDetail(body);

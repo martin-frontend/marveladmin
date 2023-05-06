@@ -43,12 +43,20 @@
                     :showTime="true"
                 />
                 <div class="header-button">
-                    <el-button @click="handlerSearch" type="primary" icon="el-icon-search">{{
-                        LangUtil("查询")
-                    }}</el-button>
-                    <el-button @click="handlerReset" type="primary" icon="el-icon-refresh">{{
-                        LangUtil("重置")
-                    }}</el-button>
+                    <el-button @click="handlerSearch" type="primary" icon="el-icon-search">
+                        {{ LangUtil("查询") }}
+                    </el-button>
+                    <el-button @click="handlerReset" type="primary" icon="el-icon-refresh">
+                        {{ LangUtil("重置") }}
+                    </el-button>
+                    <el-button
+                        @click="handlerExport"
+                        type="primary"
+                        icon="el-icon-download"
+                        :disabled="list.length == 0"
+                    >
+                        {{ LangUtil("导出") }}
+                    </el-button>
                 </div>
             </div>
         </div>
@@ -191,6 +199,7 @@ export default class PlatEmailList extends AbstractView {
     listQuery = this.myProxy.listQuery;
     // Iproxy property
     EmailStatus = EmailStatus;
+    list = this.myProxy.tableData.list;
 
     handlerSearch() {
         this.listQuery.page_count = 1;
@@ -212,6 +221,10 @@ export default class PlatEmailList extends AbstractView {
 
     handlerDelete(data: any) {
         this.myProxy.onDelete(data.content_id);
+    }
+
+    handlerExport() {
+        this.myProxy.showEmailFieldSelectionDialog();
     }
 }
 </script>

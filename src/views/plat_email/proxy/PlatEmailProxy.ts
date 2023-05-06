@@ -46,6 +46,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             status: { name: "", options: {} },
             title: { name: "", options: {} },
             type: { name: "", options: {} },
+            member_analyze: { name: LangUtil('收到/阅读/奖励/发送'), options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -68,6 +69,32 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         page_count: 1,
         page_size: 20,
     };
+
+    fieldSelectionEmailData = {
+        bShow: false,
+        fieldOptions: [
+            "content_id",
+            "plat_id",
+            "title",
+            "content",
+            "send_type",
+            "type",
+            "cate",
+            "member_analyze",
+            "created_by",
+            "created_at",
+            "status",
+        ],
+    };
+
+    exportEmailData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
+
+    }
 
     /**弹窗相关数据 */
     dialogData = {
@@ -425,13 +452,6 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         this.sendNotification(HttpType.admin_plat_users_mail_index, objectRemoveNull(queryCopy));
     }
 
-    /**取得excel 挡案名称 */
-    getExcelOutputName() {
-        const plat_name = this.tableData.columns.plat_id.options[this.listQuery.plat_id];
-        let name = `${<string>LangUtil("用户邮件列表")}-${plat_name}`;
-        return name;
-    }
-
     /**取得所有资料 */
     onQueryExportData() {
         this.exportData.isExportExcel = true;
@@ -457,6 +477,16 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         }
     }
 
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
     /**导出excel */
     exportExcel() {
         this.exportData.isExportExcel = true;
@@ -470,7 +500,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             }
         });
         new BaseInfo.ExportExcel(
-            this.getExcelOutputName(),
+            this.getExcelOutputName("用户邮件列表"),
             // Object.keys(this.platUserTableData.columns),
             this.exportData.fieldOrder,
             this.platUserTableData.columns,
@@ -480,23 +510,79 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         );
     }
 
-    resetExportData(timeout: any) {
+    /**取得所有资料 */
+    onQueryExportEmailData() {
+        this.exportEmailData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportEmailData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
+        this.sendNotification(HttpType.admin_plat_mail_content_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportEmailData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportEmailData.list.push(...list);
+        Object.assign(this.exportEmailData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportEmailData();
+        } else {
+            this.onExportEmailExcel();
+            this.resetExportEmailData(500);
+        }
+    }
+
+    resetExportEmailData(timeout: any) {
         setTimeout(() => {
-            this.exportData.isExportExcel = false;
-            this.exportData.list = [];
-            Object.assign(this.exportData.pageInfo, {
+            this.exportEmailData.isExportExcel = false;
+            this.exportEmailData.list = [];
+            Object.assign(this.exportEmailData.pageInfo, {
                 pageCurrent: 0,
             });
         }, timeout);
     }
 
+    onExportEmailExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportEmailData.list));
+        // @ts-ignore
+        newData.forEach(element => {
+            let memberAnalze: string = `${element.statistics.receive} / ${element.statistics.read} / ${element.statistics.receive_award} / ${element.statistics.send}`;
+            element.member_analyze = memberAnalze;
+        });
+        new BaseInfo.ExportExcel(
+            this.getExcelOutputName("平台邮件列表"),
+            // Object.keys(this.tableData.columns),
+            this.exportEmailData.fieldOrder,
+            this.tableData.columns,
+            newData,
+            ["plat_id", "send_type", "type", "cate", "status"],
+            []
+        );
+    }
+
+    /**取得excel 挡案名称 */
+    getExcelOutputName(title: string) {
+        const plat_name = this.tableData.columns.plat_id.options[this.listQuery.plat_id];
+        let name = `${<string>LangUtil(title)}-${plat_name}`;
+        return name;
+    }
+
     /** 批次進度 */
     get percentage() {
-        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+        return Math.round((this.exportEmailData.pageInfo.pageCurrent / this.exportEmailData.pageInfo.pageCount) * 100);
     }
 
     showFieldSelectionDialog() {
         this.fieldSelectionData.bShow = true;
         this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
+    }
+
+    showEmailFieldSelectionDialog() {
+        this.fieldSelectionEmailData.bShow = true;
+        this.exportEmailData.fieldOrder = [...this.fieldSelectionEmailData.fieldOptions];
     }
 }
