@@ -45,6 +45,9 @@
             <el-form-item size="mini" :label="tableColumns['visitor_allowed'].name" prop="visitor_allowed">
                 <el-switch v-model="form.visitor_allowed" :active-value="1" :inactive-value="98"></el-switch>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['cancel_order'].name" prop="cancel_order">
+                <el-switch v-model="form.cancel_order" :active-value="1" :inactive-value="98"></el-switch>
+            </el-form-item>
             <!-- 系统参数id -->
             <el-form-item :label="tableColumns.proxy_key.name" prop="proxy_key">
                 <el-select v-model="form.proxy_key" filterable class="select" :placeholder="LangUtil('必须选择')">
