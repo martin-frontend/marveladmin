@@ -499,10 +499,18 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
                 element.attachment_content = jsonStringify(element.attachment_content);
             }
         });
+
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item)
+            }
+        }
+
         new BaseInfo.ExportExcel(
             this.getExcelOutputName("用户邮件列表"),
             // Object.keys(this.platUserTableData.columns),
-            this.exportData.fieldOrder,
+            exportField,
             this.platUserTableData.columns,
             newData,
             ["plat_id", "send_type", "type", "cate", "is_read", "attachment_status"],
@@ -553,10 +561,18 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             let memberAnalze: string = `${element.statistics.receive} / ${element.statistics.read} / ${element.statistics.receive_award} / ${element.statistics.send}`;
             element.member_analyze = memberAnalze;
         });
+
+        const exportField = [];
+        for (const item of this.fieldSelectionEmailData.fieldOptions) {
+            if (this.exportEmailData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item)
+            }
+        }
+
         new BaseInfo.ExportExcel(
             this.getExcelOutputName("平台邮件列表"),
             // Object.keys(this.tableData.columns),
-            this.exportEmailData.fieldOrder,
+            exportField,
             this.tableData.columns,
             newData,
             ["plat_id", "send_type", "type", "cate", "status"],

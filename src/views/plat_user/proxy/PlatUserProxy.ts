@@ -1,15 +1,12 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
-import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import { HttpType } from "@/views/plat_user/setting";
 import { Message, MessageBox } from "element-ui";
 import IPlatUserProxy from "./IPlatUserProxy";
-import i18n from "@/lang";
-import ExchangeOrdersProxy from "@/views/exchange_orders/proxy/ExchangeOrdersProxy";
 import { MD5 } from "@/core/global/MD5";
-import { exportJson2Excel } from "@/core/global/Excel";
+import { BaseInfo } from "@/components/vo/commonVo";
 
 export default class PlatUserProxy extends AbstractProxy implements IPlatUserProxy {
     static NAME = "PlatUserProxy";
@@ -465,7 +462,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 const { channel_id, user_id } = this.changeChannelDialogData.form;
                 this.sendNotification(HttpType.admin_plat_user_change_channel, { channel_id, user_id });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**取得所有资料 */
@@ -497,19 +494,34 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
     /**导出 Excel */
     exportExcel() {
-        const data = JSON.parse(JSON.stringify(this.exportData.list));
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+
         // 要导出的栏位
-        let exportColumn = this.exportData.fieldOrder;
+        // let exportColumn = this.exportData.fieldOrder;
         // 栏位中文名称
-        let exportHeader = <any>[];
-        exportColumn.forEach((column: any) => {
-            exportHeader.push(this.tableData.columns[column].name);
-        });
+        // let exportHeader = <any>[];
+        // exportColumn.forEach((column: any) => {
+        //     exportHeader.push(this.tableData.columns[column].name);
+        // });
         // 导出资料
-        let exportData = this.dataMatching(exportColumn, data);
-        exportJson2Excel(exportHeader, exportData, this.getFileName, undefined, undefined);
-        // 改回来page size
-        this.listQuery.page_size = 20;
+        // let exportData = this.dataMatching(exportColumn, data);
+        // exportJson2Excel(exportHeader, exportData, this.getFileName, undefined, undefined);
+
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item)
+            }
+        }
+
+        new BaseInfo.ExportExcel(
+            this.getFileName,
+            exportField,
+            this.tableData.columns,
+            newData,
+            ["plat_id", "is_credit_user", "status"],
+            []
+        );
     }
 
     /**导出资料合并 */
@@ -546,4 +558,3 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }
- 

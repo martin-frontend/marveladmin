@@ -31,7 +31,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             id: { name: "主键", options: [] },
             data_belong: { name: "数据归属标记", options: [] },
             plat_id: { name: "所属平台", options: {} },
@@ -279,7 +279,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
 
-    onQueryAll() {}
+    onQueryAll() { }
 
     /**重置查询条件 */
     resetListQuery() {
@@ -467,10 +467,16 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             // item.exchange_vendors_id = this.tableData.columns["exchange_vendors_id"].options[item.exchange_vendors_id];
         }
 
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item)
+            }
+        }
+
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
-            // Object.keys(this.tableData.columns),
-            this.exportData.fieldOrder,
+            exportField,
             this.tableData.columns,
             newData,
             [

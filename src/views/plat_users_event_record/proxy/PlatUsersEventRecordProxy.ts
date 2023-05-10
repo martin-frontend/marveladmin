@@ -208,9 +208,16 @@ export default class PlatUsersEventRecordProxy extends AbstractProxy implements 
         this.exportData.isExportExcel = true;
         const newData = JSON.parse(JSON.stringify(this.exportData.list));
 
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item)
+            }
+        }
+
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
-            this.exportData.fieldOrder,
+            exportField,
             this.tableData.columns,
             newData,
             ["plat_id", "event_type", "event_status"],

@@ -225,9 +225,17 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
         const newData = JSON.parse(JSON.stringify(this.exportData.list));
         // @ts-ignore
         newData.forEach(element => { element.total_backwater = jsonStringify(element.total_backwater); });
+
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item)
+            }
+        }
+
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
-            this.exportData.fieldOrder,
+            exportField,
             this.tableData.columns,
             newData,
             ["plat_id", "settlement_type"],

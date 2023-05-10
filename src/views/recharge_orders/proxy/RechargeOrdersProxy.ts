@@ -392,11 +392,17 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
                 element.extends = "-";
             }
         });
-        this.tableData.isExportExcel = false;
+
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item)
+            }
+        }
+
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
-            // Object.keys(this.tableData.columns),
-            this.exportData.fieldOrder,
+            exportField,
             this.tableData.columns,
             newData,
             ["plat_id", "paymethod_id", "vendor_id", "status", "block_network_id", "status", "is_internal"],

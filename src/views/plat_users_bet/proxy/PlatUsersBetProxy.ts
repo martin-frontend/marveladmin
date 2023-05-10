@@ -377,10 +377,17 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         //     element.bet_code = element.bet_code ? element.bet_code : `-`;
         // });
 
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item)
+            }
+        }
+
         new BaseInfo.ExportExcel(
             `${this.getExcelOutputName}`,
             // this.curKeyList,
-            this.exportData.fieldOrder,
+            exportField,
             this.tableData.columns,
             // summary,
             newData,
