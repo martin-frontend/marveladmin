@@ -100,7 +100,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        form: {
+        form: <any>{
             content_id: "",
             plat_id: "", //所属平台
             title: "", //邮件名称
