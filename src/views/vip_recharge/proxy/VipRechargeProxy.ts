@@ -64,6 +64,7 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
             coin_name_unique: "",
             remark: "",
             bonus_multiple: 0,
+            plat_id: "",
         },
         isRechargeSuccess: +new Date(),
     };
@@ -105,8 +106,9 @@ export default class VipRechargeProxy extends AbstractProxy implements IVipRecha
     }
     /**提交充值 */
     onTopup() {
-        const { coin_name_unique } = this.listQuery;
+        const { coin_name_unique, plat_id } = this.listQuery;
         this.bodyData.form.coin_name_unique = coin_name_unique;
+        this.bodyData.form.plat_id = plat_id;
         this.sendNotification(HttpType.admin_vip_recharge_recharge, objectRemoveNull(this.bodyData.form));
     }
     /**重置页面表单 */
