@@ -32,16 +32,21 @@
                     </div>
                 </template>
             </el-table-column>
-
             <el-table-column :label="`${tableColumns.username.name}`" class-name="status-col" prop="username">
             </el-table-column>
-            <el-table-column :label="`${tableColumns.is_real.name}`" class-name="status-col" prop="is_real">
+            <!-- <el-table-column :label="`${tableColumns.is_real.name}`" class-name="status-col" prop="is_real">
                 <template slot-scope="{ row }">
                     <div>
                         {{ tableColumns.is_real.options[row.is_real] }}
                     </div>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
+            <el-table-column
+                :label="`${tableColumns.coin_name_unique.name}`"
+                class-name="status-col"
+                prop="coin_name_unique"
+            />
+            <!-- 总充值 -->
             <el-table-column
                 :label="`${tableColumns.total_recharge.name}`"
                 class-name="status-col"
@@ -57,6 +62,7 @@
                     />
                 </template>
             </el-table-column>
+            <!-- 总兑换 -->
             <el-table-column
                 :label="`${tableColumns.total_exchange.name}`"
                 class-name="status-col"
@@ -72,11 +78,14 @@
                     />
                 </template>
             </el-table-column>
+            <!-- 总流水 -->
             <el-table-column
+                v-if="listQuery.vendor_type == ''"
                 :label="`${tableColumns.total_water.name}`"
                 sortable="custom"
                 class-name="status-col"
                 prop="total_water"
+                key="0"
             >
                 <template slot-scope="{ row }">
                     <WinLossDisplay
@@ -87,11 +96,14 @@
                     />
                 </template>
             </el-table-column>
+            <!-- 总输赢 -->
             <el-table-column
+                v-if="listQuery.vendor_type == ''"
                 sortable="custom"
                 :label="`${tableColumns.total_win.name}`"
                 class-name="status-col"
                 prop="total_win"
+                key="1"
             >
                 <template slot-scope="{ row }">
                     <div>
@@ -99,13 +111,117 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="80px">
+            <!-- 总投注 -->
+            <el-table-column
+                v-if="listQuery.vendor_type == ''"
+                sortable="custom"
+                :label="`${tableColumns.total_bet.name}`"
+                class-name="status-col"
+                prop="total_bet"
+                key="2"
+            >
+                <template slot-scope="{ row }">
+                    <div>
+                        <WinLossDisplay :amount="row.total_bet" />
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 总投注数量 -->
+            <el-table-column
+                v-if="listQuery.vendor_type == ''"
+                sortable="custom"
+                :label="`${tableColumns.total_bet_count.name}`"
+                class-name="status-col"
+                prop="total_bet_count"
+                key="3"
+            >
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ row.total_bet_count }}
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- <el-table-column
+                v-if="listQuery.vendor_type != ''"
+                sortable="custom"
+                :label="`${tableColumns[`backwater_${listQuery.vendor_type}`].name}`"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    {{ row[`backwater_${listQuery.vendor_type}`] }}
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="listQuery.vendor_type != ''"
+                sortable="custom"
+                :label="`${tableColumns[`bet_${listQuery.vendor_type}`].name}`"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    {{ row[`bet_${listQuery.vendor_type}`] }}
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="listQuery.vendor_type != ''"
+                sortable="custom"
+                :label="`${tableColumns[`valid_bet_${listQuery.vendor_type}`].name}`"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    {{ row[`valid_bet_${listQuery.vendor_type}`] }}
+                </template>
+            </el-table-column> -->
+            <el-table-column
+                v-if="listQuery.vendor_type != ''"
+                sortable="custom"
+                :label="`${tableColumns[`water_${listQuery.vendor_type}`].name}`"
+                class-name="status-col"
+                key="4"
+            >
+                <template slot-scope="{ row }">
+                    {{ row[`water_${listQuery.vendor_type}`] }}
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="listQuery.vendor_type != ''"
+                sortable="custom"
+                :label="`${tableColumns[`win_gold_${listQuery.vendor_type}`].name}`"
+                class-name="status-col"
+                key="5"
+            >
+                <template slot-scope="{ row }">
+                    {{ row[`win_gold_${listQuery.vendor_type}`] }}
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="listQuery.vendor_type != ''"
+                sortable="custom"
+                :label="`${tableColumns[`bet_${listQuery.vendor_type}`].name}`"
+                class-name="status-col"
+                key="6"
+            >
+                <template slot-scope="{ row }">
+                    {{ row[`bet_${listQuery.vendor_type}`] }}
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="listQuery.vendor_type != ''"
+                sortable="custom"
+                :label="`${tableColumns[`bet_${listQuery.vendor_type}_count`].name}`"
+                class-name="status-col"
+                key="7"
+            >
+                <template slot-scope="{ row }">
+                    {{ row[`bet_${listQuery.vendor_type}_count`] }}
+                </template>
+            </el-table-column>
+            <!-- <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
                     <el-button v-if="!row.is_real" size="mini" type="primary" @click="handleEdit(row)">{{
                         LangUtil("编辑")
                     }}</el-button>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>

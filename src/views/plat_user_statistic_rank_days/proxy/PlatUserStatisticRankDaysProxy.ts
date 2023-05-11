@@ -1,10 +1,11 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { dateFormat, formCompared, generateUUID, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
+import { dateFormat, formCompared, generateUUID, getTodayOffset, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import { HttpType } from "@/views/plat_user_statistic_rank_days/setting";
-import { MessageBox } from "element-ui";
 import IPlatUserStatisticRankDaysProxy from "./IPlatUserStatisticRankDaysProxy";
+import { BaseInfo } from "@/components/vo/commonVo";
 
 export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implements IPlatUserStatisticRankDaysProxy {
     static NAME = "PlatUserStatisticRankDaysProxy";
@@ -26,67 +27,113 @@ export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implem
 
     /**表格相关数据 */
     tableData = {
-        columns: {
-            channel_id: { name: "渠道ID", options: {} },
-            created_at: { name: "创建时间", options: {} },
-            created_date: { name: "统计日期", options: {} },
-            data_belong: { name: "数据归属标记", options: {} },
-            id: { name: "平台用户每日累计ID", options: {} },
-            plat_id: { name: "平台ID", options: {} },
-            total_bet: { name: "用户总投注", options: {} },
-            total_exchange: { name: "用户总兑换", options: {} },
-            total_recharge: { name: "用户总充值", options: {} },
-            total_valid_bet: { name: "用户总有效投注", options: {} },
-            total_water: { name: "用户总流水", options: {} },
-            total_win: { name: "用户总输赢", options: {} },
-            updated_at: { name: "修改时间", options: {} },
-            user_id: { name: "平台用户ID", options: {} },
-            username: { name: "用户名", options: {} },
-            nick_name: { name: "用户昵称", options: {} },
-            bet_2: { name: "棋牌投注", options: {} },
-            bet_4: { name: "彩票投注", options: {} },
-            bet_8: { name: "捕鱼投注", options: {} },
-            bet_16: { name: "电子投注", options: {} },
-            bet_32: { name: "真人投注", options: {} },
-            bet_64: { name: "体育投注", options: {} },
-            bet_128: { name: "电竞投注", options: {} },
-            is_real: { name: "数据属性", options: {} },
-            total_settlement_water: { name: "用户总原始流水", options: {} },
-            valid_bet_2: { name: "棋牌有效投注", options: {} },
-            valid_bet_4: { name: "彩票有效投注", options: {} },
-            valid_bet_8: { name: "捕鱼有效投注", options: {} },
-            valid_bet_16: { name: "电子有效投注", options: {} },
-            valid_bet_32: { name: "真人有效投注", options: {} },
-            valid_bet_64: { name: "体育有效投注", options: {} },
-            valid_bet_128: { name: "电竞有效投注", options: {} },
-            water_2: { name: "棋牌流水", options: {} },
-            water_4: { name: "彩票流水", options: {} },
-            water_8: { name: "捕鱼流水", options: {} },
-            water_16: { name: "电子流水", options: {} },
-            water_32: { name: "真人流水", options: {} },
-            water_64: { name: "体育流水", options: {} },
-            water_128: { name: "电竞流水", options: {} },
-            win_gold_2: { name: "棋牌输赢金额", options: {} },
-            win_gold_4: { name: "彩票输赢金额", options: {} },
-            win_gold_8: { name: "捕鱼输赢金额", options: {} },
-            win_gold_16: { name: "电子输赢金额", options: {} },
-            win_gold_32: { name: "真人输赢金额", options: {} },
-            win_gold_64: { name: "体育输赢金额", options: {} },
-            win_gold_128: { name: "电竞输赢金额", options: {} },
+        columns: <any>{
+            backwater_2: { name: '棋牌挖矿流水', options: {} },
+            backwater_4: { name: '彩票挖矿流水', options: {} },
+            backwater_8: { name: '捕鱼挖矿流水', options: {} },
+            backwater_16: { name: '电子挖矿流水', options: {} },
+            backwater_32: { name: '真人挖矿流水', options: {} },
+            backwater_64: { name: '体育电竞挖矿流水', options: {} },
+            backwater_128: { name: '链游挖矿流水', options: {} },
+            bet_2: { name: '棋牌投注', options: {} },
+            bet_2_count: { name: '棋牌投注数量', options: {} },
+            bet_4: { name: '彩票投注', options: {} },
+            bet_4_count: { name: '彩票投注数量', options: {} },
+            bet_8: { name: '捕鱼投注', options: {} },
+            bet_8_count: { name: '捕鱼投注数量', options: {} },
+            bet_16: { name: '电子投注', options: {} },
+            bet_16_count: { name: '电子投注数量', options: {} },
+            bet_32: { name: '真人投注', options: {} },
+            bet_32_count: { name: '真人投注数量', options: {} },
+            bet_64: { name: '体育电竞投注', options: {} },
+            bet_64_count: { name: '体育电竞投注数量', options: {} },
+            bet_128: { name: '链游投注', options: {} },
+            bet_128_count: { name: '链游投注数量', options: {} },
+            channel_id: { name: '渠道ID', options: {} },
+            coin_name_unique: { name: '币种', options: {} },
+            created_at: { name: '创建时间', options: {} },
+            created_date: { name: '日期', options: {} },
+            data_belong: { name: '数据归属标记', options: {} },
+            id: { name: 'ID', options: {} },
+            is_real: { name: '是否真实', options: {} },
+            plat_id: { name: '平台ID', options: {} },
+            total_backwater: { name: '总挖矿流水', options: {} },
+            total_bet: { name: '总投注', options: {} },
+            total_bet_count: { name: '总投注数量', options: {} },
+            total_exchange: { name: '总兑换', options: {} },
+            total_exchange_count: { name: '总兑换数量', options: {} },
+            total_recharge: { name: '总充值', options: {} },
+            total_recharge_count: { name: '总充值数量', options: {} },
+            total_settlement_water: { name: '用户总原始流水', options: {} },
+            total_valid_bet: { name: '总有效投注', options: {} },
+            total_water: { name: '总流水', options: {} },
+            total_win: { name: '总输赢', options: {} },
+            updated_at: { name: '修改时间', options: {} },
+            user_id: { name: '平台用户ID', options: {} },
+            username: { name: '用户名', options: {} },
+            valid_bet_2: { name: '棋牌有效投注', options: {} },
+            valid_bet_4: { name: '彩票有效投注', options: {} },
+            valid_bet_8: { name: '捕鱼有效投注', options: {} },
+            valid_bet_16: { name: '电子有效投注', options: {} },
+            valid_bet_32: { name: '真人有效投注', options: {} },
+            valid_bet_64: { name: '体育电竞有效投注', options: {} },
+            valid_bet_128: { name: '链游有效投注', options: {} },
+            vendor_type: { name: '游戏类型', options: {} },
+            water_2: { name: '棋牌流水', options: {} },
+            water_4: { name: '彩票流水', options: {} },
+            water_8: { name: '捕鱼流水', options: {} },
+            water_16: { name: '电子流水', options: {} },
+            water_32: { name: '真人流水', options: {} },
+            water_64: { name: '体育电竞流水', options: {} },
+            water_128: { name: '链游流水', options: {} },
+            win_gold_2: { name: '棋牌输赢金额', options: {} },
+            win_gold_4: { name: '彩票输赢金额', options: {} },
+            win_gold_8: { name: '捕鱼输赢金额', options: {} },
+            win_gold_16: { name: '电子输赢金额', options: {} },
+            win_gold_32: { name: '真人输赢金额', options: {} },
+            win_gold_64: { name: '体育电竞输赢金额', options: {} },
+            win_gold_128: { name: '链游输赢金额', options: {} },
+            coin_name_unique_option: {},
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
     /**查询条件 */
-    listQuery = {
+    listQuery: any = {
         user_id: "",
         page_count: 1,
         page_size: 20,
         plat_id: "",
-        is_real: "",
+        // is_real: "",
         order_by: "",
+        vendor_type: "",
+        coin_name_unique: "",
         "created_at-{>=}": dateFormat(getTodayOffset(0), "yyyy-MM-dd hh:mm:ss"),
         "created_at-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
+    };
+
+    fieldSelectionData = {
+        bShow: false,
+        baseData: [
+            "plat_id",
+            "user_id",
+            "username",
+            // "is_real",
+            "coin_name_unique",
+            "total_recharge",
+            "total_exchange",
+        ],
+        fieldOptions: <any>[
+        ],
+    };
+
+    /**导出 相关数据 */
+    exportData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
     };
 
     /**随机数据 */
@@ -131,11 +178,17 @@ export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implem
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
+                //设定选取平台第一个
                 this.listQuery.plat_id = plat_id_options_keys[0];
             }
-            this.onQuery();
+            if (this.listQuery.plat_id) {
+                //@ts-ignore
+                this.tableData.columns.coin_name_unique_option = this.tableData.columns.coin_name_unique.options[this.listQuery.plat_id];
+                this.onQuery();
+            }
         }
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
@@ -150,7 +203,9 @@ export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implem
             page_count: 1,
             page_size: 20,
             order_by: "",
-            is_real: "",
+            // is_real: "",
+            vendor_type: "",
+            coin_name_unique: "",
             "created_at-{>=}": dateFormat(getTodayOffset(0), "yyyy-MM-dd hh:mm:ss"),
             "created_at-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
         });
@@ -178,6 +233,7 @@ export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implem
     hideDialog() {
         this.dialogData.bShow = false;
     }
+
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
@@ -251,8 +307,126 @@ export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implem
         const keys = Object.keys(this.tableData.columns.plat_id.options);
         return keys.includes(val) ? val : this.dialogData.plat_id;
     }
+
     /**取随机数 */
     getRandom(min: any, max: any) {
         return Math.floor(Math.random() * (max - min) + min);
+    }
+
+    /**取得excel 挡案名称 */
+    getExcelOutputName() {
+        //@ts-ignore
+        const plat_name = this.tableData.columns.plat_id.options[this.listQuery.plat_id];
+        let name = `${<string>LangUtil("用户排行榜汇总")}-${plat_name}`;
+        return name;
+    }
+
+    /**取得所有资料 */
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        this.sendNotification(HttpType.admin_plat_user_statistic_rank_days_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
+    }
+
+    /**导出excel */
+    exportExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item)
+            }
+        }
+
+        new BaseInfo.ExportExcel(
+            this.getExcelOutputName(),
+            exportField,
+            this.tableData.columns,
+            newData,
+            ["plat_id"],
+            []
+        );
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.fieldSelectionData.fieldOptions = [];
+        this.fieldSelectionData.fieldOptions = [... this.fieldSelectionData.baseData];
+        if (this.listQuery.vendor_type == '') {
+            this.fieldSelectionData.fieldOptions.push("total_water");
+            this.fieldSelectionData.fieldOptions.push("total_win");
+            this.fieldSelectionData.fieldOptions.push("total_bet");
+            this.fieldSelectionData.fieldOptions.push("total_bet_count");
+        } else if (this.listQuery.vendor_type == 2) {
+            this.fieldSelectionData.fieldOptions.push("water_2");
+            this.fieldSelectionData.fieldOptions.push("win_gold_2");
+            this.fieldSelectionData.fieldOptions.push("bet_2");
+            this.fieldSelectionData.fieldOptions.push("bet_2_count");
+        } else if (this.listQuery.vendor_type == 4) {
+            this.fieldSelectionData.fieldOptions.push("water_4");
+            this.fieldSelectionData.fieldOptions.push("win_gold_4");
+            this.fieldSelectionData.fieldOptions.push("bet_4");
+            this.fieldSelectionData.fieldOptions.push("bet_4_count");
+        } else if (this.listQuery.vendor_type == 8) {
+            this.fieldSelectionData.fieldOptions.push("water_8");
+            this.fieldSelectionData.fieldOptions.push("win_gold_8");
+            this.fieldSelectionData.fieldOptions.push("bet_8");
+            this.fieldSelectionData.fieldOptions.push("bet_8_count");
+        } else if (this.listQuery.vendor_type == 16) {
+            this.fieldSelectionData.fieldOptions.push("water_16");
+            this.fieldSelectionData.fieldOptions.push("win_gold_16");
+            this.fieldSelectionData.fieldOptions.push("bet_16");
+            this.fieldSelectionData.fieldOptions.push("bet_16_count");
+        } else if (this.listQuery.vendor_type == 32) {
+            this.fieldSelectionData.fieldOptions.push("water_32");
+            this.fieldSelectionData.fieldOptions.push("win_gold_32");
+            this.fieldSelectionData.fieldOptions.push("bet_32");
+            this.fieldSelectionData.fieldOptions.push("bet_32_count");
+        } else if (this.listQuery.vendor_type == 64) {
+            this.fieldSelectionData.fieldOptions.push("water_64");
+            this.fieldSelectionData.fieldOptions.push("win_gold_64");
+            this.fieldSelectionData.fieldOptions.push("bet_64");
+            this.fieldSelectionData.fieldOptions.push("bet_64_count");
+        } else if (this.listQuery.vendor_type == 128) {
+            this.fieldSelectionData.fieldOptions.push("water_128");
+            this.fieldSelectionData.fieldOptions.push("win_gold_128");
+            this.fieldSelectionData.fieldOptions.push("bet_128");
+            this.fieldSelectionData.fieldOptions.push("bet_128_count");
+        }
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }

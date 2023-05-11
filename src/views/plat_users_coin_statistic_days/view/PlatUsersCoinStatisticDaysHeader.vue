@@ -15,12 +15,6 @@
             v-model="listQuery.coin_name_unique"
             :options="tableColumns.coin_name_unique_option"
         />
-        <SearchSelect
-            :title="tableColumns.vendor_type.name"
-            v-model="listQuery.vendor_type"
-            :options="tableColumns.vendor_type.options"
-            @change="handlerSearch()"
-        />
         <div class="group">
             <SearchDatePicker
                 :title="LangUtil('投注结算时间')"
@@ -29,26 +23,13 @@
                 :showTime="true"
             />
             <SearchInput :title="tableColumns.user_id.name" :maxLength="30" v-model="listQuery.user_id" />
-            <!-- <SearchSelect
-                :title="tableColumns.is_real.name"
-                v-model="listQuery.is_real"
-                :options="tableColumns.is_real.options"
-                @change="handlerSearch"
-                :clearable="true"
-            /> -->
-            <div class="btn_group">
+            <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
                     {{ LangUtil("查询") }}
                 </el-button>
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
                     {{ LangUtil("重置") }}
                 </el-button>
-                <el-button type="primary" @click="handlerExport()" icon="el-icon-download" :disabled="list.length == 0">
-                    {{ LangUtil("导出") }}
-                </el-button>
-                <!-- <el-button class="add" @click="handlerCreate()" type="primary" icon="el-icon-circle-plus-outline">
-                    {{ LangUtil("添加") }}
-                </el-button> -->
             </div>
         </div>
     </div>
@@ -58,7 +39,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
-import PlatUserStatisticRankDaysProxy from "../proxy/PlatUserStatisticRankDaysProxy";
+import PlatUsersCoinStatisticDaysProxy from "../proxy/PlatUsersCoinStatisticDaysProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SearchSelect from "@/components/SearchSelect.vue";
@@ -68,22 +49,21 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
     components: {
-        SearchInput,
         SearchSelect,
+        SearchInput,
         SearchDatePicker,
     },
 })
-export default class PlatUserStatisticRankDaysHeader extends AbstractView {
+export default class PlatUsersCoinStatisticDaysHeader extends AbstractView {
     LangUtil = LangUtil;
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
     // proxy
-    myProxy: PlatUserStatisticRankDaysProxy = this.getProxy(PlatUserStatisticRankDaysProxy);
+    myProxy: PlatUsersCoinStatisticDaysProxy = this.getProxy(PlatUsersCoinStatisticDaysProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
-    list = this.myProxy.tableData.list;
 
     handlerSearch() {
         this.listQuery.page_count = 1;
@@ -98,10 +78,6 @@ export default class PlatUserStatisticRankDaysHeader extends AbstractView {
         this.myProxy.showDialog(DialogStatus.create);
     }
 
-    handlerExport() {
-        this.myProxy.showFieldSelectionDialog();
-    }
-
     //更换平台切换对应币种
     changePlat() {
         this.listQuery.coin_name_unique = "";
@@ -113,11 +89,4 @@ export default class PlatUserStatisticRankDaysHeader extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
-.btn_group {
-    display: flex;
-    width: 100%;
-    .add {
-        margin-left: auto;
-    }
-}
 </style>

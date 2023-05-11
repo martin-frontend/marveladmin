@@ -1,0 +1,429 @@
+<template>
+    <div>
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
+            <el-table-column
+                :label="`${tableColumns.plat_id.name}`"
+                class-name="status-col"
+                prop="plat_id"
+                min-width="180px"
+            >
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns.plat_id.options[row.plat_id] }}
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="`${tableColumns.channel_id.name}`"
+                class-name="status-col"
+                prop="channel_id"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.user_id.name}`"
+                class-name="status-col"
+                prop="user_id"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.username.name}`"
+                class-name="status-col"
+                prop="username"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.coin_name_unique.name}`"
+                class-name="status-col"
+                prop="coin_name_unique"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.created_date.name}`"
+                class-name="status-col"
+                prop="created_date"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.updated_at.name}`"
+                class-name="status-col"
+                prop="updated_at"
+                min-width="180px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_recharge.name}`"
+                class-name="status-col"
+                prop="username"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_recharge_count.name}`"
+                class-name="status-col"
+                prop="total_recharge_count"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_exchange.name}`"
+                class-name="status-col"
+                prop="total_exchange"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_exchange_count.name}`"
+                class-name="status-col"
+                prop="total_exchange_count"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_bet.name}`"
+                class-name="status-col"
+                prop="total_bet"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_bet_count.name}`"
+                class-name="status-col"
+                prop="total_bet_count"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_backwater.name}`"
+                class-name="status-col"
+                prop="total_backwater"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_settlement_water.name}`"
+                class-name="status-col"
+                prop="total_settlement_water"
+                min-width="120px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_valid_bet.name}`"
+                class-name="status-col"
+                prop="total_valid_bet"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_water.name}`"
+                class-name="status-col"
+                prop="total_water"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.total_win.name}`"
+                class-name="status-col"
+                prop="total_win"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_2_count.name}`"
+                class-name="status-col"
+                prop="bet_2_count"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_2.name}`"
+                class-name="status-col"
+                prop="bet_2"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.valid_bet_2.name}`"
+                class-name="status-col"
+                prop="valid_bet_2"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.water_2.name}`"
+                class-name="status-col"
+                prop="water_2"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.backwater_2.name}`"
+                class-name="status-col"
+                prop="backwater_2"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.win_gold_2.name}`"
+                class-name="status-col"
+                prop="win_gold_2"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_4_count.name}`"
+                class-name="status-col"
+                prop="bet_4_count"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_4.name}`"
+                class-name="status-col"
+                prop="bet_4"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.valid_bet_4.name}`"
+                class-name="status-col"
+                prop="valid_bet_4"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.water_4.name}`"
+                class-name="status-col"
+                prop="water_4"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.backwater_4.name}`"
+                class-name="status-col"
+                prop="backwater_4"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.win_gold_4.name}`"
+                class-name="status-col"
+                prop="win_gold_4"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_8_count.name}`"
+                class-name="status-col"
+                prop="bet_8_count"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_8.name}`"
+                class-name="status-col"
+                prop="bet_8"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.valid_bet_8.name}`"
+                class-name="status-col"
+                prop="valid_bet_8"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.water_8.name}`"
+                class-name="status-col"
+                prop="water_8"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.backwater_8.name}`"
+                class-name="status-col"
+                prop="backwater_8"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.win_gold_8.name}`"
+                class-name="status-col"
+                prop="win_gold_8"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_16_count.name}`"
+                class-name="status-col"
+                prop="bet_16_count"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_16.name}`"
+                class-name="status-col"
+                prop="bet_16"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.valid_bet_16.name}`"
+                class-name="status-col"
+                prop="valid_bet_16"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.water_16.name}`"
+                class-name="status-col"
+                prop="water_16"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.backwater_16.name}`"
+                class-name="status-col"
+                prop="backwater_16"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.win_gold_16.name}`"
+                class-name="status-col"
+                prop="win_gold_16"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_32_count.name}`"
+                class-name="status-col"
+                prop="bet_32_count"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_32.name}`"
+                class-name="status-col"
+                prop="bet_32"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.valid_bet_32.name}`"
+                class-name="status-col"
+                prop="valid_bet_32"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.water_32.name}`"
+                class-name="status-col"
+                prop="water_32"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.backwater_32.name}`"
+                class-name="status-col"
+                prop="backwater_32"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.win_gold_32.name}`"
+                class-name="status-col"
+                prop="win_gold_32"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_64_count.name}`"
+                class-name="status-col"
+                prop="bet_64_count"
+                min-width="140px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_64.name}`"
+                class-name="status-col"
+                prop="bet_64"
+                min-width="140px"
+            />
+            <el-table-column
+                :label="`${tableColumns.valid_bet_64.name}`"
+                class-name="status-col"
+                prop="valid_bet_64"
+                min-width="140px"
+            />
+            <el-table-column
+                :label="`${tableColumns.water_64.name}`"
+                class-name="status-col"
+                prop="water_64"
+                min-width="140px"
+            />
+            <el-table-column
+                :label="`${tableColumns.backwater_64.name}`"
+                class-name="status-col"
+                prop="backwater_64"
+                min-width="140px"
+            />
+            <el-table-column
+                :label="`${tableColumns.win_gold_64.name}`"
+                class-name="status-col"
+                prop="win_gold_64"
+                min-width="140px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_128_count.name}`"
+                class-name="status-col"
+                prop="bet_128_count"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.bet_128.name}`"
+                class-name="status-col"
+                prop="bet_128"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.valid_bet_128.name}`"
+                class-name="status-col"
+                prop="valid_bet_128"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.water_128.name}`"
+                class-name="status-col"
+                prop="water_128"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.backwater_128.name}`"
+                class-name="status-col"
+                prop="backwater_128"
+                min-width="100px"
+            />
+            <el-table-column
+                :label="`${tableColumns.win_gold_128.name}`"
+                class-name="status-col"
+                prop="win_gold_128"
+                min-width="100px"
+            />
+        </el-table>
+        <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
+    </div>
+</template>
+<script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
+import AbstractView from "@/core/abstract/AbstractView";
+import { Component } from "vue-property-decorator";
+import { DialogStatus } from "@/core/global/Constant";
+import { checkUnique, unique } from "@/core/global/Permission";
+import PlatUsersCoinStatisticDaysProxy from "../proxy/PlatUsersCoinStatisticDaysProxy";
+import Pagination from "@/components/Pagination.vue";
+import GlobalVar from "@/core/global/GlobalVar";
+
+@Component({
+    components: {
+        Pagination,
+    },
+})
+export default class PlatUsersCoinStatisticDaysBody extends AbstractView {
+    LangUtil = LangUtil;
+    //权限标识
+    unique = unique;
+    checkUnique = checkUnique;
+    //网络状态
+    net_status = GlobalVar.net_status;
+    // proxy
+    myProxy: PlatUsersCoinStatisticDaysProxy = this.getProxy(PlatUsersCoinStatisticDaysProxy);
+    // proxy property
+    tableColumns = this.myProxy.tableData.columns;
+    tableData = this.myProxy.tableData.list;
+    pageInfo = this.myProxy.tableData.pageInfo;
+    listQuery = this.myProxy.listQuery;
+
+    handlerPageSwitch(page: number) {
+        this.listQuery.page_count = page;
+        this.myProxy.onQuery();
+    }
+
+    handleEdit(data: any) {
+        this.myProxy.showDialog(DialogStatus.update, data);
+    }
+
+    handlerDelete(data: any) {
+        this.myProxy.onDelete(data.id);
+    }
+}
+</script>
+
+<style scoped lang="scss">
+@import "@/styles/common.scss";
+</style>

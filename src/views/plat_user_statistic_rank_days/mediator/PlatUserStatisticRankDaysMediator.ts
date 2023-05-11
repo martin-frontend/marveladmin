@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/plat_user_statistic_rank_days/setti
 import { Message } from "element-ui";
 import PlatUserStatisticRankDaysProxy from "../proxy/PlatUserStatisticRankDaysProxy";
 
-interface IPlatUserStatisticRankDays extends IEventDispatcher {}
+interface IPlatUserStatisticRankDays extends IEventDispatcher { }
 
 export default class PlatUserStatisticRankDaysMediator extends AbstractMediator {
     private myProxy: PlatUserStatisticRankDaysProxy = <any>this.getProxy(PlatUserStatisticRankDaysProxy);
@@ -42,7 +42,11 @@ export default class PlatUserStatisticRankDaysMediator extends AbstractMediator 
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_user_statistic_rank_days_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_plat_user_statistic_rank_days_store:
                 Message.success(SuccessMessage.create);
