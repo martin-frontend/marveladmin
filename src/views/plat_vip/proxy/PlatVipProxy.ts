@@ -167,8 +167,8 @@ export default class PlatVipProxy extends AbstractProxy implements IPlatVipProxy
         this.copyVipData = JSON.parse(JSON.stringify(value.vip_config));
         this.vipModeDesc = value;
         const { vip_config, types } = value;
-        this.vipData = [];
-        this.vipData = vip_config;
+        // this.vipData = [];
+        // this.vipData = vip_config;
         this.types = types;
     }
 
