@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/dashboard/setting";
 import { Message } from "element-ui";
 import DashboardProxy from "../proxy/DashboardProxy";
 
-interface IDashboard extends IEventDispatcher {}
+interface IDashboard extends IEventDispatcher { }
 
 export default class DashboardMediator extends AbstractMediator {
     private myProxy: DashboardProxy = <any>this.getProxy(DashboardProxy);
@@ -29,6 +29,7 @@ export default class DashboardMediator extends AbstractMediator {
             EventType.admin_index_statistic_today_statistic,
             EventType.admin_index_statistic_recharge_statistic,
             EventType.admin_index_statistic_exchange_statistic,
+            EventType.admin_index_statistic_coin_statistic,
         ];
     }
 
@@ -51,6 +52,9 @@ export default class DashboardMediator extends AbstractMediator {
                 break;
             case EventType.admin_index_statistic_exchange_statistic:
                 myProxy.setExchange(body);
+                break;
+            case EventType.admin_index_statistic_coin_statistic:
+                myProxy.setStatistic(body);
                 break;
         }
     }
