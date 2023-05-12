@@ -1,7 +1,16 @@
 <template>
     <div>
         <div class="group">
-            <div class="content">
+            <SearchDatePicker
+                :title="LangUtil('统计日期')"
+                :startDate.sync="listQuery.start_date"
+                :endDate.sync="listQuery.end_date"
+                :clearable="false"
+            />
+            <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                {{ LangUtil("查询") }}
+            </el-button>
+            <!-- <div class="content">
                 <span class="title">
                     {{ LangUtil("统计开始时间") }}
                 </span>
@@ -32,7 +41,7 @@
                     :clearable="false"
                 >
                 </el-date-picker>
-            </div>
+            </div> -->
         </div>
         <div style="display: flex; flex-wrap: wrap" v-loading="net_status.loading">
             <div class="stats_table">
@@ -114,7 +123,7 @@
         </div>
         <div v-loading="net_status.loading">
             <div class="stats_title">
-                {{ LangUtil("游戏输赢") }}
+                {{ LangUtil("平台游戏输赢") }}
             </div>
             <el-table
                 :data="myProxy.game_win_gold"
@@ -196,8 +205,14 @@
                 <el-table-column :label="LangUtil('活动奖励')" prop="activity_awards_amount" class-name="status-col">
                 </el-table-column>
                 <el-table-column :label="LangUtil('人工扣款')" prop="manual_deduct_amount" class-name="status-col">
+                    <template slot-scope="{ row }">
+                        <WinLossDisplay :amount="row.manual_deduct_amount" :isShowDollar="false" />
+                    </template>
                 </el-table-column>
                 <el-table-column :label="LangUtil('游戏输赢')" prop="win_loss_amount" class-name="status-col">
+                    <template slot-scope="{ row }">
+                        <WinLossDisplay :amount="row.win_loss_amount" :isShowDollar="false" />
+                    </template>
                 </el-table-column>
             </el-table>
         </div>
@@ -213,10 +228,12 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import GlobalVar from "@/core/global/GlobalVar";
 import { dateFormat } from "@/core/global/Functions";
 import WinLossDisplay from "@/components/WinLossDisplay.vue";
+import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
     components: {
         WinLossDisplay,
+        SearchDatePicker,
     },
 })
 export default class DashboardDialog extends AbstractView {
@@ -230,43 +247,46 @@ export default class DashboardDialog extends AbstractView {
     myProxy: DashboardProxy = this.getProxy(DashboardProxy);
     listQuery = this.myProxy.listQuery;
 
-    onChangeStart() {
-        if (this.listQuery.start_date) {
-            if (this.listQuery.start_date == dateFormat(new Date(), "yyyy-MM-dd")) {
-                // 开始时间选今天 结束时间为今天
-                this.listQuery.end_date = this.listQuery.start_date;
-            } else {
-                this.listQuery.end_date = this.incrementDate(this.listQuery.start_date, 1);
-            }
-        }
-        this.myProxy.onQueryStats();
-    }
+    // onChangeStart() {
+    //     if (this.listQuery.start_date) {
+    //         if (this.listQuery.start_date == dateFormat(new Date(), "yyyy-MM-dd")) {
+    //             // 开始时间选今天 结束时间为今天
+    //             this.listQuery.end_date = this.listQuery.start_date;
+    //         } else {
+    //             this.listQuery.end_date = this.incrementDate(this.listQuery.start_date, 1);
+    //         }
+    //     }
+    //     this.myProxy.onQueryStats();
+    // }
 
-    onChangeEnd() {
-        if (this.listQuery.end_date) {
-            this.listQuery.start_date = this.incrementDate(this.listQuery.end_date, -1);
-        }
-        this.myProxy.onQueryStats();
-    }
+    // onChangeEnd() {
+    //     if (this.listQuery.end_date) {
+    //         this.listQuery.start_date = this.incrementDate(this.listQuery.end_date, -1);
+    //     }
+    //     this.myProxy.onQueryStats();
+    // }
 
-    incrementDate(date_str: string, incrementor: number) {
-        var parts = date_str.split("-");
-        var dt = new Date(
-            parseInt(parts[0], 10), // year
-            parseInt(parts[1], 10) - 1, // month (starts with 0)
-            parseInt(parts[2], 10) // date
-        );
-        dt.setDate(dt.getDate() + incrementor);
-        parts[0] = "" + dt.getFullYear();
-        parts[1] = "" + (dt.getMonth() + 1);
-        if (parts[1].length < 2) {
-            parts[1] = "0" + parts[1];
-        }
-        parts[2] = "" + dt.getDate();
-        if (parts[2].length < 2) {
-            parts[2] = "0" + parts[2];
-        }
-        return parts.join("-");
+    // incrementDate(date_str: string, incrementor: number) {
+    //     var parts = date_str.split("-");
+    //     var dt = new Date(
+    //         parseInt(parts[0], 10), // year
+    //         parseInt(parts[1], 10) - 1, // month (starts with 0)
+    //         parseInt(parts[2], 10) // date
+    //     );
+    //     dt.setDate(dt.getDate() + incrementor);
+    //     parts[0] = "" + dt.getFullYear();
+    //     parts[1] = "" + (dt.getMonth() + 1);
+    //     if (parts[1].length < 2) {
+    //         parts[1] = "0" + parts[1];
+    //     }
+    //     parts[2] = "" + dt.getDate();
+    //     if (parts[2].length < 2) {
+    //         parts[2] = "0" + parts[2];
+    //     }
+    //     return parts.join("-");
+    // }
+    handlerSearch() {
+        this.myProxy.onQueryStats();
     }
 }
 </script>

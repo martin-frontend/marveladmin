@@ -174,9 +174,40 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
 
     /**日期快捷 */
     pickerOptions = {
-        disabledDate(time: any) {
-            return time.getTime() > Date.now();
-        },
+        shortcuts: [
+            {
+                text: LangUtil("今日"),
+                onClick(picker: any) {
+                    const start = getTodayOffset();
+                    const end = getTodayOffset(1, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+            {
+                text: LangUtil("昨日"),
+                onClick(picker: any) {
+                    const start = getTodayOffset(-1);
+                    const end = getTodayOffset(0, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+            {
+                text: LangUtil("最近一周"),
+                onClick(picker: any) {
+                    const start = getTodayOffset(-6);
+                    const end = getTodayOffset(1, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+            {
+                text: LangUtil("最近一个月"),
+                onClick(picker: any) {
+                    const start = getTodayOffset(-29);
+                    const end = getTodayOffset(1, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+        ],
     };
 
     get getXAxisData() {
