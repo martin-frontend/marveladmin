@@ -59,6 +59,9 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['white_ip'].name" prop="white_ip">
+                <el-input v-model="form.white_ip" :placeholder="LangUtil('请输入')"></el-input>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['cron_id'].name" prop="cron_id">
                 <el-input v-model="form.cron_id" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>

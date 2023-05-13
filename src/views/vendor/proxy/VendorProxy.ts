@@ -64,6 +64,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             coin_tag: { name: '币种前缀' },
             vendor_coin_name_unique: { name: '厂商币种编号' },
             cancel_order: { name: '取消订单', options: {} },
+            white_ip: { name: 'IP白名單', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -112,6 +113,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             visitor_allowed: 98,
             extends_coin: "",
             cancel_order: "",
+            white_ip: "",
         },
         formSource: null, // 表单的原始数据
         // 扩展数据
@@ -217,6 +219,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             visitor_allowed: 98,
             extends_coin: "",
             cancel_order: "",
+            white_ip: "",
         });
         this.dialogData.extendsData = {};
         this.dialogData.betCodeContentData = {};
@@ -254,6 +257,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             is_save_bet_info,
             visitor_allowed,
             cancel_order,
+            white_ip,
         } = this.dialogData.form;
         const formCopy: any = {
             bet_detail_url,
@@ -274,6 +278,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             is_save_bet_info,
             visitor_allowed,
             cancel_order,
+            white_ip,
         };
         formCopy.vendor_types = JSON.stringify(formCopy.vendor_types);
         formCopy.languages = JSON.stringify(formCopy.languages);
