@@ -24,6 +24,7 @@
                 :title="tableColumns.binded_at.name"
                 :startDate.sync="listQuery.binded_start"
                 :endDate.sync="listQuery.binded_end"
+                :showTime="true"
             />
             <SearchSelect
                 :title="tableColumns.channel_id.name"
