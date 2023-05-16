@@ -28,6 +28,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
     tableData = {
         columns: {
             app_platform: { name: "应用平台", options: {} },
+            category: { name: '分类', options: {} },
             content: { name: "公告内容", options: {} },
             created_at: { name: "创建时间", options: {} },
             created_by: { name: "创建人", options: {} },
@@ -53,19 +54,25 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        isResort: false, // 是否重新排序
     };
 
     /**查询条件 */
     listQuery = {
         page_count: 1,
-        page_size: 20,
+        page_size: 200,
         plat_id: "",
+        type_position: "",
+        status: "",
+        category: "",
     };
 
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
+        /** 页面是否载入中 */
+        loading: false,
         form: <any>{
             id: null,
             // TODO
@@ -75,6 +82,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             start_time: "",
             end_time: "",
             type: 1,
+            category: "",
             content: "",
             img_urls: "",
             img_uris: "",
@@ -117,11 +125,22 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             this.onQuery();
         }
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        this.tableData.isResort = true;
+    }
+
+    /**重置查询条件 */
+    resetListQuery() {
+        Object.assign(this.listQuery, {
+            type_position: "",
+            status: "",
+            category: "",
+        });
     }
 
     /**详细数据 */
@@ -139,6 +158,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         this.dialogData.bShow = true;
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
+            this.dialogData.loading = true;
             this.dialogData.formSource = data;
             this.sendNotification(HttpType.admin_plats_notice_show, { id: data.id });
         } else {
@@ -164,6 +184,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             start_time: "",
             end_time: "",
             type: 1,
+            category: "",
             content: "",
             img_urls: "",
             img_uris: "",
@@ -191,6 +212,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             start_time,
             end_time,
             type,
+            category,
             content,
             img_urls,
             img_uris,
@@ -233,6 +255,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             start_time,
             end_time,
             type,
+            category,
             content,
             img_urls,
             img_uris,
@@ -307,7 +330,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             .then(() => {
                 this.sendNotification(HttpType.admin_plats_notice_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     onRemoveItem() {
@@ -320,7 +343,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                 this.tableCtrlData.opt = null;
                 this.onUpdate(true);
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**图片上传 */
@@ -343,5 +366,20 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             this.dialogData.form.thumbnail_uris[this.appType] = body.uri;
             this.dialogData.form.thumbnail_urls[this.appType] = body.url;
         }
+    }
+
+    /**重新排序 */
+    onResort({ id, next_id }: { [key: string]: number }) {
+        this.facade.sendNotification(HttpType.admin_plats_notice_update, { id: id, next_id: next_id, opt: 11 });
+    }
+
+    /** 显示复制模版 */
+    showCopyDialog(status: string, data?: any) {
+        this.dialogData.bShow = true;
+        this.dialogData.status = status;
+        this.sendNotification(HttpType.admin_plats_notice_show, { id: data.id });
+        this.resetDialogForm();
+        this.dialogData.formSource = null;
+        this.dialogData.loading = true;
     }
 }

@@ -71,6 +71,26 @@
                 </el-select>
             </el-form-item>
 
+            <!-- 分类 -->
+            <el-form-item size="mini" :label="tableColumns['category'].name" prop="category">
+                <div class="flex d-flex">
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        v-model="form.category"
+                        :placeholder="LangUtil('请输入')"
+                    ></el-input>
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate(form.category)"
+                    >
+                        <!-- 翻译 -->
+                        {{ LangUtil("翻译") }}
+                    </el-button>
+                </div>
+            </el-form-item>
+
             <el-form-item size="mini" :label="tableColumns['start_time'].name" prop="start_time">
                 <el-date-picker
                     v-model="form.start_time"
@@ -132,7 +152,7 @@
                         :placeholder="LangUtil('请输入')"
                         v-model="form.content"
                     ></el-input> -->
-                    <TinymceUpload v-model="form.content"/>
+                    <TinymceUpload v-model="form.content" />
                     <!-- <el-button
                         style="max-height: 35px"
                         type="primary"
@@ -329,11 +349,12 @@ export default class PlatsNoticeDialog extends AbstractView {
             start_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             end_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
-            content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
-            img_urls: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            // content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            // img_urls: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             // thumbnail_urls: [{ required: true, message: this.LangUtil('必须选择'), trigger: "change" }],
             languages: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             type_position: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            // category: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 

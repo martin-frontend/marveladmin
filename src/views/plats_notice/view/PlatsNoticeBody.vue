@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-table
-            :data="tableData"
+            :data="data"
             border
             fit
             highlight-current-row
@@ -40,7 +40,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['type_position'].name" align="center">
+            <el-table-column :label="tableColumns['type_position'].name" align="center" width="100">
                 <template slot-scope="{ row }">
                     {{ tableColumns["type_position"].options[row.type_position] }}
                 </template>
@@ -58,13 +58,22 @@
                 width="160"
                 align="center"
             ></el-table-column>
+            <el-table-column
+                :label="tableColumns['category'].name"
+                prop="category"
+                width="120"
+                align="center"
+            ></el-table-column>
             <el-table-column :label="tableColumns['status'].name" align="center">
                 <template slot-scope="{ row }">
                     {{ tableColumns["status"].options[row.status] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="220">
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="320">
                 <template slot-scope="{ row }">
+                    <el-button size="mini" type="primary" @click="onCopyModule(row)">
+                        {{ LangUtil("复制") }}
+                    </el-button>
                     <el-button
                         size="mini"
                         v-if="checkUnique(unique.plats_notice_update)"
@@ -105,6 +114,10 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column :label="LangUtil('排序')" class-name="status-col" min-width="60px">
+                <div class="sort">
+                    <i class="el-icon-rank"></i></div
+            ></el-table-column>
         </el-table>
         <Pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch" />
     </div>
@@ -112,12 +125,13 @@
 <script lang="ts">
 import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatsNoticeProxy from "../proxy/PlatsNoticeProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import Sortable from "sortablejs";
 
 @Component({
     components: {
@@ -138,6 +152,24 @@ export default class PlatsNoticeBody extends AbstractView {
     tableData = this.myProxy.tableData.list;
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
+
+    data = [];
+    sortItem = {
+        id: 0,
+        next_id: 0,
+    };
+
+    @Watch("myProxy.tableData.isResort")
+    resort() {
+        if (this.myProxy.tableData.isResort) {
+            this.data = [];
+            this.$nextTick(() => {
+                this.data = this.tableData;
+                this.initSort();
+            });
+            this.myProxy.tableData.isResort = false;
+        }
+    }
 
     handlerQuery() {
         this.myProxy.onQuery();
@@ -167,6 +199,33 @@ export default class PlatsNoticeBody extends AbstractView {
         this.myProxy.tableCtrlData.status = status;
         this.myProxy.onRemoveItem();
     }
+
+    onCopyModule(data: any) {
+        this.myProxy.showCopyDialog(DialogStatus.create, data);
+    }
+
+    initSort() {
+        const tbody: any = document.querySelector(".el-table__body-wrapper tbody");
+        new Sortable(tbody, {
+            onStart: e => {
+                this.sortItem.id = this.tableData[e.oldIndex as number].id;
+            },
+            onEnd: e => {
+                let oldIndex: number = e.oldIndex as number;
+                let newIndex: number = e.newIndex as number;
+                if (oldIndex < newIndex) {
+                    if ((e.newIndex as number) + 1 >= this.tableData.length) {
+                        this.sortItem.next_id = 0;
+                    } else {
+                        this.sortItem.next_id = this.tableData[(e.newIndex as number) + 1].id;
+                    }
+                } else {
+                    this.sortItem.next_id = this.tableData[newIndex].id;
+                }
+                this.myProxy.onResort(this.sortItem);
+            },
+        });
+    }
 }
 </script>
 
@@ -186,5 +245,8 @@ export default class PlatsNoticeBody extends AbstractView {
             }
         }
     }
+}
+.sort {
+    font-size: 32px;
 }
 </style>
