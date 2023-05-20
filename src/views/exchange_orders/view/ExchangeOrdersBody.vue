@@ -178,6 +178,40 @@
                     <p>{{ tableColumns["updated_at"].name }}：<br />{{ row.updated_at }}</p>
                 </template>
             </el-table-column>
+
+            <el-table-column :label="tableColumns.total_recharge.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} : {{ value.total_recharge }}
+                    </p>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="tableColumns.total_exchange.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} : {{ value.total_exchange }}
+                    </p>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="tableColumns.total_bet.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} : {{ value.total_bet }}
+                    </p>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="tableColumns.total_win.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} : {{ value.total_win }}
+                    </p>
+                </template>
+            </el-table-column>
+
+
             <el-table-column prop="remark" :label="tableColumns['remark'].name" align="center" min-width="100px">
                 <template slot-scope="{ row }">
                     <div class="remark">
