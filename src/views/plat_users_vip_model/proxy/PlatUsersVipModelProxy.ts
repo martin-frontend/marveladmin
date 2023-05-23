@@ -58,6 +58,7 @@ export default class PlatUsersVipModelProxy extends AbstractProxy implements IPl
             types: [1],
             vip_config: [],
         },
+        min_option_level: 3, //最小开始限制的等级
         formSource: null, // 表单的原始数据
     };
 
@@ -130,9 +131,25 @@ export default class PlatUsersVipModelProxy extends AbstractProxy implements IPl
         };
 
         const keys = Object.keys(this.tableData.columns.vip_config.options_key[1]);
-        for (const key of keys) {
-            newConfig.backwater_config[key] = { backwater_rate: 0 };
+
+        //vip 5级以上需要添加 别的限制
+        if (this.dialogData.form.vip_config.length > this.dialogData.min_option_level) {
+            for (const key of keys) {
+                newConfig.backwater_config[key] = {
+                    backwater_rate: 0,
+                    daily_max_backwater_limit: 0,
+                    weekly_max_backwater_limit: 0,
+                    month_max_backwater_limit: 0,
+                };
+            }
+
+            console.log("新添加的数据结构为", newConfig);
+        } else {
+            for (const key of keys) {
+                newConfig.backwater_config[key] = { backwater_rate: 0 };
+            }
         }
+
         (this.dialogData.form.vip_config as any).push(newConfig);
     }
     /**删除等级 */

@@ -48,6 +48,7 @@ export default class PlatUsersBackwaterLogProxy extends AbstractProxy implements
             water_64: { name: "体育流水", options: [] },
             water_128: { name: "电竞流水", options: [] },
             username: { name: "", options: {} },
+            remark: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },

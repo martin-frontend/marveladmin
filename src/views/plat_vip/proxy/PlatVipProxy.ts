@@ -117,6 +117,15 @@ export default class PlatVipProxy extends AbstractProxy implements IPlatVipProxy
         }
     }
 
+    setVipOption(vip_config:any)
+    {
+        this.levelOptions = [];
+        for (let i = 0; i < vip_config.length; i++) {
+            this.levelOptions[i] = i + 1;
+        }
+        this.maxLevel = this.levelOptions.length;
+        this.levelOptions = Object.assign({}, this.levelOptions);
+    }
     /**详细数据 */
     setDetail(data: any) {
         const { vip_model_id, vip_config, plat_id } = data;
@@ -125,12 +134,13 @@ export default class PlatVipProxy extends AbstractProxy implements IPlatVipProxy
         this.vipData = vip_config;
 
         if (vip_model_id) {
-            this.levelOptions = [];
-            for (let i = 0; i < vip_config.length; i++) {
-                this.levelOptions[i] = i + 1;
-            }
-            this.maxLevel = this.levelOptions.length;
-            this.levelOptions = Object.assign({}, this.levelOptions);
+            this.setVipOption(vip_config);
+            // this.levelOptions = [];
+            // for (let i = 0; i < vip_config.length; i++) {
+            //     this.levelOptions[i] = i + 1;
+            // }
+            // this.maxLevel = this.levelOptions.length;
+            // this.levelOptions = Object.assign({}, this.levelOptions);
             this.sendNotification(HttpType.admin_plat_users_vip_model_show, { vip_model_id });
         } else {
             this.vipModeDesc = {};
@@ -181,7 +191,8 @@ export default class PlatVipProxy extends AbstractProxy implements IPlatVipProxy
         })
             .then(() => {
                 this.vipData = JSON.parse(JSON.stringify(this.copyVipData));
-                this.maxLevel = this.copyVipData.length.toString();
+                this.setVipOption(this.vipData);
+                //this.maxLevel = this.vipData.length.toString();
             })
             .catch(() => { });
     }

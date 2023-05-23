@@ -83,24 +83,95 @@
                                 </el-form-item>
                             </div>
                         </div>
-                        <div class="gap_line">{{ LangUtil("返水比例") }}</div>
-                        <el-form :inline="true" class="demo-form-inline">
-                            <el-form-item
-                                size="mini"
-                                :label="tableColumns.vip_config.options_key[1][citem]"
-                                v-for="(citem, cindex) in Object.keys(tableColumns.vip_config.options_key[1])"
-                                :key="cindex"
-                            >
-                                <el-input-number
-                                    v-model="item.backwater_config[citem].backwater_rate"
-                                    controls-position="right"
-                                    :min="0"
-                                    :max="0.99999"
-                                    :step="0.00001"
-                                    :precision="5"
-                                ></el-input-number>
-                            </el-form-item>
-                        </el-form>
+                        <div>
+                            <div class="gap_line"></div>
+                            <div>{{ LangUtil("返水比例") }}</div>
+                            <el-form :inline="true" class="demo-form-inline">
+                                <el-form-item
+                                    size="mini"
+                                    :label="tableColumns.vip_config.options_key[1][citem]"
+                                    v-for="(citem, cindex) in Object.keys(tableColumns.vip_config.options_key[1])"
+                                    :key="cindex"
+                                >
+                                    <el-input-number
+                                        v-model="item.backwater_config[citem].backwater_rate"
+                                        controls-position="right"
+                                        :min="0"
+                                        :max="0.99999"
+                                        :step="0.00001"
+                                        :precision="5"
+                                        style="width: 200px"
+                                    ></el-input-number>
+                                </el-form-item>
+                            </el-form>
+                        </div>
+                        <template v-if="index > myProxy.dialogData.min_option_level">
+                            <div class="gap_line"></div>
+                            <div>{{ LangUtil("每日最高返水限额") }}</div>
+                            <el-form :inline="true" class="demo-form-inline">
+                                <el-form-item
+                                    size="mini"
+                                    :label="tableColumns.vip_config.options_key[1][citem]"
+                                    v-for="(citem, cindex) in Object.keys(tableColumns.vip_config.options_key[1])"
+                                    :key="cindex"
+                                >
+                                    <el-input
+                                        v-model="item.backwater_config[citem].daily_max_backwater_limit"
+                                        controls-position="right"
+                                        :min="0"
+                                        :step="0.01"
+                                        :precision="2"
+                                        type="number"
+                                        onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                        style="width: 200px"
+                                    ></el-input>
+                                </el-form-item>
+                            </el-form>
+
+                            <div class="gap_line"></div>
+                            <div>{{ LangUtil("每周最高返水限额") }}</div>
+                            <el-form :inline="true" class="demo-form-inline">
+                                <el-form-item
+                                    size="mini"
+                                    :label="tableColumns.vip_config.options_key[1][citem]"
+                                    v-for="(citem, cindex) in Object.keys(tableColumns.vip_config.options_key[1])"
+                                    :key="cindex"
+                                >
+                                    <el-input
+                                        v-model="item.backwater_config[citem].weekly_max_backwater_limit"
+                                        controls-position="right"
+                                        :min="0"
+                                        :step="0.01"
+                                        :precision="2"
+                                        type="number"
+                                        onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                        style="width: 200px"
+                                    ></el-input>
+                                </el-form-item>
+                            </el-form>
+
+                            <div class="gap_line"></div>
+                            <div>{{ LangUtil("每月最高返水限额") }}</div>
+                            <el-form :inline="true" class="demo-form-inline">
+                                <el-form-item
+                                    size="mini"
+                                    :label="tableColumns.vip_config.options_key[1][citem]"
+                                    v-for="(citem, cindex) in Object.keys(tableColumns.vip_config.options_key[1])"
+                                    :key="cindex"
+                                >
+                                    <el-input
+                                        v-model="item.backwater_config[citem].month_max_backwater_limit"
+                                        controls-position="right"
+                                        :min="0"
+                                        :step="0.01"
+                                        :precision="2"
+                                        type="number"
+                                        onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                        style="width: 200px"
+                                    ></el-input>
+                                </el-form-item>
+                            </el-form>
+                        </template>
                     </div>
                 </el-col>
             </el-row>
