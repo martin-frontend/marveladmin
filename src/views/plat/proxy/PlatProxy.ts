@@ -91,11 +91,12 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_exchange_fail_automatic_refund: { name: "", options: {} },
             bet_log_keep_days: { name: "投注记录保留天数", options: {} },
             bet_log_search_days: { name: "投注记录搜索天数", options: {} },
-            main_language: { name: '主语言', options: {} },
-            is_first_login_send_sms: { name: '首次登入发送短信', options: {} },
-            is_user_manual_refund: { name: '用户手动退款', options: {} },
-            client_config: { name: 'Client 配置参数', options: {} },
-            other_config: { name: '配置参数', options: {} },
+            main_language: { name: "主语言", options: {} },
+            is_first_login_send_sms: { name: "首次登入发送短信", options: {} },
+            is_user_manual_refund: { name: "用户手动退款", options: {} },
+            client_config: { name: "Client 配置参数", options: {} },
+            other_config: { name: "配置参数", options: {} },
+            exchange_count: { name: "玩家兑换笔数", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -160,6 +161,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         main_language: "",
         client_config: {},
         other_config: {},
+        exchange_count: 1,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -250,13 +252,15 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
 
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
         // client_config
-        Object.assign(this.dialogData.form.client_config, JSON.parse(JSON.stringify(
-            {
-                client_config:
-                    data.extends.client_config
-            }
-        )));
-        delete data.extends["client_config"]
+        Object.assign(
+            this.dialogData.form.client_config,
+            JSON.parse(
+                JSON.stringify({
+                    client_config: data.extends.client_config,
+                })
+            )
+        );
+        delete data.extends["client_config"];
 
         Object.assign(this.dialogData.form.other_config, JSON.parse(JSON.stringify(data.extends)));
         this.promotionDiscountDialogData.form.promotion_discount = JSON.parse(
@@ -435,18 +439,18 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         formCopy.register_types = JSON.stringify(formCopy.register_types);
 
         //组回原始 extends
-        if (typeof this.dialogData.form.client_config == 'string') {
-            this.dialogData.form.client_config = JSON.parse(this.dialogData.form.client_config)
+        if (typeof this.dialogData.form.client_config == "string") {
+            this.dialogData.form.client_config = JSON.parse(this.dialogData.form.client_config);
         }
-        if (typeof this.dialogData.form.other_config == 'string') {
-            this.dialogData.form.other_config = JSON.parse(this.dialogData.form.other_config)
+        if (typeof this.dialogData.form.other_config == "string") {
+            this.dialogData.form.other_config = JSON.parse(this.dialogData.form.other_config);
         }
         formCopy.extends = {};
         formCopy.extends = {
             ...this.dialogData.form.client_config,
-            ...this.dialogData.form.other_config
-        }
-        formCopy.extends = JSON.stringify(formCopy.extends)
+            ...this.dialogData.form.other_config,
+        };
+        formCopy.extends = JSON.stringify(formCopy.extends);
         try {
             let extendsStr: any = "{}";
             if (Object.keys(this.dialogData.form.extends).length > 0) {
@@ -470,18 +474,18 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     onUpdate() {
         const formCopy: any = Object.assign({}, this.dialogData.form);
         //组回原始 extends
-        if (typeof this.dialogData.form.client_config == 'string') {
-            this.dialogData.form.client_config = JSON.parse(this.dialogData.form.client_config)
+        if (typeof this.dialogData.form.client_config == "string") {
+            this.dialogData.form.client_config = JSON.parse(this.dialogData.form.client_config);
         }
-        if (typeof this.dialogData.form.other_config == 'string') {
-            this.dialogData.form.other_config = JSON.parse(this.dialogData.form.other_config)
+        if (typeof this.dialogData.form.other_config == "string") {
+            this.dialogData.form.other_config = JSON.parse(this.dialogData.form.other_config);
         }
         formCopy.extends = {};
         formCopy.extends = {
             ...this.dialogData.form.client_config,
-            ...this.dialogData.form.other_config
-        }
-        formCopy.extends = JSON.stringify(formCopy.extends)
+            ...this.dialogData.form.other_config,
+        };
+        formCopy.extends = JSON.stringify(formCopy.extends);
         try {
             formCopy.extends = JSON.parse(formCopy.extends);
             const temp = formCompared(formCopy, this.dialogData.formSource);
@@ -522,7 +526,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_update, { plat_id: id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**Vip Model弹窗相关数据 */
@@ -670,7 +674,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                     plat_id: plat_id,
                 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**显示折扣返佣弹窗 */
@@ -748,7 +752,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                     plat_id: this.allBonusModelDialogData.form.plat_id,
                 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**取得全盘分红配置 */

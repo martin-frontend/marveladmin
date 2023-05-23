@@ -539,6 +539,20 @@
                     </div>
                 </el-form-item>
 
+                <el-form-item size="mini" :label="LangUtil('兑换')">
+                    <div class="item-content">
+                        <span>{{ tableColumns.exchange_count.name }}：</span>
+                        <el-input
+                            class="select"
+                            type="number"
+                            min="0"
+                            max="999"
+                            v-model="form.exchange_count"
+                            oninput="value=value.replace(/[^\d]/g,'');if(value >999)value=999"
+                        ></el-input>
+                    </div>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="tableColumns['client_config'].name" prop="client_config">
                     <div class="editor-container">
                         <json-editor ref="jsonEditor" v-model="form.client_config" />
