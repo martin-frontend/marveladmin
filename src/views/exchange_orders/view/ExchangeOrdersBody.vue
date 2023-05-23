@@ -206,7 +206,8 @@
             <el-table-column :label="tableColumns.total_win.name" align="left" min-width="150px">
                 <template slot-scope="{ row }">
                     <p v-for="(value, key) of row.user_statistic" :key="key">
-                        {{ value.coin_name_unique }} : {{ value.total_win }}
+                        {{ value.coin_name_unique }} : 
+                        <WinLossDisplay :amount="value.total_win" :isShowDollar="false"/>
                     </p>
                 </template>
             </el-table-column>
@@ -367,11 +368,12 @@ import Cookies from "js-cookie";
 import { Dialog, Message } from "element-ui";
 import SelfModel from "@/core/model/SelfModel";
 import { UserType } from "@/core/enum/UserType";
-
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 @Component({
     components: {
         Pagination,
         SearchSelect,
+        WinLossDisplay,
     },
 })
 export default class ExchangeOrdersBody extends AbstractView {
