@@ -12,7 +12,7 @@
                 {{ tableColumns["plat_id"].options[form.plat_id] }}
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns.channel_id.name" prop="channel_id">
-                <el-select v-model="form.channel_id" :placeholder="LangUtil('请选择')">
+                <el-select v-model="form.channel_id" :placeholder="LangUtil('请选择')" filterable>
                     <el-option
                         v-for="value in tableColumns.channel_id.options[form.plat_id]"
                         :key="value"
