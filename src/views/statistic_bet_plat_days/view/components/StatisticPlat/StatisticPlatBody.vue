@@ -34,8 +34,19 @@
                     </template>
                 </template>
             </el-table-column>
+
             <el-table-column
-                sortable="custom"
+                prop="coin_name_unique"
+                :label="`${tableColumns.coin_name_unique.name}`"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    {{ row.coin_name_unique }}
+                </template>
+            </el-table-column>
+
+            <el-table-column
+               
                 prop="bet_gold"
                 :label="`${tableColumns.bet_gold.name}`"
                 class-name="status-col"
@@ -50,7 +61,7 @@
                 </template>
             </el-table-column>
             <el-table-column
-                sortable="custom"
+                
                 prop="valid_bet_gold"
                 :label="`${tableColumns.valid_bet_gold.name}`"
                 class-name="status-col"
@@ -65,7 +76,7 @@
                 </template>
             </el-table-column>
             <el-table-column
-                sortable="custom"
+               
                 prop="win_gold"
                 :label="`${tableColumns.win_gold.name}`"
                 class-name="status-col"
@@ -75,7 +86,7 @@
                 </template>
             </el-table-column>
             <el-table-column
-                sortable="custom"
+               
                 prop="water"
                 :label="`${tableColumns.water.name}`"
                 class-name="status-col"
@@ -145,12 +156,16 @@ export default class StatisticPlatBody extends AbstractView {
         this.myProxy.onQuery();
     }
 
+    
+    chickIsSame(obj_1: any, obj_2: any): boolean {
+        return obj_1._myTable_id == obj_2._myTable_id;
+    }
     /**栏位合并 */
     spanMethod({ row, column, rowIndex, columnIndex }: { [key: string]: number }) {
         if (rowIndex === 0) {
             if (columnIndex === 0) {
                 return {
-                    rowspan: 1, //合并的行数
+                    rowspan: row.list.length, //合并的行数
                     colspan: 3, //合并的列数，设为0则直接不显示
                 };
             } else if (columnIndex < 3) {
@@ -160,6 +175,35 @@ export default class StatisticPlatBody extends AbstractView {
                     colspan: 0,
                 };
             }
+        }
+
+        if (
+            column.label === this.tableColumns.created_date.name ||
+            column.label === this.tableColumns.plat_id.name ||
+            column.label === this.tableColumns.vendor_id.name
+        ) {
+            let list = this.tableData;
+            let len = list.length;
+            let _row = 0;
+
+            if (rowIndex - 1 >= 0 && this.chickIsSame(list[rowIndex], list[rowIndex - 1])) {
+                return {
+                    // [0,0] 表示这一行不显示， [2,1]表示行的合并数
+                    rowspan: 0,
+                    colspan: 0,
+                };
+            }
+            for (let j = rowIndex; j < len; j++) {
+                if (this.chickIsSame(list[rowIndex], list[j])) {
+                    _row++;
+                } else break;
+            }
+            const _col = _row > 0 ? 1 : 0;
+            return {
+                // [0,0] 表示这一行不显示， [2,1]表示行的合并数
+                rowspan: _row,
+                colspan: _col,
+            };
         }
     }
 }

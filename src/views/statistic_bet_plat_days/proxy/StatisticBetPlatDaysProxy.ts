@@ -42,6 +42,7 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
             water: { name: "", options: {} },
             time_type: { name: "", options: {} },
             time_region_hour_interval: { name: "", options: {} },
+            coin_name_unique: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -69,6 +70,7 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
         time_region_hour_interval: "0",
         page_count: 1,
         page_size: 20,
+        coin_name_unique: "",
     };
     /**查询条件  平台游戏统计*/
     platListQuery = {
@@ -81,6 +83,7 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
         time_region_hour_interval: "0",
         page_count: 1,
         page_size: 20,
+        coin_name_unique: "",
     };
 
     /**设置表头数据 */
@@ -115,9 +118,35 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
         });
         data.list = this.addSummary(data);
         this.tableData.list.length = 0;
-        this.tableData.list.push(...data.list);
+        //this.tableData.list.push(...data.list);
+        this.tableData.list.push(...this.resetTabdata(data.list));
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
+    resetTabdata(data: any, isexport: boolean = false) {
+        const newdata = [];
+        //将数据中的 表格数据重组
+        for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            element._myTable_id = index;
+            if (element.list) {
+                for (let n = 0; n < element.list.length; n++) {
+                    const obj = JSON.parse(JSON.stringify(element));
+                    if (isexport) {
+                        obj.list = [];
+                    }
+                    const keys = Object.keys(obj.list[n]);
+                    for (let p = 0; p < keys.length; p++) {
+                        obj[keys[p]] = obj.list[n][keys[p]];
+                    }
+                    newdata.push(obj);
+                }
+            } else {
+                newdata.push(element);
+            }
+        }
+        return newdata;
+    }
+
     /**增加合计数据 */
     addSummary(data: any) {
         let summary = {
@@ -133,6 +162,7 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
             valid_bet_gold: data.summary.valid_bet_gold,
             win_gold: data.summary.win_gold,
             water: data.summary.water,
+            list: JSON.parse(JSON.stringify(data.summary)),
         };
         data.list.unshift(summary);
         return data.list;
@@ -147,6 +177,7 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
             "created_date-{>=}": dateFormat(getTodayOffset(-1), "yyyy-MM-dd hh:mm:ss"),
             "created_date-{<=}": dateFormat(getTodayOffset(0, 1), "yyyy-MM-dd hh:mm:ss"),
             time_region_hour_interval: "0",
+            coin_name_unique: "",
         });
     }
     /**重置平台游戏统计查询条件 */
@@ -156,6 +187,7 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
             "created_date-{>=}": dateFormat(getTodayOffset(-1), "yyyy-MM-dd hh:mm:ss"),
             "created_date-{<=}": dateFormat(getTodayOffset(0, 1), "yyyy-MM-dd hh:mm:ss"),
             time_region_hour_interval: "0",
+            coin_name_unique: "",
         });
     }
 
@@ -163,12 +195,20 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
     onQuery() {
         this.listQuery.type = this.tableData.activeName;
         this.platListQuery.type = this.tableData.activeName;
+        let obj;
         if (this.isPlat) {
-            this.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(this.platListQuery));
+            obj = JSON.parse(JSON.stringify(this.platListQuery));
         } else {
-            this.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(this.listQuery));
+            obj = JSON.parse(JSON.stringify(this.listQuery));
         }
+
+        if (obj.coin_name_unique == "-") {
+            obj.coin_name_unique = "";
+        }
+        this.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(obj));
     }
+    
+
     /**取得所有资料 */
     onQueryAll() {
         this.tableData.isExportExcel = true;
@@ -180,11 +220,49 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
         }
         queryCopy.page_size = this.tableData.excelPageSize;
         queryCopy.page_count = 1;
+        if (queryCopy.coin_name_unique == "-") {
+            queryCopy.coin_name_unique = "";
+        }
+        //this.fieldSelectionData.exportOption = <any>[];
+        this.fieldSelectionData.exportOption.length = 0 ;
+        //设置导出的筛选
+        for (let index = 0; index < this.fieldSelectionData.baseData.length; index++) {
+            const element = this.fieldSelectionData.baseData[index];
+            if (this.fieldSelectionData.fieldOptions.includes(element))
+            {
+                this.fieldSelectionData.exportOption.push(element);
+            }
+        }
         this.facade.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(queryCopy));
+    }
+    fieldSelectionData = {
+        bShow: false,
+        baseData: [],
+        fieldOptions: <any>[],
+        exportOption:<any>[],
+    };
+    /**打开导出选择弹框 */
+    openDialogFieldSelection() {
+        if (this.isPlat) {
+            this.fieldSelectionData.baseData = JSON.parse(JSON.stringify(this._platKeyList));
+        } else {
+            this.fieldSelectionData.baseData = JSON.parse(JSON.stringify(this._gameKeyList));
+        }
+        this.fieldSelectionData.fieldOptions = JSON.parse(JSON.stringify(this.fieldSelectionData.baseData));
+        this.fieldSelectionData.bShow = true;
     }
 
     /**平台游戏统计栏位导出顺序 */
-    _platKeyList = ["created_date", "plat_id", "vendor_id", "bet_gold", "valid_bet_gold", "win_gold", "water"];
+    _platKeyList = [
+        "created_date",
+        "plat_id",
+        "vendor_id",
+        "coin_name_unique",
+        "bet_gold",
+        "valid_bet_gold",
+        "win_gold",
+        "water",
+    ];
     /**游戏统计栏位导出顺序 */
     _gameKeyList = [
         "created_date",
@@ -192,6 +270,7 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
         "vendor_id",
         "vendor_type",
         "vendor_product_name",
+        "coin_name_unique",
         "bet_gold",
         "valid_bet_gold",
         "win_gold",
@@ -238,13 +317,15 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
     exportExcel(data: any) {
         this.tableData.isExportExcel = false;
         let summary = this.addSummary(data);
+        summary = this.resetTabdata(summary);
+
         summary.map((element: any) => {
             element.win_gold = Number(element.win_gold) > 0 ? `+${element.win_gold}` : element.win_gold;
         });
 
         new BaseInfo.ExportExcel(
             `${this.getExcelOutputName}`,
-            this.curKeyList,
+            this.fieldSelectionData.exportOption,
             this.tableData.columns,
             summary,
             ["plat_id", "type", "vendor_id", "vendor_type"],
