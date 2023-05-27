@@ -20,9 +20,10 @@
             <el-table-column :label="tableColumns['version'].name" prop="version" align="center"> </el-table-column>
             <el-table-column :label="tableColumns['template'].name" prop="template" align="center">
                 <template slot-scope="{ row }">
-                    <el-button type="text" @click="handleDownloadTemplate(row.download_uri_url)">{{
-                        row.template
-                    }}</el-button>
+                    <div v-if="row.model_type == 3">{{ row.template }}</div>
+                    <el-button v-else type="text" @click="handleDownloadTemplate(row.download_uri_url)">
+                        {{ row.template }}
+                    </el-button>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns['model_type'].name" prop="model_type" align="center">
