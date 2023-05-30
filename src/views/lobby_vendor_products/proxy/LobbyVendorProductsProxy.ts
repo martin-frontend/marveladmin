@@ -49,6 +49,7 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
             lobby_vendor_product_id: "",
             opt: "",
             status: "",
+            index_no:"",
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -65,7 +66,8 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         languages: "",
         vendor_languages: "",
     };
-
+    //上一次搜索的条件
+    lastTimeListQuery = <any>{};
     /**更新列表資料 */
     rowRateData = {
         lobby_vendor_product_id: "",
@@ -136,6 +138,7 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
 
     /**查询 */
     onQuery() {
+        this.lastTimeListQuery = JSON.parse(JSON.stringify(this.listQuery));
         this.sendNotification(HttpType.admin_lobby_vendor_products_index, objectRemoveNull(this.listQuery));
     }
     /**更新数据 */

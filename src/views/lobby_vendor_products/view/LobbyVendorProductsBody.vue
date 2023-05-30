@@ -161,11 +161,64 @@
                     </el-radio-group>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('排序')" class-name="status-col" width="140px">
+            <el-table-column v-if="!isCantEditOrderno" :label="LangUtil('排序')" class-name="status-col" width="300px">
                 <template slot-scope="{ row }">
                     <div>
-                        <el-button size="mini" icon="el-icon-top" @click="onUpdate(row, 3)"></el-button>
-                        <el-button size="mini" icon="el-icon-bottom" @click="onUpdate(row, 4)"></el-button>
+                        <el-button size="mini" @click="handlerOpt(row, { opt: 1 })" :disabled="row.index_no == 1 || isCantEditOrderno"
+                            >{{ LangUtil("置顶") }}
+                        </el-button>
+                        <el-button
+                            size="mini"
+                            icon="el-icon-top"
+                            :disabled="(row.index_no == 1) || isCantEditOrderno"
+                            @click="onUpdate(row, 3)"
+                        ></el-button>
+                        <el-button size="mini" icon="el-icon-bottom" @click="onUpdate(row, 4)" :disabled="isCantEditOrderno"></el-button>
+                        <el-button
+                            size="mini"
+                            @click="handlerOpt(row, { opt: 2 })"
+                            :disabled="isCantEditOrderno"
+                            >{{ LangUtil("置底") }}</el-button
+                        >
+                    </div>
+
+                    <div style="margin-top: 10px;">
+                        <div v-if="isorderno && editOrdernoID == row.lobby_vendor_product_id">
+                            <el-input
+                                v-model="editOrdernoValue"
+                                style="width: 60px; margin-right: 10px"
+                                oninput="value=value.replace(/[^\d]/g,'');"
+                            ></el-input>
+                            <el-button
+                                class="item"
+                                type="warning"
+                                size="mini"
+                                @click="
+                                    editOrdernoID = null;
+                                    isorderno = false;
+                                "
+                                >{{ LangUtil("取消") }}</el-button
+                            >
+                            <el-button class="item" type="success" size="mini" @click="onEditOrderNo(row)">{{
+                                LangUtil("确定")
+                            }}</el-button>
+                        </div>
+                        <div v-else>
+                            <span style="margin-right: 10px">{{ row.index_no }}</span>
+                            <el-button
+                                class="item"
+                                type="primary"
+                                size="mini"
+                                :disabled="isCantEditOrderno"
+                                @click="
+                                    editOrdernoID = row.lobby_vendor_product_id;
+                                    isorderno = true;
+                                    editOrdernoValue = row.index_no;
+                                "
+                                
+                                >{{ LangUtil("编辑") }}</el-button
+                            >
+                        </div>
                     </div>
                 </template>
             </el-table-column>
@@ -219,23 +272,47 @@ export default class VendorProductBody extends AbstractView {
     editWaterRateValue = "";
     editWaterRateAccelerateValue = "";
 
+    editOrdernoID: any = null;
+    isorderno = false;
+    editOrdernoValue = "";
+
+    /** 不能编辑*/
+    get isCantEditOrderno()
+    {
+        return !this.myProxy.lastTimeListQuery || !this.myProxy.lastTimeListQuery.vendor_id;
+        //return (!this.myProxy.listQuery.vendor_id || !this.myProxy.listQuery.vendor_id.trim());
+    }
     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    onUpdate(row: any, opt: any) {
+    onUpdate(row: any, opt: any, index_no: any = null) {
         this.myProxy.tableData.ctrlData.lobby_vendor_product_id = row.lobby_vendor_product_id;
         this.myProxy.tableData.ctrlData.opt = opt;
         this.myProxy.tableData.ctrlData.status = "";
+        if (index_no) {
+            this.myProxy.tableData.ctrlData.index_no = index_no;
+        } else {
+            this.myProxy.tableData.ctrlData.index_no = index_no;
+        }
         this.myProxy.onUpdate();
     }
-
+    /**更新排序 */
+    handlerOpt(row: any, value: any) {
+        const { opt } = value;
+        this.onUpdate(row, opt);
+    }
     onUpdateStatus(row: any) {
         this.myProxy.tableData.ctrlData.lobby_vendor_product_id = row.lobby_vendor_product_id;
         this.myProxy.tableData.ctrlData.status = row.status;
         this.myProxy.tableData.ctrlData.opt = "0";
         this.myProxy.onUpdate();
+    }
+    onEditOrderNo(row: any) {
+        this.editOrdernoID = null;
+        this.isorderno = false;
+        this.onUpdate(row, 6, this.editOrdernoValue);
     }
 
     onEditWaterRate(row: any) {
