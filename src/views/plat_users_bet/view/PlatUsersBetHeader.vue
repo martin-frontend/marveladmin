@@ -14,7 +14,6 @@
                 :endDate.sync="listQuery['bet_at-{<=}']"
                 :showTime="true"
                 :tip="LangUtil('（北京时间）')"
-                :pickerOptions="myProxy.pickerOptions"
             />
             <SearchDatePicker
                 :title="tableColumns['settlement_at'].name"
@@ -22,7 +21,6 @@
                 :endDate.sync="listQuery['settlement_at-{<=}']"
                 :showTime="true"
                 :tip="LangUtil('（北京时间）')"
-                :pickerOptions="myProxy.pickerOptions"
             />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <SearchInput :title="tableColumns.nick_name.name" v-model="listQuery.nick_name" />

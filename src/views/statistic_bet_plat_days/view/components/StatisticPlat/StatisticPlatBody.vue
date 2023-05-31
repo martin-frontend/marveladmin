@@ -82,7 +82,7 @@
                 class-name="status-col"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.win_gold" />
+                    <WinLossDisplay :amount="row.win_gold" :isShowDollar="false"/>
                 </template>
             </el-table-column>
             <el-table-column

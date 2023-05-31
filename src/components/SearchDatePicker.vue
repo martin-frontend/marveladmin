@@ -85,14 +85,14 @@ export default class SearchDatePicker extends Vue {
                             picker.$emit("pick", [start, end]);
                         },
                     },
-                    // {
-                    //     text: "最近三个月",
-                    //     onClick(picker: any) {
-                    //         const start = getTodayOffset(-90);
-                    //         const end = getTodayOffset(1, 1);
-                    //         picker.$emit("pick", [start, end]);
-                    //     },
-                    // },
+                    {
+                        text: "最近60天",
+                        onClick(picker: any) {
+                            const start = getTodayOffset(-59);
+                            const end = getTodayOffset(1, 1);
+                            picker.$emit("pick", [start, end]);
+                        },
+                    },
                 ],
             };
         },

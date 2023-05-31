@@ -37,6 +37,7 @@ export default class ProgressDialog extends AbstractView {
             .then(() => {
                 this.myProxy.exportData.stop = true;
                 this.myProxy.resetExportData(0);
+                this.myProxy.exportData.isSearch = true;
             })
             .catch(() => {});
     }
