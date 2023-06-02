@@ -19,7 +19,7 @@
             <el-table-column prop="nick_name" :label="tableColumns['nick_name'].name" align="center"> </el-table-column>
             <el-table-column prop="type" :label="tableColumns['type'].name" width="110px" align="center">
                 <template slot-scope="{ row }">
-                    <p>{{ tableColumns.type.options[row.type] }}</p>
+                    <p>{{ tableColumns.type.options[row.type] || row.type }}</p>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('內容')" align="center">
@@ -66,12 +66,31 @@ export default class PlatUsersPaymentMethodBody extends AbstractView {
 
     getAccessInfo(data: any) {
         const options: any = this.tableColumns.payment_method.options[data.type];
-        const keys = Object.keys(options);
+
         let infoStr = "";
-        for (const key of keys) {
-            infoStr += options[key] + "：";
-            infoStr += `<span class="span_value">${data.payment_method[key]}</span><br>`;
+        let keys ;
+        if (options) {
+            keys = Object.keys(options);
         }
+        //const keys = Object.keys(options);
+        const info_keys = Object.keys(data.payment_method);
+        for (let index = 0; index < info_keys.length; index++) {
+            const element = info_keys[index];
+            //检查这个字段 在 option中是否存在
+            //@ts-ignore
+            const isHave = options && keys.some((ele: any, index: any, arr: any) => {
+                    return ele == element;
+                }) || false;
+
+            if (isHave) {
+                infoStr += options[element] + "：";
+                infoStr += `<span class="span_value">${data.payment_method[element]}</span><br>`;
+            } else {
+                infoStr += element + "：";
+                infoStr += `<span class="span_value">${data.payment_method[element]}</span><br>`;
+            }
+        }
+
         return infoStr;
     }
 
