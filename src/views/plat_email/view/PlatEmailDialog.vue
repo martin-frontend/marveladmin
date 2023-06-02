@@ -170,7 +170,7 @@
                 </div>
             </el-form-item>
 
-            <template v-if="!readonly && checkUnique(unique.plat_email_store_attachment) && isGroupMail">
+            <template v-if="checkUnique(unique.plat_email_store_attachment) && isGroupMail">
                 <el-form-item size="mini" v-for="(item, index) in form.attachment_content" :key="index">
                     <template v-if="readonly"> {{ index }}：{{ item }} </template>
                     <template v-if="!readonly">
