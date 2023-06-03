@@ -56,6 +56,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
             username: { name: "用户账号", options: {} },
             exchange_scale: { name: "代币转换比率", options: {} },
             target_coin_name_unique: { name: "目标币种", options: {} },
+            vendor_order_no: { name: "厂商编号", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -79,6 +80,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
         plat_id: "",
         coin_name_unique: "",
         username: "",
+        vendor_order_no:"",
     };
 
     /**操作数据 */
@@ -132,6 +134,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
             status: "",
             coin_name_unique: "",
             username: "",
+            vendor_order_no:"",
         });
     }
 
@@ -179,12 +182,14 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
     _platKeyList = [
         "plat_id",
         "vendor_id",
-        "order_no",
         "order_at",
+        "order_no",
+        "vendor_order_no",
         "user_id",
         "nick_name",
         "username",
         "type",
+        "coin_name_unique",
         "gold",
         "status",
         "response",

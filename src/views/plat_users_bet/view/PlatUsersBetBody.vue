@@ -157,6 +157,13 @@
                 </template>
             </el-table-column>
             <el-table-column
+                :label="tableColumns['vendor_order_no'].name"
+                prop="vendor_order_no"
+                min-width="80px"
+                class-name="status-col"
+            ></el-table-column>
+
+            <el-table-column
                 :label="tableColumns['order_no'].name"
                 prop="order_no"
                 min-width="80px"

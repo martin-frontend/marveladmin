@@ -15,6 +15,7 @@
                 :endDate.sync="listQuery['order_at-{<=}']"
             />
             <SearchInput :title="tableColumns.order_no.name" v-model="listQuery.order_no" />
+            <SearchInput :title="tableColumns.vendor_order_no.name" v-model="listQuery.vendor_order_no" />
             <SearchSelect
                 :title="tableColumns.vendor_id.name"
                 v-model="listQuery.vendor_id"

@@ -105,6 +105,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             league: { name: LangUtil("联赛") },
             market_type_text: { name: LangUtil("盘口") },
             odds: { name: LangUtil("赔率") },
+            vendor_order_no: { name: "", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -143,6 +144,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         is_credit_user: "",
         resettlement_status: "",
         is_export: false,
+        vendor_order_no:"",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -302,6 +304,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             username: "",
             is_credit_user: "",
             resettlement_status: "",
+            vendor_order_no:"",
         });
     }
 
@@ -386,7 +389,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         const exportField = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
             if (this.exportData.fieldOrder.indexOf(item) != -1) {
-                exportField.push(item)
+                exportField.push(item);
             }
         }
 

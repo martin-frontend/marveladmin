@@ -32,6 +32,8 @@ export default class TabGoldProxy extends AbstractProxy implements ITabGoldProxy
             remark: { name: "", options: {} },
             created_at: { name: "", options: {} },
             coin_name_unique: { name: "", options: {} },
+            vendor_order_no: { name: "", options: {} },
+            order_no: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 10 },
@@ -46,6 +48,8 @@ export default class TabGoldProxy extends AbstractProxy implements ITabGoldProxy
         page_size: 10,
         coin_name_unique: "",
         plat_id: 0,
+        vendor_order_no: "",
+        order_no:"",
     };
 
     /**设置表头数据 */
@@ -65,6 +69,8 @@ export default class TabGoldProxy extends AbstractProxy implements ITabGoldProxy
             "created_at-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
             type: "",
             coin_name_unique: "",
+            vendor_order_no: "",
+            order_no: "",
         });
     }
 
