@@ -205,6 +205,10 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
         if (obj.coin_name_unique == "-") {
             obj.coin_name_unique = "";
         }
+        if (!obj.plat_id)
+        {
+            obj.plat_id="0";
+        }
         this.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(obj));
     }
     
