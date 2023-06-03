@@ -60,7 +60,7 @@
             <el-table-column
                 :label="`${tableColumns.total_recharge.name}`"
                 class-name="status-col"
-                prop="username"
+                prop="total_recharge"
                 min-width="100px"
             />
             <el-table-column
