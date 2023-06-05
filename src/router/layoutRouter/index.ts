@@ -326,6 +326,10 @@ const layoutRouter = {
             name: "上下分记录",
             component: () => import(/* webpackChunkName: "plat_users_vendor_gold_log" */"@/views/plat_users_vendor_gold_log/view/PlatUsersVendorGoldLog.vue")
         },        {
+            path: "plat_users_vendor_gold_log_alarm",
+            name: "投注报警",
+            component: () => import(/* webpackChunkName: "plat_users_vendor_gold_log_alarm" */"@/views/plat_users_vendor_gold_log_alarm/view/PlatUsersVendorGoldLogAlarm.vue")
+        },        {
             path: "plat_users_vip_model",
             name: "VIP模版配置",
             component: () => import(/* webpackChunkName: "plat_users_vip_model" */"@/views/plat_users_vip_model/view/PlatUsersVipModel.vue")

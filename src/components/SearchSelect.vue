@@ -1,6 +1,6 @@
 <template>
     <div class="content" :style="contentWidth">
-        <span class="title">
+        <span v-if="isNeedTitle" class="title">
             {{ title }}
             <el-tooltip v-if="tip" effect="dark" :content="tip" placement="top">
                 <i class="el-icon-question"></i>
@@ -44,6 +44,7 @@ export default class SearchSelect extends Vue {
     @Prop({ default: "" }) width!: string;
     // @Prop({ default: "" }) placeholder!: string;
     @Prop({ default: false }) disabled!: boolean;
+    @Prop({ default: true }) isNeedTitle!: boolean;
     @Prop() tip!: string;
 
     selectValue = this.getValue;

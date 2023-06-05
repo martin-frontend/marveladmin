@@ -1,0 +1,10 @@
+{
+    "name": "投注报警",
+    "description": "投注报警",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47777507",
+    "list": [
+        "admin/plat_users_vendor_gold_log_alarm/table_columns",
+        "admin/plat_users_vendor_gold_log_alarm/index",
+        "admin/plat_users_vendor_gold_log_alarm/update/{id}"
+    ]
+}
