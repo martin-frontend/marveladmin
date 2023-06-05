@@ -144,6 +144,9 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
 
     /**查询 */
     onQuery() {
+        if (!this.listQuery.plat_id) {
+            this.listQuery.plat_id = "0";
+        }
         this.sendNotification(HttpType.admin_statistic_user_days_index, objectRemoveNull(this.listQuery));
     }
 

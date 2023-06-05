@@ -110,6 +110,9 @@ export default class StatisticPlatFundsFlowProxy extends AbstractProxy implement
 
     /**查询 */
     onQuery() {
+        if (!this.listQuery.plat_id) {
+            this.listQuery.plat_id = "0";
+        }
         this.sendNotification(HttpType.admin_statistic_plat_funds_flow_show, objectRemoveNull(this.listQuery));
     }
 }
