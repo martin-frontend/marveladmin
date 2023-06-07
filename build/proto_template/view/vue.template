@@ -9,7 +9,7 @@
 <script lang="ts">
 import AbstractView from "../../../core/abstract/AbstractView";
 import ${className}Mediator from "@/views/${moduleName}/mediator/${className}Mediator";
-import ${className}Proxy from "@/views/${moduleName}/proxy/${className}Proxy";
+import ${className}Proxy from "../proxy/${className}Proxy";
 import { Component } from "vue-property-decorator";
 import ${className}Dialog from "./${className}Dialog.vue";
 import ${className}Header from "./${className}Header.vue";

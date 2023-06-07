@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow">
         <el-form
             ref="form"
             :rules="rules"
@@ -14,25 +14,26 @@
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
-import ${className}Proxy from "@/views/${moduleName}/proxy/${className}Proxy";
+import ${className}Proxy from "../proxy/${className}Proxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
+import LangUtil from "@/core/global/LangUtil";
 
 @Component
 export default class ${className}Dialog extends AbstractView {
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: ${className}Proxy = this.getProxy(${className}Proxy);
+    myProxy: ${className}Proxy = this.getProxy(${className}Proxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
-
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
+    LangUtil = LangUtil
     private textMap = {
         update: "编辑",
         create: "新增"
@@ -57,7 +58,7 @@ export default class ${className}Dialog extends AbstractView {
         return {};
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -65,7 +66,7 @@ export default class ${className}Dialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -73,7 +74,7 @@ export default class ${className}Dialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 }
