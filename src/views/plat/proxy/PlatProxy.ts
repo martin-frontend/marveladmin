@@ -97,6 +97,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             client_config: { name: "Client 配置参数", options: {} },
             other_config: { name: "配置参数", options: {} },
             exchange_count: { name: "玩家兑换笔数", options: {} },
+            register_same_ip_limit: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -162,6 +163,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         client_config: {},
         other_config: {},
         exchange_count: 1,
+        register_same_ip_limit:0,
     };
     /**弹窗相关数据 */
     dialogData = {

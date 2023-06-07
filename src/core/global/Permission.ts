@@ -214,6 +214,7 @@ export var unique = {
     coin_receive_recharge_order: "coin_receive_recharge_order",
     //站内信
     plat_message: "plat_message",
+    plat_register_same_ip_log:"plat_register_same_ip_log", //注册IP人数显示
     //登录白名单
     admin_whitelist_update: "admin_whitelist_update", //编辑登录白名单-编辑
     admin_whitelist_store: "admin_whitelist_store", //添加登录白名单

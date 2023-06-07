@@ -258,6 +258,10 @@ const layoutRouter = {
             name: "消息系统",
             component: () => import(/* webpackChunkName: "plat_message" */"@/views/plat_message/view/PlatMessage.vue")
         },        {
+            path: "plat_register_same_ip_log",
+            name: "同IP注册用户风控",
+            component: () => import(/* webpackChunkName: "plat_register_same_ip_log" */"@/views/plat_register_same_ip_log/view/PlatRegisterSameIpLog.vue")
+        },        {
             path: "plat_service",
             name: "平台客服功能管理",
             component: () => import(/* webpackChunkName: "plat_service" */"@/views/plat_service/view/PlatService.vue")

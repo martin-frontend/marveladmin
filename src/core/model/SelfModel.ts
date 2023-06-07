@@ -201,6 +201,16 @@ export default class SelfModel extends puremvc.Proxy {
                         if (audioDiv) audioDiv.play();
                     }, time);
                 }
+                if (
+                    this.userInfo.message_info["5"] > oldMessageInfo["5"] &&
+                    localStorage.getItem("sound5") != "false"
+                ) {
+                    setTimeout(() => {
+                        audioDiv = document.getElementById("nomalAudio");
+                        if (audioDiv) audioDiv.play();
+                    }, time);
+                }
+
             }
         }
     }
