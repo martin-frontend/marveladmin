@@ -118,7 +118,7 @@ export default class ExportDialog extends Vue {
     alldata = {};
 
     get chickExport(): boolean {
-        return this.proxy.tableData.list && this.proxy.tableData.list.length > 1;
+        return this.proxy.tableData.list && this.proxy.tableData.list.length > 0;
     }
 
     openFiterDialog() {

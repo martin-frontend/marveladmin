@@ -35,7 +35,11 @@ export default class StatisticUserKeepDaysMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_statistic_user_keep_days_index:
-                myProxy.setTableData(body);
+                if (myProxy.tableData.isExportExcel) {
+                    myProxy.exportExcel(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
         }
     }
