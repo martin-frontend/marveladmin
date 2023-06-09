@@ -61,13 +61,7 @@
                 ></el-input>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button
-                    v-if="checkUnique(unique.store_fake_bet)"
-                    type="primary"
-                    size="mini"
-                    @click="handlerSave()"
-                    >{{ LangUtil("确认保存") }}</el-button
-                >
+                <el-button type="primary" size="mini" @click="handlerSave()">{{ LangUtil("确认保存") }}</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
