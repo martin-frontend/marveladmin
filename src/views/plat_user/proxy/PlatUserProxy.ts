@@ -251,6 +251,16 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             item.plat_money = "-";
             item.sum_money = "-";
             item.vendors_money = "-";
+
+            if (item.coin_name_unique_arr && item.coin_name_unique_arr.length > 0)
+            {
+                item.gold_info = <any>{};
+                for (let index = 0; index < item.coin_name_unique_arr.length; index++) {
+                    const element = item.coin_name_unique_arr[index];
+                    item.gold_info[element] = <any>{};
+                    item.gold_info[element].sum_money = "-";
+                }
+            }
         }
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
@@ -264,6 +274,11 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 item.plat_money = data.gold_info_summary.plat_money;
                 item.sum_money = data.gold_info_summary.sum_money;
                 item.vendors_money = data.gold_info_summary.vendors_money;
+            
+                const keys = Object.keys(item.gold_info);
+                for (let index = 0; index < keys.length; index++) {
+                    Object.assign(item.gold_info[keys[index]], data.gold_info[keys[index]]);
+                }
             }
             temp.push(item);
         }
