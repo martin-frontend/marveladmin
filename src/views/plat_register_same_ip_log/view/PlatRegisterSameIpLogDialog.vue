@@ -1,46 +1,38 @@
 <template>
     <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow">
-        <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
-            <el-form-item :label="`${tableColumns.plat_id.name}`" prop="plat_id" label-width="100px"> 
+        <el-form ref="form" :rules="rules" :model="form" label-width="160px" v-loading="net_status.loading">
+            <el-form-item :label="`${tableColumns.plat_id.name}`" prop="plat_id">
                 {{ form["plat_id"] }}
             </el-form-item>
 
-            <el-form-item :label="`${tableColumns.created_at.name}`" prop="created_at" label-width="100px">
+            <el-form-item :label="`${tableColumns.created_at.name}`" prop="created_at">
                 {{ form["created_at"] }}
             </el-form-item>
 
-            <el-form-item :label="`${tableColumns.created_by.name}`" prop="created_by" label-width="100px">
+            <el-form-item :label="`${tableColumns.created_by.name}`" prop="created_by">
                 {{ form["created_by"] }}
             </el-form-item>
 
-            <el-form-item :label="`${tableColumns.updated_at.name}`" prop="updated_at" label-width="100px">
+            <el-form-item :label="`${tableColumns.updated_at.name}`" prop="updated_at">
                 {{ form["updated_at"] }}
             </el-form-item>
-            <el-form-item :label="`${tableColumns.updated_by.name}`" prop="updated_by" label-width="100px">
+            <el-form-item :label="`${tableColumns.updated_by.name}`" prop="updated_by">
                 {{ form["updated_by"] }}
             </el-form-item>
 
-            <el-form-item :label="`${tableColumns.register_ip.name}`" prop="register_ip" label-width="100px">
+            <el-form-item :label="`${tableColumns.register_ip.name}`" prop="register_ip">
                 {{ form["register_ip"] }}
             </el-form-item>
 
-            <el-form-item
-                :label="`${tableColumns.register_ip_count.name}`"
-                prop="register_ip_count"
-                label-width="100px"
-            >
-            {{ form["register_ip_count"] }}
+            <el-form-item :label="`${tableColumns.register_ip_count.name}`" prop="register_ip_count">
+                {{ form["register_ip_count"] }}
             </el-form-item>
 
-            <el-form-item
-                :label="`${tableColumns.register_ip_locked_count.name}`"
-                prop="register_ip_locked_count"
-                label-width="100px"
-            >
-            {{ form["register_ip_locked_count"] }}
+            <el-form-item :label="`${tableColumns.register_ip_locked_count.name}`" prop="register_ip_locked_count">
+                {{ form["register_ip_locked_count"] }}
             </el-form-item>
 
-            <el-form-item :label="`${tableColumns.status.name}`" prop="status" label-width="100px">
+            <el-form-item :label="`${tableColumns.status.name}`" prop="status">
                 <el-select
                     style="width:100%"
                     v-model="form.status"
