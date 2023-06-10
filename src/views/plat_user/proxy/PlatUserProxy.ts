@@ -252,8 +252,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             item.sum_money = "-";
             item.vendors_money = "-";
 
-            if (item.coin_name_unique_arr && item.coin_name_unique_arr.length > 0)
-            {
+            if (item.coin_name_unique_arr && item.coin_name_unique_arr.length > 0) {
                 item.gold_info = <any>{};
                 for (let index = 0; index < item.coin_name_unique_arr.length; index++) {
                     const element = item.coin_name_unique_arr[index];
@@ -274,10 +273,12 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 item.plat_money = data.gold_info_summary.plat_money;
                 item.sum_money = data.gold_info_summary.sum_money;
                 item.vendors_money = data.gold_info_summary.vendors_money;
-            
-                const keys = Object.keys(item.gold_info);
-                for (let index = 0; index < keys.length; index++) {
-                    Object.assign(item.gold_info[keys[index]], data.gold_info[keys[index]]);
+
+                if (item.gold_info) {
+                    const keys = Object.keys(item.gold_info);
+                    for (let index = 0; index < keys.length; index++) {
+                        Object.assign(item.gold_info[keys[index]], data.gold_info[keys[index]]);
+                    }
                 }
             }
             temp.push(item);
@@ -477,7 +478,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 const { channel_id, user_id } = this.changeChannelDialogData.form;
                 this.sendNotification(HttpType.admin_plat_user_change_channel, { channel_id, user_id });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**取得所有资料 */
@@ -525,7 +526,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         const exportField = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
             if (this.exportData.fieldOrder.indexOf(item) != -1) {
-                exportField.push(item)
+                exportField.push(item);
             }
         }
 
