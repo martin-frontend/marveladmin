@@ -45,6 +45,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             plat_id: { name: "所属平台", options: {}, display: true },
             recharge: { name: "充值金额", options: {}, display: true },
             recharge_user: { name: "充值人数", options: {}, display: true },
+            repeat_recharge_user: { name: '重复充值人数', options: {} },
             water: { name: "游戏流水", options: {}, display: true },
             win_loss: { name: "游戏输赢", options: {}, display: true },
             new_user: { name: "新增登入" },
@@ -164,6 +165,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         commission_gold: "",
         new_user: "",
         agent_bonus_gold: "",
+        repeat_recharge_user: "",
     };
 
     /**导出 相关数据 */
@@ -231,6 +233,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         this.summaryData["backwater_gold"] = data.summary.backwater_gold;
         this.summaryData["commission_gold"] = data.summary.commission_gold;
         this.summaryData["agent_bonus_gold"] = data.summary.agent_bonus_gold;
+        this.summaryData["repeat_recharge_user"] = data.summary.repeat_recharge_user;
         // 把summaryData 插入第一笔
         this.tableData.list.splice(0, 0, this.summaryData);
     }
@@ -403,7 +406,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any) {
-        return arr1.concat(arr2).filter(function(v: any, i: any, arr: any) {
+        return arr1.concat(arr2).filter(function (v: any, i: any, arr: any) {
             return arr.indexOf(v) === arr.lastIndexOf(v);
         });
     }
@@ -438,9 +441,8 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         let fileFirstName: any = "";
         let fileLastName: any = "";
         if (this.listQuery["created_date-{<=}"]) {
-            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${
-                this.listQuery["created_date-{<=}"].split(" ")[0]
-            }]`;
+            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${this.listQuery["created_date-{<=}"].split(" ")[0]
+                }]`;
         }
         if (this.listQuery.plat_id !== "0") {
             let str: any =

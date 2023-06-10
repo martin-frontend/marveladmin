@@ -74,6 +74,15 @@
                 prop="new_recharge_user"
                 :label="tableColumns['new_recharge_user'].name"
                 align="center"
+                min-width="90"
+            >
+            </el-table-column>
+            <el-table-column
+                v-if="tableColumns.repeat_recharge_user.display"
+                prop="repeat_recharge_user"
+                :label="tableColumns['repeat_recharge_user'].name"
+                align="center"
+                min-width="90"
             >
             </el-table-column>
             <el-table-column
@@ -99,6 +108,7 @@
                 prop="new_exchange_user"
                 :label="tableColumns['new_exchange_user'].name"
                 align="center"
+                min-width="90"
             >
             </el-table-column>
             <el-table-column
