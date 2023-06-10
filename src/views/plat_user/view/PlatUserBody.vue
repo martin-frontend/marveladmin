@@ -46,7 +46,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('联系方式')" min-width="100px" class-name="status-col">
+            <el-table-column :label="tableColumns.contact_info.name" min-width="100px" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div style="text-align: left;">{{ tableColumns.phone.name }}：{{ row.phone }}</div>
                     <div style="text-align: left;">{{ tableColumns.email.name }}：{{ row.email }}</div>
@@ -86,7 +86,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="LangUtil('推荐人')" prop="invite_user" min-width="150px">
+            <el-table-column :label="tableColumns.invite_user.name" prop="invite_user" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.invite_user && row.invite_user.user_id">
                     <div>
                         ID：<span class="user_id" @click="showUserDetail(row.invite_user.user_id)">{{
@@ -98,21 +98,21 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="LangUtil('第一次充值')" prop="first_recharge" min-width="150px">
+            <el-table-column :label="tableColumns.first_recharge.name" prop="first_recharge" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.first_recharge && row.first_recharge.coin_name_unique">
                     <p>{{ row.first_recharge.pay_time }}</p>
                     <p class="">{{ row.first_recharge.coin_name_unique }}:{{ row.first_recharge.gold }}</p>
                 </template>
             </el-table-column>
 
-            <el-table-column :label="LangUtil('上一次充值')" prop="last_recharge" min-width="150px">
+            <el-table-column :label="tableColumns.last_recharge.name" prop="last_recharge" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.last_recharge && row.last_recharge.coin_name_unique">
                     <p>{{ row.last_recharge.pay_time }}</p>
                     <p class="">{{ row.last_recharge.coin_name_unique }}:{{ row.last_recharge.gold }}</p>
                 </template>
             </el-table-column>
 
-            <el-table-column :label="LangUtil('上一次兑换')" prop="last_exchange" min-width="150px">
+            <el-table-column :label="tableColumns.last_exchange.name" prop="last_exchange" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.last_exchange && row.last_exchange.coin_name_unique">
                     <p>{{ row.last_exchange.pay_time }}</p>
                     <p class="">{{ row.last_exchange.coin_name_unique }}:{{ row.last_exchange.gold }}</p>
@@ -189,7 +189,7 @@
             </el-table-column>
 
             <el-table-column
-                :label="LangUtil('币种余额')"
+                :label="tableColumns['coin_name_unique_arr'].name"
                 prop="currency"
                 class-name="status-col"
                 min-width="150px"
