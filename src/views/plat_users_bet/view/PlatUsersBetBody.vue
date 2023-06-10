@@ -239,8 +239,6 @@
                         {{ tableColumns["vendor_win_gold"].name }}:
                         <WinLossDisplay
                             :amount="row.vendor_win_gold"
-                           
-                            :isShowPlus="false"
                             :isShowDollar="false"
                         />
                     </div>
