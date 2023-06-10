@@ -226,6 +226,25 @@
                             :isShowDollar="false"
                         />
                     </div>
+                    <div>
+                        {{ tableColumns["vendor_coin_name_unicode"].name }}:
+                        <WinLossDisplay
+                            :amount="row.vendor_coin_name_unicode"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </div>
+                    <div>
+                        {{ tableColumns["vendor_win_gold"].name }}:
+                        <WinLossDisplay
+                            :amount="row.vendor_win_gold"
+                           
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </div>
+
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns['win_gold'].name" prop="win_gold" class-name="status-col">

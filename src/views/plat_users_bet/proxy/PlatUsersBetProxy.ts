@@ -106,6 +106,8 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             market_type_text: { name: LangUtil("盘口") },
             odds: { name: LangUtil("赔率") },
             vendor_order_no: { name: "", options: [] },
+            vendor_coin_name_unicode: { name: "", options: [] },
+            vendor_win_gold: { name: "", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
