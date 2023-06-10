@@ -60,7 +60,7 @@ export default class StatisticBetPlatDaysHeader extends AbstractView {
         //this.myProxy.onQueryAll();
     }
     get chickExport(): boolean {
-        return this.myProxy.tableData.list && this.myProxy.tableData.list.length > 1;
+        return this.myProxy.tableData.list && this.myProxy.tableData.list.length > 0;
     }
 }
 </script>

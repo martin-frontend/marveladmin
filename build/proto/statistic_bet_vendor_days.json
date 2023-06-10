@@ -1,0 +1,9 @@
+{
+    "name": "平台游戏报表",
+    "description": "平台游戏报表",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47777538",
+    "list": [
+        "admin/statistic_bet_vendor_days/table_columns",
+        "admin/statistic_bet_vendor_days/index"
+    ]
+}

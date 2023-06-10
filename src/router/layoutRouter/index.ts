@@ -402,6 +402,10 @@ const layoutRouter = {
             name: "每日输赢统计",
             component: () => import(/* webpackChunkName: "statistic_bet_plat_days" */"@/views/statistic_bet_plat_days/view/StatisticBetPlatDays.vue")
         },        {
+            path: "statistic_bet_vendor_days",
+            name: "平台游戏报表",
+            component: () => import(/* webpackChunkName: "statistic_bet_vendor_days" */"@/views/statistic_bet_vendor_days/view/StatisticBetVendorDays.vue")
+        },        {
             path: "statistic_credit",
             name: "信用统计",
             component: () => import(/* webpackChunkName: "statistic_credit" */"@/views/statistic_credit/view/StatisticCredit.vue")
