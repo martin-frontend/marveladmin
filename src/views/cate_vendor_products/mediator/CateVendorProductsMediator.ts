@@ -4,6 +4,7 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/cate_vendor_products/setting";
 import { Message } from "element-ui";
 import CateVendorProductsProxy from "../proxy/CateVendorProductsProxy";
+import LangUtil from "@/core/global/LangUtil";
 
 interface ICateVendorProducts extends IEventDispatcher {}
 
@@ -28,6 +29,7 @@ export default class CateVendorProductsMediator extends AbstractMediator {
             EventType.admin_cate_vendor_products_index,
             EventType.admin_cate_vendor_products_store,
             EventType.admin_cate_vendor_products_update,
+            EventType.admin_cate_vendor_products_batch_copy_data,
         ];
     }
 
@@ -52,6 +54,11 @@ export default class CateVendorProductsMediator extends AbstractMediator {
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 myProxy.onQuery();
+                break;
+            case EventType.admin_cate_vendor_products_batch_copy_data:
+                Message.success(LangUtil("复制成功"));
+                // myProxy.hideDialog();
+                 myProxy.onQuery();
                 break;
         }
     }

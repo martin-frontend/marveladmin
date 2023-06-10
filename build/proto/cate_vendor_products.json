@@ -6,6 +6,7 @@
         "admin/cate_vendor_products/table_columns",
         "admin/cate_vendor_products/index",
         "admin/cate_vendor_products/store",
-        "admin/cate_vendor_products/update/{id}"
+        "admin/cate_vendor_products/update/{id}",
+        "admin/cate_vendor_products/batch_copy_data"
     ]
 }

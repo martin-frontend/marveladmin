@@ -21,6 +21,18 @@
                     </el-button>
                 </div>
             </el-form-item>
+
+            <el-form-item :label="tableColumns['icon_name'].name" prop="icon_name">
+                <div class="flex d-flex">
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        :placeholder="LangUtil('请输入')"
+                        v-model="form.icon_name"
+                        maxlength="200"
+                    ></el-input>
+                </div>
+            </el-form-item>
+
             <el-form-item :label="tableColumns.vendor_id.name" prop="vendor_id">
                 <el-select
                     @change="form.vendor_product_id = ''"

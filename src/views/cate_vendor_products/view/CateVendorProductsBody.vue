@@ -7,8 +7,11 @@
             highlight-current-row
             style="width: 100%"
             size="mini"
+            @selection-change="headleSelectionChange"
             v-loading="net_status.loading"
         >
+            <el-table-column type="selection" width="50" align="center"></el-table-column>
+
             <el-table-column :label="tableColumns['plat_id'].name" prop="plat_id" class-name="status-col" width="100px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
@@ -45,6 +48,12 @@
                 class-name="status-col"
                 min-width="150px"
             ></el-table-column>
+            <el-table-column
+            :label="tableColumns['icon_name'].name"
+            prop="icon_name"
+            class-name="status-col"
+            min-width="150px"
+        ></el-table-column>
             <el-table-column
                 :label="tableColumns['vendor_product_status'].name"
                 prop="vendor_product_status"
@@ -183,6 +192,10 @@ export default class CateVendorProductsBody extends AbstractView {
         }
     }
 
+    headleSelectionChange(selection: any) {
+        //console.log("---- 选择 改变---",selection);
+        this.myProxy.select_list_temp = selection;
+    }
     private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();

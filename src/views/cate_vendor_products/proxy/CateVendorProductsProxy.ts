@@ -30,6 +30,8 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             id: { name: "ID", options: {} },
             data_belong: { name: "数据归属标记", options: {} },
             plat_id: { name: "平台ID", options: {} },
+            type: { name: "", options: {} },
+            icon_name: { name: "", options: {} },
             vendor_id: { name: "厂商ID", options: {} },
             vendor_product_id: { name: "产品ID", options: {} },
             category: { name: "分类标签", options: {} },
@@ -50,12 +52,20 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 100 },
         isResort: false, // 是否重新排序
+        isCopyModle: false, // 是否为复制模式
     };
+
+    copy_data = {
+        type: "1", // 复制的数据 当前的分类
+        list: <any>[], // 复制的数据
+    };
+    select_list_temp = <any>[]; //临时选择的容器
     /**查询条件 */
     listQuery = {
         page_count: 1,
         page_size: 100,
         plat_id: "",
+        type: "1",
         category: "",
     };
     /**弹窗相关数据 */
@@ -66,7 +76,9 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             plat_id: "",
             category: "",
             vendor_id: "",
+            type: "",
             vendor_product_id: "",
+            icon_name:"",
         },
         formSource: null, // 表单的原始数据
     };
@@ -78,6 +90,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
                 this.listQuery.plat_id = plat_id_options_keys[0];
+            this.listQuery.type = "1";
             this.onQuery();
         }
     }
@@ -106,6 +119,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         } else {
             this.resetDialogForm();
             this.dialogData.form.plat_id = this.listQuery.plat_id;
+            this.dialogData.form.type = this.listQuery.type;
             this.dialogData.formSource = null;
         }
     }
@@ -119,6 +133,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             category: "",
             vendor_id: "",
             vendor_product_id: "",
+            icon_name:"",
         });
     }
 
@@ -128,12 +143,14 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
     }
     /**添加数据 */
     onAdd() {
-        const { category, vendor_id, vendor_product_id, plat_id } = this.dialogData.form;
+        const { category, vendor_id, vendor_product_id, plat_id, type ,icon_name} = this.dialogData.form;
         const formCopy: any = {
             category,
             vendor_id,
             vendor_product_id,
             plat_id,
+            type,
+            icon_name,
         };
         this.sendNotification(HttpType.admin_cate_vendor_products_store, objectRemoveNull(formCopy));
     }
@@ -162,7 +179,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             .then(() => {
                 this.sendNotification(HttpType.admin_cate_vendor_products_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
     /**更新排序 */
     onUpdateOpt(data: any) {
@@ -172,5 +189,25 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
     /**重新排序 */
     onResort({ id, next_id }: { [key: string]: number }) {
         this.facade.sendNotification(HttpType.admin_cate_vendor_products_update, { id: id, next_id: next_id, opt: 11 });
+    }
+    clearCopyData()
+    {
+        this.copy_data.type =  this.listQuery.type;
+        this.copy_data.list = [];
+    }
+    onBatchCopy() {
+        let str = "";
+        for (let index = 0; index < this.copy_data.list.length; index++) {
+            str = str + this.copy_data.list[index].id;
+            if (!(index == this.copy_data.list.length - 1)) {
+                str = str + ",";
+            }
+        }
+        const obj = {
+            plat_id: this.listQuery.plat_id,
+            ids: str,
+            types: this.listQuery.type,
+        };
+        this.sendNotification(HttpType.admin_cate_vendor_products_batch_copy_data, obj);
     }
 }
