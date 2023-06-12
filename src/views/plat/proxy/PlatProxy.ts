@@ -97,6 +97,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             client_config: { name: "Client 配置参数", options: {} },
             other_config: { name: "配置参数", options: {} },
             exchange_count: { name: "玩家兑换笔数", options: {} },
+            is_user_verification: { name: "", options: {} },
             register_same_ip_limit: { name: "", options: {} },
         },
         list: <any>[],
@@ -139,6 +140,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_agent_bonus: 98, // 1:是 98:否
         is_first_login_send_sms: 98, // 1:是 98:否
         is_user_manual_refund: 98, // 1:是 98:否
+        is_user_verification: 98,
         recharge_cost_rate: 0,
         game_cost_rate: 0,
         agent_bonus_rate_limit: 0,
@@ -378,6 +380,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_first_login_send_sms, //首次登入发送短信
             is_user_manual_refund, //用户手动退款
             is_bind_phone_recharge, //绑定手机充值
+            is_user_verification, //用户认证
             validate_type,
             register_types, //注册方式
             is_show_commission,
@@ -420,6 +423,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_open_registration, // 注册开关
             is_first_login_send_sms, //首次登入发送短信
             is_user_manual_refund, //用户手动退款
+            is_user_verification, //用户认证
             is_win_leaderboard_display,
             is_water_leaderboard_display,
             is_recharge_leaderboard_display,

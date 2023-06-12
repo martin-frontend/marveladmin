@@ -1,0 +1,10 @@
+{
+    "name": "用户认证",
+    "description": "用户认证",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47777464",
+    "list": [
+        "admin/plat_users_verification/table_columns",
+        "admin/plat_users_verification/index",
+        "admin/plat_users_verification/update/{id}"
+    ]
+}

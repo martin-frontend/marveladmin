@@ -477,6 +477,19 @@
                                 ></el-option>
                             </el-select>
                         </div>
+
+                        <div>
+                            <span class="title_switch">{{ tableColumns["is_user_verification"].name }}</span>
+                            <el-select class="select" v-model="form.is_user_verification">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_user_verification.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
+
                     </div>
                 </el-form-item>
                 <el-form-item size="mini" :label="LangUtil('金币划转')" prop="">

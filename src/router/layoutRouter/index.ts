@@ -330,6 +330,10 @@ const layoutRouter = {
             name: "上下分记录",
             component: () => import(/* webpackChunkName: "plat_users_vendor_gold_log" */"@/views/plat_users_vendor_gold_log/view/PlatUsersVendorGoldLog.vue")
         },        {
+            path: "plat_users_verification",
+            name: "用户认证",
+            component: () => import(/* webpackChunkName: "plat_users_verification" */"@/views/plat_users_verification/view/PlatUsersVerification.vue")
+        },        {
             path: "plat_users_vendor_gold_log_alarm",
             name: "投注报警",
             component: () => import(/* webpackChunkName: "plat_users_vendor_gold_log_alarm" */"@/views/plat_users_vendor_gold_log_alarm/view/PlatUsersVendorGoldLogAlarm.vue")
