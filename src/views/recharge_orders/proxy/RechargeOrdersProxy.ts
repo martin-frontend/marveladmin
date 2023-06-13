@@ -72,6 +72,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             vendor_id: { name: "充值厂商", options: {} },
             nick_name: { name: "用户昵称", options: [] },
             username: { name: "用户账号", options: [] },
+            gold_scale: { name: "代币汇率", options: [] },
             user_remark: { name: "用户备注" },
             coin_user_id: { options: {} },
         },

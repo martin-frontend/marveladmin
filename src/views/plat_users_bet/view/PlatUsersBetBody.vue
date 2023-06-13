@@ -227,6 +227,10 @@
                         />
                     </div>
                     <div>
+                        {{ tableColumns["gold_scale"].name }}:
+                        {{ row.gold_scale }}
+                    </div>
+                    <div>
                         {{ tableColumns["vendor_coin_name_unicode"].name }}:
                         <WinLossDisplay
                             :amount="row.vendor_coin_name_unicode"

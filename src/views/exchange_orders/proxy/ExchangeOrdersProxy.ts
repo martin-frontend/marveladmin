@@ -75,7 +75,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             nick_name: { name: "用户昵称", options: [] },
             user_remark: { name: "用户备注", options: [] },
             extends: { name: LangUtil('用户兑换信息'), options: [] },
-
+            gold_scale: { name: "", options: [] },
             total_recharge: { name: "", options: [] },
             total_exchange: { name:"", options: [] },
             total_bet: { name: "", options: [] },

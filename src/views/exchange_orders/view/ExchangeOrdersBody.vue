@@ -170,6 +170,7 @@
                     <div>{{ tableColumns["fee_rate"].name }}：{{ row.fee_rate }}</div>
                     <div>{{ tableColumns["fee"].name }}：{{ row.fee }}</div>
                     <div>{{ tableColumns["money"].name }}：{{ row.money }}</div>
+                    <div>{{ tableColumns["gold_scale"].name }}：{{ row.gold_scale }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('订单时间')" align="left" min-width="150px">

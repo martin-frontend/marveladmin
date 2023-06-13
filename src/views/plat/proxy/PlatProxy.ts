@@ -91,11 +91,12 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_exchange_fail_automatic_refund: { name: "", options: {} },
             bet_log_keep_days: { name: "投注记录保留天数", options: {} },
             bet_log_search_days: { name: "投注记录搜索天数", options: {} },
-            main_language: { name: "主语言", options: {} },
-            is_first_login_send_sms: { name: "首次登入发送短信", options: {} },
-            is_user_manual_refund: { name: "用户手动退款", options: {} },
-            client_config: { name: "Client 配置参数", options: {} },
-            other_config: { name: "配置参数", options: {} },
+            main_language: { name: '主语言', options: {} },
+            is_first_login_send_sms: { name: '首次登入发送短信', options: {} },
+            is_user_manual_refund: { name: '用户手动退款', options: {} },
+            client_config: { name: 'Client 配置参数', options: {} },
+            other_config: { name: '配置参数', options: {} },
+            vendor_wallet_types: { name: "游戏钱包类型", options: {} },  
             exchange_count: { name: "玩家兑换笔数", options: {} },
             is_user_verification: { name: "", options: {} },
             register_same_ip_limit: { name: "", options: {} },
@@ -164,6 +165,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         main_language: "",
         client_config: {},
         other_config: {},
+        vendor_wallet_types:[],
         exchange_count: 1,
         register_same_ip_limit:0,
     };
@@ -383,6 +385,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_user_verification, //用户认证
             validate_type,
             register_types, //注册方式
+            vendor_wallet_types, //钱包类型
             is_show_commission,
             bet_log_keep_days,
             bet_log_search_days,
@@ -430,6 +433,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_bind_phone_recharge, //绑定手机充值
             validate_type,
             register_types,
+            vendor_wallet_types,
             is_show_commission,
             bet_log_keep_days,
             bet_log_search_days,
@@ -443,6 +447,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         formCopy.promotion_floor = JSON.stringify(formCopy.promotion_floor);
         formCopy.validate_type = JSON.stringify(formCopy.validate_type);
         formCopy.register_types = JSON.stringify(formCopy.register_types);
+        formCopy.vendor_wallet_types = JSON.stringify(formCopy.vendor_wallet_types);
+        
 
         //组回原始 extends
         if (typeof this.dialogData.form.client_config == "string") {

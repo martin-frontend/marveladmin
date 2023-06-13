@@ -34,6 +34,7 @@ export default class CoinReceiveRechargeOrderProxy extends AbstractProxy impleme
     tableData = {
         columns: {
             actual_gold: { name: "实际到帐金额", options: {} },
+            actual_gold_scale: { name: "实际到帐金额[换算后]", options: {} },
             channel_id: { name: "渠道ID", options: {} },
             created_at: { name: "创建时间", options: {} },
             created_by: { name: "创建人", options: {} },
@@ -62,6 +63,8 @@ export default class CoinReceiveRechargeOrderProxy extends AbstractProxy impleme
             user_recharge_certificate_type: { name: "用户支付凭证类型", options: {} },
             user_remark: { name: "", options: {} },
             real_name: { name: "真实姓名" },
+            coin_name_unique: { name: "币种" , options: {}},
+            gold_scale: { name: "代币汇率", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },

@@ -23,6 +23,19 @@
                         </el-radio>
                     </el-radio-group>
                 </el-form-item>
+                <!-- "钱包类型" -->
+                <el-form-item size="mini" :label="tableColumns['vendor_wallet_types'].name" prop="vendor_wallet_types">
+                    <el-checkbox-group v-model="form.vendor_wallet_types">
+                        <el-checkbox
+                            v-for="(value, key) in tableColumns.vendor_wallet_types.options"
+                            :key="key"
+                            :label="Number(key)"
+                        >
+                            {{ value }}
+                        </el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+
                 <!-- "注册方式" -->
                 <el-form-item size="mini" :label="tableColumns['register_types'].name" prop="register_types">
                     <el-checkbox-group v-model="form.register_types">

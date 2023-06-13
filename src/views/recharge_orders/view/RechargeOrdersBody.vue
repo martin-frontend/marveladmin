@@ -107,6 +107,11 @@
                             tableColumns["block_network_id"].options[row.block_network_id]
                         }}
                     </div>
+                    <div align="left">
+                        {{ tableColumns["gold_scale"].name }}：{{
+                            row.gold_scale
+                        }}
+                    </div>
                 </template>
             </el-table-column>
 
