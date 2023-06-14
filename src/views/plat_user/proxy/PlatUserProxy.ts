@@ -127,6 +127,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             last_exchange: { name: "", options: {} },
             last_recharge: { name: "", options: {} },
             coin_name_unique_arr: { name: "", options: {} },
+            is_cash_agent: { name: '充值兑换开关', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -230,6 +231,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             water_config: { "0": 0, "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0 },
             credit_rate_min: "",
             credit_rate_max: "",
+            is_cash_agent: 98,
         },
         backwater_config: <any>{ "0": 0, "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0 },
     };
@@ -439,6 +441,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             water_config: { "0": 0, "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0 },
             credit_rate_min: "",
             credit_rate_max: "",
+            is_cash_agent: 98,
         });
     }
 
@@ -450,6 +453,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             credit_rate_min,
             credit_rate_max,
             show_credit_report,
+            is_cash_agent,
         } = this.creditUserDialogData.form;
         let water_config = JSON.parse(JSON.stringify(this.creditUserDialogData.form.water_config));
         password = MD5.createInstance().hex_md5(password);
@@ -465,6 +469,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             credit_rate_max,
             plat_id,
             show_credit_report,
+            is_cash_agent,
         };
         this.sendNotification(HttpType.admin_plat_user_store_credit_user, objectRemoveNull(formCopy));
     }

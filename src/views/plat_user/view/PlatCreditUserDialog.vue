@@ -44,6 +44,9 @@
                     </span>
                 </div>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['is_cash_agent'].name" prop="is_cash_agent">
+                <el-switch v-model="form.is_cash_agent" :active-value="1" :inactive-value="98"></el-switch>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['show_credit_report'].name" prop="show_credit_report">
                 <el-switch v-model="form.show_credit_report" :active-value="1" :inactive-value="98"></el-switch>
             </el-form-item>
