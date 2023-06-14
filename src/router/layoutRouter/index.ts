@@ -429,7 +429,11 @@ const layoutRouter = {
             path: "statistic_credit",
             name: "信用统计",
             component: () => import(/* webpackChunkName: "statistic_credit" */"@/views/statistic_credit/view/StatisticCredit.vue")
-        },        {
+        },       {
+            path: "statistic_credit_user",
+            name: "代理用户报表",
+            component: () => import(/* webpackChunkName: "statistic_credit_user" */"@/views/statistic_credit_user/view/StatisticCreditUser.vue")
+        },       {
             path: "statistic_plat_coin_days",
             name: "每日币种统计",
             component: () => import(/* webpackChunkName: "statistic_plat_coin_days" */"@/views/statistic_plat_coin_days/view/StatisticPlatCoinDays.vue")

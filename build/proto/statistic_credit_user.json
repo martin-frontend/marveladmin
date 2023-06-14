@@ -1,0 +1,9 @@
+{
+    "name": "代理用户报表",
+    "description": "代理用户报表",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47777654",
+    "list": [
+        "admin/statistic_credit_user/table_columns",
+        "admin/statistic_credit_user/index"
+    ]
+}
