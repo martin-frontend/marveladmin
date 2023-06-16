@@ -484,7 +484,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 const { channel_id, user_id } = this.changeChannelDialogData.form;
                 this.sendNotification(HttpType.admin_plat_user_change_channel, { channel_id, user_id });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**取得所有资料 */
@@ -535,6 +535,42 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 exportField.push(item);
             }
         }
+
+        // @ts-ignore
+        newData.forEach(element => {
+            let total_recharge: string = `${this.tableData.columns.recharge_times.name} : ${element.recharge_times};  `;
+            for (const item of element.user_statistic) {
+                total_recharge = total_recharge + `${item.coin_name_unique} : ${Math.abs(item.total_recharge).toFixed(3)};`;
+            }
+            element.total_recharge = total_recharge;
+        });
+
+        // @ts-ignore
+        newData.forEach(element => {
+            let total_exchange: string = `${this.tableData.columns.exchange_times.name} : ${element.exchange_times};  `;
+            for (const item of element.user_statistic) {
+                total_exchange = total_exchange + `${item.coin_name_unique} : ${Math.abs(item.total_exchange).toFixed(3)};`;
+            }
+            element.total_exchange = total_exchange;
+        });
+
+        // @ts-ignore
+        newData.forEach(element => {
+            let total_bet: string = ``;
+            for (const item of element.user_statistic) {
+                total_bet = total_bet + `${item.coin_name_unique} : ${Math.abs(item.total_bet).toFixed(3)};`;
+            }
+            element.total_bet = total_bet;
+        });
+
+        // @ts-ignore
+        newData.forEach(element => {
+            let total_win: string = ``;
+            for (const item of element.user_statistic) {
+                total_win = total_win + `${item.coin_name_unique} : ${Math.abs(item.total_win).toFixed(3)};`;
+            }
+            element.total_win = total_win;
+        });
 
         new BaseInfo.ExportExcel(
             this.getFileName,

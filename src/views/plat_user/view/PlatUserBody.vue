@@ -127,6 +127,7 @@
                 align="left"
             >
                 <template slot-scope="{ row }">
+                    <p style="text-align: left;">{{ tableColumns.recharge_times.name }}: {{ row.recharge_times }}</p>
                     <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
                         {{ value.coin_name_unique }} :
                         <WinLossDisplay
@@ -146,6 +147,7 @@
                 align="left"
             >
                 <template slot-scope="{ row }">
+                    <p style="text-align: left;">{{ tableColumns.exchange_times.name }}: {{ row.exchange_times }}</p>
                     <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
                         {{ value.coin_name_unique }} :
                         <WinLossDisplay
@@ -183,7 +185,8 @@
             >
                 <template slot-scope="{ row }">
                     <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
-                        {{ value.coin_name_unique }} : <WinLossDisplay :amount="value.total_win" :isShowDollar="false" />
+                        {{ value.coin_name_unique }} :
+                        <WinLossDisplay :amount="value.total_win" :isShowDollar="false" />
                     </p>
                 </template>
             </el-table-column>
