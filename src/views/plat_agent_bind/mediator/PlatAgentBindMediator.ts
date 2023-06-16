@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/plat_agent_bind/setting";
 import { Message } from "element-ui";
 import PlatAgentBindProxy from "../proxy/PlatAgentBindProxy";
 
-interface IPlatAgentBind extends IEventDispatcher {}
+interface IPlatAgentBind extends IEventDispatcher { }
 
 export default class PlatAgentBindMediator extends AbstractMediator {
     private myProxy: PlatAgentBindProxy = <any>this.getProxy(PlatAgentBindProxy);
@@ -45,7 +45,12 @@ export default class PlatAgentBindMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_agent_bind_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
+                break;
                 break;
             case EventType.admin_plat_agent_bind_show:
                 myProxy.setDetail(body);
@@ -54,6 +59,7 @@ export default class PlatAgentBindMediator extends AbstractMediator {
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 myProxy.hideAgentBonus();
+                myProxy.hideRemarkDialog();
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_agent_bind_show_floor_range:

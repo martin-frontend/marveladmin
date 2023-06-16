@@ -18,21 +18,33 @@
                     <div>{{ LangUtil("渠道") }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('用户信息')" prop="user_id" min-width="120px">
+            <el-table-column :label="LangUtil('用户信息')" min-width="220px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
                         {{ LangUtil("ID") }}：{{ row.user_id }}
                     </div>
                     <div>{{ LangUtil("昵称") }}：{{ row.nick_name }}</div>
+                    <div>{{ tableColumns.binded_at.name }}：{{ row.binded_at }}</div>
                 </template>
             </el-table-column>
-            <el-table-column
-                :label="tableColumns.binded_at.name"
-                prop="binded_at"
-                min-width="160px"
-                align="center"
-            ></el-table-column>
-            <el-table-column
+            <el-table-column :label="tableColumns.remark.name" prop="remark" min-width="100px" align="center"
+                ><template slot-scope="{ row }">
+                    <p>{{ row.remark }}</p>
+                    <el-button
+                        type="primary"
+                        size="mini"
+                        icon="el-icon-edit"
+                        @click="handerEditRemark(row)"
+                    ></el-button>
+                </template>
+            </el-table-column>
+            <el-table-column :label="LangUtil('上级用户信息')" min-width="180px" align="center">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns.invite_user_id.name }}：{{ row.invite_user_id }}</div>
+                    <div>{{ tableColumns.parent_nick_name.name }}：{{ row.parent_nick_name }}</div>
+                </template>
+            </el-table-column>
+            <!-- <el-table-column
                 :label="tableColumns.invite_user_id.name"
                 prop="invite_user_id"
                 min-width="100px"
@@ -43,7 +55,7 @@
                 prop="parent_nick_name"
                 min-width="110px"
                 align="center"
-            ></el-table-column>
+            ></el-table-column> -->
             <el-table-column
                 :label="tableColumns.bind_depth.name"
                 prop="bind_depth"
@@ -51,13 +63,7 @@
                 align="center"
             ></el-table-column>
             <el-table-column
-                :label="tableColumns.directly_users.name"
-                prop="directly_users"
-                width="110px"
-                align="center"
-            ></el-table-column>
-            <el-table-column
-                :label="LangUtil('团队人数')"
+                :label="tableColumns.total_group_all_users.name"
                 align="center"
                 prop="total_group_all_users"
                 width="110px"
@@ -66,67 +72,249 @@
                 :label="tableColumns.group_all_recharge.name"
                 align="center"
                 prop="group_all_recharge"
-                width="110px"
+                width="150px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay
-                        :amount="row.group_all_recharge"
-                        :isShowColor="false"
-                        :isShowPlus="false"
-                    ></WinLossDisplay>
+                    <div v-if="row.group_all_recharge.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.group_all_recharge" :key="key">
+                            {{ key }} :
+                            <WinLossDisplay :amount="value" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
+                        </p>
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.group_all_exchange.name"
                 align="center"
                 prop="group_all_exchange"
-                width="110px"
+                width="150px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay
-                        :amount="row.group_all_exchange"
-                        :isShowColor="false"
-                        :isShowPlus="false"
-                    ></WinLossDisplay>
+                    <div v-if="row.group_all_exchange.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.group_all_exchange" :key="key">
+                            {{ key }} :
+                            <WinLossDisplay :amount="value" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
+                        </p>
+                    </div>
                 </template>
             </el-table-column>
+            <!-- 团队流水 -->
             <el-table-column
                 :label="tableColumns.group_all_total_water.name"
                 align="center"
                 prop="group_all_total_water"
-                width="110px"
+                width="150px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay
-                        :amount="row.group_all_total_water"
-                        :isShowColor="false"
-                        :isShowPlus="false"
-                    ></WinLossDisplay>
+                    <div v-if="row.group_all_total_water.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.group_all_total_water" :key="key">
+                            {{ key }} :
+                            <WinLossDisplay :amount="value" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
+                        </p>
+                    </div>
                 </template>
             </el-table-column>
+            <!-- 团队投注笔数 -->
+            <el-table-column
+                :label="tableColumns.group_all_bet_count.name"
+                align="center"
+                prop="group_all_bet_count"
+                width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.group_all_bet_count.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.group_all_bet_count" :key="key">{{ key }} : {{ value }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 团队投注金额 -->
+            <el-table-column :label="tableColumns.group_all_bet.name" align="center" prop="group_all_bet" width="150px">
+                <template slot-scope="{ row }">
+                    <div v-if="row.group_all_bet.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.group_all_bet" :key="key">{{ key }} : {{ value }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 团队游戏输赢金额 -->
+            <el-table-column
+                :label="tableColumns.group_all_win_gold.name"
+                align="center"
+                prop="group_all_win_gold"
+                width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.group_all_win_gold.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.group_all_win_gold" :key="key">
+                            {{ key }} : <WinLossDisplay :amount="value" :isShowDollar="false" />
+                        </p>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 团队有效投注金额 -->
+            <el-table-column
+                :label="tableColumns.group_all_valid_bet.name"
+                align="center"
+                prop="group_all_valid_bet"
+                width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.group_all_valid_bet.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.group_all_valid_bet" :key="key">{{ key }} : {{ value }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.directly_users.name"
+                prop="directly_users"
+                width="110px"
+                align="center"
+            ></el-table-column>
+            <!-- 直属流水 -->
             <el-table-column
                 :label="tableColumns.directly_total_water.name"
                 align="center"
                 prop="directly_total_water"
-                width="110px"
+                width="150px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay
-                        :amount="row.directly_total_water"
-                        :isShowColor="false"
-                        :isShowPlus="false"
-                    ></WinLossDisplay>
+                    <div v-if="row.directly_total_water.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.directly_total_water" :key="key">
+                            {{ key }} :
+                            <WinLossDisplay :amount="value" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
+                        </p>
+                    </div>
                 </template>
             </el-table-column>
+            <!-- 直属充值 -->
+            <el-table-column
+                :label="tableColumns.directly_recharge.name"
+                align="center"
+                prop="directly_recharge"
+                width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.directly_recharge.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.directly_recharge" :key="key">{{ key }} : {{ value }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 直属兑换 -->
+            <el-table-column
+                :label="tableColumns.directly_exchange.name"
+                align="center"
+                prop="directly_exchange"
+                width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.directly_exchange.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.directly_exchange" :key="key">{{ key }} : {{ value }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 直属投注笔数 -->
+            <el-table-column
+                :label="tableColumns.directly_bet_count.name"
+                align="center"
+                prop="directly_bet_count"
+                width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.directly_bet_count.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.directly_bet_count" :key="key">{{ key }} : {{ value }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 直属投注额 -->
+            <el-table-column :label="tableColumns.directly_bet.name" align="center" prop="directly_bet" width="150px">
+                <template slot-scope="{ row }">
+                    <div v-if="row.directly_bet.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.directly_bet" :key="key">{{ key }} : {{ value }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 直属游戏输赢 -->
+            <el-table-column
+                :label="tableColumns.directly_win_gold.name"
+                align="center"
+                prop="directly_win_gold"
+                width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.directly_win_gold.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.directly_win_gold" :key="key">
+                            {{ key }} : <WinLossDisplay :amount="value" :isShowDollar="false" />
+                        </p>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 直属有效投注 -->
+            <el-table-column
+                :label="tableColumns.directly_valid_bet.name"
+                align="center"
+                prop="directly_valid_bet"
+                width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.directly_valid_bet.length == 0">
+                        -
+                    </div>
+                    <div v-else>
+                        <p v-for="(value, key) of row.directly_valid_bet" :key="key">{{ key }} : {{ value }}</p>
+                    </div>
+                </template>
+            </el-table-column>
+
             <!-- 当前可领取佣金 -->
             <el-table-column
                 :label="tableColumns.commission_awaiting_num.name"
                 prop="commission_awaiting_num"
                 width="120px"
-                align="left"
+                align="center"
             >
                 <template slot-scope="{ row }">
-                    <div v-html="formatObject(row.commission_awaiting_num)"></div>
+                    <div v-if="row.commission_awaiting_num.length == 0">
+                        -
+                    </div>
+                    <div v-else v-html="formatObject(row.commission_awaiting_num)"></div>
                 </template>
             </el-table-column>
             <!-- 已领取佣金总额 -->
@@ -134,20 +322,26 @@
                 :label="tableColumns.commission_received_num.name"
                 prop="commission_received_num"
                 width="120px"
-                align="left"
+                align="center"
             >
                 <template slot-scope="{ row }">
-                    <div v-html="formatObject(row.commission_received_num)"></div>
+                    <div v-if="row.commission_received_num.length == 0">
+                        -
+                    </div>
+                    <div v-else v-html="formatObject(row.commission_received_num)"></div>
                 </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.commission_total.name"
                 prop="commission_total"
                 width="120px"
-                align="left"
+                align="center"
             >
                 <template slot-scope="{ row }">
-                    <div v-html="formatObject(row.commission_total)"></div>
+                    <div v-if="row.commission_total.length == 0">
+                        -
+                    </div>
+                    <div v-else v-html="formatObject(row.commission_total)"></div>
                 </template>
             </el-table-column>
             <el-table-column align="center" width="120px" :label="tableColumns.bonus_ratio.name" prop="bonus_ratio">
@@ -303,6 +497,16 @@ export default class PlatAgentBindBody extends AbstractView {
             _w = "320px";
         }
         return _w;
+    }
+
+    /**编辑备注 */
+    handerEditRemark(row: any) {
+        this.myProxy.remarkDialogData.status = DialogStatus.update;
+        Object.assign(this.myProxy.remarkDialogData.form, {
+            user_id: row.user_id,
+            remark: row.remark,
+        });
+        this.myProxy.showRemarkDialog();
     }
 
     /**物件解析 */

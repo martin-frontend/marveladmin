@@ -17,7 +17,14 @@
                 :endDate.sync="listQuery.settlement_date_end"
                 :tip="LangUtil('（北京时间）')"
                 :pickerOptions="myProxy.pickerOptions"
+                :showTime="true"
             />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                :options="tableColumns.coin_name_unique_option"
+                v-model="listQuery.coin_name_unique"
+            />
+            <SearchInput :title="tableColumns.bind_depth.name" v-model="listQuery.bind_depth" />
         </div>
         <div class="group">
             <SearchDatePicker
@@ -42,13 +49,17 @@
             />
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <SearchInput :title="tableColumns.agent_user_id.name" v-model="listQuery.agent_user_id" />
+            <SearchInput :title="tableColumns.remark.name" v-model="listQuery.remark" />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    LangUtil("查询")
-                }}</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    LangUtil("重置")
-                }}</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                    {{ LangUtil("查询") }}
+                </el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                    {{ LangUtil("重置") }}
+                </el-button>
+                <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 0">
+                    {{ LangUtil("导出") }}
+                </el-button>
             </div>
         </div>
     </div>
@@ -84,6 +95,7 @@ export default class PlatAgentBindHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
     handlerSearch() {
         this.listQuery.page_count = 1;
@@ -98,10 +110,15 @@ export default class PlatAgentBindHeader extends AbstractView {
         channel_id_keys.forEach((key: any) => {
             this.tableColumns.channel_id_options[key] = key;
         });
+        this.tableColumns.coin_name_unique_option = this.tableColumns.coin_name_unique.options[this.listQuery.plat_id];
     }
 
     handlerReset() {
         this.myProxy.resetListQuery();
+    }
+
+    exportExcel() {
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>

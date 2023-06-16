@@ -6,6 +6,9 @@
         <BindDialog v-if="myProxy.bindDialogData.bShow" />
         <AgentBonusDialog v-if="myProxy.agentBonusDialogData.bShow" />
         <BonusConfigDialog v-if="myProxy.bonusConfigDialogData.bShow" />
+        <RemarkDialog />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -20,6 +23,9 @@ import PromotionFloorDialog from "./component/PromotionFloorDialog.vue";
 import BindDialog from "./component/BindDialog.vue";
 import AgentBonusDialog from "./component/AgentBonusDialog.vue";
 import BonusConfigDialog from "./component/BonusConfigDialog.vue";
+import ProgressDialog from "./component/ProgressDialog.vue";
+import FieldSelectionDialog from "./component/FieldSelectionDialog.vue";
+import RemarkDialog from "./component/RemarkDialog.vue";
 
 @Component({
     components: {
@@ -29,6 +35,9 @@ import BonusConfigDialog from "./component/BonusConfigDialog.vue";
         BindDialog,
         AgentBonusDialog,
         BonusConfigDialog,
+        ProgressDialog,
+        FieldSelectionDialog,
+        RemarkDialog,
     },
 })
 export default class PlatAgentBind extends AbstractView {
