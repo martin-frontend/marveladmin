@@ -509,7 +509,35 @@ const layoutRouter = {
             path: "vip_recharge",
             name: "VIP充值中心",
             component: () => import(/* webpackChunkName: "vip_recharge" */"@/views/vip_recharge/view/VipRecharge.vue")
-        },
+        },        {
+            path: "vip_replenish_recharge",
+            name: "VIP补单中心",
+            component: () => import(/* webpackChunkName: "vip_replenish_recharge" */"@/views/vip_replenish_recharge/view/VipReplenishRecharge.vue")
+        },        {
+            path: "vip_replenish_recharge_order",
+            name: "VIP补单订单",
+            component: () => import(/* webpackChunkName: "vip_replenish_recharge_order" */"@/views/vip_replenish_recharge_order/view/VipReplenishRechargeOrder.vue")
+        },        {
+            path: "channel_plat_user",
+            name: "渠道用户",
+            component: () => import(/* webpackChunkName: "plat_user" */ "@/views/plat_user/view/PlatUser.vue"),
+        },        {
+            path: "channel_statistic_plat_days",
+            name: "渠道每日统计",
+            component: () => import(/* webpackChunkName: "statistic_plat_days" */ "@/views/statistic_plat_days/view/StatisticPlatDays.vue"),
+        },        {
+            path: "channel_statistic_user_promotion_days_index",
+            name: "渠道代理统计",
+            component: () => import(/* webpackChunkName: "statistic_user_promotion_days_index" */ "@/views/statistic_user_promotion_days_index/view/StatisticUserPromotionDaysIndex.vue"),
+        },        {
+            path: "plat_agent_manage",
+            name: "代理人员管理",
+            component: () => import(/* webpackChunkName: "plat_agent_manage" */"@/views/plat_agent_manage/view/PlatAgentManage.vue")
+        },        {
+            path: "admin_user_log_user",
+            name: "人员修改记录",
+            component: () => import(/* webpackChunkName: "admin_user_log_user" */"@/views/admin_user_log_user/view/AdminUserLogUser.vue")
+        }
     ]
 }
 

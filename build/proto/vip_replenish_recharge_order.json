@@ -1,0 +1,10 @@
+{
+    "name": "VIP补单订单",
+    "description": "VIP补单订单",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1707617",
+    "list": [
+        "admin/vip_replenish_recharge_order/table_columns",
+        "admin/vip_replenish_recharge_order/index",
+        "admin/vip_replenish_recharge_order/show/{id}"
+    ]
+}
