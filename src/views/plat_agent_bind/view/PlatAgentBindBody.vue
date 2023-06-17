@@ -191,7 +191,7 @@
                 align="center"
             ></el-table-column>
             <!-- 直属流水 -->
-            <el-table-column
+            <!-- <el-table-column
                 :label="tableColumns.directly_total_water.name"
                 align="center"
                 prop="directly_total_water"
@@ -208,9 +208,9 @@
                         </p>
                     </div>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <!-- 直属充值 -->
-            <el-table-column
+            <!-- <el-table-column
                 :label="tableColumns.directly_recharge.name"
                 align="center"
                 prop="directly_recharge"
@@ -224,9 +224,9 @@
                         <p v-for="(value, key) of row.directly_recharge" :key="key">{{ key }} : {{ value }}</p>
                     </div>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <!-- 直属兑换 -->
-            <el-table-column
+            <!-- <el-table-column
                 :label="tableColumns.directly_exchange.name"
                 align="center"
                 prop="directly_exchange"
@@ -240,9 +240,9 @@
                         <p v-for="(value, key) of row.directly_exchange" :key="key">{{ key }} : {{ value }}</p>
                     </div>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <!-- 直属投注笔数 -->
-            <el-table-column
+            <!-- <el-table-column
                 :label="tableColumns.directly_bet_count.name"
                 align="center"
                 prop="directly_bet_count"
@@ -256,9 +256,9 @@
                         <p v-for="(value, key) of row.directly_bet_count" :key="key">{{ key }} : {{ value }}</p>
                     </div>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <!-- 直属投注额 -->
-            <el-table-column :label="tableColumns.directly_bet.name" align="center" prop="directly_bet" width="150px">
+            <!-- <el-table-column :label="tableColumns.directly_bet.name" align="center" prop="directly_bet" width="150px">
                 <template slot-scope="{ row }">
                     <div v-if="row.directly_bet.length == 0">
                         -
@@ -267,9 +267,9 @@
                         <p v-for="(value, key) of row.directly_bet" :key="key">{{ key }} : {{ value }}</p>
                     </div>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <!-- 直属游戏输赢 -->
-            <el-table-column
+            <!-- <el-table-column
                 :label="tableColumns.directly_win_gold.name"
                 align="center"
                 prop="directly_win_gold"
@@ -285,9 +285,9 @@
                         </p>
                     </div>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <!-- 直属有效投注 -->
-            <el-table-column
+            <!-- <el-table-column
                 :label="tableColumns.directly_valid_bet.name"
                 align="center"
                 prop="directly_valid_bet"
@@ -301,8 +301,7 @@
                         <p v-for="(value, key) of row.directly_valid_bet" :key="key">{{ key }} : {{ value }}</p>
                     </div>
                 </template>
-            </el-table-column>
-
+            </el-table-column> -->
             <!-- 当前可领取佣金 -->
             <el-table-column
                 :label="tableColumns.commission_awaiting_num.name"
