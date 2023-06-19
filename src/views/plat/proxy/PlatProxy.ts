@@ -100,6 +100,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             exchange_count: { name: "玩家兑换笔数", options: {} },
             is_user_verification: { name: "", options: {} },
             register_same_ip_limit: { name: "", options: {} },
+            max_exchange_gold: {name: '最大兑换金额', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -168,6 +169,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         vendor_wallet_types:[],
         exchange_count: 1,
         register_same_ip_limit:0,
+        max_exchange_gold: -1,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -392,6 +394,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             main_language,
             client_config,
             other_config,
+            max_exchange_gold,
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -440,6 +443,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             main_language,
             client_config,
             other_config,
+            max_exchange_gold,
         };
 
         formCopy.app_types = JSON.stringify(formCopy.app_types);
