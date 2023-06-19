@@ -101,7 +101,12 @@
 
             <el-table-column :label="LangUtil('操作')" align="center" width="320px">
                 <template slot-scope="{ row }">
-                    <el-button type="primary" size="small" @click="showStatus(row.vendor_gold_log_id)">
+                    <el-button
+                        type="primary"
+                        size="small"
+                        @click="showStatus(row.vendor_gold_log_id)"
+                        v-if="row.wallet_type != 2"
+                    >
                         {{ LangUtil("交易状态") }}
                     </el-button>
                     <div v-if="checkUnique(unique.plat_users_vendor_gold_log_update_manual) && row.status === 1">
