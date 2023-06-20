@@ -66,7 +66,7 @@
                     <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('用户信息')" align="left" min-width="160px">
+            <el-table-column :label="LangUtil('用户信息')" align="left" min-width="190px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
                         {{ tableColumns["user_id"].name }}：{{ row.user_id }}
@@ -76,6 +76,7 @@
                     <div>
                         {{ tableColumns["user_remark"].name }}：<span class="user_remark">{{ row.user_remark }}</span>
                     </div>
+                    <div>{{ LangUtil("账号创建时间") }}：{{ row.user_created_at }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('接单状态')" align="left" min-width="150px">
@@ -207,13 +208,11 @@
             <el-table-column :label="tableColumns.total_win.name" align="left" min-width="150px">
                 <template slot-scope="{ row }">
                     <p v-for="(value, key) of row.user_statistic" :key="key">
-                        {{ value.coin_name_unique }} : 
-                        <WinLossDisplay :amount="value.total_win" :isShowDollar="false"/>
+                        {{ value.coin_name_unique }} :
+                        <WinLossDisplay :amount="value.total_win" :isShowDollar="false" />
                     </p>
                 </template>
             </el-table-column>
-
-
             <el-table-column prop="remark" :label="tableColumns['remark'].name" align="center" min-width="100px">
                 <template slot-scope="{ row }">
                     <div class="remark">

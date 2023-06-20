@@ -75,6 +75,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             gold_scale: { name: "代币汇率", options: [] },
             user_remark: { name: "用户备注" },
             coin_user_id: { options: {} },
+            user_created_at: { name: LangUtil('账号创建时间'), options: [] },
         },
         list: <any>[],
         message: {
@@ -110,6 +111,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             "user_id",
             "nick_name",
             "user_remark",
+            "user_created_at",
             "order_no",
             "third_order_no",
             "third_name",
