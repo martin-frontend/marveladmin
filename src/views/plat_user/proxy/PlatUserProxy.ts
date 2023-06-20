@@ -174,6 +174,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "nick_name",
             "remark",
             "vip_level",
+            "real_name",
             "is_credit_user",
             "phone",
             "status",
