@@ -224,7 +224,7 @@ export default class ExportDialog extends Vue {
             option,
             this.proxy.tableData.columns,
             data.list,
-            ["plat_id", "type", "vendor_id", "vendor_type","vendor_wallet_type","time_region_hour_interval"],
+            ["plat_id", "type", "vendor_id", "vendor_type","vendor_wallet_type","time_region_hour_interval","status"],
             ["id", "data_belong", "vendor_product_id"]
         );
     }

@@ -53,6 +53,12 @@
                 <el-button @click="handlerReset()" class="header-button" type="primary" icon="el-icon-search">{{
                     LangUtil("重置")
                 }}</el-button>
+                <ExportDialog
+                    :fiterOption="userList"
+                    :proxy="myProxy"
+                    :export_file_name="getExcelOutputName"
+                    @exportExcel="exportExcel"
+                />
             </div>
         </div>
     </div>
@@ -67,11 +73,13 @@ import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SearchSelect from "@/components/SearchSelect.vue";
 import SearchInput from "@/components/SearchInput.vue";
+import ExportDialog from "@/components/ExportDialog.vue";
 
 @Component({
     components: {
         SearchSelect,
         SearchInput,
+        ExportDialog,
     },
 })
 export default class VendorProductHeader extends AbstractView {
@@ -84,6 +92,7 @@ export default class VendorProductHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    userList = this.myProxy._userList;
 
     handlerSearch() {
         this.listQuery.page_count = 1;
@@ -95,6 +104,20 @@ export default class VendorProductHeader extends AbstractView {
     }
     handlerSync() {
         this.myProxy.onSync();
+    }
+
+    get getExcelOutputName() {
+        //@ts-ignore
+        const plat_name = this.tableColumns.plat_id.options[this.listQuery.plat_id];
+        let name = `${LangUtil("大厅厂商产品")}-${plat_name}`;
+        return name;
+    }
+
+    exportExcel(val: boolean, pageInfo: any) {
+        this.myProxy.tableData.isExportExcel = val;
+        if (val) {
+            this.myProxy.onQuery_export(pageInfo);
+        }
     }
 }
 </script>

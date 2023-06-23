@@ -49,10 +49,11 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
             lobby_vendor_product_id: "",
             opt: "",
             status: "",
-            index_no:"",
+            index_no: "",
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        isExportExcel: false,
     };
     /**查询条件 */
     listQuery = {
@@ -141,6 +142,12 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         this.lastTimeListQuery = JSON.parse(JSON.stringify(this.listQuery));
         this.sendNotification(HttpType.admin_lobby_vendor_products_index, objectRemoveNull(this.listQuery));
     }
+    onQuery_export(pageInfo: any) {
+        const obj = JSON.parse(JSON.stringify(this.listQuery));
+        obj.page_count = pageInfo.pageCount;
+        obj.page_size = pageInfo.page_size;
+        this.sendNotification(HttpType.admin_lobby_vendor_products_index, objectRemoveNull(obj));
+    }
     /**更新数据 */
     onUpdate() {
         let formCopy: any = null;
@@ -170,5 +177,55 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         this.sendNotification(HttpType.admin_lobby_vendor_products_sync_data, {
             plat_id: this.listQuery.plat_id,
         });
+    }
+
+    resetTabdata(data: any, isexport: boolean = false) {
+        const newdata = [];
+        //将数据中的 表格数据重组
+        for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            element._myTable_id = index;
+            if (element.list) {
+                for (let n = 0; n < element.list.length; n++) {
+                    const obj = JSON.parse(JSON.stringify(element));
+                    if (isexport) {
+                        obj.list = [];
+                    }
+                    const keys = Object.keys(obj.list[n]);
+                    for (let p = 0; p < keys.length; p++) {
+                        obj[keys[p]] = obj.list[n][keys[p]];
+                    }
+                    newdata.push(obj);
+                }
+            } else {
+                newdata.push(element);
+            }
+        }
+        return newdata;
+    }
+    _userList = [
+        "created_at",
+        "created_by",
+        "lobby_vendor_product_id",
+        "ori_product_id",
+        "plat_id",
+        "status",
+        "updated_at",
+        "updated_by",
+        "vendor_id",
+        "vendor_product_name",
+        "vendor_type",
+        "water_rate",
+        "water_rate_accelerate",
+        "languages",
+        "vendor_languages",
+    ];
+    myExportPagedata = <any>{};
+    /**导出excel */
+    exportExcel(data: any) {
+        if (data && data.list) {
+            data.list = this.resetTabdata(data.list);
+        }
+        this.myExportPagedata = JSON.parse(JSON.stringify(data));
     }
 }
