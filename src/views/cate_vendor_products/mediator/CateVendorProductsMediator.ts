@@ -6,7 +6,7 @@ import { Message } from "element-ui";
 import CateVendorProductsProxy from "../proxy/CateVendorProductsProxy";
 import LangUtil from "@/core/global/LangUtil";
 
-interface ICateVendorProducts extends IEventDispatcher {}
+interface ICateVendorProducts extends IEventDispatcher { }
 
 export default class CateVendorProductsMediator extends AbstractMediator {
     private myProxy: CateVendorProductsProxy = <any>this.getProxy(CateVendorProductsProxy);
@@ -30,6 +30,10 @@ export default class CateVendorProductsMediator extends AbstractMediator {
             EventType.admin_cate_vendor_products_store,
             EventType.admin_cate_vendor_products_update,
             EventType.admin_cate_vendor_products_batch_copy_data,
+            EventType.admin_game_type_tag_table_columns,
+            EventType.admin_game_type_tag_index,
+            EventType.admin_game_type_tag_store,
+            EventType.admin_game_type_tag_update,
         ];
     }
 
@@ -58,7 +62,23 @@ export default class CateVendorProductsMediator extends AbstractMediator {
             case EventType.admin_cate_vendor_products_batch_copy_data:
                 Message.success(LangUtil("复制成功"));
                 // myProxy.hideDialog();
-                 myProxy.onQuery();
+                myProxy.onQuery();
+                break;
+            case EventType.admin_game_type_tag_table_columns:
+                myProxy.setGameTypeTableColumns(body);
+                break;
+            case EventType.admin_game_type_tag_index:
+                myProxy.setGameTypeTableData(body);
+                break;
+            case EventType.admin_game_type_tag_store:
+                Message.success(SuccessMessage.create);
+                myProxy.hideGameTypeDialog();
+                myProxy.onGameTypeQuery();
+                break;
+            case EventType.admin_game_type_tag_update:
+                Message.success(SuccessMessage.update);
+                myProxy.hideGameTypeDialog();
+                myProxy.onGameTypeQuery();
                 break;
         }
     }

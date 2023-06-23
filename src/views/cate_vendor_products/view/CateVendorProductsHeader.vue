@@ -6,10 +6,14 @@
             :options="tableColumns.plat_id.options"
             @change="handlerSearch"
             :clearable="false"
-            style="width: 350px"
         />
         <div class="group">
-            <SearchInput :title="tableColumns.category.name" v-model="listQuery.category" />
+            <SearchSelect
+                v-if="listQuery.plat_id"
+                :title="tableColumns.category.name"
+                v-model="listQuery.category"
+                :options="tableColumns.category.options[listQuery.plat_id][listQuery.type]"
+            />
             <div>
                 <el-button @click="handlerSearch" class="header-button" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")
@@ -30,6 +34,9 @@
                 </el-button>
                 <el-button class="header-button" type="primary" @click="handlerPaste" :disabled="!isCanPaste">
                     {{ LangUtil("粘贴") }}
+                </el-button>
+                <el-button class="header-button" type="primary" @click="handlerShowGameTypeTag"
+                    >{{ LangUtil("游戏分类标签管理") }}
                 </el-button>
             </div>
         </div>
@@ -64,26 +71,26 @@ import { MessageBox, Message } from "element-ui";
 export default class CateVendorProductsHeader extends AbstractView {
     LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: CateVendorProductsProxy = this.getProxy(CateVendorProductsProxy);
+    myProxy: CateVendorProductsProxy = this.getProxy(CateVendorProductsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.clearCopyData();
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
         this.handlerSearch();
     }
 
-    private handlerCreate() {
+    handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
     }
     /**复制 */
@@ -124,9 +131,23 @@ export default class CateVendorProductsHeader extends AbstractView {
         console.log("---修改---", this.listQuery.type);
         this.myProxy.onQuery();
     }
+
+    handlerShowGameTypeTag() {
+        this.myProxy.showGameTypeTagDialog();
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.el-button {
+    a,
+    a:hover,
+    a:focus,
+    a:focus-within,
+    a:active,
+    a:visited {
+        color: inherit;
+    }
+}
 </style>

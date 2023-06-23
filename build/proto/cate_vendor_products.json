@@ -7,6 +7,10 @@
         "admin/cate_vendor_products/index",
         "admin/cate_vendor_products/store",
         "admin/cate_vendor_products/update/{id}",
-        "admin/cate_vendor_products/batch_copy_data"
+        "admin/cate_vendor_products/batch_copy_data",
+        "admin/game_type_tag/table_columns",
+        "admin/game_type_tag/index",
+        "admin/game_type_tag/store",
+        "admin/game_type_tag/update/{id}"
     ]
 }

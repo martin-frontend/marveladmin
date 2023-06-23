@@ -47,13 +47,17 @@
                 prop="category"
                 class-name="status-col"
                 min-width="150px"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    {{ tableColumns.category.options[listQuery.plat_id][listQuery.type][row.category] }}
+                </template>
+            </el-table-column>
             <el-table-column
-            :label="tableColumns['icon_name'].name"
-            prop="icon_name"
-            class-name="status-col"
-            min-width="150px"
-        ></el-table-column>
+                :label="tableColumns['icon_name'].name"
+                prop="icon_name"
+                class-name="status-col"
+                min-width="150px"
+            ></el-table-column>
             <el-table-column
                 :label="tableColumns['vendor_product_status'].name"
                 prop="vendor_product_status"

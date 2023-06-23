@@ -6,19 +6,21 @@
             </el-form-item>
             <el-form-item :label="tableColumns['category'].name" prop="category">
                 <div class="flex d-flex">
-                    <el-input
-                        style="margin-right: 0.8rem"
-                        :placeholder="LangUtil('请输入')"
-                        v-model="form.category"
-                        maxlength="200"
-                    ></el-input>
-                    <el-button
+                    <el-select v-model="form.category" filterable :placeholder="LangUtil('请选择')">
+                        <el-option
+                            v-for="(value, key) in tableColumns.category.options[listQuery.plat_id][listQuery.type]"
+                            :key="key"
+                            :label="value"
+                            :value="key"
+                        ></el-option>
+                    </el-select>
+                    <!-- <el-button
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
                         @click="handleTranslate(form.category)"
                         >{{ LangUtil("翻译") }}
-                    </el-button>
+                    </el-button> -->
                 </div>
             </el-form-item>
 
@@ -88,25 +90,25 @@ import { LanguageType } from "@/core/enum/UserType";
 export default class CateVendorProductsDialog extends AbstractView {
     LangUtil = LangUtil;
     // 权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     //网络状态
-    private net_status = GlobalVar.net_status;
+    net_status = GlobalVar.net_status;
     // proxy
-    private myProxy: CateVendorProductsProxy = this.getProxy(CateVendorProductsProxy);
+    myProxy: CateVendorProductsProxy = this.getProxy(CateVendorProductsProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private form = this.myProxy.dialogData.form;
+    tableColumns = this.myProxy.tableData.columns;
+    form = this.myProxy.dialogData.form;
     langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
-    private listQuery = this.myProxy.listQuery;
+    listQuery = this.myProxy.listQuery;
 
-    private textMap = {
+    textMap = {
         update: "编辑",
         create: "新增",
     };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow() {
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
@@ -128,7 +130,7 @@ export default class CateVendorProductsDialog extends AbstractView {
         };
     }
 
-    private handleAdd() {
+    handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onAdd();
@@ -136,7 +138,7 @@ export default class CateVendorProductsDialog extends AbstractView {
         });
     }
 
-    private handleUpdate() {
+    handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 this.myProxy.onUpdate();
@@ -144,7 +146,7 @@ export default class CateVendorProductsDialog extends AbstractView {
         });
     }
 
-    private handleDelete() {
+    handleDelete() {
         this.myProxy.onDelete(this.form.id);
     }
 
