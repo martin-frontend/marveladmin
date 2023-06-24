@@ -15,6 +15,8 @@
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <SearchInput :title="tableColumns.invite_user_id.name" v-model="listQuery.invite_user_id" />
             <SearchInput :title="tableColumns.invite_username.name" v-model="listQuery.invite_username" />
+            <SearchInput :title="tableColumns.top_invite_user_id.name" v-model="listQuery.top_invite_user_id" />
+            <SearchInput :title="tableColumns.top_invite_username.name" v-model="listQuery.top_invite_username" />
             <SearchSelect
                 :title="tableColumns.coin_name_unique.name"
                 :options="tableColumns.coin_name_unique_option"

@@ -27,20 +27,25 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
     /**表格相关数据 */
     tableData = {
         columns: <any>{
-            backwater_coin: { name: '实际返水', options: {} },
-            backwater_except_user_coin: { name: '结算返水', options: {} },
-            bet_gold_coin: { name: '投注金额', options: {} },
-            coin_name_unique: { name: '币种', options: {} },
-            credit_rate_self: { name: '我的占成', options: {} },
-            invite_user_id: { name: '上级用户ID', options: {} },
-            invite_username: { name: '上级用户账号', options: {} },
-            plat_id: { name: '所属平台', options: {} },
-            record_count: { name: '下注笔数', options: {} },
-            user_id: { name: '用户ID', options: {} },
-            username: { name: '用户账号', options: {} },
-            valid_bet_gold_coin: { name: '有效投注', options: {} },
-            vendor_type: { name: '游戏类型', options: {} },
-            win_gold_coin: { name: '玩家输赢', options: {} },
+            backwater_coin: { name: "实际返水", options: {} },
+            backwater_except_user_coin: { name: "结算返水", options: {} },
+            bet_gold_coin: { name: "投注金额", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
+            credit_rate_self: { name: "我的占成", options: {} },
+            invite_user_id: { name: "上级用户ID", options: {} },
+            invite_username: { name: "上级用户账号", options: {} },
+            plat_id: { name: "所属平台", options: {} },
+            record_count: { name: "下注笔数", options: {} },
+            user_id: { name: "用户ID", options: {} },
+            username: { name: "用户账号", options: {} },
+            valid_bet_gold_coin: { name: "有效投注", options: {} },
+            vendor_type: { name: "游戏类型", options: {} },
+            win_gold_coin: { name: "玩家输赢", options: {} },
+            top_invite_user: { name: "总代理用户信息", options: {} },
+
+            // 假数据 导出名称用
+            top_invite_user_id: { name: LangUtil("总代理用户ID"), options: {} },
+            top_invite_username: { name: LangUtil("总代理用户帐号"), options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -54,6 +59,8 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
             "username",
             "invite_user_id",
             "invite_username",
+            "top_invite_user_id",
+            "top_invite_username",
             "coin_name_unique",
             "record_count",
             "bet_gold_coin",
@@ -61,8 +68,8 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
             "valid_bet_gold_coin",
             "backwater_coin",
             "backwater_except_user_coin",
-            "credit_rate_self"
-        ]
+            "credit_rate_self",
+        ],
     };
 
     exportData = {
@@ -72,7 +79,6 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
         isQueryExportData: false,
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
     };
-
 
     /**查询条件 */
     listQuery = {
@@ -86,6 +92,8 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
         coin_name_unique: "",
         settlement_date_start: dateFormat(getTodayOffset(-7), "yyyy-MM-dd 00:00:00"),
         settlement_date_end: dateFormat(getTodayOffset(-1), "yyyy-MM-dd 23:59:59"),
+        top_invite_user_id: "",
+        top_invite_username: "",
     };
 
     /**弹窗相关数据 */
@@ -93,7 +101,7 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
         bShow: false,
         status: DialogStatus.create,
         form: {
-            id: null
+            id: null,
             // TODO
         },
         formSource: null, // 表单的原始数据
@@ -109,11 +117,12 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
                 this.listQuery.plat_id = plat_id_options_keys[0];
             }
             if (this.listQuery.plat_id) {
-                this.tableData.columns.coin_name_unique_option = this.tableData.columns.coin_name_unique.options[this.listQuery.plat_id];
+                this.tableData.columns.coin_name_unique_option = this.tableData.columns.coin_name_unique.options[
+                    this.listQuery.plat_id
+                ];
             }
             this.onQuery();
         }
-
     }
 
     /**表格数据 */
@@ -139,6 +148,8 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
             coin_name_unique: "",
             settlement_date_start: dateFormat(getTodayOffset(-7), "yyyy-MM-dd 00:00:00"),
             settlement_date_end: dateFormat(getTodayOffset(-1), "yyyy-MM-dd 23:59:59"),
+            top_invite_user_id: "",
+            top_invite_username: "",
         });
     }
 
@@ -172,7 +183,6 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
         ],
     };
 
-
     /**显示弹窗 */
     showDialog(status: string, data?: any) {
         this.dialogData.bShow = true;
@@ -204,13 +214,13 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
     }
 
     /**添加数据 */
-    onAdd() { }
+    onAdd() {}
 
     /**更新数据 */
-    onUpdate() { }
+    onUpdate() {}
 
     /**删除数据 */
-    onDelete(id: any) { }
+    onDelete(id: any) {}
 
     /**取得excel 挡案名称 */
     getExcelOutputName() {
@@ -254,7 +264,9 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
     exportExcel() {
         const newData = JSON.parse(JSON.stringify(this.exportData.list));
         for (const item of newData) {
-            item.credit_rate_self = item.credit_rate_self + '%';
+            item.credit_rate_self = item.credit_rate_self + "%";
+            item.top_invite_username = item.top_invite_user.username;
+            item.top_invite_user_id = item.top_invite_user.user_id;
         }
         const exportField: string[] = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
@@ -293,5 +305,4 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
         this.fieldSelectionData.bShow = true;
         this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
-
 }

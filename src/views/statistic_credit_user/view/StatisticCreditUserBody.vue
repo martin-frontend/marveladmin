@@ -14,30 +14,24 @@
                     {{ tableColumns.plat_id.options[row.plat_id] }}
                 </template>
             </el-table-column>
-            <el-table-column
-                :label="tableColumns.user_id.name"
-                prop="user_id"
-                min-width="140px"
-                align="center"
-            ></el-table-column>
-            <el-table-column
-                :label="tableColumns.username.name"
-                prop="username"
-                min-width="140px"
-                align="center"
-            ></el-table-column>
-            <el-table-column
-                :label="tableColumns.invite_user_id.name"
-                prop="invite_user_id"
-                min-width="140px"
-                align="center"
-            ></el-table-column>
-            <el-table-column
-                :label="tableColumns.invite_username.name"
-                prop="invite_username"
-                min-width="140px"
-                align="center"
-            ></el-table-column>
+            <el-table-column :label="LangUtil('用户信息')" min-width="140px" align="center">
+                <template slot-scope="{ row }">
+                    <div>id: {{ row.username }}</div>
+                    <div>{{ LangUtil("帐号") }}: {{ row.user_id }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="LangUtil('上级用户信息')" min-width="140px" align="center">
+                <template slot-scope="{ row }">
+                    <div>id: {{ row.invite_user_id || "-" }}</div>
+                    <div>{{ LangUtil("帐号") }}: {{ row.invite_username }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns.top_invite_user.name" min-width="140px" align="center">
+                <template slot-scope="{ row }">
+                    <div>id: {{ row.top_invite_user.user_id || "-" }}</div>
+                    <div>{{ LangUtil("帐号") }}: {{ row.top_invite_user.username }}</div>
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.coin_name_unique.name"
                 prop="coin_name_unique"
