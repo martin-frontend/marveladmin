@@ -88,6 +88,7 @@
                 <el-button @click="exportExcel()" type="primary" icon="el-icon-download" :disabled="list.length == 0">
                     {{ LangUtil("导出") }}
                 </el-button>
+                <el-button @click="heandlerStatistic()" type="primary">{{ LangUtil("统计") }}</el-button>
             </div>
         </div>
     </div>
@@ -146,6 +147,10 @@ export default class PlatUsersBetHeader extends AbstractView {
 
     handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
+    }
+
+    heandlerStatistic() {
+        this.myProxy.admin_plat_users_bet_vendors();
     }
 }
 </script>

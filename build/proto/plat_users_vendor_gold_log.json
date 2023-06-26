@@ -8,6 +8,7 @@
         "admin/plat_users_vendor_gold_log/show/{vendor_gold_log_id}",
         "admin/plat_users_vendor_gold_log/update_manual/{vendor_gold_log_id}",
         "admin/plat_users_vendor_gold_log/auto_check/{vendor_gold_log_id}",
-        "admin/plat_users_vendor_gold_log/status/{vendor_gold_log_id}"
+        "admin/plat_users_vendor_gold_log/status/{vendor_gold_log_id}",
+        "admin/plat_users_vendor_gold_log/vendors"
     ]
 }

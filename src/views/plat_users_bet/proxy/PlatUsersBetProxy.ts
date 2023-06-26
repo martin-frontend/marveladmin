@@ -146,7 +146,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         is_credit_user: "",
         resettlement_status: "",
         is_export: false,
-        vendor_order_no:"",
+        vendor_order_no: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -198,6 +198,12 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     jsonEditorDialog = {
         bShow: false,
         data: <any>{},
+    };
+
+    statisticDialog = {
+        list: <any>[],
+        bShow: false,
+        form: <any>{},
     };
 
     fieldSelectionData = {
@@ -306,7 +312,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             username: "",
             is_credit_user: "",
             resettlement_status: "",
-            vendor_order_no:"",
+            vendor_order_no: "",
         });
     }
 
@@ -531,6 +537,11 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         this.dialogData.log.list.push(...data.list);
     }
 
+    /**统计 */
+    admin_plat_users_bet_vendors() {
+        this.sendNotification(HttpType.admin_plat_users_bet_vendors, objectRemoveNull(this.listQuery));
+    }
+
     /** 批次進度 */
     get percentage() {
         return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
@@ -539,5 +550,11 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     showFieldSelectionDialog() {
         this.fieldSelectionData.bShow = true;
         this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
+    }
+
+    showStatisticDialog(data: any) {
+        this.statisticDialog.list.length = 0;
+        this.statisticDialog.list.push(...data);
+        this.statisticDialog.bShow = true;
     }
 }

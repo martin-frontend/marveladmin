@@ -28,9 +28,8 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
     }
 
     /**表格相关数据 */
-    tableData = {
+    tableData = <any>{
         columns: {
-            // TODO
             created_at: { name: "创建时间", options: {} },
             created_by: { name: "创建人", options: {} },
             data_belong: { name: "数据归属标记", options: {} },
@@ -80,7 +79,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
         plat_id: "",
         coin_name_unique: "",
         username: "",
-        vendor_order_no:"",
+        vendor_order_no: "",
     };
 
     /**操作数据 */
@@ -91,6 +90,12 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
     };
 
     statusDialog = {
+        bShow: false,
+        form: <any>{},
+    };
+
+    statisticDialog = {
+        list: <any>[],
         bShow: false,
         form: <any>{},
     };
@@ -134,7 +139,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
             status: "",
             coin_name_unique: "",
             username: "",
-            vendor_order_no:"",
+            vendor_order_no: "",
         });
     }
 
@@ -161,7 +166,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
                     status,
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**用户详情 */
@@ -231,8 +236,19 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
         this.sendNotification(HttpType.admin_plat_users_vendor_gold_log_status, { vendor_gold_log_id });
     }
 
+    /**统计 */
+    admin_plat_users_vendor_gold_log_vendors() {
+        this.sendNotification(HttpType.admin_plat_users_vendor_gold_log_vendors, objectRemoveNull(this.listQuery));
+    }
+
     showStatusDialog(data: any) {
         this.statusDialog.bShow = true;
         this.statusDialog.form = data;
+    }
+
+    showStatisticDialog(data: any) {
+        this.statisticDialog.list.length = 0;
+        this.statisticDialog.list.push(...data);
+        this.statisticDialog.bShow = true;
     }
 }

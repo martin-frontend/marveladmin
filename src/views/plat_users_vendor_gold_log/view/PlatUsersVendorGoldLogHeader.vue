@@ -49,6 +49,7 @@
                     LangUtil("重置")
                 }}</el-button>
                 <el-button @click="heandlerExport()" type="primary">{{ LangUtil("导出") }}</el-button>
+                <el-button @click="heandlerStatistic()" type="primary">{{ LangUtil("统计") }}</el-button>
             </div>
         </div>
     </div>
@@ -96,6 +97,10 @@ export default class PlatUsersVendorGoldLogHeader extends AbstractView {
 
     heandlerExport() {
         this.myProxy.onQueryAll();
+    }
+
+    heandlerStatistic() {
+        this.myProxy.admin_plat_users_vendor_gold_log_vendors();
     }
 }
 </script>
