@@ -71,6 +71,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             updated_by: { name: "更新人", options: {} },
             reward_coin: { name: "", options: {} },
             languages: { name: "", options: {} },
+            process_control: { name: "流程控制", options: {} },
         },
         orderData: {
             id: "",
@@ -133,6 +134,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             award_timing_map: "",
             icon: "",
             icon_url: "",
+            process_control: 1,
         },
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据
@@ -301,6 +303,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             award_tpl: "",
             award_type_map: "",
             icon: "",
+            process_control: 1,
         });
 
         this.activeModelData.options.length = 0;
@@ -350,6 +353,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_type,
             is_once,
             icon,
+            process_control,
         } = this.dialogData.form;
         for (const item of rules) {
             for (const child of item.list) {
@@ -379,6 +383,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 award_tpl,
                 show_type,
                 icon,
+                process_control,
             };
         } else {
             formCopy = {
@@ -394,6 +399,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 link_url,
                 show_type,
                 icon,
+                process_control,
             };
         }
         /**

@@ -135,6 +135,21 @@
                 </el-form-item>
                 <el-form-item
                     size="mini"
+                    :label="tableColumns['process_control'].name"
+                    prop="process_control"
+                >
+                    <el-radio-group v-model="form.process_control" :disabled="isStatusUpdate">
+                        <el-radio
+                            v-for="(value, key) in tableColumns['process_control'].options"
+                            :key="key"
+                            :label="Number(key)"
+                        >
+                            {{ value }}
+                        </el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item
+                    size="mini"
                     :label="tableColumns['is_preheat'].name"
                     prop="is_preheat"
                     v-if="form.show_type == 2 || form.show_type == 4"
