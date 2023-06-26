@@ -55,7 +55,11 @@
                 prop="win_gold_coin"
                 min-width="100px"
                 align="center"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.win_gold_coin" :isShowDollar="false" />
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.valid_bet_gold_coin.name"
                 prop="valid_bet_gold_coin"
@@ -95,10 +99,12 @@ import StatisticCreditUserProxy from "../proxy/StatisticCreditUserProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
         Pagination,
+        WinLossDisplay,
     },
 })
 export default class StatisticCreditUserBody extends AbstractView {
