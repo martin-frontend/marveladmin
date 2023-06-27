@@ -84,7 +84,6 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_gold_transfer: { name: "", options: {} },
         water_config: { name: "", options: {} },
         pretty_user_id: { name: "推广靓号", options: {} },
-
         credit_rate: { name: "信用占比", options: {} },
         credit_rate_invited: { name: "上级占成", options: {} },
         show_credit_statistic: { name: '"显示信用统计"', options: {} },
@@ -95,6 +94,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         credit_rate_min: { name: "信用占成-最小", options: {} },
         show_credit_set: { name: "允许多层", options: {} },
         is_cash_agent: { name: '充值兑换开关', options: {} },
+        birth_date: { name: '出生年月', options: {} },
     };
     /**用户详情 */
     userInfo = {
@@ -181,6 +181,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         credit_rate_max: 0,
         credit_rate_min: 0,
         is_cash_agent: "98",
+        birth_date: "",
     };
     /**代理关系链 */
     relationChain: string[] = [];

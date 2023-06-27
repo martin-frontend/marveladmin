@@ -219,6 +219,18 @@
                         {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
+                <el-form-item size="mini" :label="tableColumns['birth_date'].name" prop="birth_date">
+                    <el-input disabled v-model="userInfo.birth_date" style="width: 200px"></el-input>
+                    <el-button
+                        class="item"
+                        type="primary"
+                        @click="handlerEdit('birth_date')"
+                        style="margin-left: 20px"
+                        v-if="!isChannelPlatUser"
+                    >
+                        {{ LangUtil("编辑") }}
+                    </el-button>
+                </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['pretty_user_id'].name" prop="pretty_user_id">
                     <el-input disabled v-model="userInfo.pretty_user_id" style="width: 200px"></el-input>
                     <el-button
@@ -667,7 +679,9 @@ export default class TabUserInfo extends AbstractView {
 
     get isChannelPlatUser() {
         return (
-            this.$route.path == "/layout/channel_plat_user" || this.$route.path == "/layout/plat_agent_manage_bind" || this.$route.path == "/layout/plat_agent_manage"
+            this.$route.path == "/layout/channel_plat_user" ||
+            this.$route.path == "/layout/plat_agent_manage_bind" ||
+            this.$route.path == "/layout/plat_agent_manage"
         );
     }
 }
