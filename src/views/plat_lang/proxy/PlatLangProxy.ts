@@ -41,18 +41,19 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             plat_id: { name: "平台ID", options: {} },
             key: { name: "键", options: {} },
             ar_AR: { name: "键", options: {} },
+            de_DE: { name: 'Deutsch', options: {} },
             en_EN: { name: "键", options: {} },
+            es_ES: { name: "Español", options: {} },
+            fr_FR: { name: 'Français', options: {} },
+            hi_IN: { name: 'Hindi', options: {} },
             jp_JP: { name: "", options: {} },
             ko_Kr: { name: "", options: {} },
+            pt_PT: { name: "", options: {} },
             th_TH: { name: "", options: {} },
+            tr_TR: { name: 'Türk dili', options: {} },
             vi_VN: { name: "", options: {} },
             zh_CN: { name: "", options: {} },
             zh_TW: { name: "", options: {} },
-            es_ES: { name: "", options: {} },
-            pt_PT: { name: "", options: {} },
-            hi_IN: { name: "", options: {} },
-            de_DE: { name: "", options: {} },
-            fr_FR: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -94,6 +95,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             hi_IN: "",
             de_DE: "",
             fr_FR: "",
+            tr_TR: "",
             config: <any>{
                 ar_AR: [],
                 en_EN: [],
@@ -108,6 +110,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
                 hi_IN: [],
                 de_DE: [],
                 fr_FR: [],
+                tr_TR: [],
             },
         },
         formSource: null, // 表单的原始数据
@@ -197,6 +200,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             hi_IN: "",
             de_DE: "",
             fr_FR: "",
+            tr_TR: "",
             config: <any>{
                 ar_AR: [],
                 en_EN: [],
@@ -211,6 +215,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
                 hi_IN: [],
                 de_DE: [],
                 fr_FR: [],
+                tr_TR: [],
             },
         });
     }
@@ -259,7 +264,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_lang_delete, { id });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     onQueryAll() {

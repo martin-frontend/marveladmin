@@ -53,6 +53,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             hi_IN: { name: "", options: {} },
             de_DE: { name: "", options: {} },
             fr_FR: { name: "", options: {} },
+            tr_TR: { name: 'Türk dili', options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -93,6 +94,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             hi_IN: "",
             de_DE: "",
             fr_FR: "",
+            tr_TR: "",
             config: <any>{
                 ar_AR: [],
                 en_EN: [],
@@ -107,6 +109,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
                 hi_IN: [],
                 de_DE: [],
                 fr_FR: [],
+                tr_TR: [],
             },
         },
         formSource: null, // 表单的原始数据
@@ -190,6 +193,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             hi_IN: "",
             de_DE: "",
             fr_FR: "",
+            tr_TR: "",
             config: {
                 ar_AR: [],
                 en_EN: [],
@@ -204,6 +208,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
                 hi_IN: [],
                 de_DE: [],
                 fr_FR: [],
+                tr_TR: [],
             },
         });
     }
