@@ -81,7 +81,7 @@
                     <div v-else>
                         <p v-for="(value, key) of row.group_all_recharge" :key="key">
                             {{ key }} :
-                            <WinLossDisplay :amount="value" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
+                            <WinLossDisplay :isShowDollar="false" :amount="value" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
                         </p>
                     </div>
                 </template>
@@ -99,7 +99,7 @@
                     <div v-else>
                         <p v-for="(value, key) of row.group_all_exchange" :key="key">
                             {{ key }} :
-                            <WinLossDisplay :amount="value" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
+                            <WinLossDisplay :isShowDollar="false" :amount="value" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
                         </p>
                     </div>
                 </template>
@@ -118,7 +118,7 @@
                     <div v-else>
                         <p v-for="(value, key) of row.group_all_total_water" :key="key">
                             {{ key }} :
-                            <WinLossDisplay :amount="value" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
+                            <WinLossDisplay :amount="value" :isShowDollar="false" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
                         </p>
                     </div>
                 </template>
