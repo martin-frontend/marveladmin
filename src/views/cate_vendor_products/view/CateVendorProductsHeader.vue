@@ -12,7 +12,10 @@
                 v-if="listQuery.plat_id"
                 :title="tableColumns.category.name"
                 v-model="listQuery.category"
-                :options="tableColumns.category.options[listQuery.plat_id][listQuery.type]"
+                :options="
+                    tableColumns.category.options[listQuery.plat_id] &&
+                        tableColumns.category.options[listQuery.plat_id][listQuery.type]
+                "
             />
             <div>
                 <el-button @click="handlerSearch" class="header-button" type="primary" icon="el-icon-search">{{
@@ -25,6 +28,7 @@
                     class="header-button"
                     type="primary"
                     icon="el-icon-circle-plus-outline"
+                    :disabled="!isCanCreate"
                     @click="handlerCreate"
                 >
                     {{ LangUtil("新增") }}
@@ -111,7 +115,15 @@ export default class CateVendorProductsHeader extends AbstractView {
     public get isCanPaste(): boolean {
         return this.myProxy.copy_data.list && this.myProxy.copy_data.list.length > 0;
     }
-
+    get isCanCreate(): boolean {
+        const category = this.tableColumns.category.options[this.listQuery.plat_id];
+        if (category && category[this.listQuery.type]) {
+            console.log("--- ", category[this.listQuery.type]);
+            const keys = Object.keys(category[this.listQuery.type]);
+            return keys.length > 0;
+        }
+        return false;
+    }
     /**粘贴*/
     handlerPaste() {
         const str = `确定将${this.tableColumns.type.options[this.myProxy.copy_data.type]}中的 ${

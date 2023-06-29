@@ -24,6 +24,9 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         });
     }
 
+    refreshTableColums() {
+        this.sendNotification(HttpType.admin_cate_vendor_products_table_columns);
+    }
     /**表格相关数据 */
     tableData = {
         columns: {
@@ -57,22 +60,22 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
 
     gameTypeTableData = {
         columns: {
-            created_at: { name: '创建时间', options: {} },
-            created_by: { name: '创建人', options: {} },
-            data_belong: { name: '数据归属标记', options: {} },
-            game_type: { name: '游戏类型', options: {} },
-            id: { name: 'ID', options: {} },
-            index_no: { name: '排序', options: {} },
-            name: { name: '分类标签', options: {} },
-            plat_id: { name: '平台ID', options: {} },
-            status: { name: '状态', options: {} },
-            updated_at: { name: '修改时间', options: {} },
-            updated_by: { name: '更新人', options: {} },
+            created_at: { name: "创建时间", options: {} },
+            created_by: { name: "创建人", options: {} },
+            data_belong: { name: "数据归属标记", options: {} },
+            game_type: { name: "游戏类型", options: {} },
+            id: { name: "ID", options: {} },
+            index_no: { name: "排序", options: {} },
+            name: { name: "分类标签", options: {} },
+            plat_id: { name: "平台ID", options: {} },
+            status: { name: "状态", options: {} },
+            updated_at: { name: "修改时间", options: {} },
+            updated_by: { name: "更新人", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         isResort: false, // 是否重新排序
-    }
+    };
 
     copy_data = {
         type: "1", // 复制的数据 当前的分类
@@ -113,7 +116,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
 
     cateVendorProductsGameTypeTagDialog = {
         bShow: false,
-    }
+    };
 
     /**弹窗相关数据 */
     gameTypeDialogData = {
@@ -128,7 +131,6 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         },
         formSource: null, // 表单的原始数据
     };
-
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -273,16 +275,12 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
 
     /**添加数据 */
     onGameTypeAdd() {
-        const {
-            plat_id,
-            game_type,
-            name,
-            status } = this.gameTypeDialogData.form;
+        const { plat_id, game_type, name, status } = this.gameTypeDialogData.form;
         const formCopy: any = {
             plat_id,
             game_type,
             name,
-            status
+            status,
         };
         this.sendNotification(HttpType.admin_game_type_tag_store, objectRemoveNull(formCopy));
     }
@@ -329,7 +327,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             .then(() => {
                 this.sendNotification(HttpType.admin_cate_vendor_products_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**删除数据 */
@@ -342,7 +340,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             .then(() => {
                 this.sendNotification(HttpType.admin_game_type_tag_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**更新排序 */

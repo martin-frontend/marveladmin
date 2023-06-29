@@ -49,7 +49,7 @@
                 min-width="150px"
             >
                 <template slot-scope="{ row }">
-                    {{ tableColumns.category.options[listQuery.plat_id][listQuery.type][row.category] }}
+                    {{ tableColumns.category.options[listQuery.plat_id] && tableColumns.category.options[listQuery.plat_id][listQuery.type] && tableColumns.category.options[listQuery.plat_id][listQuery.type][row.category] }}
                 </template>
             </el-table-column>
             <el-table-column

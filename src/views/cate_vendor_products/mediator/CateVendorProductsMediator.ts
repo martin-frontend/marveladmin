@@ -74,11 +74,14 @@ export default class CateVendorProductsMediator extends AbstractMediator {
                 Message.success(SuccessMessage.create);
                 myProxy.hideGameTypeDialog();
                 myProxy.onGameTypeQuery();
+                myProxy.refreshTableColums();
                 break;
             case EventType.admin_game_type_tag_update:
                 Message.success(SuccessMessage.update);
                 myProxy.hideGameTypeDialog();
                 myProxy.onGameTypeQuery();
+                myProxy.refreshTableColums();
+                //myProxy.onQuery();
                 break;
         }
     }

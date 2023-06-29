@@ -4,9 +4,9 @@
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
                 <span>{{ tableColumns.plat_id.options[form.plat_id] }}</span>
             </el-form-item>
-            <el-form-item :label="tableColumns['category'].name" prop="category">
+            <el-form-item :label="tableColumns['category'].name" prop="category" v-if="tableColumns.category.options[listQuery.plat_id]">
                 <div class="flex d-flex">
-                    <el-select v-model="form.category" filterable :placeholder="LangUtil('请选择')">
+                    <el-select v-model="form.category" filterable :placeholder="LangUtil('请选择')" >
                         <el-option
                             v-for="(value, key) in tableColumns.category.options[listQuery.plat_id][listQuery.type]"
                             :key="key"
