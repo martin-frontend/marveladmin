@@ -1,8 +1,10 @@
 <template>
     <div class="content">
-        <PlatRegisterSameIpLogDialog v-if="myProxy.dialogData.bShow"/>
-        <PlatRegisterSameIpLogHeader/>
-        <PlatRegisterSameIpLogBody/>
+        <PlatRegisterSameIpLogDialog v-if="myProxy.dialogData.bShow" />
+        <PlatRegisterSameIpLogHeader />
+        <PlatRegisterSameIpLogBody />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -14,16 +16,19 @@ import { Component } from "vue-property-decorator";
 import PlatRegisterSameIpLogDialog from "./PlatRegisterSameIpLogDialog.vue";
 import PlatRegisterSameIpLogHeader from "./PlatRegisterSameIpLogHeader.vue";
 import PlatRegisterSameIpLogBody from "./PlatRegisterSameIpLogBody.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 
 @Component({
     components: {
         PlatRegisterSameIpLogDialog,
         PlatRegisterSameIpLogHeader,
         PlatRegisterSameIpLogBody,
-    }
+        ProgressDialog,
+        FieldSelectionDialog,
+    },
 })
 export default class PlatRegisterSameIpLog extends AbstractView {
-
     constructor() {
         super(PlatRegisterSameIpLogMediator);
     }
@@ -32,7 +37,7 @@ export default class PlatRegisterSameIpLog extends AbstractView {
         super.destroyed();
     }
     // proxy
-    private myProxy: PlatRegisterSameIpLogProxy = this.getProxy(PlatRegisterSameIpLogProxy);
+    myProxy: PlatRegisterSameIpLogProxy = this.getProxy(PlatRegisterSameIpLogProxy);
 }
 </script>
 

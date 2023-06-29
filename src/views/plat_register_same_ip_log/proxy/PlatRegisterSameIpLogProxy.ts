@@ -1,9 +1,11 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { dateFormat, getTodayOffset, formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_register_same_ip_log/setting";
 import { MessageBox } from "element-ui";
 import IPlatRegisterSameIpLogProxy from "./IPlatRegisterSameIpLogProxy";
+import { BaseInfo } from "@/components/vo/commonVo";
+import router from "@/router";
 
 export default class PlatRegisterSameIpLogProxy extends AbstractProxy implements IPlatRegisterSameIpLogProxy {
     static NAME = "PlatRegisterSameIpLogProxy";
@@ -25,29 +27,54 @@ export default class PlatRegisterSameIpLogProxy extends AbstractProxy implements
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             plat_id: { name: "平台ID", options: {} },
             register_ip: { name: "", options: {} },
             register_ip_count: { name: "", options: {} },
             register_ip_locked_count: { name: "", options: {} },
             status: { name: "", options: {} },
             remark: { name: "", options: {} },
-            createdBy: { name: "", options: {} },
-            createdAt: { name: "", options: {} },
-            updatedBy: { name: "", options: {} },
-            updatedAt: { name: "", options: {} },
+            created_by: { name: "", options: {} },
+            created_at: { name: "", options: {} },
+            updated_by: { name: "", options: {} },
+            updated_at: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
+
     /**查询条件 */
     listQuery = {
+        "created_at-{>=}": "",
+        "created_at-{<=}": "",
         plat_id: "",
         status: "",
         register_ip: "",
         page_count: 1,
         page_size: 20,
     };
+
+    fieldSelectionData = {
+        bShow: false,
+        fieldOptions: [
+            "plat_id",
+            "register_ip",
+            "register_ip_count",
+            "register_ip_locked_count",
+            "created_at",
+            "status",
+            "remark",
+        ],
+    };
+
+    exportData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
+    };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -74,12 +101,14 @@ export default class PlatRegisterSameIpLogProxy extends AbstractProxy implements
         Object.assign(this.tableData.columns, data);
         this.onQuery();
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
+
     /**详细数据 */
     setDetail(data: any) {
         this.dialogData.formSource = data;
@@ -92,6 +121,8 @@ export default class PlatRegisterSameIpLogProxy extends AbstractProxy implements
             plat_id: "",
             status: "",
             register_ip: "",
+            "created_at-{>=}": "",
+            "created_at-{<=}": "",
         });
     }
 
@@ -108,10 +139,12 @@ export default class PlatRegisterSameIpLogProxy extends AbstractProxy implements
             this.dialogData.formSource = null;
         }
     }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
     }
+
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
@@ -133,6 +166,7 @@ export default class PlatRegisterSameIpLogProxy extends AbstractProxy implements
     onQuery() {
         this.sendNotification(HttpType.admin_plat_register_same_ip_log_index, objectRemoveNull(this.listQuery));
     }
+
     /**添加数据 */
     onAdd() {
         const formCopy: any = {
@@ -140,6 +174,7 @@ export default class PlatRegisterSameIpLogProxy extends AbstractProxy implements
         };
         //this.sendNotification(HttpType.undefined, objectRemoveNull(formCopy));
     }
+
     /**更新数据 */
     onUpdate() {
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
@@ -158,6 +193,7 @@ export default class PlatRegisterSameIpLogProxy extends AbstractProxy implements
         formCopy.register_ip = this.dialogData.form.register_ip;
         this.sendNotification(HttpType.admin_plat_register_same_ip_log_update, formCopy);
     }
+
     /**删除数据 */
     onDelete(id: any) {
         MessageBox.confirm("您是否删除该记录", "提示", {
@@ -168,8 +204,9 @@ export default class PlatRegisterSameIpLogProxy extends AbstractProxy implements
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_register_same_ip_log_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
+
     /**备注弹窗相关数据 */
     remarkDialogData = {
         bShow: false,
@@ -182,13 +219,87 @@ export default class PlatRegisterSameIpLogProxy extends AbstractProxy implements
         },
         formSource: null,
     };
+
     /**显示备注弹窗 */
     showRemarkDialog(remark: any) {
         this.remarkDialogData.bShow = true;
         this.remarkDialogData.form.remark = remark;
     }
+
     /**隐藏备注弹窗 */
     hideRemarkDialog() {
         this.remarkDialogData.bShow = false;
+    }
+
+    /**取得excel 挡案名称 */
+    getExcelOutputName() {
+        let name = `${router.currentRoute.name}`;
+        return `${name}-${this.listQuery["created_at-{>=}"]}～${this.listQuery["created_at-{<=}"]}`;
+    }
+
+    /**取得所有资料 */
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
+        this.sendNotification(HttpType.admin_plat_register_same_ip_log_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
+    }
+
+    /**导出excel */
+    exportExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item)
+            }
+        }
+
+        new BaseInfo.ExportExcel(
+            this.getExcelOutputName(),
+            exportField,
+            this.tableData.columns,
+            newData,
+            ["plat_id", "status"],
+            []
+        );
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }

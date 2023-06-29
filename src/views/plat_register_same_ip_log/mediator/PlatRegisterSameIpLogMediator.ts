@@ -6,7 +6,7 @@ import { Message } from "element-ui";
 import PlatRegisterSameIpLogProxy from "../proxy/PlatRegisterSameIpLogProxy";
 
 interface IPlatRegisterSameIpLog extends IEventDispatcher {
-    
+
 }
 
 export default class PlatRegisterSameIpLogMediator extends AbstractMediator {
@@ -43,7 +43,12 @@ export default class PlatRegisterSameIpLogMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_register_same_ip_log_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
+                break;
                 break;
             case EventType.admin_plat_register_same_ip_log_show:
                 myProxy.setDetail(body);

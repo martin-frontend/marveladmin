@@ -10,12 +10,17 @@
 
         <div class="group">
             <SearchInput :title="tableColumns.register_ip.name" v-model="listQuery.register_ip" />
+            <SearchDatePicker
+                :title="tableColumns['created_at'].name"
+                :startDate.sync="listQuery['created_at-{>=}']"
+                :endDate.sync="listQuery['created_at-{<=}']"
+            />
             <SearchSelect
-            :title="tableColumns.status.name"
-            v-model="listQuery.status"
-            :options="tableColumns.status.options"
-            :clearable="false"
-        />
+                :title="tableColumns.status.name"
+                v-model="listQuery.status"
+                :options="tableColumns.status.options"
+                :clearable="false"
+            />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")
@@ -23,6 +28,9 @@
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
                     LangUtil("重置")
                 }}</el-button>
+                <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 0">
+                    {{ LangUtil("导出") }}
+                </el-button>
             </div>
         </div>
     </div>
@@ -45,6 +53,7 @@ import LangUtil from "@/core/global/LangUtil";
         SearchSelect,
         SearchInput,
         SearchRange,
+        SearchDatePicker,
     },
 })
 export default class PlatRegisterSameIpLogHeader extends AbstractView {
@@ -56,6 +65,7 @@ export default class PlatRegisterSameIpLogHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
     LangUtil = LangUtil;
 
     handlerSearch() {
@@ -69,6 +79,10 @@ export default class PlatRegisterSameIpLogHeader extends AbstractView {
 
     handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
+    }
+
+    exportExcel() {
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>

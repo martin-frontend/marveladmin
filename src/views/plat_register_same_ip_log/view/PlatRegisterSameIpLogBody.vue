@@ -1,18 +1,33 @@
 <template>
     <div>
-        <el-table :data="tableData" border fit highlight-current-row style="width: 100%" size="mini" v-loading="net_status.loading">
-
+        <el-table
+            :data="tableData"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%"
+            size="mini"
+            v-loading="net_status.loading"
+        >
             <el-table-column :label="`${tableColumns.plat_id.name}`" class-name="status-col" width="200px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.plat_id.options[row.plat_id] }}
                 </template>
             </el-table-column>
 
-            <el-table-column :label="`${tableColumns.register_ip.name}`" class-name="status-col"  prop="register_ip" />
-            <el-table-column :label="`${tableColumns.register_ip_count.name}`" class-name="status-col" prop="register_ip_count" />
-            <el-table-column :label="`${tableColumns.register_ip_locked_count.name}`" class-name="status-col" prop="register_ip_locked_count" />
-
-            <el-table-column :label="`${tableColumns.status.name}`" class-name="status-col" >
+            <el-table-column :label="`${tableColumns.register_ip.name}`" class-name="status-col" prop="register_ip" />
+            <el-table-column
+                :label="`${tableColumns.register_ip_count.name}`"
+                class-name="status-col"
+                prop="register_ip_count"
+            />
+            <el-table-column
+                :label="`${tableColumns.register_ip_locked_count.name}`"
+                class-name="status-col"
+                prop="register_ip_locked_count"
+            />
+            <el-table-column :label="`${tableColumns.created_at.name}`" class-name="status-col" prop="created_at" />
+            <el-table-column :label="`${tableColumns.status.name}`" class-name="status-col">
                 <template slot-scope="{ row }">
                     {{ tableColumns.status.options[row.status] }}
                 </template>
@@ -27,7 +42,7 @@
                         type="primary"
                         @click="handleEdit(row)"
                         v-if="checkUnique(unique.admin_user_show)"
-                        >{{LangUtil("编辑")}}</el-button
+                        >{{ LangUtil("编辑") }}</el-button
                     >
                 </template>
             </el-table-column>
@@ -48,7 +63,7 @@ import LangUtil from "@/core/global/LangUtil";
 @Component({
     components: {
         Pagination,
-    }
+    },
 })
 export default class PlatRegisterSameIpLogBody extends AbstractView {
     //权限标识
@@ -64,7 +79,7 @@ export default class PlatRegisterSameIpLogBody extends AbstractView {
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
     LangUtil = LangUtil;
-    handlerPageSwitch(page:number){
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
