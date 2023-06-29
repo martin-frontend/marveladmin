@@ -241,12 +241,8 @@
                     </div>
                     <div>
                         {{ tableColumns["vendor_win_gold"].name }}:
-                        <WinLossDisplay
-                            :amount="row.vendor_win_gold"
-                            :isShowDollar="false"
-                        />
+                        <WinLossDisplay :amount="row.vendor_win_gold" :isShowDollar="false" />
                     </div>
-
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns['win_gold'].name" prop="win_gold" class-name="status-col">
@@ -276,7 +272,11 @@
                         </span>
                     </p>
                     <p>{{ tableColumns["bet_code"].name }}：{{ row.bet_code }}</p>
-                    <p>{{ tableColumns["bet_result"].name }}：{{ row.bet_result }}</p>
+                    <p v-if="row.vendor_id == 173">{{ LangUtil("开奖结果") }}：{{ row.game_results }}</p>
+                    <p v-else-if="row.vendor_id != 136">{{ tableColumns["bet_result"].name }}：{{ row.bet_result }}</p>
+                    <p v-if="row.vendor_id == 136">{{ LangUtil("彩种") }}：{{ row.vendor_game_name }}</p>
+                    <p v-if="row.vendor_id == 136">{{ LangUtil("玩法") }}：{{ row.vendor_game_rules }}</p>
+                    <p v-if="row.vendor_id == 136">{{ LangUtil("奖期") }}：{{ row.vendor_game_issue }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type_text }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("赔率") }}：{{ row.odds }}</p>
                     <el-button v-if="row.bet_detail_url" @click="showDetailPage(row)" type="text">{{
