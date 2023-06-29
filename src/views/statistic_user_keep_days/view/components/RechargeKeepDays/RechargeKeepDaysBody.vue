@@ -1,7 +1,9 @@
 <template>
     <div>
         <div style="margin-bottom: 10px;">
-            {{ tableColumns.user_all_count.name }}:{{ summary.user_all_count}}  {{tableColumns.user_count.name }}:{{ summary.user_count}}
+            {{ tableColumns.user_all_count.name }}:{{ summary.user_all_count }} {{ tableColumns.user_count.name }}:{{
+                summary.user_count
+            }}
         </div>
 
         <el-table
@@ -21,6 +23,8 @@
                         {{ tableColumns.plat_id.options[row.plat_id] }}
                     </div>
                 </template>
+            </el-table-column>
+            <el-table-column prop="channel_id" :label="tableColumns.channel_id.name" align="center" min-width="80px">
             </el-table-column>
             <el-table-column prop="user_count" :label="tableColumns.user_count.name" align="center" min-width="60px">
             </el-table-column>

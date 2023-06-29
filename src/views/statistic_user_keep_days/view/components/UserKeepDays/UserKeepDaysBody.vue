@@ -18,6 +18,8 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column prop="channel_id" :label="tableColumns.channel_id.name" align="center" min-width="80px">
+            </el-table-column>
             <el-table-column prop="user_count" :label="tableColumns.user_count.name" align="center" min-width="60px">
             </el-table-column>
             <el-table-column prop="day_1" :label="tableColumns.day_1.name" align="center" min-width="80px">
