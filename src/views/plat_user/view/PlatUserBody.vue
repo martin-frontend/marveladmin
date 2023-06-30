@@ -39,6 +39,7 @@
                     </div>
                     <div>VIP：{{ row.vip_level }}</div>
                     <div>{{ tableColumns.real_name.name }}：{{ row.real_name }}</div>
+                    <div>{{ tableColumns.cpf.name }}：{{ row.cpf }}</div>
                     <div>
                         {{ tableColumns.is_credit_user.name }}：{{
                             tableColumns.is_credit_user.options[row.is_credit_user]
