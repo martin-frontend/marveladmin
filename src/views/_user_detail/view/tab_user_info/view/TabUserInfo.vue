@@ -182,6 +182,18 @@
                         {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
+                <el-form-item size="mini" :label="LangUtil('绑定CPF')" prop="cpf">
+                    <el-input disabled v-model="userInfo.cpf" style="width: 200px"></el-input>
+                    <el-button
+                        class="item"
+                        type="primary"
+                        @click="handlerEdit('cpf')"
+                        style="margin-left: 20px"
+                        v-if="!isChannelPlatUser"
+                    >
+                        {{ LangUtil("编辑") }}
+                    </el-button>
+                </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['phone'].name" prop="phone" v-if="!isChannelPlatUser">
                     <el-input
                         disabled

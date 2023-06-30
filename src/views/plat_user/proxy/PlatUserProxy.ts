@@ -128,6 +128,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             last_recharge: { name: "", options: {} },
             coin_name_unique_arr: { name: "", options: {} },
             is_cash_agent: { name: '充值兑换开关', options: {} },
+            cpf: { name: 'cpf', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -159,7 +160,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         remark: "",
         is_credit_user: "",
         is_gold_exchange: "",
-
+        cpf: "",
         page_count: 1,
         page_size: 20,
     };
@@ -329,6 +330,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             min_level: "",
             order_by: <any>null,
             is_credit_user: "",
+            cpf: "",
         });
     }
 

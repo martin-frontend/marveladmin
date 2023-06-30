@@ -95,6 +95,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         show_credit_set: { name: "允许多层", options: {} },
         is_cash_agent: { name: '充值兑换开关', options: {} },
         birth_date: { name: '出生年月', options: {} },
+        cpf: { name: 'cpf', options: {} },
     };
     /**用户详情 */
     userInfo = {
@@ -182,6 +183,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         credit_rate_min: 0,
         is_cash_agent: "98",
         birth_date: "",
+        cpf: "",
     };
     /**代理关系链 */
     relationChain: string[] = [];
