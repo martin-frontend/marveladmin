@@ -101,6 +101,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_user_verification: { name: "", options: {} },
             register_same_ip_limit: { name: "", options: {} },
             max_exchange_gold: {name: '最大兑换金额', options: {} },
+            forbidden_country: {name: '', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -170,6 +171,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         exchange_count: 1,
         register_same_ip_limit:0,
         max_exchange_gold: -1,
+        forbidden_country:"",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -179,6 +181,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         formSource: null, // 表单的原始数据
         initPromotion_floor: <any>{},
         initWater_config: <any>{},
+        forbidden_country:"",
     };
     /**初始返佣折扣数据 */
     defaultPromotionConfig = {
@@ -395,6 +398,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             client_config,
             other_config,
             max_exchange_gold,
+            forbidden_country,
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -444,6 +448,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             client_config,
             other_config,
             max_exchange_gold,
+            forbidden_country,
         };
 
         formCopy.app_types = JSON.stringify(formCopy.app_types);

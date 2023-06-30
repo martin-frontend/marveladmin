@@ -601,6 +601,16 @@
                     </div>
                 </el-form-item>
 
+                <el-form-item size="mini" :label="LangUtil('受限国家')">
+                    <div class="el_select_group">
+                        <span>{{ tableColumns.forbidden_country.name }}：</span>
+                        <el-input
+                        class="select"
+                            v-model="form.forbidden_country" 
+                        ></el-input>
+                    </div>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="tableColumns['client_config'].name" prop="client_config">
                     <div class="editor-container">
                         <json-editor ref="jsonEditor" v-model="form.client_config" />

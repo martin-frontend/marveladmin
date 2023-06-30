@@ -98,6 +98,10 @@ const layoutRouter = {
             name: "币商管理",
             component: () => import(/* webpackChunkName: "coin_wallet" */"@/views/coin_wallet/view/CoinWallet.vue")
         },        {
+            path: "country",
+            name: "国家信息",
+            component: () => import(/* webpackChunkName: "country" */"@/views/country/view/Country.vue")
+        },        {
             path: "dashboard",
             name: "首页",
             component: () => import(/* webpackChunkName: "dashboard" */"@/views/dashboard/view/Dashboard.vue")
