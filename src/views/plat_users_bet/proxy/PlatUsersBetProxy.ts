@@ -365,7 +365,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         if (!queryCopy.plat_id) {
             queryCopy.plat_id = "0";
         }
-        this.sendNotification(HttpType.admin_plat_users_bet_index, queryCopy);
+        this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(queryCopy));
     }
 
     /**每1000笔保存一次 */
@@ -453,7 +453,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             query.plat_id = "0";
         }
         delete query.is_export;
-        this.sendNotification(HttpType.admin_plat_users_bet_index, query);
+        this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(query));
     }
 
     resetExportData(timeout: any) {
