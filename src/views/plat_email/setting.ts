@@ -10,6 +10,8 @@ import cmd_admin_plat_email_store_attachment_store from "@/views/plat_email/comm
 import cmd_admin_plat_mail_content_update from "@/views/plat_email/command/cmd_admin_plat_mail_content_update";
 import cmd_admin_plat_users_mail_table_columns from "@/views/plat_email/command/cmd_admin_plat_users_mail_table_columns";
 import cmd_admin_plat_users_mail_index from "@/views/plat_email/command/cmd_admin_plat_users_mail_index";
+import cmd_admin_plat_mail_template_index from "@/views/plat_email/command/cmd_admin_plat_mail_template_index";
+import cmd_admin_plat_mail_template_show from "@/views/plat_email/command/cmd_admin_plat_mail_template_show";
 /**协议*/
 export var HttpType = {
     admin_plat_mail_content_table_columns: "admin/plat_mail_content/table_columns",
@@ -20,6 +22,8 @@ export var HttpType = {
     admin_plat_mail_content_update: "admin/plat_mail_content/update/{content_id}",
     admin_plat_users_mail_table_columns: "admin/plat_users_mail/table_columns",
     admin_plat_users_mail_index: "admin/plat_users_mail/index",
+    admin_plat_mail_template_index: "admin/plat_mail_template/index",
+    admin_plat_mail_template_show: "admin/plat_mail_template/show/{id}",
 };
 /**事件*/
 export var EventType = {
@@ -31,6 +35,8 @@ export var EventType = {
     admin_plat_mail_content_update: "admin_plat_mail_content_update",
     admin_plat_users_mail_table_columns: "admin_plat_users_mail_table_columns",
     admin_plat_users_mail_index: "admin_plat_users_mail_index",
+    admin_plat_mail_template_index: "admin_plat_mail_template_index",
+    admin_plat_mail_template_show: "admin_plat_mail_template_show",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -42,3 +48,6 @@ facade.registerCommand(HttpType.admin_plat_email_store_attachment_store, cmd_adm
 facade.registerCommand(HttpType.admin_plat_mail_content_update, cmd_admin_plat_mail_content_update);
 facade.registerCommand(HttpType.admin_plat_users_mail_table_columns, cmd_admin_plat_users_mail_table_columns);
 facade.registerCommand(HttpType.admin_plat_users_mail_index, cmd_admin_plat_users_mail_index);
+facade.registerCommand(HttpType.admin_plat_mail_template_index, cmd_admin_plat_mail_template_index);
+facade.registerCommand(HttpType.admin_plat_mail_template_show, cmd_admin_plat_mail_template_show);
+

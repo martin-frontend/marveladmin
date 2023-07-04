@@ -6,7 +6,7 @@ import { EventType, HttpType } from "@/views/plat_email/setting";
 import { Message } from "element-ui";
 import PlatEmailProxy from "../proxy/PlatEmailProxy";
 
-interface IPlatEmail extends IEventDispatcher { }
+interface IPlatEmail extends IEventDispatcher {}
 
 export default class PlatEmailMediator extends AbstractMediator {
     private myProxy: PlatEmailProxy = <any>this.getProxy(PlatEmailProxy);
@@ -33,6 +33,8 @@ export default class PlatEmailMediator extends AbstractMediator {
             EventType.admin_plat_mail_content_update,
             EventType.admin_plat_users_mail_table_columns,
             EventType.admin_plat_users_mail_index,
+            EventType.admin_plat_mail_template_index,
+            EventType.admin_plat_mail_template_show,
             GlobalEventType.REQUEST_ERROR,
         ];
     }
@@ -76,6 +78,12 @@ export default class PlatEmailMediator extends AbstractMediator {
                 } else {
                     myProxy.setUserTableData(body);
                 }
+                break;
+            case EventType.admin_plat_mail_template_index:
+                myProxy.setTemplateArrData(body);
+                break;
+            case EventType.admin_plat_mail_template_show:
+                myProxy.setTemplateDetail(body);
                 break;
             case GlobalEventType.REQUEST_ERROR:
                 if (body.url.toString() == HttpType.admin_plat_mail_content_store) {

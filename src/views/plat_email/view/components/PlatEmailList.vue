@@ -42,6 +42,18 @@
                     :endDate.sync="listQuery['created_at-{<=}']"
                     :showTime="true"
                 />
+                <SearchInput
+                    :title="tableColumns.receive_users.name"
+                    :placeholder="LangUtil('请输入')"
+                    v-model="listQuery.receive_users"
+                />
+
+                <SearchInput
+                    :title="tableColumns.remark.name"
+                    :placeholder="LangUtil('请输入')"
+                    v-model="listQuery.remark"
+                />
+
                 <div class="header-button">
                     <el-button @click="handlerSearch" type="primary" icon="el-icon-search">
                         {{ LangUtil("查询") }}
@@ -94,6 +106,19 @@
                     {{ tableColumns.send_type.options[row.send_type] }}
                 </template>
             </el-table-column>
+
+            <el-table-column :label="`${tableColumns.receive_users.name}`" class-name="status-col" min-width="80px">
+                <template slot-scope="{ row }">
+                    {{ row.receive_users }}
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="`${tableColumns.remark.name}`" class-name="status-col" min-width="80px">
+                <template slot-scope="{ row }">
+                    {{ row.remark }}
+                </template>
+            </el-table-column>
+
             <el-table-column :label="`${tableColumns.type.name}`" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.type.options[row.type] }}

@@ -17,6 +17,17 @@
                 </template>
             </el-form-item>
 
+            <el-form-item :label="LangUtil('模版')" v-if="!readonly">
+                <el-select v-model="form.template_id" filterable class="select" :placeholder="LangUtil('请选择')" :disabled="!form.plat_id || !(form.template_option && form.template_option.length > 0)">
+                    <el-option
+                        v-for="(value) in form.template_option"
+                        :key="value.template_id"
+                        :label="value.template_name"
+                        :value="value.template_id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+
             <el-form-item :label="`${tableColumns.title.name}`" prop="title">
                 <div class="flex d-flex">
                     <el-input
@@ -99,6 +110,25 @@
                 prop="type"
             >
                 {{ form.receive_users }}
+            </el-form-item>
+
+            <el-form-item :label="`${tableColumns.remark.name}`" prop="remark">
+                <div class="flex d-flex">
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        type="textarea"
+                        maxlength="30"
+                        filterable
+                        clearable
+                        show-word-limit
+                        :readonly="readonly"
+                        :placeholder="`${tableColumns.remark.name}`"
+                        v-model="form.remark"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.remark)"
+                        >翻译</el-button
+                    >
+                </div>
             </el-form-item>
 
             <!-- 发送用户 -->
@@ -289,6 +319,17 @@ export default class PlatEmailDialog extends AbstractView {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
     }
+
+    @Watch("form.plat_id")
+    onWatchPlat() {
+        this.myProxy.admin_plat_mail_template_index();
+    }
+
+    @Watch("form.template_id")
+    onWatchTemplate_id() {
+        this.myProxy.admin_plat_mail_template_show();
+    }
+
     get isGroupMail() {
         return this.myProxy.isGroupMail;
     }

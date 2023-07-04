@@ -270,6 +270,10 @@ const layoutRouter = {
             name: "落地页域名配置",
             component: () => import(/* webpackChunkName: "plat_load_page_domain" */"@/views/plat_load_page_domain/view/PlatLoadPageDomain.vue")
         },        {
+            path: "plat_mail_template",
+            name: "平台邮件模版",
+            component: () => import(/* webpackChunkName: "plat_mail_template" */"@/views/plat_mail_template/view/PlatMailTemplate.vue")
+        },        {
             path: "plat_marquee",
             name: "大厅跑马灯",
             component: () => import(/* webpackChunkName: "plat_marquee" */"@/views/plat_marquee/view/PlatMarquee.vue")

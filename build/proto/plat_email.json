@@ -10,6 +10,8 @@
         "admin/plat_email_store_attachment/store",
         "admin/plat_mail_content/update/{content_id}",
         "admin/plat_users_mail/table_columns",
-        "admin/plat_users_mail/index"
+        "admin/plat_users_mail/index",
+        "admin/plat_mail_template/index",
+        "admin/plat_mail_template/show/{id}"
     ]
 }

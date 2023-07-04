@@ -46,7 +46,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             status: { name: "", options: {} },
             title: { name: "", options: {} },
             type: { name: "", options: {} },
-            member_analyze: { name: LangUtil('收到/阅读/奖励/发送'), options: {} },
+            remark: { name: "", options: {} },
+            member_analyze: { name: LangUtil("收到/阅读/奖励/发送"), options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -66,6 +67,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         cate: "",
         "created_at-{>=}": "",
         "created_at-{<=}": "",
+        remark: "",
+        receive_users: "",
         page_count: 1,
         page_size: 20,
     };
@@ -93,8 +96,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         list: <any>[],
         isQueryExportData: false,
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
-
-    }
+    };
 
     /**弹窗相关数据 */
     dialogData = {
@@ -113,6 +115,10 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             bonus_multiple: 1, //提领流水倍数
             attachment_type: 1, //附件类型 1-无附件 | 11-奖励物件
             attachment_content: <any>[], //附件内容,attachment_content:{"USDT":"10000","BNB":"88"}
+            template_id: "", //模版ID
+            template_option: <any>[], // 模版的列表
+            template_detail: <any>{}, // 模版的详细信息
+            remark: "",
         },
         formSource: null, // 表单的原始数据
         readonly: false, //是否唯讀
@@ -169,6 +175,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             cate: "",
             "created_at-{>=}": "",
             "created_at-{<=}": "",
+            remark: "",
+            receive_users: "",
             page_count: 1,
             page_size: 20,
         });
@@ -209,6 +217,10 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             bonus_multiple: 1, //提领流水倍数
             attachment_type: 1, //附件类型 1-无附件 | 11-奖励物件
             attachment_content: [], //附件内容
+            template_id: "",
+            template_option: <any>[], // 模版的列表
+            template_detail: <any>{}, // 模版的详细信息
+            remark: "",
         });
     }
 
@@ -231,6 +243,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             bonus_multiple,
             attachment_type,
             attachment_content,
+            template_id,
+            remark,
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -244,6 +258,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             bonus_multiple,
             attachment_type,
             attachment_content,
+            template_id,
+            remark,
         };
         let attachment_content_copy = [];
         let bonus: any = {};
@@ -282,7 +298,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_mail_content_update, { content_id: id, status: 99 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**用户邮件表格相关数据 */
@@ -352,6 +368,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             "attachment_content",
             "attachment_status",
             "attachment_open_at",
+            "remark",
         ],
     };
 
@@ -494,7 +511,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         // @ts-ignore
         newData.forEach(element => {
             if (element.attachment_content.length == 0) {
-                element.attachment_content = '';
+                element.attachment_content = "";
             } else {
                 element.attachment_content = jsonStringify(element.attachment_content);
             }
@@ -503,7 +520,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         const exportField = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
             if (this.exportData.fieldOrder.indexOf(item) != -1) {
-                exportField.push(item)
+                exportField.push(item);
             }
         }
 
@@ -565,7 +582,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         const exportField = [];
         for (const item of this.fieldSelectionEmailData.fieldOptions) {
             if (this.exportEmailData.fieldOrder.indexOf(item) != -1) {
-                exportField.push(item)
+                exportField.push(item);
             }
         }
 
@@ -600,5 +617,24 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
     showEmailFieldSelectionDialog() {
         this.fieldSelectionEmailData.bShow = true;
         this.exportEmailData.fieldOrder = [...this.fieldSelectionEmailData.fieldOptions];
+    }
+    setTemplateArrData(data: any) {
+        console.log(" 模版返回", data);
+        this.dialogData.form.template_option.length = 0;
+        this.dialogData.form.template_option = JSON.parse(JSON.stringify(data.list));
+        this.dialogData.form.template_id = "";
+    }
+    setTemplateDetail(data: any) {
+        console.log("设置模版", data);
+
+        this.dialogData.form.title = data.title;
+        this.dialogData.form.content = data.content;
+    }
+    admin_plat_mail_template_index() {
+        this.sendNotification(HttpType.admin_plat_mail_template_index, { plat_id: this.dialogData.form.plat_id });
+    }
+    admin_plat_mail_template_show() {
+        if (!this.dialogData.form.template_id) return;
+        this.sendNotification(HttpType.admin_plat_mail_template_show, { id: this.dialogData.form.template_id });
     }
 }

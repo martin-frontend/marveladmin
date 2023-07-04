@@ -1,0 +1,13 @@
+{
+    "name": "平台邮件模版",
+    "description": "平台邮件模版",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47777752",
+    "list": [
+        "admin/plat_mail_template/table_columns",
+        "admin/plat_mail_template/index",
+        "admin/plat_mail_template/show/{id}",
+        "admin/plat_mail_template/store",
+        "admin/plat_mail_template/update/{id}",
+        "admin/plat_mail_template/delete/{id}"
+    ]
+}
