@@ -14,10 +14,58 @@
                 <el-radio label="cancel">{{ LangUtil("取消") }}</el-radio>
             </el-radio-group>
             <div>
-                <span>{{ tableColumns.award_num.name }}：{{ myProxy.tableData.summary.award_num }},</span>
-                <span>{{ tableColumns.award_yes_num.name }}：{{ myProxy.tableData.summary.award_yes_num }}</span>
+                <div class="title">
+                    {{ tableColumns.award_num.name }}
+                </div>
+                <el-table
+                    :data="myProxy.tableData.cur_summary.award_num"
+                    border
+                    fit
+                    highlight-current-row
+                    style="width: 100%"
+                    size="mini"
+                    :span-method="objectSpanMethod"
+                >
+                    <el-table-column :label="tableColumns.award_num.name">{{ tableColumns.award_num.name }} </el-table-column>
+                    <el-table-column
+                        v-for="(item, index) in myProxy.tableData.cur_summary.award_num"
+                        :key="index"
+                        :label="item.coin_name_unique"
+                    >
+                        {{ item.value }}
+                    </el-table-column>
+                </el-table>
+                <div class="title">
+                    {{ tableColumns.award_yes_num.name }}
+                </div>
+                <el-table
+                    :data="myProxy.tableData.cur_summary.award_yes_num"
+                    border
+                    fit
+                    highlight-current-row
+                    style="width: 100%"
+                    size="mini"
+                    :span-method="objectSpanMethod"
+                >
+                    <el-table-column :label="tableColumns.award_yes_num.name"
+                        >{{ tableColumns.award_yes_num.name }}
+                    </el-table-column>
+                    <el-table-column
+                        v-for="(item, index) in myProxy.tableData.cur_summary.award_yes_num"
+                        :key="index"
+                        :label="item.coin_name_unique"
+                    >
+                        {{ item.value }}
+                    </el-table-column>
+                </el-table>
+                <div class="title">
+                </div>
+
+                <!-- <span>{{ tableColumns.award_num.name }}：{{ myProxy.tableData.summary.award_num }},</span>
+                <span>{{ tableColumns.award_yes_num.name }}：{{ myProxy.tableData.summary.award_yes_num }}</span> -->
             </div>
         </div>
+        
         <el-table
             :data="tableData"
             border
@@ -175,6 +223,21 @@ export default class PlatActivityAwardBody extends AbstractView {
         this.myProxy.tableData.multipleSelection.length = 0;
         Object.assign(this.myProxy.tableData.multipleSelection, val);
     }
+    objectSpanMethod({ row, column, rowIndex, columnIndex }: { [key: string]: number }) {
+        if (rowIndex === 0) {
+            if (columnIndex === 0) {
+                return {
+                    rowspan: 1, //合并的行数
+                    colspan: 1, //合并的列数，设为0则直接不显示
+                };
+            }
+        } else {
+            return {
+                rowspan: 0, //合并的行数
+                colspan: 0, //合并的列数，设为0则直接不显示
+            };
+        }
+    }
 
     /**检查是否可勾选 */
     checkSelectable(row: any, index: any) {
@@ -263,5 +326,8 @@ export default class PlatActivityAwardBody extends AbstractView {
         font-size: 14px;
         margin-left: 16px;
     }
+}
+.title{
+    margin: 10px 0;
 }
 </style>

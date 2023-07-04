@@ -52,6 +52,12 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
             award_yes_num: "",
         },
         multipleSelection: [],
+        isExportExcel: false,
+        // cur_summary: <any>[], //总计值
+        cur_summary: {
+            award_num: <any>[],
+            award_yes_num: <any>[],
+        },
     };
     /**查询条件 */
     listQuery = {
@@ -88,12 +94,41 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
             this.onQuery();
         }
     }
+    /**设置总计的值 */
+    setSumData(data: any) {
+        this.tableData.cur_summary = <any>[];
+        this.tableData.cur_summary.award_num = <any>[];
+        {
+            const award_num = data.award_num;
+            const keys = Object.keys(award_num);
+            for (let index = 0; index < keys.length; index++) {
+                const item = {
+                    coin_name_unique: keys[index],
+                    value: award_num[keys[index]],
+                };
+                this.tableData.cur_summary.award_num.push(item);
+            }
+        }
+        this.tableData.cur_summary.award_yes_num = <any>[];
+        {
+            const award_num = data.award_yes_num;
+            const keys = Object.keys(award_num);
+            for (let index = 0; index < keys.length; index++) {
+                const item = {
+                    coin_name_unique: keys[index],
+                    value: award_num[keys[index]],
+                };
+                this.tableData.cur_summary.award_yes_num.push(item);
+            }
+        }
+        console.log("总计数据", this.tableData.cur_summary);
+    }
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.summary, data.summary);
-
+        this.setSumData(data.summary);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
     /**详细数据 */
@@ -135,7 +170,12 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
     onQuery() {
         this.sendNotification(HttpType.admin_plat_activity_award_index, objectRemoveNull(this.listQuery));
     }
-
+    onQuery_export(pageInfo: any) {
+        const obj = JSON.parse(JSON.stringify(this.listQuery));
+        obj.page_count = pageInfo.pageCount;
+        obj.page_size = pageInfo.page_size;
+        this.sendNotification(HttpType.admin_plat_activity_award_index, objectRemoveNull(obj));
+    }
     /**打开用户详情页 */
     showUserDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
@@ -149,5 +189,62 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
     /**取消派獎 */
     onCancelAward(data: any) {
         this.sendNotification(HttpType.admin_plat_activity_award_cancel, data);
+    }
+
+    resetTabdata(data: any) {
+        const award_num = data.summary.award_num;
+        const award_yes_num = data.summary.award_yes_num;
+
+        {
+            const list = <any>[];
+            const keys = Object.keys(award_yes_num);
+            for (let index = 0; index < keys.length; index++) {
+                const item = {
+                    user_id: this.tableData.columns.award_yes_num.name,
+                    activity_id: 0,
+                    child_rule_num: keys[index],
+                    activity_name: award_num[keys[index]] + "",
+                };
+                list.push(item);
+            }
+            data.list.unshift(...list);
+        }
+
+        {
+            const list = <any>[];
+            const keys = Object.keys(award_num);
+            for (let index = 0; index < keys.length; index++) {
+                const item = {
+                    user_id: this.tableData.columns.award_num.name,
+                    activity_id: 0,
+                    child_rule_num: keys[index],
+                    activity_name: award_num[keys[index]] + "",
+                };
+                list.push(item);
+            }
+            data.list.unshift(...list);
+        }
+    }
+    _userList = [
+        "id",
+        "user_id",
+        "activity_id",
+        "child_rule_num",
+        "activity_name",
+        "award_content",
+        "settlement_type",
+        "settlement_time_at",
+        "award_type",
+        "award_timing_at",
+        "award_status",
+        "plat_id",
+    ];
+    myExportPagedata = <any>{};
+    /**导出excel */
+    exportExcel(data: any) {
+        if (data && data.list) {
+            this.resetTabdata(data);
+        }
+        this.myExportPagedata = JSON.parse(JSON.stringify(data));
     }
 }

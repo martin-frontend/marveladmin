@@ -46,7 +46,12 @@ export default class PlatActivityAwardMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_activity_award_index:
-                myProxy.setTableData(body);
+                // myProxy.setTableData(body);
+                if (myProxy.tableData.isExportExcel) {
+                    myProxy.exportExcel(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_plat_activity_award_show:
                 myProxy.setDetail(body);

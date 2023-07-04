@@ -82,6 +82,30 @@ export default class ExportDialog extends Vue {
 
     @Prop({ default: 1000 }) everyPage_Size!: number; //每一页的大小
 
+    @Prop({ default: null }) _convertKeys!: string[];
+    @Prop({ default: null }) _excludeKeys!: string[];
+
+    get convertKeys() {
+        if (!this._convertKeys) {
+            return [
+                "plat_id",
+                "type",
+                "vendor_id",
+                "vendor_type",
+                "vendor_wallet_type",
+                "time_region_hour_interval",
+                "status",
+            ];
+        }
+        return this._convertKeys;
+    }
+    get excludeKeys() {
+        if (!this._excludeKeys) {
+            return ["id", "data_belong", "vendor_product_id"];
+        }
+        return this._excludeKeys;
+    }
+
     org_percentage = 10; //进度条的 起始值
 
     fieldOptions = JSON.parse(JSON.stringify(this.fiterOption_val));
@@ -224,8 +248,8 @@ export default class ExportDialog extends Vue {
             option,
             this.proxy.tableData.columns,
             data.list,
-            ["plat_id", "type", "vendor_id", "vendor_type","vendor_wallet_type","time_region_hour_interval","status"],
-            ["id", "data_belong", "vendor_product_id"]
+            this.convertKeys,
+            this.excludeKeys
         );
     }
 
