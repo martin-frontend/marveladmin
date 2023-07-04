@@ -8,7 +8,7 @@ import StatisticUserPromotionDaysIndexProxy from "../proxy/StatisticUserPromotio
 interface IStatisticUserPromotionDaysIndex extends IEventDispatcher {}
 
 export default class StatisticUserPromotionDaysIndexMediator extends AbstractMediator {
-    private myProxy: StatisticUserPromotionDaysIndexProxy = <any>this.getProxy(StatisticUserPromotionDaysIndexProxy);
+    myProxy: StatisticUserPromotionDaysIndexProxy = <any>this.getProxy(StatisticUserPromotionDaysIndexProxy);
 
     onRegister() {
         this.myProxy.enter();
@@ -30,17 +30,13 @@ export default class StatisticUserPromotionDaysIndexMediator extends AbstractMed
     }
 
     handleNotification(notification: puremvc.INotification) {
-        const myProxy: StatisticUserPromotionDaysIndexProxy = <any>(
-            this.facade.retrieveProxy(StatisticUserPromotionDaysIndexProxy.NAME)
-        );
-        const myView: IStatisticUserPromotionDaysIndex = this.viewComponent;
         const body = notification.getBody();
         switch (notification.getName()) {
             case EventType.admin_statistic_user_promotion_days_table_columns:
-                myProxy.setTableColumns(body);
+                this.myProxy.setTableColumns(body);
                 break;
             case EventType.admin_statistic_user_promotion_days_index:
-                myProxy.setTableData(body);
+                this.myProxy.setTableData(body);
                 break;
         }
     }

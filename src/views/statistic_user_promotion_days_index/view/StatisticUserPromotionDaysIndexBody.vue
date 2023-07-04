@@ -387,7 +387,7 @@ export default class StatisticUserPromotionDaysIndexBody extends AbstractView {
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: StatisticUserPromotionDaysIndexProxy = this.getProxy(StatisticUserPromotionDaysIndexProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.tableData.list;

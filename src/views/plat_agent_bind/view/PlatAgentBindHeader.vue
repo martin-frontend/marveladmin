@@ -49,6 +49,7 @@
             />
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <SearchInput :title="tableColumns.agent_user_id.name" v-model="listQuery.agent_user_id" />
+            <SearchInput :title="tableColumns.user_remark.name" v-model="listQuery.user_remark" />
             <SearchInput :title="tableColumns.remark.name" v-model="listQuery.remark" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">

@@ -58,8 +58,9 @@ export default class StatisticUserPromotionDaysIndexHeader extends AbstractView 
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
+    
     // proxy
-    myProxy: StatisticUserPromotionDaysIndexProxy = this.getProxy(StatisticUserPromotionDaysIndexProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;

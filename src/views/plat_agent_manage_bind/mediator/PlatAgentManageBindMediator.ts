@@ -5,9 +5,7 @@ import { EventType, HttpType } from "@/views/plat_agent_manage_bind/setting";
 import { Message } from "element-ui";
 import PlatAgentManageBindProxy from "../proxy/PlatAgentManageBindProxy";
 
-interface IPlatAgentManageBind extends IEventDispatcher {
-
-}
+interface IPlatAgentManageBind extends IEventDispatcher {}
 
 export default class PlatAgentManageBindMediator extends AbstractMediator {
     private myProxy: PlatAgentManageBindProxy = <any>this.getProxy(PlatAgentManageBindProxy);
@@ -28,7 +26,8 @@ export default class PlatAgentManageBindMediator extends AbstractMediator {
         return [
             EventType.admin_plat_agent_manage_bind_table_columns,
             EventType.admin_plat_agent_manage_bind_index,
-
+            EventType.admin_plat_user_update,
+            EventType.admin_plat_agent_bind_update,
         ];
     }
 
@@ -41,7 +40,18 @@ export default class PlatAgentManageBindMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_agent_manage_bind_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
+                break;
+            case EventType.admin_plat_agent_bind_update:
+            case EventType.admin_plat_user_update:
+                Message.success(SuccessMessage.update);
+                myProxy.hideDialog();
+                myProxy.hideRemarkDialog();
+                myProxy.onQuery();
                 break;
         }
     }

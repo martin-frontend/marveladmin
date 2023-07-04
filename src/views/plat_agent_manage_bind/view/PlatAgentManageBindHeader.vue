@@ -18,12 +18,19 @@
                 :tip="LangUtil('（北京时间）')"
                 :pickerOptions="myProxy.pickerOptions"
             />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                :options="tableColumns.coin_name_unique_option"
+                v-model="listQuery.coin_name_unique"
+            />
+            <SearchInput :title="tableColumns.bind_depth.name" v-model="listQuery.bind_depth" />
         </div>
         <div class="group">
             <SearchDatePicker
                 :title="tableColumns.binded_at.name"
                 :startDate.sync="listQuery.binded_start"
                 :endDate.sync="listQuery.binded_end"
+                :showTime="true"
             />
             <SearchSelect
                 :title="tableColumns.channel_id.name"
@@ -41,6 +48,8 @@
             />
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <SearchInput :title="tableColumns.agent_user_id.name" v-model="listQuery.agent_user_id" />
+            <SearchInput :title="tableColumns.user_remark.name" v-model="listQuery.user_remark" />
+            <SearchInput :title="tableColumns.remark.name" v-model="listQuery.remark" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")
@@ -48,6 +57,9 @@
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
                     LangUtil("重置")
                 }}</el-button>
+                <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 0">
+                    {{ LangUtil("导出") }}
+                </el-button>
             </div>
         </div>
     </div>
@@ -76,15 +88,16 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
 export default class PlatAgentManageBindHeader extends AbstractView {
     LangUtil = LangUtil;
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: PlatAgentManageBindProxy = this.getProxy(PlatAgentManageBindProxy);
+    myProxy: PlatAgentManageBindProxy = this.getProxy(PlatAgentManageBindProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
     }
@@ -97,10 +110,15 @@ export default class PlatAgentManageBindHeader extends AbstractView {
         channel_id_keys.forEach((key: any) => {
             this.tableColumns.channel_id_options[key] = key;
         });
+        this.tableColumns.coin_name_unique_option = this.tableColumns.coin_name_unique.options[this.listQuery.plat_id];
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
+    }
+
+    exportExcel() {
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>

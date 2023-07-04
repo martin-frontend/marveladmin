@@ -42,7 +42,7 @@ export default class PlatUserDialog extends AbstractView {
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;

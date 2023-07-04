@@ -111,7 +111,7 @@ export default class PlatUserHeader extends AbstractView {
     unique = unique;
     checkUnique = checkUnique;
     // proxy
-    myProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;

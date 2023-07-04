@@ -58,8 +58,9 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             channel_id_option: {},
             username: { name: "", options: {} },
             bind_depth: { name: "代理级别", options: {} },
-            coin_name_unique: { name: '币种', options: {} },
-            remark: { name: '备注', options: {} },
+            coin_name_unique: { name: "币种", options: {} },
+            remark: { name: "备注", options: {} },
+            user_remark: { name: "备注", options: {} },
             group_all_bet_count: { name: "团队投注笔数" },
             group_all_bet: { name: "团队投注金额" },
             group_all_valid_bet: { name: "团队有效投注金额" },
@@ -74,7 +75,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             directly_recharge: { name: "直属充值" },
             directly_exchange: { name: "直属兑换" },
             directly_total_water: { name: "直属流水" },
-            commission_total: { name: "累计佣金" }
+            commission_total: { name: "累计佣金" },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -91,6 +92,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             "user_id",
             "nick_name",
             "binded_at",
+            "user_remark",
             "remark",
             "invite_user_id",
             "parent_nick_name",
@@ -104,19 +106,19 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             "group_all_win_gold",
             "group_all_valid_bet",
             "directly_users",
-            // "directly_total_water",
-            // "directly_recharge",
-            // "directly_exchange",
-            // "directly_bet_count",
-            // "directly_bet",
-            // "directly_win_gold",
-            // "directly_valid_bet",
+            "directly_total_water",
+            "directly_recharge",
+            "directly_exchange",
+            "directly_bet_count",
+            "directly_bet",
+            "directly_win_gold",
+            "directly_valid_bet",
             "commission_awaiting_num",
             "commission_received_num",
             "commission_total",
             "bonus_ratio",
-            "promotion_floor"
-        ]
+            "promotion_floor",
+        ],
     };
 
     exportData = {
@@ -147,6 +149,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         coin_name_unique: "",
         bind_depth: "",
         remark: "",
+        user_remark: "",
     };
 
     /**备注弹窗相关数据 */
@@ -174,9 +177,11 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
 
     /**更新備註 */
     onUpdateReamrk() {
-        this.sendNotification(HttpType.admin_plat_agent_bind_update, {
-            user_id: this.remarkDialogData.form.user_id,
-            remark: this.remarkDialogData.form.remark,
+        const { user_id, remark, type } = this.remarkDialogData.form;
+        const api = type == "agent" ? HttpType.admin_plat_agent_bind_update : HttpType.admin_plat_user_update;
+        this.sendNotification(api, {
+            user_id: user_id,
+            remark: remark,
         });
     }
 
@@ -390,7 +395,9 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 channel_id_keys.forEach((key: any) => {
                     this.tableData.columns.channel_id_options[key] = key;
                 });
-                this.tableData.columns.coin_name_unique_option = this.tableData.columns.coin_name_unique.options[this.listQuery.plat_id];
+                this.tableData.columns.coin_name_unique_option = this.tableData.columns.coin_name_unique.options[
+                    this.listQuery.plat_id
+                ];
             }
             this.onQuery();
         }
@@ -423,8 +430,8 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             agent_user_id: "",
             page_count: 1,
             page_size: 20,
-            binded_start: "",
-            binded_end: "",
+            binded_start: dateFormat(getTodayOffset(-7), "yyyy-MM-dd 00:00:00"),
+            binded_end: dateFormat(getTodayOffset(-1), "yyyy-MM-dd 23:59:59"),
             channel_id: "",
             nick_name: "",
             user_id: "",
@@ -433,11 +440,12 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             max_promotion_floor: "",
             min_promotion_floor: "",
             username: "",
-            settlement_date_start: dateFormat(getTodayOffset(-7), "yyyy-MM-dd 00:00:00"),
-            settlement_date_end: dateFormat(getTodayOffset(-1), "yyyy-MM-dd 23:59:59"),
+            settlement_date_start: "",
+            settlement_date_end: "",
             coin_name_unique: "",
             bind_depth: "",
             remark: "",
+            user_remark: "",
         });
     }
 

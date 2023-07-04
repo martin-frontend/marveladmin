@@ -1,7 +1,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { dateFormat, formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/statistic_user_promotion_days_index/setting";
 import { MessageBox } from "element-ui";
 import IStatisticUserPromotionDaysIndexProxy from "./IStatisticUserPromotionDaysIndexProxy";
@@ -174,8 +174,8 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
         page_count: 1,
         page_size: 20,
         plat_id: "",
-        "created_date-{>=}": "",
-        "created_date-{<=}": "",
+        "created_date-{>=}": dateFormat(getTodayOffset(-29), 'yyyy-MM-dd'),
+        "created_date-{<=}": dateFormat(getTodayOffset(), 'yyyy-MM-dd'),
         username: "",
         user_id: "",
     };
@@ -191,8 +191,14 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
-                this.listQuery.plat_id = plat_id_options_keys[0];
+                if (!this.listQuery.plat_id) {
+                    this.listQuery.plat_id = plat_id_options_keys[0];
+                    this.listQuery.user_id = "";
+                }
             }
+        }
+        if (this.listQuery.plat_id && this.listQuery.user_id) {
+            this.onQuery();
         }
     }
 
@@ -213,8 +219,8 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
             // TODO
             page_count: 1,
             page_size: 20,
-            "created_date-{>=}": "",
-            "created_date-{<=}": "",
+            "created_date-{>=}": dateFormat(getTodayOffset(-29), 'yyyy-MM-dd hh:mm:ss'),
+            "created_date-{<=}": dateFormat(getTodayOffset(), 'yyyy-MM-dd hh:mm:ss'),
             username: "",
             user_id: "",
         });

@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/plat_agent_bind/setting";
 import { Message } from "element-ui";
 import PlatAgentBindProxy from "../proxy/PlatAgentBindProxy";
 
-interface IPlatAgentBind extends IEventDispatcher { }
+interface IPlatAgentBind extends IEventDispatcher {}
 
 export default class PlatAgentBindMediator extends AbstractMediator {
     private myProxy: PlatAgentBindProxy = <any>this.getProxy(PlatAgentBindProxy);
@@ -33,6 +33,7 @@ export default class PlatAgentBindMediator extends AbstractMediator {
             EventType.admin_plat_agent_bonus_config_table_columns,
             EventType.admin_plat_agent_bonus_config_show,
             EventType.admin_plat_agent_bonus_config_update,
+            EventType.admin_plat_user_update,
         ];
     }
 
@@ -51,11 +52,11 @@ export default class PlatAgentBindMediator extends AbstractMediator {
                     myProxy.setTableData(body);
                 }
                 break;
-                break;
             case EventType.admin_plat_agent_bind_show:
                 myProxy.setDetail(body);
                 break;
             case EventType.admin_plat_agent_bind_update:
+            case EventType.admin_plat_user_update:
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 myProxy.hideAgentBonus();

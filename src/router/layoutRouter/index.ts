@@ -72,15 +72,15 @@ const layoutRouter = {
         },        {
             path: "channel_plat_user",
             name: "渠道用户",
-            component: () => import(/* webpackChunkName: "plat_user" */"@/views/plat_user/view/PlatUser.vue")
+            component: () => import(/* webpackChunkName: "channel_plat_user" */"@/views/channel_plat_user/view/ChannelPlatUser.vue")
         },        {
             path: "channel_statistic_plat_days",
             name: "渠道每日统计",
-            component: () => import(/* webpackChunkName: "statistic_plat_days" */"@/views/statistic_plat_days/view/StatisticPlatDays.vue")
+            component: () => import(/* webpackChunkName: "channel_statistic_plat_days" */"@/views/channel_statistic_plat_days/view/ChannelStatisticPlatDays.vue")
         },        {
             path: "channel_statistic_user_promotion_days_index",
             name: "渠道代理统计",
-            component: () => import(/* webpackChunkName: "statistic_user_promotion_days_index" */"@/views/statistic_user_promotion_days_index/view/StatisticUserPromotionDaysIndex.vue")
+            component: () => import(/* webpackChunkName: "channel_statistic_user_promotion_days_index" */"@/views/channel_statistic_user_promotion_days_index/view/ChannelStatisticUserPromotionDaysIndex.vue")
         },        {
             path: "coin_exchange_orders",
             name: "定时任务",
