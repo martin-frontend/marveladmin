@@ -450,6 +450,10 @@ const layoutRouter = {
             name: "平台统计",
             component: () => import(/* webpackChunkName: "statistic_plat_days" */"@/views/statistic_plat_days/view/StatisticPlatDays.vue")
         },        {
+            path: "statistic_plat_days_date",
+            name: "平台当日统计",
+            component: () => import(/* webpackChunkName: "statistic_plat_days_date" */"@/views/statistic_plat_days_date/view/StatisticPlatDaysDate.vue")
+        },        {
             path: "statistic_plat_funds_flow",
             name: "平台出入款",
             component: () => import(/* webpackChunkName: "statistic_plat_funds_flow" */"@/views/statistic_plat_funds_flow/view/StatisticPlatFundsFlow.vue")
