@@ -205,13 +205,11 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
         if (obj.coin_name_unique == "-") {
             obj.coin_name_unique = "";
         }
-        if (!obj.plat_id)
-        {
-            obj.plat_id="0";
+        if (!obj.plat_id) {
+            obj.plat_id = "0";
         }
         this.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(obj));
     }
-    
 
     /**取得所有资料 */
     onQueryAll() {
@@ -228,14 +226,16 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
             queryCopy.coin_name_unique = "";
         }
         //this.fieldSelectionData.exportOption = <any>[];
-        this.fieldSelectionData.exportOption.length = 0 ;
+        this.fieldSelectionData.exportOption.length = 0;
         //设置导出的筛选
         for (let index = 0; index < this.fieldSelectionData.baseData.length; index++) {
             const element = this.fieldSelectionData.baseData[index];
-            if (this.fieldSelectionData.fieldOptions.includes(element))
-            {
+            if (this.fieldSelectionData.fieldOptions.includes(element)) {
                 this.fieldSelectionData.exportOption.push(element);
             }
+        }
+        if (!queryCopy.plat_id) {
+            queryCopy.plat_id = "0";
         }
         this.facade.sendNotification(HttpType.admin_statistic_bet_plat_days_index, objectRemoveNull(queryCopy));
     }
@@ -243,7 +243,7 @@ export default class StatisticBetPlatDaysProxy extends AbstractProxy implements 
         bShow: false,
         baseData: [],
         fieldOptions: <any>[],
-        exportOption:<any>[],
+        exportOption: <any>[],
     };
     /**打开导出选择弹框 */
     openDialogFieldSelection() {

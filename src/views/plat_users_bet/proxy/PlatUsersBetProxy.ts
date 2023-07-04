@@ -362,7 +362,10 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         queryCopy.page_size = pageSize;
         queryCopy.page_count = Number(pageCurrent) + 1;
         queryCopy.is_export = true;
-        this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(queryCopy));
+        if (!queryCopy.plat_id) {
+            queryCopy.plat_id = "0";
+        }
+        this.sendNotification(HttpType.admin_plat_users_bet_index, queryCopy);
     }
 
     /**每1000笔保存一次 */
@@ -446,8 +449,11 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     /**查询 */
     onQuery() {
         const query = JSON.parse(JSON.stringify(this.listQuery));
+        if (!query.plat_id) {
+            query.plat_id = "0";
+        }
         delete query.is_export;
-        this.sendNotification(HttpType.admin_plat_users_bet_index, objectRemoveNull(query));
+        this.sendNotification(HttpType.admin_plat_users_bet_index, query);
     }
 
     resetExportData(timeout: any) {
