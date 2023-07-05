@@ -2,8 +2,8 @@ import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/plat_users_bet/setting";
 import PlatUsersBetProxy from "../proxy/PlatUsersBetProxy";
-
-interface IPlatUsersBet extends IEventDispatcher { }
+import { Message } from "element-ui";
+interface IPlatUsersBet extends IEventDispatcher {}
 
 export default class PlatUsersBetMediator extends AbstractMediator {
     private myProxy: PlatUsersBetProxy = <any>this.getProxy(PlatUsersBetProxy);
@@ -56,7 +56,32 @@ export default class PlatUsersBetMediator extends AbstractMediator {
                 myProxy.setDetail(body);
                 break;
             case EventType.admin_plat_users_bet_show_url:
-                window.open(body);
+                {
+                    if (myProxy.dialogData.trun_bet_detail_text == 1 || myProxy.dialogData.trun_bet_detail_text == "1") {
+                        let json;
+                        try {
+                            json = JSON.parse(body);
+                            if (!json) {
+                                throw "aaa";
+                            }
+                            console.log("---",json);
+                            if (json.status_code == 200) {
+                                if (json && json.data && json.data.html) {
+                                    const winHandler: any = window.open("", "_blank");
+                                    winHandler.document.body.innerHTML = json.data.html;
+                                } else {
+                                    throw "bbb";
+                                }
+                            } else {
+                                Message.error(json.message);
+                            }
+                        } catch (d) {
+                            window.open(body);
+                        }
+                    } else {
+                        window.open(body);
+                    }
+                }
                 break;
             case EventType.admin_plat_users_bet_credit_log_table_columns:
                 myProxy.setCreditLogTableColumns(body);
