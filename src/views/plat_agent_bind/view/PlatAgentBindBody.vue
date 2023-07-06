@@ -369,6 +369,9 @@
                     <div v-else v-html="formatObject(row.commission_total)"></div>
                 </template>
             </el-table-column>
+
+            <el-table-column align="center" :label="tableColumns.agent_bonus.name" prop="agent_bonus" width="120px">
+            </el-table-column>
             <el-table-column align="center" width="120px" :label="tableColumns.bonus_ratio.name" prop="bonus_ratio">
             </el-table-column>
             <el-table-column
@@ -531,8 +534,8 @@ export default class PlatAgentBindBody extends AbstractView {
 
     /**编辑备注 */
     handerEditRemark(row: any, type: string) {
-        console.warn('type', type);
-        
+        console.warn("type", type);
+
         this.myProxy.remarkDialogData.status = DialogStatus.update;
         Object.assign(this.myProxy.remarkDialogData.form, {
             user_id: row.user_id,

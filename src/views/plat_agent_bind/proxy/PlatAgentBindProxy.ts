@@ -52,6 +52,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             vendor_type_32: { name: "真人-每万返佣保底", options: {} },
             vendor_type_64: { name: "体育-每万返佣保底", options: {} },
             vendor_type_128: { name: "电竞-每万返佣保底", options: {} },
+            agent_bonus: { name: "" },
             version: { name: "推广配置版本", options: {} },
             is_agent_bonus: { name: "", options: {} },
             agent_bonus_rate: { name: "", options: {} },
@@ -150,6 +151,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         bind_depth: "",
         remark: "",
         user_remark: "",
+        is_show: "",
     };
 
     /**备注弹窗相关数据 */
@@ -446,6 +448,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             bind_depth: "",
             remark: "",
             user_remark: "",
+            is_show: "",
         });
     }
 

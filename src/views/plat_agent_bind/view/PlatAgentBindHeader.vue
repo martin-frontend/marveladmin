@@ -51,6 +51,13 @@
             <SearchInput :title="tableColumns.agent_user_id.name" v-model="listQuery.agent_user_id" />
             <SearchInput :title="tableColumns.user_remark.name" v-model="listQuery.user_remark" />
             <SearchInput :title="tableColumns.remark.name" v-model="listQuery.remark" />
+
+            <SearchSelect
+                :title="LangUtil('分红开启')"
+                :options="agent_bonus_option"
+                v-model="listQuery.is_show"
+                :clearable="false"
+            />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
                     {{ LangUtil("查询") }}
@@ -97,6 +104,11 @@ export default class PlatAgentBindHeader extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
     list = this.myProxy.tableData.list;
+
+    agent_bonus_option = {
+        0: LangUtil("否"),
+        1: LangUtil("是"),
+    };
 
     handlerSearch() {
         this.listQuery.page_count = 1;
