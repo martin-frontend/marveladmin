@@ -637,4 +637,140 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         if (!this.dialogData.form.template_id) return;
         this.sendNotification(HttpType.admin_plat_mail_template_show, { id: this.dialogData.form.template_id });
     }
+
+    /**邮件模版相关 */
+    platEmailTemplateManager_data = {
+        bShow: false,
+        columns: {
+            template_id: { name: "ID", options: {} },
+            template_name: { name: "", options: {} },
+            plat_id: { name: "", options: {} },
+            title: { name: "", options: {} },
+            content: { name: "创建人", options: {} },
+            data_belong: { name: "数据归属标记", options: {} },
+            created_by: { name: "", options: {} },
+            created_at: { name: "", options: {} },
+            updated_at: { name: "修改时间", options: {} },
+            updated_by: { name: "修改人", options: {} },
+        },
+        list: <any>[],
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+    };
+    /**查询条件 */
+    platEmailTemplateManager_listQuery = {
+        page_count: 1,
+        page_size: 20,
+        plat_id: "",
+    };
+
+    /**弹窗相关数据 */
+    platEmailTemplateManager_dialogData = {
+        bShow: false,
+        status: DialogStatus.create,
+        form: {
+            id: null,
+            // TODO
+            plat_id: "",
+            template_name: "",
+            template_id: "",
+            title: "",
+            content: "",
+        },
+        formSource: null, // 表单的原始数据
+    };
+
+    /**设置表头数据 */
+    setTableColumns_templateManager(data: any) {
+        Object.assign(this.platEmailTemplateManager_data.columns, data);
+        const plat_id_options_keys = Object.keys(this.platEmailTemplateManager_data.columns.plat_id.options);
+        if (plat_id_options_keys.length > 0) {
+            if (!plat_id_options_keys.includes(this.platEmailTemplateManager_listQuery.plat_id)) {
+                this.platEmailTemplateManager_listQuery.plat_id = plat_id_options_keys[0];
+            }
+        }
+        this.onQuery_templateManager();
+    }
+    /**表格数据 */
+    setTableData_templateManager(data: any) {
+        this.platEmailTemplateManager_data.list.length = 0;
+        this.platEmailTemplateManager_data.list.push(...data.list);
+        Object.assign(this.platEmailTemplateManager_data.pageInfo, data.pageInfo);
+    }
+    /**详细数据 */
+    setDetail_templateManager(data: any) {
+        this.platEmailTemplateManager_dialogData.formSource = data;
+        Object.assign(this.platEmailTemplateManager_dialogData.form, JSON.parse(JSON.stringify(data)));
+    }
+    /**显示弹窗 */
+    showDialog_templateManager(status: string, data?: any) {
+        this.platEmailTemplateManager_dialogData.bShow = true;
+        this.platEmailTemplateManager_dialogData.status = status;
+        if (status == DialogStatus.update) {
+            this.platEmailTemplateManager_dialogData.formSource = data;
+            Object.assign(this.platEmailTemplateManager_dialogData.form, JSON.parse(JSON.stringify(data)));
+            this.sendNotification(HttpType.admin_plat_mail_template_show, { id: data.template_id });
+        } else {
+            this.resetDialogForm_templateManager();
+            this.platEmailTemplateManager_dialogData.form.plat_id = this.listQuery.plat_id;
+            this.platEmailTemplateManager_dialogData.formSource = null;
+        }
+    }
+    /**隐藏弹窗 */
+    hideDialog_templateManager() {
+        this.platEmailTemplateManager_dialogData.bShow = false;
+    }
+    /**重置弹窗表单 */
+    resetDialogForm_templateManager() {
+        Object.assign(this.platEmailTemplateManager_dialogData.form, {
+            // TODO
+            plat_id: "",
+            template_name: "",
+            title: "",
+            content: "",
+            template_id: "",
+        });
+    }
+    /**查询 */
+    onQuery_templateManager() {
+        this.sendNotification(
+            HttpType.admin_plat_mail_template_index,
+            objectRemoveNull(this.platEmailTemplateManager_listQuery)
+        );
+    }
+    /**添加数据 */
+    onAdd_templateManager() {
+        const formCopy = JSON.parse(JSON.stringify(this.platEmailTemplateManager_dialogData.form));
+        this.sendNotification(HttpType.admin_plat_mail_template_store, objectRemoveNull(formCopy));
+    }
+    /**更新数据 */
+    onUpdate_templateManager() {
+        const formCopy: any = formCompared(
+            this.platEmailTemplateManager_dialogData.form,
+            this.platEmailTemplateManager_dialogData.formSource
+        );
+        if (Object.keys(formCopy).length == 0) {
+            this.platEmailTemplateManager_dialogData.bShow = false;
+            return;
+        }
+        formCopy.id = this.platEmailTemplateManager_dialogData.form.template_id;
+        this.sendNotification(HttpType.admin_plat_mail_template_update, formCopy);
+    }
+    /**删除数据 */
+    onDelete_templateManager(id: any) {
+        MessageBox.confirm("您是否删除该记录", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning",
+        })
+            .then(() => {
+                this.sendNotification(HttpType.admin_plat_mail_template_delete, { id });
+            })
+            .catch(() => {});
+    }
+
+    openEmailTemplateManager() {
+        this.platEmailTemplateManager_data.bShow = true;
+        this.platEmailTemplateManager_listQuery.plat_id = this.listQuery.plat_id;
+        this.sendNotification(HttpType.admin_plat_mail_template_table_columns);
+    }
 }

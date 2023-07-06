@@ -35,6 +35,10 @@ export default class PlatEmailMediator extends AbstractMediator {
             EventType.admin_plat_users_mail_index,
             EventType.admin_plat_mail_template_index,
             EventType.admin_plat_mail_template_show,
+            EventType.admin_plat_mail_template_table_columns,
+            EventType.admin_plat_mail_template_store,
+            EventType.admin_plat_mail_template_update,
+            EventType.admin_plat_mail_template_delete,
             GlobalEventType.REQUEST_ERROR,
         ];
     }
@@ -80,11 +84,39 @@ export default class PlatEmailMediator extends AbstractMediator {
                 }
                 break;
             case EventType.admin_plat_mail_template_index:
-                myProxy.setTemplateArrData(body);
+                if (myProxy.platEmailTemplateManager_data.bShow) {
+                    myProxy.setTableData_templateManager(body);
+                } else {
+                    myProxy.setTemplateArrData(body);
+                }
                 break;
             case EventType.admin_plat_mail_template_show:
-                myProxy.setTemplateDetail(body);
+                if (myProxy.platEmailTemplateManager_dialogData.bShow) {
+                    myProxy.setDetail_templateManager(body);
+                } else {
+                    myProxy.setTemplateDetail(body);
+                }
                 break;
+
+            case EventType.admin_plat_mail_template_table_columns:
+                myProxy.setTableColumns_templateManager(body);
+                break;
+
+            case EventType.admin_plat_mail_template_store:
+                Message.success(SuccessMessage.create);
+                myProxy.hideDialog_templateManager();
+                myProxy.platEmailTemplateManager_listQuery.page_count = 1;
+                myProxy.onQuery_templateManager();
+                break;
+            case EventType.admin_plat_mail_template_update:
+                Message.success(SuccessMessage.update);
+                myProxy.hideDialog_templateManager();
+                myProxy.onQuery_templateManager();
+                break;
+            case EventType.admin_plat_mail_template_delete:
+                myProxy.onQuery_templateManager();
+                break;
+
             case GlobalEventType.REQUEST_ERROR:
                 if (body.url.toString() == HttpType.admin_plat_mail_content_store) {
                     myProxy.showAlertDialog(body.result.msg);
