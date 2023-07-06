@@ -502,6 +502,17 @@
                                 ></el-option>
                             </el-select>
                         </div>
+                        <div>
+                            <span class="title_switch">{{ tableColumns["is_active_digital_currency"].name }}</span>
+                            <el-select class="select" v-model="form.is_active_digital_currency">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_active_digital_currency.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
 
                     </div>
                 </el-form-item>
