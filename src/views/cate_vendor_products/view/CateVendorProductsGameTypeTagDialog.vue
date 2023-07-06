@@ -63,6 +63,13 @@
                     prop="name"
                     class-name="status-col"
                 ></el-table-column>
+
+                <el-table-column
+                :label="tableColumns['icon_name'].name"
+                prop="icon_name"
+                class-name="status-col"
+            ></el-table-column>
+
                 <el-table-column :label="LangUtil('操作')" class-name="status-col" width="350px">
                     <template slot-scope="{ row, $index }">
                         <el-button size="mini" @click="handlerOpt(row, { opt: 2 })" :disabled="$index == 0"
@@ -92,6 +99,9 @@
                     </template>
                 </el-table-column>
             </el-table>
+
+            <pagination :pageInfo="myProxy.gameTypeTableData.pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
+
         </div>
     </el-dialog>
 </template>
@@ -109,11 +119,13 @@ import SearchSelect from "@/components/SearchSelect.vue";
 import SearchInput from "@/components/SearchInput.vue";
 import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 import Sortable from "sortablejs";
+import Pagination from "@/components/Pagination.vue";
 
 @Component({
     components: {
         SearchInput,
         SearchSelect,
+        Pagination,
     },
     filters: {
         statusFilter(status: any) {
@@ -139,7 +151,6 @@ export default class GameTypeTagDialog extends AbstractView {
     tableColumns = this.myProxy.gameTypeTableData.columns;
     tableData = this.myProxy.gameTypeTableData.list;
     listQuery = this.myProxy.gameTypeListQuery;
-
     private textMap = {
         update: this.LangUtil("编辑"),
         create: this.LangUtil("新增"),
@@ -165,6 +176,7 @@ export default class GameTypeTagDialog extends AbstractView {
 
     @Watch("myProxy.gameTypeTableData.isResort")
     resort() {
+        console.log(" 呗修改了000",this.myProxy.gameTypeTableData.isResort);
         if (this.myProxy.gameTypeTableData.isResort) {
             this.data = [];
             this.$nextTick(() => {
@@ -188,6 +200,10 @@ export default class GameTypeTagDialog extends AbstractView {
         const { id } = row;
         const { opt } = value;
         this.myProxy.onGameTypeUpdateOpt({ id, opt });
+    }
+    handlerPageSwitch(page: number) {
+        this.myProxy.gameTypeListQuery.page_count = page;
+        this.myProxy.onGameTypeQuery();
     }
 
     initSort() {

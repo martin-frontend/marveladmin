@@ -71,6 +71,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             status: { name: "状态", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "更新人", options: {} },
+            icon_name: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -94,6 +95,8 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
 
     /**查询条件 */
     gameTypeListQuery = {
+        page_count: 1,
+        page_size: 20,
         plat_id: "",
         game_type: "",
         name: "",
@@ -112,6 +115,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             icon_name: "",
         },
         formSource: null, // 表单的原始数据
+        typeOption: <any>{},
     };
 
     cateVendorProductsGameTypeTagDialog = {
@@ -128,6 +132,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             game_type: "",
             name: "",
             status: "",
+            icon_name: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -149,7 +154,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         Object.assign(this.gameTypeTableData.columns, data);
         const plat_id_options_keys = Object.keys(this.gameTypeTableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
-            if (!plat_id_options_keys.includes(this.gameTypeListQuery.plat_id))
+            if (!plat_id_options_keys.includes(this.gameTypeListQuery.plat_id) && !this.gameTypeListQuery.plat_id)
                 this.gameTypeListQuery.plat_id = plat_id_options_keys[0];
             this.onGameTypeQuery();
         }
@@ -163,18 +168,42 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         this.tableData.isResort = true;
     }
 
+    getGameTypeName(category: any) {
+        const obj = <any>{
+            id: 0,
+            icon_name: "",
+            name: "",
+        };
+        if (!category) return obj;
+        if (!this.gameTypeTableData || !this.gameTypeTableData.list || this.gameTypeTableData.list.length < 1)
+            return obj;
+
+        for (let index = 0; index < this.gameTypeTableData.list.length; index++) {
+            const element = this.gameTypeTableData.list[index];
+            if (element.id == category) {
+                return element;
+            }
+        }
+        return obj;
+        // const fitter = this.gameTypeTableData.list
+    }
     /**表格数据 */
     setGameTypeTableData(data: any) {
         this.gameTypeTableData.list.length = 0;
         this.gameTypeTableData.list.push(...data.list);
-        // Object.assign(this.gameTypeTableData.pageInfo, data.pageInfo);
-        this.gameTypeTableData.isResort = true;
+        Object.assign(this.gameTypeTableData.pageInfo, data.pageInfo);
+        // this.gameTypeTableData.isResort = true;
+        if (this.cateVendorProductsGameTypeTagDialog.bShow) {
+            this.gameTypeTableData.isResort = true;
+        }
     }
 
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
             category: "",
+            page_count: 1,
+            page_size: 100,
         });
     }
 
@@ -183,13 +212,25 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         Object.assign(this.gameTypeListQuery, {
             game_type: "",
             name: "",
+            page_count: 1,
+            page_size: 20,
         });
     }
 
+    setDialogData(data: any) {
+        this.dialogData.typeOption = data;
+    }
+    sendGameTypeTagIndex() {
+        this.sendNotification(HttpType.admin_game_type_tag_index, {
+            plat_id: this.listQuery.plat_id,
+            game_type: this.listQuery.type,
+        });
+    }
     /**显示弹窗 */
     showDialog(status: string, data?: any) {
         this.dialogData.bShow = true;
         this.dialogData.status = status;
+        //this.dialogData.form.icon_name = data.icon_name;
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
@@ -202,8 +243,10 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
     }
 
     showGameTypeTagDialog() {
+        this.resetGameTypeListQuery();
         this.sendNotification(HttpType.admin_game_type_tag_table_columns);
         this.cateVendorProductsGameTypeTagDialog.bShow = true;
+        // this.gameTypeTableData.isResort = true;
     }
 
     /**显示弹窗 */
@@ -246,12 +289,16 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             game_type: "",
             name: "",
             status: "",
+            icon_name: "",
         });
     }
 
     /**查询 */
     onQuery() {
         this.sendNotification(HttpType.admin_cate_vendor_products_index, objectRemoveNull(this.listQuery));
+        if (!this.cateVendorProductsGameTypeTagDialog.bShow) {
+            this.sendGameTypeTagIndex();
+        }
     }
 
     /**查询 */
@@ -275,12 +322,13 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
 
     /**添加数据 */
     onGameTypeAdd() {
-        const { plat_id, game_type, name, status } = this.gameTypeDialogData.form;
+        const { plat_id, game_type, name, status, icon_name } = this.gameTypeDialogData.form;
         const formCopy: any = {
             plat_id,
             game_type,
             name,
             status,
+            icon_name,
         };
         this.sendNotification(HttpType.admin_game_type_tag_store, objectRemoveNull(formCopy));
     }

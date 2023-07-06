@@ -1,17 +1,18 @@
 <template>
+    <!-- 新增 和 修改  游戏标签 -->
     <el-dialog width="700px" :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
                 <span>{{ tableColumns.plat_id.options[form.plat_id] }}</span>
             </el-form-item>
-            <el-form-item :label="tableColumns['category'].name" prop="category" v-if="tableColumns.category.options[listQuery.plat_id]">
+            <el-form-item :label="tableColumns['category'].name" prop="category">
                 <div class="flex d-flex">
                     <el-select v-model="form.category" filterable :placeholder="LangUtil('请选择')" >
                         <el-option
-                            v-for="(value, key) in tableColumns.category.options[listQuery.plat_id][listQuery.type]"
+                            v-for="(value, key) in myProxy.gameTypeTableData.list"
                             :key="key"
-                            :label="value"
-                            :value="key"
+                            :label="value.name"
+                            :value="value.id"
                         ></el-option>
                     </el-select>
                     <!-- <el-button
@@ -24,16 +25,21 @@
                 </div>
             </el-form-item>
 
-            <el-form-item :label="tableColumns['icon_name'].name" prop="icon_name">
+            <el-form-item :label="tableColumns['icon_name'].name">
+                {{ form.icon_name }}
+            </el-form-item>
+
+            <!-- <el-form-item :label="tableColumns['icon_name'].name" prop="icon_name">
                 <div class="flex d-flex">
                     <el-input
                         style="margin-right: 0.8rem"
                         :placeholder="LangUtil('请输入')"
                         v-model="form.icon_name"
                         maxlength="200"
+                        readonly
                     ></el-input>
                 </div>
-            </el-form-item>
+            </el-form-item> -->
 
             <el-form-item :label="tableColumns.vendor_id.name" prop="vendor_id">
                 <el-select
@@ -113,6 +119,13 @@ export default class CateVendorProductsDialog extends AbstractView {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
     }
+
+    @Watch("myProxy.dialogData.form.category")
+    onWatchCategory() {
+        // this.myProxy.dialogData.form.icon_name = this.myProxy.gameTypeTableData.list[this.form.category].icon_name;
+        this.myProxy.dialogData.form.icon_name = this.myProxy.getGameTypeName(this.form.category).icon_name;
+    }
+
 
     get status() {
         return this.myProxy.dialogData.status;

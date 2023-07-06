@@ -6,7 +6,7 @@ import { Message } from "element-ui";
 import CateVendorProductsProxy from "../proxy/CateVendorProductsProxy";
 import LangUtil from "@/core/global/LangUtil";
 
-interface ICateVendorProducts extends IEventDispatcher { }
+interface ICateVendorProducts extends IEventDispatcher {}
 
 export default class CateVendorProductsMediator extends AbstractMediator {
     private myProxy: CateVendorProductsProxy = <any>this.getProxy(CateVendorProductsProxy);
@@ -68,20 +68,24 @@ export default class CateVendorProductsMediator extends AbstractMediator {
                 myProxy.setGameTypeTableColumns(body);
                 break;
             case EventType.admin_game_type_tag_index:
+                // if (myProxy.dialogData.bShow) {
+                //     myProxy.setDialogData(body.list);
+                // } else 
                 myProxy.setGameTypeTableData(body);
                 break;
             case EventType.admin_game_type_tag_store:
                 Message.success(SuccessMessage.create);
                 myProxy.hideGameTypeDialog();
                 myProxy.onGameTypeQuery();
-                myProxy.refreshTableColums();
+                // myProxy.refreshTableColums();
+                myProxy.onQuery();
                 break;
             case EventType.admin_game_type_tag_update:
                 Message.success(SuccessMessage.update);
                 myProxy.hideGameTypeDialog();
                 myProxy.onGameTypeQuery();
-                myProxy.refreshTableColums();
-                //myProxy.onQuery();
+                //myProxy.refreshTableColums();
+                myProxy.onQuery();
                 break;
         }
     }
