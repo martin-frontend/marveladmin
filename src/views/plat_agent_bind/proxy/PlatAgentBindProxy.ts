@@ -117,6 +117,7 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             "commission_awaiting_num",
             "commission_received_num",
             "commission_total",
+            "agent_bonus",
             "bonus_ratio",
             "promotion_floor",
         ],
