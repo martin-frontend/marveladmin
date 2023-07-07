@@ -178,6 +178,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "real_name",
             "is_credit_user",
             "phone",
+            "email",
             "status",
             "balance",
             "gold",
