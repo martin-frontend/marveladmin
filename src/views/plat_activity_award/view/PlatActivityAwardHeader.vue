@@ -38,6 +38,7 @@
                 :title="tableColumns.settlement_time_at.name"
                 :startDate.sync="listQuery['created_at-{>=}']"
                 :endDate.sync="listQuery['created_at-{<=}']"
+                :showTime="true"
             />
             <SearchSelect
                 :title="tableColumns.award_status.name"
