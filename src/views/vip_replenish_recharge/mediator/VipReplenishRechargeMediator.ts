@@ -9,7 +9,7 @@ import SelfModel from "@/core/model/SelfModel";
 import { UserInfoVO } from "@/core/vo/UserInfoVO";
 import { UserType } from "@/core/enum/UserType";
 
-export interface IVipReplenishRecharge extends IEventDispatcher { }
+export interface IVipReplenishRecharge extends IEventDispatcher {}
 
 export default class VipReplenishRechargeMediator extends AbstractMediator {
     private myProxy: VipReplenishRechargeProxy = <any>this.getProxy(VipReplenishRechargeProxy);
@@ -54,12 +54,15 @@ export default class VipReplenishRechargeMediator extends AbstractMediator {
                 break;
             case EventType.admin_vip_replenish_recharge_recharge:
                 this.str = LangUtil(
-                    "玩家 {0} 成功充值 {1} {2}",
+                    "玩家<p class='text-hidden'>{0}</p>成功充值 {1} {2}",
                     myProxy.bodyData.form.user_id,
                     myProxy.bodyData.form.amount,
                     myProxy.bodyData.form.coin_name_unique
                 );
-                Message.success(this.str);
+                Message.success({
+                    message: this.str,
+                    dangerouslyUseHTMLString: true,
+                });
                 myProxy.resetForm();
                 myProxy.bodyData.isRechargeSuccess = +new Date();
                 myProxy.setUserInfo();

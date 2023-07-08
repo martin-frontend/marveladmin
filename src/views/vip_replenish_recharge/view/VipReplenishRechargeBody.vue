@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="net_status.loading">
         <div class="header-content">
             <div class="group">
                 <div>
@@ -24,14 +24,28 @@
         >
             <el-form-item :label="LangUtil('充值玩家ID')" prop="user_id">
                 <el-input
+                    oninput="value=value.replace(/[^\d,]/g, '')"
                     v-model="form.user_id"
                     :placeholder="LangUtil('请输入')"
-                    oninput="value=value.replace(/[^\d]/g,'');"
                     style="width: 200px"
                 ></el-input>
-                <el-button type="primary" @click="onQueryUser" style="margin-left: 10px">{{
+                <el-button :disabled="!canSearchUser" type="primary" @click="onQueryUser" style="margin-left: 10px">{{
                     LangUtil("玩家查询")
                 }}</el-button>
+                <input
+                    v-show="false"
+                    ref="excel-upload-input"
+                    class="excel-upload-input"
+                    type="file"
+                    accept=".xlsx, .xls"
+                    @change="handleClick"
+                />
+                <el-button type="primary" style="margin-left: 10px;" @click="onImportUser">
+                    {{ LangUtil("导入用户") }}
+                </el-button>
+                <el-button type="primary" @click="onLoadModule">
+                    {{ LangUtil("下载导入模版") }}
+                </el-button>
             </el-form-item>
             <SearchSelect
                 class="mb-22"
@@ -72,6 +86,7 @@
                     @click="onTopup"
                     style="margin-left: 10px"
                     v-if="checkUnique(unique.vip_recharge_recharge)"
+                    
                     >{{ LangUtil("提交充值") }}</el-button
                 >
             </el-form-item>
@@ -89,6 +104,10 @@ import GlobalVar from "@/core/global/GlobalVar";
 import { IVipReplenishRecharge } from "../mediator/VipReplenishRechargeMediator";
 import Cookies from "js-cookie";
 import SearchSelect from "@/components/SearchSelect.vue";
+import { readerData } from "@/core/global/Excel";
+import { removeRepeatStr } from "@/core/global/Functions";
+import { BaseInfo } from "@/components/vo/commonVo";
+import { dateFormat } from "@/core/global/Functions";
 
 @Component({
     components: {
@@ -139,8 +158,9 @@ export default class VipReplenishRechargeBody extends AbstractView implements IV
             if (valid) {
                 // this.$confirm(`您是否要给玩家${this.form.user_id}充值${this.form.amount}金币`, "提示", {
                 let str: any = LangUtil(
-                    "您是否要给玩家{0}充值{1} {2}",
+                    "您是否要给玩家 <p class='text-hidden'>{0}</p> 总共 {1} 人<br>充值 {2} {3}",
                     this.form.user_id,
+                    this.form.user_id.split(",").length,
                     this.form.amount,
                     this.listQuery.coin_name_unique
                 );
@@ -155,6 +175,7 @@ export default class VipReplenishRechargeBody extends AbstractView implements IV
                     confirmButtonText: obj.str3,
                     cancelButtonText: obj.str4,
                     type: "warning",
+                    dangerouslyUseHTMLString: true,
                 })
                     .then(() => {
                         this.myProxy.onTopup();
@@ -189,6 +210,42 @@ export default class VipReplenishRechargeBody extends AbstractView implements IV
 
     changeCoin() {
         this.myProxy.getCoinGold();
+    }
+
+    // excel 导入
+    async handleClick(e: any) {
+        const files = e.target.files;
+        const rawFile = files[0];
+        if (!rawFile) return;
+        (this.$refs["excel-upload-input"] as any).value = null;
+        const excel: any = await readerData(rawFile);
+        let user_id = removeRepeatStr(excel.results, this.myProxy.dialogData.excelColumnInfo.user_id.name, ",");
+        this.form.user_id = user_id;
+    }
+
+    // 汇入用户excel
+    onImportUser() {
+        (this.$refs["excel-upload-input"] as any).click();
+    }
+
+    // 载入模组
+    onLoadModule() {
+        let userIdTemplate: any = this.LangUtil("用户模版");
+        new BaseInfo.ExportExcel(
+            `【` + userIdTemplate + `】${this.curTime}`,
+            [],
+            this.myProxy.dialogData.excelColumnInfo,
+            [],
+            []
+        );
+    }
+
+    get curTime() {
+        return dateFormat(new Date(), "yyyy-MM-dd hh-mm-ss");
+    }
+
+    get canSearchUser() {
+        return this.form.user_id != "" && !this.form.user_id.includes(",");
     }
 }
 </script>

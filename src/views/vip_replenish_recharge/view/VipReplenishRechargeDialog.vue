@@ -1,12 +1,25 @@
 <template>
-    <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="LangUtil('查询玩家')" :visible.sync="myProxy.dialogData.bShow" width="500px">
         <el-form
+            label-position="right"
             ref="form"
             :rules="rules"
             :model="form"
-            label-width="115px"
+            label-width="100px"
             v-loading="net_status.loading"
         >
+            <el-form-item :label="tableColumns['plat_id'].name" prop="plat_id">
+                {{ tableColumns["plat_id"].options[form.plat_id] }}
+            </el-form-item>
+            <el-form-item :label="tableColumns['user_id'].name" prop="user_id">
+                {{ form.user_id }}
+            </el-form-item>
+            <el-form-item :label="tableColumns['username'].name" prop="username">
+                {{ form.username }}
+            </el-form-item>
+            <el-form-item :label="tableColumns['nick_name'].name" prop="nick_name">
+                {{ form.nick_name }}
+            </el-form-item>
         </el-form>
     </el-dialog>
 </template>
@@ -23,6 +36,7 @@ import LangUtil from "@/core/global/LangUtil";
 
 @Component
 export default class VipReplenishRechargeDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
     unique = unique;
     checkUnique = checkUnique;
@@ -33,49 +47,16 @@ export default class VipReplenishRechargeDialog extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
-    LangUtil = LangUtil
-    private textMap = {
-        update: "编辑",
-        create: "新增"
-    };
 
     @Watch("myProxy.dialogData.bShow")
-    private onWatchShow(){
+    onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
     }
 
-    get status() {
-        return this.myProxy.dialogData.status;
-    }
-
-    get isStatusUpdate() {
-        return this.status == DialogStatus.update;
-    }
-
     get rules() {
         return {};
-    }
-
-    handleAdd() {
-        (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
-            if (valid) {
-                this.myProxy.onAdd();
-            }
-        });
-    }
-
-    handleUpdate() {
-        (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
-            if (valid) {
-                this.myProxy.onUpdate();
-            }
-        });
-    }
-
-    handleDelete() {
-        this.myProxy.onDelete(this.form.id);
     }
 }
 </script>

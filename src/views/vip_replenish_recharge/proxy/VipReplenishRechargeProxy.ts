@@ -52,6 +52,9 @@ export default class VipReplenishRechargeProxy extends AbstractProxy implements 
             username: "",
             nick_name: "",
         },
+        excelColumnInfo: {
+            user_id: { name: "user_id", options: {} },
+        },
         formSource: null, // 表单的原始数据
     };
 
