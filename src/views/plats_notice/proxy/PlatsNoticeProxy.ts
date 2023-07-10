@@ -5,6 +5,8 @@ import { formCompared, jsonStringify, objectRemoveNull } from "@/core/global/Fun
 import { HttpType } from "@/views/plats_notice/setting";
 import { MessageBox } from "element-ui";
 import IPlatsNoticeProxy from "./IPlatsNoticeProxy";
+import { dateFormat } from "@/core/global/Functions";
+
 import i18n from "@/lang";
 import GlobalVar from "@/core/global/GlobalVar";
 export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNoticeProxy {
@@ -27,7 +29,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             app_platform: { name: "应用平台", options: {} },
             category: { name: "分类", options: {} },
             content: { name: "公告内容", options: {} },
@@ -52,6 +54,25 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
             video_uris: { name: "视频播放URL地址", options: {} },
+            condition_balance: { name: "条件-余额", options: {} },
+            condition_balance_options: { options: {} },
+            condition_channel_id: { name: "条件-渠道号", options: {} },
+            condition_is_first_login: { name: "条件-首次登入", options: {} },
+            condition_is_first_recharge: { name: "条件-首次充值", options: {} },
+            conditions: { name: "条件", options: {} },
+            mark: {
+                name: "",
+                options: {
+                    1: "<=",
+                },
+            },
+            relation: {
+                name: "",
+                options: {
+                    1: LangUtil("且"),
+                    2: LangUtil("或"),
+                },
+            },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -68,18 +89,32 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         category: "",
     };
 
+    /**條件规则 */
+    conditionRule: any = {
+        condition: "",
+        firstLogin: 1,
+        firstRecharge: 2,
+        coin: "", //币种
+        mark: "1",
+        showRelation: "0",
+        relation: 2,
+        balance: "", //余额
+        channel_id: "",
+    };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
         /** 页面是否载入中 */
         loading: false,
+        addSwitch: true,
         form: <any>{
             id: null,
-            // TODO
             plat_id: "",
             app_platform: <any>[],
             name: "",
+            time: <any>[],
             start_time: "",
             end_time: "",
             type: 1,
@@ -94,6 +129,10 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             languages: [],
             type_position: "",
             video_uris: "",
+            condition: [],
+        },
+        excelColumnInfo: {
+            channel_id: { name: "channel_id", options: {} },
         },
         formSource: null, // 表单的原始数据
     };
@@ -150,8 +189,43 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.form.open_mode = this.dialogData.form.open_mode.toString();
+        this.dialogData.form.time = [this.dialogData.form.start_time, this.dialogData.form.end_time];
         this.appType = data.app_platform[0].toString();
         this.dialogData.form.video_uris = this.dialogData.form.video_uris[this.type];
+        this.tableData.columns.condition_balance_options = this.tableData.columns.condition_balance.options[
+            this.dialogData.form.plat_id
+        ];
+        this.dialogData.addSwitch = false;
+        //弹窗充值
+        if (this.dialogData.form.condition_channel_id) {
+            this.addCondition({
+                condition: "condition_channel_id",
+                channel_id: this.dialogData.form.condition_channel_id,
+            });
+        }
+        if (this.dialogData.form.condition_is_first_login) {
+            this.addCondition({
+                firstLogin: this.dialogData.form.condition_is_first_login,
+                condition: "condition_is_first_login",
+            });
+        }
+        if (this.dialogData.form.condition_is_first_recharge) {
+            this.addCondition({
+                condition: "condition_is_first_recharge",
+                firstRecharge: this.dialogData.form.condition_is_first_recharge,
+            });
+        }
+        if (this.dialogData.form.condition_balance) {
+            const condition_balance = JSON.parse(this.dialogData.form.condition_balance);
+            for (let i = 0; i < Object.keys(condition_balance).length; i++) {
+                this.addCondition({
+                    condition: "condition_balance",
+                    coin: Object.keys(condition_balance)[i],
+                    balance: Object.values(condition_balance)[i],
+                });
+            }
+        }
+        this.onChangeCondition();
     }
 
     /**显示弹窗 */
@@ -161,6 +235,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         if (status == DialogStatus.update) {
             this.dialogData.loading = true;
             this.dialogData.formSource = data;
+            this.dialogData.form.condition = [];
             this.sendNotification(HttpType.admin_plats_notice_show, { id: data.id });
         } else {
             this.resetDialogForm();
@@ -176,9 +251,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
-            // TODO
             id: null,
-            // TODO
             plat_id: "",
             app_platform: <any>[],
             name: "",
@@ -197,6 +270,8 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             type_position: "",
             languages: [],
             video_uris: "",
+            time: [],
+            condition: [],
         });
     }
 
@@ -210,6 +285,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             plat_id,
             app_platform,
             name,
+            time,
             start_time,
             end_time,
             type,
@@ -253,6 +329,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             plat_id,
             app_platform,
             name,
+            time,
             start_time,
             end_time,
             type,
@@ -268,7 +345,39 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             type_position,
             video_uris,
         };
+        formCopy.start_time = this.dialogData.form.time[0];
+        formCopy.end_time = this.dialogData.form.time[1];
+
         formCopy.video_uris = JSON.stringify({ [this.type]: formCopy.video_uris });
+        delete formCopy.time;
+        if (formCopy.type_position == 15) {
+            formCopy.condition_balance = {};
+            // @ts-ignore
+            this.dialogData.form.condition.forEach(element => {
+                if (element.condition == "condition_channel_id") {
+                    // 渠道ID
+                    formCopy.condition_channel_id = element.channel_id;
+                } else if (element.condition == "condition_is_first_login") {
+                    // 用户首次登录
+                    formCopy.condition_is_first_login = element.firstLogin;
+                } else if (element.condition == "condition_is_first_recharge") {
+                    // 用户首次充值
+                    formCopy.condition_is_first_recharge = element.firstRecharge;
+                } else if (element.condition == "condition_balance") {
+                    // 用户首次充值
+                    if (element.balance) {
+                        formCopy.condition_balance[element.coin] = element.balance;
+                    }
+                }
+            });
+            if (Object.keys(formCopy.condition_balance).length > 0) {
+                formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
+            } else {
+                delete formCopy.condition_balance;
+            }
+        }
+        delete formCopy.condition;
+
         this.sendNotification(HttpType.admin_plats_notice_store, objectRemoveNull(formCopy));
     }
 
@@ -314,9 +423,39 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                 formCopy.thumbnail_urls = "";
                 formCopy.video_uris = JSON.stringify({ [this.type]: formCopy.video_uris });
             }
-
             formCopy.id = this.dialogData.form.id;
         }
+        formCopy.start_time = this.dialogData.form.time[0];
+        formCopy.end_time = this.dialogData.form.time[1];
+        delete formCopy.time;
+
+        formCopy.condition_channel_id = "";
+        formCopy.condition_is_first_login = 0;
+        formCopy.condition_is_first_recharge = 0;
+        formCopy.condition_balance = "";
+        if (this.dialogData.form.type_position == 15) {
+            formCopy.condition_balance = {};
+            // @ts-ignore
+            this.dialogData.form.condition.forEach(element => {
+                if (element.condition == "condition_channel_id") {
+                    // 渠道ID
+                    formCopy.condition_channel_id = element.channel_id;
+                } else if (element.condition == "condition_is_first_login") {
+                    // 用户首次登录
+                    formCopy.condition_is_first_login = element.firstLogin;
+                } else if (element.condition == "condition_is_first_recharge") {
+                    // 用户首次充值
+                    formCopy.condition_is_first_recharge = element.firstRecharge;
+                } else if (element.condition == "condition_balance") {
+                    // 用户首次充值
+                    if (element.balance && element.coin) {
+                        formCopy.condition_balance[element.coin] = element.balance;
+                    }
+                }
+            });
+            formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
+        }
+        delete formCopy.condition;
 
         this.sendNotification(HttpType.admin_plats_notice_update, formCopy);
     }
@@ -379,9 +518,50 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
     showCopyDialog(status: string, data?: any) {
         this.dialogData.bShow = true;
         this.dialogData.status = status;
-        this.sendNotification(HttpType.admin_plats_notice_show, { id: data.id });
         this.resetDialogForm();
         this.dialogData.formSource = null;
         this.dialogData.loading = true;
+        this.sendNotification(HttpType.admin_plats_notice_show, { id: data.id });
+    }
+
+    addCondition(option: any = {}) {
+        if (this.dialogData.form.condition.length > 0) {
+            this.dialogData.form.condition[this.dialogData.form.condition.length - 1].showRelation = "1";
+        }
+        this.dialogData.form.condition.push(JSON.parse(JSON.stringify({ ...this.conditionRule, ...option })));
+    }
+
+    onChangeCondition() {
+        for (let i = 0; i < this.dialogData.form.condition.length; i++) {
+            if (this.dialogData.form.condition[i].condition == "condition_channel_id") {
+                if (i > 0) {
+                    this.dialogData.form.condition[i - 1].relation = 1;
+                }
+                this.dialogData.form.condition[i].relation = 1;
+            } else {
+                this.dialogData.form.condition[i].relation = 2;
+            }
+        }
+    }
+
+    isValid_DateTime(str: any) {
+        // Regex to check valid
+        // DateTime(YYYY-MM-DD HH:MM:SS)
+        let regex = new RegExp(
+            /^([0-9]{4})-((01|02|03|04|05|06|07|08|09|10|11|12|(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|A(pril|ugust)|(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)|(JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|NOVEMBER|DECEMBER)|(September|October|November|December)|(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)|(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)))|(january|february|march|april|may|june|july|august|september|october|november|december))-([0-3][0-9])\s([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9])$/
+        );
+        // if str
+        // is empty return false
+        if (str == null) {
+            return false;
+        }
+
+        // Return true if the str
+        // matched the ReGex
+        if (regex.test(str) == true) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

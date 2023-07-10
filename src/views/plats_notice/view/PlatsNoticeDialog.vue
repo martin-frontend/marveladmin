@@ -3,7 +3,13 @@
         <el-form ref="form" :rules="rules" :model="form" label-width="140px" v-loading="net_status.loading">
             <!--  -->
             <el-form-item size="mini" :label="LangUtil('发布平台')" prop="plat_id">
-                <el-select v-model="form.plat_id" :placeholder="LangUtil('请选择')" filterable style="width: 300px">
+                <el-select
+                    v-model="form.plat_id"
+                    :placeholder="LangUtil('请选择')"
+                    filterable
+                    style="width: 300px"
+                    @change="onChangePlatId"
+                >
                     <el-option
                         v-for="(value, key) in tableColumns['plat_id'].options"
                         :key="key"
@@ -53,55 +59,73 @@
                     </el-button>
                 </div>
             </el-form-item>
-
-            <el-form-item size="mini" :label="tableColumns['type_position'].name" prop="type_position">
-                <el-select
-                    v-model="form.type_position"
-                    :placeholder="LangUtil('请选择')"
-                    filterable
-                    style="width: 300px"
-                >
-                    <el-option
-                        v-for="(value, key) in tableColumns['type_position'].options"
-                        :key="key"
-                        :label="value"
-                        :value="Number(key)"
-                    >
-                    </el-option>
-                </el-select>
-            </el-form-item>
-
-            <!-- 分类 -->
-            <el-form-item size="mini" :label="tableColumns['category'].name" prop="category">
-                <div class="flex d-flex">
-                    <el-input
-                        style="margin-right: 0.8rem"
-                        v-model="form.category"
-                        :placeholder="LangUtil('请输入')"
-                    ></el-input>
-                    <el-button
-                        style="max-height: 35px"
-                        type="primary"
-                        size="mini"
-                        @click="handleTranslate(form.category)"
-                    >
-                        <!-- 翻译 -->
-                        {{ LangUtil("翻译") }}
-                    </el-button>
+            <div class="layout">
+                <div style="position: relative;">
+                    <el-form-item size="mini" :label="tableColumns['type_position'].name" prop="type_position">
+                        <el-select
+                            v-model="form.type_position"
+                            :placeholder="LangUtil('请选择')"
+                            filterable
+                            style="width: 220px"
+                        >
+                            <el-option
+                                v-for="(value, key) in tableColumns['type_position'].options"
+                                :key="key"
+                                :label="value"
+                                :value="Number(key)"
+                            >
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
                 </div>
-            </el-form-item>
-
-            <el-form-item size="mini" :label="tableColumns['start_time'].name" prop="start_time">
+                <div>
+                    <!-- 分类 -->
+                    <el-form-item
+                        size="mini"
+                        :label="tableColumns['category'].name"
+                        prop="category"
+                        class="right_label"
+                    >
+                        <div class="flex d-flex">
+                            <el-input
+                                style="margin-right: 0.8rem"
+                                v-model="form.category"
+                                :placeholder="LangUtil('请输入')"
+                            ></el-input>
+                            <el-button
+                                style="max-height: 35px"
+                                type="primary"
+                                size="mini"
+                                @click="handleTranslate(form.category)"
+                            >
+                                <!-- 翻译 -->
+                                {{ LangUtil("翻译") }}
+                            </el-button>
+                        </div>
+                    </el-form-item>
+                </div>
+            </div>
+            <el-form-item size="mini" :label="LangUtil('有效时间')" prop="time">
                 <el-date-picker
+                    v-model="form.time"
+                    type="datetimerange"
+                    :range-separator="to"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    :start-placeholder="start"
+                    :end-placeholder="end"
+                    :default-time="['00:00:00', '23:59:59']"
+                >
+                </el-date-picker>
+                <!-- <el-date-picker
                     v-model="form.start_time"
                     type="datetime"
                     align="right"
                     value-format="yyyy-MM-dd HH:mm:ss"
                     :placeholder="LangUtil('请选择')"
                 >
-                </el-date-picker>
+                </el-date-picker> -->
             </el-form-item>
-            <el-form-item size="mini" :label="tableColumns['end_time'].name" prop="end_time">
+            <!-- <el-form-item size="mini" :label="tableColumns['end_time'].name" prop="end_time">
                 <el-date-picker
                     v-model="form.end_time"
                     type="datetime"
@@ -110,7 +134,7 @@
                     :placeholder="LangUtil('请选择')"
                 >
                 </el-date-picker>
-            </el-form-item>
+            </el-form-item> -->
             <!-- 模块 -->
             <el-form-item size="mini" :label="tableColumns['open_mode'].name" prop="open_mode">
                 <el-select v-model="form.open_mode" :placeholder="LangUtil('请选择')" filterable>
@@ -273,6 +297,175 @@
                 <el-input v-model="form.video_uris" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
 
+            <div v-if="form.type_position == 15" style="margin-bottom: 18px;">
+                <div style="margin-bottom: 18px;">
+                    <el-button
+                        @click="myProxy.addCondition()"
+                        size="mini"
+                        type="primary"
+                        icon="el-icon-circle-plus-outline"
+                    >
+                        {{ LangUtil("条件") }}
+                    </el-button>
+                    <!-- <el-button
+                        size="mini"
+                        @click="addRelation()"
+                        type="primary"
+                        icon="el-icon-circle-plus-outline"
+                        :disabled="myProxy.dialogData.addSwitch"
+                    >
+                        {{ LangUtil("关系") }}
+                    </el-button> -->
+                    <input
+                        v-show="false"
+                        ref="excel-upload-input"
+                        class="excel-upload-input"
+                        type="file"
+                        accept=".xlsx, .xls"
+                        @change="handleClick"
+                    />
+                    <el-button
+                        size="mini"
+                        type="primary"
+                        style="margin-left: 10px;"
+                        @click="onImportUser"
+                        :disabled="!canImportChannelId"
+                    >
+                        {{ LangUtil("导入渠道ID") }}
+                    </el-button>
+                    <el-button size="mini" type="primary" @click="onLoadModule">
+                        {{ LangUtil("下载渠道ID模版") }}
+                    </el-button>
+                </div>
+                <div
+                    class="rules_item"
+                    v-for="(item, index) in form.condition"
+                    :key="index"
+                    style="margin-bottom: 5px;"
+                >
+                    <el-row type="flex" justify="start" align="middle" :gutter="24">
+                        <el-col :span="4">
+                            <el-button @click="deleteCondition(index)" size="mini" icon="el-icon-delete">
+                                {{ LangUtil("刪除") }}
+                            </el-button>
+                        </el-col>
+                        <el-col :span="8" class="vi_div">
+                            <el-select
+                                v-model="item.condition"
+                                :placeholder="LangUtil('请选择')"
+                                filterable
+                                @change="myProxy.onChangeCondition()"
+                            >
+                                <el-option
+                                    v-for="{ name, key, disabled } in newConditions"
+                                    :key="key"
+                                    :label="name"
+                                    :value="key"
+                                    :disabled="disabled"
+                                >
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="8" class="vi_div" v-if="item.condition == 'condition_channel_id'">
+                            <el-input
+                                :placeholder="LangUtil('渠道ID, 多个渠道使用英文逗号')"
+                                size="small"
+                                v-model="item.channel_id"
+                                oninput="value=value.replace(/[^\d,]/g,'')"
+                            ></el-input>
+                        </el-col>
+                        <el-col :span="8" class="vi_div" v-if="item.condition == 'condition_is_first_login'">
+                            <el-radio-group v-model="item.firstLogin">
+                                <template v-for="(value, key) in tableColumns['condition_is_first_login'].options">
+                                    <el-radio :key="key" :label="Number(key)" v-if="key != 0">
+                                        {{ value }}
+                                        <el-tooltip
+                                            class="tip-item"
+                                            effect="dark"
+                                            :content="
+                                                key == 1
+                                                    ? LangUtil('表示未登录过新用户')
+                                                    : LangUtil('已经登录过的老用户')
+                                            "
+                                            placement="top"
+                                            v-if="key != 0"
+                                            :key="value"
+                                        >
+                                            <i class="el-icon-question"></i>
+                                        </el-tooltip>
+                                    </el-radio>
+                                </template>
+                            </el-radio-group>
+                        </el-col>
+                        <el-col :span="8" class="vi_div" v-if="item.condition == 'condition_is_first_recharge'">
+                            <el-radio-group v-model="item.firstRecharge">
+                                <template v-for="(value, key) in tableColumns['condition_is_first_recharge'].options">
+                                    <el-radio :key="key" :label="Number(key)" v-if="key != 0">
+                                        {{ value }}
+                                        <el-tooltip
+                                            class="tip-item"
+                                            effect="dark"
+                                            :content="
+                                                key == 1
+                                                    ? LangUtil('已有首次充值的用户')
+                                                    : LangUtil('未有首次充值的用户')
+                                            "
+                                            placement="top"
+                                            v-if="key != 0"
+                                            :key="value"
+                                        >
+                                            <i class="el-icon-question"></i>
+                                        </el-tooltip>
+                                    </el-radio>
+                                </template>
+                            </el-radio-group>
+                        </el-col>
+                        <el-col :span="5" class="vi_div" v-if="item.condition == 'condition_balance'">
+                            <el-select v-model="item.coin" :placeholder="LangUtil('请选择')" filterable>
+                                <el-option
+                                    v-for="(value, key) in tableColumns['condition_balance_options']"
+                                    :key="key"
+                                    :label="value"
+                                    :value="value"
+                                >
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="3" class="vi_div" v-if="item.condition == 'condition_balance'">
+                            <el-select v-model="item.mark" :placeholder="LangUtil('请选择')" filterable disabled>
+                                <el-option
+                                    v-for="(value, key) in tableColumns['mark'].options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="key"
+                                >
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="4" class="vi_div" v-if="item.condition == 'condition_balance'">
+                            <el-input
+                                size="small"
+                                v-model="item.balance"
+                                :placeholder="LangUtil('请输入')"
+                                onkeyup="this.value=(this.value.match(/\d+(.\d{0,3})?/)||[''])[0]"
+                            ></el-input>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="item.showRelation == 1">
+                        <el-col :span="2">
+                            <el-select v-model="item.relation" :placeholder="LangUtil('请选择')" filterable disabled>
+                                <el-option
+                                    v-for="(value, key) in tableColumns['relation'].options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                >
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                    </el-row>
+                </div>
+            </div>
             <el-form-item class="dialog-footer">
                 <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
                     isStatusUpdate ? LangUtil("确认保存") : LangUtil("确认发布")
@@ -288,7 +481,7 @@ import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatsNoticeProxy from "@/views/plats_notice/proxy/PlatsNoticeProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
-import { checkUserName, checkUserPassword, formatImageUrl } from "@/core/global/Functions";
+import { formatImageUrl, removeRepeatStr } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import { LanguageType } from "@/core/enum/UserType";
@@ -296,7 +489,9 @@ import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 import CommonLangImgProxy from "@/views/lang_img_dialog/proxy/CommonLangImgProxy";
 import { Message } from "element-ui";
 import TinymceUpload from "@/components/TinymceUpload/index.vue";
-import i18n from "@/lang";
+import { BaseInfo } from "@/components/vo/commonVo";
+import { dateFormat } from "@/core/global/Functions";
+import { readerData } from "@/core/global/Excel";
 
 @Component({
     components: {
@@ -317,6 +512,9 @@ export default class PlatsNoticeDialog extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
+    start: any = LangUtil("发布时间");
+    end: any = LangUtil("结束时间");
+    to: any = LangUtil("至");
 
     formatImageUrl = formatImageUrl;
 
@@ -325,6 +523,10 @@ export default class PlatsNoticeDialog extends AbstractView {
         create: this.LangUtil("新增"),
     };
     showMask = false;
+
+    mounted() {
+        this.onChangePlatId();
+    }
 
     @Watch("myProxy.dialogData.bShow")
     onWatchShow() {
@@ -341,6 +543,10 @@ export default class PlatsNoticeDialog extends AbstractView {
         return this.status == DialogStatus.update;
     }
 
+    get curTime() {
+        return dateFormat(new Date(), "yyyy-MM-dd hh-mm-ss");
+    }
+
     get rules() {
         return {
             plat_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
@@ -349,12 +555,15 @@ export default class PlatsNoticeDialog extends AbstractView {
             start_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             end_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
-            // content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
-            // img_urls: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
-            // thumbnail_urls: [{ required: true, message: this.LangUtil('必须选择'), trigger: "change" }],
             languages: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             type_position: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
-            // category: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            time: [
+                {
+                    type: "array",
+                    required: true,
+                    message: this.LangUtil("必须选择"),
+                },
+            ],
         };
     }
 
@@ -409,6 +618,7 @@ export default class PlatsNoticeDialog extends AbstractView {
             file: file.raw,
         });
     }
+
     handleChange1(file: any) {
         // this.myProxy.appType = this.myProxy.appType;
         this.myProxy.onUploadImage(
@@ -419,11 +629,13 @@ export default class PlatsNoticeDialog extends AbstractView {
             true
         );
     }
+
     handleRemove() {
         this.form.img_urls[this.myProxy.appType] = "";
         this.form.img_uris[this.myProxy.appType] = "";
         this.showMask = false;
     }
+
     handleRemove1() {
         this.form.thumbnail_urls[this.myProxy.appType] = "";
         this.form.thumbnail_uris[this.myProxy.appType] = "";
@@ -485,6 +697,72 @@ export default class PlatsNoticeDialog extends AbstractView {
         }
         this.langImgProxy.showDialog(data);
     }
+
+    onChangePlatId() {
+        this.tableColumns.condition_balance_options = this.tableColumns.condition_balance.options[this.form.plat_id];
+    }
+
+    // excel 导入
+    async handleClick(e: any) {
+        const files = e.target.files;
+        const rawFile = files[0];
+        if (!rawFile) return;
+        (this.$refs["excel-upload-input"] as any).value = null;
+        const excel: any = await readerData(rawFile);
+        let channel_id = removeRepeatStr(excel.results, this.myProxy.dialogData.excelColumnInfo.channel_id.name, ",");
+        this.form.condition.find((item: any) => {
+            if (item.condition == "condition_channel_id") {
+                item.channel_id = channel_id;
+            }
+        });
+    }
+
+    // 汇入用户excel
+    onImportUser() {
+        (this.$refs["excel-upload-input"] as any).click();
+    }
+
+    // 载入模组
+    onLoadModule() {
+        let channelIdTemplate: any = this.LangUtil("渠道ID模版");
+        new BaseInfo.ExportExcel(
+            `【` + channelIdTemplate + `】${this.curTime}`,
+            [],
+            this.myProxy.dialogData.excelColumnInfo,
+            [],
+            []
+        );
+    }
+
+    deleteCondition(index: any) {
+        this.form.condition.splice(index, 1);
+
+        if (this.form.condition.length == index && index > 0) {
+            this.form.condition[index - 1].showRelation = "0";
+        }
+
+        this.myProxy.onChangeCondition();
+    }
+
+    get newConditions() {
+        let newArr = [];
+        const keys = Object.keys(this.tableColumns.conditions.options);
+        // @ts-ignore
+        const selectedKeys = this.form.condition.map(item => item.condition);
+        newArr = keys.map(key => {
+            return {
+                name: this.tableColumns.conditions.options[key],
+                key,
+                disabled: selectedKeys.includes(key) && key != "condition_balance",
+            };
+        });
+        return newArr;
+    }
+
+    get canImportChannelId() {
+        // @ts-ignore
+        return this.form.condition.find(({ condition }) => condition == "condition_channel_id") != undefined;
+    }
 }
 </script>
 
@@ -525,5 +803,36 @@ export default class PlatsNoticeDialog extends AbstractView {
         height: 100%;
         object-fit: contain;
     }
+}
+::v-deep .el-dialog {
+    margin-top: 0 !important;
+}
+.content {
+    .layout {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        .el-form {
+            width: 50%;
+        }
+        div {
+            width: 100%;
+        }
+    }
+}
+.right_label {
+    ::v-deep .el-form-item__label {
+        width: 100px !important;
+    }
+    ::v-deep .el-form-item__content {
+        margin-left: 100px !important;
+    }
+}
+.vi_div {
+    padding: 0 3px !important;
+}
+.tip-item {
+    color: #606266;
 }
 </style>
