@@ -426,6 +426,10 @@ const layoutRouter = {
             name: "代理总报表",
             component: () => import(/* webpackChunkName: "statistic_agent_credit" */"@/views/statistic_agent_credit/view/StatisticAgentCredit.vue")
         },        {
+            path: "statistic_agent_keep_days",
+            name: "代理留存统计",
+            component: () => import(/* webpackChunkName: "statistic_agent_keep_days" */"@/views/statistic_agent_keep_days/view/StatisticAgentKeepDays.vue")
+        },        {
             path: "statistic_bet_plat_days",
             name: "每日输赢统计",
             component: () => import(/* webpackChunkName: "statistic_bet_plat_days" */"@/views/statistic_bet_plat_days/view/StatisticBetPlatDays.vue")
