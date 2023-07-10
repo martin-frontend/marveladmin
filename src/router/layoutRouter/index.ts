@@ -438,6 +438,10 @@ const layoutRouter = {
             name: "平台游戏报表",
             component: () => import(/* webpackChunkName: "statistic_bet_vendor_days" */"@/views/statistic_bet_vendor_days/view/StatisticBetVendorDays.vue")
         },        {
+            path: "statistic_coin_keep_days",
+            name: "价值留存统计",
+            component: () => import(/* webpackChunkName: "statistic_coin_keep_days" */"@/views/statistic_coin_keep_days/view/StatisticCoinKeepDays.vue")
+        },        {
             path: "statistic_credit",
             name: "信用统计",
             component: () => import(/* webpackChunkName: "statistic_credit" */"@/views/statistic_credit/view/StatisticCredit.vue")

@@ -1,16 +1,17 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { dateFormat, formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
-import { HttpType } from "@/views/statistic_user_keep_days/setting";
+import { HttpType } from "@/views/statistic_coin_keep_days/setting";
 import { MessageBox } from "element-ui";
-import IStatisticUserKeepDaysProxy, { StatisticTab } from "./IStatisticUserKeepDaysProxy";
+import IStatisticCoinKeepDaysProxy from "./IStatisticCoinKeepDaysProxy";
 import LangUtil from "@/core/global/LangUtil";
-export default class StatisticUserKeepDaysProxy extends AbstractProxy implements IStatisticUserKeepDaysProxy {
-    static NAME = "StatisticUserKeepDaysProxy";
+
+export default class StatisticCoinKeepDaysProxy extends AbstractProxy implements IStatisticCoinKeepDaysProxy {
+    static NAME = "StatisticCoinKeepDaysProxy";
 
     /**进入页面时调用 */
     enter() {
-        this.sendNotification(HttpType.admin_statistic_user_keep_days_table_columns);
+        this.sendNotification(HttpType.admin_statistic_coin_keep_days_table_columns);
     }
 
     /**离开页面时调用 */
@@ -30,6 +31,8 @@ export default class StatisticUserKeepDaysProxy extends AbstractProxy implements
             created_at: { name: "", options: {} },
             created_date: { name: "", options: {} },
             data_belong: { name: "", options: {} },
+            coin_name_unique: { name: "", options: {} },
+            user_ids: { name: "", options: {} },
             day_1: { name: "", options: {} },
             day_2: { name: "", options: {} },
             day_3: { name: "", options: {} },
@@ -47,23 +50,28 @@ export default class StatisticUserKeepDaysProxy extends AbstractProxy implements
             user_all_count: { name: "", options: {} },
         },
         list: <any>[],
-        summary: <any>{
-            user_all_count: 0,
-            user_count: 0,
-        },
         isExportExcel: false,
-        activeName: StatisticTab.User,
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
     /**查询条件 */
     listQuery = {
+        page_count: 1,
+        page_size: 20,
         plat_id: "",
-        type: this.tableData.activeName,
+        // coin_name_unique: "",
         channel_id: "",
         "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd hh:mm:ss"),
         "created_date-{<=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
-        page_count: 1,
-        page_size: 20,
+    };
+    /**弹窗相关数据 */
+    dialogData = {
+        bShow: false,
+        status: DialogStatus.create,
+        form: {
+            id: null,
+            // TODO
+        },
+        formSource: null, // 表单的原始数据
     };
 
     /**设置表头数据 */
@@ -81,47 +89,92 @@ export default class StatisticUserKeepDaysProxy extends AbstractProxy implements
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
-        Object.assign(this.tableData.summary, data.summary);
+        // Object.assign(this.tableData.summary, data.summary);
+    }
+    /**详细数据 */
+    setDetail(data: any) {
+        this.dialogData.formSource = data;
+        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
     }
 
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
+            // coin_name_unique: "",
             channel_id: "",
             "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd hh:mm:ss"),
             "created_date-{<=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
         });
     }
+
+    /**显示弹窗 */
+    showDialog(status: string, data?: any) {
+        this.dialogData.bShow = true;
+        this.dialogData.status = status;
+        // if (status == DialogStatus.update) {
+        //     this.dialogData.formSource = data;
+        //     Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        //     this.sendNotification(HttpType.undefined, { id: data.id });
+        // } else {
+        //     this.resetDialogForm();
+        //     this.dialogData.formSource = null;
+        // }
+    }
+    /**隐藏弹窗 */
+    hideDialog() {
+        this.dialogData.bShow = false;
+    }
+    /**重置弹窗表单 */
+    resetDialogForm() {
+        Object.assign(this.dialogData.form, {
+            // TODO
+        });
+    }
     myExportPagedata = <any>{};
     /**查询 */
     onQuery() {
-        this.listQuery.type = this.tableData.activeName;
-        const obj = JSON.parse(JSON.stringify(this.listQuery));
-        if (obj.coin_name_unique == "-") {
-            obj.coin_name_unique = "";
-        }
-        this.sendNotification(HttpType.admin_statistic_user_keep_days_index, objectRemoveNull(obj));
+        this.sendNotification(HttpType.admin_statistic_coin_keep_days_index, objectRemoveNull(this.listQuery));
     }
     onQuery_export(pageInfo: any) {
-        this.listQuery.type = this.tableData.activeName;
         const obj = JSON.parse(JSON.stringify(this.listQuery));
-        if (obj.coin_name_unique == "-") {
-            obj.coin_name_unique = "";
-        }
+        // if (obj.coin_name_unique == "-") {
+        //     obj.coin_name_unique = "";
+        // }
         obj.page_count = pageInfo.pageCount;
         obj.page_size = pageInfo.page_size;
-        this.sendNotification(HttpType.admin_statistic_user_keep_days_index, objectRemoveNull(obj));
+        this.sendNotification(HttpType.admin_statistic_coin_keep_days_index, objectRemoveNull(obj));
     }
-
-    /**是否为平台游戏 */
-    get isUser() {
-        return this.tableData.activeName === StatisticTab.User;
+    /**添加数据 */
+    onAdd() {
+        const formCopy: any = {
+            // TODO
+        };
+        // this.sendNotification(HttpType.undefined, objectRemoveNull(formCopy));
     }
+    /**更新数据 */
+    onUpdate() {
+        const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
+        // 删除多余无法去除的参数
+        // TODO
+        // 如果没有修改，就直接关闭弹窗
+        if (Object.keys(formCopy).length == 0) {
+            this.dialogData.bShow = false;
+            return;
+        }
+        // 添加必填参数
+        // TODO
+        // 发送消息
+        // this.sendNotification(HttpType.undefined, formCopy);
+    }
+    /**删除数据 */
+    onDelete(id: any) {}
     _userList = [
         "created_date",
         "plat_id",
         "channel_id",
         "user_count",
+        "user_all_count",
+        // "coin_name_unique",
         "day_1",
         "day_2",
         "day_3",
@@ -148,13 +201,13 @@ export default class StatisticUserKeepDaysProxy extends AbstractProxy implements
                 )})`;
             }
         }
-
         this.myExportPagedata = JSON.parse(JSON.stringify(data));
     }
     toPercent(curAmount: string, total: string) {
         if (total == "0" || curAmount == "0") {
-            return "0%";
+            return "0";
         }
-        return ((Number(curAmount) / Number(total)) * 100).toFixed(2) + "%";
+        return Number((Number(curAmount) / Number(total)).toString().match(/^\d+(?:\.\d{0,2})?/));
+        //return ((Number(curAmount) / Number(total)) ).toFixed(3) ;
     }
 }

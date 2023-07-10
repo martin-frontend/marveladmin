@@ -1,11 +1,5 @@
 <template>
     <div>
-        <div style="margin-bottom: 10px;">
-            {{ tableColumns.user_all_count.name }}:{{ summary.user_all_count }} {{ tableColumns.user_count.name }}:{{
-                summary.user_count
-            }}
-        </div>
-
         <el-table
             :data="tableData"
             border
@@ -30,6 +24,10 @@
             </el-table-column>
             <el-table-column prop="user_count" :label="tableColumns.user_count.name" align="center" min-width="60px">
             </el-table-column>
+            <el-table-column prop="user_all_count" :label="tableColumns.user_all_count.name" align="center" min-width="60px">
+            </el-table-column>
+            <!-- <el-table-column prop="coin_name_unique" :label="tableColumns.coin_name_unique.name" align="center" min-width="60px">
+            </el-table-column> -->
             <el-table-column prop="day_1" :label="tableColumns.day_1.name" align="center" min-width="80px">
                 <template slot-scope="{ row }"> {{ row.day_1 }}({{ toPercent(row.day_1, row.user_count) }}) </template>
             </el-table-column>
@@ -66,46 +64,45 @@
     </div>
 </template>
 <script lang="ts">
-import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
-import StatisticUserKeepDaysProxy from "../../../proxy/StatisticUserKeepDaysProxy";
+import StatisticCoinKeepDaysProxy from "../proxy/StatisticCoinKeepDaysProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
+import LangUtil from "@/core/global/LangUtil";
 
 @Component({
     components: {
         Pagination,
-    },
+    }
 })
-export default class RechargeKeepDaysBody extends AbstractView {
-    LangUtil = LangUtil;
+export default class StatisticCoinKeepDaysBody extends AbstractView {
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: StatisticUserKeepDaysProxy = this.getProxy(StatisticUserKeepDaysProxy);
+    myProxy: StatisticCoinKeepDaysProxy = this.getProxy(StatisticCoinKeepDaysProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.tableData.list;
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
-    summary = this.myProxy.tableData.summary;
-    handlerPageSwitch(page: number) {
+    LangUtil = LangUtil;
+    handlerPageSwitch(page:number){
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
-    toPercent(curAmount: string, total: string) {
-        return this.myProxy.toPercent(curAmount ,total);
-        // if (total == "0" || curAmount == "0") {
-        //     return "0%";
-        // }
-        // return ((Number(curAmount) / Number(total)) * 100).toFixed(2) + "%";
+    handleEdit(data: any) {
+        this.myProxy.showDialog(DialogStatus.update, data);
+    }
+
+    handlerDelete(data: any) {
+        this.myProxy.onDelete(data.id);
     }
     channelName(row: any): string {
         if (row.channel_id == 0 || row.channel_id == "0") {
@@ -122,11 +119,15 @@ export default class RechargeKeepDaysBody extends AbstractView {
         }
         return "";
     }
+    toPercent(curAmount: string, total: string) {
+        return this.myProxy.toPercent(curAmount,total);
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+
 ::v-deep .highlight-row {
     background-color: #f6f7fa !important;
 }

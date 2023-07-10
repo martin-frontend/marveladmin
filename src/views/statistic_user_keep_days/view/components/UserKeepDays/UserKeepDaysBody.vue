@@ -8,6 +8,7 @@
             style="width: 100%"
             size="mini"
             v-loading="net_status.loading"
+            :row-class-name="rowClassName"
         >
             <el-table-column prop="created_date" :label="LangUtil('日期')" align="center" min-width="120px">
             </el-table-column>
@@ -18,7 +19,8 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="channel_id" :label="tableColumns.channel_id.name" align="center" min-width="80px">
+            <el-table-column :label="tableColumns.channel_id.name" align="center" min-width="80px">
+                <template slot-scope="{ row }"> {{ channelName(row) }} </template>
             </el-table-column>
             <el-table-column prop="user_count" :label="tableColumns.user_count.name" align="center" min-width="60px">
             </el-table-column>
@@ -93,14 +95,34 @@ export default class UserKeepDaysBody extends AbstractView {
     }
 
     toPercent(curAmount: string, total: string) {
-        if (total == "0" || curAmount == "0") {
-            return "0%";
+        return this.myProxy.toPercent(curAmount ,total);
+        // if (total == "0" || curAmount == "0") {
+        //     return "0%";
+        // }
+        // return ((Number(curAmount) / Number(total)) * 100).toFixed(2) + "%";
+    }
+    channelName(row: any): string {
+        if (row.channel_id == 0 || row.channel_id == "0") {
+            return LangUtil("全部渠道");
         }
-        return ((Number(curAmount) / Number(total)) * 100).toFixed(2) + "%";
+        return row.channel_id;
+    }
+    rowClassName({ row, rowIndex }): string {
+        // 在这里判断是否应用 'highlight-row' 类名
+        // 假设符合条件的行具有 isHighlighted 属性
+        if (row.channel_id == 0 || row.channel_id == "0") {
+            // if (row.channel_id == 30037001 || row.channel_id == "30037001") {
+            return "highlight-row";
+        }
+        return "";
     }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+
+::v-deep .highlight-row {
+    background-color: #f6f7fa !important;
+}
 </style>
