@@ -4,6 +4,7 @@ import ITabUserInfoProxy from "./ITabUserInfoProxy";
 import { getPageSetting } from "@/views/_user_detail/PageSetting";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import { MD5 } from "@/core/global/MD5";
+import { jsonStringify } from "@/core/global/Functions";
 
 export default class TabUserInfoProxy extends AbstractProxy implements ITabUserInfoProxy {
     static NAME = "TabUserInfoProxy";
@@ -21,13 +22,14 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     tableColumns: any = {
         area_code: { name: "手机区号", options: {} },
         avatar: { name: "头像", options: {} },
-        backup_phone: { name: '手机号(选填)', options: {} },
+        backup_phone: { name: "手机号(选填)", options: {} },
         balance: { name: "账户余额", options: {}, tips: "账户余额=平台余额+厂商钱包金币总和" },
         channel_id: { name: "所属渠道", options: {} },
         created_at: { name: "创建时间", options: {} },
         created_by: { name: "创建人", options: {} },
         data_belong: { name: "数据归属标记", options: {} },
         email: { name: "邮箱", options: {} },
+        easybet_level: { name: "easybet用户等级", options: {} },
         gender: { name: "性别", options: {} },
         gold: { name: "平台余额", options: {}, tips: "" },
         gold_columns_disable: { name: "金币明细列屏蔽", options: <any>{} },
@@ -93,6 +95,11 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         credit_rate_max: { name: "信用占成-最大", options: {} },
         credit_rate_min: { name: "信用占成-最小", options: {} },
         show_credit_set: { name: "允许多层", options: {} },
+        easybet_level_type: { name: "easybet用户等级更新类别", options: {} },
+
+        user_level: { name: "", options: {} },
+        update_type: { name: "用户等级更新类别", options: {} },
+        level_type: { name: "类型", options: {} },
         is_cash_agent: { name: '充值兑换开关', options: {} },
         birth_date: { name: '出生年月', options: {} },
         cpf: { name: 'cpf', options: {} },
@@ -181,6 +188,8 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         last_ip_location: "",
         credit_rate_max: 0,
         credit_rate_min: 0,
+        easybet_level: 0,
+        user_level: <any>{},
         is_cash_agent: "98",
         birth_date: "",
         cpf: "",
@@ -188,7 +197,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     /**代理关系链 */
     relationChain: string[] = [];
     /**弹窗数据 */
-    dialogData = {
+    dialogData = <any>{
         bShow: false,
         filed: "",
         filedValue: "",

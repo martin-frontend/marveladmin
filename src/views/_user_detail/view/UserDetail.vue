@@ -38,6 +38,9 @@
                 <el-tab-pane :label="LangUtil('信用代理')" name="tab12">
                     <TabCredit v-if="activeName == 'tab12'" />
                 </el-tab-pane>
+                <el-tab-pane :label="LangUtil('用户等级')" name="tab13">
+                    <TabEasybet v-if="activeName == 'tab13'" />
+                </el-tab-pane>
             </el-tabs>
         </el-dialog>
     </div>
@@ -62,6 +65,7 @@ import TabLoginRecord from "./tab_login_record/view/TabLoginRecord.vue";
 import TabWaterRate from "./tab_water_rate/view/TabWaterRate.vue";
 import TabPlatVendorUser from "./tab_plat_vendor_user/view/TabPlatVendorUser.vue";
 import TabCredit from "./tab_credit/view/TabCredit.vue";
+import TabEasybet from "./tab_easybet/view/TabEasybet.vue";
 import Cookies from "js-cookie";
 
 @Component({
@@ -78,6 +82,7 @@ import Cookies from "js-cookie";
         TabWaterRate,
         TabPlatVendorUser,
         TabCredit,
+        TabEasybet,
     },
 })
 export default class UserDetail extends AbstractView {

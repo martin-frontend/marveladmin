@@ -52,6 +52,8 @@
         "--信用代理&credit",
         "admin/plat_user/direct_users",
         "admin/plat_users_credit_log/table_columns",
-        "admin/plat_users_credit_log/index"
+        "admin/plat_users_credit_log/index",
+        "--Easybet&easybet",
+        "admin/plat_user/update_user_level/{user_id}"
     ]
 }

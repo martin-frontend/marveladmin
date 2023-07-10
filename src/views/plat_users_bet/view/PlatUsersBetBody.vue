@@ -279,6 +279,7 @@
                     <p v-if="row.vendor_id == 136">{{ LangUtil("奖期") }}：{{ row.vendor_game_issue }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type_text }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("赔率") }}：{{ row.odds }}</p>
+                    <p v-if="row.user_level">{{ LangUtil("等级") }}：{{ row.user_level }}</p>
                     <template v-if="row.vendor_id == 187">
                         <p>{{ LangUtil("倍率") }}：{{ row.agdz_betx }}</p>
                         <p>{{ LangUtil("捕获鱼总价值") }}：{{ row.agdz_totalfishcost }}</p>
