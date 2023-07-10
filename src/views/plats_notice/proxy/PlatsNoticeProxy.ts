@@ -6,6 +6,7 @@ import { HttpType } from "@/views/plats_notice/setting";
 import { MessageBox } from "element-ui";
 import IPlatsNoticeProxy from "./IPlatsNoticeProxy";
 import i18n from "@/lang";
+import GlobalVar from "@/core/global/GlobalVar";
 export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNoticeProxy {
     static NAME = "PlatsNoticeProxy";
 
@@ -28,7 +29,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
     tableData = {
         columns: {
             app_platform: { name: "应用平台", options: {} },
-            category: { name: '分类', options: {} },
+            category: { name: "分类", options: {} },
             content: { name: "公告内容", options: {} },
             created_at: { name: "创建时间", options: {} },
             created_by: { name: "创建人", options: {} },
@@ -330,7 +331,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             .then(() => {
                 this.sendNotification(HttpType.admin_plats_notice_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     onRemoveItem() {
@@ -343,13 +344,14 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                 this.tableCtrlData.opt = null;
                 this.onUpdate(true);
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**图片上传 */
     private isMin = false;
     onUploadImage(data: any, isMin: boolean = false) {
         this.isMin = isMin;
+        data.custom_host = GlobalVar.host;
         this.sendNotification(HttpType.admin_resource_upload, data);
     }
 
