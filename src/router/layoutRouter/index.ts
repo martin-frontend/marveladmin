@@ -74,9 +74,25 @@ const layoutRouter = {
             name: "渠道用户",
             component: () => import(/* webpackChunkName: "channel_plat_user" */"@/views/channel_plat_user/view/ChannelPlatUser.vue")
         },        {
+            path: "channel_statistic_agent_keep_days",
+            name: "渠道代理留存统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_agent_keep_days" */"@/views/channel_statistic_agent_keep_days/view/ChannelStatisticAgentKeepDays.vue")
+        },        {
+            path: "channel_statistic_coin_keep_days",
+            name: "渠道价值留存统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_coin_keep_days" */"@/views/channel_statistic_coin_keep_days/view/ChannelStatisticCoinKeepDays.vue")
+        },        {
             path: "channel_statistic_plat_days",
             name: "渠道每日统计",
             component: () => import(/* webpackChunkName: "channel_statistic_plat_days" */"@/views/channel_statistic_plat_days/view/ChannelStatisticPlatDays.vue")
+        },        {
+            path: "channel_statistic_plat_days_date",
+            name: "渠道当日统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_plat_days_date" */"@/views/channel_statistic_plat_days_date/view/ChannelStatisticPlatDaysDate.vue")
+        },        {
+            path: "channel_statistic_user_keep_days",
+            name: "渠道用户留存统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_user_keep_days" */"@/views/channel_statistic_user_keep_days/view/ChannelStatisticUserKeepDays.vue")
         },        {
             path: "channel_statistic_user_promotion_days_index",
             name: "渠道代理统计",

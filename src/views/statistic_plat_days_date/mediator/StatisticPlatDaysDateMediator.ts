@@ -10,7 +10,7 @@ interface IStatisticPlatDaysDate extends IEventDispatcher {
 }
 
 export default class StatisticPlatDaysDateMediator extends AbstractMediator {
-    private myProxy: StatisticPlatDaysDateProxy = <any>this.getProxy(StatisticPlatDaysDateProxy);
+    myProxy: StatisticPlatDaysDateProxy = <any>this.getProxy(StatisticPlatDaysDateProxy);
 
     onRegister() {
         this.myProxy.enter();

@@ -8,7 +8,7 @@ import StatisticUserKeepDaysProxy from "../proxy/StatisticUserKeepDaysProxy";
 interface IStatisticUserKeepDays extends IEventDispatcher {}
 
 export default class StatisticUserKeepDaysMediator extends AbstractMediator {
-    private myProxy: StatisticUserKeepDaysProxy = <any>this.getProxy(StatisticUserKeepDaysProxy);
+    myProxy: StatisticUserKeepDaysProxy = <any>this.getProxy(StatisticUserKeepDaysProxy);
 
     onRegister() {
         this.myProxy.enter();

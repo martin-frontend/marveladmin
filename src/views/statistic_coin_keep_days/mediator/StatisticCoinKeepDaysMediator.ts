@@ -10,7 +10,7 @@ interface IStatisticCoinKeepDays extends IEventDispatcher {
 }
 
 export default class StatisticCoinKeepDaysMediator extends AbstractMediator {
-    private myProxy: StatisticCoinKeepDaysProxy = <any>this.getProxy(StatisticCoinKeepDaysProxy);
+    myProxy: StatisticCoinKeepDaysProxy = <any>this.getProxy(StatisticCoinKeepDaysProxy);
 
     onRegister() {
         this.myProxy.enter();

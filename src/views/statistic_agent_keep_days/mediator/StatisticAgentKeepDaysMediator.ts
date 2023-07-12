@@ -8,7 +8,7 @@ import StatisticAgentKeepDaysProxy from "../proxy/StatisticAgentKeepDaysProxy";
 interface IStatisticAgentKeepDays extends IEventDispatcher {}
 
 export default class StatisticAgentKeepDaysMediator extends AbstractMediator {
-    private myProxy: StatisticAgentKeepDaysProxy = <any>this.getProxy(StatisticAgentKeepDaysProxy);
+    myProxy: StatisticAgentKeepDaysProxy = <any>this.getProxy(StatisticAgentKeepDaysProxy);
 
     onRegister() {
         this.myProxy.enter();
