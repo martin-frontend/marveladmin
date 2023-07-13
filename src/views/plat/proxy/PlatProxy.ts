@@ -91,18 +91,19 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_exchange_fail_automatic_refund: { name: "", options: {} },
             bet_log_keep_days: { name: "投注记录保留天数", options: {} },
             bet_log_search_days: { name: "投注记录搜索天数", options: {} },
-            main_language: { name: '主语言', options: {} },
-            is_first_login_send_sms: { name: '首次登入发送短信', options: {} },
-            is_user_manual_refund: { name: '用户手动退款', options: {} },
-            client_config: { name: 'Client 配置参数', options: {} },
-            other_config: { name: '配置参数', options: {} },
-            vendor_wallet_types: { name: "游戏钱包类型", options: {} },  
+            main_language: { name: "主语言", options: {} },
+            is_first_login_send_sms: { name: "首次登入发送短信", options: {} },
+            is_user_manual_refund: { name: "用户手动退款", options: {} },
+            client_config: { name: "Client 配置参数", options: {} },
+            other_config: { name: "配置参数", options: {} },
+            vendor_wallet_types: { name: "游戏钱包类型", options: {} },
             exchange_count: { name: "玩家兑换笔数", options: {} },
             is_user_verification: { name: "", options: {} },
             register_same_ip_limit: { name: "", options: {} },
-            max_exchange_gold: {name: '最大兑换金额', options: {} },
-            forbidden_country: {name: '', options: {} },
-            is_active_digital_currency: {name: '数字货币是否参数活动', options: {} },
+            max_exchange_gold: { name: "最大兑换金额", options: {} },
+            forbidden_country: { name: "", options: {} },
+            is_active_digital_currency: { name: "数字货币是否参数活动", options: {} },
+            auth_types: { name: "验证方式", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -168,12 +169,13 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         main_language: "",
         client_config: {},
         other_config: {},
-        vendor_wallet_types:[],
+        vendor_wallet_types: [],
         exchange_count: 1,
-        register_same_ip_limit:0,
+        register_same_ip_limit: 0,
         max_exchange_gold: -1,
-        forbidden_country:"",
+        forbidden_country: "",
         is_active_digital_currency: 1,
+        auth_types: 1,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -183,7 +185,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         formSource: null, // 表单的原始数据
         initPromotion_floor: <any>{},
         initWater_config: <any>{},
-        forbidden_country:"",
+        forbidden_country: "",
     };
     /**初始返佣折扣数据 */
     defaultPromotionConfig = {
@@ -402,6 +404,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             max_exchange_gold,
             forbidden_country,
             is_active_digital_currency,
+            auth_types,
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -453,6 +456,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             max_exchange_gold,
             forbidden_country,
             is_active_digital_currency,
+            auth_types,
         };
 
         formCopy.app_types = JSON.stringify(formCopy.app_types);
@@ -461,7 +465,6 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         formCopy.validate_type = JSON.stringify(formCopy.validate_type);
         formCopy.register_types = JSON.stringify(formCopy.register_types);
         formCopy.vendor_wallet_types = JSON.stringify(formCopy.vendor_wallet_types);
-        
 
         //组回原始 extends
         if (typeof this.dialogData.form.client_config == "string") {

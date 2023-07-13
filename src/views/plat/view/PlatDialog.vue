@@ -49,6 +49,17 @@
                     </el-checkbox-group>
                 </el-form-item>
 
+                <el-form-item size="mini" :label="tableColumns['auth_types'].name">
+                    <el-select v-model="form.auth_types" filterable class="select" :placeholder="LangUtil('请选择')">
+                        <el-option
+                            v-for="(value, key) in tableColumns.auth_types.options"
+                            :key="key"
+                            :label="value"
+                            :value="Number(key)"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="tableColumns['language'].name" prop="language">
                     <el-checkbox-group v-model="form.language">
                         <el-checkbox
@@ -513,7 +524,6 @@
                                 ></el-option>
                             </el-select>
                         </div>
-
                     </div>
                 </el-form-item>
                 <el-form-item size="mini" :label="LangUtil('金币划转')" prop="">
@@ -590,11 +600,7 @@
                     </div>
                     <div class="item-content">
                         <span>{{ tableColumns.max_exchange_gold.name }}：</span>
-                        <el-input
-                            class="select"
-                            type="number"
-                            v-model="form.max_exchange_gold"
-                        ></el-input>
+                        <el-input class="select" type="number" v-model="form.max_exchange_gold"></el-input>
                     </div>
                 </el-form-item>
 
@@ -615,10 +621,7 @@
                 <el-form-item size="mini" :label="LangUtil('受限国家')">
                     <div class="el_select_group">
                         <span>{{ tableColumns.forbidden_country.name }}：</span>
-                        <el-input
-                        class="select"
-                            v-model="form.forbidden_country" 
-                        ></el-input>
+                        <el-input class="select" v-model="form.forbidden_country"></el-input>
                     </div>
                 </el-form-item>
 
