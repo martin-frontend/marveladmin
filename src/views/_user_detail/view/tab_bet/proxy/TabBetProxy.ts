@@ -481,6 +481,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
                 page_size: 20,
             },
         },
+        trun_bet_detail_text:0,
     };
 
     jsonEditorDialog = {
@@ -556,6 +557,7 @@ export default class TabBetProxy extends AbstractProxy implements ITabBetProxy {
     /**跳转详情 */
     showDetailPage(data: any) {
         const { plat_id, bet_id } = data;
+        this.dialogData.trun_bet_detail_text = data.trun_bet_detail_text || 0;
         this.sendNotification(HttpType.admin_plat_users_bet_show_url, { plat_id, bet_id });
     }
 
