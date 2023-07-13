@@ -137,10 +137,10 @@
             </el-table-column>
             <el-table-column prop="extends" :label="tableColumns['extends'].name" min-width="180px" align="center">
                 <template slot-scope="{ row }">
-                    <div align="left" v-if="row.receive_payment_type == 7 && row.payment_method.length != 0">
+                    <div align="left" v-if="row.payment_method && row.payment_method.length > 0">
                         <p v-for="(value, key) of row.payment_method" :key="key">{{ key }}：{{ value }}</p>
                     </div>
-                    <div align="left" v-else-if="row.receive_payment_type == 8 && row.payment_method.length != 0">
+                    <div align="left" v-else-if="row.payment_method && Object.keys(row.payment_method).length >0">
                         <p v-for="(value, key) of row.payment_method" :key="key">{{ key }}：{{ value }}</p>
                     </div>
                     <div v-else>
