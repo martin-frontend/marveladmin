@@ -88,7 +88,6 @@
                 <div class="flex d-flex">
                     <el-input
                         clearable
-                        maxlength="30"
                         :placeholder="LangUtil('请输入')"
                         v-model="form.template"
                         style="margin-right: 0.8rem"
