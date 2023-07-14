@@ -28,6 +28,13 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column prop="vendor_type" :label="tableColumns['vendor_type'].name" align="center">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["vendor_type"].options[row.vendor_type] }}
+                    </div>
+                </template>
+            </el-table-column>
 
             <el-table-column
                 prop="time_region_hour_interval"

@@ -37,6 +37,12 @@
                 :options="tableColumns.vendor_id.options"
                 :clearable="false"
             />
+            <SearchSelect
+                :title="tableColumns.vendor_type.name"
+                v-model="listQuery.vendor_type"
+                :options="tableColumns.vendor_type.options"
+                :clearable="false"
+            />
 
             <!-- <SearchInput :title="tableColumns.time_region_hour_interval.name" v-model="listQuery.time_region_hour_interval" /> -->
 

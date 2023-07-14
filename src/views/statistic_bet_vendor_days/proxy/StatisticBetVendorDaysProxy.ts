@@ -35,6 +35,7 @@ export default class StatisticBetVendorDaysProxy extends AbstractProxy implement
             win_gold: { name: "", options: {} },
             coin_name_unique: { name: "币种", options: {} },
             vendor_wallet_type: { name: "", options: {} },
+            vendor_type: { name: "游戏类型", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -44,11 +45,12 @@ export default class StatisticBetVendorDaysProxy extends AbstractProxy implement
     listQuery = {
         page_count: 1,
         page_size: 20,
-        vendor_id: "",
+        vendor_id: "0",
         plat_id: "",
         time_region_hour_interval: "",
         "created_date-{>=}": this.getFirstDay(),
-        "created_date-{<=}": dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
+        "created_date-{<=}": dateFormat(new Date(new Date().getTime()-24*60*60*1000), "yyyy-MM-dd 23:59:59"),
+        vendor_type: "0",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -123,9 +125,10 @@ export default class StatisticBetVendorDaysProxy extends AbstractProxy implement
     resetListQuery() {
         Object.assign(this.listQuery, {
             // TODO
-            vendor_id: "",
+            vendor_id: "0",
             "created_date-{>=}": this.getFirstDay(),
-            "created_date-{<=}": dateFormat(new Date(), "yyyy-MM-dd 23:59:59"),
+            "created_date-{<=}": dateFormat(new Date(new Date().getTime()-24*60*60*1000), "yyyy-MM-dd 23:59:59"),
+            vendor_type: "0",
         });
 
         const time_region_hour_interval_keys = Object.keys(this.tableData.columns["time_region_hour_interval"].options);
@@ -200,7 +203,7 @@ export default class StatisticBetVendorDaysProxy extends AbstractProxy implement
             })
             .catch(() => {});
     }
-    _userList = ["vendor_id", "time_region_hour_interval", "vendor_wallet_type", "coin_name_unique", "win_gold"];
+    _userList = ["vendor_id", "time_region_hour_interval", "vendor_wallet_type", "coin_name_unique", "win_gold", "vendor_type"];
     myExportPagedata = <any>{};
     /**导出excel */
     exportExcel(data: any) {
