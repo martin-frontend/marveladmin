@@ -206,6 +206,13 @@
             </el-table-column>
 
             <el-table-column
+                :label="tableColumns['first_login_device'].name"
+                prop="first_login_device"
+                class-name="status-col"
+                min-width="120px"
+            ></el-table-column>
+
+            <el-table-column
                 :label="tableColumns['last_login_device'].name"
                 prop="last_login_device"
                 class-name="status-col"

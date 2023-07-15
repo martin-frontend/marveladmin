@@ -21,6 +21,7 @@
             <SearchInput :title="tableColumns.last_login_ip.name" v-model="listQuery.last_login_ip" />
             <SearchInput :title="tableColumns.register_ip.name" v-model="listQuery.register_ip" />
             <SearchInput :title="tableColumns.last_login_device.name" v-model="listQuery.last_login_device" />
+            <SearchInput :title="tableColumns.first_login_device.name" v-model="listQuery.first_login_device" />
             <SearchInput :title="tableColumns.phone.name" v-model="listQuery.phone" />
             <SearchInput :title="tableColumns.remark.name" v-model="listQuery.remark" :tip="tableColumns.remark.tips" />
             <SearchSelect

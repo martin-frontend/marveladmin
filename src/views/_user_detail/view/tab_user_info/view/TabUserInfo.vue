@@ -64,6 +64,9 @@
                 >
                     {{ userInfo.last_ip_location }}
                 </el-form-item> -->
+                <el-form-item size="mini" :label="tableColumns['first_login_device'].name" prop="first_login_device">
+                    {{ userInfo.first_login_device }}
+                </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['last_login_device'].name" prop="last_login_device">
                     {{ userInfo.last_login_device }} ({{ LangUtil("人数") }} {{ userInfo.login_device_counts }})
                 </el-form-item>

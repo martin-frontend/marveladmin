@@ -79,6 +79,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             register_ip: { name: "创建IP", options: [] },
             register_app_type: { name: "创建应用平台", options: [] },
             last_login_app_type: { name: "最近登陆应用平台", options: {} },
+            first_login_device: { name: "首次登录设备号", options: [] },
             last_login_device: { name: "最近登录设备号", options: [] },
             last_login_ip: { name: "最近登录IP", options: [] },
             last_login_at: { name: "最近登入时间", options: [] },
@@ -153,6 +154,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
         last_login_ip: "",
         register_ip: "",
+        first_login_device: "",
         last_login_device: "",
         phone: "",
         max_level: "",
@@ -189,6 +191,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "total_exchange",
             "total_water",
             "total_win",
+            "first_login_device",
             "last_login_device",
             "created_at",
             "last_online_at",
@@ -326,6 +329,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
             last_login_ip: "",
             register_ip: "",
+            first_login_device: "",
             last_login_device: "",
             phone: "",
             max_level: "",
