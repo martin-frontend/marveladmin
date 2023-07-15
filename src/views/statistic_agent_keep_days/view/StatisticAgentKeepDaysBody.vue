@@ -50,47 +50,56 @@
                     </el-table-column>
                     <el-table-column prop="day_1" :label="tableColumns['day_1'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
-                            <span>{{ row.day_1 }}({{ toPercent(row.day_1, row.user_count) }})</span>
+                            <WinLossDisplay :amount="row.day_1" :isShowColor="false" :isShowPlus="false" />
+                            <div>({{ toPercent(row.day_1, row.user_count) }})</div>
                         </template>
                     </el-table-column>
                     <el-table-column prop="day_2" :label="tableColumns['day_2'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
-                            <span>{{ row.day_2 }}({{ toPercent(row.day_2, row.user_count) }})</span>
+                            <WinLossDisplay :amount="row.day_2" :isShowColor="false" :isShowPlus="false" />
+                            <div>({{ toPercent(row.day_2, row.user_count) }})</div>
                         </template>
                     </el-table-column>
                     <!-- <el-table-column prop="day_3" :label="tableColumns['day_3'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
-                            <span>{{ row.day_3 }}({{ toPercent(row.day_3, row.user_count) }})</span>
+                            <WinLossDisplay :amount="row.day_3" :isShowColor="false" :isShowPlus="false" />
+                            <div>({{ toPercent(row.day_3, row.user_count) }})</div>
                         </template>
                     </el-table-column> -->
                     <el-table-column prop="day_4" :label="tableColumns['day_4'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
-                            <span>{{ row.day_4 }}({{ toPercent(row.day_4, row.user_count) }})</span>
+                            <WinLossDisplay :amount="row.day_4" :isShowColor="false" :isShowPlus="false" />
+                            <div>({{ toPercent(row.day_4, row.user_count) }})</div>
                         </template>
                     </el-table-column>
                     <!-- <el-table-column prop="day_5" :label="tableColumns['day_5'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
-                            <span>{{ row.day_5 }}({{ toPercent(row.day_5, row.user_count) }})</span>
+                            <WinLossDisplay :amount="row.day_5" :isShowColor="false" :isShowPlus="false" />
+                            <div>({{ toPercent(row.day_5, row.user_count) }})</div>
                         </template>
                     </el-table-column> -->
                     <el-table-column prop="day_6" :label="tableColumns['day_6'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
-                            <span>{{ row.day_6 }}({{ toPercent(row.day_6, row.user_count) }})</span>
+                            <WinLossDisplay :amount="row.day_6" :isShowColor="false" :isShowPlus="false" />
+                            <div>({{ toPercent(row.day_6, row.user_count) }})</div>
                         </template>
                     </el-table-column>
                     <!-- <el-table-column prop="day_7" :label="tableColumns['day_7'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
-                            <span>{{ row.day_7 }}({{ toPercent(row.day_7, row.user_count) }})</span>
+                            <WinLossDisplay :amount="row.day_7" :isShowColor="false" :isShowPlus="false" />
+                            <div>({{ toPercent(row.day_7, row.user_count) }})</div>
                         </template>
                     </el-table-column> -->
                     <el-table-column prop="day_14" :label="tableColumns['day_14'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
-                            <span>{{ row.day_14 }}({{ toPercent(row.day_14, row.user_count) }})</span>
+                            <WinLossDisplay :amount="row.day_14" :isShowColor="false" :isShowPlus="false" />
+                            <div>({{ toPercent(row.day_14, row.user_count) }})</div>
                         </template>
                     </el-table-column>
                     <el-table-column prop="day_30" :label="tableColumns['day_30'].name" align="center" width="100px">
                         <template slot-scope="{ row }">
-                            <span>{{ row.day_30 }}({{ toPercent(row.day_30, row.user_count) }})</span>
+                            <WinLossDisplay :amount="row.day_30" :isShowColor="false" :isShowPlus="false" />
+                            <div>({{ toPercent(row.day_30, row.user_count) }})</div>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -109,10 +118,12 @@ import StatisticAgentKeepDaysProxy from "../proxy/StatisticAgentKeepDaysProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
         Pagination,
+        WinLossDisplay,
     },
 })
 export default class StatisticAgentKeepDaysBody extends AbstractView {
@@ -143,9 +154,10 @@ export default class StatisticAgentKeepDaysBody extends AbstractView {
     }
     toPercent(curAmount: string, total: string) {
         if (total == "0" || curAmount == "0") {
-            return "0%";
+            return "0";
         }
-        return ((Number(curAmount) / Number(total)) * 100).toFixed(2) + "%";
+        return Number((Number(curAmount) / Number(total)).toString().match(/^\d+(?:\.\d{0,2})?/));
+        //return ((Number(curAmount) / Number(total)) ).toFixed(3) ;
     }
 }
 </script>

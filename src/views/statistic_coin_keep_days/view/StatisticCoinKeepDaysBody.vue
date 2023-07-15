@@ -24,39 +24,62 @@
             </el-table-column>
             <el-table-column prop="user_count" :label="tableColumns.user_count.name" align="center" min-width="60px">
             </el-table-column>
-            <el-table-column prop="user_all_count" :label="tableColumns.user_all_count.name" align="center" min-width="60px">
-            </el-table-column>
+            <!-- <el-table-column prop="user_all_count" :label="tableColumns.user_all_count.name" align="center" min-width="60px">
+            </el-table-column> -->
             <!-- <el-table-column prop="coin_name_unique" :label="tableColumns.coin_name_unique.name" align="center" min-width="60px">
             </el-table-column> -->
             <el-table-column prop="day_1" :label="tableColumns.day_1.name" align="center" min-width="80px">
-                <template slot-scope="{ row }"> {{ row.day_1 }}({{ toPercent(row.day_1, row.user_count) }}) </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.day_1" :isShowColor="false" :isShowPlus="false" />
+                    <div>({{ toPercent(row.day_1, row.user_count) }})</div>
+                </template>
             </el-table-column>
             <el-table-column prop="day_2" :label="tableColumns.day_2.name" align="center" min-width="80px">
-                <template slot-scope="{ row }"> {{ row.day_2 }}({{ toPercent(row.day_2, row.user_count) }}) </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.day_2" :isShowColor="false" :isShowPlus="false" />
+                    <div>({{ toPercent(row.day_2, row.user_count) }})</div>
+                </template>
             </el-table-column>
             <el-table-column prop="day_3" :label="tableColumns.day_3.name" align="center" min-width="80px">
-                <template slot-scope="{ row }"> {{ row.day_3 }}({{ toPercent(row.day_3, row.user_count) }}) </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.day_3" :isShowColor="false" :isShowPlus="false" />
+                    <div>({{ toPercent(row.day_3, row.user_count) }})</div>
+                </template>
             </el-table-column>
             <el-table-column prop="day_4" :label="tableColumns.day_4.name" align="center" min-width="80px">
-                <template slot-scope="{ row }"> {{ row.day_4 }}({{ toPercent(row.day_4, row.user_count) }}) </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.day_4" :isShowColor="false" :isShowPlus="false" />
+                    <div>({{ toPercent(row.day_4, row.user_count) }})</div>
+                </template>
             </el-table-column>
             <el-table-column prop="day_5" :label="tableColumns.day_5.name" align="center" min-width="80px">
-                <template slot-scope="{ row }"> {{ row.day_5 }}({{ toPercent(row.day_5, row.user_count) }}) </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.day_5" :isShowColor="false" :isShowPlus="false" />
+                    <div>({{ toPercent(row.day_5, row.user_count) }})</div>
+                </template>
             </el-table-column>
             <el-table-column prop="day_6" :label="tableColumns.day_6.name" align="center" min-width="80px">
-                <template slot-scope="{ row }"> {{ row.day_6 }}({{ toPercent(row.day_6, row.user_count) }}) </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.day_6" :isShowColor="false" :isShowPlus="false" />
+                    <div>({{ toPercent(row.day_6, row.user_count) }})</div>
+                </template>
             </el-table-column>
             <el-table-column prop="day_7" :label="tableColumns.day_7.name" align="center" min-width="80px">
-                <template slot-scope="{ row }"> {{ row.day_7 }}({{ toPercent(row.day_7, row.user_count) }}) </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.day_7" :isShowColor="false" :isShowPlus="false" />
+                    <div>({{ toPercent(row.day_7, row.user_count) }})</div>
+                </template>
             </el-table-column>
             <el-table-column prop="day_14" :label="tableColumns.day_14.name" align="center" min-width="80px">
                 <template slot-scope="{ row }">
-                    {{ row.day_14 }}({{ toPercent(row.day_14, row.user_count) }})
+                    <WinLossDisplay :amount="row.day_41" :isShowColor="false" :isShowPlus="false" />
+                    <div>({{ toPercent(row.day_14, row.user_count) }})</div>
                 </template>
             </el-table-column>
             <el-table-column prop="day_30" :label="tableColumns.day_30.name" align="center" min-width="80px">
                 <template slot-scope="{ row }">
-                    {{ row.day_30 }}({{ toPercent(row.day_30, row.user_count) }})
+                    <WinLossDisplay :amount="row.day_30" :isShowColor="false" :isShowPlus="false" />
+                    <div>({{ toPercent(row.day_30, row.user_count) }})</div>
                 </template>
             </el-table-column>
         </el-table>
@@ -72,11 +95,13 @@ import StatisticCoinKeepDaysProxy from "../proxy/StatisticCoinKeepDaysProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
         Pagination,
-    }
+        WinLossDisplay,
+    },
 })
 export default class StatisticCoinKeepDaysBody extends AbstractView {
     //权限标识
@@ -92,7 +117,7 @@ export default class StatisticCoinKeepDaysBody extends AbstractView {
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
     LangUtil = LangUtil;
-    handlerPageSwitch(page:number){
+    handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
@@ -120,7 +145,7 @@ export default class StatisticCoinKeepDaysBody extends AbstractView {
         return "";
     }
     toPercent(curAmount: string, total: string) {
-        return this.myProxy.toPercent(curAmount,total);
+        return this.myProxy.toPercent(curAmount, total);
     }
 }
 </script>
