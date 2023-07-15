@@ -277,6 +277,10 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     onGetPhone() {
         this.sendNotification(HttpType.admin_plat_user_phone, { user_id: this.userInfo.user_id });
     }
+    /**获取邮件 */
+    onGetEmail() {
+        this.sendNotification(HttpType.admin_plat_user_email, { user_id: this.userInfo.user_id });
+    }
     /**打开用户详情页 */
     onShowDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);

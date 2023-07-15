@@ -25,6 +25,7 @@ export default class TabUserUnfoMediator extends AbstractMediator {
             EventType.admin_plat_user_show,
             EventType.admin_plat_user_update,
             EventType.admin_plat_user_phone,
+            EventType.admin_plat_user_email,
             EventType.admin_plat_user_agent_bind_show,
             EventType.admin_plat_user_update_level_exp,
             EventType.admin_plat_user_clear_cache,
@@ -60,6 +61,7 @@ export default class TabUserUnfoMediator extends AbstractMediator {
                     this.myProxy.hideDialog();
                     break;
                 case EventType.admin_plat_user_phone:
+                case EventType.admin_plat_user_email:
                     MessageBox.alert(<any>LangUtil("操作成功") + ":" + body);
                     break;
                 case EventType.admin_plat_user_agent_bind_show:

@@ -7,6 +7,7 @@ import { Message, MessageBox } from "element-ui";
 import IPlatUserProxy from "./IPlatUserProxy";
 import { MD5 } from "@/core/global/MD5";
 import { BaseInfo } from "@/components/vo/commonVo";
+import { checkUnique, unique } from "@/core/global/Permission";
 
 export default class PlatUserProxy extends AbstractProxy implements IPlatUserProxy {
     static NAME = "PlatUserProxy";
@@ -127,8 +128,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             last_exchange: { name: "", options: {} },
             last_recharge: { name: "", options: {} },
             coin_name_unique_arr: { name: "", options: {} },
-            is_cash_agent: { name: '充值兑换开关', options: {} },
-            cpf: { name: 'cpf', options: {} },
+            is_cash_agent: { name: "充值兑换开关", options: {} },
+            cpf: { name: "cpf", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -365,7 +366,11 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
     /**查询 */
     onQuery() {
-        this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull(this.listQuery));
+        if (checkUnique(unique.admin_plat_user_index2)) {
+            this.sendNotification(HttpType.admin_plat_user_index2, objectRemoveNull(this.listQuery));
+        } else {
+            this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull(this.listQuery));
+        }
     }
 
     resetExportData(timeout: any) {
@@ -493,7 +498,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 const { channel_id, user_id } = this.changeChannelDialogData.form;
                 this.sendNotification(HttpType.admin_plat_user_change_channel, { channel_id, user_id });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**取得所有资料 */
@@ -506,7 +511,11 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         queryCopy.page_size = pageSize;
         queryCopy.page_count = Number(pageCurrent) + 1;
         queryCopy.is_export = true;
-        this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull(queryCopy));
+        if (checkUnique(unique.admin_plat_user_index2)) {
+            this.sendNotification(HttpType.admin_plat_user_index2, objectRemoveNull(queryCopy));
+        } else {
+            this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull(queryCopy));
+        }
     }
 
     /**每1000笔保存一次 */
@@ -549,7 +558,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         newData.forEach(element => {
             let total_recharge: string = `${this.tableData.columns.recharge_times.name} : ${element.recharge_times};  `;
             for (const item of element.user_statistic) {
-                total_recharge = total_recharge + `${item.coin_name_unique} : ${Math.abs(item.total_recharge).toFixed(3)};`;
+                total_recharge =
+                    total_recharge + `${item.coin_name_unique} : ${Math.abs(item.total_recharge).toFixed(3)};`;
             }
             element.total_recharge = total_recharge;
         });
@@ -558,7 +568,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         newData.forEach(element => {
             let total_exchange: string = `${this.tableData.columns.exchange_times.name} : ${element.exchange_times};  `;
             for (const item of element.user_statistic) {
-                total_exchange = total_exchange + `${item.coin_name_unique} : ${Math.abs(item.total_exchange).toFixed(3)};`;
+                total_exchange =
+                    total_exchange + `${item.coin_name_unique} : ${Math.abs(item.total_exchange).toFixed(3)};`;
             }
             element.total_exchange = total_exchange;
         });

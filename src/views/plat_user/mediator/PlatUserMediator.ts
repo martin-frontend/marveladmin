@@ -37,6 +37,7 @@ export default class PlatUserMediator extends AbstractMediator {
             EventType.admin_plat_user_backwater_config,
             EventType.admin_plat_user_store_credit_user,
             EventType.admin_plat_user_change_channel,
+            EventType.admin_plat_user_index2,
         ];
     }
 
@@ -49,6 +50,7 @@ export default class PlatUserMediator extends AbstractMediator {
                 this.myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_user_index:
+            case EventType.admin_plat_user_index2:
                 this.myProxy.exportData.isSearch = true;
                 if (this.myProxy.exportData.stop) {
                     this.myProxy.exportData.stop = false;

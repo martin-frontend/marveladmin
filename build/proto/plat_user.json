@@ -5,6 +5,7 @@
     "list": [
         "admin/plat_user/table_columns",
         "admin/plat_user/index",
+        "admin/plat_user/index2",
         "admin/plat_user/store",
         "admin/plat_user/show/{user_id}",
         "admin/plat_user/update/{user_id}",

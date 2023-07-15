@@ -4,6 +4,7 @@
  */
 import cmd_admin_plat_user_table_columns from "@/views/plat_user/command/cmd_admin_plat_user_table_columns";
 import cmd_admin_plat_user_index from "@/views/plat_user/command/cmd_admin_plat_user_index";
+import cmd_admin_plat_user_index2 from "@/views/plat_user/command/cmd_admin_plat_user_index2";
 import cmd_admin_plat_user_store from "@/views/plat_user/command/cmd_admin_plat_user_store";
 import cmd_admin_plat_user_show from "@/views/plat_user/command/cmd_admin_plat_user_show";
 import cmd_admin_plat_user_update from "@/views/plat_user/command/cmd_admin_plat_user_update";
@@ -19,6 +20,7 @@ import cmd_admin_plat_user_change_channel from "@/views/plat_user/command/cmd_ad
 export var HttpType = {
     admin_plat_user_table_columns: "admin/plat_user/table_columns",
     admin_plat_user_index: "admin/plat_user/index",
+    admin_plat_user_index2: "admin/plat_user/index2",
     admin_plat_user_store: "admin/plat_user/store",
     admin_plat_user_show: "admin/plat_user/show/{user_id}",
     admin_plat_user_update: "admin/plat_user/update/{user_id}",
@@ -35,6 +37,7 @@ export var HttpType = {
 export var EventType = {
     admin_plat_user_table_columns: "admin_plat_user_table_columns",
     admin_plat_user_index: "admin_plat_user_index",
+    admin_plat_user_index2: "admin_plat_user_index2",
     admin_plat_user_store: "admin_plat_user_store",
     admin_plat_user_show: "admin_plat_user_show",
     admin_plat_user_update: "admin_plat_user_update",
@@ -51,6 +54,7 @@ export var EventType = {
 const facade = puremvc.Facade.getInstance();
 facade.registerCommand(HttpType.admin_plat_user_table_columns, cmd_admin_plat_user_table_columns);
 facade.registerCommand(HttpType.admin_plat_user_index, cmd_admin_plat_user_index);
+facade.registerCommand(HttpType.admin_plat_user_index2, cmd_admin_plat_user_index2);
 facade.registerCommand(HttpType.admin_plat_user_store, cmd_admin_plat_user_store);
 facade.registerCommand(HttpType.admin_plat_user_show, cmd_admin_plat_user_show);
 facade.registerCommand(HttpType.admin_plat_user_update, cmd_admin_plat_user_update);

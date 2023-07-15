@@ -189,6 +189,8 @@ export var unique = {
     plat_user_update_nick_name: "plat_user_update_nick_name", //用户信息-是否可编辑用户昵称
     plat_user_update_phone: "plat_user_update_phone", //用户信息-是否可编辑用户手机
     plat_user_update_email: "plat_user_update_email", //用户信息-是否可编辑用户邮箱
+    plat_user_phone: "plat_user_phone", //用户信息-是否可查看用户手机
+    plat_user_email: "plat_user_email", //用户信息-是否可查看用户邮箱
     plat_user_update_wechat: "plat_user_update_wechat", //用户信息-是否可编辑用户微信
     plat_user_update_qq: "plat_user_update_qq", //用户信息-是否可编辑用户QQ
     plat_user_update_password: "plat_user_update_password", //用户信息-是否可编辑用户密码
@@ -196,6 +198,7 @@ export var unique = {
     plat_user_refresh: "plat_user_refresh", //用户钱包-金币刷新
     plat_user_withdraw: "plat_user_withdraw", //用户钱包-提取
     plat_user_store_credit_user: "plat_user_store_credit_user", //添加信用用户
+    admin_plat_user_index2: "plat_user2", //查看完整手机与信箱
     //上下分记录
     plat_users_vendor_gold_log_update_manual: "plat_users_vendor_gold_log_update_manual", //上下分手动处理
     //操作日志

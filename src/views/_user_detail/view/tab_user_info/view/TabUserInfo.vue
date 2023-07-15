@@ -198,14 +198,19 @@
                     <el-input
                         disabled
                         v-model="userInfo.phone"
-                        :style="{ width: userInfo.phone && userInfo.phone != '' ? '120px' : '200px' }"
+                        :style="{
+                            width:
+                                checkUnique(unique.plat_user_phone) && userInfo.phone && userInfo.phone != ''
+                                    ? '120px'
+                                    : '200px',
+                        }"
                     ></el-input>
                     <el-button
                         class="item"
                         type="primary"
                         @click="handlerLookPhone"
                         style="margin-left: 20px"
-                        v-if="checkUnique(unique.plat_user_update_phone) && userInfo.phone && userInfo.phone != ''"
+                        v-if="checkUnique(unique.plat_user_phone) && userInfo.phone && userInfo.phone != ''"
                     >
                         {{ LangUtil("查看") }}
                     </el-button>
@@ -220,7 +225,25 @@
                     </el-button>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['email'].name" prop="email">
-                    <el-input disabled v-model="userInfo.email" style="width: 200px"></el-input>
+                    <el-input
+                        disabled
+                        v-model="userInfo.email"
+                        :style="{
+                            width:
+                                checkUnique(unique.plat_user_email) && userInfo.email && userInfo.email != ''
+                                    ? '120px'
+                                    : '200px',
+                        }"
+                    ></el-input>
+                    <el-button
+                        class="item"
+                        type="primary"
+                        @click="handlerLookEmail"
+                        style="margin-left: 20px"
+                        v-if="checkUnique(unique.plat_user_email) && userInfo.email && userInfo.email != ''"
+                    >
+                        {{ LangUtil("查看") }}
+                    </el-button>
                     <el-button
                         class="item"
                         type="primary"
@@ -675,6 +698,10 @@ export default class TabUserInfo extends AbstractView {
 
     handlerLookPhone() {
         this.myProxy.onGetPhone();
+    }
+
+    handlerLookEmail() {
+        this.myProxy.onGetEmail();
     }
 
     handlerClear() {
