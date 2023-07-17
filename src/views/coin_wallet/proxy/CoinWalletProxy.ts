@@ -9,14 +9,14 @@ import CoinReceivePaymentChannelMediator from "@/views/coin_receive_payment_chan
 import { HttpType } from "@/views/coin_wallet/setting";
 import { MessageBox } from "element-ui";
 import ICoinWalletProxy from "./ICoinWalletProxy";
-
+import { checkUnique, unique } from "@/core/global/Permission";
 export default class CoinWalletProxy extends AbstractProxy implements ICoinWalletProxy {
     static NAME = "CoinWalletProxy";
 
     /**进入页面时调用 */
     enter() {
         const selfModel: SelfModel = <any>this.facade.retrieveProxy(SelfModel.NAME);
-        if (selfModel.userInfo.type != UserType.CHANNEL) {
+        if (selfModel.userInfo.type != UserType.CHANNEL && checkUnique(unique.coin_wallet_log)) {
             if (selfModel.userInfo.type != UserType.COIN && selfModel.userInfo.type != UserType.COINUSEREXCHANGE) {
                 this.sendNotification(HttpType.admin_coin_wallet_table_columns);
                 this.sendNotification(HttpType.admin_coin_wallet_log_table_columns);
