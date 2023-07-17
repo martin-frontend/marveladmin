@@ -73,6 +73,11 @@
                 :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             >
             </SearchRange>
+            <SearchSelect
+                :title="tableColumns.is_first_recharge.name"
+                v-model="listQuery.is_first_recharge"
+                :options="tableColumns.is_first_recharge.options"
+            />
             <div>
                 <el-button @click="handlerSearch" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")

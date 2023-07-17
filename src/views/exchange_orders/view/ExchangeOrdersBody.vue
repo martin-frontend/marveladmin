@@ -106,6 +106,13 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column prop="is_first_exchange" :label="tableColumns['is_first_exchange'].name" min-width="90px" align="center">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["is_first_exchange"].options[row.is_first_exchange] }}
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column :label="LangUtil('兑换信息')" min-width="160px" align="center">
                 <template slot-scope="{ row }">
                     <div align="left">

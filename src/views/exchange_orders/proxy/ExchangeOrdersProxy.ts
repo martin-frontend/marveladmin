@@ -74,13 +74,14 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             username: { name: "用户账号", options: [] },
             nick_name: { name: "用户昵称", options: [] },
             user_remark: { name: "用户备注", options: [] },
-            extends: { name: LangUtil('用户兑换信息'), options: [] },
+            extends: { name: LangUtil("用户兑换信息"), options: [] },
             gold_scale: { name: "", options: [] },
             total_recharge: { name: "", options: [] },
             total_exchange: { name: "", options: [] },
             total_bet: { name: "", options: [] },
             total_win: { name: "", options: [] },
-            user_created_at: { name: LangUtil('账号创建时间'), options: [] },
+            user_created_at: { name: LangUtil("账号创建时间"), options: [] },
+            is_first_exchange: { name: "是否首兑", options: [] },
         },
         list: <any>[],
         message: {},
@@ -103,6 +104,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             "order_no",
             "third_order_no",
             "status",
+            "is_first_exchange",
             "exchange_vendors_id",
             "exchange_channel",
             "coin_user_id",
@@ -154,6 +156,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         "gold-{<=}": "",
         coin_name_unique: "",
         block_network_id: "",
+        is_first_exchange: "",
     };
 
     /**平台币商代付相关数据 */
@@ -253,6 +256,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             ...this.tableData.columns.plat_id.options,
             "0": LangUtil("所有平台"),
         };
+        delete this.tableData.columns.is_first_exchange.options[0]
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
@@ -286,7 +290,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
 
-    onQueryAll() { }
+    onQueryAll() {}
 
     /**重置查询条件 */
     resetListQuery() {
@@ -311,6 +315,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             "gold-{<=}": "",
             coin_name_unique: "",
             block_network_id: "",
+            is_first_exchange: "",
         });
     }
 
@@ -477,7 +482,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         const exportField = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
             if (this.exportData.fieldOrder.indexOf(item) != -1) {
-                exportField.push(item)
+                exportField.push(item);
             }
         }
 
@@ -495,6 +500,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
                 "exchange_channel",
                 "exchange_vendors_id",
                 "block_network_id",
+                "is_first_exchange"
             ],
             [""]
         );

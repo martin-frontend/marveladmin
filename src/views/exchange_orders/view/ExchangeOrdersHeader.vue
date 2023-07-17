@@ -78,6 +78,11 @@
                 :minValue.sync="listQuery['gold-{>=}']"
                 :placeholders="[LangUtil('最小金额'), LangUtil('最大金额')]"
             />
+            <SearchSelect
+                :title="tableColumns.is_first_exchange.name"
+                v-model="listQuery.is_first_exchange"
+                :options="tableColumns.is_first_exchange.options"
+            />
             <div>
                 <el-button @click="handlerSearch" type="primary" icon="el-icon-search">
                     {{ LangUtil("查询") }}

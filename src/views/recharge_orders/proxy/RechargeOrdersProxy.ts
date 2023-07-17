@@ -76,6 +76,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             user_remark: { name: "用户备注" },
             coin_user_id: { options: {} },
             user_created_at: { name: LangUtil('账号创建时间'), options: [] },
+            is_first_recharge: { name: "是否首充", options: [] },
         },
         list: <any>[],
         message: {
@@ -116,6 +117,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             "third_order_no",
             "third_name",
             "status",
+            "is_first_recharge",
             "coin_name_unique",
             "block_network_id",
             "vendor_id",
@@ -164,6 +166,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         "gold-{<=}": "",
         coin_name_unique: "",
         block_network_id: "",
+        is_first_recharge: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -212,6 +215,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             ...this.tableData.columns.plat_id.options,
             "0": LangUtil("所有平台"),
         };
+        delete this.tableData.columns.is_first_recharge.options[0];
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
@@ -265,6 +269,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             "gold-{<=}": "",
             coin_name_unique: "",
             block_network_id: "",
+            is_first_recharge: "",
         });
     }
 
@@ -408,7 +413,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             exportField,
             this.tableData.columns,
             newData,
-            ["plat_id", "paymethod_id", "vendor_id", "status", "block_network_id", "status", "is_internal"],
+            ["plat_id", "paymethod_id", "vendor_id", "status", "block_network_id", "status", "is_internal", "is_first_recharge"],
             []
         );
     }

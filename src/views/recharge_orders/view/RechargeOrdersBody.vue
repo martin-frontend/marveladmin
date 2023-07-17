@@ -94,6 +94,13 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column prop="is_first_recharge" :label="tableColumns['is_first_recharge'].name" width="75px" align="center">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["is_first_recharge"].options[row.is_first_recharge] }}
+                    </div>
+                </template>
+            </el-table-column>
 
             <el-table-column
                 prop="coin_name_unique"
