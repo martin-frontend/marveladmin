@@ -44,6 +44,7 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
             award_timing_at: { name: "", options: {} },
             award_num: { name: "", options: {} },
             award_yes_num: { name: "", options: {} },
+            channel_id: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -72,6 +73,7 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
         award_status: "",
         page_count: 1,
         page_size: 20,
+        channel_id: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -148,6 +150,7 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
             award_type: "",
             settlement_time_at: "",
             award_status: "",
+            channel_id: "",
         });
     }
 
@@ -238,6 +241,7 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
         "award_timing_at",
         "award_status",
         "plat_id",
+        "channel_id"
     ];
     myExportPagedata = <any>{};
     /**导出excel */

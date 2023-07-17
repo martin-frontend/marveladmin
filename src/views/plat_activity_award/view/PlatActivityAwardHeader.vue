@@ -8,6 +8,7 @@
                 :clearable="false"
                 @change="handlerSearch"
             />
+            <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
             <div class="">
                 <div class="btn">
                     <ExportDialog

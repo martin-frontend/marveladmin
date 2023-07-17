@@ -142,6 +142,11 @@
                     {{ tableColumns.plat_id.options[row.plat_id] }}
                 </template>
             </el-table-column>
+            <el-table-column
+                :label="tableColumns['channel_id'].name"
+                prop="channel_id"
+                min-width="95"
+            ></el-table-column>
             <el-table-column :label="LangUtil('操作')" min-width="300px">
                 <template slot-scope="{ row }">
                     <el-button-group>

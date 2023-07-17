@@ -47,6 +47,10 @@
                     :isShowDollar="false"
                 />
             </span>
+            <span>
+                {{ LangUtil("投注總人數") }}:
+                {{ summary.total_bet_user_num }}
+            </span>
         </div>
         <div class="statistics" v-for="(item, index) in myProxy.tableData.summary_coin" :key="index">
             {{ item.coin_name_unique }}
@@ -110,6 +114,16 @@
             >
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.vendor_id.options[row.vendor_id] }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="LangUtil('平台信息')"
+                min-width="200px"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    <div style="text-align: left;">{{ tableColumns.plat_id.name }}:{{ tableColumns.plat_id.options[row.plat_id] }}</div>
+                    <div style="text-align: left;">{{ tableColumns.channel_id.name }}:{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
             <el-table-column

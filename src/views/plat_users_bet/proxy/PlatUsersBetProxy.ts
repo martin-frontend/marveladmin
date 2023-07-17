@@ -118,6 +118,8 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             water: "",
             win_gold: "",
             water_accelerate: "",
+            backwater: "",
+            total_bet_user_num: "",
         },
         summary_coin: [],
     };
@@ -147,6 +149,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         resettlement_status: "",
         is_export: false,
         vendor_order_no: "",
+        channel_id: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -211,6 +214,8 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         bShow: false,
         fieldOptions: [
             "vendor_id",
+            "plat_id",
+            "channel_id",
             "user_id",
             "is_credit_user",
             "nick_name",
@@ -314,6 +319,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             is_credit_user: "",
             resettlement_status: "",
             vendor_order_no: "",
+            channel_id: "",
         });
     }
 

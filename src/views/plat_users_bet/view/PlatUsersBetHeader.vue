@@ -8,6 +8,7 @@
             :clearable="false"
         />
         <div class="group">
+            <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
             <SearchDatePicker
                 :title="tableColumns['bet_at'].name"
                 :startDate.sync="listQuery['bet_at-{>=}']"
