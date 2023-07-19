@@ -387,6 +387,14 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull(this.listQuery));
         }
     }
+    onQueryWithParam(plat_id:any) {
+        if (checkUnique(unique.admin_plat_user_index2)) {
+            this.sendNotification(HttpType.admin_plat_user_index2, objectRemoveNull({...this.listQuery, plat_id}));
+            console.log('this.listQuery mike', this.listQuery)
+        } else {
+            this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull({...this.listQuery, plat_id}));
+        }
+    }
 
     resetExportData(timeout: any) {
         setTimeout(() => {
@@ -429,6 +437,12 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     // 状态切换
     onToggleStatus(user_id: number, status: number) {
         this.facade.sendNotification(HttpType.admin_plat_user_update, { user_id, status });
+    }
+    onToggleIsBack(user_id: number, is_back: number){
+        this.facade.sendNotification(HttpType.admin_plat_user_update, {
+            user_id: user_id,
+            is_back_visit: is_back,
+        });
     }
     showWallet() {
         // this.walletDialogData.bShow = true;

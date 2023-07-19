@@ -66,7 +66,12 @@
             </el-table-column>
             <el-table-column :label="tableColumns.is_back_visit.name" min-width="80px" class-name="status-col">
                 <template slot-scope="{ row }">
-                    <div>{{ tableColumns.is_back_visit.options[row.is_back_visit] }}</div>
+                    <el-switch
+                        @change="onSwitchIsBackVisit(row.user_id, row.is_back_visit)"
+                        v-model="row.is_back_visit"
+                        :active-value="1"
+                        :inactive-value="98"
+                    ></el-switch>
                 </template>
             </el-table-column>
             <el-table-column align="left" min-width="160px">
@@ -300,7 +305,6 @@ import { MessageBox } from "element-ui";
         Pagination,
     },
 })
-
 export default class PlatUserBody extends AbstractView {
     LangUtil = LangUtil;
     //权限标识
@@ -315,6 +319,7 @@ export default class PlatUserBody extends AbstractView {
     tableData = this.myProxy.tableData.list;
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
+    userInfo = this.myProxy.userInfo;
 
     handlerQuery() {
         this.myProxy.onQuery();
@@ -379,6 +384,9 @@ export default class PlatUserBody extends AbstractView {
         } else {
             this.myProxy.onToggleStatus(user_id, status);
         }
+    }
+    onSwitchIsBackVisit(user_id: number, is_back_visit: number) {
+        this.myProxy.onToggleIsBack(user_id, is_back_visit);
     }
 
     handlerAddCreditUser() {
