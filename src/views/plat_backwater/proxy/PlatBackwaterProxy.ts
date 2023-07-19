@@ -92,7 +92,7 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
         saveId: "",
         /**是否显示返水列表 */
         showBackWater: false,
-        backWaterConfig: {},
+        backWaterConfig: <any>{},
     };
 
     /**设置表头数据 */
@@ -121,6 +121,13 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
         const { vip_model_id, backwater_model_id, plat_id } = data;
         this.backWaterData.saveId = plat_id;
         this.backWaterData.backWaterConfig = data.backwater_config;
+
+        const aaa = Object.keys(this.tableData.columns.vip_config.options_key[1]);
+        for (let index = 0; index < aaa.length; index++) {
+            if (!this.backWaterData.backWaterConfig[aaa[index]]) {
+                this.backWaterData.backWaterConfig[aaa[index]] = { backwater_rate: "0" };
+            }
+        }
         this.backWaterData.showBackWater = Object.keys(this.backWaterData.backWaterConfig).length > 0;
         if (backwater_model_id) {
             this.sendNotification(HttpType.admin_plat_users_backwater_model_show, { backwater_model_id });
@@ -151,7 +158,7 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
                 this.backWaterData.isEdit = false;
                 this.sendNotification(HttpType.admin_plat_update, data);
             })
-            .catch(() => { });
+            .catch(() => {});
     }
     updateSuccess() {
         this.sendNotification(HttpType.admin_plat_show, {
@@ -171,7 +178,7 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
                     this.backWaterData.isEdit = false;
                     this.updateSuccess();
                 })
-                .catch(() => { });
+                .catch(() => {});
         } else {
             this.backWaterData.isEdit = !this.backWaterData.isEdit;
         }
@@ -192,7 +199,7 @@ export default class PlatBackwaterProxy extends AbstractProxy implements IPlatBa
             .then(() => {
                 this.backWaterData.backWaterConfig = JSON.parse(JSON.stringify(this.backWaterData.copybackWaterData));
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     checkRate(obj: any): boolean {

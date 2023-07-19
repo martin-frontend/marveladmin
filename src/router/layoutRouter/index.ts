@@ -70,6 +70,10 @@ const layoutRouter = {
             name: "首页分类游戏",
             component: () => import(/* webpackChunkName: "cate_vendor_products" */"@/views/cate_vendor_products/view/CateVendorProducts.vue")
         },        {
+            path: "channel_event_record_pix",
+            name: "渠道pix事件统计",
+            component: () => import(/* webpackChunkName: "channel_event_record_pix" */"@/views/plat_users_event_record_pix/view/PlatUsersEventRecordPix.vue")
+        },        {
             path: "channel_plat_user",
             name: "渠道用户",
             component: () => import(/* webpackChunkName: "channel_plat_user" */"@/views/channel_plat_user/view/ChannelPlatUser.vue")
@@ -357,6 +361,10 @@ const layoutRouter = {
             path: "plat_users_event_record",
             name: "事件统计",
             component: () => import(/* webpackChunkName: "plat_users_event_record" */"@/views/plat_users_event_record/view/PlatUsersEventRecord.vue")
+        },        {
+            path: "plat_users_event_record_pix",
+            name: "pix事件统计",
+            component: () => import(/* webpackChunkName: "plat_users_event_record_pix" */"@/views/plat_users_event_record_pix/view/PlatUsersEventRecordPix.vue")
         },        {
             path: "plat_users_gold_log",
             name: "金币明细",
