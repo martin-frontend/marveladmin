@@ -131,6 +131,9 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             coin_name_unique_arr: { name: "", options: {} },
             is_cash_agent: { name: "充值兑换开关", options: {} },
             cpf: { name: "cpf", options: {} },
+            is_recharged: { name: "是否充值", options: {} },
+            is_back_visit: { name: "是否回访", options: {} },
+            recharge_amount: { name: "充值金额", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -164,6 +167,9 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         is_credit_user: "",
         is_gold_exchange: "",
         cpf: "",
+        is_recharged: "",
+        is_back_visit: "",
+        recharge_amount: "",
         page_count: 1,
         page_size: 20,
     };
@@ -183,10 +189,12 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "phone",
             "email",
             "status",
+            "is_back_visit",
             "balance",
             "gold",
             "vendors_money",
             "safe_gold",
+            "is_recharged",
             "total_recharge",
             "total_exchange",
             "total_water",
@@ -337,6 +345,9 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             order_by: <any>null,
             is_credit_user: "",
             cpf: "",
+            is_recharged: "",
+            is_back_visit: "",
+            recharge_amount: "",
         });
     }
 
@@ -601,7 +612,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             exportField,
             this.tableData.columns,
             newData,
-            ["plat_id", "is_credit_user", "status"],
+            ["plat_id", "is_credit_user", "status", "is_recharged", "is_back_visit"],
             []
         );
     }

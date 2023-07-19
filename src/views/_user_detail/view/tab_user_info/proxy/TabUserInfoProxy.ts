@@ -104,6 +104,8 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_cash_agent: { name: '充值兑换开关', options: {} },
         birth_date: { name: '出生年月', options: {} },
         cpf: { name: 'cpf', options: {} },
+        is_recharged: { name: "是否充值", options: {} },
+        is_back_visit: { name: "是否回访", options: {} },
     };
     /**用户详情 */
     userInfo = {
@@ -195,6 +197,8 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_cash_agent: "98",
         birth_date: "",
         cpf: "",
+        is_recharged: "98",
+        is_back_visit: "98",
     };
     /**代理关系链 */
     relationChain: string[] = [];

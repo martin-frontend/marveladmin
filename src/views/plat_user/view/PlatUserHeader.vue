@@ -31,6 +31,16 @@
             />
             <SearchInput :title="tableColumns.agent_user_id.name" v-model="listQuery.agent_user_id" />
             <SearchInput :title="tableColumns.cpf.name" v-model="listQuery.cpf" />
+            <SearchSelect
+                :title="tableColumns.is_recharged.name"
+                v-model="listQuery.is_recharged"
+                :options="tableColumns.is_recharged.options"
+            />
+            <SearchSelect
+                :title="tableColumns.is_back_visit.name"
+                v-model="listQuery.is_back_visit"
+                :options="tableColumns.is_back_visit.options"
+            />
         </div>
         <div class="group">
             <SearchRange
@@ -54,6 +64,8 @@
                 :maxValue.sync="listQuery.max_level"
                 :placeholders="[LangUtil('最小等级'), LangUtil('最大等级')]"
             />
+            <SearchInput :title="tableColumns.recharge_amount.name" v-model="listQuery.recharge_amount" :placeholderProps="LangUtil('最小金额')" searchType="number" />
+
         </div>
         <div class="group">
             <SearchDatePicker

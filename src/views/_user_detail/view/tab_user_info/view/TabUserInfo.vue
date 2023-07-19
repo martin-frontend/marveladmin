@@ -158,6 +158,17 @@
                         ></el-switch>
                     </el-form-item> -->
                 </template>
+                <el-form-item size="mini" :label="tableColumns['is_back_visit'].name" prop="is_back_visit">
+                    <el-switch
+                        @change="onSwitchIsBackVisit()"
+                        v-model="userInfo.is_back_visit"
+                        :active-value="1"
+                        :inactive-value="98"
+                    ></el-switch>
+                </el-form-item>
+                <el-form-item size="mini" :label="tableColumns['is_recharged'].name" prop="is_recharged">
+                    {{ tableColumns["is_recharged"].options[userInfo.is_recharged] }}
+                </el-form-item>
             </el-form>
 
             <el-form ref="form" label-position="left" label-width="130px" :model="userInfo">
@@ -693,6 +704,10 @@ export default class TabUserInfo extends AbstractView {
     onSwitchLogin_need_google() {
         this.myProxy.dialogData.filed = "is_login_need_google";
         this.myProxy.onEdit("is_login_need_google", this.userInfo.is_login_need_google);
+    }
+    onSwitchIsBackVisit() {
+        this.myProxy.dialogData.filed = "is_back_visit";
+        this.myProxy.onEdit("is_back_visit", this.userInfo.is_back_visit);
     }
 
     showUserDetail(user_id: number) {

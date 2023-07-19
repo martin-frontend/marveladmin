@@ -64,6 +64,11 @@
                     </el-switch>
                 </template>
             </el-table-column>
+            <el-table-column :label="tableColumns.is_back_visit.name" min-width="80px" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns.is_back_visit.options[row.is_back_visit] }}</div>
+                </template>
+            </el-table-column>
             <el-table-column align="left" min-width="160px">
                 <template slot="header">
                     <el-tooltip effect="dark" placement="top">
@@ -98,7 +103,11 @@
                     <div>{{ LangUtil("昵称") }}：{{ row.invite_user.nick_name }}</div>
                 </template>
             </el-table-column>
-
+            <el-table-column :label="tableColumns.is_recharged.name" min-width="80px" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns.is_recharged.options[row.is_recharged] }}</div>
+                </template>
+            </el-table-column>
             <el-table-column :label="tableColumns.first_recharge.name" prop="first_recharge" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.first_recharge && row.first_recharge.coin_name_unique">
                     <p>{{ row.first_recharge.pay_time }}</p>
@@ -291,6 +300,7 @@ import { MessageBox } from "element-ui";
         Pagination,
     },
 })
+
 export default class PlatUserBody extends AbstractView {
     LangUtil = LangUtil;
     //权限标识
