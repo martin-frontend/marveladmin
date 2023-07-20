@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="750px" top="20px">
+    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="1200px" top="20px">
         <el-scrollbar style="height: 700px">
             <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
                 <el-form-item size="mini" :label="tableColumns['plat_id'].name" prop="plat_id">
@@ -282,6 +282,52 @@
                         </el-radio>
                     </el-radio-group>
                 </el-form-item>
+
+                <el-form-item
+                v-if="form.settlement_type == 4 || form.settlement_type == '4'"
+                size="mini"
+                :label="LangUtil('派奖方式')"
+            >
+                <div>
+                    <el-row>
+                        {{ tableColumns["daily_ratio"].name }}
+                    </el-row>
+                    <el-row :gutter="10">
+                        <!-- <el-col :span="3">
+                            <div>
+                                <el-button
+                                    @click="onDeleteDailyRatio()"
+                                    :disabled="!form.daily_ratio || form.daily_ratio.length < 1"
+                                    type="primary"
+                                    icon="el-icon-refresh"
+                                    >{{ LangUtil("删除") }}</el-button
+                                >
+                            </div>
+                            <div style="margin-top: 8px;">
+                                <el-button @click="onAddDailyRatio()" type="primary" icon="el-icon-refresh">{{
+                                    LangUtil("添加")
+                                }}</el-button>
+                            </div>
+                        </el-col> -->
+
+                        <el-col :span="3" v-for="(value, key) in form.daily_ratio" :key="key">
+                            <div style="height: 30px;">{{ LangUtil("第{0}天%", key + 1) }}</div>
+                            <div style="margin-top: 8px; height:30px">
+                                <el-input-number
+                                    v-model="form.daily_ratio[key]"
+                                    size="mini"
+                                    :precision="1"
+                                    :step="1"
+                                    :max="100"
+                                    controls-position="right"
+                                    style="width: 100%"
+                                ></el-input-number>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
+            </el-form-item>
+
                 <el-form-item size="mini" :label="LangUtil('上传图片')" v-if="form.show_type == 4" prop="link_url">
                     <div style="display: flex">
                         <el-upload
@@ -730,6 +776,15 @@ export default class PlatActivityDialog extends AbstractView {
         data.plat_id = this.form.plat_id;
         data.key = this.myProxy.dialogData.form.link_url;
         this.langTinymceProxy.showDialog(data);
+    }
+        /** 添加每日返水  */
+        onAddDailyRatio() {
+        console.log("点击添加");
+        this.form.daily_ratio.push(0);
+    }
+    onDeleteDailyRatio() {
+        console.log("点击删除");
+        this.form.daily_ratio.pop();
     }
 }
 </script>

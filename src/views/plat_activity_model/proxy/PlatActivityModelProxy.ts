@@ -45,6 +45,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             settlement_period: { name: "", options: {} },
             settlement_type: { name: "", options: {} },
             show_types: { name: "", options: <any>{} },
+            daily_ratio: { name: "", options: <any>{} },
             type: { name: "", options: {} },
         },
         list: <any>[],
@@ -93,6 +94,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         settlement_type: "",
         award_types: [],
         show_types: [],
+        daily_ratio: [],
         bonus_multiple: "1",
         link_url: "",
         award_tpl: "",
@@ -167,17 +169,38 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
     onQuery() {
         this.sendNotification(HttpType.admin_plat_activity_model_index, objectRemoveNull(this.listQuery));
     }
+    chickDailyRatio(): boolean {
+        if (this.dialogData.form.settlement_type == 4 || this.dialogData.form.settlement_type == "4") {
+            let sumNub = 0;
+            for (let index = 0; index < this.dialogData.form.daily_ratio.length; index++) {
+                sumNub += this.dialogData.form.daily_ratio[index];
+            }
+            if (sumNub != 100) {
+                const msg = LangUtil("全部比例总和必须为100%");
+                MessageBox.alert(msg, "", { confirmButtonText: <string>LangUtil("关闭") });
+
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+
     /**添加数据 */
     onAdd() {
+        if (!this.chickDailyRatio()) return;
+
         const formCopy: any = JSON.parse(JSON.stringify(this.dialogData.form));
         delete formCopy.id;
         formCopy.rules = JSON.stringify(formCopy.rules);
         formCopy.award_types = JSON.stringify(formCopy.award_types);
         formCopy.show_types = JSON.stringify(formCopy.show_types);
+        formCopy.daily_ratio = JSON.stringify(formCopy.daily_ratio);
         this.sendNotification(HttpType.admin_plat_activity_model_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
     onUpdate() {
+        if (!this.chickDailyRatio()) return;
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
         // 删除多余无法去除的参数
         // TODO
@@ -194,6 +217,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             rules: JSON.stringify(this.dialogData.form.rules),
             award_types: JSON.stringify(this.dialogData.form.award_types),
             show_types: JSON.stringify(this.dialogData.form.show_types),
+            daily_ratio: JSON.stringify(this.dialogData.form.daily_ratio),
         });
         this.sendNotification(HttpType.admin_plat_activity_model_update, objectRemoveNull(formCopy));
     }
@@ -210,6 +234,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
                     rules: JSON.stringify(this.dialogData.form.rules),
                     award_types: JSON.stringify(this.dialogData.form.award_types),
                     show_types: JSON.stringify(this.dialogData.form.show_types),
+                    daily_ratio: JSON.stringify(this.dialogData.form.daily_ratio),
                     is_delete: 1,
                 });
                 this.sendNotification(HttpType.admin_plat_activity_model_update, formCopy);
