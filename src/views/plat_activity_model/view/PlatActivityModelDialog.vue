@@ -102,7 +102,7 @@
                         <el-input v-model="form.award_tpl" :placeholder="LangUtil('请输入')"></el-input>
                     </el-form-item>
                     <el-form-item
-                        v-if="form.settlement_type == 4 || form.settlement_type == '4'"
+                        v-if="form.award_types.includes(16)"
                         size="mini"
                         :label="LangUtil('派奖方式')"
                     >

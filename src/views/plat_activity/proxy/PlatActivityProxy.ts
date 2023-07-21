@@ -73,6 +73,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             languages: { name: "", options: {} },
             process_control: { name: "流程控制", options: {} },
             daily_ratio: { name: "", options: <any>{} },
+            rule_desc: { name: "", options: <any>{} },
         },
         orderData: {
             id: "",
@@ -137,6 +138,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             icon: "",
             icon_url: "",
             process_control: 1,
+            rule_desc:"",
         },
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据

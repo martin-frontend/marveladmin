@@ -200,7 +200,29 @@
                             type="primary"
                             size="mini"
                             @click="handleTranslate(form.activity_category)"
-                            >翻译</el-button
+                            >{{LangUtil("翻译")}}</el-button
+                        >
+                    </div>
+                </el-form-item>
+
+                <el-form-item size="mini" :label="tableColumns['rule_desc'].name">
+                    <div class="flex d-flex">
+                        <el-input
+                            v-model="form.rule_desc"
+                            :placeholder="LangUtil('请输入')"
+                            style="margin-right: 0.8rem"
+
+                            show-word-limit
+                            clearable
+                            type="textarea"
+                            rows="3"
+                        ></el-input>
+                        <el-button
+                            style="max-height: 35px"
+                            type="primary"
+                            size="mini"
+                            @click="handleTranslate(form.rule_desc)"
+                            >{{LangUtil("翻译")}}</el-button
                         >
                     </div>
                 </el-form-item>
@@ -284,7 +306,7 @@
                 </el-form-item>
 
                 <el-form-item
-                v-if="form.settlement_type == 4 || form.settlement_type == '4'"
+                v-if="form.award_type == 16 || form.award_type == '16'"
                 size="mini"
                 :label="LangUtil('派奖方式')"
             >
