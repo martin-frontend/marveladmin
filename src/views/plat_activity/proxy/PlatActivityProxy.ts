@@ -138,7 +138,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             icon: "",
             icon_url: "",
             process_control: 1,
-            rule_desc:"",
+            rule_desc: "",
         },
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据
@@ -157,8 +157,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         },
         formSource: <any>null, // 表单的原始数据
     };
-
-
 
     /**活动 数据 */
     activeModelData = {
@@ -335,7 +333,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.sendNotification(HttpType.admin_plat_activity_index, objectRemoveNull(this.listQuery));
     }
     chickDailyRatio(): boolean {
-        if (this.dialogData.form.settlement_type == 4 || this.dialogData.form.settlement_type == "4") {
+        if (this.dialogData.form.award_type == 16 || this.dialogData.form.award_type == "16") {
             let sumNub = 0;
             for (let index = 0; index < this.dialogData.form.daily_ratio.length; index++) {
                 sumNub += this.dialogData.form.daily_ratio[index];
@@ -399,7 +397,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 end_time,
                 model_open_mode,
                 award_type,
-                daily_ratio :JSON.stringify(daily_ratio),
+                daily_ratio: JSON.stringify(daily_ratio),
                 model_id,
                 rules: JSON.stringify(rules),
                 bonus_multiple,
@@ -448,7 +446,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_activity_store, objectRemoveNull(formCopy));
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**关闭该活动 */
@@ -475,7 +473,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 };
                 this.facade.sendNotification(HttpType.admin_plat_activity_update, copyForm);
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**更新活动*/
