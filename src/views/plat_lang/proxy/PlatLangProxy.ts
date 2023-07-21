@@ -54,6 +54,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             vi_VN: { name: "", options: {} },
             zh_CN: { name: "", options: {} },
             zh_TW: { name: "", options: {} },
+            ms_MS: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -96,6 +97,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             de_DE: "",
             fr_FR: "",
             tr_TR: "",
+            ms_MS: "",
             config: <any>{
                 ar_AR: [],
                 en_EN: [],
@@ -111,6 +113,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
                 de_DE: [],
                 fr_FR: [],
                 tr_TR: [],
+                ms_MS: [],
             },
         },
         formSource: null, // 表单的原始数据
@@ -201,6 +204,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             de_DE: "",
             fr_FR: "",
             tr_TR: "",
+            ms_MS: "",
             config: <any>{
                 ar_AR: [],
                 en_EN: [],
@@ -216,6 +220,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
                 de_DE: [],
                 fr_FR: [],
                 tr_TR: [],
+                ms_MS: [],
             },
         });
     }

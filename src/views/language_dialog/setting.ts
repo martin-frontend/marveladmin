@@ -11,6 +11,7 @@ import cmd_admin_system_lang_translate from "@/views/language_dialog/command/cmd
 import cmd_admin_plat_lang_import from "@/views/language_dialog/command/cmd_admin_plat_lang_import";
 import cmd_admin_system_lang_store from "@/views/language_dialog/command/cmd_admin_system_lang_store";
 import cmd_admin_system_lang_check from "@/views/language_dialog/command/cmd_admin_system_lang_check";
+import cmd_admin_system_lang_translate_skip_reserved_words from "@/views/language_dialog/command/cmd_admin_system_lang_translate_skip_reserved_words";
 /**协议*/
 export var HttpType = {
     admin_plat_lang_table_columns: "admin/plat_lang/table_columns ",
@@ -23,6 +24,7 @@ export var HttpType = {
     admin_system_lang_store: "admin/system_lang/store",
     admin_system_lang_update: "admin/system_lang/update/{id}",
     admin_system_lang_check: "admin/system_lang/show_key",
+    admin_system_lang_translate_skip_reserved_words: "admin/system_lang/translate_skip_reserved_words",
 };
 /**事件*/
 export var EventType = {
@@ -36,6 +38,7 @@ export var EventType = {
     admin_system_lang_store: "admin_system_lang_store",
     admin_system_lang_update: "admin_system_lang_update",
     admin_system_lang_check: "admin_system_lang_check",
+    admin_system_lang_translate_skip_reserved_words: "admin_system_lang_translate_skip_reserved_words",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -49,3 +52,4 @@ facade.registerCommand(HttpType.admin_plat_lang_import, cmd_admin_plat_lang_impo
 facade.registerCommand(HttpType.admin_system_lang_store, cmd_admin_system_lang_store);
 facade.registerCommand(HttpType.admin_system_lang_check, cmd_admin_system_lang_check);
 facade.registerCommand(HttpType.admin_system_lang_update, cmd_admin_plat_lang_update);
+facade.registerCommand(HttpType.admin_system_lang_translate_skip_reserved_words, cmd_admin_system_lang_translate_skip_reserved_words);

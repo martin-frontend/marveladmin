@@ -17,6 +17,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     private sentence = "";
     //管理类型，options: {1: '前端WEB皮肤1语言', 2: '后端管理语言', 3: '服务器数据语言', 4: '厂商游戏', 5: '平台公告', 6: '常见问题', 7: '平台邮件', 8: '平台活动'}
     private type = "";
+    private isReservedWords = false;
 
     /**进入页面时调用 */
     enter() {
@@ -61,7 +62,8 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             hi_IN: { name: "", options: {} },
             de_DE: { name: "", options: {} },
             fr_FR: { name: "", options: {} },
-            tr_TR: { name: 'Türk dili', options: {} },
+            tr_TR: { name: "Türk dili", options: {} },
+            ms_MS: { name: "", options: {} }
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -127,6 +129,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             de_DE: "",
             fr_FR: "",
             tr_TR: "",
+            ms_MS: "",
             config: <any>{
                 ar_AR: [],
                 en_EN: [],
@@ -142,13 +145,14 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
                 de_DE: [],
                 fr_FR: [],
                 tr_TR: [],
+                ms_MS: [],
             },
         },
         formSource: null, // 表单的原始数据
     };
 
     /**显示弹窗 */
-    showDialog(data?: any) {
+    showDialog(data?: any, isReservedWords: any = false) {
         //清除数据
         this.resetDialogForm();
         this.dialogData.formSource = null;
@@ -157,6 +161,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
         this.type = data.type;
         this.dialogData.form.plat_id = data.plat_id != undefined ? data.plat_id : 0;
         this.dialogData.bShow = true;
+        this.isReservedWords = isReservedWords;
         this.enter();
     }
     /**隐藏弹窗 */
@@ -186,6 +191,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             de_DE: "",
             fr_FR: "",
             tr_TR: "",
+            ms_MS: "",
             config: {
                 ar_AR: [],
                 en_EN: [],
@@ -201,6 +207,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
                 de_DE: [],
                 fr_FR: [],
                 tr_TR: [],
+                ms_MS: [],
             },
         });
         this.dialogData.status = DialogStatus.create;
@@ -245,7 +252,11 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
      * source	string	源语言: en_EN   sentence	string	要翻译的语句
      */
     translate(data: any): void {
-        this.sendNotification(HttpType.admin_system_lang_translate, data);
+        if (this.isReservedWords) {
+            this.sendNotification(HttpType.admin_system_lang_translate_skip_reserved_words, data);
+        } else {
+            this.sendNotification(HttpType.admin_system_lang_translate, data);
+        }
     }
 
     /**获取全部翻译返回更新表单 */
