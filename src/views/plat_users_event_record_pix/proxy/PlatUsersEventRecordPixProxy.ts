@@ -256,6 +256,16 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
 
     /**查询 */
     onQuery() {
+        if (
+            !this.listQuery["event_time-{>=}"] ||
+            !this.listQuery["event_time-{>=}"].trim() ||
+            !this.listQuery["event_time-{<=}"] ||
+            !this.listQuery["event_time-{<=}"].trim()
+        ) {
+            const msg = LangUtil("必须选择时间段！");
+            MessageBox.alert(msg, LangUtil("时间未选择"), { confirmButtonText: <string>LangUtil("关闭") });
+            return;
+        }
         const listQuery = JSON.parse(JSON.stringify(this.listQuery));
         listQuery["event_time-{>=}"] = this.convertTime_to_Beijing(listQuery["event_time-{>=}"]);
         listQuery["event_time-{<=}"] = this.convertTime_to_Beijing(listQuery["event_time-{<=}"]);
