@@ -145,7 +145,6 @@ export default class PlatAgentManageBindProxy extends AbstractProxy implements I
         username: "",
         settlement_date_start: "",
         settlement_date_end: "",
-        coin_name_unique: "",
         bind_depth: "",
         remark: "",
         user_remark: "",
@@ -213,9 +212,6 @@ export default class PlatAgentManageBindProxy extends AbstractProxy implements I
                 channel_id_keys.forEach((key: any) => {
                     this.tableData.columns.channel_id_options[key] = key;
                 });
-                this.tableData.columns.coin_name_unique_option = this.tableData.columns.coin_name_unique.options[
-                    this.listQuery.plat_id
-                ];
             }
             this.onQuery();
         }
@@ -251,7 +247,6 @@ export default class PlatAgentManageBindProxy extends AbstractProxy implements I
             username: "",
             settlement_date_start: "",
             settlement_date_end: "",
-            coin_name_unique: "",
             bind_depth: "",
             remark: "",
             user_remark: "",
@@ -383,14 +378,6 @@ export default class PlatAgentManageBindProxy extends AbstractProxy implements I
         });
         // @ts-ignore
         newData.forEach(element => {
-            if (element.group_all_bet_count && element.group_all_bet_count.length != 0) {
-                element.group_all_bet_count = jsonStringify(element.group_all_bet_count);
-            } else {
-                element.group_all_bet_count = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
             if (element.group_all_bet && element.group_all_bet.length != 0) {
                 element.group_all_bet = jsonStringify(element.group_all_bet);
             } else {
@@ -403,14 +390,6 @@ export default class PlatAgentManageBindProxy extends AbstractProxy implements I
                 element.group_all_win_gold = jsonStringify(element.group_all_win_gold);
             } else {
                 element.group_all_win_gold = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.group_all_valid_bet && element.group_all_valid_bet.length != 0) {
-                element.group_all_valid_bet = jsonStringify(element.group_all_valid_bet);
-            } else {
-                element.group_all_valid_bet = "-";
             }
         });
         // @ts-ignore
@@ -438,15 +417,6 @@ export default class PlatAgentManageBindProxy extends AbstractProxy implements I
                 element.directly_exchange = "-";
             }
         });
-        // 直属投注笔数
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.directly_bet_count && element.directly_bet_count.length != 0) {
-                element.directly_bet_count = jsonStringify(element.directly_bet_count);
-            } else {
-                element.directly_bet_count = "-";
-            }
-        });
         // 直属投注额
         // @ts-ignore
         newData.forEach(element => {
@@ -462,14 +432,6 @@ export default class PlatAgentManageBindProxy extends AbstractProxy implements I
                 element.directly_win_gold = jsonStringify(element.directly_win_gold);
             } else {
                 element.directly_win_gold = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.directly_valid_bet && element.directly_valid_bet.length != 0) {
-                element.directly_valid_bet = jsonStringify(element.directly_valid_bet);
-            } else {
-                element.directly_valid_bet = "-";
             }
         });
         // @ts-ignore

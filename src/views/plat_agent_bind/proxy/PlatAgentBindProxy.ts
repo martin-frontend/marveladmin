@@ -30,38 +30,38 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
     /**表格相关数据 */
     tableData = {
         columns: <any>{
-            agent_user_id: { name: "代理ID", options: {} },
-            binded_at: { name: "绑定时间", options: {} },
-            bonus_ratio: { name: "分红统计比例" },
-            channel_id: <any>{ name: "所属渠道", options: {} },
-            commission_awaiting_num: { name: "当前可领取佣金", options: {} },
-            commission_received_num: { name: "已领取佣金总额", options: {} },
-            directly_users: { name: "直属代理人数", options: {} },
-            total_group_all_users: { name: "团队人数", options: {} },
-            invite_user_id: { name: "绑定上级ID", options: {} },
-            nick_name: { name: "用户昵称", options: {} },
-            parent_nick_name: { name: "绑定上级昵称", options: {} },
+            user_id: { name: "用户ID", options: [] },
             plat_id: { name: "所属平台", options: {} },
-            promotion_floor: { name: "保底设定", options: {} },
-            user_id: { name: "用户ID", options: {} },
-            vendor_type_0: { name: "所有-每万返佣保底", options: {} },
-            vendor_type_2: { name: "棋牌-每万返佣保底", options: {} },
-            vendor_type_4: { name: "彩票-每万返佣保底", options: {} },
-            vendor_type_8: { name: "捕鱼-每万返佣保底", options: {} },
-            vendor_type_16: { name: "电子-每万返佣保底", options: {} },
-            vendor_type_32: { name: "真人-每万返佣保底", options: {} },
-            vendor_type_64: { name: "体育-每万返佣保底", options: {} },
-            vendor_type_128: { name: "电竞-每万返佣保底", options: {} },
-            agent_bonus: { name: "" },
-            version: { name: "推广配置版本", options: {} },
-            is_agent_bonus: { name: "", options: {} },
-            agent_bonus_rate: { name: "", options: {} },
-            channel_id_option: {},
-            username: { name: "", options: {} },
-            bind_depth: { name: "代理级别", options: {} },
+            invite_user_id: { name: "绑定上级ID", options: [] },
+            directly_users: { name: "直属代理人数", options: [] },
+            group_users: { name: "团队人数", options: [] },
+            bind_depth: { name: "代理级别", options: [] },
+            commission_awaiting_num: { name: "当前可领取佣金", options: [] },
+            commission_received_num: { name: "已领取佣金总额", options: [] },
+            binded_at: { name: "绑定时间", options: [] },
+            is_agent_bonus: { name: "总代分红", options: {} },
+            agent_bonus_rate: { name: "分红比例", options: [] },
+            remark: { name: "代理备注", options: [] },
+            vendor_type_0: { name: "所有-每万返佣保底", options: [] },
+            vendor_type_2: { name: "棋牌-每万返佣保底", options: [] },
+            vendor_type_4: { name: "彩票-每万返佣保底", options: [] },
+            vendor_type_8: { name: "捕鱼-每万返佣保底", options: [] },
+            vendor_type_16: { name: "电子-每万返佣保底", options: [] },
+            vendor_type_32: { name: "真人-每万返佣保底", options: [] },
+            vendor_type_64: { name: "体育电竞-每万返佣保底", options: [] },
+            vendor_type_128: { name: "链游-每万返佣保底", options: [] },
+            version: { name: "推广配置版本", options: [] },
+            channel_id: { name: "所属渠道", options: {} },
+            nick_name: { name: "用户昵称", options: [] },
+            username: { name: "用户账号" },
+            parent_nick_name: { name: "绑定上级昵称", options: [] },
+            promotion_floor: { name: "保底设定", options: [] },
+            min_promotion_floor: { name: "最小保底" },
+            max_promotion_floor: { name: "最大保底" },
+            agent_bonus_status: { options: [] },
+            agent_user_id: { name: "代理ID" },
+            bonus_ratio: { name: "分红统计比例" },
             coin_name_unique: { name: "币种", options: {} },
-            remark: { name: "备注", options: {} },
-            user_remark: { name: "备注", options: {} },
             group_all_bet_count: { name: "团队投注笔数" },
             group_all_bet: { name: "团队投注金额" },
             group_all_valid_bet: { name: "团队有效投注金额" },
@@ -77,6 +77,8 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             directly_exchange: { name: "直属兑换" },
             directly_total_water: { name: "直属流水" },
             commission_total: { name: "累计佣金" },
+            user_remark: { name: "用户备注" },
+            agent_bonus: { name: "累计分红" },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -98,22 +100,17 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             "invite_user_id",
             "parent_nick_name",
             "bind_depth",
-            "total_group_all_users",
             "group_all_recharge",
             "group_all_exchange",
             "group_all_total_water",
-            "group_all_bet_count",
             "group_all_bet",
             "group_all_win_gold",
-            "group_all_valid_bet",
             "directly_users",
             "directly_total_water",
             "directly_recharge",
             "directly_exchange",
-            "directly_bet_count",
             "directly_bet",
             "directly_win_gold",
-            "directly_valid_bet",
             "commission_awaiting_num",
             "commission_received_num",
             "commission_total",
@@ -148,7 +145,6 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         username: "",
         settlement_date_start: "",
         settlement_date_end: "",
-        coin_name_unique: "",
         bind_depth: "",
         remark: "",
         user_remark: "",
@@ -398,9 +394,6 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 channel_id_keys.forEach((key: any) => {
                     this.tableData.columns.channel_id_options[key] = key;
                 });
-                this.tableData.columns.coin_name_unique_option = this.tableData.columns.coin_name_unique.options[
-                    this.listQuery.plat_id
-                ];
             }
             this.onQuery();
         }
@@ -445,7 +438,6 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             username: "",
             settlement_date_start: "",
             settlement_date_end: "",
-            coin_name_unique: "",
             bind_depth: "",
             remark: "",
             user_remark: "",
@@ -729,14 +721,6 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
         });
         // @ts-ignore
         newData.forEach(element => {
-            if (element.group_all_bet_count && element.group_all_bet_count.length != 0) {
-                element.group_all_bet_count = jsonStringify(element.group_all_bet_count);
-            } else {
-                element.group_all_bet_count = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
             if (element.group_all_bet && element.group_all_bet.length != 0) {
                 element.group_all_bet = jsonStringify(element.group_all_bet);
             } else {
@@ -749,14 +733,6 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 element.group_all_win_gold = jsonStringify(element.group_all_win_gold);
             } else {
                 element.group_all_win_gold = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.group_all_valid_bet && element.group_all_valid_bet.length != 0) {
-                element.group_all_valid_bet = jsonStringify(element.group_all_valid_bet);
-            } else {
-                element.group_all_valid_bet = "-";
             }
         });
         // @ts-ignore
@@ -784,15 +760,6 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 element.directly_exchange = "-";
             }
         });
-        // 直属投注笔数
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.directly_bet_count && element.directly_bet_count.length != 0) {
-                element.directly_bet_count = jsonStringify(element.directly_bet_count);
-            } else {
-                element.directly_bet_count = "-";
-            }
-        });
         // 直属投注额
         // @ts-ignore
         newData.forEach(element => {
@@ -808,14 +775,6 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
                 element.directly_win_gold = jsonStringify(element.directly_win_gold);
             } else {
                 element.directly_win_gold = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.directly_valid_bet && element.directly_valid_bet.length != 0) {
-                element.directly_valid_bet = jsonStringify(element.directly_valid_bet);
-            } else {
-                element.directly_valid_bet = "-";
             }
         });
         // @ts-ignore

@@ -74,7 +74,7 @@
                 align="center"
             ></el-table-column>
             <el-table-column
-                :label="LangUtil('团队人数')"
+                :label="tableColumns.group_users.name"
                 align="center"
                 prop="total_group_all_users"
                 width="110px"
@@ -85,22 +85,6 @@
                 prop="group_all_recharge"
                 width="110px"
             >
-                <template slot-scope="{ row }">
-                    <div v-if="row.group_all_recharge.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.group_all_recharge" :key="key">
-                            {{ key }} :
-                            <WinLossDisplay
-                                :isShowDollar="false"
-                                :amount="value"
-                                :isShowColor="false"
-                                :isShowPlus="false"
-                            ></WinLossDisplay>
-                        </p>
-                    </div>
-                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.group_all_exchange.name"
@@ -108,22 +92,6 @@
                 prop="group_all_exchange"
                 width="110px"
             >
-                <template slot-scope="{ row }">
-                    <div v-if="row.group_all_exchange.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.group_all_exchange" :key="key">
-                            {{ key }} :
-                            <WinLossDisplay
-                                :isShowDollar="false"
-                                :amount="value"
-                                :isShowColor="false"
-                                :isShowPlus="false"
-                            ></WinLossDisplay>
-                        </p>
-                    </div>
-                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.group_all_total_water.name"
@@ -131,49 +99,9 @@
                 prop="group_all_total_water"
                 width="110px"
             >
-                <template slot-scope="{ row }">
-                    <div v-if="row.group_all_total_water.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.group_all_total_water" :key="key">
-                            {{ key }} :
-                            <WinLossDisplay
-                                :amount="value"
-                                :isShowDollar="false"
-                                :isShowColor="false"
-                                :isShowPlus="false"
-                            ></WinLossDisplay>
-                        </p>
-                    </div>
-                </template>
-            </el-table-column>
-            <!-- 团队投注笔数 -->
-            <el-table-column
-                :label="tableColumns.group_all_bet_count.name"
-                align="center"
-                prop="group_all_bet_count"
-                width="150px"
-            >
-                <template slot-scope="{ row }">
-                    <div v-if="row.group_all_bet_count.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.group_all_bet_count" :key="key">{{ key }} : {{ value }}</p>
-                    </div>
-                </template>
             </el-table-column>
             <!-- 团队投注金额 -->
             <el-table-column :label="tableColumns.group_all_bet.name" align="center" prop="group_all_bet" width="150px">
-                <template slot-scope="{ row }">
-                    <div v-if="row.group_all_bet.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.group_all_bet" :key="key">{{ key }} : {{ value }}</p>
-                    </div>
-                </template>
             </el-table-column>
             <!-- 团队游戏输赢金额 -->
             <el-table-column
@@ -183,30 +111,7 @@
                 width="150px"
             >
                 <template slot-scope="{ row }">
-                    <div v-if="row.group_all_win_gold.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.group_all_win_gold" :key="key">
-                            {{ key }} : <WinLossDisplay :amount="value" :isShowDollar="false" />
-                        </p>
-                    </div>
-                </template>
-            </el-table-column>
-            <!-- 团队有效投注金额 -->
-            <el-table-column
-                :label="tableColumns.group_all_valid_bet.name"
-                align="center"
-                prop="group_all_valid_bet"
-                width="150px"
-            >
-                <template slot-scope="{ row }">
-                    <div v-if="row.group_all_valid_bet.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.group_all_valid_bet" :key="key">{{ key }} : {{ value }}</p>
-                    </div>
+                    <WinLossDisplay :amount="row.group_all_win_gold" :isShowDollar="false" />
                 </template>
             </el-table-column>
             <el-table-column
@@ -228,14 +133,6 @@
                 prop="directly_recharge"
                 width="150px"
             >
-                <template slot-scope="{ row }">
-                    <div v-if="row.directly_recharge.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.directly_recharge" :key="key">{{ key }} : {{ value }}</p>
-                    </div>
-                </template>
             </el-table-column>
             <!-- 直属兑换 -->
             <el-table-column
@@ -244,14 +141,6 @@
                 prop="directly_exchange"
                 width="150px"
             >
-                <template slot-scope="{ row }">
-                    <div v-if="row.directly_exchange.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.directly_exchange" :key="key">{{ key }} : {{ value }}</p>
-                    </div>
-                </template>
             </el-table-column>
             <!-- 直属流水 -->
             <el-table-column
@@ -260,44 +149,9 @@
                 prop="directly_total_water"
                 width="150px"
             >
-                <template slot-scope="{ row }">
-                    <div v-if="row.directly_total_water.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.directly_total_water" :key="key">
-                            {{ key }} :
-                            <WinLossDisplay :amount="value" :isShowColor="false" :isShowPlus="false"></WinLossDisplay>
-                        </p>
-                    </div>
-                </template>
-            </el-table-column>
-            <!-- 直属投注笔数 -->
-            <el-table-column
-                :label="tableColumns.directly_bet_count.name"
-                align="center"
-                prop="directly_bet_count"
-                width="150px"
-            >
-                <template slot-scope="{ row }">
-                    <div v-if="row.directly_bet_count.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.directly_bet_count" :key="key">{{ key }} : {{ value }}</p>
-                    </div>
-                </template>
             </el-table-column>
             <!-- 直属投注额 -->
             <el-table-column :label="tableColumns.directly_bet.name" align="center" prop="directly_bet" width="150px">
-                <template slot-scope="{ row }">
-                    <div v-if="row.directly_bet.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.directly_bet" :key="key">{{ key }} : {{ value }}</p>
-                    </div>
-                </template>
             </el-table-column>
             <!-- 直属游戏输赢 -->
             <el-table-column
@@ -307,30 +161,7 @@
                 width="150px"
             >
                 <template slot-scope="{ row }">
-                    <div v-if="row.directly_win_gold.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.directly_win_gold" :key="key">
-                            {{ key }} : <WinLossDisplay :amount="value" :isShowDollar="false" />
-                        </p>
-                    </div>
-                </template>
-            </el-table-column>
-            <!-- 直属有效投注 -->
-            <el-table-column
-                :label="tableColumns.directly_valid_bet.name"
-                align="center"
-                prop="directly_valid_bet"
-                width="150px"
-            >
-                <template slot-scope="{ row }">
-                    <div v-if="row.directly_valid_bet.length == 0">
-                        -
-                    </div>
-                    <div v-else>
-                        <p v-for="(value, key) of row.directly_valid_bet" :key="key">{{ key }} : {{ value }}</p>
-                    </div>
+                    <WinLossDisplay :amount="row.directly_win_gold" :isShowDollar="false"  />
                 </template>
             </el-table-column>
             <!-- 当前可领取佣金 -->
@@ -368,7 +199,7 @@
             <el-table-column align="center" width="120px" :label="tableColumns.bonus_ratio.name" prop="bonus_ratio">
             </el-table-column>
             <el-table-column
-                align="left"
+                align="center"
                 :label="tableColumns.promotion_floor.name"
                 prop="promotion_floor"
                 width="200px"

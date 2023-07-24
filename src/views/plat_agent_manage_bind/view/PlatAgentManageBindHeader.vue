@@ -18,11 +18,6 @@
                 :tip="LangUtil('（北京时间）')"
                 :pickerOptions="myProxy.pickerOptions"
             />
-            <SearchSelect
-                :title="tableColumns.coin_name_unique.name"
-                :options="tableColumns.coin_name_unique_option"
-                v-model="listQuery.coin_name_unique"
-            />
             <SearchInput :title="tableColumns.bind_depth.name" v-model="listQuery.bind_depth" />
         </div>
         <div class="group">
