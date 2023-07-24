@@ -112,7 +112,7 @@
                 width="150px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.group_all_win_gold" :isShowDollar="false" />
+                    <WinLossDisplay :amount="row.group_all_win_gold" :isShowDollar="true" />
                 </template>
             </el-table-column>
             <el-table-column
