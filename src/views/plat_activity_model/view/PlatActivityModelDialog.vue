@@ -16,6 +16,9 @@
                     <el-form-item size="mini" :label="tableColumns['icon'].name" prop="icon">
                         <el-input v-model="form.icon" :placeholder="LangUtil('请输入')"></el-input>
                     </el-form-item>
+                    <el-form-item size="mini" :label="tableColumns['active_model_tag'].name" prop="active_model_tag">
+                        <el-input v-model="form.active_model_tag" :placeholder="LangUtil('请输入')"></el-input>
+                    </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['type'].name" prop="type">
                         <el-select
                             v-model="form.type"
@@ -102,7 +105,7 @@
                         <el-input v-model="form.award_tpl" :placeholder="LangUtil('请输入')"></el-input>
                     </el-form-item>
                     <el-form-item
-                        v-if="form.award_types.includes(16)"
+                        v-if="form.active_model_tag == '16'"
                         size="mini"
                         :label="LangUtil('派奖方式')"
                     >

@@ -30,6 +30,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     /**表格相关数据 */
     tableData = <any>{
         columns: {
+            active_model_tag: { name: "", options: {} },
             activity_category: { name: "活动分类", options: {} },
             activity_desc: { name: "活动描述", options: {} },
             activity_name: { name: "活动名称", options: {} },
@@ -139,6 +140,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             icon_url: "",
             process_control: 1,
             rule_desc: "",
+            active_model_tag:"",
         },
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据
@@ -308,6 +310,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             award_type_map: "",
             icon: "",
             process_control: 1,
+            rule_desc:"",
+            active_model_tag:"",
         });
 
         this.activeModelData.options.length = 0;
@@ -333,7 +337,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.sendNotification(HttpType.admin_plat_activity_index, objectRemoveNull(this.listQuery));
     }
     chickDailyRatio(): boolean {
-        if (this.dialogData.form.award_type == 16 || this.dialogData.form.award_type == "16") {
+        if (this.dialogData.form.active_model_tag == "16") {
             let sumNub = 0;
             for (let index = 0; index < this.dialogData.form.daily_ratio.length; index++) {
                 sumNub += this.dialogData.form.daily_ratio[index];
@@ -376,7 +380,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_type,
             is_once,
             icon,
+            rule_desc,
             process_control,
+            active_model_tag
         } = this.dialogData.form;
         for (const item of rules) {
             for (const child of item.list) {
@@ -407,6 +413,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 award_tpl,
                 show_type,
                 icon,
+                rule_desc,
+                active_model_tag,
                 process_control,
             };
         } else {
@@ -424,6 +432,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 show_type,
                 icon,
                 process_control,
+                rule_desc,
+                active_model_tag,
             };
         }
         /**
@@ -549,6 +559,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 daily_ratio,
                 link_url,
                 is_once,
+                rule_desc,
+                active_model_tag,
             } = body;
 
             this.dialogData.form.model_open_mode = open_mode;
