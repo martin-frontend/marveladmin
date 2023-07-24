@@ -309,7 +309,7 @@
                 </el-form-item>
 
                 <el-form-item
-                v-if="form.active_model_tag == '16'"
+                v-if="form.award_type == 16 || form.award_type == '16'"
                 size="mini"
                 :label="LangUtil('派奖方式')"
             >

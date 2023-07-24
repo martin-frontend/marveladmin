@@ -172,8 +172,8 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         this.sendNotification(HttpType.admin_plat_activity_model_index, objectRemoveNull(this.listQuery));
     }
     chickDailyRatio(): boolean {
-        // if (this.dialogData.form.award_types.includes(16))
-        if (this.dialogData.form.active_model_tag == "16") {
+        if (this.dialogData.form.award_types.includes(16)){
+        // if (this.dialogData.form.active_model_tag == "16") {
             let sumNub = 0;
             for (let index = 0; index < this.dialogData.form.daily_ratio.length; index++) {
                 sumNub += this.dialogData.form.daily_ratio[index];

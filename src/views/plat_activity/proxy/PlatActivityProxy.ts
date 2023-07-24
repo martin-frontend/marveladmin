@@ -337,7 +337,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.sendNotification(HttpType.admin_plat_activity_index, objectRemoveNull(this.listQuery));
     }
     chickDailyRatio(): boolean {
-        if (this.dialogData.form.active_model_tag == "16") {
+        if (this.dialogData.form.award_type == 16 || this.dialogData.form.award_type == "16") {
+        // if (this.dialogData.form.active_model_tag == "16") {
             let sumNub = 0;
             for (let index = 0; index < this.dialogData.form.daily_ratio.length; index++) {
                 sumNub += this.dialogData.form.daily_ratio[index];
