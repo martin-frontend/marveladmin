@@ -76,6 +76,7 @@ export default class PlatAgentManageBindProxy extends AbstractProxy implements I
             coin_name_unique: { name: "币种", options: {} },
             remark: { name: "备注", options: {} },
             user_remark: { name: "备注", options: {} },
+            group_users: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
