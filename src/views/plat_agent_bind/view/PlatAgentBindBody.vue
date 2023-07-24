@@ -156,7 +156,7 @@
                 width="150px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.directly_win_gold" :isShowDollar="false" />
+                    <WinLossDisplay :amount="row.directly_win_gold" :isShowDollar="true" />
                 </template>
             </el-table-column>
             <!-- 当前可领取佣金 -->

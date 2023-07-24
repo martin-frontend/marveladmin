@@ -174,8 +174,8 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
         page_count: 1,
         page_size: 20,
         plat_id: "",
-        "created_date-{>=}": dateFormat(getTodayOffset(-29), 'yyyy-MM-dd'),
-        "created_date-{<=}": dateFormat(getTodayOffset(), 'yyyy-MM-dd'),
+        "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd"),
+        "created_date-{<=}": dateFormat(getTodayOffset(), "yyyy-MM-dd"),
         username: "",
         user_id: "",
     };
@@ -219,8 +219,8 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
             // TODO
             page_count: 1,
             page_size: 20,
-            "created_date-{>=}": dateFormat(getTodayOffset(-29), 'yyyy-MM-dd hh:mm:ss'),
-            "created_date-{<=}": dateFormat(getTodayOffset(), 'yyyy-MM-dd hh:mm:ss'),
+            "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd hh:mm:ss"),
+            "created_date-{<=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
             username: "",
             user_id: "",
         });
@@ -228,6 +228,16 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
 
     /**查询 */
     onQuery() {
+        if (
+            !this.listQuery["created_date-{<=}"] ||
+            !this.listQuery["created_date-{<=}"].trim() ||
+            !this.listQuery["created_date-{>=}"] ||
+            !this.listQuery["created_date-{>=}"].trim()
+        ) {
+            MessageBox.alert(<any>LangUtil("时间必须选择"));
+
+            return;
+        }
         this.sendNotification(HttpType.admin_statistic_user_promotion_days_index, objectRemoveNull(this.listQuery));
     }
 }
