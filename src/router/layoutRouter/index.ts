@@ -274,6 +274,10 @@ const layoutRouter = {
             name: "渠道管理",
             component: () => import(/* webpackChunkName: "plat_channel" */"@/views/plat_channel/view/PlatChannel.vue")
         },        {
+            path: "plat_coin_tasks",
+            name: "奖励活动任务",
+            component: () => import(/* webpackChunkName: "plat_coin_tasks" */"@/views/plat_coin_tasks/view/PlatCoinTasks.vue")
+        },        {
             path: "plat_email",
             name: "平台邮件",
             component: () => import(/* webpackChunkName: "plat_email" */"@/views/plat_email/view/PlatEmail.vue")

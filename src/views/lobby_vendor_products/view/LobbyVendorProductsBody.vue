@@ -40,6 +40,23 @@
                 prop="ori_product_id"
                 min-width="100px"
             ></el-table-column>
+
+            <el-table-column
+                align="center"
+                :label="tableColumns['is_activity_task_water'].name"
+                prop="is_activity_task_water"
+                min-width="120px"
+            >
+                <template slot-scope="{ row }">
+                    <el-switch
+                        v-model="row.is_activity_task_water"
+                        :active-value="1"
+                        :inactive-value="98"
+                        @change="onSwitchTaskWater(row)"
+                    ></el-switch>
+                </template>
+            </el-table-column>
+
             <el-table-column
                 align="center"
                 prop="water_rate"
@@ -164,22 +181,27 @@
             <el-table-column v-if="!isCantEditOrderno" :label="LangUtil('排序')" class-name="status-col" width="300px">
                 <template slot-scope="{ row }">
                     <div>
-                        <el-button size="mini" @click="handlerOpt(row, { opt: 1 })" :disabled="row.index_no == 1 || isCantEditOrderno"
+                        <el-button
+                            size="mini"
+                            @click="handlerOpt(row, { opt: 1 })"
+                            :disabled="row.index_no == 1 || isCantEditOrderno"
                             >{{ LangUtil("置顶") }}
                         </el-button>
                         <el-button
                             size="mini"
                             icon="el-icon-top"
-                            :disabled="(row.index_no == 1) || isCantEditOrderno"
+                            :disabled="row.index_no == 1 || isCantEditOrderno"
                             @click="onUpdate(row, 3)"
                         ></el-button>
-                        <el-button size="mini" icon="el-icon-bottom" @click="onUpdate(row, 4)" :disabled="isCantEditOrderno"></el-button>
                         <el-button
                             size="mini"
-                            @click="handlerOpt(row, { opt: 2 })"
+                            icon="el-icon-bottom"
+                            @click="onUpdate(row, 4)"
                             :disabled="isCantEditOrderno"
-                            >{{ LangUtil("置底") }}</el-button
-                        >
+                        ></el-button>
+                        <el-button size="mini" @click="handlerOpt(row, { opt: 2 })" :disabled="isCantEditOrderno">{{
+                            LangUtil("置底")
+                        }}</el-button>
                     </div>
 
                     <div style="margin-top: 10px;">
@@ -215,7 +237,6 @@
                                     isorderno = true;
                                     editOrdernoValue = row.index_no;
                                 "
-                                
                                 >{{ LangUtil("编辑") }}</el-button
                             >
                         </div>
@@ -277,8 +298,7 @@ export default class VendorProductBody extends AbstractView {
     editOrdernoValue = "";
 
     /** 不能编辑*/
-    get isCantEditOrderno()
-    {
+    get isCantEditOrderno() {
         return !this.myProxy.lastTimeListQuery || !this.myProxy.lastTimeListQuery.vendor_id;
         //return (!this.myProxy.listQuery.vendor_id || !this.myProxy.listQuery.vendor_id.trim());
     }
@@ -333,6 +353,12 @@ export default class VendorProductBody extends AbstractView {
 
     onUpdateLanguages(row: any) {
         this.myProxy.showDialog(DialogStatus.update, row);
+    }
+
+    onSwitchTaskWater(row: any) {
+        this.myProxy.rowActivityTaskWaterData.lobby_vendor_product_id = row.lobby_vendor_product_id;
+        this.myProxy.rowActivityTaskWaterData.is_activity_task_water = row.is_activity_task_water;
+        this.myProxy.onUpdateActivithTaskWaterData();
     }
 }
 </script>

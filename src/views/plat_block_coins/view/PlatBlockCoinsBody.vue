@@ -7,15 +7,16 @@
             highlight-current-row
             style="width: 100%"
             size="mini"
+            :header-cell-style="{'text-align': 'center'}"
             v-loading="net_status.loading"
         >
-            <el-table-column prop="id" :label="`${tableColumns.id.name}`" class-name="status-col" min-width="30px">
+            <el-table-column prop="id" :label="`${tableColumns.id.name}`" class-name="status-col" min-width="100px">
             </el-table-column>
             <el-table-column
                 prop="plat_id"
                 :label="`${tableColumns.plat_id.name}`"
                 class-name="status-col"
-                min-width="30px"
+                min-width="150px"
             >
                 <template slot-scope="{ row }">
                     {{ tableColumns.plat_id.options[row.plat_id] }}
@@ -25,7 +26,7 @@
                 prop="coin_name_unique"
                 :label="`${tableColumns.coin_name_unique.name}`"
                 class-name="status-col"
-                min-width="30px"
+                min-width="100px"
             >
                 <template slot-scope="{ row }">
                     {{ tableColumns.coin_name_unique.options[row.coin_name_unique] }}
@@ -39,37 +40,42 @@
                     <div>{{ tableColumns.is_digital_currency.options[row.is_digital_currency] }}</div>
                 </template>
             </el-table-column>
-            <el-table-column prop="type" :label="`${tableColumns.type.name}`" class-name="status-col" min-width="30px">
+            <el-table-column prop="type" :label="`${tableColumns.type.name}`" class-name="status-col" min-width="100px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.type.options[row.type] }}
+                </template>
+            </el-table-column>
+            <el-table-column prop="priority" :label="`${tableColumns.priority.name}`" class-name="status-col" min-width="100px">
+                <template slot-scope="{ row }">
+                    {{ row.priority }}
                 </template>
             </el-table-column>
             <el-table-column
                 prop="scale"
                 :label="`${tableColumns.scale.name}`"
                 class-name="status-col"
-                min-width="30px"
+                min-width="150px"
             >
             </el-table-column>
             <el-table-column
                 prop="remark"
                 :label="`${tableColumns.remark.name}`"
                 class-name="status-col"
-                min-width="30px"
+                min-width="100px"
             >
             </el-table-column>
             <el-table-column
                 prop="bonus_multiple"
                 :label="`${tableColumns.bonus_multiple.name}`"
                 class-name="status-col"
-                min-width="30px"
+                min-width="100px"
             >
             </el-table-column>
             <el-table-column
                 prop="can_play_game"
                 :label="`${tableColumns.can_play_game.name}`"
                 class-name="status-col"
-                min-width="35px"
+                min-width="100px"
             >
                 <template slot-scope="{ row }">
                     {{ tableColumns.can_play_game.options[row.can_play_game] }}
@@ -79,7 +85,7 @@
                 prop="is_display"
                 :label="`${tableColumns.is_display.name}`"
                 class-name="status-col"
-                min-width="30px"
+                min-width="100px"
             >
                 <template slot-scope="{ row }">
                     {{ tableColumns.is_display.options[row.is_display] }}
@@ -89,10 +95,10 @@
                 prop="show_scale"
                 :label="`${tableColumns.show_scale.name}`"
                 class-name="status-col"
-                min-width="30px"
+                min-width="100px"
             >
             </el-table-column>
-            <el-table-column aling="left" :label="tableColumns['languages'].name" prop="languages" min-width="180px">
+            <el-table-column :label="tableColumns['languages'].name" prop="languages" min-width="250px">
                 <template slot-scope="{ row }">
                     <el-tag class="mr-1" v-for="item of row.languages" :key="item">{{
                         tableColumns["languages"].options[item]

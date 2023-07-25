@@ -526,6 +526,63 @@
                         </div>
                     </div>
                 </el-form-item>
+                <el-form-item size="mini" :label="LangUtil('活动币相关设置')" prop="">
+                    <div class="el_select_group">
+                        <div>
+                            <span class="title_switch">{{ tableColumns["is_activity_task"].name }}</span>
+                            <el-select class="select" v-model="form.is_activity_task">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_activity_task.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
+                        <div>
+                            <span class="title_switch">{{ tableColumns["activity_task_least_amount"].name }}</span>
+                            <!-- <el-input
+                            style="width: 150px"
+                            type="number"
+                            min="0"
+                            v-model="form.activity_task_least_amount"
+                            @keydown.native="inputLimit"
+                            controls-position="right"
+                        ></el-input> -->
+
+                            <el-input-number
+                                size="mini"
+                                :min="0"
+                                :step="1"
+                                controls-position="right"
+                                v-model="form.activity_task_least_amount"
+                            >
+                            </el-input-number>
+                        </div>
+                        <div>
+                            <span class="title_switch">{{ tableColumns["is_activity_back_water"].name }}</span>
+                            <el-select class="select" v-model="form.is_activity_back_water">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_activity_back_water.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
+                        <div>
+                            <span class="title_switch">{{ tableColumns["activity_task_pattern"].name }}</span>
+                            <el-select class="select" v-model="form.activity_task_pattern">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.activity_task_pattern.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
+                    </div>
+                </el-form-item>
                 <el-form-item size="mini" :label="LangUtil('金币划转')" prop="">
                     <div class="item-content">
                         <span>{{ tableColumns["is_gold_transfer"].name }}：</span>

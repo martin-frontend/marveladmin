@@ -100,6 +100,14 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             exchange_count: { name: "玩家兑换笔数", options: {} },
             is_user_verification: { name: "", options: {} },
             register_same_ip_limit: { name: "", options: {} },
+            max_exchange_gold: {name: '最大兑换金额', options: {} },
+            forbidden_country: {name: '', options: {} },
+            is_active_digital_currency: {name: '数字货币是否参数活动', options: {} },
+
+            is_activity_task: {name: '活动币任务是否启用', options: {} },
+            activity_task_least_amount: {name: '活动币任务最少真实金额', options: {} },
+            is_activity_back_water: {name: '活动币任务是否返水', options: {} },
+            activity_task_pattern: {name: '活动币任务激活模式', options: {} },
             max_exchange_gold: { name: "最大兑换金额", options: {} },
             forbidden_country: { name: "", options: {} },
             is_active_digital_currency: { name: "数字货币是否参数活动", options: {} },
@@ -175,6 +183,10 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         max_exchange_gold: -1,
         forbidden_country: "",
         is_active_digital_currency: 1,
+        is_activity_task:"",
+        activity_task_least_amount:"",
+        is_activity_back_water:"",
+        activity_task_pattern:"",
         auth_types: 1,
     };
     /**弹窗相关数据 */
@@ -354,111 +366,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     }
     /**添加数据 */
     onAdd() {
-        const {
-            plat_id,
-            plat_name,
-            app_types,
-            api_type,
-            region,
-            currency_type,
-            language,
-            status,
-            water_config,
-            //代理保底
-            promotion_floor,
-            promotion_floor_unit, //保底设定最小单位
-            is_promotion_same, //保底是否平级
-            is_promotion_solid, //保底级差是否固定
-            //总代分红
-            is_agent_bonus,
-            recharge_cost_rate,
-            game_cost_rate,
-            agent_bonus_rate_limit,
-            //开关设定
-            is_bind_phone_award, //绑定手机领取奖励
-            is_bind_phone_exchange, //绑定手机-收款
-            is_bet_water_display, //投注流水展示
-            is_promotion_statistics_display, //推广统计展示
-            is_bind_phone_transfer, //绑定手机-金币划转
-            is_bind_real_name, //兑换绑定真名
-            is_password_gold_transfer, //现金密码-金必划转
-            is_show_message_win, //显示中讲信息
-            is_bet_gold_display, // 输赢投注显示
-            is_open_registration, // 注册开关
-            is_win_leaderboard_display,
-            is_water_leaderboard_display,
-            is_recharge_leaderboard_display,
-            is_first_login_send_sms, //首次登入发送短信
-            is_user_manual_refund, //用户手动退款
-            is_bind_phone_recharge, //绑定手机充值
-            is_user_verification, //用户认证
-            validate_type,
-            register_types, //注册方式
-            vendor_wallet_types, //钱包类型
-            is_show_commission,
-            bet_log_keep_days,
-            bet_log_search_days,
-            main_language,
-            client_config,
-            other_config,
-            max_exchange_gold,
-            forbidden_country,
-            is_active_digital_currency,
-            auth_types,
-        } = this.dialogData.form;
-        const formCopy: any = {
-            plat_id,
-            plat_name,
-            app_types,
-            api_type,
-            region,
-            currency_type,
-            language,
-            status,
-            water_config,
-            //代理保底
-            promotion_floor,
-            promotion_floor_unit, //保底设定最小单位
-            is_promotion_same, //保底是否平级
-            is_promotion_solid, //保底级差是否固定
-            //总代分红
-            is_agent_bonus,
-            recharge_cost_rate,
-            game_cost_rate,
-            agent_bonus_rate_limit,
-            //开关设定
-            is_bind_phone_award, //绑定手机领取奖励
-            is_bind_phone_exchange, //绑定手机-收款
-            is_bet_water_display, //投注流水展示
-            is_promotion_statistics_display, //推广统计展示
-            is_bind_phone_transfer, //绑定手机-金币划转
-            is_bind_real_name, //兑换绑定真名
-            is_password_gold_transfer, //现金密码-金必划转
-            is_show_message_win, //显示中讲信息
-            is_bet_gold_display, // 输赢投注显示
-            is_open_registration, // 注册开关
-            is_first_login_send_sms, //首次登入发送短信
-            is_user_manual_refund, //用户手动退款
-            is_user_verification, //用户认证
-            is_win_leaderboard_display,
-            is_water_leaderboard_display,
-            is_recharge_leaderboard_display,
-            is_bind_phone_recharge, //绑定手机充值
-            validate_type,
-            register_types,
-            vendor_wallet_types,
-            is_show_commission,
-            bet_log_keep_days,
-            bet_log_search_days,
-            main_language,
-            client_config,
-            other_config,
-            max_exchange_gold,
-            forbidden_country,
-            is_active_digital_currency,
-            auth_types,
-        };
-
+        const formCopy = JSON.parse(JSON.stringify(this.dialogData.form));
+        
         formCopy.app_types = JSON.stringify(formCopy.app_types);
         formCopy.water_config = JSON.stringify(formCopy.water_config);
         formCopy.promotion_floor = JSON.stringify(formCopy.promotion_floor);
@@ -488,7 +397,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
 
             const langKeys = Object.keys(this.tableData.columns.language.options);
             const arr = [];
-            for (const idx of language) {
+            for (const idx of this.dialogData.form.language) {
                 arr.push(langKeys[idx]);
             }
             formCopy.language = JSON.stringify(arr);

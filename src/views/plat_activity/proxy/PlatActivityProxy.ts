@@ -71,7 +71,12 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             updated_by: { name: "更新人", options: {} },
             reward_coin: { name: "", options: {} },
             languages: { name: "", options: {} },
+            activity_coin: { name: "活动币", options: {} },
+            activity_coin_task: { name: "活动币任务", options: {} },
+            extended_task_type: { name: "扩展任务类型", options: {} },
             process_control: { name: "流程控制", options: {} },
+            vendor_id: { name: "厂商ID", options: {} },
+            vendor_ids: { name: "", options: {} },
         },
         orderData: {
             id: "",
@@ -134,7 +139,19 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             award_timing_map: "",
             icon: "",
             icon_url: "",
+            extended_task_type: 0,
+            task_days: "",
+            task_water_rate_2: "",
+            task_water_rate_4: "",
+            task_water_rate_8: "",
+            task_water_rate_16: "",
+            task_water_rate_32: "",
+            task_water_rate_64: "",
+            task_water_rate_128: "",
+            activity_coin_task: <any>{},
             process_control: 1,
+            vendorArr: <any>[],
+            transfer_amount_rate_Arr: <any>[],
         },
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据
@@ -153,8 +170,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         },
         formSource: <any>null, // 表单的原始数据
     };
-
-
 
     /**活动 数据 */
     activeModelData = {
@@ -197,6 +212,22 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         if (data.model_id != 0) {
             this.getModelDetail(data.model_id);
         }
+
+        this.dialogData.form.transfer_amount_rate_Arr = [];
+        if (data.extended_task_type == 2) {
+            this.dialogData.form.task_days = data.extend.task_days;
+            this.dialogData.form.task_water_rate_2 = data.extend.task_water_rate_2;
+            this.dialogData.form.task_water_rate_4 = data.extend.task_water_rate_4;
+            this.dialogData.form.task_water_rate_8 = data.extend.task_water_rate_8;
+            this.dialogData.form.task_water_rate_16 = data.extend.task_water_rate_16;
+            this.dialogData.form.task_water_rate_32 = data.extend.task_water_rate_32;
+            this.dialogData.form.task_water_rate_64 = data.extend.task_water_rate_64;
+            this.dialogData.form.task_water_rate_128 = data.extend.task_water_rate_128;
+            const keys = Object.keys(data.extend.transfer_amount_rate_in_activity);
+            keys.forEach(key => {
+                this.dialogData.form.transfer_amount_rate_Arr.push(data.extend.transfer_amount_rate_in_activity[key]);
+            });
+        }
         this.dialogData.formSource["award_type_map"] = this.dialogData.form.award_type_map;
         this.dialogData.formSource["award_timing_map"] = this.dialogData.form.award_timing_map;
         this.dialogData.formSource["type"] = this.dialogData.form.type;
@@ -238,8 +269,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.dialogData.form.model_id = this.dialogData.form.model_id.toString();
 
             this.sendNotification(HttpType.admin_plat_activity_show, { id: data.id });
-            console.log(1, this.dialogData.form);
-
             this.getActivityModel({
                 page_count: 1,
                 page_size: 20000,
@@ -303,7 +332,19 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             award_tpl: "",
             award_type_map: "",
             icon: "",
+            extended_task_type: "",
+            task_days: "",
+            task_water_rate_2: "",
+            task_water_rate_4: "",
+            task_water_rate_8: "",
+            task_water_rate_16: "",
+            task_water_rate_32: "",
+            task_water_rate_64: "",
+            task_water_rate_128: "",
+            activity_coin_task: <any>{},
             process_control: 1,
+            vendorArr: <any>[],
+            transfer_amount_rate_Arr: <any>[],
         });
 
         this.activeModelData.options.length = 0;
@@ -353,7 +394,18 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_type,
             is_once,
             icon,
+            extended_task_type,
+            task_days,
+            task_water_rate_2,
+            task_water_rate_4,
+            task_water_rate_8,
+            task_water_rate_16,
+            task_water_rate_32,
+            task_water_rate_64,
+            task_water_rate_128,
             process_control,
+            vendorArr,
+            transfer_amount_rate_Arr,
         } = this.dialogData.form;
         for (const item of rules) {
             for (const child of item.list) {
@@ -383,6 +435,15 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 award_tpl,
                 show_type,
                 icon,
+                extended_task_type,
+                task_days,
+                task_water_rate_2,
+                task_water_rate_4,
+                task_water_rate_8,
+                task_water_rate_16,
+                task_water_rate_32,
+                task_water_rate_64,
+                task_water_rate_128,
                 process_control,
             };
         } else {
@@ -399,6 +460,15 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 link_url,
                 show_type,
                 icon,
+                extended_task_type,
+                task_days,
+                task_water_rate_2,
+                task_water_rate_4,
+                task_water_rate_8,
+                task_water_rate_16,
+                task_water_rate_32,
+                task_water_rate_64,
+                task_water_rate_128,
                 process_control,
             };
         }
@@ -412,6 +482,43 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                     }
                 },
         */
+        formCopy.activity_coin_task = {
+            task_days,
+            task_water_rate_2,
+            task_water_rate_4,
+            task_water_rate_8,
+            task_water_rate_16,
+            task_water_rate_32,
+            task_water_rate_64,
+            task_water_rate_128,
+        };
+
+        const obj = <any>{};
+        for (let index = 0; index < this.dialogData.form.vendorArr.length; index++) {
+            const element = this.dialogData.form.vendorArr[index];
+            obj[element.vendor_id] = element.water;
+        }
+        formCopy.activity_coin_task.task_water_vendor = obj;
+
+        const obj_rate = <any>{};
+        for (let index = 0; index < this.dialogData.form.transfer_amount_rate_Arr.length; index++) {
+            const element = this.dialogData.form.transfer_amount_rate_Arr[index];
+            obj_rate[index + 1 + ""] = element;
+        }
+        formCopy.activity_coin_task.transfer_amount_rate_in_activity = obj_rate;
+
+        formCopy.activity_coin_task = JSON.stringify(formCopy.activity_coin_task);
+        if (formCopy.extended_task_type == 1) {
+            delete formCopy.activity_coin_task;
+        }
+        delete formCopy.task_days;
+        delete formCopy.task_water_rate_2;
+        delete formCopy.task_water_rate_4;
+        delete formCopy.task_water_rate_8;
+        delete formCopy.task_water_rate_16;
+        delete formCopy.task_water_rate_32;
+        delete formCopy.task_water_rate_64;
+        delete formCopy.task_water_rate_128;
         formCopy["publish_status"] = Object.keys(this.tableData.columns.publish_status.options)[1];
 
         MessageBox.confirm(<string>LangUtil("发布以后活动数据不能修改，确定发布"), <string>LangUtil("提示"), {
@@ -422,7 +529,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_activity_store, objectRemoveNull(formCopy));
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**关闭该活动 */
@@ -449,7 +556,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 };
                 this.facade.sendNotification(HttpType.admin_plat_activity_update, copyForm);
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**更新活动*/
@@ -475,6 +582,46 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 }
             },
          */
+        const {
+            task_days,
+            task_water_rate_2,
+            task_water_rate_4,
+            task_water_rate_8,
+            task_water_rate_16,
+            task_water_rate_32,
+            task_water_rate_64,
+            task_water_rate_128,
+        } = this.dialogData.form;
+        formCopy.activity_coin_task = {
+            task_days,
+            task_water_rate_2,
+            task_water_rate_4,
+            task_water_rate_8,
+            task_water_rate_16,
+            task_water_rate_32,
+            task_water_rate_64,
+            task_water_rate_128,
+        };
+        if (formCopy.extended_task_type == 1) {
+            delete formCopy.activity_coin_task;
+        }
+
+        const obj_rate = <any>{};
+        for (let index = 0; index < this.dialogData.form.transfer_amount_rate_Arr.length; index++) {
+            const element = this.dialogData.form.transfer_amount_rate_Arr[index];
+            obj_rate[index + 1 + ""] = element;
+        }
+        formCopy.activity_coin_task.transfer_amount_rate_in_activity = obj_rate;
+        formCopy.activity_coin_task = JSON.stringify(formCopy.activity_coin_task);
+
+        delete formCopy.task_days;
+        delete formCopy.task_water_rate_2;
+        delete formCopy.task_water_rate_4;
+        delete formCopy.task_water_rate_8;
+        delete formCopy.task_water_rate_16;
+        delete formCopy.task_water_rate_32;
+        delete formCopy.task_water_rate_64;
+        delete formCopy.task_water_rate_128;
         formCopy["publish_status"] = Object.keys(this.tableData.columns.publish_status.options)[1];
         formCopy.id = this.dialogData.form.id;
         if (formCopy.show_type == 2) {
@@ -541,14 +688,22 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 for (const child of item.list) {
                     for (const child_1 of child.list) {
                         if (child_1.params_type && child_1.type) {
-                            if (child_1.type == 61 && child_1.params_type == 5) {
+                            if (
+                                child_1.type == 61 &&
+                                child_1.params_type == 5 &&
+                                this.dialogData.form.extended_task_type != 2
+                            ) {
                                 child_1.coin_type = "USDT";
+                                child_1.coin_amount = 0;
+                            } else {
+                                child_1.coin_type = "";
                                 child_1.coin_amount = 0;
                             }
                         }
                     }
                 }
             }
+            this.dialogData.form.transfer_amount_rate_Arr = <any>[];
             this.dialogData.form.rules = rules;
             this.dialogData.update++;
 
@@ -587,5 +742,59 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         }
         formCopy.id = id;
         this.sendNotification(HttpType.admin_plat_activity_update, formCopy);
+    }
+
+    vendorDialogData = {
+        bShow: false,
+        form: {
+            name: "",
+            water: "",
+            vendor_id: "",
+        },
+    };
+
+    showVendorDialog() {
+        this.vendorDialogData.bShow = true;
+        this.resetVendorDialogForm();
+    }
+
+    resetVendorDialogForm() {
+        Object.assign(this.vendorDialogData.form, {
+            name: "",
+            water: "",
+            vendor_id: "",
+        });
+    }
+
+    onAddVendor() {
+        this.dialogData.form.vendorArr.push({ ...this.vendorDialogData.form });
+        this.vendorDialogData.bShow = false;
+    }
+
+    get vendor_options() {
+        const newlist = <any>[];
+        const plat_id = this.dialogData.form.plat_id;
+        const keys = Object.keys(this.tableData.columns.vendor_ids.options[plat_id]);
+
+        for (let index = 0; index < keys.length; index++) {
+            const element = keys[index];
+
+            let isHave = false;
+            for (let n = 0; n < this.dialogData.form.vendorArr.length; n++) {
+                const element_cur = this.dialogData.form.vendorArr[n];
+                if (element_cur.vendor_id == element) {
+                    isHave = true;
+                    break;
+                }
+            }
+            if (!isHave) {
+                newlist.push({
+                    name: this.tableData.columns.vendor_ids.options[plat_id][element],
+                    value: element,
+                });
+            }
+        }
+
+        return newlist;
     }
 }

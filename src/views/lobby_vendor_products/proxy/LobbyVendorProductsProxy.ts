@@ -44,6 +44,7 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
             water_rate_accelerate: { name: "", options: {} },
             languages: { name: "", options: {} },
             vendor_languages: { name: "", options: {} },
+            is_activity_task_water: { name: "", options: {} },
         },
         ctrlData: {
             lobby_vendor_product_id: "",
@@ -66,6 +67,7 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         page_size: 20,
         languages: "",
         vendor_languages: "",
+        is_activity_task_water: "",
     };
     //上一次搜索的条件
     lastTimeListQuery = <any>{};
@@ -80,6 +82,10 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         water_rate_accelerate: 0,
     };
 
+    rowActivityTaskWaterData = {
+        lobby_vendor_product_id: "",
+        is_activity_task_water: 98,
+    };
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -134,6 +140,7 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
             status: "",
             languages: "",
             vendor_languages: "",
+            is_activity_task_water: "",
         });
     }
 
@@ -171,6 +178,10 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
     /**更新流水加速配置 */
     onUpdateWaterRateAccelerate() {
         this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowRateAccelerateData);
+    }
+    /**更新活动币 */
+    onUpdateActivithTaskWaterData() {
+        this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowActivityTaskWaterData);
     }
     /**同步游戏 */
     onSync() {
@@ -219,6 +230,7 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         "water_rate_accelerate",
         "languages",
         "vendor_languages",
+        "is_activity_task_water",
     ];
     myExportPagedata = <any>{};
     /**导出excel */

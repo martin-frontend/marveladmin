@@ -95,6 +95,7 @@ export default class ExportDialog extends Vue {
                 "vendor_wallet_type",
                 "time_region_hour_interval",
                 "status",
+                "is_activity_task_water",
             ];
         }
         return this._convertKeys;

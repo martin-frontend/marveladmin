@@ -46,6 +46,12 @@
                 :options="tableColumns.status.options"
                 clearable
             />
+            <SearchSelect
+                :title="tableColumns.is_activity_task_water.name"
+                v-model="listQuery.is_activity_task_water"
+                :options="tableColumns.is_activity_task_water.options"
+                clearable
+            />
             <div>
                 <el-button @click="handlerSearch()" class="header-button" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")

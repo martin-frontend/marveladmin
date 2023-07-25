@@ -27,7 +27,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             bonus_multiple: { name: '充值流水倍数', options: {} },
             can_play_game: { name: "是否允许游戏", options: {} },
             coin_name_unique: { name: "币种", options: {} },
@@ -48,6 +48,10 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             show_scale: { name: '显示比例', options: {} },
             languages: { name: "语言", options: {} },
             is_digital_currency: { name: '币种类型', options: {} },
+            transfer_coin_name_unique: { name: '活动币转换币种', options: {} },
+            vendor_ids: { name: '支持产品', options: {} },
+            vendor_types: { name: '支持产品类型', options: {} },
+            priority: { name: '', options: {} }
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -76,6 +80,10 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             show_scale: 0,
             languages: <any>[],
             bonus_multiple: 0,
+            transfer_coin_name_unique: "",
+            vendor_ids: "",
+            vendor_types: <any>[],
+            priority:"",
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -124,6 +132,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
             this.dialogData.form.plat_id = data.plat_id.toString();
             this.dialogData.form.type = data.type.toString();
+            this.dialogData.form.vendor_types = this.dialogData.form.vendor_types.map(String);
             // this.sendNotification(HttpType.undefined, { id: data.id });
         } else {
             this.resetDialogForm();
@@ -150,6 +159,10 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             show_scale: 1,
             languages: <any>[],
             bonus_multiple: 1,
+            transfer_coin_name_unique: "",
+            vendor_ids: "",
+            vendor_types: <any>[],
+            priority:"",
         });
     }
 
@@ -172,7 +185,11 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             scale: form.scale,
             show_scale: form.show_scale,
             bonus_multiple: form.bonus_multiple,
+            transfer_coin_name_unique: form.transfer_coin_name_unique,
+            vendor_ids: JSON.stringify(form.vendor_ids),
+            vendor_types: JSON.stringify(form.vendor_types),
             languages: JSON.stringify(form.languages),
+            priority: form.priority,
         };
 
         this.sendNotification(HttpType.admin_plat_block_coins_store, objectRemoveNull(formCopy));
