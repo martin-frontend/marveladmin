@@ -33,20 +33,22 @@
                         <el-col :span="6">
                             <div style="margin-right: 8px; max-width:250px">
                                 <div>{{ LangUtil("返水比例") }}</div>
-                                <el-input
-                                    style="width: 100%"
-                                    v-for="(value, key) in tableColumns.vip_config.options_key[1]"
-                                    :key="key"
-                                    class="input"
-                                    type="number"
-                                    step="0.0001"
-                                    v-model="item.backwater_config[key].backwater_rate"
-                                    :disabled="!myProxy.isEdit"
-                                    oninput="if(value.length>6)value=value.slice(0,6)"
-                                    @keydown.native="inputLimit"
-                                >
-                                    <template slot="prepend">{{ value }}</template>
-                                </el-input>
+                                <template v-for="(value, key) in tableColumns.vip_config.options_key[1]">
+                                    <el-input
+                                        style="width: 100%"
+                                        v-if="item.backwater_config[key]"
+                                        :key="key"
+                                        class="input"
+                                        type="number"
+                                        step="0.0001"
+                                        v-model="item.backwater_config[key].backwater_rate"
+                                        :disabled="!myProxy.isEdit"
+                                        oninput="if(value.length>6)value=value.slice(0,6)"
+                                        @keydown.native="inputLimit"
+                                    >
+                                        <template slot="prepend">{{ value }}</template>
+                                    </el-input>
+                                </template>
                             </div>
                         </el-col>
 
@@ -55,60 +57,66 @@
                                 <div style="margin-right: 8px; max-width:250px;">
                                     <div>{{ LangUtil("每日最高返水限额") }}</div>
 
-                                    <el-input
-                                        style="width: 100%"
-                                        v-for="(value, key) in tableColumns.vip_config.options_key[1]"
-                                        :key="key"
-                                        :min="0"
-                                        class="input"
-                                        type="number"
-                                        step="1"
-                                        v-model="item.backwater_config[key].daily_max_backwater_limit"
-                                        :disabled="!myProxy.isEdit"
-                                        onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
-                                    >
-                                        <template slot="prepend">{{ value }}</template>
-                                    </el-input>
+                                    <template v-for="(value, key) in tableColumns.vip_config.options_key[1]">
+                                        <el-input
+                                            style="width: 100%"
+                                            v-if="item.backwater_config[key]"
+                                            :key="key"
+                                            :min="0"
+                                            class="input"
+                                            type="number"
+                                            step="1"
+                                            v-model="item.backwater_config[key].daily_max_backwater_limit"
+                                            :disabled="!myProxy.isEdit"
+                                            onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                        >
+                                            <template slot="prepend">{{ value }}</template>
+                                        </el-input>
+                                    </template>
                                 </div>
                             </el-col>
 
                             <el-col :span="6">
                                 <div style="margin-right: 8px;max-width:250px;">
                                     <div>{{ LangUtil("每周最高返水限额") }}</div>
-                                    <el-input
-                                        style="width: 100%"
-                                        v-for="(value, key) in tableColumns.vip_config.options_key[1]"
-                                        :key="key"
-                                        :min="0"
-                                        class="input"
-                                        type="number"
-                                        step="1"
-                                        v-model="item.backwater_config[key].weekly_max_backwater_limit"
-                                        :disabled="!myProxy.isEdit"
-                                        onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
-                                    >
-                                        <template slot="prepend">{{ value }}</template>
-                                    </el-input>
+                                    <template v-for="(value, key) in tableColumns.vip_config.options_key[1]">
+                                        <el-input
+                                            style="width: 100%"
+                                            v-if="item.backwater_config[key]"
+                                            :key="key"
+                                            :min="0"
+                                            class="input"
+                                            type="number"
+                                            step="1"
+                                            v-model="item.backwater_config[key].weekly_max_backwater_limit"
+                                            :disabled="!myProxy.isEdit"
+                                            onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                        >
+                                            <template slot="prepend">{{ value }}</template>
+                                        </el-input>
+                                    </template>
                                 </div>
                             </el-col>
 
                             <el-col :span="6">
                                 <div style="margin-right: 8px;max-width:250px;">
                                     <div>{{ LangUtil("每月最高返水限额") }}</div>
-                                    <el-input
-                                        style="width: 100%"
-                                        v-for="(value, key) in tableColumns.vip_config.options_key[1]"
-                                        :key="key"
-                                        :min="0"
-                                        class="input"
-                                        type="number"
-                                        step="1"
-                                        v-model="item.backwater_config[key].month_max_backwater_limit"
-                                        :disabled="!myProxy.isEdit"
-                                        onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
-                                    >
-                                        <template slot="prepend">{{ value }}</template>
-                                    </el-input>
+                                    <template v-for="(value, key) in tableColumns.vip_config.options_key[1]">
+                                        <el-input
+                                            style="width: 100%"
+                                            v-if="item.backwater_config[key]"
+                                            :key="key"
+                                            :min="0"
+                                            class="input"
+                                            type="number"
+                                            step="1"
+                                            v-model="item.backwater_config[key].month_max_backwater_limit"
+                                            :disabled="!myProxy.isEdit"
+                                            onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                        >
+                                            <template slot="prepend">{{ value }}</template>
+                                        </el-input>
+                                    </template>
                                 </div>
                             </el-col>
                         </template>

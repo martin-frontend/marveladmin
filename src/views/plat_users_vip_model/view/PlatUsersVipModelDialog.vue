@@ -94,6 +94,7 @@
                                     :key="cindex"
                                 >
                                     <el-input-number
+                                        v-if="item.backwater_config[citem]"
                                         v-model="item.backwater_config[citem].backwater_rate"
                                         controls-position="right"
                                         :min="0"
@@ -116,6 +117,7 @@
                                     :key="cindex"
                                 >
                                     <el-input
+                                        v-if="item.backwater_config[citem]"
                                         v-model="item.backwater_config[citem].daily_max_backwater_limit"
                                         controls-position="right"
                                         :min="0"
@@ -138,6 +140,7 @@
                                     :key="cindex"
                                 >
                                     <el-input
+                                        v-if="item.backwater_config[citem]"
                                         v-model="item.backwater_config[citem].weekly_max_backwater_limit"
                                         controls-position="right"
                                         :min="0"
@@ -160,6 +163,7 @@
                                     :key="cindex"
                                 >
                                     <el-input
+                                        v-if="item.backwater_config[citem]"
                                         v-model="item.backwater_config[citem].month_max_backwater_limit"
                                         controls-position="right"
                                         :min="0"
