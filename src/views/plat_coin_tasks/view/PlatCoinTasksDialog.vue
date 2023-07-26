@@ -67,11 +67,22 @@
             </el-form-item>
             <el-form-item :label="tableColumns.bonus_multiple.name" prop="bonus_multiple">
                 <div class="flex d-flex">
-                    <el-input
+                    <!-- <el-input
                         :placeholder="LangUtil('请输入')"
                         v-model="form.bonus_multiple"
                         oninput="value=value.replace(/[^\d]/g,'');"
-                    ></el-input>
+                    ></el-input> -->
+
+                    <el-input-number
+                        size="mini"
+                        :min="0"
+                        :step="0.1"
+                        controls-position="right"
+                        v-model="form.bonus_multiple"
+                        style="margin-right: 10px"
+                        :precision="2"
+                    >
+                    </el-input-number>
                 </div>
             </el-form-item>
             <div class="title">{{ LangUtil("奖励任务设置") }}</div>
