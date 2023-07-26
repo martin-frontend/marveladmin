@@ -44,6 +44,18 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
+
+            <el-form-item v-if="form.params_type =='5'" size="mini" :label="tableColumns['key_value_type'].name" prop="key_value_type">
+                <el-select v-model="form.key_value_type" filterable :placeholder="LangUtil('请选择')">
+                    <el-option
+                        v-for="(value, key) in tableColumns['key_value_type'].options"
+                        :key="key"
+                        :label="value"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+
             <el-form-item size="mini" :label="tableColumns['weight'].name" prop="weight">
                 <el-input type="number" v-model="form.weight" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>

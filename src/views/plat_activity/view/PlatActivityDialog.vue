@@ -627,16 +627,47 @@
                                             :value="key"
                                         ></el-option>
                                     </el-select>
-                                    <el-input-number
-                                        size="small"
-                                        v-if="childRule.type == 61 && childRule.params_type == 5"
-                                        v-model="childRule.coin_amount"
-                                        :placeholder="LangUtil('请输入')"
-                                        :disabled="isStatusUpdate"
-                                        :min="0"
-                                        :step="1"
-                                        controls-position="right"
-                                    ></el-input-number>
+                                    <template v-if="getRuleInfo(childRule).key_value_type != 2">
+                                        <el-input-number
+                                            size="small"
+                                            v-if="childRule.type == 61 && childRule.params_type == 5"
+                                            v-model="childRule.coin_amount"
+                                            :placeholder="LangUtil('请输入')"
+                                            :disabled="isStatusUpdate"
+                                            :min="0"
+                                            :step="1"
+                                            controls-position="right"
+                                        ></el-input-number>
+                                    </template>
+                                    <template v-else>
+                                        <!-- <div v-for="(item, key) of childRule.params"  :key="key"> -->
+                                            <el-input-number
+                                                size="small"
+                                                v-if="childRule.type == 61 && childRule.params_type == 5"
+                                                v-model="childRule.coin_amount"
+                                                :placeholder="LangUtil('请输入')"
+                                                :disabled="isStatusUpdate"
+                                                :min="0"
+                                                :step="1"
+                                                controls-position="right"
+                                            ></el-input-number>
+                                            <div style="margin-top: 10px;">
+                                            <span style="margin-left: 10px;">{{ LangUtil("最大限制") }}</span>
+                                            <el-input-number
+                                            style="margin-left: 10px;"
+                                                size="small"
+                                                v-if="childRule.type == 61 && childRule.params_type == 5"
+                                                v-model="childRule.max_limit"
+                                                :placeholder="LangUtil('请输入')"
+                                                :disabled="isStatusUpdate"
+                                                :min="0"
+                                                :step="1"
+                                                controls-position="right"
+                                            ></el-input-number>
+                                        </div>
+                                        <!-- </div> -->
+                                    </template>
+
                                     <el-radio-group
                                         v-model="childRule.params"
                                         v-if="childRule.params_type == '2'"
