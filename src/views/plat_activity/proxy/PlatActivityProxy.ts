@@ -140,7 +140,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             icon_url: "",
             process_control: 1,
             rule_desc: "",
-            active_model_tag:"",
+            active_model_tag: "",
         },
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据
@@ -310,8 +310,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             award_type_map: "",
             icon: "",
             process_control: 1,
-            rule_desc:"",
-            active_model_tag:"",
+            rule_desc: "",
+            active_model_tag: "",
         });
 
         this.activeModelData.options.length = 0;
@@ -338,7 +338,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     }
     chickDailyRatio(): boolean {
         if (this.dialogData.form.award_type == 16 || this.dialogData.form.award_type == "16") {
-        // if (this.dialogData.form.active_model_tag == "16") {
+            // if (this.dialogData.form.active_model_tag == "16") {
             let sumNub = 0;
             for (let index = 0; index < this.dialogData.form.daily_ratio.length; index++) {
                 sumNub += this.dialogData.form.daily_ratio[index];
@@ -383,7 +383,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             icon,
             rule_desc,
             process_control,
-            active_model_tag
+            active_model_tag,
         } = this.dialogData.form;
         for (const item of rules) {
             for (const child of item.list) {
@@ -493,6 +493,10 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         // 删除多余无法去除的参数
         let formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
         formCopy = objectRemoveNull(formCopy);
+        if (this.dialogData.form.award_type == 16 || this.dialogData.form.award_type == "16") {
+            formCopy.daily_ratio = JSON.stringify(this.dialogData.form.daily_ratio);
+            console.log("----formCopy---", formCopy);
+        }
         // 如果没有修改，就直接关闭弹窗
         if (Object.keys(formCopy).length == 0) {
             console.log("如果没有修改，就直接关闭弹窗");
