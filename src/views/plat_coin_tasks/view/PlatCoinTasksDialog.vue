@@ -6,7 +6,15 @@
             </el-form-item>
             <el-form-item :label="tableColumns.activity_name.name" prop="activity_name">
                 <div class="flex d-flex">
-                    <el-input :placeholder="LangUtil('请输入')" v-model="form.activity_name"></el-input>
+                    <el-input
+                        clearable
+                        :placeholder="LangUtil('请输入')"
+                        v-model="form.activity_name"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.activity_name)">
+                        {{ LangUtil("翻译") }}
+                    </el-button>
                 </div>
             </el-form-item>
             <!-- <el-form-item :label="tableColumns.activity_id.name" prop="activity_id">
@@ -223,6 +231,8 @@ import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
 import { readerData } from "@/core/global/Excel";
 import { BaseInfo } from "@/components/vo/commonVo";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class PlatCoinTasksDialog extends AbstractView {
@@ -237,6 +247,8 @@ export default class PlatCoinTasksDialog extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
     LangUtil = LangUtil;
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+
     private textMap = {
         update: "编辑",
         create: "新增",
@@ -330,6 +342,14 @@ export default class PlatCoinTasksDialog extends AbstractView {
     }
     handleDeleteVendor(i: any) {
         this.form.vendorArr.splice(i, 1);
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_ACTIVITY;
+        data.plat_id = this.form.plat_id;
+        this.langProxy.showDialog(data, true);
     }
 }
 </script>
