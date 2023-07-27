@@ -47,16 +47,16 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
             plat_id: { name: "平台ID", options: {} },
             key: { name: "键", options: {} },
             ar_AR: { name: "键", options: {} },
-            de_DE: { name: 'Deutsch', options: {} },
+            de_DE: { name: "Deutsch", options: {} },
             en_EN: { name: "键", options: {} },
             es_ES: { name: "Español", options: {} },
-            fr_FR: { name: 'Français', options: {} },
-            hi_IN: { name: 'Hindi', options: {} },
+            fr_FR: { name: "Français", options: {} },
+            hi_IN: { name: "Hindi", options: {} },
             jp_JP: { name: "", options: {} },
             ko_Kr: { name: "", options: {} },
             pt_PT: { name: "", options: {} },
             th_TH: { name: "", options: {} },
-            tr_TR: { name: 'Türk dili', options: {} },
+            tr_TR: { name: "Türk dili", options: {} },
             vi_VN: { name: "", options: {} },
             zh_CN: { name: "", options: {} },
             zh_TW: { name: "", options: {} },
@@ -123,6 +123,7 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
 
     /**显示弹窗 */
     showDialog(data?: any) {
+        console.log("传入 信息为", data);
         //清除数据
         this.resetDialogForm();
         this.dialogData.formSource = null;
@@ -166,9 +167,15 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
     /**添加平台的数据 */
     onAdd() {
         let formCopy: any = Object.assign({}, this.dialogData.form);
+        if (!formCopy) {
+            formCopy = <any>{};
+        }
         try {
             let data: any = {};
             for (var key in this.tableData.columns.language.options) {
+                if (!formCopy[key]) {
+                    formCopy[key] = <any>{};
+                }
                 if (formCopy[key].uris && formCopy[key].urls) {
                     formCopy[key] = JSON.stringify(formCopy[key]);
                 } else {
@@ -185,9 +192,15 @@ export default class CommonLangImgProxy extends AbstractProxy implements ICommon
 
     /**更新数据 */
     onUpdate() {
-        const formCopy: any = Object.assign({}, this.dialogData.form);
+        let formCopy: any = Object.assign({}, this.dialogData.form);
+        if (!formCopy) {
+            formCopy = <any>{};
+        }
         try {
             for (var key in this.tableData.columns.language.options) {
+                if (!formCopy[key]) {
+                    formCopy[key] = <any>{};
+                }
                 if (formCopy[key].uris && formCopy[key].urls) {
                     formCopy[key] = JSON.stringify(formCopy[key]);
                 } else {
