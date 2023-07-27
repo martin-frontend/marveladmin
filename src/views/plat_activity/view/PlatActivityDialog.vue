@@ -574,11 +574,11 @@
                                 <el-col :span="4">
                                     <div>{{ typeOptions[childRule.type] }}</div>
                                 </el-col>
-                                <el-col :span="5">
+                                <el-col :span="4">
                                     <div>{{ getRuleInfo(childRule).params_name }}</div>
                                 </el-col>
 
-                                <el-col :span="15">
+                                <el-col :span="16">
                                     <el-input
                                         size="small"
                                         v-if="childRule.params_type == '1'"
@@ -590,6 +590,7 @@
                                     <el-select
                                         size="small"
                                         v-if="
+                                        isShowSelectCoin(childRule) &&
                                             childRule.type == 61 &&
                                                 childRule.params_type == 5 &&
                                                 form.extended_task_type != 2
@@ -610,6 +611,7 @@
                                     <el-select
                                         size="small"
                                         v-if="
+                                        isShowSelectCoin(childRule) &&
                                             childRule.type == 61 &&
                                                 childRule.params_type == 5 &&
                                                 form.extended_task_type == 2
@@ -627,23 +629,10 @@
                                             :value="key"
                                         ></el-option>
                                     </el-select>
-                                    <template v-if="getRuleInfo(childRule).key_value_type != 2">
-                                        <el-input-number
-                                            size="small"
-                                            v-if="childRule.type == 61 && childRule.params_type == 5"
-                                            v-model="childRule.coin_amount"
-                                            :placeholder="LangUtil('请输入')"
-                                            :disabled="isStatusUpdate"
-                                            :min="0"
-                                            :step="1"
-                                            controls-position="right"
-                                        ></el-input-number>
-                                    </template>
-                                    <template v-else>
-                                        <!-- <div v-for="(item, key) of childRule.params"  :key="key"> -->
+                                    <template v-if="childRule.type == 61 && childRule.params_type == 5">
+                                        <template v-if="getRuleInfo(childRule).key_value_type != 2">
                                             <el-input-number
                                                 size="small"
-                                                v-if="childRule.type == 61 && childRule.params_type == 5"
                                                 v-model="childRule.coin_amount"
                                                 :placeholder="LangUtil('请输入')"
                                                 :disabled="isStatusUpdate"
@@ -651,23 +640,59 @@
                                                 :step="1"
                                                 controls-position="right"
                                             ></el-input-number>
-                                            <div style="margin-top: 10px;">
-                                            <span style="margin-left: 10px;">{{ LangUtil("最大限制") }}</span>
-                                            <el-input-number
-                                            style="margin-left: 10px;"
-                                                size="small"
-                                                v-if="childRule.type == 61 && childRule.params_type == 5"
-                                                v-model="childRule.max_limit"
-                                                :placeholder="LangUtil('请输入')"
-                                                :disabled="isStatusUpdate"
-                                                :min="0"
-                                                :step="1"
-                                                controls-position="right"
-                                            ></el-input-number>
-                                        </div>
-                                        <!-- </div> -->
-                                    </template>
+                                        </template>
+                                        <template v-else>
+                                            <template v-if="status == dialogStatus.create">
+                                                <el-input-number
+                                                    size="small"
+                                                    v-model="childRule.coin_amount"
+                                                    :placeholder="LangUtil('请输入')"
+                                                    :disabled="isStatusUpdate"
+                                                    :min="0"
+                                                    :step="1"
+                                                    controls-position="right"
+                                                ></el-input-number>
+                                                <span style="margin-left: 10px;">{{ LangUtil("最大限制") }}</span>
+                                                <el-input-number
+                                                    style="margin-left: 10px;"
+                                                    size="small"
+                                                    v-if="childRule.type == 61 && childRule.params_type == 5"
+                                                    v-model="childRule.max_limit"
+                                                    :placeholder="LangUtil('请输入')"
+                                                    :disabled="isStatusUpdate"
+                                                    :min="0"
+                                                    :step="1"
+                                                    controls-position="right"
+                                                ></el-input-number>
+                                            </template>
 
+                                            <template v-if="status == dialogStatus.update">
+                                                <span v-for="(item, key) of childRule.params" :key="key">
+                                                    <span>{{ key }}</span>
+                                                    <el-input-number
+                                                        size="small"
+                                                        v-model="item.percent"
+                                                        :placeholder="LangUtil('请输入')"
+                                                        :disabled="isStatusUpdate"
+                                                        :min="0"
+                                                        :step="1"
+                                                        controls-position="right"
+                                                    ></el-input-number>
+                                                    <span style="margin-left: 10px;">{{ LangUtil("最大限制") }}</span>
+                                                    <el-input-number
+                                                        style="margin-left: 10px;"
+                                                        size="small"
+                                                        v-model="item.max_limit"
+                                                        :placeholder="LangUtil('请输入')"
+                                                        :disabled="isStatusUpdate"
+                                                        :min="0"
+                                                        :step="1"
+                                                        controls-position="right"
+                                                    ></el-input-number>
+                                                </span>
+                                            </template>
+                                        </template>
+                                    </template>
                                     <el-radio-group
                                         v-model="childRule.params"
                                         v-if="childRule.params_type == '2'"
@@ -1030,6 +1055,11 @@ export default class PlatActivityDialog extends AbstractView {
             return time.getTime() < lastWeek.getTime() || time.getTime() > twentyYearsFromNow.getTime();
         },
     };
+    //是否显示币种选择，只有 为 key -value 且为 预览模式的 时候才不显示
+    isShowSelectCoin(childRule:any)
+    {
+        return this.getRuleInfo(childRule).key_value_type == 2 && childRule.type == 61 && childRule.params_type == 5 && this.status==this.dialogStatus.create;
+    }
 }
 </script>
 
