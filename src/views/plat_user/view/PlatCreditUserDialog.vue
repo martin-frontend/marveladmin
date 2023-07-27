@@ -70,13 +70,14 @@ import GlobalVar from "@/core/global/GlobalVar";
 @Component
 export default class PlatCreditUserDialog extends AbstractView {
     LangUtil = LangUtil;
+
     // 权限标识
     unique = unique;
     checkUnique = checkUnique;
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy = this.$parent.myProxy;
+    myProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.creditUserDialogData.form;

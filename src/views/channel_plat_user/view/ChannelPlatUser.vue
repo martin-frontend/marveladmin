@@ -24,7 +24,6 @@ import ChannelPlatUserProxy from "@/views/channel_plat_user/proxy/ChannelPlatUse
 import PlatCreditUserDialog from "@/views/plat_user/view/PlatCreditUserDialog.vue";
 import ProgressDialog from "@/views/plat_user/view/components/ProgressDialog.vue";
 import FieldSelectionDialog from "@/views/plat_user/view/components/FieldSelectionDialog.vue";
-
 @Component({
     components: {
         PlatUserDialog,

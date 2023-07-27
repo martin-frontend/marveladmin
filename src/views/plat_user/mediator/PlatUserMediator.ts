@@ -38,6 +38,10 @@ export default class PlatUserMediator extends AbstractMediator {
             EventType.admin_plat_user_store_credit_user,
             EventType.admin_plat_user_change_channel,
             EventType.admin_plat_user_index2,
+            EventType.admin_plat_user_update_admin_added_user,
+            EventType.admin_plat_user_store_user_by_admin,
+            EventType.admin_plat_user_get_admin_added_user,
+            EventType.admin_plat_user_delete_admin_added_user,
         ];
     }
 
@@ -90,6 +94,18 @@ export default class PlatUserMediator extends AbstractMediator {
             case EventType.admin_plat_user_backwater_config:
                 this.myProxy.setPlatUserBackwaterConfig(body);
                 break;
+            case EventType.admin_plat_user_get_admin_added_user:
+                // this.myProxy.setMutipleUserDialogTableData(body);
+                if (this.myProxy.addMutipleUserData.isExportExcel) {
+                    this.myProxy.exportExcel_multiple(body);
+                } else {
+                    this.myProxy.setMutipleUserDialogTableData(body);
+                }
+
+                break;
+            case EventType.admin_plat_user_store_user_by_admin:
+                this.myProxy.setPlatAddMultipleUserConfig();
+                break;
             case EventType.admin_plat_user_store_credit_user:
                 MessageBox.confirm(
                     <string>(
@@ -115,6 +131,12 @@ export default class PlatUserMediator extends AbstractMediator {
                 Message.success(SuccessMessage.update);
                 this.myProxy.hideDialog();
                 this.myProxy.onQuery();
+                break;
+            case EventType.admin_plat_user_delete_admin_added_user:
+                this.myProxy.onQueryForAddMultipleUserTable();
+                break;
+            case EventType.admin_plat_user_update_admin_added_user:
+                this.myProxy.onUpdata_multiple_callback();
                 break;
         }
     }

@@ -64,8 +64,12 @@
                 :maxValue.sync="listQuery.max_level"
                 :placeholders="[LangUtil('最小等级'), LangUtil('最大等级')]"
             />
-            <SearchInput :title="tableColumns.recharge_amount.name" v-model="listQuery.recharge_amount" :placeholderProps="LangUtil('最小金额')" searchType="number" />
-
+            <SearchInput
+                :title="tableColumns.recharge_amount.name"
+                v-model="listQuery.recharge_amount"
+                :placeholderProps="LangUtil('最小金额')"
+                searchType="number"
+            />
         </div>
         <div class="group">
             <SearchDatePicker

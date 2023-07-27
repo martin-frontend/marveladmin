@@ -198,6 +198,10 @@ export var unique = {
     plat_user_refresh: "plat_user_refresh", //用户钱包-金币刷新
     plat_user_withdraw: "plat_user_withdraw", //用户钱包-提取
     plat_user_store_credit_user: "plat_user_store_credit_user", //添加信用用户
+    plat_user_update_admin_added_user:"plat_user_update_admin_added_user", //编辑后台批量新增用户
+    plat_user_get_admin_added_user:"plat_user_get_admin_added_user", //后台批量新增用户列表
+    plat_user_store_user_by_admin:"plat_user_store_user_by_admin", //批量新增用户
+    
     admin_plat_user_index2: "plat_user2", //查看完整手机与信箱
     //上下分记录
     plat_users_vendor_gold_log_update_manual: "plat_users_vendor_gold_log_update_manual", //上下分手动处理
