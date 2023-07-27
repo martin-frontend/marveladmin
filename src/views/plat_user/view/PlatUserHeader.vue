@@ -84,6 +84,14 @@
                 :endDate.sync="listQuery['last_online_at-{<}']"
                 :showTime="true"
             />
+            <SearchDatePicker
+                :title="LangUtil('首充时间')"
+                :startDate.sync="listQuery['paytime-{>=}']"
+                :endDate.sync="listQuery['paytime-{<}']"
+                :showTime="true"
+            />
+        </div>
+        <div>
             <el-button class="header-button" @click="handlerSearch()" type="primary">{{ LangUtil("查询") }}</el-button>
             <el-button class="header-button" @click="handlerReset()" type="primary">{{ LangUtil("重置") }}</el-button>
             <el-button

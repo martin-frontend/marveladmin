@@ -75,8 +75,10 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             gold_scale: { name: "代币汇率", options: [] },
             user_remark: { name: "用户备注" },
             coin_user_id: { options: {} },
-            user_created_at: { name: LangUtil('账号创建时间'), options: [] },
+            user_created_at: { name: LangUtil("账号创建时间"), options: [] },
             is_first_recharge: { name: "是否首充", options: [] },
+            invite_user_id: { name: "直属代理ID", options: [] },
+            grant_agent_id: { name: "代理ID", options: [] },
         },
         list: <any>[],
         message: {
@@ -167,6 +169,9 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         coin_name_unique: "",
         block_network_id: "",
         is_first_recharge: "",
+        invite_user_id: "",
+        grant_agent_id: "",
+        user_remark: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -270,6 +275,9 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             coin_name_unique: "",
             block_network_id: "",
             is_first_recharge: "",
+            invite_user_id: "",
+            grant_agent_id: "",
+            user_remark: "",
         });
     }
 
@@ -404,7 +412,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         const exportField = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
             if (this.exportData.fieldOrder.indexOf(item) != -1) {
-                exportField.push(item)
+                exportField.push(item);
             }
         }
 
@@ -413,7 +421,16 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             exportField,
             this.tableData.columns,
             newData,
-            ["plat_id", "paymethod_id", "vendor_id", "status", "block_network_id", "status", "is_internal", "is_first_recharge"],
+            [
+                "plat_id",
+                "paymethod_id",
+                "vendor_id",
+                "status",
+                "block_network_id",
+                "status",
+                "is_internal",
+                "is_first_recharge",
+            ],
             []
         );
     }

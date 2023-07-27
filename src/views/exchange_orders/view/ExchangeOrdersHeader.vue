@@ -83,6 +83,9 @@
                 v-model="listQuery.is_first_exchange"
                 :options="tableColumns.is_first_exchange.options"
             />
+            <SearchInput :title="tableColumns.invite_user_id.name" v-model="listQuery.invite_user_id" />
+            <SearchInput :title="tableColumns.grant_agent_id.name" v-model="listQuery.grant_agent_id" />
+            <SearchInput :title="tableColumns.user_remark.name" v-model="listQuery.user_remark" />
             <div>
                 <el-button @click="handlerSearch" type="primary" icon="el-icon-search">
                     {{ LangUtil("查询") }}

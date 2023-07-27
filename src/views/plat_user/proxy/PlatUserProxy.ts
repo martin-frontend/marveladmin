@@ -135,6 +135,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             is_recharged: { name: "是否充值", options: {} },
             is_back_visit: { name: "是否回访", options: {} },
             recharge_amount: { name: "充值金额", options: [] },
+            paytime: { name: "第一次充值时间", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -173,6 +174,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         recharge_amount: "",
         page_count: 1,
         page_size: 20,
+        "paytime-{>=}": "",
+        "paytime-{<}": "",
     };
 
     fieldSelectionData = {
@@ -417,6 +420,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             is_recharged: "",
             is_back_visit: "",
             recharge_amount: "",
+            "paytime-{>=}": "",
+            "paytime-{<}": "",
         });
     }
 
