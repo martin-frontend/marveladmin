@@ -76,10 +76,10 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             activity_coin_task: { name: "活动币任务", options: {} },
             extended_task_type: { name: "扩展任务类型", options: {} },
             process_control: { name: "流程控制", options: {} },
-            vendor_id: { name: "厂商ID", options: {} },
-            vendor_ids: { name: "", options: {} },
             daily_ratio: { name: "", options: <any>{} },
             rule_desc: { name: "", options: <any>{} },
+            vendor_id: { name: "厂商ID", options: {} },
+            vendor_ids: { name: "", options: {} },
         },
         orderData: {
             id: "",
@@ -154,10 +154,10 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             task_water_rate_128: "",
             activity_coin_task: <any>{},
             process_control: 1,
-            vendorArr: <any>[],
-            transfer_amount_rate_Arr: <any>[],
             rule_desc: "",
             active_model_tag: "",
+            vendorArr: <any>[],
+            transfer_amount_rate_Arr: <any>[],
         },
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据
@@ -245,6 +245,30 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
         this.dialogData.fileList1[0].url = this.dialogData.form.icon_url;
+
+        for (const item of this.dialogData.form.rules) {
+            for (const child of item.list) {
+                for (const child_1 of child.list) {
+                    if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
+                        if (this.getRuleInfo(child_1).key_value_type == 2) {
+                            if (!child_1.params) {
+                                child_1.params = {};
+                            }
+
+                            for (const iterator of child_1.params) {
+                                if (!iterator.percent) {
+                                    iterator.percent = 0;
+                                }
+                                if (!iterator.max_limit) {
+                                    iterator.max_limit = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        console.log("---->>>", this.dialogData.form);
     }
 
     /**重置查询条件 */
@@ -281,6 +305,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 page_size: 20000,
                 plat_id: data.plat_id,
             });
+            console.log("---<<< ", this.dialogData.form);
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -351,10 +376,10 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             task_water_rate_128: "",
             activity_coin_task: <any>{},
             process_control: 1,
-            vendorArr: <any>[],
-            transfer_amount_rate_Arr: <any>[],
             rule_desc: "",
             active_model_tag: "",
+            vendorArr: <any>[],
+            transfer_amount_rate_Arr: <any>[],
         });
 
         this.activeModelData.options.length = 0;
@@ -378,6 +403,11 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     /**查询 */
     onQuery() {
         this.sendNotification(HttpType.admin_plat_activity_index, objectRemoveNull(this.listQuery));
+    }
+    getRuleInfo(rule: any) {
+        let result: any = [];
+        result = this.activeModelData.ruleList.filter((item: any) => parseInt(rule.rule_id) === item.id);
+        return result.length > 0 ? result[0] : "";
     }
     chickDailyRatio(): boolean {
         if (this.dialogData.form.award_type == 16 || this.dialogData.form.award_type == "16") {
@@ -424,6 +454,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_type,
             is_once,
             icon,
+            rule_desc,
+            process_control,
+            active_model_tag,
             extended_task_type,
             task_days,
             task_water_rate_2,
@@ -433,17 +466,27 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             task_water_rate_32,
             task_water_rate_64,
             task_water_rate_128,
-            process_control,
             vendorArr,
             transfer_amount_rate_Arr,
-            rule_desc,
-            active_model_tag,
         } = this.dialogData.form;
         for (const item of rules) {
             for (const child of item.list) {
                 for (const child_1 of child.list) {
                     if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
-                        child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+                        // child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+
+                        if (this.getRuleInfo(child_1).key_value_type == 2) {
+                            child_1.params = {};
+                            child_1.params[child_1.coin_type] = {};
+                            child_1.params[child_1.coin_type]["percent"] = child_1.coin_amount;
+                            child_1.params[child_1.coin_type]["max_limit"] = child_1.max_limit;
+
+                            delete child_1.coin_type;
+                            delete child_1.coin_amount;
+                            delete child_1.max_limit;
+                        } else {
+                            child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+                        }
                     }
                 }
             }
@@ -468,6 +511,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 award_tpl,
                 show_type,
                 icon,
+                rule_desc,
+                active_model_tag,
                 extended_task_type,
                 task_days,
                 task_water_rate_2,
@@ -477,8 +522,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 task_water_rate_32,
                 task_water_rate_64,
                 task_water_rate_128,
-                rule_desc,
-                active_model_tag,
                 process_control,
             };
         } else {
@@ -557,6 +600,11 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         delete formCopy.task_water_rate_64;
         delete formCopy.task_water_rate_128;
         formCopy["publish_status"] = Object.keys(this.tableData.columns.publish_status.options)[1];
+
+        console.log("---->>>", formCopy);
+        const pointForm = JSON.parse(JSON.stringify(formCopy));
+        pointForm.rules = JSON.parse(pointForm.rules);
+        console.log("----发送的JSON ", pointForm);
 
         MessageBox.confirm(<string>LangUtil("发布以后活动数据不能修改，确定发布"), <string>LangUtil("提示"), {
             confirmButtonText: <string>LangUtil("确定"),
