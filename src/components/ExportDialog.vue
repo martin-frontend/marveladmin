@@ -12,6 +12,7 @@
             :close-on-click-modal="false"
             :show-close="false"
             :title="LangUtil(title_fiter)"
+            append-to-body
         >
             <el-checkbox
                 :indeterminate="fiterSelectData.isIndeterminate"
@@ -170,10 +171,15 @@ export default class ExportDialog extends Vue {
     dataChange() {
         console.warn("记录分页信息");
         const data = this.proxy.myExportPagedata;
-        if (!data || !data.pageInfo) {
+        if (!data) {
             console.error("页面数据错误", data);
             this.endSend();
             return;
+        }
+        if (!data.pageInfo) {
+            data.pageInfo = {};
+            data.pageInfo.pageCurrent = 1;
+            data.pageInfo.pageCount = 1;
         }
         Object.assign(this.pageInfo, data.pageInfo);
         //收到数据之后开始对分页数据进行处理  ,检查数据中是否存在这个页面的数据， 不管是否存在直接覆盖掉

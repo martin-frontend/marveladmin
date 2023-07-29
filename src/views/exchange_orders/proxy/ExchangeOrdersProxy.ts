@@ -82,6 +82,8 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             total_win: { name: "", options: [] },
             user_created_at: { name: LangUtil("账号创建时间"), options: [] },
             is_first_exchange: { name: "是否首兑", options: [] },
+            invite_user_id: { name: "直属代理ID", options: [] },
+            grant_agent_id: { name: "代理ID", options: [] },
         },
         list: <any>[],
         message: {},
@@ -157,6 +159,9 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         coin_name_unique: "",
         block_network_id: "",
         is_first_exchange: "",
+        invite_user_id: "",
+        grant_agent_id: "",
+        user_remark: "",
     };
 
     /**平台币商代付相关数据 */
@@ -316,6 +321,9 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             coin_name_unique: "",
             block_network_id: "",
             is_first_exchange: "",
+            invite_user_id: "",
+            grant_agent_id: "",
+            user_remark: "",
         });
     }
 

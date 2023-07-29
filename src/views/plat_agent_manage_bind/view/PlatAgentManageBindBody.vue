@@ -169,32 +169,23 @@
                 :label="tableColumns.commission_awaiting_num.name"
                 prop="commission_awaiting_num"
                 width="120px"
-                align="left"
+                align="center"
             >
-                <template slot-scope="{ row }">
-                    <div v-html="formatObject(row.commission_awaiting_num)"></div>
-                </template>
             </el-table-column>
             <!-- 已领取佣金总额 -->
             <el-table-column
                 :label="tableColumns.commission_received_num.name"
                 prop="commission_received_num"
                 width="120px"
-                align="left"
+                align="center"
             >
-                <template slot-scope="{ row }">
-                    <div v-html="formatObject(row.commission_received_num)"></div>
-                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.commission_total.name"
                 prop="commission_total"
                 width="120px"
-                align="left"
+                align="center"
             >
-                <template slot-scope="{ row }">
-                    <div v-html="formatObject(row.commission_total)"></div>
-                </template>
             </el-table-column>
             <el-table-column align="center" width="120px" :label="tableColumns.bonus_ratio.name" prop="bonus_ratio">
             </el-table-column>

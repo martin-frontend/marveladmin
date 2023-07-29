@@ -64,8 +64,12 @@
                 :maxValue.sync="listQuery.max_level"
                 :placeholders="[LangUtil('最小等级'), LangUtil('最大等级')]"
             />
-            <SearchInput :title="tableColumns.recharge_amount.name" v-model="listQuery.recharge_amount" :placeholderProps="LangUtil('最小金额')" searchType="number" />
-
+            <SearchInput
+                :title="tableColumns.recharge_amount.name"
+                v-model="listQuery.recharge_amount"
+                :placeholderProps="LangUtil('最小金额')"
+                searchType="number"
+            />
         </div>
         <div class="group">
             <SearchDatePicker
@@ -80,6 +84,14 @@
                 :endDate.sync="listQuery['last_online_at-{<}']"
                 :showTime="true"
             />
+            <SearchDatePicker
+                :title="LangUtil('首充时间')"
+                :startDate.sync="listQuery['paytime-{>=}']"
+                :endDate.sync="listQuery['paytime-{<}']"
+                :showTime="true"
+            />
+        </div>
+        <div>
             <el-button class="header-button" @click="handlerSearch()" type="primary">{{ LangUtil("查询") }}</el-button>
             <el-button class="header-button" @click="handlerReset()" type="primary">{{ LangUtil("重置") }}</el-button>
             <el-button

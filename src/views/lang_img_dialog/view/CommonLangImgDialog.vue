@@ -31,7 +31,7 @@
                             :multiple="false"
                             :show-file-list="false"
                             ref="upload"
-                            v-if="!form[key].urls"
+                            v-if="!form || !form[key] || !form[key].urls"
                             class="upload"
                         >
                             <i class="el-icon-plus"></i>
@@ -40,7 +40,7 @@
                             class="upload-box"
                             @mouseover="onMouseEnter"
                             @mouseleave="onMouseLeave"
-                            v-if="form[key].urls"
+                            v-else
                         >
                             <div class="mask" v-show="showMask">
                                 <div class="icon-bar">

@@ -30,6 +30,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     /**表格相关数据 */
     tableData = <any>{
         columns: {
+            active_model_tag: { name: "", options: {} },
             activity_category: { name: "活动分类", options: {} },
             activity_desc: { name: "活动描述", options: {} },
             activity_name: { name: "活动名称", options: {} },
@@ -75,6 +76,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             activity_coin_task: { name: "活动币任务", options: {} },
             extended_task_type: { name: "扩展任务类型", options: {} },
             process_control: { name: "流程控制", options: {} },
+            daily_ratio: { name: "", options: <any>{} },
+            rule_desc: { name: "", options: <any>{} },
             vendor_id: { name: "厂商ID", options: {} },
             vendor_ids: { name: "", options: {} },
         },
@@ -131,6 +134,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             settlement_period: "",
             des: "",
             show_types: [],
+            daily_ratio: [],
             show_type: <any>2,
             is_once: "",
             rules: <any>[],
@@ -150,6 +154,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             task_water_rate_128: "",
             activity_coin_task: <any>{},
             process_control: 1,
+            rule_desc: "",
+            active_model_tag: "",
             vendorArr: <any>[],
             transfer_amount_rate_Arr: <any>[],
         },
@@ -234,6 +240,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.formSource["open_model_url"] = this.dialogData.form.open_model_url;
         this.dialogData.formSource["award_types"] = this.dialogData.form.award_types;
         this.dialogData.formSource["show_types"] = this.dialogData.form.show_types;
+        this.dialogData.formSource["daily_ratio"] = this.dialogData.form.daily_ratio;
         this.dialogData.formSource["des"] = this.dialogData.form.des;
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
@@ -351,6 +358,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             settlement_period: "",
             des: "",
             show_types: [],
+            daily_ratio: [],
             show_type: <any>1,
             is_once: "",
             rules: [],
@@ -368,6 +376,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             task_water_rate_128: "",
             activity_coin_task: <any>{},
             process_control: 1,
+            rule_desc: "",
+            active_model_tag: "",
             vendorArr: <any>[],
             transfer_amount_rate_Arr: <any>[],
         });
@@ -399,9 +409,28 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         result = this.activeModelData.ruleList.filter((item: any) => parseInt(rule.rule_id) === item.id);
         return result.length > 0 ? result[0] : "";
     }
+    chickDailyRatio(): boolean {
+        if (this.dialogData.form.award_type == 16 || this.dialogData.form.award_type == "16") {
+            // if (this.dialogData.form.active_model_tag == "16") {
+            let sumNub = 0;
+            for (let index = 0; index < this.dialogData.form.daily_ratio.length; index++) {
+                sumNub += this.dialogData.form.daily_ratio[index];
+            }
+            if (sumNub != 100) {
+                const msg = LangUtil("全部比例总和必须为100%");
+                MessageBox.alert(msg, "", { confirmButtonText: <string>LangUtil("关闭") });
+
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
 
     /**添加数据 */
     onAdd() {
+        if (!this.chickDailyRatio()) return;
+
         let formCopy = <any>{};
         const {
             plat_id,
@@ -413,6 +442,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             model_open_mode,
             open_mode_url,
             award_type,
+            daily_ratio,
             type,
             model_id,
             rules,
@@ -424,6 +454,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_type,
             is_once,
             icon,
+            rule_desc,
+            process_control,
+            active_model_tag,
             extended_task_type,
             task_days,
             task_water_rate_2,
@@ -433,7 +466,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             task_water_rate_32,
             task_water_rate_64,
             task_water_rate_128,
-            process_control,
             vendorArr,
             transfer_amount_rate_Arr,
         } = this.dialogData.form;
@@ -469,6 +501,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 end_time,
                 model_open_mode,
                 award_type,
+                daily_ratio: JSON.stringify(daily_ratio),
                 model_id,
                 rules: JSON.stringify(rules),
                 bonus_multiple,
@@ -478,6 +511,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 award_tpl,
                 show_type,
                 icon,
+                rule_desc,
+                active_model_tag,
                 extended_task_type,
                 task_days,
                 task_water_rate_2,
@@ -513,6 +548,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 task_water_rate_64,
                 task_water_rate_128,
                 process_control,
+                rule_desc,
+                active_model_tag,
             };
         }
         /**
@@ -609,9 +646,14 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
 
     /**更新活动*/
     onUpdate() {
+        if (!this.chickDailyRatio()) return;
         // 删除多余无法去除的参数
         let formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
         formCopy = objectRemoveNull(formCopy);
+        if (this.dialogData.form.award_type == 16 || this.dialogData.form.award_type == "16") {
+            formCopy.daily_ratio = JSON.stringify(this.dialogData.form.daily_ratio);
+            console.log("----formCopy---", formCopy);
+        }
         // 如果没有修改，就直接关闭弹窗
         if (Object.keys(formCopy).length == 0) {
             console.log("如果没有修改，就直接关闭弹窗");
@@ -716,8 +758,11 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 award_tpl,
                 activity_desc,
                 show_types,
+                daily_ratio,
                 link_url,
                 is_once,
+                rule_desc,
+                active_model_tag,
             } = body;
 
             this.dialogData.form.model_open_mode = open_mode;
@@ -728,6 +773,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.dialogData.form.award_tpl = award_tpl;
             this.dialogData.form.des = activity_desc;
             this.dialogData.form.show_types = show_types;
+            this.dialogData.form.daily_ratio = daily_ratio;
             this.dialogData.form.link_url = link_url;
             this.dialogData.form.is_once = is_once;
             this.dialogData.form.show_type = show_types[0];

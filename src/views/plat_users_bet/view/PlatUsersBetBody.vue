@@ -301,6 +301,11 @@
                         <p>{{ LangUtil("Jackpot") }}：{{ row.agdz_totaljackpot }}</p>
                         <p>{{ LangUtil("第一名奖励") }}：{{ row.agdz_totalfirstprize }}</p>
                     </template>
+                    <template v-if="row.vendor_id == 197">
+                        <p>{{ LangUtil("开奖结果") }}：{{ row.game_results }}</p>
+                        <p>{{ LangUtil("奖期") }}：{{ row.vendor_game_issue }}</p>
+                        <p>{{ LangUtil("赔率") }}：{{ row.odds }}</p>
+                    </template>
                     <el-button v-if="row.bet_detail_url" @click="showDetailPage(row)" type="text">{{
                         LangUtil("跳转详情")
                     }}</el-button>

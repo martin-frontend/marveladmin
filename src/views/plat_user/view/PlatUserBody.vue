@@ -1,6 +1,7 @@
 <template>
     <div>
         <div style="margin-bottom: 8px; text-align: right">
+            <el-button v-if="checkUnique(unique.plat_user_get_admin_added_user)" @click="handleMutipleUser()" type="primary">{{ LangUtil("批量新增用户") }}</el-button>
             <el-button
                 v-if="checkUnique(unique.plat_user_store_credit_user)"
                 @click="handlerAddCreditUser()"
@@ -391,6 +392,9 @@ export default class PlatUserBody extends AbstractView {
 
     handlerAddCreditUser() {
         this.myProxy.showCreditUserDialog();
+    }
+    handleMutipleUser() {
+        this.myProxy.showMultipleUserDialog();
     }
 
     changeChannel(data: any) {

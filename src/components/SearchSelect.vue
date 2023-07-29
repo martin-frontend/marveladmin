@@ -15,7 +15,17 @@
             :disabled="getDisabled"
             @change="onChange"
         >
-            <el-option v-for="(value, key) in options" :key="key" :label="value.name || value" :value="key"></el-option>
+            <template v-if="!isUseKey">
+                <el-option
+                    v-for="(value, key) in options"
+                    :key="key"
+                    :label="value.name || value"
+                    :value="key"
+                ></el-option>
+            </template>
+            <template v-else>
+                <el-option v-for="(value, key) in options" :key="key" :label="key || value" :value="key"></el-option>
+            </template>
         </el-select>
     </div>
     <!-- 父组件用法 -->
@@ -46,6 +56,7 @@ export default class SearchSelect extends Vue {
     @Prop({ default: false }) disabled!: boolean;
     @Prop({ default: true }) isNeedTitle!: boolean;
     @Prop() tip!: string;
+    @Prop({ default: false }) isUseKey!: boolean;
 
     selectValue = this.getValue;
 

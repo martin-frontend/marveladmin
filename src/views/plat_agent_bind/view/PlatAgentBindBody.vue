@@ -166,12 +166,6 @@
                 width="120px"
                 align="center"
             >
-                <template slot-scope="{ row }">
-                    <div v-if="row.commission_awaiting_num.length == 0">
-                        -
-                    </div>
-                    <div v-else v-html="formatObject(row.commission_awaiting_num)"></div>
-                </template>
             </el-table-column>
             <!-- 已领取佣金总额 -->
             <el-table-column
@@ -180,12 +174,6 @@
                 width="120px"
                 align="center"
             >
-                <template slot-scope="{ row }">
-                    <div v-if="row.commission_received_num.length == 0">
-                        -
-                    </div>
-                    <div v-else v-html="formatObject(row.commission_received_num)"></div>
-                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.commission_total.name"
@@ -193,12 +181,6 @@
                 width="120px"
                 align="center"
             >
-                <template slot-scope="{ row }">
-                    <div v-if="row.commission_total.length == 0">
-                        -
-                    </div>
-                    <div v-else v-html="formatObject(row.commission_total)"></div>
-                </template>
             </el-table-column>
 
             <el-table-column align="center" :label="tableColumns.agent_bonus.name" prop="agent_bonus" width="120px">
