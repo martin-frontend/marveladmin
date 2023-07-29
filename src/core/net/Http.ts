@@ -10,6 +10,9 @@ export default class Http {
         data.device = GlobalVar.device;
         data.lang = GlobalVar.lang;
 
+        if (!data.custom_host) {
+            data.custom_host = GlobalVar.host;
+        }
         if (GlobalVar.admin_user_id) {
             data.login_admin_user_id = GlobalVar.admin_user_id;
             data.token = GlobalVar.token;
