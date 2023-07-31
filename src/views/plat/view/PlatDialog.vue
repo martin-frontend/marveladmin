@@ -60,6 +60,17 @@
                     </el-select>
                 </el-form-item>
 
+                <el-form-item size="mini" :label="tableColumns['is_register_store_bank_info'].name">
+                    <el-select v-model="form.is_register_store_bank_info" filterable class="select" :placeholder="LangUtil('请选择')">
+                        <el-option
+                            v-for="(value, key) in tableColumns.is_register_store_bank_info.options"
+                            :key="key"
+                            :label="value"
+                            :value="Number(key)"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="tableColumns['language'].name" prop="language">
                     <el-checkbox-group v-model="form.language">
                         <el-checkbox
