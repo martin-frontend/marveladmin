@@ -27,7 +27,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             pageCount: 1,
         });
     }
-
+    protected isChannelUser = false;
     /**表格相关数据 */
     tableData = {
         columns: <any>{
@@ -267,7 +267,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         remark: "",
         is_credit_user: "",
         is_gold_exchange: "",
-        admin_added_batch:"",
+        admin_added_batch: "",
         page_count: 1,
         page_size: 20,
     };
@@ -281,7 +281,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "created_at-{>=}": "",
             "created_at-{<}": "",
             remark: "",
-            admin_added_batch:"",
+            admin_added_batch: "",
             is_credit_user: "",
             is_gold_exchange: "",
             page_count: 1,

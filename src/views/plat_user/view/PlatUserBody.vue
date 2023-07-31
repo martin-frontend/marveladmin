@@ -1,9 +1,9 @@
 <template>
     <div>
         <div style="margin-bottom: 8px; text-align: right">
-            <el-button v-if="checkUnique(unique.plat_user_get_admin_added_user)" @click="handleMutipleUser()" type="primary">{{ LangUtil("批量新增用户") }}</el-button>
+            <el-button v-if="checkUnique(unique.plat_user_get_admin_added_user) && !myProxy.isChannelUser" @click="handleMutipleUser()" type="primary">{{ LangUtil("批量新增用户") }}</el-button>
             <el-button
-                v-if="checkUnique(unique.plat_user_store_credit_user)"
+                v-if="checkUnique(unique.plat_user_store_credit_user) && !myProxy.isChannelUser"
                 @click="handlerAddCreditUser()"
                 type="primary"
                 >{{ LangUtil("新增信用用户") }}</el-button
