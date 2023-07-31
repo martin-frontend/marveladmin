@@ -12,7 +12,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="`${tableColumns.ip.name}`" prop="ip">
-                <el-input clearable maxlength="30" :placeholder="LangUtil('请输入')" v-model="form.ip"></el-input>
+                <el-input clearable maxlength="30" :placeholder="LangUtil('请输入')" v-model.trim="form.ip"></el-input>
             </el-form-item>
             <el-form-item :label="`${tableColumns.remark.name}`" prop="remark">
                 <el-input clearable maxlength="100" :placeholder="LangUtil('请输入')" v-model="form.remark"></el-input>
