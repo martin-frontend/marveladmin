@@ -103,7 +103,7 @@
             >
                 {{ LangUtil("导出") }}
             </el-button>
-            <el-button class="header-button" @click="handlerSearchWallet()" type="primary">{{
+            <el-button v-if="!myProxy.isChannelUser" class="header-button" @click="handlerSearchWallet()" type="primary">{{
                 LangUtil("平台当前用户余额")
             }}</el-button>
         </div>
