@@ -108,10 +108,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             activity_task_least_amount: {name: '活动币任务最少真实金额', options: {} },
             is_activity_back_water: {name: '活动币任务是否返水', options: {} },
             activity_task_pattern: {name: '活动币任务激活模式', options: {} },
-            max_exchange_gold: { name: "最大兑换金额", options: {} },
-            forbidden_country: { name: "", options: {} },
-            is_active_digital_currency: { name: "数字货币是否参数活动", options: {} },
             auth_types: { name: "验证方式", options: {} },
+            is_register_store_bank_info: { name: "注册是否储存银行卡信息", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -188,6 +186,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_activity_back_water:"",
         activity_task_pattern:"",
         auth_types: 1,
+        is_register_store_bank_info:98,
     };
     /**弹窗相关数据 */
     dialogData = {
