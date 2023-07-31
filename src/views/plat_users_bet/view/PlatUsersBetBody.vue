@@ -52,51 +52,117 @@
                 {{ summary.total_bet_user_num }}
             </span>
         </div>
-        <div class="statistics" v-for="(item, index) in myProxy.tableData.summary_coin" :key="index">
-            {{ item.coin_name_unique }}
-            <span>
-                {{ LangUtil("总投注金额") }}:
-                <WinLossDisplay
-                    :amount="item.bet_gold"
-                    :isShowColor="false"
-                    :isShowPlus="false"
-                    :isShowDollar="false"
-                />
-            </span>
-            <span>
-                {{ LangUtil("有效投注金额") }}:
-                <WinLossDisplay
-                    :amount="item.valid_bet_gold"
-                    :isShowColor="false"
-                    :isShowPlus="false"
-                    :isShowDollar="false"
-                />
-            </span>
-            <span> {{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
-            <span>
-                {{ LangUtil("结算流水") }}:
-                <WinLossDisplay
-                    :amount="item.settlement_water"
-                    :isShowColor="false"
-                    :isShowPlus="false"
-                    :isShowDollar="false"
-                />
-            </span>
-            <span>
-                {{ LangUtil("用户流水") }}:
-                <WinLossDisplay :amount="item.water" :isShowColor="false" :isShowPlus="false" :isShowDollar="false" />
-            </span>
-            <span>
-                {{ tableColumns["backwater"].name }}:
-                <WinLossDisplay
-                    :amount="item.backwater_coin"
-                    :isShowColor="false"
-                    :isShowPlus="false"
-                    :isShowDollar="false"
-                />
-            </span>
-            <!-- <span>{{ tableColumns["water_accelerate"].name }}:{{ item.water_accelerate }}</span> -->
-        </div>
+        <template v-for="(item, index) in myProxy.tableData.summary_coin">
+            <div class="statistics" :key="index" v-if="item.coin_name_unique_type != 4">
+                {{ item.coin_name_unique }}
+                <span>
+                    {{ LangUtil("总投注金额") }}:
+                    <WinLossDisplay
+                        :amount="item.bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </span>
+                <span>
+                    {{ LangUtil("有效投注金额") }}:
+                    <WinLossDisplay
+                        :amount="item.valid_bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </span>
+                <span> {{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
+                <span>
+                    {{ LangUtil("结算流水") }}:
+                    <WinLossDisplay
+                        :amount="item.settlement_water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </span>
+                <span>
+                    {{ LangUtil("用户流水") }}:
+                    <WinLossDisplay
+                        :amount="item.water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </span>
+                <span>
+                    {{ tableColumns["backwater"].name }}:
+                    <WinLossDisplay
+                        :amount="item.backwater_coin"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </span>
+                <!-- <span>{{ tableColumns["water_accelerate"].name }}:{{ item.water_accelerate }}</span> -->
+            </div>
+        </template>
+        <el-collapse v-if="activitySummaryCoin.length > 0" class="custom-collapse">
+            <el-collapse-item>
+                <template slot="title">
+                    <div>{{ LangUtil("活动币统计") }}</div>
+                </template>
+                <div class="statistics" :key="item.name" v-for="item in activitySummaryCoin">
+                    {{ item.coin_name_unique }}
+                    <span>
+                        {{ LangUtil("总投注金额") }}:
+                        <WinLossDisplay
+                            :amount="item.bet_gold"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ LangUtil("有效投注金额") }}:
+                        <WinLossDisplay
+                            :amount="item.valid_bet_gold"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"
+                    /></span>
+                    <span>
+                        {{ LangUtil("结算流水") }}:
+                        <WinLossDisplay
+                            :amount="item.settlement_water"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ LangUtil("用户流水") }}:
+                        <WinLossDisplay
+                            :amount="item.water"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ tableColumns["backwater"].name }}:
+                        <WinLossDisplay
+                            :amount="item.backwater_coin"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                </div>
+            </el-collapse-item>
+        </el-collapse>
+
         <el-table
             :data="tableData"
             border
@@ -116,13 +182,11 @@
                     <div>{{ tableColumns.vendor_id.options[row.vendor_id] }}</div>
                 </template>
             </el-table-column>
-            <el-table-column
-                :label="LangUtil('平台信息')"
-                min-width="200px"
-                class-name="status-col"
-            >
+            <el-table-column :label="LangUtil('平台信息')" min-width="200px" class-name="status-col">
                 <template slot-scope="{ row }">
-                    <div style="text-align: left;">{{ tableColumns.plat_id.name }}:{{ tableColumns.plat_id.options[row.plat_id] }}</div>
+                    <div style="text-align: left;">
+                        {{ tableColumns.plat_id.name }}:{{ tableColumns.plat_id.options[row.plat_id] }}
+                    </div>
                     <div style="text-align: left;">{{ tableColumns.channel_id.name }}:{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
@@ -455,6 +519,11 @@ export default class PlatUsersBetBody extends AbstractView {
     showDetailPage(data: any) {
         this.myProxy.showDetailPage(data);
     }
+
+    get activitySummaryCoin() {
+        // @ts-ignore
+        return this.myProxy.tableData.summary_coin.filter(({ coin_name_unique_type }) => coin_name_unique_type == 4);
+    }
 }
 </script>
 
@@ -467,6 +536,25 @@ export default class PlatUsersBetBody extends AbstractView {
         :nth-child(1) {
             margin-left: 0;
         }
+    }
+}
+::v-deep .custom-collapse {
+    margin-bottom: 10px;
+    border: 0;
+    .el-collapse-item__header {
+        border: 0;
+        color: #000;
+        font-size: 16px;
+    }
+    .el-collapse-item__arrow {
+        margin: 0 0 0 8px;
+    }
+    .statistics {
+        color: #000;
+        font-size: 16px;
+    }
+    .el-collapse-item__wrap {
+        border: 0;
     }
 }
 </style>
