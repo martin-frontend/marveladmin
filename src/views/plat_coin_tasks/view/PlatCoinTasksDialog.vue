@@ -6,7 +6,15 @@
             </el-form-item>
             <el-form-item :label="tableColumns.activity_name.name" prop="activity_name">
                 <div class="flex d-flex">
-                    <el-input :placeholder="LangUtil('请输入')" v-model="form.activity_name"></el-input>
+                    <el-input
+                        clearable
+                        :placeholder="LangUtil('请输入')"
+                        v-model="form.activity_name"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.activity_name)">
+                        {{ LangUtil("翻译") }}
+                    </el-button>
                 </div>
             </el-form-item>
             <!-- <el-form-item :label="tableColumns.activity_id.name" prop="activity_id">
@@ -83,6 +91,19 @@
                         :precision="2"
                     >
                     </el-input-number>
+                </div>
+            </el-form-item>
+            <el-form-item :label="tableColumns.award_type.name" prop="award_type">
+                <div class="flex d-flex">
+                    <el-select filterable v-model="form.award_type" :placeholder="LangUtil('请选择')">
+                        <el-option
+                            v-for="(item, key) of tableColumns.award_type.options"
+                            :label="item"
+                            :value="key"
+                            :key="key"
+                        >
+                        </el-option>
+                    </el-select>
                 </div>
             </el-form-item>
             <div class="title">{{ LangUtil("奖励任务设置") }}</div>
@@ -234,6 +255,8 @@ import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
 import { readerData } from "@/core/global/Excel";
 import { BaseInfo } from "@/components/vo/commonVo";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class PlatCoinTasksDialog extends AbstractView {
@@ -248,6 +271,8 @@ export default class PlatCoinTasksDialog extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
     LangUtil = LangUtil;
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
+
     private textMap = {
         update: "编辑",
         create: "新增",
@@ -284,6 +309,7 @@ export default class PlatCoinTasksDialog extends AbstractView {
             task_water_rate_32: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             task_water_rate_64: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             task_water_rate_128: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            award_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 
@@ -341,6 +367,14 @@ export default class PlatCoinTasksDialog extends AbstractView {
     }
     handleDeleteVendor(i: any) {
         this.form.vendorArr.splice(i, 1);
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_ACTIVITY;
+        data.plat_id = this.form.plat_id;
+        this.langProxy.showDialog(data, true);
     }
 }
 </script>
