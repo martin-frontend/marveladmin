@@ -82,6 +82,19 @@
                     ></el-input>
                 </div>
             </el-form-item>
+            <el-form-item :label="tableColumns.award_type.name" prop="award_type">
+                <div class="flex d-flex">
+                    <el-select filterable v-model="form.award_type" :placeholder="LangUtil('请选择')">
+                        <el-option
+                            v-for="(item, key) of tableColumns.award_type.options"
+                            :label="item"
+                            :value="key"
+                            :key="key"
+                        >
+                        </el-option>
+                    </el-select>
+                </div>
+            </el-form-item>
             <div class="title">{{ LangUtil("奖励任务设置") }}</div>
             <div class="layout">
                 <div>
@@ -285,6 +298,7 @@ export default class PlatCoinTasksDialog extends AbstractView {
             task_water_rate_32: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             task_water_rate_64: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             task_water_rate_128: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            award_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 

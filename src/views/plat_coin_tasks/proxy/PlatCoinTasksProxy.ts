@@ -63,6 +63,7 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             water_need_128: { name: "电竞所需流水", options: {} },
             vendor_id: { name: "厂商ID", options: {} },
             vendor_ids: { name: "", options: {} },
+            award_type: { name: "派奖类型", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -105,6 +106,7 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             vendorArr: <any>[
                 //{ name: "mmm", water: 11}
             ],
+            award_type: "",
         },
         formSource: null, // 表单的原始数据
         excelColumnInfo: {
@@ -219,6 +221,7 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             task_water_rate_64: "",
             task_water_rate_128: "",
             task_config: <any>{},
+            award_type: "",
         });
     }
 
@@ -263,6 +266,7 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             task_water_rate_32,
             task_water_rate_64,
             task_water_rate_128,
+            award_type,
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -272,6 +276,7 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             task_coin_amount,
             bonus_multiple,
             task_days,
+            award_type,
         };
         formCopy.task_config = {
             task_days,
