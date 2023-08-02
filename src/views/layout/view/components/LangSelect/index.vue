@@ -18,6 +18,9 @@
             <el-dropdown-item :disabled="language === 'jp'" command="jp" class="flex">
                 <span class="lang"> <img :src="imageBox.jp" class="img" /> Japanese </span>
             </el-dropdown-item>
+            <el-dropdown-item :disabled="language === 'ko'" command="ko" class="flex">
+                <span class="lang"> <img :src="imageBox.ko" class="img" /> 한국인 </span>
+            </el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
 </template>
@@ -32,6 +35,7 @@ export default {
                 vi: require("../../../../../assets/lang/vi_logo.png"),
                 en: require("../../../../../assets/lang/en_logo.png"),
                 jp: require("../../../../../assets/lang/jp_logo.png"),
+                ko: require("../../../../../assets/lang/ko_logo.png"),
             },
         };
     },
@@ -50,6 +54,8 @@ export default {
                 str = "English";
             } else if (Cookies.get("language") === "jp") {
                 str = "Japanese";
+            } else if (Cookies.get("language") === "ko") {
+                str = "한국인";
             }
             return str;
         },

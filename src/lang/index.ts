@@ -9,6 +9,7 @@ import elementViLocale from "element-ui/lib/locale/lang/vi";
 import elementZhLocale from "element-ui/lib/locale/lang/zh-CN";
 import elementEnLocale from "element-ui/lib/locale/lang/en";
 import elementJpLocale from "element-ui/lib/locale/lang/ja";
+import elementKoLocale from "element-ui/lib/locale/lang/ko";
 
 // User defined lang
 import GlobalVar from "@/core/global/GlobalVar";
@@ -30,6 +31,9 @@ const messages = {
     jp: {
         ...elementJpLocale,
     },
+    ko: {
+        ...elementKoLocale,
+    }
     // 这里如果有其它语言包继续按照规则添加即可
 };
 
@@ -51,6 +55,9 @@ export const getLocale = () => {
                     break;
                 case "jp":
                     GlobalVar.lang = "jp_JP";
+                    break;
+                case "ko":
+                    GlobalVar.lang = "ko_Kr";
                     break;
             }
             return locale;
