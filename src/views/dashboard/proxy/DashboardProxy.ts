@@ -1,7 +1,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { dateFormat, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/dashboard/setting";
 import { MessageBox } from "element-ui";
 import IDashboardProxy from "./IDashboardProxy";
@@ -16,7 +16,7 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
     }
 
     /**离开页面时调用 */
-    leave() {}
+    leave() { }
 
     /**表格相关数据 */
     tableData = {
@@ -33,9 +33,26 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
         },
     };
 
+    /**玩家充值(全部订单) */
+    total_recharge = <any>[];
+
+    /**玩家充值(普通订单) */
+    non_vip_recharge = <any>[];
+
+    /**玩家充值(VIP订单) */
+    vip_recharge = <any>[];
+
+    /**游戏输赢 */
+    game_win_gold = <any>[];
+
+    /**平台币种统计 */
+    plat_coin_statistic = <any>[];
+
     /**查询条件 */
     listQuery = {
         plat_id: "",
+        start_date: dateFormat(getTodayOffset(), "yyyy-MM-dd"),
+        end_date: dateFormat(getTodayOffset(), "yyyy-MM-dd"),
     };
 
     /**昨天统计数据 */
@@ -155,6 +172,44 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
         number: 0,
     };
 
+    /**日期快捷 */
+    pickerOptions = {
+        shortcuts: [
+            {
+                text: LangUtil("今日"),
+                onClick(picker: any) {
+                    const start = getTodayOffset();
+                    const end = getTodayOffset(1, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+            {
+                text: LangUtil("昨日"),
+                onClick(picker: any) {
+                    const start = getTodayOffset(-1);
+                    const end = getTodayOffset(0, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+            {
+                text: LangUtil("最近一周"),
+                onClick(picker: any) {
+                    const start = getTodayOffset(-6);
+                    const end = getTodayOffset(1, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+            {
+                text: LangUtil("最近一个月"),
+                onClick(picker: any) {
+                    const start = getTodayOffset(-29);
+                    const end = getTodayOffset(1, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+        ],
+    };
+
     get getXAxisData() {
         let result = [];
         for (let index = 1; index <= 24; index++) {
@@ -198,7 +253,6 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
             yesterday: this.yesterdayStatistic.win_loss,
             vary: true,
         });
-
         return arr;
     }
 
@@ -218,7 +272,69 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
     onQuery() {
         this.sendNotification(HttpType.admin_index_statistic_today_statistic, objectRemoveNull(this.listQuery));
         this.sendNotification(HttpType.admin_index_statistic_yesterday_statistic, objectRemoveNull(this.listQuery));
+        this.onQueryStats();
         this.showChart();
+    }
+
+    onQueryStats() {
+        this.sendNotification(HttpType.admin_index_statistic_coin_statistic, objectRemoveNull(this.listQuery));
+    }
+
+    setStatistic(data: any) {
+        const keys = Object.keys(data.total_recharge);
+        const total_recharge = [];
+        const non_vip_recharge = [];
+        const vip_recharge = [];
+        const game_win_gold = [];
+        const plat_coin_statistic = [];
+        for (const key of keys) {
+            const item = data.total_recharge[key];
+            total_recharge.push({
+                coin_name_unique: key,
+                total_recharge: data.total_recharge[key].total_recharge,
+                user_num: data.total_recharge[key].user_num,
+                total_recharge_count: data.total_recharge[key].total_recharge_count,
+            });
+
+            non_vip_recharge.push({
+                coin_name_unique: key,
+                non_vip_total_recharge: data.non_vip_recharge[key].non_vip_total_recharge,
+                non_vip_user_num: data.non_vip_recharge[key].non_vip_user_num,
+                non_vip_total_recharge_count: data.non_vip_recharge[key].non_vip_total_recharge_count,
+            });
+            vip_recharge.push({
+                coin_name_unique: key,
+                vip_total_recharge: data.vip_recharge[key].vip_total_recharge,
+                vip_user_num: data.vip_recharge[key].vip_user_num,
+                vip_total_recharge_count: data.vip_recharge[key].vip_total_recharge_count,
+            });
+            game_win_gold.push({
+                coin_name_unique: key,
+                win_gold_2: data.game_win_gold[key].win_gold_2,
+                win_gold_4: data.game_win_gold[key].win_gold_4,
+                win_gold_8: data.game_win_gold[key].win_gold_8,
+                win_gold_16: data.game_win_gold[key].win_gold_16,
+                win_gold_32: data.game_win_gold[key].win_gold_32,
+                win_gold_64: data.game_win_gold[key].win_gold_64,
+                win_gold_128: data.game_win_gold[key].win_gold_128,
+            });
+            plat_coin_statistic.push({
+                coin_name_unique: key,
+                recharge_amount: data.plat_coin_statistic[key].recharge_amount,
+                exchange_amount: data.plat_coin_statistic[key].exchange_amount,
+                commission_amount: data.plat_coin_statistic[key].commission_amount,
+                backwater_amount: data.plat_coin_statistic[key].backwater_amount,
+                mail_awards_amount: data.plat_coin_statistic[key].mail_awards_amount,
+                activity_awards_amount: data.plat_coin_statistic[key].activity_awards_amount,
+                manual_deduct_amount: data.plat_coin_statistic[key].manual_deduct_amount,
+                win_loss_amount: data.plat_coin_statistic[key].win_loss_amount,
+            });
+        }
+        this.total_recharge = total_recharge;
+        this.non_vip_recharge = non_vip_recharge;
+        this.vip_recharge = vip_recharge;
+        this.game_win_gold = game_win_gold;
+        this.plat_coin_statistic = plat_coin_statistic;
     }
 
     /**昨天统计数据 */

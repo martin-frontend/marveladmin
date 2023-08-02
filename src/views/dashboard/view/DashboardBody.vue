@@ -2,6 +2,7 @@
     <div>
         <PanelGroup />
         <Chart />
+        <Statistic />
     </div>
 </template>
 <script lang="ts">
@@ -13,11 +14,13 @@ import DashboardProxy from "../proxy/DashboardProxy";
 import GlobalVar from "@/core/global/GlobalVar";
 import PanelGroup from "./components/PanelGroup.vue";
 import Chart from "./components/Chart.vue";
+import Statistic from "./components/Statistic.vue";
 
 @Component({
     components: {
         PanelGroup,
         Chart,
+        Statistic,
     },
 })
 export default class DashboardBody extends AbstractView {

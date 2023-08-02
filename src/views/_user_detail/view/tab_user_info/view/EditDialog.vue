@@ -27,7 +27,6 @@
                 <el-input
                     v-model="dialogData.filedValue"
                     rows="2"
-                    maxlength="10"
                     show-word-limit
                     class="dialog_input"
                     :placeholder="LangUtil('输入用户备注信息 最多10个字')"

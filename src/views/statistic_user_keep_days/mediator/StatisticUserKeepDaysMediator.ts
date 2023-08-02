@@ -8,7 +8,7 @@ import StatisticUserKeepDaysProxy from "../proxy/StatisticUserKeepDaysProxy";
 interface IStatisticUserKeepDays extends IEventDispatcher {}
 
 export default class StatisticUserKeepDaysMediator extends AbstractMediator {
-    private myProxy: StatisticUserKeepDaysProxy = <any>this.getProxy(StatisticUserKeepDaysProxy);
+    myProxy: StatisticUserKeepDaysProxy = <any>this.getProxy(StatisticUserKeepDaysProxy);
 
     onRegister() {
         this.myProxy.enter();
@@ -35,7 +35,11 @@ export default class StatisticUserKeepDaysMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_statistic_user_keep_days_index:
-                myProxy.setTableData(body);
+                if (myProxy.tableData.isExportExcel) {
+                    myProxy.exportExcel(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
         }
     }

@@ -42,13 +42,33 @@
                     :endDate.sync="listQuery['created_at-{<=}']"
                     :showTime="true"
                 />
+                <SearchInput
+                    :title="tableColumns.receive_users.name"
+                    :placeholder="LangUtil('请输入')"
+                    v-model="listQuery.receive_users"
+                />
+
+                <SearchInput
+                    :title="tableColumns.remark.name"
+                    :placeholder="LangUtil('请输入')"
+                    v-model="listQuery.remark"
+                />
+
                 <div class="header-button">
-                    <el-button @click="handlerSearch" type="primary" icon="el-icon-search">{{
-                        LangUtil("查询")
-                    }}</el-button>
-                    <el-button @click="handlerReset" type="primary" icon="el-icon-refresh">{{
-                        LangUtil("重置")
-                    }}</el-button>
+                    <el-button @click="handlerSearch" type="primary" icon="el-icon-search">
+                        {{ LangUtil("查询") }}
+                    </el-button>
+                    <el-button @click="handlerReset" type="primary" icon="el-icon-refresh">
+                        {{ LangUtil("重置") }}
+                    </el-button>
+                    <el-button
+                        @click="handlerExport"
+                        type="primary"
+                        icon="el-icon-download"
+                        :disabled="list.length == 0"
+                    >
+                        {{ LangUtil("导出") }}
+                    </el-button>
                 </div>
             </div>
         </div>
@@ -86,6 +106,19 @@
                     {{ tableColumns.send_type.options[row.send_type] }}
                 </template>
             </el-table-column>
+
+            <el-table-column :label="`${tableColumns.receive_users.name}`" class-name="status-col" min-width="80px">
+                <template slot-scope="{ row }">
+                    {{ row.receive_users }}
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="`${tableColumns.remark.name}`" class-name="status-col" min-width="80px">
+                <template slot-scope="{ row }">
+                    {{ row.remark }}
+                </template>
+            </el-table-column>
+
             <el-table-column :label="`${tableColumns.type.name}`" class-name="status-col" min-width="80px">
                 <template slot-scope="{ row }">
                     {{ tableColumns.type.options[row.type] }}
@@ -191,6 +224,7 @@ export default class PlatEmailList extends AbstractView {
     listQuery = this.myProxy.listQuery;
     // Iproxy property
     EmailStatus = EmailStatus;
+    list = this.myProxy.tableData.list;
 
     handlerSearch() {
         this.listQuery.page_count = 1;
@@ -212,6 +246,10 @@ export default class PlatEmailList extends AbstractView {
 
     handlerDelete(data: any) {
         this.myProxy.onDelete(data.content_id);
+    }
+
+    handlerExport() {
+        this.myProxy.showEmailFieldSelectionDialog();
     }
 }
 </script>

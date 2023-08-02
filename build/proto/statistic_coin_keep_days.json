@@ -1,0 +1,9 @@
+{
+    "name": "价值留存统计",
+    "description": "价值留存统计",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47777817",
+    "list": [
+        "admin/statistic_coin_keep_days/table_columns",
+        "admin/statistic_coin_keep_days/index"
+    ]
+}

@@ -28,7 +28,6 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
     /**表格相关数据 */
     tableData = {
         columns: <any>{
-            // TODO
             active_user: { name: "活跃用户", options: {}, display: true },
             backwater_gold: { name: "实时返水", options: {}, tips: "玩家在实时返水中获得的金额", display: true },
             channel_id: { name: "所属渠道", options: {}, display: true },
@@ -45,10 +44,24 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             plat_id: { name: "所属平台", options: {}, display: true },
             recharge: { name: "充值金额", options: {}, display: true },
             recharge_user: { name: "充值人数", options: {}, display: true },
+            repeat_recharge_user: { name: '重复充值人数', options: {} },
             water: { name: "游戏流水", options: {}, display: true },
             win_loss: { name: "游戏输赢", options: {}, display: true },
             new_user: { name: "新增登入" },
             agent_bonus_gold: { name: "", options: {} },
+            new_register_device: { name: '新增注册设备', options: {} },
+            effective_new_rate: { name: '有效新增率', options: {} },
+            new_user_recharge: { name: '新用户充值金额', options: {} },
+            old_user_recharge: { name: '老用户充值金额', options: {} },
+            new_recharge_rate: { name: '新增充值率', options: {} },
+            new_register_water: { name: '新用户游戏流水', options: {} },
+            active_user_week: { name: '周活跃用户', options: {} },
+            active_user_month: { name: '月活跃用户', options: {} },
+            active_recharge_user: { name: '活跃充值人数', options: {} },
+            active_user_recharge: { name: '活跃充值金额', options: {} },
+            recharge_seep_rate: { name: '充值渗透率', options: {} },
+            arpu_rate: { name: 'arpu_rate', options: {} },
+            arppu_rate: { name: 'arppu_rate', options: {} },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -164,6 +177,20 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         commission_gold: "",
         new_user: "",
         agent_bonus_gold: "",
+        repeat_recharge_user: "",
+        new_register_device: "",
+        effective_new_rate: "",
+        new_user_recharge: "",
+        old_user_recharge: "",
+        new_recharge_rate: "",
+        new_register_water: "",
+        active_user_week: "",
+        active_user_month: "",
+        active_recharge_user: "",
+        active_user_recharge: "",
+        recharge_seep_rate: "",
+        arpu_rate: "",
+        arppu_rate: "",
     };
 
     /**导出 相关数据 */
@@ -172,20 +199,34 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "created_date",
             "plat_id",
             "channel_id",
-            "new_user",
+            "new_register_device",
             "new_register",
-            "active_user",
+            "effective_new_rate",
             "recharge",
+            "new_user_recharge",
+            "old_user_recharge",
             "recharge_user",
             "new_recharge_user",
+            "new_recharge_rate",
+            "repeat_recharge_user",
             "exchange",
             "exchange_user",
             "new_exchange_user",
             "gift_gold",
             "backwater_gold",
+            "agent_bonus_gold",
             "commission_gold",
             "win_loss",
             "water",
+            "new_register_water",
+            "active_user",
+            "active_user_week",
+            "active_user_month",
+            "active_recharge_user",
+            "active_user_recharge",
+            "recharge_seep_rate",
+            "arpu_rate",
+            "arppu_rate",
         ],
     };
 
@@ -214,9 +255,9 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
         this.summaryData["plat_id"] = <any>LangUtil("合计");
-        this.summaryData["active_user"] = "--";
-        this.summaryData["recharge_user"] = "--";
-        this.summaryData["exchange_user"] = "--";
+        this.summaryData["active_user"] = data.summary.active_user;
+        this.summaryData["recharge_user"] = data.summary.recharge_user;
+        this.summaryData["exchange_user"] = data.summary.exchange_user;
         this.summaryData["exchange"] = data.summary.exchange;
         this.summaryData["new_exchange_user"] =
             data.summary.new_exchange_user === 0 ? "0" : data.summary.new_exchange_user;
@@ -231,6 +272,20 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         this.summaryData["backwater_gold"] = data.summary.backwater_gold;
         this.summaryData["commission_gold"] = data.summary.commission_gold;
         this.summaryData["agent_bonus_gold"] = data.summary.agent_bonus_gold;
+        this.summaryData["repeat_recharge_user"] = data.summary.repeat_recharge_user;
+        this.summaryData["new_register_device"] = data.summary.new_register_device;
+        this.summaryData["effective_new_rate"] = data.summary.effective_new_rate;
+        this.summaryData["new_user_recharge"] = data.summary.new_user_recharge;
+        this.summaryData["old_user_recharge"] = data.summary.old_user_recharge;
+        this.summaryData["new_recharge_rate"] = data.summary.new_recharge_rate;
+        this.summaryData["new_register_water"] = data.summary.new_register_water;
+        this.summaryData["active_user_week"] = data.summary.active_user_week;
+        this.summaryData["active_user_month"] = data.summary.active_user_month;
+        this.summaryData["active_recharge_user"] = data.summary.active_recharge_user;
+        this.summaryData["active_user_recharge"] = data.summary.active_user_recharge;
+        this.summaryData["recharge_seep_rate"] = data.summary.recharge_seep_rate;
+        this.summaryData["arpu_rate"] = data.summary.arpu_rate;
+        this.summaryData["arppu_rate"] = data.summary.arppu_rate;
         // 把summaryData 插入第一笔
         this.tableData.list.splice(0, 0, this.summaryData);
     }
@@ -403,7 +458,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any) {
-        return arr1.concat(arr2).filter(function(v: any, i: any, arr: any) {
+        return arr1.concat(arr2).filter(function (v: any, i: any, arr: any) {
             return arr.indexOf(v) === arr.lastIndexOf(v);
         });
     }
@@ -415,6 +470,26 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 if (key === "plat_id") {
                     return this.tableData.columns["plat_id"].options[data.plat_id];
                 }
+                if (key === "effective_new_rate") {
+                    if (data.effective_new_rate == null)
+                        return '-';
+                }
+                if (key === "new_recharge_rate") {
+                    if (data.new_recharge_rate == null)
+                        return '-';
+                }
+                if (key === "recharge_seep_rate") {
+                    if (data.recharge_seep_rate == null)
+                        return '-';
+                }
+                if (key === "arpu_rate") {
+                    if (data.arpu_rate == null)
+                        return '-';
+                }
+                if (key === "arppu_rate") {
+                    if (data.arppu_rate == null)
+                        return '-';
+                }
                 return data[key];
             })
         );
@@ -425,11 +500,16 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         let result: any = ["", ""];
         filterKeys.forEach((key: any) => {
             if (summary[key] !== undefined) {
-                result.push(summary[key]);
+                if (summary[key] == null) {
+                    result.push('-');
+                } else {
+                    result.push(summary[key]);
+                }
             } else {
                 console.log("key", key);
             }
         });
+
         return result;
     }
 
@@ -438,9 +518,8 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         let fileFirstName: any = "";
         let fileLastName: any = "";
         if (this.listQuery["created_date-{<=}"]) {
-            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${
-                this.listQuery["created_date-{<=}"].split(" ")[0]
-            }]`;
+            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${this.listQuery["created_date-{<=}"].split(" ")[0]
+                }]`;
         }
         if (this.listQuery.plat_id !== "0") {
             let str: any =

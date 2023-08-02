@@ -17,6 +17,17 @@
                 </template>
             </el-form-item>
 
+            <el-form-item :label="LangUtil('模版')" v-if="!readonly">
+                <el-select v-model="form.template_id" filterable class="select" :placeholder="LangUtil('请选择')" :disabled="!form.plat_id || !(form.template_option && form.template_option.length > 0)">
+                    <el-option
+                        v-for="(value) in form.template_option"
+                        :key="value.template_id"
+                        :label="value.template_name"
+                        :value="value.template_id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+
             <el-form-item :label="`${tableColumns.title.name}`" prop="title">
                 <div class="flex d-flex">
                     <el-input
@@ -61,6 +72,7 @@
                 </div>
             </el-form-item>
 
+            <!-- 邮件分类 -->
             <el-form-item size="mini" :label="tableColumns.cate.name" prop="cate">
                 <template v-if="readonly">{{ tableColumns.cate.options[form.cate] }} </template>
                 <template v-else>
@@ -69,19 +81,28 @@
                     </el-radio-group>
                 </template>
             </el-form-item>
+
+            <!-- 邮件类型 -->
             <el-form-item size="mini" :label="tableColumns.type.name" prop="type">
                 <template v-if="readonly">
                     {{ tableColumns.type.options[form.type] }}
                 </template>
                 <template v-else>
                     <el-radio-group v-model="form.type">
-                        <el-radio v-for="(value, key) in tableColumns.type.options" :key="key" :label="key">{{
-                            value
-                        }}</el-radio>
+                        <el-radio
+                            v-for="(value, key) in tableColumns.type.options"
+                            :key="key"
+                            :label="key"
+                            @change="onChange"
+                        >
+                            {{ value }}
+                        </el-radio>
                     </el-radio-group>
                     <div class="mark_font">{{ form.type | emailTypeDesc }}</div>
                 </template>
             </el-form-item>
+
+            <!-- 收件人 -->
             <el-form-item
                 v-if="isGroupMail && readonly"
                 size="mini"
@@ -90,6 +111,27 @@
             >
                 {{ form.receive_users }}
             </el-form-item>
+
+            <el-form-item :label="`${tableColumns.remark.name}`" prop="remark">
+                <div class="flex d-flex">
+                    <el-input
+                        style="margin-right: 0.8rem"
+                        type="textarea"
+                        maxlength="30"
+                        filterable
+                        clearable
+                        show-word-limit
+                        :readonly="readonly"
+                        :placeholder="`${tableColumns.remark.name}`"
+                        v-model="form.remark"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.remark)"
+                        >翻译</el-button
+                    >
+                </div>
+            </el-form-item>
+
+            <!-- 发送用户 -->
             <template v-if="isGroupMail && !readonly">
                 <el-form-item size="mini" :label="LangUtil('发送用户')" prop="user_list">
                     <div class="send_users">
@@ -111,20 +153,24 @@
                             @change="handleClick"
                         />
 
-                        <el-button @click="onImportUser()" type="primary" icon="">{{ LangUtil("导入用户") }}</el-button>
-                        <el-button @click="onLoadModule()" type="primary" icon="">{{
+                        <el-button @click="onImportUser" type="primary" icon="">{{ LangUtil("导入用户") }}</el-button>
+                        <el-button @click="onLoadModule" type="primary" icon="">{{
                             LangUtil("下载导入模版")
                         }}</el-button>
                     </div>
                     <div class="mark_font">{{ LangUtil("用户ID, 多个用户使用英文逗号", "区分") }}</div>
                 </el-form-item>
             </template>
-            <template v-if="!readonly && checkUnique(unique.plat_email_store_attachment)">
+
+            <!-- 附件奖励内容 -->
+            <template v-if="!readonly && checkUnique(unique.plat_email_store_attachment) && isGroupMail">
                 <el-form-item size="mini" :label="tableColumns.attachment_content.name" class="additional-bonus">
-                    <el-button @click="onAddBonus()" type="success">{{ LangUtil("添加奖励") }}</el-button>
+                    <el-button @click="onAddBonus" type="success">{{ LangUtil("添加奖励") }}</el-button>
                     <span class="mark_font">{{ LangUtil("最多增加五个奖励") }}</span>
                 </el-form-item>
             </template>
+
+            <!-- 提现流水倍数 -->
             <el-form-item
                 size="mini"
                 :label="tableColumns.bonus_multiple.name"
@@ -153,53 +199,48 @@
                     </template>
                 </div>
             </el-form-item>
-            <el-form-item size="mini" v-for="(item, index) in form.attachment_content" :key="index">
-                <template v-if="readonly"> {{ index }}：{{ item }} </template>
-                <template v-if="!readonly">
-                    <el-button
-                        style="margin-right: 8px"
-                        size="mini"
-                        @click="onDeleteBonus(item)"
-                        type="primary"
-                        icon=""
-                        >{{ LangUtil("删除") }}</el-button
-                    >
-                    <el-select
-                        style="margin-right: 8px; width: 120px"
-                        v-model="item.type"
-                        filterable
-                        :placeholder="tableColumns.attachment_content.options[form.plat_id]"
-                    >
-                        <el-option
-                            v-for="(key, value) in tableColumns.attachment_content.options[form.plat_id]"
-                            :key="value"
-                            :label="key"
-                            :value="value"
-                        ></el-option>
-                    </el-select>
-                    <el-input
-                        min="0"
-                        step="1"
-                        style="width: 120px"
-                        type="number"
-                        v-model="item.amount"
-                        @keydown.native="inputOnlyPositive"
-                    ></el-input>
-                </template>
-            </el-form-item>
+
+            <template v-if="checkUnique(unique.plat_email_store_attachment) && isGroupMail">
+                <el-form-item size="mini" v-for="(item, index) in form.attachment_content" :key="index">
+                    <template v-if="readonly"> {{ index }}：{{ item }} </template>
+                    <template v-if="!readonly">
+                        <el-button
+                            style="margin-right: 8px"
+                            size="mini"
+                            @click="onDeleteBonus(item)"
+                            type="primary"
+                            icon=""
+                            >{{ LangUtil("删除") }}</el-button
+                        >
+                        <el-select style="margin-right: 8px; width: 120px" v-model="item.type" filterable>
+                            <el-option
+                                v-for="(key, value) in tableColumns.attachment_content.options[form.plat_id]"
+                                :key="value"
+                                :label="key"
+                                :value="value"
+                            ></el-option>
+                        </el-select>
+                        <el-input
+                            min="0"
+                            step="1"
+                            style="width: 120px"
+                            type="number"
+                            v-model="item.amount"
+                            @keydown.native="inputOnlyPositive"
+                        ></el-input>
+                    </template>
+                </el-form-item>
+            </template>
+
             <el-form-item class="dialog-footer">
                 <div class="delete">
-                    <el-button
-                        v-if="readonly && this.form.status != 99"
-                        @click="handleDelete()"
-                        type="danger"
-                        icon=""
-                        >{{ LangUtil("撤销邮件") }}</el-button
-                    >
+                    <el-button v-if="readonly && form.status != 99" @click="handleDelete" type="danger" icon="">{{
+                        LangUtil("撤销邮件")
+                    }}</el-button>
                 </div>
                 <div class="submit">
                     <div style="">
-                        <el-button v-if="!readonly" @click="handleAdd()" type="primary" icon="">{{
+                        <el-button v-if="!readonly" @click="handleAdd" type="primary" icon="">{{
                             LangUtil("发送邮件")
                         }}</el-button>
                     </div>
@@ -278,8 +319,22 @@ export default class PlatEmailDialog extends AbstractView {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
     }
+
+    @Watch("form.plat_id")
+    onWatchPlat() {
+        this.myProxy.admin_plat_mail_template_index();
+    }
+
+    @Watch("form.template_id")
+    onWatchTemplate_id() {
+        this.myProxy.admin_plat_mail_template_show();
+    }
+
     get isGroupMail() {
         return this.myProxy.isGroupMail;
+    }
+    get isAllPlatNew() {
+        return this.myProxy.isAllPlatNew;
     }
     get hasAttachmentContent() {
         return this.form.attachment_content.length != 0;
@@ -383,6 +438,13 @@ export default class PlatEmailDialog extends AbstractView {
         data.type = LanguageType.TYPE_PLAT_EMAIL;
         data.plat_id = this.form.plat_id;
         this.langProxy.showDialog(data);
+    }
+
+    onChange(value: any) {
+        // 群发邮件
+        if (value != 3) {
+            this.myProxy.dialogData.form.attachment_content = [];
+        }
     }
 }
 </script>

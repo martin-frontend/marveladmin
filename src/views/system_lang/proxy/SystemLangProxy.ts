@@ -53,6 +53,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             hi_IN: { name: "", options: {} },
             de_DE: { name: "", options: {} },
             fr_FR: { name: "", options: {} },
+            tr_TR: { name: 'Türk dili', options: {} },
+            ms_MS: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -93,6 +95,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             hi_IN: "",
             de_DE: "",
             fr_FR: "",
+            tr_TR: "",
+            ms_MS: "",
             config: <any>{
                 ar_AR: [],
                 en_EN: [],
@@ -107,6 +111,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
                 hi_IN: [],
                 de_DE: [],
                 fr_FR: [],
+                tr_TR: [],
+                ms_MS: [],
             },
         },
         formSource: null, // 表单的原始数据
@@ -190,6 +196,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             hi_IN: "",
             de_DE: "",
             fr_FR: "",
+            tr_TR: "",
+            ms_MS: "",
             config: {
                 ar_AR: [],
                 en_EN: [],
@@ -204,6 +212,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
                 hi_IN: [],
                 de_DE: [],
                 fr_FR: [],
+                tr_TR: [],
+                ms_MS: [],
             },
         });
     }
@@ -252,7 +262,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             .then(() => {
                 this.sendNotification(HttpType.admin_system_lang_delete, { id });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     onQueryAll() {
@@ -316,5 +326,9 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
 
     generate(): void {
         this.sendNotification(HttpType.admin_system_lang_generate);
+    }
+
+    translateAllLang() {
+        this.sendNotification(HttpType.admin_system_lang_translate_all_error_lang);
     }
 }

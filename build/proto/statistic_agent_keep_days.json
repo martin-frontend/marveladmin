@@ -1,0 +1,9 @@
+{
+    "name": "代理留存统计",
+    "description": "代理留存统计",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47777793",
+    "list": [
+        "admin/statistic_agent_keep_days/table_columns",
+        "admin/statistic_agent_keep_days/index"
+    ]
+}

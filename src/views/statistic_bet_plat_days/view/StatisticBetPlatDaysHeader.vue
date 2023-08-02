@@ -9,9 +9,14 @@
                 :clearable="false"
             />
             <div>
-                <el-button class="header-button" @click="exportExcel" type="primary" icon="el-icon-download">{{
-                    LangUtil("导出")
-                }}</el-button>
+                <el-button
+                    class="header-button"
+                    @click="exportExcel"
+                    :disabled="!chickExport"
+                    type="primary"
+                    icon="el-icon-download"
+                    >{{ LangUtil("导出") }}</el-button
+                >
             </div>
         </div>
     </div>
@@ -51,7 +56,11 @@ export default class StatisticBetPlatDaysHeader extends AbstractView {
     }
 
     exportExcel() {
-        this.myProxy.onQueryAll();
+        this.myProxy.openDialogFieldSelection();
+        //this.myProxy.onQueryAll();
+    }
+    get chickExport(): boolean {
+        return this.myProxy.tableData.list && this.myProxy.tableData.list.length > 0;
     }
 }
 </script>

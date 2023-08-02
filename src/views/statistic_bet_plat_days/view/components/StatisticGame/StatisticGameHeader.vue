@@ -31,6 +31,11 @@
                 v-model="listQuery.time_region_hour_interval"
                 :title="tableColumns['time_region_hour_interval'].name"
             />
+            <SearchSelect
+            :options="tableColumns.coin_name_unique.options[listQuery.plat_id || 0]"
+            v-model="listQuery.coin_name_unique"
+            :title="tableColumns.coin_name_unique.name"
+        />
             <div>
                 <el-button @click="handlerSearch()" class="header-button" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")

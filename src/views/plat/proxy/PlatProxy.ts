@@ -91,7 +91,27 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_exchange_fail_automatic_refund: { name: "", options: {} },
             bet_log_keep_days: { name: "投注记录保留天数", options: {} },
             bet_log_search_days: { name: "投注记录搜索天数", options: {} },
-            main_language: { name: '主语言', options: {} },
+            main_language: { name: "主语言", options: {} },
+            is_first_login_send_sms: { name: "首次登入发送短信", options: {} },
+            is_user_manual_refund: { name: "用户手动退款", options: {} },
+            client_config: { name: "Client 配置参数", options: {} },
+            other_config: { name: "配置参数", options: {} },
+            vendor_wallet_types: { name: "游戏钱包类型", options: {} },
+            exchange_count: { name: "玩家兑换笔数", options: {} },
+            is_user_verification: { name: "", options: {} },
+            register_same_ip_limit: { name: "", options: {} },
+            max_exchange_gold: {name: '最大兑换金额', options: {} },
+            forbidden_country: {name: '', options: {} },
+            is_active_digital_currency: {name: '数字货币是否参数活动', options: {} },
+
+            is_activity_task: {name: '活动币任务是否启用', options: {} },
+            activity_task_least_amount: {name: '活动币任务最少真实金额', options: {} },
+            is_activity_back_water: {name: '活动币任务是否返水', options: {} },
+            activity_task_pattern: {name: '活动币任务激活模式', options: {} },
+            max_exchange_gold: { name: "最大兑换金额", options: {} },
+            forbidden_country: { name: "", options: {} },
+            is_active_digital_currency: { name: "数字货币是否参数活动", options: {} },
+            auth_types: { name: "验证方式", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -131,6 +151,9 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_password_gold_transfer: 98, // 1:是 98:否
         is_show_message_win: 1, // 1:是 98:否
         is_agent_bonus: 98, // 1:是 98:否
+        is_first_login_send_sms: 98, // 1:是 98:否
+        is_user_manual_refund: 98, // 1:是 98:否
+        is_user_verification: 98,
         recharge_cost_rate: 0,
         game_cost_rate: 0,
         agent_bonus_rate_limit: 0,
@@ -152,6 +175,19 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         bet_log_keep_days: 0,
         bet_log_search_days: 0,
         main_language: "",
+        client_config: {},
+        other_config: {},
+        vendor_wallet_types: [],
+        exchange_count: 1,
+        register_same_ip_limit: 0,
+        max_exchange_gold: -1,
+        forbidden_country: "",
+        is_active_digital_currency: 1,
+        is_activity_task:"",
+        activity_task_least_amount:"",
+        is_activity_back_water:"",
+        activity_task_pattern:"",
+        auth_types: 1,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -161,6 +197,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         formSource: null, // 表单的原始数据
         initPromotion_floor: <any>{},
         initWater_config: <any>{},
+        forbidden_country: "",
     };
     /**初始返佣折扣数据 */
     defaultPromotionConfig = {
@@ -239,8 +276,20 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     setDetail(data: any) {
         data.extends = jsonToObject(data.extends);
         this.dialogData.formSource = data;
-        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
 
+        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        // client_config
+        Object.assign(
+            this.dialogData.form.client_config,
+            JSON.parse(
+                JSON.stringify({
+                    client_config: data.extends.client_config,
+                })
+            )
+        );
+        delete data.extends["client_config"];
+
+        Object.assign(this.dialogData.form.other_config, JSON.parse(JSON.stringify(data.extends)));
         this.promotionDiscountDialogData.form.promotion_discount = JSON.parse(
             JSON.stringify(this.defaultPromotionConfig)
         );
@@ -258,6 +307,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             arr.push(idx);
         }
         this.dialogData.form.language = arr;
+        this.dialogData.bShow = true;
         // console.log(">>>>>>>", this.dialogData.form.language)
     }
     /**设置配置初始数据 */
@@ -286,13 +336,15 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
 
     /**显示弹窗 */
     showDialog(status: string, data?: any) {
-        this.dialogData.bShow = true;
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
+            this.dialogData.form.client_config = {};
+            this.dialogData.form.other_config = {};
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
             this.sendNotification(HttpType.admin_plat_show, { plat_id: data.plat_id });
         } else {
+            this.dialogData.bShow = true;
             this.resetDialogForm();
             this.dialogData.formSource = null;
         }
@@ -314,97 +366,28 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     }
     /**添加数据 */
     onAdd() {
-        const {
-            plat_id,
-            plat_name,
-            app_types,
-            api_type,
-            region,
-            currency_type,
-            language,
-            status,
-            water_config,
-            //代理保底
-            promotion_floor,
-            promotion_floor_unit, //保底设定最小单位
-            is_promotion_same, //保底是否平级
-            is_promotion_solid, //保底级差是否固定
-            //总代分红
-            is_agent_bonus,
-            recharge_cost_rate,
-            game_cost_rate,
-            agent_bonus_rate_limit,
-            //开关设定
-            is_bind_phone_award, //绑定手机领取奖励
-            is_bind_phone_exchange, //绑定手机-收款
-            is_bet_water_display, //投注流水展示
-            is_promotion_statistics_display, //推广统计展示
-            is_bind_phone_transfer, //绑定手机-金币划转
-            is_bind_real_name, //兑换绑定真名
-            is_password_gold_transfer, //现金密码-金必划转
-            is_show_message_win, //显示中讲信息
-            is_bet_gold_display, // 输赢投注显示
-            is_open_registration, // 注册开关
-            is_win_leaderboard_display,
-            is_water_leaderboard_display,
-            is_recharge_leaderboard_display,
-            is_bind_phone_recharge, //绑定手机充值
-            validate_type,
-            register_types, //注册方式
-            is_show_commission,
-            bet_log_keep_days,
-            bet_log_search_days,
-            main_language,
-        } = this.dialogData.form;
-        const formCopy: any = {
-            plat_id,
-            plat_name,
-            app_types,
-            api_type,
-            region,
-            currency_type,
-            language,
-            status,
-            water_config,
-            //代理保底
-            promotion_floor,
-            promotion_floor_unit, //保底设定最小单位
-            is_promotion_same, //保底是否平级
-            is_promotion_solid, //保底级差是否固定
-            //总代分红
-            is_agent_bonus,
-            recharge_cost_rate,
-            game_cost_rate,
-            agent_bonus_rate_limit,
-            //开关设定
-            is_bind_phone_award, //绑定手机领取奖励
-            is_bind_phone_exchange, //绑定手机-收款
-            is_bet_water_display, //投注流水展示
-            is_promotion_statistics_display, //推广统计展示
-            is_bind_phone_transfer, //绑定手机-金币划转
-            is_bind_real_name, //兑换绑定真名
-            is_password_gold_transfer, //现金密码-金必划转
-            is_show_message_win, //显示中讲信息
-            is_bet_gold_display, // 输赢投注显示
-            is_open_registration, // 注册开关
-
-            is_win_leaderboard_display,
-            is_water_leaderboard_display,
-            is_recharge_leaderboard_display,
-            is_bind_phone_recharge, //绑定手机充值
-            validate_type,
-            register_types,
-            is_show_commission,
-            bet_log_keep_days,
-            bet_log_search_days,
-            main_language,
-        };
-
+        const formCopy = JSON.parse(JSON.stringify(this.dialogData.form));
+        
         formCopy.app_types = JSON.stringify(formCopy.app_types);
         formCopy.water_config = JSON.stringify(formCopy.water_config);
         formCopy.promotion_floor = JSON.stringify(formCopy.promotion_floor);
         formCopy.validate_type = JSON.stringify(formCopy.validate_type);
         formCopy.register_types = JSON.stringify(formCopy.register_types);
+        formCopy.vendor_wallet_types = JSON.stringify(formCopy.vendor_wallet_types);
+
+        //组回原始 extends
+        if (typeof this.dialogData.form.client_config == "string") {
+            this.dialogData.form.client_config = JSON.parse(this.dialogData.form.client_config);
+        }
+        if (typeof this.dialogData.form.other_config == "string") {
+            this.dialogData.form.other_config = JSON.parse(this.dialogData.form.other_config);
+        }
+        formCopy.extends = {};
+        formCopy.extends = {
+            ...this.dialogData.form.client_config,
+            ...this.dialogData.form.other_config,
+        };
+        formCopy.extends = JSON.stringify(formCopy.extends);
         try {
             let extendsStr: any = "{}";
             if (Object.keys(this.dialogData.form.extends).length > 0) {
@@ -414,7 +397,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
 
             const langKeys = Object.keys(this.tableData.columns.language.options);
             const arr = [];
-            for (const idx of language) {
+            for (const idx of this.dialogData.form.language) {
                 arr.push(langKeys[idx]);
             }
             formCopy.language = JSON.stringify(arr);
@@ -427,6 +410,19 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     /**更新数据 */
     onUpdate() {
         const formCopy: any = Object.assign({}, this.dialogData.form);
+        //组回原始 extends
+        if (typeof this.dialogData.form.client_config == "string") {
+            this.dialogData.form.client_config = JSON.parse(this.dialogData.form.client_config);
+        }
+        if (typeof this.dialogData.form.other_config == "string") {
+            this.dialogData.form.other_config = JSON.parse(this.dialogData.form.other_config);
+        }
+        formCopy.extends = {};
+        formCopy.extends = {
+            ...this.dialogData.form.client_config,
+            ...this.dialogData.form.other_config,
+        };
+        formCopy.extends = JSON.stringify(formCopy.extends);
         try {
             formCopy.extends = JSON.parse(formCopy.extends);
             const temp = formCompared(formCopy, this.dialogData.formSource);
@@ -467,7 +463,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_update, { plat_id: id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**Vip Model弹窗相关数据 */
@@ -615,7 +611,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                     plat_id: plat_id,
                 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**显示折扣返佣弹窗 */
@@ -693,7 +689,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
                     plat_id: this.allBonusModelDialogData.form.plat_id,
                 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**取得全盘分红配置 */

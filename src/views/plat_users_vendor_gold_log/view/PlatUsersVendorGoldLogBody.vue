@@ -23,10 +23,23 @@
                     </div>
                 </template>
             </el-table-column>
+            <!-- 
+            <el-table-column prop="vendor_order_no" :label="tableColumns['vendor_order_no'].name" width="150px" align="center">
+
+            </el-table-column>
             <el-table-column prop="order_no" :label="tableColumns['order_no'].name" width="150px" align="center">
             </el-table-column>
             <el-table-column prop="order_at" :label="tableColumns['order_at'].name" width="150px" align="center">
+            </el-table-column> -->
+
+            <el-table-column :label="LangUtil('订单')" width="300px" align="left">
+                <template slot-scope="{ row }">
+                    <p>{{ tableColumns["order_at"].name }}:{{ row.order_at }}</p>
+                    <p>{{ tableColumns["vendor_order_no"].name }}:{{ row.vendor_order_no }}</p>
+                    <p>{{ tableColumns["order_no"].name }}:{{ row.order_no }}</p>
+                </template>
             </el-table-column>
+
             <el-table-column :label="LangUtil('用户信息')" min-width="150px" align="center">
                 <template slot-scope="{ row }">
                     <div
@@ -92,6 +105,7 @@
                         type="primary"
                         size="small"
                         @click="showStatus(row.vendor_gold_log_id)"
+                        v-if="row.wallet_type != 2"
                     >
                         {{ LangUtil("交易状态") }}
                     </el-button>

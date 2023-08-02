@@ -8,6 +8,9 @@
         <div v-if="GlobalVar.lang == 'vi_VN'">
             <audio src="@/assets/sound/vi/withdraw.mp3" id="withdrawAudio"></audio>
         </div>
+        <div>
+            <audio src="@/assets/sound/12025.mp3" id="nomalAudio"></audio>
+        </div>
         <PreviewImageDialog />
         <CommonLangDialog />
         <CommonLangImgDialog />

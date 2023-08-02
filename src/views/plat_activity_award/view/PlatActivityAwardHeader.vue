@@ -1,12 +1,27 @@
 <template>
     <div class="header-content">
-        <SearchSelect
-            :title="tableColumns.plat_id.name"
-            v-model="listQuery.plat_id"
-            :options="tableColumns.plat_id.options"
-            :clearable="false"
-            @change="handlerSearch"
-        />
+        <div class="group">
+            <SearchSelect
+                :title="tableColumns.plat_id.name"
+                v-model="listQuery.plat_id"
+                :options="tableColumns.plat_id.options"
+                :clearable="false"
+                @change="handlerSearch"
+            />
+            <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
+            <div class="">
+                <div class="btn">
+                    <ExportDialog
+                        :fiterOption="userList"
+                        :proxy="myProxy"
+                        :export_file_name="getExcelOutputName"
+                        @exportExcel="exportExcel"
+                        :_excludeKeys="excludeKeys"
+                        :_convertKeys="convertKeys"
+                    />
+                </div>
+            </div>
+        </div>
         <div class="group">
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <SearchInput :title="tableColumns.activity_id.name" v-model="listQuery.activity_id" />
@@ -24,6 +39,7 @@
                 :title="tableColumns.settlement_time_at.name"
                 :startDate.sync="listQuery['created_at-{>=}']"
                 :endDate.sync="listQuery['created_at-{<=}']"
+                :showTime="true"
             />
             <SearchSelect
                 :title="tableColumns.award_status.name"
@@ -52,12 +68,13 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import SearchSelect from "@/components/SearchSelect.vue";
 import SearchInput from "@/components/SearchInput.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
-
+import ExportDialog from "@/components/ExportDialog.vue";
 @Component({
     components: {
         SearchSelect,
         SearchInput,
         SearchDatePicker,
+        ExportDialog,
     },
 })
 export default class PlatActivityAwardHeader extends AbstractView {
@@ -70,7 +87,7 @@ export default class PlatActivityAwardHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
-
+    userList = this.myProxy._userList;
     handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
@@ -78,6 +95,22 @@ export default class PlatActivityAwardHeader extends AbstractView {
 
     handlerReset() {
         this.myProxy.resetListQuery();
+    }
+    get getExcelOutputName() {
+        let name: string = LangUtil("派奖查询") + "-" + this.tableColumns.plat_id.options[this.listQuery.plat_id];
+        return `${name}-${this.listQuery["created_at-{>=}"]}～${this.listQuery["created_at-{<=}"]}`;
+    }
+    exportExcel(val: boolean, pageInfo: any) {
+        this.myProxy.tableData.isExportExcel = val;
+        if (val) {
+            this.myProxy.onQuery_export(pageInfo);
+        }
+    }
+    get excludeKeys() {
+        return ["vendor_product_id"];
+    }
+    get convertKeys() {
+        return ["plat_id", "settlement_type", "award_type", "award_status"];
     }
 }
 </script>

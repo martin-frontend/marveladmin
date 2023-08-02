@@ -140,6 +140,18 @@
                 </template>
             </el-table-column>
 
+            <el-table-column prop="amount_to_the_company" :label="LangUtil('到公司货量')" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.amount_to_the_company" :isShowDollar="false"></WinLossDisplay>
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="contribute_to_the_company" :label="LangUtil('给公司贡献')" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.contribute_to_the_company" :isShowDollar="false"></WinLossDisplay>
+                </template>
+            </el-table-column>
+
             <!-- <el-table-column :label="tableColumns['credit_rate'].name" prop="credit_rate" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div v-if="row.user_id === '合计' || row.user_id === LangUtil('合计')">

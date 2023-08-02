@@ -6,6 +6,10 @@
         <ChangeChannelDialog v-if="myProxy.changeChannelDialogData.bShow" />
         <PlatUserHeader />
         <PlatUserBody />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
+        <MultipleUserDialog v-if="myProxy.mutipleUserDialogData.bShow" />
+        <AddMultipleUserDialog v-if="myProxy.addMutipleUserData.bShow" />
     </div>
 </template>
 
@@ -20,6 +24,10 @@ import PlatUserHeader from "./PlatUserHeader.vue";
 import PlatUserBody from "./PlatUserBody.vue";
 import PlatUserProxy from "../proxy/PlatUserProxy";
 import PlatCreditUserDialog from "./PlatCreditUserDialog.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
+import MultipleUserDialog from "./MultipleUserDialog.vue";
+import AddMultipleUserDialog from "./AddMultipleUserDialog.vue";
 
 @Component({
     components: {
@@ -29,6 +37,10 @@ import PlatCreditUserDialog from "./PlatCreditUserDialog.vue";
         PlatUsersWalletDialog,
         PlatCreditUserDialog,
         ChangeChannelDialog,
+        ProgressDialog,
+        FieldSelectionDialog,
+        MultipleUserDialog,
+        AddMultipleUserDialog,
     },
 })
 export default class PlatUser extends AbstractView {

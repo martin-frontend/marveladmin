@@ -4,6 +4,8 @@
     "document": "",
     "list": [
         "admin/plat_agent_manage_bind/table_columns",
-        "admin/plat_agent_manage_bind/index"
+        "admin/plat_agent_manage_bind/index",
+        "admin/plat_agent_bind/update/{user_id}",
+        "admin/plat_user/update/{user_id}"
     ]
 }

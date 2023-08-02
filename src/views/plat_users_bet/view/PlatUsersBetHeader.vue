@@ -8,13 +8,13 @@
             :clearable="false"
         />
         <div class="group">
+            <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
             <SearchDatePicker
                 :title="tableColumns['bet_at'].name"
                 :startDate.sync="listQuery['bet_at-{>=}']"
                 :endDate.sync="listQuery['bet_at-{<=}']"
                 :showTime="true"
                 :tip="LangUtil('（北京时间）')"
-                :pickerOptions="myProxy.pickerOptions"
             />
             <SearchDatePicker
                 :title="tableColumns['settlement_at'].name"
@@ -22,7 +22,6 @@
                 :endDate.sync="listQuery['settlement_at-{<=}']"
                 :showTime="true"
                 :tip="LangUtil('（北京时间）')"
-                :pickerOptions="myProxy.pickerOptions"
             />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <SearchInput :title="tableColumns.nick_name.name" v-model="listQuery.nick_name" />
@@ -38,6 +37,7 @@
                 :options="tableColumns.vendor_type.options"
             />
             <SearchInput :title="tableColumns.agent_user_id.name" v-model="listQuery.agent_user_id" />
+            <SearchInput :title="tableColumns.vendor_order_no.name" v-model="listQuery.vendor_order_no" />
             <SearchInput :title="tableColumns.vendor_product_name.name" v-model="listQuery.vendor_product_name" />
             <SearchInput :title="tableColumns.ori_product_id.name" v-model="listQuery.ori_product_id" />
             <SearchSelect
@@ -75,16 +75,21 @@
             </SearchRange>
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    LangUtil("查询")
-                }}</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    LangUtil("重置")
-                }}</el-button>
-
-                <el-button @click="exportExcel()" type="primary" icon="el-icon-download">{{
-                    LangUtil("导出")
-                }}</el-button>
+                <el-button
+                    @click="handlerSearch()"
+                    type="primary"
+                    icon="el-icon-search"
+                    :disabled="!myProxy.exportData.isSearch"
+                >
+                    {{ LangUtil("查询") }}
+                </el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                    {{ LangUtil("重置") }}
+                </el-button>
+                <el-button @click="exportExcel()" type="primary" icon="el-icon-download" :disabled="list.length == 0">
+                    {{ LangUtil("导出") }}
+                </el-button>
+                <el-button @click="heandlerStatistic()" type="primary">{{ LangUtil("统计") }}</el-button>
             </div>
         </div>
     </div>
@@ -120,6 +125,7 @@ export default class PlatUsersBetHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
     winLoss: string = "";
     onWinLossChange(value: any) {
@@ -128,7 +134,7 @@ export default class PlatUsersBetHeader extends AbstractView {
     }
 
     exportExcel() {
-        this.myProxy.onQueryAll();
+        this.myProxy.showFieldSelectionDialog();
     }
 
     handlerSearch() {
@@ -142,6 +148,10 @@ export default class PlatUsersBetHeader extends AbstractView {
 
     handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
+    }
+
+    heandlerStatistic() {
+        this.myProxy.admin_plat_users_bet_vendors();
     }
 }
 </script>

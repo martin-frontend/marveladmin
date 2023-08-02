@@ -1,0 +1,9 @@
+{
+    "name": "用户每日币种统计",
+    "description": "用户每日币种统计",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47777239",
+    "list": [
+       "admin/plat_users_coin_statistic_days/table_columns",
+       "admin/plat_users_coin_statistic_days/index"
+    ]
+}

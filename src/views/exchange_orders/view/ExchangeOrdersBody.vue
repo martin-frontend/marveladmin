@@ -66,7 +66,7 @@
                     <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('用户信息')" align="left" min-width="160px">
+            <el-table-column :label="LangUtil('用户信息')" align="left" min-width="190px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
                         {{ tableColumns["user_id"].name }}：{{ row.user_id }}
@@ -76,6 +76,7 @@
                     <div>
                         {{ tableColumns["user_remark"].name }}：<span class="user_remark">{{ row.user_remark }}</span>
                     </div>
+                    <div>{{ LangUtil("账号创建时间") }}：{{ row.user_created_at }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('接单状态')" align="left" min-width="150px">
@@ -102,6 +103,13 @@
                 <template slot-scope="{ row }">
                     <div>
                         {{ tableColumns["status"].options[row.status] }}
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="is_first_exchange" :label="tableColumns['is_first_exchange'].name" min-width="90px" align="center">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["is_first_exchange"].options[row.is_first_exchange] }}
                     </div>
                 </template>
             </el-table-column>
@@ -134,9 +142,12 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="extends" :label="LangUtil('用户兑换信息')" min-width="180px" align="center">
+            <el-table-column prop="extends" :label="tableColumns['extends'].name" min-width="180px" align="center">
                 <template slot-scope="{ row }">
-                    <div align="left" v-if="row.receive_payment_type == 7 && row.payment_method.length != 0">
+                    <div align="left" v-if="row.payment_method && row.payment_method.length > 0">
+                        <p v-for="(value, key) of row.payment_method" :key="key">{{ key }}：{{ value }}</p>
+                    </div>
+                    <div align="left" v-else-if="row.payment_method && Object.keys(row.payment_method).length >0">
                         <p v-for="(value, key) of row.payment_method" :key="key">{{ key }}：{{ value }}</p>
                     </div>
                     <div v-else>
@@ -157,7 +168,7 @@
                                 tableColumns["receive_payment_type"].options[row.receive_payment_type]
                             }}
                         </div>
-                        <span v-html="getAccessInfo(row)"></span>
+                        <span v-if="row.receive_payment_type != 8" v-html="getAccessInfo(row)"></span>
                     </div>
                 </template>
             </el-table-column>
@@ -167,12 +178,46 @@
                     <div>{{ tableColumns["fee_rate"].name }}：{{ row.fee_rate }}</div>
                     <div>{{ tableColumns["fee"].name }}：{{ row.fee }}</div>
                     <div>{{ tableColumns["money"].name }}：{{ row.money }}</div>
+                    <div>{{ tableColumns["gold_scale"].name }}：{{ row.gold_scale }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('订单时间')" align="left" min-width="150px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["created_at"].name }}：<br />{{ row.created_at }}</p>
                     <p>{{ tableColumns["updated_at"].name }}：<br />{{ row.updated_at }}</p>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="tableColumns.total_recharge.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} : {{ value.total_recharge }}
+                    </p>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="tableColumns.total_exchange.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} : {{ value.total_exchange }}
+                    </p>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="tableColumns.total_bet.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} : {{ value.total_bet }}
+                    </p>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="tableColumns.total_win.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} :
+                        <WinLossDisplay :amount="value.total_win" :isShowDollar="false" />
+                    </p>
                 </template>
             </el-table-column>
             <el-table-column prop="remark" :label="tableColumns['remark'].name" align="center" min-width="100px">
@@ -330,11 +375,12 @@ import Cookies from "js-cookie";
 import { Dialog, Message } from "element-ui";
 import SelfModel from "@/core/model/SelfModel";
 import { UserType } from "@/core/enum/UserType";
-
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 @Component({
     components: {
         Pagination,
         SearchSelect,
+        WinLossDisplay,
     },
 })
 export default class ExchangeOrdersBody extends AbstractView {

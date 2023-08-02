@@ -81,6 +81,7 @@ export enum EmailType {
     AllPlatWithNew = "1",
     AllPlat = "2", //全平台
     Group = "3", //群发
+    AllPlatNew = "4", //全平台邮件（新用户）
 }
 //獎勵類型
 export enum BonusType {

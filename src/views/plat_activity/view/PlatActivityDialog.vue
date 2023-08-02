@@ -1,7 +1,7 @@
 <template>
-    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="750px" top="20px">
+    <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="1200px" top="20px">
         <el-scrollbar style="height: 700px">
-            <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
+            <el-form ref="form" :rules="rules" :model="form" label-width="160px" v-loading="net_status.loading">
                 <el-form-item size="mini" :label="tableColumns['plat_id'].name" prop="plat_id">
                     <el-select
                         v-model="form.plat_id"
@@ -31,7 +31,7 @@
                             type="primary"
                             size="mini"
                             @click="handleTranslate(form.activity_name)"
-                            >翻译</el-button
+                            >{{ LangUtil("翻译") }}</el-button
                         >
                     </div>
                 </el-form-item>
@@ -111,6 +111,10 @@
                     <div>{{ form.des }}</div>
                 </el-form-item>
 
+                <el-form-item size="mini" :label="tableColumns['active_model_tag'].name" prop="active_model_tag">
+                    <el-input v-model="form.active_model_tag" :placeholder="LangUtil('请输入')"></el-input>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="tableColumns['start_time'].name" prop="start_time">
                     <el-date-picker
                         v-model="form.start_time"
@@ -119,6 +123,7 @@
                         :placeholder="LangUtil('选择开始时间')"
                         value-format="yyyy-MM-dd"
                         :disabled="isStatusUpdate"
+                        :picker-options="pickerOptions"
                     >
                     </el-date-picker>
                 </el-form-item>
@@ -130,8 +135,20 @@
                         :placeholder="LangUtil('选择结束时间')"
                         value-format="yyyy-MM-dd"
                         :disabled="isStatusUpdate"
+                        :picker-options="pickerOptions"
                     >
                     </el-date-picker>
+                </el-form-item>
+                <el-form-item size="mini" :label="tableColumns['process_control'].name" prop="process_control">
+                    <el-radio-group v-model="form.process_control" :disabled="isStatusUpdate">
+                        <el-radio
+                            v-for="(value, key) in tableColumns['process_control'].options"
+                            :key="key"
+                            :label="Number(key)"
+                        >
+                            {{ value }}
+                        </el-radio>
+                    </el-radio-group>
                 </el-form-item>
                 <el-form-item
                     size="mini"
@@ -178,14 +195,34 @@
                             show-word-limit
                             clearable
                             type="textarea"
-                            rows="3"
                         ></el-input>
                         <el-button
                             style="max-height: 35px"
                             type="primary"
                             size="mini"
                             @click="handleTranslate(form.activity_category)"
-                            >翻译</el-button
+                            >{{ LangUtil("翻译") }}</el-button
+                        >
+                    </div>
+                </el-form-item>
+
+                <el-form-item size="mini" :label="tableColumns['rule_desc'].name">
+                    <div class="flex d-flex">
+                        <el-input
+                            v-model="form.rule_desc"
+                            :placeholder="LangUtil('请输入')"
+                            style="margin-right: 0.8rem"
+                            show-word-limit
+                            clearable
+                            type="textarea"
+                            rows="3"
+                        ></el-input>
+                        <el-button
+                            style="max-height: 35px"
+                            type="primary"
+                            size="mini"
+                            @click="handleTranslate(form.rule_desc)"
+                            >{{ LangUtil("翻译") }}</el-button
                         >
                     </div>
                 </el-form-item>
@@ -267,6 +304,52 @@
                         </el-radio>
                     </el-radio-group>
                 </el-form-item>
+
+                <el-form-item
+                    v-if="form.award_type == 16 || form.award_type == '16'"
+                    size="mini"
+                    :label="LangUtil('派奖方式')"
+                >
+                    <div>
+                        <el-row>
+                            {{ tableColumns["daily_ratio"].name }}
+                        </el-row>
+                        <el-row :gutter="10">
+                            <!-- <el-col :span="3">
+                            <div>
+                                <el-button
+                                    @click="onDeleteDailyRatio()"
+                                    :disabled="!form.daily_ratio || form.daily_ratio.length < 1"
+                                    type="primary"
+                                    icon="el-icon-refresh"
+                                    >{{ LangUtil("删除") }}</el-button
+                                >
+                            </div>
+                            <div style="margin-top: 8px;">
+                                <el-button @click="onAddDailyRatio()" type="primary" icon="el-icon-refresh">{{
+                                    LangUtil("添加")
+                                }}</el-button>
+                            </div>
+                        </el-col> -->
+
+                            <el-col :span="3" v-for="(value, key) in form.daily_ratio" :key="key">
+                                <div style="height: 30px;">{{ LangUtil("第{0}天%", key + 1) }}</div>
+                                <div style="margin-top: 8px; height:30px">
+                                    <el-input-number
+                                        v-model="form.daily_ratio[key]"
+                                        size="mini"
+                                        :precision="1"
+                                        :step="1"
+                                        :max="100"
+                                        controls-position="right"
+                                        style="width: 100%"
+                                    ></el-input-number>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </div>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="LangUtil('上传图片')" v-if="form.show_type == 4" prop="link_url">
                     <div style="display: flex">
                         <el-upload
@@ -314,6 +397,190 @@
                 >
                     <el-input v-model="form.link_url" :placeholder="LangUtil('请输入')"></el-input>
                 </el-form-item>
+                <!-- 扩展任务类型 -->
+                <el-form-item size="mini" :label="tableColumns['extended_task_type'].name" prop="extended_task_type">
+                    <el-radio-group v-model="form.extended_task_type" @change="onExtendTypeChange">
+                        <el-radio
+                            v-for="(value, key) in tableColumns['extended_task_type'].options"
+                            :key="key"
+                            :label="Number(key)"
+                            :disabled="isStatusUpdate"
+                        >
+                            {{ value }}
+                        </el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <div class="title" v-if="form.extended_task_type == 2">{{ LangUtil("奖励任务设置") }}</div>
+                <div class="layout" v-if="form.extended_task_type == 2">
+                    <div>
+                        <el-form-item style="margin-bottom: 0px;" :label="LangUtil('基本设置')"></el-form-item>
+                        <el-form-item
+                            :label="tableColumns.activity_coin_task.options.task_days"
+                            prop="task_days"
+                            label-width="250px"
+                        >
+                            <div class="flex d-flex">
+                                <el-input
+                                    :placeholder="LangUtil('请输入天数')"
+                                    v-model="form.task_days"
+                                    :disabled="isStatusUpdate"
+                                ></el-input>
+                            </div>
+                        </el-form-item>
+
+                        <!-- <el-form-item
+                            :label="tableColumns.activity_coin_task.options.transfer_amount_rate"
+                            prop="transfer_amount_rate"
+                            label-width="250px"
+                        >
+                            <div class="flex d-flex">
+                                <el-input
+                                    :placeholder="LangUtil('请输入')"
+                                    v-model="form.transfer_amount_rate"
+                                    :disabled="isStatusUpdate"
+                                ></el-input>
+                            </div>
+                        </el-form-item> -->
+
+                        <el-form-item style="margin-bottom: 15px;padding-top: 20px;" :label="LangUtil('游戏厂商流水')">
+                            <el-button
+                                type="primary"
+                                icon="el-icon-circle-plus-outline"
+                                @click="handleAddVendor"
+                                size="mini"
+                                :disabled="!form.plat_id"
+                                >{{ LangUtil("新增") }}</el-button
+                            >
+                        </el-form-item>
+                        <el-form-item
+                            v-for="(item, index) of form.vendorArr"
+                            :key="index"
+                            :label="tableColumns.vendor_ids.options[form.plat_id][item.vendor_id]"
+                        >
+                            <div class="flex d-flex">
+                                <el-input-number
+                                    size="mini"
+                                    :min="0"
+                                    :max="100"
+                                    :step="1"
+                                    controls-position="right"
+                                    v-model="form.vendorArr[index].water"
+                                    style="margin-right: 10px"
+                                >
+                                </el-input-number>
+                                <!-- <el-input
+                                    :placeholder="LangUtil('请输入')"
+                                    v-model="form.vendorArr[index].water"
+                                    style="margin-right: 10px"
+                                ></el-input> -->
+                                <el-button type="danger" @click="handleDeleteVendor(index)" size="mini">{{
+                                    LangUtil("删除")
+                                }}</el-button>
+                            </div>
+                        </el-form-item>
+                    </div>
+                    <div>
+                        <el-form-item style="margin-bottom: 0px;" :label="LangUtil('任务流水%')"> </el-form-item>
+                        <el-form-item
+                            :label="tableColumns.activity_coin_task.options.task_water_rate_2"
+                            prop="task_water_rate_2"
+                            label-width="200px"
+                        >
+                            <div class="flex d-flex">
+                                <el-input
+                                    :placeholder="LangUtil('请输入')"
+                                    v-model="form.task_water_rate_2"
+                                    oninput="value=value.replace(/[^\d]/g,''); if(value>100){value=100}"
+                                    :disabled="isStatusUpdate"
+                                ></el-input>
+                            </div>
+                        </el-form-item>
+                        <el-form-item
+                            :label="tableColumns.activity_coin_task.options.task_water_rate_4"
+                            prop="task_water_rate_4"
+                            label-width="200px"
+                        >
+                            <div class="flex d-flex">
+                                <el-input
+                                    :placeholder="LangUtil('请输入')"
+                                    v-model="form.task_water_rate_4"
+                                    oninput="value=value.replace(/[^\d]/g,''); if(value>100){value=100}"
+                                    :disabled="isStatusUpdate"
+                                ></el-input>
+                            </div>
+                        </el-form-item>
+                        <el-form-item
+                            :label="tableColumns.activity_coin_task.options.task_water_rate_8"
+                            prop="task_water_rate_8"
+                            label-width="200px"
+                        >
+                            <div class="flex d-flex">
+                                <el-input
+                                    :placeholder="LangUtil('请输入')"
+                                    v-model="form.task_water_rate_8"
+                                    oninput="value=value.replace(/[^\d]/g,''); if(value>100){value=100}"
+                                    :disabled="isStatusUpdate"
+                                ></el-input>
+                            </div>
+                        </el-form-item>
+                        <el-form-item
+                            :label="tableColumns.activity_coin_task.options.task_water_rate_16"
+                            prop="task_water_rate_16"
+                            label-width="200px"
+                        >
+                            <div class="flex d-flex">
+                                <el-input
+                                    :placeholder="LangUtil('请输入')"
+                                    v-model="form.task_water_rate_16"
+                                    oninput="value=value.replace(/[^\d]/g,''); if(value>100){value=100}"
+                                    :disabled="isStatusUpdate"
+                                ></el-input>
+                            </div>
+                        </el-form-item>
+                        <el-form-item
+                            :label="tableColumns.activity_coin_task.options.task_water_rate_32"
+                            prop="task_water_rate_32"
+                            label-width="200px"
+                        >
+                            <div class="flex d-flex">
+                                <el-input
+                                    :placeholder="LangUtil('请输入')"
+                                    v-model="form.task_water_rate_32"
+                                    oninput="value=value.replace(/[^\d]/g,''); if(value>100){value=100}"
+                                    :disabled="isStatusUpdate"
+                                ></el-input>
+                            </div>
+                        </el-form-item>
+                        <el-form-item
+                            :label="tableColumns.activity_coin_task.options.task_water_rate_64"
+                            prop="task_water_rate_64"
+                            label-width="200px"
+                        >
+                            <div class="flex d-flex">
+                                <el-input
+                                    :placeholder="LangUtil('请输入')"
+                                    v-model="form.task_water_rate_64"
+                                    oninput="value=value.replace(/[^\d]/g,''); if(value>100){value=100}"
+                                    :disabled="isStatusUpdate"
+                                ></el-input>
+                            </div>
+                        </el-form-item>
+                        <el-form-item
+                            :label="tableColumns.activity_coin_task.options.task_water_rate_128"
+                            prop="task_water_rate_128"
+                            label-width="200px"
+                        >
+                            <div class="flex d-flex">
+                                <el-input
+                                    :placeholder="LangUtil('请输入')"
+                                    v-model="form.task_water_rate_128"
+                                    oninput="value=value.replace(/[^\d]/g,''); if(value>100){value=100}"
+                                    :disabled="isStatusUpdate"
+                                ></el-input>
+                            </div>
+                        </el-form-item>
+                    </div>
+                </div>
             </el-form>
             <!-- 奖励规则 -->
             <div v-if="form.type == 1 && form.model_id" class="_title">
@@ -330,7 +597,7 @@
                         <el-col :span="2">
                             <div>{{ LangUtil("ID") }}: {{ item.rule_num }}</div>
                         </el-col>
-                        <el-col :span="10">
+                        <el-col :span="14">
                             <div>{{ item.name }}</div>
                         </el-col>
                     </el-row>
@@ -342,6 +609,23 @@
                             <el-col :span="13">
                                 <div>{{ rule.name }}</div>
                             </el-col>
+                            <template v-if="form.extended_task_type == 2">
+                                <el-col :span="3">
+                                    <div>{{ tableColumns.activity_coin_task.options.transfer_amount_rate }}</div>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-input
+                                        size="small"
+                                        :placeholder="LangUtil('请输入')"
+                                        :min="0"
+                                        :step="1"
+                                        :precision="0"
+                                        v-model="form.transfer_amount_rate_Arr[index + secondIndex]"
+                                        :disabled="isStatusUpdate"
+                                        style="width: 80px"
+                                    ></el-input>
+                                </el-col>
+                            </template>
                             <el-col :span="4">
                                 <div>{{ tableColumns["bonus_multiple"].name }}</div>
                             </el-col>
@@ -363,6 +647,7 @@
                                 <el-col :span="5">
                                     <div>{{ getRuleInfo(childRule).params_name }}</div>
                                 </el-col>
+
                                 <el-col :span="15">
                                     <el-input
                                         size="small"
@@ -374,7 +659,11 @@
                                     ></el-input>
                                     <el-select
                                         size="small"
-                                        v-if="childRule.type == 61 && childRule.params_type == 5"
+                                        v-if="
+                                            childRule.type == 61 &&
+                                                childRule.params_type == 5 &&
+                                                form.extended_task_type != 2
+                                        "
                                         v-model="childRule.coin_type"
                                         filterable
                                         :placeholder="LangUtil('请选择')"
@@ -383,6 +672,26 @@
                                     >
                                         <el-option
                                             v-for="(value, key) in tableColumns.reward_coin.options[form.plat_id]"
+                                            :key="key"
+                                            :label="value"
+                                            :value="key"
+                                        ></el-option>
+                                    </el-select>
+                                    <el-select
+                                        size="small"
+                                        v-if="
+                                            childRule.type == 61 &&
+                                                childRule.params_type == 5 &&
+                                                form.extended_task_type == 2
+                                        "
+                                        v-model="childRule.coin_type"
+                                        filterable
+                                        :placeholder="LangUtil('请选择')"
+                                        :disabled="isStatusUpdate"
+                                        style="margin-right: 5px"
+                                    >
+                                        <el-option
+                                            v-for="(value, key) in tableColumns.activity_coin.options[form.plat_id]"
                                             :key="key"
                                             :label="value"
                                             :value="key"
@@ -562,6 +871,16 @@ export default class PlatActivityDialog extends AbstractView {
             link_url: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             show_type: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             rules: [{ required: false, message: this.LangUtil("必须填写"), trigger: "change" }],
+            extended_task_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            task_days: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            transfer_amount_rate: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            task_water_rate_2: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            task_water_rate_4: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            task_water_rate_8: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            task_water_rate_16: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            task_water_rate_32: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            task_water_rate_64: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            task_water_rate_128: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
@@ -641,6 +960,23 @@ export default class PlatActivityDialog extends AbstractView {
         }
     }
 
+    onExtendTypeChange(type: any) {
+        if (type == 2) {
+            for (const item of this.myProxy.dialogData.form.rules) {
+                for (const child of item.list) {
+                    for (const child_1 of child.list) {
+                        if (child_1.params_type && child_1.type) {
+                            if (child_1.type == 61 && child_1.params_type == 5) {
+                                child_1.coin_type = "";
+                                child_1.coin_amount = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     onModelIdChange(id: any) {
         this.myProxy.getModelDetail(id);
     }
@@ -716,6 +1052,32 @@ export default class PlatActivityDialog extends AbstractView {
         data.key = this.myProxy.dialogData.form.link_url;
         this.langTinymceProxy.showDialog(data);
     }
+    /** 添加每日返水  */
+    onAddDailyRatio() {
+        console.log("点击添加");
+        this.form.daily_ratio.push(0);
+    }
+    onDeleteDailyRatio() {
+        console.log("点击删除");
+        this.form.daily_ratio.pop();
+    }
+    handleAddVendor() {
+        this.myProxy.showVendorDialog();
+    }
+    handleDeleteVendor(i: any) {
+        this.form.vendorArr.splice(i, 1);
+    }
+
+    pickerOptions = {
+        disabledDate(time: any) {
+            // return time.getTime() < (Date.now() - 86400000);
+            const now = new Date(); // 当前时间
+            const lastWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2); // 上周时间
+            const twentyYearsFromNow = new Date(now.getFullYear() + 20, now.getMonth(), now.getDate()); // 20年后的时间
+            // 禁用选择上周之前的日期和20年后的日期
+            return time.getTime() < lastWeek.getTime() || time.getTime() > twentyYearsFromNow.getTime();
+        },
+    };
 }
 </script>
 
@@ -792,5 +1154,21 @@ export default class PlatActivityDialog extends AbstractView {
     padding-bottom: 14px;
     margin-left: 12px;
     margin-top: 48px;
+}
+.layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-top: 20px;
+    .el-form {
+        width: 50%;
+    }
+    div {
+        width: 100%;
+    }
+}
+.title {
+    font-weight: bold;
+    font-size: 18px;
 }
 </style>

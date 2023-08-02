@@ -44,14 +44,17 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
             water_rate_accelerate: { name: "", options: {} },
             languages: { name: "", options: {} },
             vendor_languages: { name: "", options: {} },
+            is_activity_task_water: { name: "", options: {} },
         },
         ctrlData: {
             lobby_vendor_product_id: "",
             opt: "",
             status: "",
+            index_no: "",
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        isExportExcel: false,
     };
     /**查询条件 */
     listQuery = {
@@ -64,8 +67,10 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         page_size: 20,
         languages: "",
         vendor_languages: "",
+        is_activity_task_water: "",
     };
-
+    //上一次搜索的条件
+    lastTimeListQuery = <any>{};
     /**更新列表資料 */
     rowRateData = {
         lobby_vendor_product_id: "",
@@ -77,6 +82,10 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         water_rate_accelerate: 0,
     };
 
+    rowActivityTaskWaterData = {
+        lobby_vendor_product_id: "",
+        is_activity_task_water: 98,
+    };
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -131,12 +140,20 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
             status: "",
             languages: "",
             vendor_languages: "",
+            is_activity_task_water: "",
         });
     }
 
     /**查询 */
     onQuery() {
+        this.lastTimeListQuery = JSON.parse(JSON.stringify(this.listQuery));
         this.sendNotification(HttpType.admin_lobby_vendor_products_index, objectRemoveNull(this.listQuery));
+    }
+    onQuery_export(pageInfo: any) {
+        const obj = JSON.parse(JSON.stringify(this.listQuery));
+        obj.page_count = pageInfo.pageCount;
+        obj.page_size = pageInfo.page_size;
+        this.sendNotification(HttpType.admin_lobby_vendor_products_index, objectRemoveNull(obj));
     }
     /**更新数据 */
     onUpdate() {
@@ -162,10 +179,65 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
     onUpdateWaterRateAccelerate() {
         this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowRateAccelerateData);
     }
+    /**更新活动币 */
+    onUpdateActivithTaskWaterData() {
+        this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowActivityTaskWaterData);
+    }
     /**同步游戏 */
     onSync() {
         this.sendNotification(HttpType.admin_lobby_vendor_products_sync_data, {
             plat_id: this.listQuery.plat_id,
         });
+    }
+
+    resetTabdata(data: any, isexport: boolean = false) {
+        const newdata = [];
+        //将数据中的 表格数据重组
+        for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            element._myTable_id = index;
+            if (element.list) {
+                for (let n = 0; n < element.list.length; n++) {
+                    const obj = JSON.parse(JSON.stringify(element));
+                    if (isexport) {
+                        obj.list = [];
+                    }
+                    const keys = Object.keys(obj.list[n]);
+                    for (let p = 0; p < keys.length; p++) {
+                        obj[keys[p]] = obj.list[n][keys[p]];
+                    }
+                    newdata.push(obj);
+                }
+            } else {
+                newdata.push(element);
+            }
+        }
+        return newdata;
+    }
+    _userList = [
+        "created_at",
+        "created_by",
+        "lobby_vendor_product_id",
+        "ori_product_id",
+        "plat_id",
+        "status",
+        "updated_at",
+        "updated_by",
+        "vendor_id",
+        "vendor_product_name",
+        "vendor_type",
+        "water_rate",
+        "water_rate_accelerate",
+        "languages",
+        "vendor_languages",
+        "is_activity_task_water",
+    ];
+    myExportPagedata = <any>{};
+    /**导出excel */
+    exportExcel(data: any) {
+        if (data && data.list) {
+            data.list = this.resetTabdata(data.list);
+        }
+        this.myExportPagedata = JSON.parse(JSON.stringify(data));
     }
 }

@@ -1,0 +1,12 @@
+{
+    "name": "国家信息",
+    "description": "国家信息",
+    "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1704626",
+    "list": [
+        "admin/country/table_columns",
+        "admin/country/index",
+        "admin/country/show/{id}",
+        "admin/country/store",
+        "admin/country/update/{id}"
+    ]
+}

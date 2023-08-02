@@ -37,6 +37,8 @@
                 :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
             />
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
+            <SearchInput :title="tableColumns.vendor_order_no.name" v-model="listQuery.vendor_order_no" />
+            <SearchInput :title="tableColumns.order_no.name" v-model="listQuery.order_no" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")

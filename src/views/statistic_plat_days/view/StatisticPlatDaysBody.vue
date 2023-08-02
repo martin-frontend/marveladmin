@@ -32,41 +32,69 @@
                 </template>
             </el-table-column>
             <el-table-column
+                prop="new_register_device"
+                :label="tableColumns['new_register_device'].name"
+                align="center"
+                min-width="100"
+            >
+            </el-table-column>
+            <el-table-column
                 v-if="tableColumns.new_register.display"
                 prop="new_register"
                 :label="tableColumns['new_register'].name"
                 align="center"
+                min-width="100"
             >
+            </el-table-column>
+            <el-table-column
+                prop="effective_new_rate"
+                :label="tableColumns['effective_new_rate'].name"
+                align="center"
+                min-width="120"
+            >
+                <template slot-scope="{ row }">
+                    <span v-if="row.effective_new_rate != null">{{ row.effective_new_rate }}</span>
+                    <span v-else> - </span>
+                </template>
             </el-table-column>
             <!-- <el-table-column
                 prop="new_user"
-                v-if="tableColumns['new_user']"
+                v-if="tableColumns['new_user']"｛
                 :label="tableColumns['new_user'].name"
                 align="center"
             >
             </el-table-column> -->
             <el-table-column
-                v-if="tableColumns.active_user.display"
-                prop="active_user"
-                :label="tableColumns['active_user'].name"
-                align="center"
-            >
-            </el-table-column>
-            <el-table-column
                 v-if="tableColumns.recharge.display"
                 prop="recharge"
                 :label="tableColumns['recharge'].name"
                 align="center"
+                min-width="100"
             >
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.recharge" :isShowColor="false" :isShowPlus="false" />
                 </template>
             </el-table-column>
             <el-table-column
+                prop="new_user_recharge"
+                :label="tableColumns['new_user_recharge'].name"
+                align="center"
+                min-width="120"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="old_user_recharge"
+                :label="tableColumns['old_user_recharge'].name"
+                align="center"
+                min-width="120"
+            >
+            </el-table-column>
+            <el-table-column
                 v-if="tableColumns.recharge_user.display"
                 prop="recharge_user"
                 :label="tableColumns['recharge_user'].name"
                 align="center"
+                min-width="100"
             >
             </el-table-column>
             <el-table-column
@@ -74,6 +102,26 @@
                 prop="new_recharge_user"
                 :label="tableColumns['new_recharge_user'].name"
                 align="center"
+                min-width="100"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="new_recharge_rate"
+                :label="tableColumns['new_recharge_rate'].name"
+                align="center"
+                min-width="120"
+            >
+                <template slot-scope="{ row }">
+                    <span v-if="row.new_recharge_rate != null">{{ row.new_recharge_rate }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="tableColumns.repeat_recharge_user.display"
+                prop="repeat_recharge_user"
+                :label="tableColumns['repeat_recharge_user'].name"
+                align="center"
+                min-width="100"
             >
             </el-table-column>
             <el-table-column
@@ -81,6 +129,7 @@
                 prop="exchange"
                 :label="tableColumns['exchange'].name"
                 align="center"
+                min-width="100"
             >
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.exchange" :isShowColor="false" :isShowPlus="false" />
@@ -91,6 +140,7 @@
                 prop="exchange_user"
                 :label="tableColumns['exchange_user'].name"
                 align="center"
+                min-width="100"
             >
             </el-table-column>
 
@@ -99,6 +149,7 @@
                 prop="new_exchange_user"
                 :label="tableColumns['new_exchange_user'].name"
                 align="center"
+                min-width="100"
             >
             </el-table-column>
             <el-table-column
@@ -179,6 +230,7 @@
                 prop="win_loss"
                 :label="tableColumns['win_loss'].name"
                 align="center"
+                min-width="130"
             >
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.win_loss"></WinLossDisplay>
@@ -189,14 +241,79 @@
                 prop="water"
                 :label="tableColumns['water'].name"
                 align="center"
+                min-width="130"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay
-                        :amount="row.water"
-                        :isShowColor="false"
-                        :isShowPlus="false"
-                        :isShowDollar="false"
-                    />
+                    <WinLossDisplay :amount="row.water" :isShowColor="false" :isShowPlus="false" />
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="new_register_water"
+                :label="tableColumns['new_register_water'].name"
+                align="center"
+                min-width="130"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.new_register_water" :isShowColor="false" :isShowPlus="false" />
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="tableColumns.active_user.display"
+                prop="active_user"
+                :label="tableColumns['active_user'].name"
+                align="center"
+                min-width="100"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="active_user_week"
+                :label="tableColumns['active_user_week'].name"
+                align="center"
+                min-width="100"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="active_user_month"
+                :label="tableColumns['active_user_month'].name"
+                align="center"
+                min-width="100"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="active_recharge_user"
+                :label="tableColumns['active_recharge_user'].name"
+                align="center"
+                min-width="100"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="active_user_recharge"
+                :label="tableColumns['active_user_recharge'].name"
+                align="center"
+                min-width="100"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="recharge_seep_rate"
+                :label="tableColumns['recharge_seep_rate'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot-scope="{ row }">
+                    <span v-if="row.recharge_seep_rate != null">{{ row.recharge_seep_rate }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="arpu_rate" :label="tableColumns['arpu_rate'].name" align="center" min-width="100">
+                <template slot-scope="{ row }">
+                    <span v-if="row.arpu_rate != null">{{ row.arpu_rate }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="arppu_rate" :label="tableColumns['arppu_rate'].name" align="center" min-width="100">
+                <template slot-scope="{ row }">
+                    <span v-if="row.arppu_rate != null">{{ row.arppu_rate }}</span>
+                    <span v-else> - </span>
                 </template>
             </el-table-column>
         </el-table>
@@ -228,7 +345,7 @@ export default class StatisticPlatDaysBody extends AbstractView {
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: StatisticPlatDaysProxy = this.getProxy(StatisticPlatDaysProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     get tableColumns() {
         return this.myProxy.tableData.columns;

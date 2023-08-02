@@ -7,7 +7,7 @@ import { Message } from "element-ui";
 import RechargeOrdersProxy from "../proxy/RechargeOrdersProxy";
 import i18n from "@/lang";
 
-interface IRechargeOrders extends IEventDispatcher {}
+interface IRechargeOrders extends IEventDispatcher { }
 
 export default class RechargeOrdersMediator extends AbstractMediator {
     private myProxy: RechargeOrdersProxy = <any>this.getProxy(RechargeOrdersProxy);
@@ -42,8 +42,8 @@ export default class RechargeOrdersMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_recharge_orders_index:
-                if (myProxy.tableData.isExportExcel) {
-                    myProxy.exportExcel(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
                 } else {
                     myProxy.setTableData(body);
                 }

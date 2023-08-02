@@ -1,8 +1,9 @@
 <template>
     <div>
         <div style="margin-bottom: 8px; text-align: right">
+            <el-button v-if="checkUnique(unique.plat_user_get_admin_added_user) && !myProxy.isChannelUser" @click="handleMutipleUser()" type="primary">{{ LangUtil("批量新增用户") }}</el-button>
             <el-button
-                v-if="checkUnique(unique.plat_user_store_credit_user)"
+                v-if="checkUnique(unique.plat_user_store_credit_user) && !myProxy.isChannelUser"
                 @click="handlerAddCreditUser()"
                 type="primary"
                 >{{ LangUtil("新增信用用户") }}</el-button
@@ -38,7 +39,8 @@
                         {{ LangUtil("备注") }}：<span class="user_remark">{{ row.remark }}</span>
                     </div>
                     <div>VIP：{{ row.vip_level }}</div>
-
+                    <div>{{ tableColumns.real_name.name }}：{{ row.real_name }}</div>
+                    <div>{{ tableColumns.cpf.name }}：{{ row.cpf }}</div>
                     <div>
                         {{ tableColumns.is_credit_user.name }}：{{
                             tableColumns.is_credit_user.options[row.is_credit_user]
@@ -46,12 +48,12 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column
-                :label="tableColumns['phone'].name"
-                prop="phone"
-                min-width="100px"
-                class-name="status-col"
-            ></el-table-column>
+            <el-table-column :label="tableColumns.contact_info.name" min-width="100px" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div style="text-align: left;">{{ tableColumns.phone.name }}：{{ row.phone }}</div>
+                    <div style="text-align: left;">{{ tableColumns.email.name }}：{{ row.email }}</div>
+                </template>
+            </el-table-column>
             <el-table-column :label="tableColumns['status'].name" min-width="60px" class-name="status-col">
                 <template slot-scope="{ row }">
                     <el-switch
@@ -61,6 +63,16 @@
                         :inactive-value="98"
                     >
                     </el-switch>
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns.is_back_visit.name" min-width="80px" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <el-switch
+                        @change="onSwitchIsBackVisit(row.user_id, row.is_back_visit)"
+                        v-model="row.is_back_visit"
+                        :active-value="1"
+                        :inactive-value="98"
+                    ></el-switch>
                 </template>
             </el-table-column>
             <el-table-column align="left" min-width="160px">
@@ -85,55 +97,136 @@
                     <div>{{ tableColumns["safe_gold"].name }}：{{ row.safe_gold }}</div>
                 </template>
             </el-table-column>
+
+            <el-table-column :label="tableColumns.invite_user.name" prop="invite_user" min-width="150px">
+                <template slot-scope="{ row }" v-if="row.invite_user && row.invite_user.user_id">
+                    <div>
+                        ID：<span class="user_id" @click="showUserDetail(row.invite_user.user_id)">{{
+                            row.invite_user.user_id
+                        }}</span>
+                    </div>
+                    <div>{{ LangUtil("账号") }}：{{ row.invite_user.username }}</div>
+                    <div>{{ LangUtil("昵称") }}：{{ row.invite_user.nick_name }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns.is_recharged.name" min-width="80px" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns.is_recharged.options[row.is_recharged] }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns.first_recharge.name" prop="first_recharge" min-width="150px">
+                <template slot-scope="{ row }" v-if="row.first_recharge && row.first_recharge.coin_name_unique">
+                    <p>{{ row.first_recharge.pay_time }}</p>
+                    <p class="">{{ row.first_recharge.coin_name_unique }}:{{ row.first_recharge.gold }}</p>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="tableColumns.last_recharge.name" prop="last_recharge" min-width="150px">
+                <template slot-scope="{ row }" v-if="row.last_recharge && row.last_recharge.coin_name_unique">
+                    <p>{{ row.last_recharge.pay_time }}</p>
+                    <p class="">{{ row.last_recharge.coin_name_unique }}:{{ row.last_recharge.gold }}</p>
+                </template>
+            </el-table-column>
+
+            <el-table-column :label="tableColumns.last_exchange.name" prop="last_exchange" min-width="150px">
+                <template slot-scope="{ row }" v-if="row.last_exchange && row.last_exchange.coin_name_unique">
+                    <p>{{ row.last_exchange.pay_time }}</p>
+                    <p class="">{{ row.last_exchange.coin_name_unique }}:{{ row.last_exchange.gold }}</p>
+                </template>
+            </el-table-column>
+
             <el-table-column
                 :label="tableColumns['total_recharge'].name"
-                sortable="custom"
                 prop="total_recharge"
                 class-name="status-col"
-                min-width="110px"
+                min-width="150px"
+                align="left"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.total_recharge" :isShowColor="false" :isShowPlus="false" />
+                    <p style="text-align: left;">{{ tableColumns.recharge_times.name }}: {{ row.recharge_times }}</p>
+                    <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
+                        {{ value.coin_name_unique }} :
+                        <WinLossDisplay
+                            :amount="value.total_recharge"
+                            :isShowDollar="false"
+                            :isShowPlus="false"
+                            :isShowColor="false"
+                        />
+                    </p>
                 </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns['total_exchange'].name"
-                sortable="custom"
                 prop="total_exchange"
                 class-name="status-col"
-                min-width="110px"
+                min-width="150px"
+                align="left"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.total_exchange" :isShowColor="false" :isShowPlus="false" />
+                    <p style="text-align: left;">{{ tableColumns.exchange_times.name }}: {{ row.exchange_times }}</p>
+                    <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
+                        {{ value.coin_name_unique }} :
+                        <WinLossDisplay
+                            :amount="value.total_exchange"
+                            :isShowDollar="false"
+                            :isShowPlus="false"
+                            :isShowColor="false"
+                        />
+                    </p>
                 </template>
             </el-table-column>
             <el-table-column
-                :label="tableColumns['total_water'].name"
-                sortable="custom"
-                prop="total_water"
+                :label="tableColumns['total_bet'].name"
+                prop="total_bet"
                 class-name="status-col"
-                min-width="110px"
+                min-width="150px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay
-                        :amount="row.total_water"
-                        :isShowColor="false"
-                        :isShowPlus="false"
-                        :isShowDollar="false"
-                    />
+                    <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
+                        {{ value.coin_name_unique }} :
+                        <WinLossDisplay
+                            :amount="value.total_bet"
+                            :isShowDollar="false"
+                            :isShowPlus="false"
+                            :isShowColor="false"
+                        />
+                    </p>
                 </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns['total_win'].name"
-                sortable="custom"
                 prop="total_win"
                 class-name="status-col"
-                min-width="110px"
+                min-width="150px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.total_win" />
+                    <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
+                        {{ value.coin_name_unique }} :
+                        <WinLossDisplay :amount="value.total_win" :isShowDollar="false" />
+                    </p>
                 </template>
             </el-table-column>
+
+            <el-table-column
+                :label="tableColumns['coin_name_unique_arr'].name"
+                prop="currency"
+                class-name="status-col"
+                min-width="150px"
+            >
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.gold_info" :key="key" style="text-align: left;">
+                        {{ key }} : {{ value.sum_money }}
+                    </p>
+                </template>
+            </el-table-column>
+
+            <el-table-column
+                :label="tableColumns['first_login_device'].name"
+                prop="first_login_device"
+                class-name="status-col"
+                min-width="120px"
+            ></el-table-column>
+
             <el-table-column
                 :label="tableColumns['last_login_device'].name"
                 prop="last_login_device"
@@ -173,12 +266,7 @@
                         </el-button>
                     </div>
                     <div>
-                        <el-button
-                            class="item op-btn"
-                            size="mini"
-                            type="success"
-                            @click="changeChannel(row)"
-                        >
+                        <el-button class="item op-btn" size="mini" type="success" @click="changeChannel(row)">
                             {{ LangUtil("更换渠道") }}
                         </el-button>
                     </div>
@@ -226,12 +314,13 @@ export default class PlatUserBody extends AbstractView {
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.tableData.list;
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
+    userInfo = this.myProxy.userInfo;
 
     handlerQuery() {
         this.myProxy.onQuery();
@@ -297,9 +386,15 @@ export default class PlatUserBody extends AbstractView {
             this.myProxy.onToggleStatus(user_id, status);
         }
     }
+    onSwitchIsBackVisit(user_id: number, is_back_visit: number) {
+        this.myProxy.onToggleIsBack(user_id, is_back_visit);
+    }
 
     handlerAddCreditUser() {
         this.myProxy.showCreditUserDialog();
+    }
+    handleMutipleUser() {
+        this.myProxy.showMultipleUserDialog();
     }
 
     changeChannel(data: any) {
@@ -310,4 +405,7 @@ export default class PlatUserBody extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.blueText {
+    color: rgb(79, 121, 246);
+}
 </style>

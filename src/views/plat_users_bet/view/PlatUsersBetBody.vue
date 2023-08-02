@@ -47,52 +47,122 @@
                     :isShowDollar="false"
                 />
             </span>
+            <span>
+                {{ LangUtil("投注總人數") }}:
+                {{ summary.total_bet_user_num }}
+            </span>
         </div>
-        <div class="statistics" v-for="(item, index) in myProxy.tableData.summary_coin" :key="index">
-            {{ item.coin_name_unique }}
-            <span>
-                {{ LangUtil("总投注金额") }}:
-                <WinLossDisplay
-                    :amount="item.bet_gold"
-                    :isShowColor="false"
-                    :isShowPlus="false"
-                    :isShowDollar="false"
-                />
-            </span>
-            <span>
-                {{ LangUtil("有效投注金额") }}:
-                <WinLossDisplay
-                    :amount="item.valid_bet_gold"
-                    :isShowColor="false"
-                    :isShowPlus="false"
-                    :isShowDollar="false"
-                />
-            </span>
-            <span> {{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
-            <span>
-                {{ LangUtil("结算流水") }}:
-                <WinLossDisplay
-                    :amount="item.settlement_water"
-                    :isShowColor="false"
-                    :isShowPlus="false"
-                    :isShowDollar="false"
-                />
-            </span>
-            <span>
-                {{ LangUtil("用户流水") }}:
-                <WinLossDisplay :amount="item.water" :isShowColor="false" :isShowPlus="false" :isShowDollar="false" />
-            </span>
-            <span>
-                {{ tableColumns["backwater"].name }}:
-                <WinLossDisplay
-                    :amount="item.backwater_coin"
-                    :isShowColor="false"
-                    :isShowPlus="false"
-                    :isShowDollar="false"
-                />
-            </span>
-            <!-- <span>{{ tableColumns["water_accelerate"].name }}:{{ item.water_accelerate }}</span> -->
-        </div>
+        <template v-for="(item, index) in myProxy.tableData.summary_coin">
+            <div class="statistics" :key="index" v-if="item.coin_name_unique_type != 4">
+                {{ item.coin_name_unique }}
+                <span>
+                    {{ LangUtil("总投注金额") }}:
+                    <WinLossDisplay
+                        :amount="item.bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </span>
+                <span>
+                    {{ LangUtil("有效投注金额") }}:
+                    <WinLossDisplay
+                        :amount="item.valid_bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </span>
+                <span> {{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"/></span>
+                <span>
+                    {{ LangUtil("结算流水") }}:
+                    <WinLossDisplay
+                        :amount="item.settlement_water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </span>
+                <span>
+                    {{ LangUtil("用户流水") }}:
+                    <WinLossDisplay
+                        :amount="item.water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </span>
+                <span>
+                    {{ tableColumns["backwater"].name }}:
+                    <WinLossDisplay
+                        :amount="item.backwater_coin"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </span>
+                <!-- <span>{{ tableColumns["water_accelerate"].name }}:{{ item.water_accelerate }}</span> -->
+            </div>
+        </template>
+        <el-collapse v-if="activitySummaryCoin.length > 0" class="custom-collapse">
+            <el-collapse-item>
+                <template slot="title">
+                    <div>{{ LangUtil("活动币统计") }}</div>
+                </template>
+                <div class="statistics" :key="item.name" v-for="item in activitySummaryCoin">
+                    {{ item.coin_name_unique }}
+                    <span>
+                        {{ LangUtil("总投注金额") }}:
+                        <WinLossDisplay
+                            :amount="item.bet_gold"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ LangUtil("有效投注金额") }}:
+                        <WinLossDisplay
+                            :amount="item.valid_bet_gold"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="item.win_gold" :isShowDollar="false"
+                    /></span>
+                    <span>
+                        {{ LangUtil("结算流水") }}:
+                        <WinLossDisplay
+                            :amount="item.settlement_water"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ LangUtil("用户流水") }}:
+                        <WinLossDisplay
+                            :amount="item.water"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ tableColumns["backwater"].name }}:
+                        <WinLossDisplay
+                            :amount="item.backwater_coin"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                </div>
+            </el-collapse-item>
+        </el-collapse>
+
         <el-table
             :data="tableData"
             border
@@ -110,6 +180,14 @@
             >
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.vendor_id.options[row.vendor_id] }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="LangUtil('平台信息')" min-width="200px" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div style="text-align: left;">
+                        {{ tableColumns.plat_id.name }}:{{ tableColumns.plat_id.options[row.plat_id] }}
+                    </div>
+                    <div style="text-align: left;">{{ tableColumns.channel_id.name }}:{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
             <el-table-column
@@ -156,6 +234,13 @@
                     <div>{{ tableColumns.vendor_type.options[row.vendor_type] }}</div>
                 </template>
             </el-table-column>
+            <el-table-column
+                :label="tableColumns['vendor_order_no'].name"
+                prop="vendor_order_no"
+                min-width="80px"
+                class-name="status-col"
+            ></el-table-column>
+
             <el-table-column
                 :label="tableColumns['order_no'].name"
                 prop="order_no"
@@ -219,6 +304,23 @@
                             :isShowDollar="false"
                         />
                     </div>
+                    <div>
+                        {{ tableColumns["gold_scale"].name }}:
+                        {{ row.gold_scale }}
+                    </div>
+                    <div>
+                        {{ tableColumns["vendor_coin_name_unicode"].name }}:
+                        <WinLossDisplay
+                            :amount="row.vendor_coin_name_unicode"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </div>
+                    <div>
+                        {{ tableColumns["vendor_win_gold"].name }}:
+                        <WinLossDisplay :amount="row.vendor_win_gold" :isShowDollar="false" />
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns['win_gold'].name" prop="win_gold" class-name="status-col">
@@ -248,9 +350,26 @@
                         </span>
                     </p>
                     <p>{{ tableColumns["bet_code"].name }}：{{ row.bet_code }}</p>
-                    <p>{{ tableColumns["bet_result"].name }}：{{ row.bet_result }}</p>
+                    <p v-if="row.vendor_id == 173">{{ LangUtil("开奖结果") }}：{{ row.game_results }}</p>
+                    <p v-else-if="row.vendor_id != 136">{{ tableColumns["bet_result"].name }}：{{ row.bet_result }}</p>
+                    <p v-if="row.vendor_id == 136">{{ LangUtil("彩种") }}：{{ row.vendor_game_name }}</p>
+                    <p v-if="row.vendor_id == 136">{{ LangUtil("玩法") }}：{{ row.vendor_game_rules }}</p>
+                    <p v-if="row.vendor_id == 136">{{ LangUtil("奖期") }}：{{ row.vendor_game_issue }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type_text }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("赔率") }}：{{ row.odds }}</p>
+                    <p v-if="row.user_level">{{ LangUtil("等级") }}：{{ row.user_level }}</p>
+                    <template v-if="row.vendor_id == 187">
+                        <p>{{ LangUtil("倍率") }}：{{ row.agdz_betx }}</p>
+                        <p>{{ LangUtil("捕获鱼总价值") }}：{{ row.agdz_totalfishcost }}</p>
+                        <p>{{ LangUtil("Jackpot抽水") }}：{{ row.agdz_totaljpcontribute }}</p>
+                        <p>{{ LangUtil("Jackpot") }}：{{ row.agdz_totaljackpot }}</p>
+                        <p>{{ LangUtil("第一名奖励") }}：{{ row.agdz_totalfirstprize }}</p>
+                    </template>
+                    <template v-if="row.vendor_id == 197">
+                        <p>{{ LangUtil("开奖结果") }}：{{ row.game_results }}</p>
+                        <p>{{ LangUtil("奖期") }}：{{ row.vendor_game_issue }}</p>
+                        <p>{{ LangUtil("赔率") }}：{{ row.odds }}</p>
+                    </template>
                     <el-button v-if="row.bet_detail_url" @click="showDetailPage(row)" type="text">{{
                         LangUtil("跳转详情")
                     }}</el-button>
@@ -400,6 +519,11 @@ export default class PlatUsersBetBody extends AbstractView {
     showDetailPage(data: any) {
         this.myProxy.showDetailPage(data);
     }
+
+    get activitySummaryCoin() {
+        // @ts-ignore
+        return this.myProxy.tableData.summary_coin.filter(({ coin_name_unique_type }) => coin_name_unique_type == 4);
+    }
 }
 </script>
 
@@ -412,6 +536,25 @@ export default class PlatUsersBetBody extends AbstractView {
         :nth-child(1) {
             margin-left: 0;
         }
+    }
+}
+::v-deep .custom-collapse {
+    margin-bottom: 10px;
+    border: 0;
+    .el-collapse-item__header {
+        border: 0;
+        color: #000;
+        font-size: 16px;
+    }
+    .el-collapse-item__arrow {
+        margin: 0 0 0 8px;
+    }
+    .statistics {
+        color: #000;
+        font-size: 16px;
+    }
+    .el-collapse-item__wrap {
+        border: 0;
     }
 }
 </style>

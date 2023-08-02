@@ -54,5 +54,6 @@ export default class DashboardDialog extends AbstractView {
 .chart {
     width: 100%;
     height: 300px;
+    margin-bottom: 30px;
 }
 </style>

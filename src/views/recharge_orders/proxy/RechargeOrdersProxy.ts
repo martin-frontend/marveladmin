@@ -1,7 +1,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, getTodayOffset, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/recharge_orders/setting";
 import IRechargeOrdersProxy from "./IRechargeOrdersProxy";
 import { dateFormat } from "@/core/global/Functions";
@@ -32,43 +32,53 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
     /**表格相关数据 */
     tableData: any = {
         columns: {
-            actual_gold: { name: "到账金额", options: {} },
-            agent_pay_account_id: { name: "代理支付账号", options: {} },
-            agent_pay_type: { name: "代理支付方式", options: {} },
-            callback_gold: { name: "回调金额", options: {} },
-            channel_id: { name: "所属渠道", options: {} },
-            created_at: { name: "创建时间", options: {} },
-            created_by: { name: "创建人", options: {} },
-            data_belong: { name: "数据归属标记", options: {} },
-            extend_column_1: { name: "扩展字段1", options: {} },
-            extend_column_2: { name: "扩展字段2", options: {} },
-            from_ip: { name: "来源IP", options: {} },
-            gift_gold: { name: "充值赠送金币", options: {} },
-            gold: { name: "订单金额", options: {} },
-            id: { name: "ID", options: {} },
-            nick_name: { name: "用户昵称", options: {} },
-            order_no: { name: "订单号", options: {} },
-            paychannel_id: { name: "充值渠道", options: {} },
-            paymethod_id: { name: "支付方式", options: <any>{} },
-            paytime: { name: "支付时间", options: {} },
+            id: { name: "ID", options: [] },
+            data_belong: { name: "数据归属标记", options: [] },
             plat_id: { name: "所属平台", options: {} },
-            remark: { name: "备注", options: {} },
-            serial_no: { name: "流水号", options: {} },
-            status: { name: "订单状态", options: {} },
-            third_order_no: { name: "第三方订单号", options: {} },
-            total_gold: { name: "实际到账金币(包含赠送)", options: {} },
-            updated_at: { name: "修改时间", options: {} },
-            updated_by: { name: "修改人", options: {} },
-            user_id: { name: "用户ID", options: {} },
-            user_remark: { name: "用户备注", options: {} },
-            username: { name: "用户账号", options: {} },
-            vendor_id: { name: "充值厂商", options: <any>{} },
-            fee: { name: "", options: {} },
-            fee_rate: { name: "", options: {} },
-            third_id: { name: "", options: {} },
-            third_name: { name: "", options: {} },
+            order_no: { name: "订单号", options: [] },
+            third_order_no: { name: "第三方订单号", options: [] },
+            serial_no: { name: "流水号", options: [] },
+            user_id: { name: "用户ID", options: [] },
+            channel_id: { name: "所属渠道", options: {} },
+            gold: { name: "资产数量", options: [] },
+            actual_gold: { name: "到账资产", options: [] },
+            actual_gold_scale: { name: "到账金额[换算后]", options: [] },
+            total_gold: { name: "实际到账资产(包含赠送,手续费)", options: [] },
+            gift_gold: { name: "充值赠送资产", options: [] },
+            fee: { name: "手续费", options: [] },
+            fee_rate: { name: "手续费比例", options: [] },
+            currency_type: { name: "结算方式", options: [] },
+            currency_num: { name: "结算资产", options: [] },
+            callback_gold: { name: "回调资产", options: [] },
+            paymethod_id: { name: "支付方式", options: {} },
+            paychannel_id: { name: "充值渠道", options: [] },
+            from_ip: { name: "来源ip", options: [] },
+            status: { name: "订单状态", options: [] },
+            paytime: { name: "支付时间", options: [] },
             block_network_id: { name: "链名", options: {} },
             coin_name_unique: { name: "币种", options: {} },
+            remark: { name: "备注", options: [] },
+            bonus_multiple: { name: "提现流水倍数", options: [] },
+            agent_pay_type: { name: "代理支付方式", options: [] },
+            agent_pay_account_id: { name: "代理支付账号", options: [] },
+            third_id: { name: "第三方编号", options: [] },
+            third_name: { name: "第三方名称", options: [] },
+            is_internal: { name: "是否内部转账", options: [] },
+            extends: { name: "扩展信息", options: [] },
+            created_by: { name: "创建人", options: [] },
+            created_at: { name: "创建时间", options: [] },
+            updated_by: { name: "修改人", options: [] },
+            updated_at: { name: "修改时间", options: [] },
+            vendor_id: { name: "充值厂商", options: {} },
+            nick_name: { name: "用户昵称", options: [] },
+            username: { name: "用户账号", options: [] },
+            gold_scale: { name: "代币汇率", options: [] },
+            user_remark: { name: "用户备注" },
+            coin_user_id: { options: {} },
+            user_created_at: { name: LangUtil("账号创建时间"), options: [] },
+            is_first_recharge: { name: "是否首充", options: [] },
+            invite_user_id: { name: "直属代理ID", options: [] },
+            grant_agent_id: { name: "代理ID", options: [] },
         },
         list: <any>[],
         message: {
@@ -82,8 +92,6 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             total_gift_gold: "",
         },
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
-        isExportExcel: false, //是否导出excel
-        excelPageSize: 1000000, //excel 资料长度
     };
 
     /**定时器 */
@@ -96,6 +104,47 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             "180000": LangUtil("180秒自动刷新"),
         },
         timer: 0,
+    };
+
+    fieldSelectionData = {
+        bShow: false,
+        fieldOptions: [
+            "plat_id",
+            "channel_id",
+            "user_id",
+            "nick_name",
+            "user_remark",
+            "user_created_at",
+            "order_no",
+            "third_order_no",
+            "third_name",
+            "status",
+            "is_first_recharge",
+            "coin_name_unique",
+            "block_network_id",
+            "vendor_id",
+            "paymethod_id",
+            "third_id",
+            "extends",
+            "gold",
+            "callback_gold",
+            "actual_gold",
+            "total_gold",
+            "gift_gold",
+            "fee",
+            "fee_rate",
+            "created_at",
+            "paytime",
+            "remark",
+        ],
+    };
+
+    exportData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
     };
 
     /**查询条件 */
@@ -119,6 +168,10 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         "gold-{<=}": "",
         coin_name_unique: "",
         block_network_id: "",
+        is_first_recharge: "",
+        invite_user_id: "",
+        grant_agent_id: "",
+        user_remark: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -167,6 +220,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             ...this.tableData.columns.plat_id.options,
             "0": LangUtil("所有平台"),
         };
+        delete this.tableData.columns.is_first_recharge.options[0];
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
@@ -220,6 +274,10 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             "gold-{<=}": "",
             coin_name_unique: "",
             block_network_id: "",
+            is_first_recharge: "",
+            invite_user_id: "",
+            grant_agent_id: "",
+            user_remark: "",
         });
     }
 
@@ -306,33 +364,94 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
     }
 
     /**取得所有资料 */
-    onQueryAll() {
-        this.tableData.isExportExcel = true;
-        let queryCopy: any = JSON.parse(JSON.stringify(this.listQuery));
-        queryCopy.page_size = this.tableData.excelPageSize;
-        queryCopy.page_count = 1;
-        if (queryCopy.plat_id == "0") queryCopy.plat_id = null;
-        this.facade.sendNotification(HttpType.admin_recharge_orders_index, objectRemoveNull(queryCopy));
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
+        this.sendNotification(HttpType.admin_recharge_orders_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
     }
 
     /**导出excel */
-    exportExcel(data: any) {
+    exportExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
         //资料列表处理
-        for (const item of data.list) {
-            // 支付方式
-            item.paymethod_id = this.tableData.columns["paymethod_id"].options[item.paymethod_id];
-            // 充值厂商
-            item.vendor_id = this.tableData.columns["vendor_id"].options[item.vendor_id];
+        // for (const item of newData) {
+        //     // 支付方式
+        //     item.paymethod_id = this.tableData.columns["paymethod_id"].options[item.paymethod_id];
+        //     // 充值厂商
+        //     item.vendor_id = this.tableData.columns["vendor_id"].options[item.vendor_id];
+        // }
+        // console.warn(newData);
+        // @ts-ignore
+        newData.forEach(element => {
+            if (element.extends && element.paymethod_id == 9 && element.extends.length != 0) {
+                element.extends = jsonStringify(element.extends);
+            } else {
+                element.extends = "-";
+            }
+        });
+
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item);
+            }
         }
-        this.tableData.isExportExcel = false;
 
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
-            Object.keys(this.tableData.columns),
+            exportField,
             this.tableData.columns,
-            data.list,
-            [],
+            newData,
+            [
+                "plat_id",
+                "paymethod_id",
+                "vendor_id",
+                "status",
+                "block_network_id",
+                "status",
+                "is_internal",
+                "is_first_recharge",
+            ],
             []
         );
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }

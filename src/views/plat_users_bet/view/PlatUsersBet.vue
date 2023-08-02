@@ -1,9 +1,12 @@
 <template>
     <div class="content">
-        <PlatUserBetDetail  v-if="myProxy.dialogData.bShow"></PlatUserBetDetail>
-        <JsonEditorDialog  v-if="myProxy.jsonEditorDialog.bShow"></JsonEditorDialog>
+        <PlatUserBetDetail v-if="myProxy.dialogData.bShow"></PlatUserBetDetail>
+        <JsonEditorDialog v-if="myProxy.jsonEditorDialog.bShow"></JsonEditorDialog>
         <PlatUsersBetHeader />
         <PlatUsersBetBody />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
+        <PlatUsersBetStatisticDialog v-if="myProxy.statisticDialog.bShow" />
     </div>
 </template>
 
@@ -16,6 +19,9 @@ import PlatUserBetDetail from "@/views/plat_users_bet/view/PlatUserBetDetail.vue
 import JsonEditorDialog from "@/views/plat_users_bet/view/JsonEditorDialog.vue";
 import PlatUsersBetHeader from "./PlatUsersBetHeader.vue";
 import PlatUsersBetBody from "./PlatUsersBetBody.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
+import PlatUsersBetStatisticDialog from "./PlatUsersBetStatisticDialog.vue";
 
 @Component({
     components: {
@@ -23,6 +29,9 @@ import PlatUsersBetBody from "./PlatUsersBetBody.vue";
         PlatUsersBetHeader,
         PlatUsersBetBody,
         JsonEditorDialog,
+        ProgressDialog,
+        FieldSelectionDialog,
+        PlatUsersBetStatisticDialog,
     },
 })
 export default class PlatUsersBet extends AbstractView {
@@ -34,9 +43,9 @@ export default class PlatUsersBet extends AbstractView {
         super.destroyed();
     }
     // proxy
-    private myProxy: PlatUsersBetProxy = this.getProxy(PlatUsersBetProxy);
+    myProxy: PlatUsersBetProxy = this.getProxy(PlatUsersBetProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
 }
 </script>
 

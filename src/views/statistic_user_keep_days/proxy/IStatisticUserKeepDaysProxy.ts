@@ -28,3 +28,8 @@ export default interface IStatisticUserKeepDaysProxy {
     /**查询 */
     onQuery(): void;
 }
+// 统计标签
+export enum StatisticTab {
+    User = "1",
+    Recharge = "3",
+}

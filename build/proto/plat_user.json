@@ -5,6 +5,7 @@
     "list": [
         "admin/plat_user/table_columns",
         "admin/plat_user/index",
+        "admin/plat_user/index2",
         "admin/plat_user/store",
         "admin/plat_user/show/{user_id}",
         "admin/plat_user/update/{user_id}",
@@ -15,6 +16,10 @@
         "admin/plat_users_wallet/show_plat",
         "admin/plat_user/{plat_id}/backwater_config",
         "admin/plat_user/store_credit_user",
-        "admin/plat_user/change_channel/{user_id}"
+        "admin/plat_user/change_channel/{user_id}",
+        "admin/plat_user/get_admin_added_user",
+        "admin/plat_user/store_user_by_admin",
+        "admin/plat_user/update_admin_added_user/{admin_added_batch}",
+        "admin/plat_user/delete_admin_added_user/{admin_added_batch}"
     ]
 }

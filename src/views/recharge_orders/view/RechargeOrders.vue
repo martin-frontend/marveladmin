@@ -4,6 +4,8 @@
         <RechargeOrdersHeader />
         <RechargeOrdersBody />
         <RemarkDialog />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -15,6 +17,9 @@ import RechargeOrdersDialog from "./RechargeOrdersDialog.vue";
 import RechargeOrdersHeader from "./RechargeOrdersHeader.vue";
 import RechargeOrdersBody from "./RechargeOrdersBody.vue";
 import RemarkDialog from "./components/RemarkDialog.vue";
+import RechargeOrdersProxy from "../proxy/RechargeOrdersProxy";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 
 @Component({
     components: {
@@ -22,9 +27,13 @@ import RemarkDialog from "./components/RemarkDialog.vue";
         RechargeOrdersHeader,
         RemarkDialog,
         RechargeOrdersBody,
+        ProgressDialog,
+        FieldSelectionDialog,
     },
 })
 export default class RechargeOrders extends AbstractView {
+    // proxy
+    myProxy: RechargeOrdersProxy = this.getProxy(RechargeOrdersProxy);
     constructor() {
         super(RechargeOrdersMediator);
     }

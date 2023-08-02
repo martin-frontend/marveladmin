@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/plat_users_backwater_log/setting";
 import { Message } from "element-ui";
 import PlatUsersBackwaterLogProxy from "../proxy/PlatUsersBackwaterLogProxy";
 
-interface IPlatUsersBackwaterLog extends IEventDispatcher {}
+interface IPlatUsersBackwaterLog extends IEventDispatcher { }
 
 export default class PlatUsersBackwaterLogMediator extends AbstractMediator {
     private myProxy: PlatUsersBackwaterLogProxy = <any>this.getProxy(PlatUsersBackwaterLogProxy);
@@ -39,7 +39,11 @@ export default class PlatUsersBackwaterLogMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_users_backwater_log_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_plat_users_backwater_log_show:
                 myProxy.setDetail(body);

@@ -9,7 +9,7 @@
         />
         <div class="group">
             <SearchDatePicker
-                :title="tableColumns.created_at.name"
+                :title="LangUtil('投注结算时间')"
                 :startDate.sync="listQuery['created_at-{>=}']"
                 :endDate.sync="listQuery['created_at-{<=}']"
                 :showTime="true"

@@ -7,6 +7,7 @@
             clearable
             v-model="inputValue"
             @input="onInput"
+            :type="inputSearchType"
         >
             <template slot="prepend">
                 <span>
@@ -39,14 +40,18 @@ export default class SearchInput extends Vue {
     @Prop() title!: string;
     @Prop() options!: any;
     @Prop({ default: "" }) width!: String;
-    // @Prop({ default: "" }) placeholder!: String;
+    @Prop({ default: "" }) placeholderProps!: String;
+    @Prop({ default: "" }) searchType!: String;
     @Prop() tip!: string;
     @Prop({ default: false }) disabled!: boolean;
     @Prop() maxLength!: number;
 
     inputValue = this.getValue;
-
+    placeholder= this.getPlaceholder;
+    inputSearchType = this.getInputSearchType;
     @Prop() value!: any;
+    // @Prop({ default: "" }) placeholderProps: string;
+
     @Watch("value")
     onValueChange() {
         this.inputValue = this.value;
@@ -64,11 +69,14 @@ export default class SearchInput extends Vue {
         return this.width ? `width:${this.width}px` : "";
     }
 
-    placeholder: any = this.LangUtil("请输入");
+    // placeholder: any = this.placeholderProps || this.LangUtil("请输入");
 
-    // get getPlaceholder() {
-    //     return this.placeholder ? this.placeholder : this.title;
-    // }
+    get getPlaceholder() {
+        return this.placeholderProps ? this.placeholderProps : this.LangUtil("请输入");
+    }
+    get getInputSearchType() {
+        return this.searchType ? this.searchType : 'text';
+    }
 
     get getDisabled() {
         return this.disabled;

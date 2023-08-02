@@ -18,6 +18,8 @@
                 v-model="listQuery.type"
                 :options="tableColumns.type.options"
             />
+            <SearchInput :title="tableColumns.vendor_order_no.name" v-model="listQuery.vendor_order_no" />
+            <SearchInput :title="tableColumns.order_no.name" v-model="listQuery.order_no" />
             <div>
                 <el-button class="header-button" type="primary" icon="el-icon-search" @click="handlerSearch">{{
                     LangUtil("查询")
@@ -38,11 +40,12 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import { getProxy } from "@/views/_user_detail/PageSetting";
 import SearchSelect from "@/components/SearchSelect.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
-
+import SearchInput from "@/components/SearchInput.vue";
 @Component({
     components: {
         SearchSelect,
         SearchDatePicker,
+        SearchInput,
     },
 })
 export default class TabGoldHeader extends AbstractView {

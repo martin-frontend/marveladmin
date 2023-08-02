@@ -1,6 +1,6 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { dateFormat, formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/statistic_user_days/setting";
 import { MessageBox } from "element-ui";
 import IStatisticUserDaysProxy from "./IStatisticUserDaysProxy";
@@ -60,7 +60,7 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
             gift_gold: { name: "平台赠送", options: {} },
             id: { name: "用户统计ID", options: {} },
             is_first_recharge: { name: "是否首充", options: {} },
-            is_credit_user:{ name: "用户类型", options: {} },
+            is_credit_user: { name: "用户类型", options: {} },
             keep_time: "30",
             nick_name: { name: "用户昵称", options: {} },
             plat_id: { name: "平台", options: {} },
@@ -96,8 +96,8 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
         page_count: 1,
         page_size: 20,
         plat_id: "",
-        "created_date-{>=}": "",
-        "created_date-{<=}": "",
+        "created_date-{>=}": dateFormat(getTodayOffset(-1), "yyyy-MM-dd hh:mm:ss"),
+        "created_date-{<=}": dateFormat(getTodayOffset(0, 1), "yyyy-MM-dd hh:mm:ss"),
         channel_id: "",
         username: "",
         nick_name: "",
@@ -144,6 +144,9 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
 
     /**查询 */
     onQuery() {
+        if (!this.listQuery.plat_id) {
+            this.listQuery.plat_id = "0";
+        }
         this.sendNotification(HttpType.admin_statistic_user_days_index, objectRemoveNull(this.listQuery));
     }
 

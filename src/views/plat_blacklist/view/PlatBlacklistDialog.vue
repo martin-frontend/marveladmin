@@ -31,7 +31,7 @@
             </el-form-item>
 
             <el-form-item :label="tableColumns.black_content.name" prop="black_contents">
-                <el-input type="textarea" v-model="form.black_contents"></el-input>
+                <el-input type="textarea" v-model.trim="form.black_contents"></el-input>
                 <p class="desc">
                     {{ LangUtil("黑名单可以批量输入，以换行进行分割，一次堆多支持录入5000条，例如：") }}
                     <br />{{ LangUtil("192.168.0.1") }} <br />{{ LangUtil("168.182.1.3") }} <br />{{

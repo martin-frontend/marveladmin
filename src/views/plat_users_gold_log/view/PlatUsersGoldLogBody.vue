@@ -69,6 +69,15 @@
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns['remark'].name" prop="remark" min-width="80px"></el-table-column>
+
+
+            <el-table-column :label="LangUtil('订单')" width="300px" align="left">
+                <template slot-scope="{ row }">
+                    <div style="text-align: start;">{{tableColumns['order_no'].name }}:{{ row.order_no }}</div>
+                    <div style="text-align: start;">{{tableColumns['vendor_order_no'].name }}:{{ row.vendor_order_no }}</div>
+                </template>
+            </el-table-column>
+
             <el-table-column
                 :label="tableColumns['created_at'].name"
                 min-width="155px"
@@ -86,6 +95,7 @@ import PlatUsersGoldLogProxy from "../proxy/PlatUsersGoldLogProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import WinLossDisplay from "@/components/WinLossDisplay.vue";
+import LangUtil from "@/core/global/LangUtil";
 
 @Component({
     components: {
@@ -97,6 +107,7 @@ export default class PlatUsersGoldLogBody extends AbstractView {
     //权限标识
     private unique = unique;
     private checkUnique = checkUnique;
+    LangUtil=LangUtil;
     //网络状态
     private net_status = GlobalVar.net_status;
     // proxy

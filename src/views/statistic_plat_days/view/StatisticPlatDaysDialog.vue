@@ -52,7 +52,7 @@ export default class StatisticPlatDaysDialog extends AbstractView {
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: StatisticPlatDaysProxy = this.getProxy(StatisticPlatDaysProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     get form() {

@@ -12,12 +12,7 @@
                     <el-input disabled v-model="form.gold"></el-input>
                 </el-form-item>
                 <el-form-item size="mini" :label="LangUtil('扣除金币')">
-                    <el-input
-                        v-model="form.deductGold"
-                        type="number"
-                        min="0"
-                        onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                    ></el-input>
+                    <el-input v-model="form.deductGold" type="number" min="0"></el-input>
                     <div style="color: #ff0000">
                         {{ LangUtil("扣除玩家金币只能扣除玩家平台余额。如果金币在厂商以及保险箱里，可进行先提取") }}
                     </div>

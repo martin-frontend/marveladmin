@@ -43,6 +43,34 @@
                     <span v-else>--</span>
                 </template>
             </el-table-column>
+            <el-table-column :label="LangUtil('排序')" class-name="status-col" width="320px">
+                <template slot-scope="{ row, $index }">
+                    <div>
+                        <el-button size="mini" @click="handlerOrder(row.id, 1)" :disabled="$index == 0">
+                            {{ LangUtil("置顶") }}
+                        </el-button>
+                        <el-button
+                            size="mini"
+                            @click="handlerOrder(row.id, 2)"
+                            :disabled="$index == myProxy.tableData.list.length - 1"
+                        >
+                            {{ LangUtil("置底") }}
+                        </el-button>
+                        <el-button
+                            size="mini"
+                            icon="el-icon-top"
+                            @click="handlerOrder(row.id, 3)"
+                            :disabled="$index == 0"
+                        ></el-button>
+                        <el-button
+                            size="mini"
+                            icon="el-icon-bottom"
+                            @click="handlerOrder(row.id, 4)"
+                            :disabled="$index == myProxy.tableData.list.length - 1"
+                        ></el-button>
+                    </div>
+                </template>
+            </el-table-column>
         </el-table>
         <Pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch" />
     </div>
@@ -101,6 +129,13 @@ export default class RechargeChannelsPaymethodsBody extends AbstractView {
             _w = "300px";
         }
         return _w;
+    }
+
+    handlerOrder(id: any, opt: string) {
+        this.myProxy.tableData.orderData.id = id;
+        this.myProxy.tableData.orderData.opt = opt;
+        this.myProxy.tableData.orderData.plat_id = this.listQuery.plat_id;
+        this.myProxy.onOrderList();
     }
 }
 </script>

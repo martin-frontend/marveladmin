@@ -61,6 +61,15 @@
                     </el-button>
                 </el-form-item>
 
+                <el-form-item size="mini" :label="tableColumns['is_cash_agent'].name" prop="is_cash_agent">
+                    <el-switch
+                        @change="onSwitchCreditCash()"
+                        v-model="userInfo.is_cash_agent"
+                        :active-value="1"
+                        :inactive-value="98"
+                    ></el-switch>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="tableColumns['show_credit_report'].name" prop="show_credit_report">
                     <el-switch
                         @change="onSwitchCreditReport()"
@@ -125,6 +134,11 @@ export default class TabCreditHeader extends AbstractView {
         this.myProxy.onEdit("show_credit_statistic", this.userInfo.show_credit_statistic);
 
         console.log(">>>>>>>>", this.userInfo.show_credit_statistic);
+    }
+
+    onSwitchCreditCash() {
+        this.myProxy.dialogData.filed = "is_cash_agent";
+        this.myProxy.onEdit("is_cash_agent", this.userInfo.is_cash_agent);
     }
 
     onSwitchCreditUser(val: any) {

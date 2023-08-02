@@ -16,6 +16,7 @@
             @change="datePick"
             :disabled="getDisabled"
             :default-time="['00:00:00', '23:59:59']"
+            :clearable="getClearable"
         >
         </el-date-picker>
         <slot></slot>
@@ -46,6 +47,7 @@ export default class SearchDatePicker extends Vue {
     @Prop() startDate!: string;
     @Prop() endDate!: string;
     @Prop({ default: false }) disabled!: boolean;
+    @Prop({ default: true }) clearable!: boolean;
 
     @Prop({
         default: () => {
@@ -83,14 +85,14 @@ export default class SearchDatePicker extends Vue {
                             picker.$emit("pick", [start, end]);
                         },
                     },
-                    // {
-                    //     text: "最近三个月",
-                    //     onClick(picker: any) {
-                    //         const start = getTodayOffset(-90);
-                    //         const end = getTodayOffset(1, 1);
-                    //         picker.$emit("pick", [start, end]);
-                    //     },
-                    // },
+                    {
+                        text: "最近60天",
+                        onClick(picker: any) {
+                            const start = getTodayOffset(-59);
+                            const end = getTodayOffset(1, 1);
+                            picker.$emit("pick", [start, end]);
+                        },
+                    },
                 ],
             };
         },
@@ -123,6 +125,10 @@ export default class SearchDatePicker extends Vue {
 
     get getDisabled() {
         return this.disabled;
+    }
+
+    get getClearable() {
+        return this.clearable;
     }
 
     datePick(data: Date[]) {

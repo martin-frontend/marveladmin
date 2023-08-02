@@ -66,6 +66,42 @@ const layoutRouter = {
             name: "数字兑换订单",
             component: () => import(/* webpackChunkName: "block_transfer_out_order" */"@/views/block_transfer_out_order/view/BlockTransferOutOrder.vue")
         },        {
+            path: "cate_vendor_products",
+            name: "首页分类游戏",
+            component: () => import(/* webpackChunkName: "cate_vendor_products" */"@/views/cate_vendor_products/view/CateVendorProducts.vue")
+        },        {
+            path: "channel_event_record_pix",
+            name: "渠道pix事件统计",
+            component: () => import(/* webpackChunkName: "channel_event_record_pix" */"@/views/plat_users_event_record_pix/view/PlatUsersEventRecordPix.vue")
+        },        {
+            path: "channel_plat_user",
+            name: "渠道用户",
+            component: () => import(/* webpackChunkName: "channel_plat_user" */"@/views/channel_plat_user/view/ChannelPlatUser.vue")
+        },        {
+            path: "channel_statistic_agent_keep_days",
+            name: "渠道代理留存统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_agent_keep_days" */"@/views/channel_statistic_agent_keep_days/view/ChannelStatisticAgentKeepDays.vue")
+        },        {
+            path: "channel_statistic_coin_keep_days",
+            name: "渠道价值留存统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_coin_keep_days" */"@/views/channel_statistic_coin_keep_days/view/ChannelStatisticCoinKeepDays.vue")
+        },        {
+            path: "channel_statistic_plat_days",
+            name: "渠道每日统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_plat_days" */"@/views/channel_statistic_plat_days/view/ChannelStatisticPlatDays.vue")
+        },        {
+            path: "channel_statistic_plat_days_date",
+            name: "渠道当日统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_plat_days_date" */"@/views/channel_statistic_plat_days_date/view/ChannelStatisticPlatDaysDate.vue")
+        },        {
+            path: "channel_statistic_user_keep_days",
+            name: "渠道用户留存统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_user_keep_days" */"@/views/channel_statistic_user_keep_days/view/ChannelStatisticUserKeepDays.vue")
+        },        {
+            path: "channel_statistic_user_promotion_days_index",
+            name: "渠道代理统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_user_promotion_days_index" */"@/views/channel_statistic_user_promotion_days_index/view/ChannelStatisticUserPromotionDaysIndex.vue")
+        },        {
             path: "coin_exchange_orders",
             name: "定时任务",
             component: () => import(/* webpackChunkName: "coin_exchange_orders" */"@/views/coin_exchange_orders/view/CoinExchangeOrders.vue")
@@ -81,6 +117,10 @@ const layoutRouter = {
             path: "coin_wallet",
             name: "币商管理",
             component: () => import(/* webpackChunkName: "coin_wallet" */"@/views/coin_wallet/view/CoinWallet.vue")
+        },        {
+            path: "country",
+            name: "国家信息",
+            component: () => import(/* webpackChunkName: "country" */"@/views/country/view/Country.vue")
         },        {
             path: "dashboard",
             name: "首页",
@@ -218,6 +258,10 @@ const layoutRouter = {
             name: "平台代币管理",
             component: () => import(/* webpackChunkName: "plat_block_coins" */"@/views/plat_block_coins/view/PlatBlockCoins.vue")
         },        {
+            path: "plat_block_coins_log",
+            name: "汇率日志",
+            component: () => import(/* webpackChunkName: "plat_block_coins_log" */"@/views/plat_block_coins_log/view/PlatBlockCoinsLog.vue")
+        },        {
             path: "plat_bonus_all",
             name: "全盘分红配置",
             component: () => import(/* webpackChunkName: "plat_bonus_all" */"@/views/plat_bonus_all/view/PlatBonusAll.vue")
@@ -229,6 +273,10 @@ const layoutRouter = {
             path: "plat_channel",
             name: "渠道管理",
             component: () => import(/* webpackChunkName: "plat_channel" */"@/views/plat_channel/view/PlatChannel.vue")
+        },        {
+            path: "plat_coin_tasks",
+            name: "奖励活动任务",
+            component: () => import(/* webpackChunkName: "plat_coin_tasks" */"@/views/plat_coin_tasks/view/PlatCoinTasks.vue")
         },        {
             path: "plat_email",
             name: "平台邮件",
@@ -246,6 +294,10 @@ const layoutRouter = {
             name: "落地页域名配置",
             component: () => import(/* webpackChunkName: "plat_load_page_domain" */"@/views/plat_load_page_domain/view/PlatLoadPageDomain.vue")
         },        {
+            path: "plat_mail_template",
+            name: "平台邮件模版",
+            component: () => import(/* webpackChunkName: "plat_mail_template" */"@/views/plat_mail_template/view/PlatMailTemplate.vue")
+        },        {
             path: "plat_marquee",
             name: "大厅跑马灯",
             component: () => import(/* webpackChunkName: "plat_marquee" */"@/views/plat_marquee/view/PlatMarquee.vue")
@@ -253,6 +305,10 @@ const layoutRouter = {
             path: "plat_message",
             name: "消息系统",
             component: () => import(/* webpackChunkName: "plat_message" */"@/views/plat_message/view/PlatMessage.vue")
+        },        {
+            path: "plat_register_same_ip_log",
+            name: "同IP注册用户风控",
+            component: () => import(/* webpackChunkName: "plat_register_same_ip_log" */"@/views/plat_register_same_ip_log/view/PlatRegisterSameIpLog.vue")
         },        {
             path: "plat_service",
             name: "平台客服功能管理",
@@ -302,6 +358,18 @@ const layoutRouter = {
             name: "投注明细",
             component: () => import(/* webpackChunkName: "plat_users_bet" */"@/views/plat_users_bet/view/PlatUsersBet.vue")
         },        {
+            path: "plat_users_coin_statistic_days",
+            name: "用户每日币种统计",
+            component: () => import(/* webpackChunkName: "plat_users_coin_statistic_days" */"@/views/plat_users_coin_statistic_days/view/PlatUsersCoinStatisticDays.vue")
+        },        {
+            path: "plat_users_event_record",
+            name: "事件统计",
+            component: () => import(/* webpackChunkName: "plat_users_event_record" */"@/views/plat_users_event_record/view/PlatUsersEventRecord.vue")
+        },        {
+            path: "plat_users_event_record_pix",
+            name: "pix事件统计",
+            component: () => import(/* webpackChunkName: "plat_users_event_record_pix" */"@/views/plat_users_event_record_pix/view/PlatUsersEventRecordPix.vue")
+        },        {
             path: "plat_users_gold_log",
             name: "金币明细",
             component: () => import(/* webpackChunkName: "plat_users_gold_log" */"@/views/plat_users_gold_log/view/PlatUsersGoldLog.vue")
@@ -313,6 +381,14 @@ const layoutRouter = {
             path: "plat_users_vendor_gold_log",
             name: "上下分记录",
             component: () => import(/* webpackChunkName: "plat_users_vendor_gold_log" */"@/views/plat_users_vendor_gold_log/view/PlatUsersVendorGoldLog.vue")
+        },        {
+            path: "plat_users_vendor_gold_log_alarm",
+            name: "投注报警",
+            component: () => import(/* webpackChunkName: "plat_users_vendor_gold_log_alarm" */"@/views/plat_users_vendor_gold_log_alarm/view/PlatUsersVendorGoldLogAlarm.vue")
+        },        {
+            path: "plat_users_verification",
+            name: "用户认证",
+            component: () => import(/* webpackChunkName: "plat_users_verification" */"@/views/plat_users_verification/view/PlatUsersVerification.vue")
         },        {
             path: "plat_users_vip_model",
             name: "VIP模版配置",
@@ -378,13 +454,29 @@ const layoutRouter = {
             name: "代理总报表",
             component: () => import(/* webpackChunkName: "statistic_agent_credit" */"@/views/statistic_agent_credit/view/StatisticAgentCredit.vue")
         },        {
+            path: "statistic_agent_keep_days",
+            name: "代理留存统计",
+            component: () => import(/* webpackChunkName: "statistic_agent_keep_days" */"@/views/statistic_agent_keep_days/view/StatisticAgentKeepDays.vue")
+        },        {
             path: "statistic_bet_plat_days",
             name: "每日输赢统计",
             component: () => import(/* webpackChunkName: "statistic_bet_plat_days" */"@/views/statistic_bet_plat_days/view/StatisticBetPlatDays.vue")
         },        {
+            path: "statistic_bet_vendor_days",
+            name: "平台游戏报表",
+            component: () => import(/* webpackChunkName: "statistic_bet_vendor_days" */"@/views/statistic_bet_vendor_days/view/StatisticBetVendorDays.vue")
+        },        {
+            path: "statistic_coin_keep_days",
+            name: "价值留存统计",
+            component: () => import(/* webpackChunkName: "statistic_coin_keep_days" */"@/views/statistic_coin_keep_days/view/StatisticCoinKeepDays.vue")
+        },        {
             path: "statistic_credit",
             name: "信用统计",
             component: () => import(/* webpackChunkName: "statistic_credit" */"@/views/statistic_credit/view/StatisticCredit.vue")
+        },        {
+            path: "statistic_credit_user",
+            name: "代理用户报表",
+            component: () => import(/* webpackChunkName: "statistic_credit_user" */"@/views/statistic_credit_user/view/StatisticCreditUser.vue")
         },        {
             path: "statistic_plat_coin_days",
             name: "每日币种统计",
@@ -397,6 +489,10 @@ const layoutRouter = {
             path: "statistic_plat_days",
             name: "平台统计",
             component: () => import(/* webpackChunkName: "statistic_plat_days" */"@/views/statistic_plat_days/view/StatisticPlatDays.vue")
+        },        {
+            path: "statistic_plat_days_date",
+            name: "平台当日统计",
+            component: () => import(/* webpackChunkName: "statistic_plat_days_date" */"@/views/statistic_plat_days_date/view/StatisticPlatDaysDate.vue")
         },        {
             path: "statistic_plat_funds_flow",
             name: "平台出入款",
@@ -466,26 +562,14 @@ const layoutRouter = {
             name: "VIP充值中心",
             component: () => import(/* webpackChunkName: "vip_recharge" */"@/views/vip_recharge/view/VipRecharge.vue")
         },        {
-            path: "channel_plat_user",
-            name: "渠道用户",
-            component: () => import(/* webpackChunkName: "plat_user" */ "@/views/plat_user/view/PlatUser.vue"),
+            path: "vip_replenish_recharge",
+            name: "VIP补单中心",
+            component: () => import(/* webpackChunkName: "vip_replenish_recharge" */"@/views/vip_replenish_recharge/view/VipReplenishRecharge.vue")
         },        {
-            path: "channel_statistic_plat_days",
-            name: "渠道每日统计",
-            component: () => import(/* webpackChunkName: "statistic_plat_days" */ "@/views/statistic_plat_days/view/StatisticPlatDays.vue"),
-        },        {
-            path: "channel_statistic_user_promotion_days_index",
-            name: "渠道代理统计",
-            component: () => import(/* webpackChunkName: "statistic_user_promotion_days_index" */ "@/views/statistic_user_promotion_days_index/view/StatisticUserPromotionDaysIndex.vue"),
-        },        {
-            path: "plat_agent_manage",
-            name: "代理人员管理",
-            component: () => import(/* webpackChunkName: "plat_agent_manage" */"@/views/plat_agent_manage/view/PlatAgentManage.vue")
-        },        {
-            path: "admin_user_log_user",
-            name: "人员修改记录",
-            component: () => import(/* webpackChunkName: "admin_user_log_user" */"@/views/admin_user_log_user/view/AdminUserLogUser.vue")
-        }
+            path: "vip_replenish_recharge_order",
+            name: "VIP补单订单",
+            component: () => import(/* webpackChunkName: "vip_replenish_recharge_order" */"@/views/vip_replenish_recharge_order/view/VipReplenishRechargeOrder.vue")
+        },
     ]
 }
 

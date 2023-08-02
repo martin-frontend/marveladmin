@@ -6,9 +6,11 @@ import { getProxy, getPageSetting } from "@/views/_user_detail/PageSetting";
 import { Message, MessageBox } from "element-ui";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import i18n from "@/lang";
+import PlatUserProxy from "@/views/plat_user/proxy/PlatUserProxy";
 
 export default class TabUserUnfoMediator extends AbstractMediator {
     myProxy: TabUserInfoProxy = <any>getProxy(TabUserInfoProxy);
+    platUserProxy: PlatUserProxy = <any>getProxy(PlatUserProxy);
     pageSetting = getPageSetting();
 
     onRegister() {
@@ -25,6 +27,7 @@ export default class TabUserUnfoMediator extends AbstractMediator {
             EventType.admin_plat_user_show,
             EventType.admin_plat_user_update,
             EventType.admin_plat_user_phone,
+            EventType.admin_plat_user_email,
             EventType.admin_plat_user_agent_bind_show,
             EventType.admin_plat_user_update_level_exp,
             EventType.admin_plat_user_clear_cache,
@@ -58,8 +61,10 @@ export default class TabUserUnfoMediator extends AbstractMediator {
                     this.myProxy.dialogData.filed = "";
                     this.sendNotification(GlobalEventType.REFRESH_PAGE);
                     this.myProxy.hideDialog();
+                    this.platUserProxy.onQueryWithParam(this.myProxy.userInfo.plat_id);
                     break;
                 case EventType.admin_plat_user_phone:
+                case EventType.admin_plat_user_email:
                     MessageBox.alert(<any>LangUtil("操作成功") + ":" + body);
                     break;
                 case EventType.admin_plat_user_agent_bind_show:

@@ -26,15 +26,15 @@ import SearchSelect from "@/components/SearchSelect.vue";
 })
 export default class DashboardHeader extends AbstractView {
     //权限标识
-    private unique = unique;
-    private checkUnique = checkUnique;
+    unique = unique;
+    checkUnique = checkUnique;
     // proxy
-    private myProxy: DashboardProxy = this.getProxy(DashboardProxy);
+    myProxy: DashboardProxy = this.getProxy(DashboardProxy);
     // proxy property
-    private tableColumns = this.myProxy.tableData.columns;
-    private listQuery = this.myProxy.listQuery;
+    tableColumns = this.myProxy.tableData.columns;
+    listQuery = this.myProxy.listQuery;
 
-    private handlerSearch() {
+    handlerSearch() {
         this.myProxy.onQuery();
     }
 }

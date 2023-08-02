@@ -80,6 +80,15 @@
                 min-width="160px"
             >
             </el-table-column>
+
+            <el-table-column
+            :label="`${tableColumns.remark.name}`"
+            class-name="status-col"
+            prop="remark"
+            min-width="100px"
+        >
+        </el-table-column>
+
             <el-table-column :label="LangUtil('操作')" class-name="status-col" width="90px">
                 <template slot-scope="{ row }">
                     <el-button

@@ -64,6 +64,9 @@
                 >
                     {{ userInfo.last_ip_location }}
                 </el-form-item> -->
+                <el-form-item size="mini" :label="tableColumns['first_login_device'].name" prop="first_login_device">
+                    {{ userInfo.first_login_device }}
+                </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['last_login_device'].name" prop="last_login_device">
                     {{ userInfo.last_login_device }} ({{ LangUtil("人数") }} {{ userInfo.login_device_counts }})
                 </el-form-item>
@@ -155,6 +158,17 @@
                         ></el-switch>
                     </el-form-item> -->
                 </template>
+                <el-form-item size="mini" :label="tableColumns['is_back_visit'].name" prop="is_back_visit">
+                    <el-switch
+                        @change="onSwitchIsBackVisit()"
+                        v-model="userInfo.is_back_visit"
+                        :active-value="1"
+                        :inactive-value="98"
+                    ></el-switch>
+                </el-form-item>
+                <el-form-item size="mini" :label="tableColumns['is_recharged'].name" prop="is_recharged">
+                    {{ tableColumns["is_recharged"].options[userInfo.is_recharged] }}
+                </el-form-item>
             </el-form>
 
             <el-form ref="form" label-position="left" label-width="130px" :model="userInfo">
@@ -182,18 +196,35 @@
                         {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
+                <el-form-item size="mini" :label="LangUtil('绑定CPF')" prop="cpf">
+                    <el-input disabled v-model="userInfo.cpf" style="width: 200px"></el-input>
+                    <el-button
+                        class="item"
+                        type="primary"
+                        @click="handlerEdit('cpf')"
+                        style="margin-left: 20px"
+                        v-if="!isChannelPlatUser"
+                    >
+                        {{ LangUtil("编辑") }}
+                    </el-button>
+                </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['phone'].name" prop="phone" v-if="!isChannelPlatUser">
                     <el-input
                         disabled
                         v-model="userInfo.phone"
-                        :style="{ width: userInfo.phone && userInfo.phone != '' ? '120px' : '200px' }"
+                        :style="{
+                            width:
+                                checkUnique(unique.plat_user_phone) && userInfo.phone && userInfo.phone != ''
+                                    ? '120px'
+                                    : '200px',
+                        }"
                     ></el-input>
                     <el-button
                         class="item"
                         type="primary"
                         @click="handlerLookPhone"
                         style="margin-left: 20px"
-                        v-if="checkUnique(unique.plat_user_update_phone) && userInfo.phone && userInfo.phone != ''"
+                        v-if="checkUnique(unique.plat_user_phone) && userInfo.phone && userInfo.phone != ''"
                     >
                         {{ LangUtil("查看") }}
                     </el-button>
@@ -208,13 +239,43 @@
                     </el-button>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['email'].name" prop="email">
-                    <el-input disabled v-model="userInfo.email" style="width: 200px"></el-input>
+                    <el-input
+                        disabled
+                        v-model="userInfo.email"
+                        :style="{
+                            width:
+                                checkUnique(unique.plat_user_email) && userInfo.email && userInfo.email != ''
+                                    ? '120px'
+                                    : '200px',
+                        }"
+                    ></el-input>
+                    <el-button
+                        class="item"
+                        type="primary"
+                        @click="handlerLookEmail"
+                        style="margin-left: 20px"
+                        v-if="checkUnique(unique.plat_user_email) && userInfo.email && userInfo.email != ''"
+                    >
+                        {{ LangUtil("查看") }}
+                    </el-button>
                     <el-button
                         class="item"
                         type="primary"
                         @click="handlerEdit('email')"
                         style="margin-left: 20px"
                         v-if="checkUnique(unique.plat_user_update_email) && !isChannelPlatUser"
+                    >
+                        {{ LangUtil("编辑") }}
+                    </el-button>
+                </el-form-item>
+                <el-form-item size="mini" :label="tableColumns['birth_date'].name" prop="birth_date">
+                    <el-input disabled v-model="userInfo.birth_date" style="width: 200px"></el-input>
+                    <el-button
+                        class="item"
+                        type="primary"
+                        @click="handlerEdit('birth_date')"
+                        style="margin-left: 20px"
+                        v-if="!isChannelPlatUser"
                     >
                         {{ LangUtil("编辑") }}
                     </el-button>
@@ -644,6 +705,10 @@ export default class TabUserInfo extends AbstractView {
         this.myProxy.dialogData.filed = "is_login_need_google";
         this.myProxy.onEdit("is_login_need_google", this.userInfo.is_login_need_google);
     }
+    onSwitchIsBackVisit() {
+        this.myProxy.dialogData.filed = "is_back_visit";
+        this.myProxy.onEdit("is_back_visit", this.userInfo.is_back_visit);
+    }
 
     showUserDetail(user_id: number) {
         this.myProxy.onShowDetail(user_id);
@@ -651,6 +716,10 @@ export default class TabUserInfo extends AbstractView {
 
     handlerLookPhone() {
         this.myProxy.onGetPhone();
+    }
+
+    handlerLookEmail() {
+        this.myProxy.onGetEmail();
     }
 
     handlerClear() {
@@ -667,7 +736,9 @@ export default class TabUserInfo extends AbstractView {
 
     get isChannelPlatUser() {
         return (
-            this.$route.path == "/layout/channel_plat_user" || this.$route.path == "/layout/plat_agent_manage_bind" || this.$route.path == "/layout/plat_agent_manage"
+            this.$route.path == "/layout/channel_plat_user" ||
+            this.$route.path == "/layout/plat_agent_manage_bind" ||
+            this.$route.path == "/layout/plat_agent_manage"
         );
     }
 }

@@ -11,6 +11,7 @@
         "admin/system_lang/translate",
         "admin/system_lang/translate_all",
         "admin/system_lang/import",
-        "admin/system_lang/generate"
+        "admin/system_lang/generate",
+        "admin/system_lang/translate_all_error_lang"
     ]
 }

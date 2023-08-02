@@ -56,6 +56,11 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
             opt: "", //操作:1-置顶 |2-置底 |3-上调 |4-下调
             plat_id: "",
         },
+        orderDialogData: {
+            id: "",
+            opt: "", //操作:1-置顶 |2-置底 |3-上调 |4-下调
+            plat_id: "",
+        },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
@@ -276,9 +281,15 @@ export default class ExchangeChannelMethodProxy extends AbstractProxy implements
         this.dialogDataChannelData.bShow = true;
     }
 
+    /**dialog 排序 */
+    onOrderDialogList() {
+        const formCopy = this.tableData.orderDialogData;
+        this.sendNotification(HttpType.admin_exchange_channel_method_update, formCopy);
+    }
+
     /**排序 */
     onOrderList() {
         const formCopy = this.tableData.orderData;
-        this.sendNotification(HttpType.admin_exchange_channel_method_update, formCopy);
+        this.sendNotification(HttpType.admin_exchange_channel_update, formCopy);
     }
 }

@@ -94,10 +94,7 @@
 
             <el-table-column :label="tableColumns['self_amount'].name" prop="self_amount" class-name="status-col">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay
-                        :amount="row.self_amount"
-                        :isShowDollar="false"
-                    ></WinLossDisplay>
+                    <WinLossDisplay :amount="row.self_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
@@ -149,6 +146,18 @@
                         {{ row.credit_rate_superior }}
                         <span v-if="row.credit_rate_superior != '-'">%</span>
                     </div>
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="amount_to_the_company" :label="LangUtil('到公司货量')" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.amount_to_the_company" :isShowDollar="false"></WinLossDisplay>
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="contribute_to_the_company" :label="LangUtil('给公司贡献')" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.contribute_to_the_company" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 

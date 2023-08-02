@@ -8,6 +8,7 @@ import cmd_admin_plat_users_vendor_gold_log_show from "@/views/plat_users_vendor
 import cmd_admin_plat_users_vendor_gold_log_update_manual from "@/views/plat_users_vendor_gold_log/command/cmd_admin_plat_users_vendor_gold_log_update_manual";
 import cmd_admin_plat_users_vendor_gold_log_auto_check from "@/views/plat_users_vendor_gold_log/command/cmd_admin_plat_users_vendor_gold_log_auto_check";
 import cmd_admin_plat_users_vendor_gold_log_status from "@/views/plat_users_vendor_gold_log/command/cmd_admin_plat_users_vendor_gold_log_status";
+import cmd_admin_plat_users_vendor_gold_log_vendors from "@/views/plat_users_vendor_gold_log/command/cmd_admin_plat_users_vendor_gold_log_vendors";
 /**协议*/
 export var HttpType = {
     admin_plat_users_vendor_gold_log_table_columns: "admin/plat_users_vendor_gold_log/table_columns",
@@ -16,6 +17,7 @@ export var HttpType = {
     admin_plat_users_vendor_gold_log_update_manual: "admin/plat_users_vendor_gold_log/update_manual/{vendor_gold_log_id}",
     admin_plat_users_vendor_gold_log_auto_check: "admin/plat_users_vendor_gold_log/auto_check/{vendor_gold_log_id}",
     admin_plat_users_vendor_gold_log_status: "admin/plat_users_vendor_gold_log/status/{vendor_gold_log_id}",
+    admin_plat_users_vendor_gold_log_vendors: "admin/plat_users_vendor_gold_log/vendors",
 };
 /**事件*/
 export var EventType = {
@@ -25,6 +27,7 @@ export var EventType = {
     admin_plat_users_vendor_gold_log_update_manual: "admin_plat_users_vendor_gold_log_update_manual",
     admin_plat_users_vendor_gold_log_auto_check: "admin_plat_users_vendor_gold_log_auto_check",
     admin_plat_users_vendor_gold_log_status: "admin_plat_users_vendor_gold_log_status",
+    admin_plat_users_vendor_gold_log_vendors: "admin_plat_users_vendor_gold_log_vendors",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -34,4 +37,5 @@ facade.registerCommand(HttpType.admin_plat_users_vendor_gold_log_show, cmd_admin
 facade.registerCommand(HttpType.admin_plat_users_vendor_gold_log_update_manual, cmd_admin_plat_users_vendor_gold_log_update_manual);
 facade.registerCommand(HttpType.admin_plat_users_vendor_gold_log_auto_check, cmd_admin_plat_users_vendor_gold_log_auto_check);
 facade.registerCommand(HttpType.admin_plat_users_vendor_gold_log_status, cmd_admin_plat_users_vendor_gold_log_status);
+facade.registerCommand(HttpType.admin_plat_users_vendor_gold_log_vendors, cmd_admin_plat_users_vendor_gold_log_vendors);
 

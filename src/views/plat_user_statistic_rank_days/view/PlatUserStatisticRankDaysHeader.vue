@@ -4,34 +4,51 @@
             :title="tableColumns.plat_id.name"
             v-model="listQuery.plat_id"
             :options="tableColumns.plat_id.options"
-            @change="handlerSearch"
+            @change="
+                changePlat();
+                handlerSearch();
+            "
             :clearable="false"
+        />
+        <SearchSelect
+            :title="tableColumns.coin_name_unique.name"
+            v-model="listQuery.coin_name_unique"
+            :options="tableColumns.coin_name_unique_option"
+        />
+        <SearchSelect
+            :title="tableColumns.vendor_type.name"
+            v-model="listQuery.vendor_type"
+            :options="tableColumns.vendor_type.options"
+            @change="handlerSearch()"
         />
         <div class="group">
             <SearchDatePicker
-                :title="tableColumns.created_at.name"
+                :title="LangUtil('投注结算时间')"
                 :startDate.sync="listQuery['created_at-{>=}']"
                 :endDate.sync="listQuery['created_at-{<=}']"
                 :showTime="true"
             />
             <SearchInput :title="tableColumns.user_id.name" :maxLength="30" v-model="listQuery.user_id" />
-            <SearchSelect
+            <!-- <SearchSelect
                 :title="tableColumns.is_real.name"
                 v-model="listQuery.is_real"
                 :options="tableColumns.is_real.options"
                 @change="handlerSearch"
                 :clearable="true"
-            />
+            /> -->
             <div class="btn_group">
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    LangUtil("查询")
-                }}</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    LangUtil("重置")
-                }}</el-button>
-                <el-button class="add" @click="handlerCreate()" type="primary" icon="el-icon-circle-plus-outline">{{
-                    LangUtil("添加")
-                }}</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                    {{ LangUtil("查询") }}
+                </el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                    {{ LangUtil("重置") }}
+                </el-button>
+                <el-button type="primary" @click="handlerExport()" icon="el-icon-download" :disabled="list.length == 0">
+                    {{ LangUtil("导出") }}
+                </el-button>
+                <!-- <el-button class="add" @click="handlerCreate()" type="primary" icon="el-icon-circle-plus-outline">
+                    {{ LangUtil("添加") }}
+                </el-button> -->
             </div>
         </div>
     </div>
@@ -66,6 +83,7 @@ export default class PlatUserStatisticRankDaysHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
     handlerSearch() {
         this.listQuery.page_count = 1;
@@ -78,6 +96,17 @@ export default class PlatUserStatisticRankDaysHeader extends AbstractView {
 
     handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
+    }
+
+    handlerExport() {
+        this.myProxy.showFieldSelectionDialog();
+    }
+
+    //更换平台切换对应币种
+    changePlat() {
+        this.listQuery.coin_name_unique = "";
+        //@ts-ignore
+        this.tableColumns.coin_name_unique_option = this.tableColumns.coin_name_unique.options[this.listQuery.plat_id];
     }
 }
 </script>

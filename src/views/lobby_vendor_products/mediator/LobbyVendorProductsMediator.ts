@@ -42,7 +42,11 @@ export default class LobbyVendorProductsMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_lobby_vendor_products_index:
-                myProxy.setTableData(body);
+                if (myProxy.tableData.isExportExcel) {
+                    myProxy.exportExcel(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_lobby_vendor_products_update:
                 Message.success(SuccessMessage.update);

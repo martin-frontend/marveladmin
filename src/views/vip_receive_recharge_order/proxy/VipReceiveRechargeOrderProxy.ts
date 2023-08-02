@@ -31,6 +31,7 @@ export default class VipReceiveRechargeOrderProxy extends AbstractProxy implemen
         columns: <any>{
             coin_name_unique: { name: "币种", options: {} },
             actual_gold: { name: "实际到帐金额", options: {} },
+            actual_gold_scale: { name: "实际到帐金额[换算后]", options: {} },
             channel_id: { name: "渠道ID", options: {} },
             created_at: { name: "创建时间", options: {} },
             created_by: { name: "创建人", options: {} },
@@ -49,6 +50,7 @@ export default class VipReceiveRechargeOrderProxy extends AbstractProxy implemen
             status: { name: "状态:1-确认玩家已付款", options: {} },
             type: { name: "充值方式 1-VIP充值", options: {} },
             user_id: { name: "用户ID", options: {} },
+            gold_scale: { name: "代币汇率", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },

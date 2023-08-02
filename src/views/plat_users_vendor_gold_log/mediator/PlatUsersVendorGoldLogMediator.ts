@@ -7,7 +7,7 @@ import { Message, MessageBox } from "element-ui";
 import PlatUsersVendorGoldLogProxy from "../proxy/PlatUsersVendorGoldLogProxy";
 import i18n from "@/lang";
 
-interface IPlatUsersVendorGoldLog extends IEventDispatcher {}
+interface IPlatUsersVendorGoldLog extends IEventDispatcher { }
 
 export default class PlatUsersVendorGoldLogMediator extends AbstractMediator {
     private myProxy: PlatUsersVendorGoldLogProxy = <any>this.getProxy(PlatUsersVendorGoldLogProxy);
@@ -32,6 +32,7 @@ export default class PlatUsersVendorGoldLogMediator extends AbstractMediator {
             EventType.admin_plat_users_vendor_gold_log_update_manual,
             EventType.admin_plat_users_vendor_gold_log_auto_check,
             EventType.admin_plat_users_vendor_gold_log_status,
+            EventType.admin_plat_users_vendor_gold_log_vendors,
         ];
     }
 
@@ -67,6 +68,9 @@ export default class PlatUsersVendorGoldLogMediator extends AbstractMediator {
 
             case EventType.admin_plat_users_vendor_gold_log_status:
                 myProxy.showStatusDialog(body);
+                break;
+            case EventType.admin_plat_users_vendor_gold_log_vendors:
+                myProxy.showStatisticDialog(body);
                 break;
         }
     }

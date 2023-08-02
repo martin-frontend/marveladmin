@@ -18,12 +18,15 @@
             <SearchInput :title="tableColumns.nick_name.name" v-model="listQuery.nick_name" />
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    LangUtil("查询")
-                }}</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    LangUtil("重置")
-                }}</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                    {{ LangUtil("查询") }}
+                </el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                    {{ LangUtil("重置") }}
+                </el-button>
+                <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 0">
+                    {{ LangUtil("导出") }}
+                </el-button>
             </div>
         </div>
     </div>
@@ -59,6 +62,7 @@ export default class PlatUsersBackwaterLogHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
     date = [this.listQuery["created_at-{>=}"], this.listQuery["created_at-{<=}"]];
     handlerSearch() {
@@ -71,6 +75,10 @@ export default class PlatUsersBackwaterLogHeader extends AbstractView {
     handlerReset() {
         this.date = [dateFormat(new Date(), "yyyy-MM-dd 00:00:00"), dateFormat(new Date(), "yyyy-MM-dd 23:59:59")];
         this.myProxy.resetListQuery();
+    }
+
+    exportExcel() {
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>

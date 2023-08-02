@@ -68,17 +68,29 @@
                     </div>
                 </template>
             </el-table-column>
+
             <el-table-column
-                prop="gold"
-                :label="LangUtil('订单金额')"
+                prop="coin_name_unique"
+                :label="tableColumns.coin_name_unique.name"
+                align="center"
+                min-width="50px"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="gold_scale"
+                :label="tableColumns.gold_scale.name"
                 align="center"
                 min-width="80px"
-            ></el-table-column>
+            >
+            </el-table-column>
+            <el-table-column prop="gold" :label="LangUtil('订单金额')" align="center" min-width="80px">
+                <template slot-scope="{ row }">
+                    <div>{{ row.gold }}</div>
+                </template>
+            </el-table-column>
             <el-table-column :label="LangUtil('玩家付款金额')" align="center" min-width="100px">
                 <template slot-scope="{ row }">
-                    <div v-if="row.status === 1">
-                        {{ row.actual_gold }}
-                    </div>
+                    <div v-if="row.status === 1">{{ row.actual_gold }}</div>
                     <div v-else>-</div>
                 </template>
             </el-table-column>

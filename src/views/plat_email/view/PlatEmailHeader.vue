@@ -8,6 +8,9 @@
                 @change="handlerSearch"
                 :clearable="false"
             />
+            <el-button class="header-button" type="primary" @click="handlerShowEmailManager"
+                >{{ LangUtil("平台邮件模版") }}
+            </el-button>
         </div>
         <div class="group">
             <el-button
@@ -65,6 +68,9 @@ export default class PlatEmailHeader extends AbstractView {
     }
     handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
+    }
+    handlerShowEmailManager() {
+        this.myProxy.openEmailTemplateManager();
     }
 }
 </script>

@@ -2,6 +2,7 @@
     <div class="content">
         <StatisticBetPlatDaysHeader />
         <StatisticBetPlatDaysBody />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -12,11 +13,12 @@ import StatisticBetPlatDaysProxy from "@/views/statistic_bet_plat_days/proxy/Sta
 import { Component } from "vue-property-decorator";
 import StatisticBetPlatDaysHeader from "./StatisticBetPlatDaysHeader.vue";
 import StatisticBetPlatDaysBody from "./StatisticBetPlatDaysBody.vue";
-
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 @Component({
     components: {
         StatisticBetPlatDaysHeader,
         StatisticBetPlatDaysBody,
+        FieldSelectionDialog,
     },
 })
 export default class StatisticBetPlatDays extends AbstractView {

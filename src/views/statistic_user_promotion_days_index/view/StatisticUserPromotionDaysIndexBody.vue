@@ -2,9 +2,15 @@
     <div>
         <div v-if="tableData.length > 0">
             <el-tabs v-model="myProxy.tabData.activeName" @tab-click="handleClick">
-                <el-tab-pane :label="LangUtil('团队统计')" name="group"></el-tab-pane>
-                <el-tab-pane :label="LangUtil('总团队统计')" name="group_all"></el-tab-pane>
-                <el-tab-pane :label="LangUtil('直属统计')" name="directly"></el-tab-pane>
+                <el-tab-pane :label="LangUtil('团队统计')" name="group">
+                    {{ LangUtil("团队统计 = 你下属所有人：包括你下级，下下级，下下下级，但不包含你。") }}
+                </el-tab-pane>
+                <el-tab-pane :label="LangUtil('总团队统计')" name="group_all">
+                    {{ LangUtil("总团队统计 = 你下属所有人+你自己的数据汇总") }}
+                </el-tab-pane>
+                <el-tab-pane :label="LangUtil('直属统计')" name="directly">
+                    {{ LangUtil("直属统计 = 你的下级数据") }}
+                </el-tab-pane>
             </el-tabs>
             <div>
                 <div class="user_info">
@@ -248,21 +254,13 @@
                             <div class="text-left">
                                 <span>{{ tableColumns[`${activeName}_total_win_loss`].name }}:</span>
                                 <span>
-                                    <WinLossDisplay
-                                        :amount="row[`${activeName}_total_win_loss`]"
-                                        :isShowColor="false"
-                                        :isShowPlus="false"
-                                    />
+                                    <WinLossDisplay :amount="row[`${activeName}_total_win_loss`]" />
                                 </span>
                             </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_win_loss_${i}`].name }}:</span>
                                 <span>
-                                    <WinLossDisplay
-                                        :amount="row[`${activeName}_win_loss_${i}`]"
-                                        :isShowColor="false"
-                                        :isShowPlus="false"
-                                    />
+                                    <WinLossDisplay :amount="row[`${activeName}_win_loss_${i}`]" />
                                 </span>
                             </div>
                         </template>
@@ -389,7 +387,7 @@ export default class StatisticUserPromotionDaysIndexBody extends AbstractView {
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: StatisticUserPromotionDaysIndexProxy = this.getProxy(StatisticUserPromotionDaysIndexProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.tableData.list;

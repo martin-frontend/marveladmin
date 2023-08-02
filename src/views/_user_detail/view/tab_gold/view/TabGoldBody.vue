@@ -30,7 +30,14 @@
                 prop="coin_name_unique"
                 min-width="100px"
             ></el-table-column>
-            <el-table-column :label="tableColumns['remark'].name" prop="remark" min-width="100px"></el-table-column>
+            <el-table-column :label="tableColumns['remark'].name" min-width="100px">
+                <template slot-scope="{ row }">
+                    <p>{{ tableColumns["remark"].name }}:{{ row.remark }}</p>
+                    <p>{{ tableColumns["order_no"].name }}:{{ row.order_no }}</p>
+                    <p>{{ tableColumns["vendor_order_no"].name }}:{{ row.vendor_order_no }}</p>
+                </template>
+
+            </el-table-column>
             <el-table-column
                 :label="tableColumns['created_at'].name"
                 min-width="155px"

@@ -1,0 +1,9 @@
+{
+    "name": "渠道pix事件统计",
+    "description": "渠道pix事件统计",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=47777985",
+    "list": [
+        "admin/plat_users_event_record/pix/table_columns",
+        "admin/plat_users_event_record/pix/index"
+    ]
+}

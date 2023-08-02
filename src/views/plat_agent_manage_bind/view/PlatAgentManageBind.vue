@@ -1,8 +1,10 @@
 <template>
     <div class="content">
-        <PlatAgentManageBindDialog v-if="myProxy.dialogData.bShow" />
         <PlatAgentManageBindHeader />
         <PlatAgentManageBindBody />
+        <RemarkDialog />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -14,12 +16,18 @@ import { Component } from "vue-property-decorator";
 import PlatAgentManageBindDialog from "./PlatAgentManageBindDialog.vue";
 import PlatAgentManageBindHeader from "./PlatAgentManageBindHeader.vue";
 import PlatAgentManageBindBody from "./PlatAgentManageBindBody.vue";
+import ProgressDialog from "./component/ProgressDialog.vue";
+import FieldSelectionDialog from "./component/FieldSelectionDialog.vue";
+import RemarkDialog from "./component/RemarkDialog.vue";
 
 @Component({
     components: {
         PlatAgentManageBindDialog,
         PlatAgentManageBindHeader,
         PlatAgentManageBindBody,
+        ProgressDialog,
+        FieldSelectionDialog,
+        RemarkDialog,
     },
 })
 export default class PlatAgentManageBind extends AbstractView {

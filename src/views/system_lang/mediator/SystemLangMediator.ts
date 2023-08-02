@@ -1,11 +1,12 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { SuccessMessage } from "@/core/global/Constant";
 import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/system_lang/setting";
-import { Message } from "element-ui";
+import { Message, MessageBox } from "element-ui";
 import SystemLangProxy from "../proxy/SystemLangProxy";
 
-interface ISystemLang extends IEventDispatcher {}
+interface ISystemLang extends IEventDispatcher { }
 
 export default class SystemLangMediator extends AbstractMediator {
     private myProxy: SystemLangProxy = <any>this.getProxy(SystemLangProxy);
@@ -32,6 +33,7 @@ export default class SystemLangMediator extends AbstractMediator {
             EventType.admin_system_lang_translate,
             EventType.admin_system_lang_import,
             EventType.admin_system_lang_generate,
+            EventType.admin_system_lang_translate_all_error_lang,
         ];
     }
 
@@ -76,6 +78,15 @@ export default class SystemLangMediator extends AbstractMediator {
                 break;
             case EventType.admin_system_lang_generate:
                 Message.success(SuccessMessage.update);
+                break;
+            case EventType.admin_system_lang_translate_all_error_lang:
+                MessageBox.confirm(
+                    <string>LangUtil("当前服务器语言插入{0}条", body), <string>LangUtil("提示"), {
+                    confirmButtonText: <string>LangUtil("确定"),
+                    cancelButtonText: <string>LangUtil("关闭"),
+                })
+                    .then(() => { })
+                    .catch(() => { });
                 break;
         }
     }

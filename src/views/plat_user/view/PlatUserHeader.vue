@@ -21,6 +21,7 @@
             <SearchInput :title="tableColumns.last_login_ip.name" v-model="listQuery.last_login_ip" />
             <SearchInput :title="tableColumns.register_ip.name" v-model="listQuery.register_ip" />
             <SearchInput :title="tableColumns.last_login_device.name" v-model="listQuery.last_login_device" />
+            <SearchInput :title="tableColumns.first_login_device.name" v-model="listQuery.first_login_device" />
             <SearchInput :title="tableColumns.phone.name" v-model="listQuery.phone" />
             <SearchInput :title="tableColumns.remark.name" v-model="listQuery.remark" :tip="tableColumns.remark.tips" />
             <SearchSelect
@@ -29,6 +30,17 @@
                 :options="tableColumns.is_credit_user.options"
             />
             <SearchInput :title="tableColumns.agent_user_id.name" v-model="listQuery.agent_user_id" />
+            <SearchInput :title="tableColumns.cpf.name" v-model="listQuery.cpf" />
+            <SearchSelect
+                :title="tableColumns.is_recharged.name"
+                v-model="listQuery.is_recharged"
+                :options="tableColumns.is_recharged.options"
+            />
+            <SearchSelect
+                :title="tableColumns.is_back_visit.name"
+                v-model="listQuery.is_back_visit"
+                :options="tableColumns.is_back_visit.options"
+            />
         </div>
         <div class="group">
             <SearchRange
@@ -52,6 +64,12 @@
                 :maxValue.sync="listQuery.max_level"
                 :placeholders="[LangUtil('最小等级'), LangUtil('最大等级')]"
             />
+            <SearchInput
+                :title="tableColumns.recharge_amount.name"
+                v-model="listQuery.recharge_amount"
+                :placeholderProps="LangUtil('最小金额')"
+                searchType="number"
+            />
         </div>
         <div class="group">
             <SearchDatePicker
@@ -66,12 +84,26 @@
                 :endDate.sync="listQuery['last_online_at-{<}']"
                 :showTime="true"
             />
+            <SearchDatePicker
+                :title="LangUtil('首充时间')"
+                :startDate.sync="listQuery['paytime-{>=}']"
+                :endDate.sync="listQuery['paytime-{<}']"
+                :showTime="true"
+            />
+        </div>
+        <div>
             <el-button class="header-button" @click="handlerSearch()" type="primary">{{ LangUtil("查询") }}</el-button>
             <el-button class="header-button" @click="handlerReset()" type="primary">{{ LangUtil("重置") }}</el-button>
-            <el-button class="header-button" @click="handlerExport()" type="primary" icon="el-icon-download">{{
-                LangUtil("导出")
-            }}</el-button>
-            <el-button class="header-button" @click="handlerSearchWallet()" type="primary">{{
+            <el-button
+                class="header-button"
+                @click="handlerExport()"
+                type="primary"
+                icon="el-icon-download"
+                :disabled="list.length == 0"
+            >
+                {{ LangUtil("导出") }}
+            </el-button>
+            <el-button v-if="!myProxy.isChannelUser" class="header-button" @click="handlerSearchWallet()" type="primary">{{
                 LangUtil("平台当前用户余额")
             }}</el-button>
         </div>
@@ -104,10 +136,11 @@ export default class PlatUserHeader extends AbstractView {
     unique = unique;
     checkUnique = checkUnique;
     // proxy
-    myProxy: PlatUserProxy = this.getProxy(PlatUserProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
     winLoss: string = "";
     onWinLossChange(value: any) {
@@ -134,7 +167,7 @@ export default class PlatUserHeader extends AbstractView {
     }
 
     handlerExport() {
-        this.myProxy.onExportExcel();
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>

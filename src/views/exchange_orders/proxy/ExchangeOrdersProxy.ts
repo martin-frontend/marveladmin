@@ -1,6 +1,6 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
-import { formCompared, getTodayOffset, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, getTodayOffset, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/exchange_orders/setting";
 import IExchangeOrdersProxy from "./IExchangeOrdersProxy";
 import router from "@/router";
@@ -31,43 +31,108 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
 
     /**表格相关数据 */
     tableData = {
-        columns: {
-            channel_id: { name: "", options: {} },
-            created_at: { name: "", options: {} },
-            created_ip: { name: "", options: {} },
-            data_belong: { name: "", options: {} },
-            exchange_channel: { name: "", options: <any>{} },
-            exchange_vendors_id: { name: "", options: <any>{} },
-            fee: { name: "", options: {} },
-            fee_rate: { name: "", options: {} },
-            gold: { name: "", options: {} },
-            id: { name: "", options: {} },
-            money: { name: "", options: {} },
-            nick_name: { name: "", options: {} },
-            order_no: { name: "", options: {} },
-            payment_method: { name: "", options: <any>{} },
-            payment_method_id: { name: "", options: {} },
-            plat_id: { name: "", options: {} },
-            receive_payment_type: <any>{ name: "", options: {} },
-            remark: { name: "", options: {} },
-            status: { name: "", options: {} },
-            third_order_no: { name: "", options: {} },
-            updated_at: { name: "", options: {} },
-            user_id: { name: "", options: {} },
-            username: { name: "", options: {} },
+        columns: <any>{
+            id: { name: "主键", options: [] },
+            data_belong: { name: "数据归属标记", options: [] },
+            plat_id: { name: "所属平台", options: {} },
+            channel_id: { name: "所属渠道", options: [] },
+            user_id: { name: "用户ID", options: [] },
+            order_no: { name: "订单号", options: [] },
+            third_order_no: { name: "第三方订单号", options: [] },
+            gold: { name: "资产数量", options: [] },
+            money: { name: "到帐资产", options: [] },
+            actual_gold_scale: { name: "资产金额[换算后]", options: [] },
+            fee: { name: "手续费", options: [] },
+            fee_rate: { name: "手续费%", options: [] },
+            currency_type: { name: "结算方式", options: {} },
+            currency_num: { name: "结算资产", options: [] },
+            receive_payment_type: { name: "兑换方式", options: {} },
+            payment_method_id: { name: "用户收款方式ID", options: [] },
+            payment_method: { name: "兑换账号", options: {} },
+            exchange_channel: { name: "兑换渠道", options: {} },
+            status: { name: "订单状态", options: {} },
+            auto_check_times: { name: "自动审核次数", options: [] },
+            auto_check_status: { name: "自动审核状态", options: {} },
+            is_coin_user_order: { name: "币商订单", options: {} },
+            coin_user_id: { name: "币商用户ID", options: {} },
+            coin_username: { name: "币商", options: [] },
+            block_network_id: { name: "链名", options: {} },
+            coin_name_unique: { name: "币种", options: {} },
+            is_internal: { name: "是否内部转账", options: ["否", "是"] },
+            accept_admin_user_id: { name: "接单人编号", options: [] },
+            accept_admin_username: { name: "接单人名称", options: [] },
+            third_id: { name: "第三方编号", options: [] },
+            third_name: { name: "第三方名称", options: [] },
+            remark: { name: "备注", options: [] },
+            created_ip: { name: "创建IP", options: [] },
+            created_at: { name: "创建时间", options: [] },
+            updated_at: { name: "更新时间", options: [] },
+            updated_by: { name: "更新人", options: [] },
+            auto_check_at: { name: "自动审核时间", options: [] },
             plat_exchange_channel: { name: "", options: {} },
-            is_coin_user_order: { name: "", options: {} },
-            coin_user_id: { name: "", options: {} },
-            coin_username: { name: "", options: {} },
-            coin_name_unique: { name: "", options: {} },
-            block_network_id: { name: "", options: {} },
+            exchange_vendors_id: { name: "兑换厂商", options: {} },
+            username: { name: "用户账号", options: [] },
+            nick_name: { name: "用户昵称", options: [] },
+            user_remark: { name: "用户备注", options: [] },
+            extends: { name: LangUtil("用户兑换信息"), options: [] },
+            gold_scale: { name: "", options: [] },
+            total_recharge: { name: "", options: [] },
+            total_exchange: { name: "", options: [] },
+            total_bet: { name: "", options: [] },
+            total_win: { name: "", options: [] },
+            user_created_at: { name: LangUtil("账号创建时间"), options: [] },
+            is_first_exchange: { name: "是否首兑", options: [] },
+            invite_user_id: { name: "直属代理ID", options: [] },
+            grant_agent_id: { name: "代理ID", options: [] },
         },
         list: <any>[],
         message: {},
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
-        isExportExcel: false, //是否导出excel
-        excelPageSize: 1000000, //excel 资料长度
         multipleSelection: <any>[],
+    };
+
+    fieldSelectionData = {
+        bShow: false,
+        fieldOptions: [
+            "plat_id",
+            "channel_id",
+            "user_id",
+            "username",
+            "nick_name",
+            "user_remark",
+            "user_created_at",
+            "accept_admin_user_id",
+            "accept_admin_username",
+            "order_no",
+            "third_order_no",
+            "status",
+            "is_first_exchange",
+            "exchange_vendors_id",
+            "exchange_channel",
+            "coin_user_id",
+            "coin_username",
+            "coin_name_unique",
+            "block_network_id",
+            "extends",
+            "receive_payment_type",
+            "payment_method",
+            "gold",
+            "fee_rate",
+            "fee",
+            "money",
+            "created_at",
+            "updated_at",
+            "remark",
+            "updated_by",
+        ],
+    };
+
+    exportData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
     };
 
     /**查询条件 */
@@ -93,6 +158,10 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         "gold-{<=}": "",
         coin_name_unique: "",
         block_network_id: "",
+        is_first_exchange: "",
+        invite_user_id: "",
+        grant_agent_id: "",
+        user_remark: "",
     };
 
     /**平台币商代付相关数据 */
@@ -192,6 +261,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             ...this.tableData.columns.plat_id.options,
             "0": LangUtil("所有平台"),
         };
+        delete this.tableData.columns.is_first_exchange.options[0]
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
@@ -225,6 +295,8 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
 
+    onQueryAll() {}
+
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
@@ -248,6 +320,10 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             "gold-{<=}": "",
             coin_name_unique: "",
             block_network_id: "",
+            is_first_exchange: "",
+            invite_user_id: "",
+            grant_agent_id: "",
+            user_remark: "",
         });
     }
 
@@ -361,38 +437,79 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
     }
 
     /**取得所有资料 */
-    onQueryAll() {
-        this.tableData.isExportExcel = true;
-        let queryCopy: any = JSON.parse(JSON.stringify(this.listQuery));
-        queryCopy.page_size = this.tableData.excelPageSize;
-        queryCopy.page_count = 1;
-        if (queryCopy.plat_id == "0") queryCopy.plat_id = null;
-        this.facade.sendNotification(HttpType.admin_exchange_orders_index, objectRemoveNull(queryCopy));
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
+        this.sendNotification(HttpType.admin_exchange_orders_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
     }
 
     /**导出excel */
-    exportExcel(data: any) {
+    exportExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
         //资料列表处理
-        for (const item of data.list) {
+        for (const item of newData) {
+            if ((item.receive_payment_type == 7 || item.receive_payment_type == 8) && item.payment_method.length != 0) {
+                item.extends = jsonStringify(item.payment_method);
+            } else {
+                item.extends = "-";
+            }
+
             //@ts-ignore
             let str =
                 this.tableData.columns["receive_payment_type"].name +
                 ": " +
                 this.tableData.columns["receive_payment_type"].options[item.receive_payment_type] +
                 "\n";
-            str += this.getAccessInfo(item);
+            if (item.receive_payment_type != 8) {
+                str += this.getAccessInfo(item);
+            }
             item.payment_method = str;
-            item.exchange_channel = this.tableData.columns["exchange_channel"].options[item.exchange_channel];
-            item.exchange_vendors_id = this.tableData.columns["exchange_vendors_id"].options[item.exchange_vendors_id];
+            // item.exchange_channel = this.tableData.columns["exchange_channel"].options[item.exchange_channel];
+            // item.exchange_vendors_id = this.tableData.columns["exchange_vendors_id"].options[item.exchange_vendors_id];
         }
 
-        this.tableData.isExportExcel = false;
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item);
+            }
+        }
+
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
-            Object.keys(this.tableData.columns),
+            exportField,
             this.tableData.columns,
-            data.list,
-            ["status", "payment_method_id", "plat_id", "receive_payment_type", "auto_check_status"],
+            newData,
+            [
+                "status",
+                "payment_method_id",
+                "plat_id",
+                "receive_payment_type",
+                "auto_check_status",
+                "exchange_channel",
+                "exchange_vendors_id",
+                "block_network_id",
+                "is_first_exchange"
+            ],
             [""]
         );
     }
@@ -435,8 +552,29 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
     public showDispatchDialog() {
         this.dispatchDialogData.bShow = true;
     }
+
     /**隐藏派发弹窗 */
     public hideDispatchDialog() {
         this.dispatchDialogData.bShow = false;
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }

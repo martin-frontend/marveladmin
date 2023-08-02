@@ -59,7 +59,7 @@ export default class StatisticPlatDaysHeader extends AbstractView {
     unique = unique;
     checkUnique = checkUnique;
     // proxy
-    myProxy: StatisticPlatDaysProxy = this.getProxy(StatisticPlatDaysProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;

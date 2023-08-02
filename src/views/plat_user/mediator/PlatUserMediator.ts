@@ -6,10 +6,10 @@ import { Message, MessageBox } from "element-ui";
 import LangUtil from "@/core/global/LangUtil";
 import PlatUserProxy from "../proxy/PlatUserProxy";
 
-interface IPlatUser extends IEventDispatcher { }
+interface IPlatUser extends IEventDispatcher {}
 
 export default class PlatUserMediator extends AbstractMediator {
-    private myProxy: PlatUserProxy = <any>this.getProxy(PlatUserProxy);
+    myProxy: PlatUserProxy = <any>this.getProxy(PlatUserProxy);
 
     onRegister() {
         this.myProxy.enter();
@@ -37,59 +37,82 @@ export default class PlatUserMediator extends AbstractMediator {
             EventType.admin_plat_user_backwater_config,
             EventType.admin_plat_user_store_credit_user,
             EventType.admin_plat_user_change_channel,
+            EventType.admin_plat_user_index2,
+            EventType.admin_plat_user_update_admin_added_user,
+            EventType.admin_plat_user_store_user_by_admin,
+            EventType.admin_plat_user_get_admin_added_user,
+            EventType.admin_plat_user_delete_admin_added_user,
         ];
     }
 
     handleNotification(notification: puremvc.INotification) {
-        const myProxy: PlatUserProxy = <any>this.facade.retrieveProxy(PlatUserProxy.NAME);
+        // const myProxy: PlatUserProxy = <any>this.facade.retrieveProxy(PlatUserProxy.NAME);
         const myView: IPlatUser = this.viewComponent;
         const body = notification.getBody();
         switch (notification.getName()) {
             case EventType.admin_plat_user_table_columns:
-                myProxy.setTableColumns(body);
+                this.myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_user_index:
-                if (this.myProxy.listQuery.page_size == 100000) {
-                    myProxy.onSetExcelData(body.list);
+            case EventType.admin_plat_user_index2:
+                this.myProxy.exportData.isSearch = true;
+                if (this.myProxy.exportData.stop) {
+                    this.myProxy.exportData.stop = false;
                 } else {
-                    myProxy.setTableData(body);
+                    if (this.myProxy.exportData.isExportExcel) {
+                        this.myProxy.onSaveExportData(body);
+                    } else {
+                        this.myProxy.setTableData(body);
+                    }
                 }
                 break;
             case EventType.admin_plat_user_show:
-                myProxy.setDetail(body);
+                this.myProxy.setDetail(body);
                 break;
             case EventType.admin_plat_user_store:
                 Message.success(SuccessMessage.create);
-                myProxy.hideDialog();
-                myProxy.listQuery.page_count = 1;
-                myProxy.onQuery();
+                this.myProxy.hideDialog();
+                this.myProxy.listQuery.page_count = 1;
+                this.myProxy.onQuery();
                 break;
             case EventType.admin_plat_user_update:
                 Message.success(SuccessMessage.update);
-                myProxy.hideDialog();
-                myProxy.onQuery();
+                this.myProxy.hideDialog();
+                this.myProxy.onQuery();
                 break;
             case EventType.admin_plat_user_vendor_withdraw:
                 break;
             case EventType.admin_plat_user_update_safe_gold:
                 break;
             case EventType.admin_plat_user_update_user_gold:
-                myProxy.hideDialog();
-                myProxy.onQuery();
+                this.myProxy.hideDialog();
+                this.myProxy.onQuery();
                 break;
             case EventType.admin_plat_users_wallet_show_plat:
-                myProxy.setWallet(body);
+                this.myProxy.setWallet(body);
                 break;
             case EventType.admin_plat_user_backwater_config:
-                myProxy.setPlatUserBackwaterConfig(body);
+                this.myProxy.setPlatUserBackwaterConfig(body);
+                break;
+            case EventType.admin_plat_user_get_admin_added_user:
+                // this.myProxy.setMutipleUserDialogTableData(body);
+                if (this.myProxy.addMutipleUserData.isExportExcel) {
+                    this.myProxy.exportExcel_multiple(body);
+                } else {
+                    this.myProxy.setMutipleUserDialogTableData(body);
+                }
+
+                break;
+            case EventType.admin_plat_user_store_user_by_admin:
+                this.myProxy.setPlatAddMultipleUserConfig();
                 break;
             case EventType.admin_plat_user_store_credit_user:
                 MessageBox.confirm(
                     <string>(
                         LangUtil(
                             "添加账户成功，帐号{0}，密码{1}",
-                            myProxy.creditUserDialogData.form.username,
-                            myProxy.creditUserDialogData.form.password
+                            this.myProxy.creditUserDialogData.form.username,
+                            this.myProxy.creditUserDialogData.form.password
                         )
                     ),
                     <string>LangUtil("提示"),
@@ -100,14 +123,20 @@ export default class PlatUserMediator extends AbstractMediator {
                         center: true,
                     }
                 ).then(() => {
-                    myProxy.hideDialog();
-                    myProxy.onQuery();
+                    this.myProxy.hideDialog();
+                    this.myProxy.onQuery();
                 });
                 break;
             case EventType.admin_plat_user_change_channel:
                 Message.success(SuccessMessage.update);
-                myProxy.hideDialog();
-                myProxy.onQuery();
+                this.myProxy.hideDialog();
+                this.myProxy.onQuery();
+                break;
+            case EventType.admin_plat_user_delete_admin_added_user:
+                this.myProxy.onQueryForAddMultipleUserTable();
+                break;
+            case EventType.admin_plat_user_update_admin_added_user:
+                this.myProxy.onUpdata_multiple_callback();
                 break;
         }
     }

@@ -190,7 +190,7 @@ export default class EmailTemplateDialog extends AbstractView {
         data.sentence = source;
         data.type = LanguageType.TYPE_SYSTEM_EMAIL_MODEl;
         data.plat_id = this.form.plat_id;
-        this.langProxy.showDialog(data);
+        this.langProxy.showDialog(data, true);
     }
 }
 </script>

@@ -66,7 +66,7 @@
                     <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('用户信息')" min-width="130px">
+            <el-table-column :label="LangUtil('用户信息')" min-width="190px">
                 <template slot-scope="{ row }">
                     <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
                         {{ tableColumns["user_id"].name }}：{{ row.user_id }}
@@ -75,6 +75,7 @@
                     <div>
                         {{ tableColumns["user_remark"].name }}：<span class="user_remark">{{ row.user_remark }}</span>
                     </div>
+                    <div>{{ LangUtil("账号创建时间") }}：{{ row.user_created_at }}</div>
                 </template>
             </el-table-column>
             <el-table-column prop="order_no" :label="tableColumns['order_no'].name" align="center" width="110px">
@@ -93,6 +94,13 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column prop="is_first_recharge" :label="tableColumns['is_first_recharge'].name" width="75px" align="center">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["is_first_recharge"].options[row.is_first_recharge] }}
+                    </div>
+                </template>
+            </el-table-column>
 
             <el-table-column
                 prop="coin_name_unique"
@@ -107,6 +115,7 @@
                             tableColumns["block_network_id"].options[row.block_network_id]
                         }}
                     </div>
+                    <div align="left">{{ tableColumns["gold_scale"].name }}：{{ row.gold_scale }}</div>
                 </template>
             </el-table-column>
 

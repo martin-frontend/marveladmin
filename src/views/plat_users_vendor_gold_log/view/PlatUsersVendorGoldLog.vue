@@ -2,7 +2,8 @@
     <div class="content plat_users_vendor_gold_log">
         <PlatUsersVendorGoldLogHeader />
         <PlatUsersVendorGoldLogBody />
-        <PlatUsersVendorGoldLogSatausDialog v-if="myProxy.statusDialog.bShow"/>
+        <PlatUsersVendorGoldLogSatausDialog v-if="myProxy.statusDialog.bShow" />
+        <PlatUsersVendorGoldLogStatisticDialog v-if="myProxy.statisticDialog.bShow" />
     </div>
 </template>
 
@@ -14,12 +15,14 @@ import { Component } from "vue-property-decorator";
 import PlatUsersVendorGoldLogHeader from "./PlatUsersVendorGoldLogHeader.vue";
 import PlatUsersVendorGoldLogBody from "./PlatUsersVendorGoldLogBody.vue";
 import PlatUsersVendorGoldLogSatausDialog from "./PlatUsersVendorGoldLogSatausDialog.vue";
+import PlatUsersVendorGoldLogStatisticDialog from "./PlatUsersVendorGoldLogStatisticDialog.vue";
 
 @Component({
     components: {
         PlatUsersVendorGoldLogHeader,
         PlatUsersVendorGoldLogBody,
         PlatUsersVendorGoldLogSatausDialog,
+        PlatUsersVendorGoldLogStatisticDialog,
     },
 })
 export default class PlatUsersVendorGoldLog extends AbstractView {
@@ -31,7 +34,7 @@ export default class PlatUsersVendorGoldLog extends AbstractView {
         super.destroyed();
     }
     // proxy
-    private myProxy: PlatUsersVendorGoldLogProxy = this.getProxy(PlatUsersVendorGoldLogProxy);
+    myProxy: PlatUsersVendorGoldLogProxy = this.getProxy(PlatUsersVendorGoldLogProxy);
 }
 </script>
 

@@ -33,6 +33,12 @@ export default class PlatEmailMediator extends AbstractMediator {
             EventType.admin_plat_mail_content_update,
             EventType.admin_plat_users_mail_table_columns,
             EventType.admin_plat_users_mail_index,
+            EventType.admin_plat_mail_template_index,
+            EventType.admin_plat_mail_template_show,
+            EventType.admin_plat_mail_template_table_columns,
+            EventType.admin_plat_mail_template_store,
+            EventType.admin_plat_mail_template_update,
+            EventType.admin_plat_mail_template_delete,
             GlobalEventType.REQUEST_ERROR,
         ];
     }
@@ -46,7 +52,11 @@ export default class PlatEmailMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_mail_content_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportEmailData.isExportExcel) {
+                    myProxy.onSaveExportEmailData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_plat_mail_content_show:
                 myProxy.setDetail(body);
@@ -67,12 +77,46 @@ export default class PlatEmailMediator extends AbstractMediator {
                 this.myProxy.setPlatUserTableColumns(body);
                 break;
             case EventType.admin_plat_users_mail_index:
-                if (myProxy.platUserTableData.isExportExcel) {
-                    myProxy.onExportExcel(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
                 } else {
                     myProxy.setUserTableData(body);
                 }
                 break;
+            case EventType.admin_plat_mail_template_index:
+                if (myProxy.platEmailTemplateManager_data.bShow) {
+                    myProxy.setTableData_templateManager(body);
+                } else {
+                    myProxy.setTemplateArrData(body);
+                }
+                break;
+            case EventType.admin_plat_mail_template_show:
+                if (myProxy.platEmailTemplateManager_dialogData.bShow) {
+                    myProxy.setDetail_templateManager(body);
+                } else {
+                    myProxy.setTemplateDetail(body);
+                }
+                break;
+
+            case EventType.admin_plat_mail_template_table_columns:
+                myProxy.setTableColumns_templateManager(body);
+                break;
+
+            case EventType.admin_plat_mail_template_store:
+                Message.success(SuccessMessage.create);
+                myProxy.hideDialog_templateManager();
+                myProxy.platEmailTemplateManager_listQuery.page_count = 1;
+                myProxy.onQuery_templateManager();
+                break;
+            case EventType.admin_plat_mail_template_update:
+                Message.success(SuccessMessage.update);
+                myProxy.hideDialog_templateManager();
+                myProxy.onQuery_templateManager();
+                break;
+            case EventType.admin_plat_mail_template_delete:
+                myProxy.onQuery_templateManager();
+                break;
+
             case GlobalEventType.REQUEST_ERROR:
                 if (body.url.toString() == HttpType.admin_plat_mail_content_store) {
                     myProxy.showAlertDialog(body.result.msg);

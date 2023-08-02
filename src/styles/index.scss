@@ -196,3 +196,10 @@ aside {
 .multiselect--active {
     z-index: 1000 !important;
 }
+
+.text-hidden {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 340px;
+}

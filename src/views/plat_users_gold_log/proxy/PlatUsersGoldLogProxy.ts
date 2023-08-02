@@ -39,6 +39,8 @@ export default class PlatUsersGoldLogProxy extends AbstractProxy implements IPla
             created_at: { name: "", options: {} },
             coin_name_unique: { name: "", options: {} },
             username: { name: "", options: {} },
+            vendor_order_no: { name: "", options: {} },
+            order_no: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -55,6 +57,8 @@ export default class PlatUsersGoldLogProxy extends AbstractProxy implements IPla
         page_size: 20,
         coin_name_unique: "",
         username: "",
+        vendor_order_no:"",
+        order_no:"",
     };
 
     /**设置表头数据 */
@@ -85,6 +89,8 @@ export default class PlatUsersGoldLogProxy extends AbstractProxy implements IPla
             nick_name: "",
             coin_name_unique: "",
             username: "",
+            vendor_order_no:"",
+            order_no:"",
         });
     }
 

@@ -9,6 +9,7 @@
         "admin/plat_user/show/{user_id}",
         "admin/plat_user/update/{user_id}",
         "admin/plat_user/phone/{user_id}",
+        "admin/plat_user/email/{user_id}",
         "admin/plat_user/update_level_exp/{user_id}",
         "admin/plat_user/clear_cache/{user_id}",
         "--用户钱包&wallet",
@@ -52,6 +53,8 @@
         "--信用代理&credit",
         "admin/plat_user/direct_users",
         "admin/plat_users_credit_log/table_columns",
-        "admin/plat_users_credit_log/index"
+        "admin/plat_users_credit_log/index",
+        "--Easybet&easybet",
+        "admin/plat_user/update_user_level/{user_id}"
     ]
 }

@@ -1,8 +1,13 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
-        <el-form ref="form" :rules="rules" :model="form" label-width="105px" v-loading="net_status.loading">
+        <el-form ref="form" :rules="rules" :model="form" label-width="120px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
-                <el-select filterable v-model="form.plat_id" :placeholder="LangUtil('请选择')">
+                <el-select
+                    filterable
+                    v-model="form.plat_id"
+                    :placeholder="LangUtil('请选择')"
+                    @change="onChangePlatId()"
+                >
                     <el-option
                         v-for="(item, key) of tableColumns.plat_id.options"
                         :label="item"
@@ -29,11 +34,62 @@
                     </el-option>
                 </el-select>
             </el-form-item>
+
+            <el-form-item v-if="form.type == 4" :label="tableColumns.priority.name" prop="priority">
+                <el-input
+                    type="number"
+                    oninput="value=value.replace(/[^\d]/g,'')"
+                    min="0"
+                    v-model="form.priority"
+                ></el-input>
+            </el-form-item>
+
+            <el-form-item
+                size="mini"
+                :label="tableColumns['vendor_types'].name"
+                prop="vendor_types"
+                v-if="form.type == 4"
+            >
+                <el-checkbox-group v-model="form.vendor_types">
+                    <el-checkbox v-for="(value, key) in tableColumns['vendor_types'].options" :key="key" :label="key">
+                        {{ value }}
+                    </el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
+            <el-form-item :label="tableColumns.vendor_ids.name" prop="vendor_ids" v-if="form.type == 4">
+                <el-select filterable multiple v-model="form.vendor_ids" :placeholder="LangUtil('请选择')">
+                    <el-option
+                        v-for="(item, key) of tableColumns.vendor_ids.options[form.plat_id]"
+                        :label="item"
+                        :value="key"
+                        :key="key"
+                    >
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item
+                :label="tableColumns.transfer_coin_name_unique.name"
+                prop="transfer_coin_name_unique"
+                v-if="form.type == 4"
+            >
+                <el-select filterable v-model="form.transfer_coin_name_unique" :placeholder="LangUtil('请选择')">
+                    <el-option
+                        v-for="(item, key) of tableColumns.transfer_coin_name_unique.options[form.plat_id]"
+                        :label="item"
+                        :value="key"
+                        :key="key"
+                    >
+                    </el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item :label="tableColumns.scale.name" prop="scale">
                 <el-input-number v-model="form.scale" :min="0" :precision="10" :step="0.001"></el-input-number>
             </el-form-item>
             <el-form-item :label="tableColumns.remark.name" prop="remark">
                 <el-input type="textarea" v-model="form.remark"></el-input>
+            </el-form-item>
+            <el-form-item :label="tableColumns.bonus_multiple.name" prop="bonus_multiple">
+                <el-input-number v-model="form.bonus_multiple" :min="0" :precision="10" :step="0.001"></el-input-number>
             </el-form-item>
             <el-form-item :label="tableColumns.can_play_game.name" prop="can_play_game">
                 <el-radio-group v-model="form.can_play_game">
@@ -97,7 +153,7 @@ export default class PlatBlockCoinsDialog extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
 
-    textMap = {
+    textMap: any = {
         update: this.LangUtil("编辑"),
         create: this.LangUtil("新增"),
     };
@@ -141,6 +197,11 @@ export default class PlatBlockCoinsDialog extends AbstractView {
 
     handleDelete() {
         this.myProxy.onDelete(this.form.id);
+    }
+
+    onChangePlatId() {
+        this.form.vendor_ids = "";
+        this.form.transfer_coin_name_unique = "";
     }
 }
 </script>

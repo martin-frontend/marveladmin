@@ -6,6 +6,8 @@
         <AutoCheckDialog v-if="autoProxy.autoCheckDialog.bShow" />
         <RemarkDialog v-if="myProxy.remarkDialogData.bShow" />
         <DispatchDialog v-if="myProxy.dispatchDialogData.bShow" />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -21,6 +23,8 @@ import ExchangeOrdersProxy from "../proxy/ExchangeOrdersProxy";
 import ExchangeAutoCheckProxy from "../proxy/ExchangeAutoCheckProxy";
 import RemarkDialog from "./components/RemarkDialog.vue";
 import DispatchDialog from "./components/DispatchDialog.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 
 @Component({
     components: {
@@ -30,12 +34,14 @@ import DispatchDialog from "./components/DispatchDialog.vue";
         AutoCheckDialog,
         RemarkDialog,
         DispatchDialog,
+        ProgressDialog,
+        FieldSelectionDialog,
     },
 })
 export default class ExchangeOrders extends AbstractView {
     // proxy
-    private myProxy: ExchangeOrdersProxy = this.getProxy(ExchangeOrdersProxy);
-    private autoProxy: ExchangeAutoCheckProxy = this.getProxy(ExchangeAutoCheckProxy);
+    myProxy: ExchangeOrdersProxy = this.getProxy(ExchangeOrdersProxy);
+    autoProxy: ExchangeAutoCheckProxy = this.getProxy(ExchangeAutoCheckProxy);
 
     constructor() {
         super(ExchangeOrdersMediator);

@@ -3,6 +3,8 @@
         <PlatUserStatisticRankDaysDialog v-if="myProxy.dialogData.bShow" />
         <PlatUserStatisticRankDaysHeader />
         <PlatUserStatisticRankDaysBody />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -14,12 +16,16 @@ import { Component } from "vue-property-decorator";
 import PlatUserStatisticRankDaysDialog from "./PlatUserStatisticRankDaysDialog.vue";
 import PlatUserStatisticRankDaysHeader from "./PlatUserStatisticRankDaysHeader.vue";
 import PlatUserStatisticRankDaysBody from "./PlatUserStatisticRankDaysBody.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 
 @Component({
     components: {
         PlatUserStatisticRankDaysDialog,
         PlatUserStatisticRankDaysHeader,
         PlatUserStatisticRankDaysBody,
+        ProgressDialog,
+        FieldSelectionDialog,
     },
 })
 export default class PlatUserStatisticRankDays extends AbstractView {
@@ -31,7 +37,7 @@ export default class PlatUserStatisticRankDays extends AbstractView {
         super.destroyed();
     }
     // proxy
-    private myProxy: PlatUserStatisticRankDaysProxy = this.getProxy(PlatUserStatisticRankDaysProxy);
+    myProxy: PlatUserStatisticRankDaysProxy = this.getProxy(PlatUserStatisticRankDaysProxy);
 }
 </script>
 

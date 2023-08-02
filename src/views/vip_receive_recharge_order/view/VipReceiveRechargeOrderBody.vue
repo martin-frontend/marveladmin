@@ -71,6 +71,15 @@
                 min-width="100px"
             >
             </el-table-column>
+
+            <el-table-column
+            :label="`${tableColumns.gold_scale.name}`"
+            class-name="status-col"
+            prop="gold_scale"
+            min-width="100px"
+        >
+        </el-table-column>
+
             <el-table-column prop="gold" :label="LangUtil('订单金额')" align="center"></el-table-column>
             <el-table-column
                 prop="gold"
