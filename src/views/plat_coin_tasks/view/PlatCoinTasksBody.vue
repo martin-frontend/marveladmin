@@ -98,9 +98,12 @@
             <el-table-column
                 :label="tableColumns.current_coin_amount.name"
                 align="center"
-                prop="current_coin_amount"
                 min-width="100px"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    {{ row.transfer_amount }}
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.transfer_amount_rate.name"
                 align="center"
