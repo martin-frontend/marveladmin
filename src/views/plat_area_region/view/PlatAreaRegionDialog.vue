@@ -24,11 +24,32 @@
                     filterable
                     clearable
                     :placeholder="LangUtil('请选择')"
+                    @change="form.default_sms_area_code = ''"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns.area_region.options"
                         :key="key"
                         :label="value"
+                        :value="Number(key)"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item
+                :label="`${tableColumns.default_sms_area_code.name}`"
+                prop="default_sms_area_code"
+                label-width="100px"
+            >
+                <el-select
+                    style="width:100%"
+                    v-model="form.default_sms_area_code"
+                    filterable
+                    clearable
+                    :placeholder="LangUtil('请选择')"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns.default_sms_area_code.options[form.area_region]"
+                        :key="key"
+                        :label="`(+${key}) ${value}`"
                         :value="Number(key)"
                     ></el-option>
                 </el-select>
@@ -93,6 +114,7 @@ export default class PlatAreaRegionDialog extends AbstractView {
         return {
             plat_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             area_region: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            default_sms_area_code: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 
