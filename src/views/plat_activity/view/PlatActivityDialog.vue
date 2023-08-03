@@ -644,11 +644,11 @@
                                 <el-col :span="4">
                                     <div>{{ typeOptions[childRule.type] }}</div>
                                 </el-col>
-                                <el-col :span="5">
+                                <el-col :span="4">
                                     <div>{{ getRuleInfo(childRule).params_name }}</div>
                                 </el-col>
 
-                                <el-col :span="15">
+                                <el-col :span="16">
                                     <el-input
                                         size="small"
                                         v-if="childRule.params_type == '1'"
@@ -657,56 +657,88 @@
                                         :disabled="isStatusUpdate"
                                         style="width: 80px"
                                     ></el-input>
-                                    <el-select
-                                        size="small"
-                                        v-if="
-                                            childRule.type == 61 &&
-                                                childRule.params_type == 5 &&
-                                                form.extended_task_type != 2
-                                        "
-                                        v-model="childRule.coin_type"
-                                        filterable
-                                        :placeholder="LangUtil('请选择')"
-                                        :disabled="isStatusUpdate"
-                                        style="margin-right: 5px"
-                                    >
-                                        <el-option
-                                            v-for="(value, key) in tableColumns.reward_coin.options[form.plat_id]"
-                                            :key="key"
-                                            :label="value"
-                                            :value="key"
-                                        ></el-option>
-                                    </el-select>
-                                    <el-select
-                                        size="small"
-                                        v-if="
-                                            childRule.type == 61 &&
-                                                childRule.params_type == 5 &&
-                                                form.extended_task_type == 2
-                                        "
-                                        v-model="childRule.coin_type"
-                                        filterable
-                                        :placeholder="LangUtil('请选择')"
-                                        :disabled="isStatusUpdate"
-                                        style="margin-right: 5px"
-                                    >
-                                        <el-option
-                                            v-for="(value, key) in tableColumns.activity_coin.options[form.plat_id]"
-                                            :key="key"
-                                            :label="value"
-                                            :value="key"
-                                        ></el-option>
-                                    </el-select>
-                                    <el-input-number
-                                        size="small"
-                                        v-if="childRule.type == 61 && childRule.params_type == 5"
-                                        v-model="childRule.coin_amount"
-                                        :placeholder="LangUtil('请输入')"
-                                        :disabled="isStatusUpdate"
-                                        :min="0"
-                                        :step="1"
-                                        controls-position="right"
-                                    ></el-input-number>
+
+                                    <template v-if="childRule.type == 61 && childRule.params_type == 5">
+                                        <!-- 币种选择 -->
+                                        <el-select
+                                            size="small"
+                                            v-if="isShowSelectCoin(childRule)"
+                                            v-model="childRule.coin_type"
+                                            filterable
+                                            :placeholder="LangUtil('请选择')"
+                                            :disabled="isStatusUpdate"
+                                            style="margin-right: 5px"
+                                        >
+                                            <el-option
+                                                v-for="(value, key) in coinOption"
+                                                :key="key"
+                                                :label="value"
+                                                :value="key"
+                                            ></el-option>
+                                        </el-select>
+                                        <template v-if="getRuleInfo(childRule).key_value_type != 2">
+                                            <el-input-number
+                                                size="small"
+                                                v-model="childRule.coin_amount"
+                                                :placeholder="LangUtil('请输入')"
+                                                :disabled="isStatusUpdate"
+                                                :min="0"
+                                                :step="1"
+                                                controls-position="right"
+                                            ></el-input-number>
+                                        </template>
+                                        <template v-else>
+                                            <template v-if="status == dialogStatus.create">
+                                                <el-input-number
+                                                    size="small"
+                                                    v-model="childRule.coin_amount"
+                                                    :placeholder="LangUtil('请输入')"
+                                                    :disabled="isStatusUpdate"
+                                                    :min="0"
+                                                    :step="1"
+                                                    controls-position="right"
+                                                ></el-input-number>
+                                                <span style="margin-left: 10px;">{{ LangUtil("最大限制") }}</span>
+                                                <el-input-number
+                                                    style="margin-left: 10px;"
+                                                    size="small"
+                                                    v-if="childRule.type == 61 && childRule.params_type == 5"
+                                                    v-model="childRule.max_limit"
+                                                    :placeholder="LangUtil('请输入')"
+                                                    :disabled="isStatusUpdate"
+                                                    :min="0"
+                                                    :step="1"
+                                                    controls-position="right"
+                                                ></el-input-number>
+                                            </template>
+
+                                            <template v-if="status == dialogStatus.update">
+                                                <span v-for="(item, key) of childRule.params" :key="key">
+                                                    <span>{{ key }}</span>
+                                                    <el-input-number
+                                                        size="small"
+                                                        v-model="item.percent"
+                                                        :placeholder="LangUtil('请输入')"
+                                                        :disabled="isStatusUpdate"
+                                                        :min="0"
+                                                        :step="1"
+                                                        controls-position="right"
+                                                    ></el-input-number>
+                                                    <span style="margin-left: 10px;">{{ LangUtil("最大限制") }}</span>
+                                                    <el-input-number
+                                                        style="margin-left: 10px;"
+                                                        size="small"
+                                                        v-model="item.max_limit"
+                                                        :placeholder="LangUtil('请输入')"
+                                                        :disabled="isStatusUpdate"
+                                                        :min="0"
+                                                        :step="1"
+                                                        controls-position="right"
+                                                    ></el-input-number>
+                                                </span>
+                                            </template>
+                                        </template>
+                                    </template>
                                     <el-radio-group
                                         v-model="childRule.params"
                                         v-if="childRule.params_type == '2'"
@@ -796,6 +828,11 @@ export default class PlatActivityDialog extends AbstractView {
         "71": this.LangUtil("概率奖池"),
     };
 
+    //获取可以选择的币种类型
+    get coinOption() {
+        if (this.form.extended_task_type == 2) return this.tableColumns.activity_coin.options[this.form.plat_id];
+        return this.tableColumns.reward_coin.options[this.form.plat_id];
+    }
     get buttonText() {
         return this.isStatusUpdate ? this.LangUtil("确认保存") : this.LangUtil("新增");
     }
@@ -1078,6 +1115,16 @@ export default class PlatActivityDialog extends AbstractView {
             return time.getTime() < lastWeek.getTime() || time.getTime() > twentyYearsFromNow.getTime();
         },
     };
+    //是否显示币种选择，只有 为 key -value 且为 预览模式的 时候才不显示
+    isShowSelectCoin(childRule: any) {
+        return (
+            (this.getRuleInfo(childRule).key_value_type == 2 &&
+                childRule.type == 61 &&
+                childRule.params_type == 5 &&
+                this.status == this.dialogStatus.create) ||
+            this.getRuleInfo(childRule).key_value_type != 2
+        );
+    }
 }
 </script>
 

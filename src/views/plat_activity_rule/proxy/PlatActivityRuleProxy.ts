@@ -40,6 +40,7 @@ export default class PlatActivityRuleProxy extends AbstractProxy implements IPla
             created_at: { name: "" },
             updated_by: { name: "" },
             updated_at: { name: "" },
+            key_value_type: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -70,6 +71,7 @@ export default class PlatActivityRuleProxy extends AbstractProxy implements IPla
             created_at: "",
             updated_by: "",
             updated_at: "",
+            key_value_type:"",
         },
         formSource: null, // 表单的原始数据
     };
@@ -132,6 +134,7 @@ export default class PlatActivityRuleProxy extends AbstractProxy implements IPla
             created_at: "",
             updated_by: "",
             updated_at: "",
+            key_value_type:"",
         });
     }
 
