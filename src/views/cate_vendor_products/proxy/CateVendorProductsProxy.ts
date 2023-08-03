@@ -53,7 +53,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             vendor_product_languages: { name: "支持语言", options: {} },
         },
         list: <any>[],
-        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 100 },
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 3000 },
         isResort: false, // 是否重新排序
         isCopyModle: false, // 是否为复制模式
     };
