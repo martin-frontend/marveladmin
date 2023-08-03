@@ -49,6 +49,8 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
     listQuery = {
         page_count: 1,
         page_size: 20,
+        area_code: "",
+        name: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -86,6 +88,8 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
     resetListQuery() {
         Object.assign(this.listQuery, {
             // TODO
+            area_code: "",
+            name: "",
         });
     }
 
@@ -156,7 +160,7 @@ export default class SystemSmsAreaCodeProxy extends AbstractProxy implements ISy
             .then(() => {
                 this.sendNotification(HttpType.admin_system_sms_area_code_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**重新排序 */

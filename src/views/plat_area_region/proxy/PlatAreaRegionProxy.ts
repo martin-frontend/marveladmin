@@ -36,6 +36,7 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
             plat_id: { name: "平台ID", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "更新人", options: {} },
+            default_sms_area_code: { name: "默认区号", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -55,6 +56,7 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
             id: null,
             area_region: "",
             plat_id: "",
+            default_sms_area_code: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -112,6 +114,7 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
         Object.assign(this.dialogData.form, {
             plat_id: "",
             area_region: "",
+            default_sms_area_code: "",
         });
     }
 
@@ -121,10 +124,11 @@ export default class PlatAreaRegionProxy extends AbstractProxy implements IPlatA
     }
     /**添加数据 */
     onAdd() {
-        const { plat_id, area_region } = this.dialogData.form;
+        const { plat_id, area_region, default_sms_area_code } = this.dialogData.form;
         const formCopy: any = {
             area_region,
             plat_id,
+            default_sms_area_code,
         };
         this.sendNotification(HttpType.admin_plat_area_region_store, objectRemoveNull(formCopy));
     }
