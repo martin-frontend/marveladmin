@@ -70,6 +70,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
         zh_CN: "",
         vi_VN: "",
         en_EN: "",
+        es_ES: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -150,6 +151,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             zh_CN: "",
             vi_VN: "",
             en_EN: "",
+            es_ES: "",
         });
     }
 

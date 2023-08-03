@@ -10,6 +10,7 @@
             <SearchInput :title="tableColumns.zh_CN.name" v-model="listQuery.zh_CN" />
             <SearchInput :title="LangUtil('越南文')" v-model="listQuery.vi_VN" />
             <SearchInput :title="tableColumns.en_EN.name" v-model="listQuery.en_EN" />
+            <SearchInput :title="tableColumns.es_ES.name" v-model="listQuery.es_ES" />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")
