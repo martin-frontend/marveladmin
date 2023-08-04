@@ -1,7 +1,19 @@
 <template>
     <div>
         <div style="margin-bottom: 8px; text-align: right">
-            <el-button v-if="checkUnique(unique.plat_user_get_admin_added_user) && !myProxy.isChannelUser" @click="handleMutipleUser()" type="primary">{{ LangUtil("批量新增用户") }}</el-button>
+            <el-button
+                @click="handleMutipleTag"
+                :disabled="myProxy.tableData.multipleSelection.length == 0"
+                type="primary"
+            >
+                {{ LangUtil("批量标签") }}
+            </el-button>
+            <el-button
+                v-if="checkUnique(unique.plat_user_get_admin_added_user) && !myProxy.isChannelUser"
+                @click="handleMutipleUser()"
+                type="primary"
+                >{{ LangUtil("批量新增用户") }}</el-button
+            >
             <el-button
                 v-if="checkUnique(unique.plat_user_store_credit_user) && !myProxy.isChannelUser"
                 @click="handlerAddCreditUser()"
@@ -21,7 +33,10 @@
             :header-cell-style="{
                 'text-align': 'center',
             }"
+            @selection-change="handleSelectionChange"
+            ref="multipleTable"
         >
+            <el-table-column type="selection" min-width="20px" align="center"> </el-table-column>
             <el-table-column :label="LangUtil('平台信息')" min-width="150px">
                 <template slot-scope="{ row }">
                     <div>{{ LangUtil("平台") }}：{{ tableColumns.plat_id.options[row.plat_id] }}</div>
@@ -112,6 +127,15 @@
             <el-table-column :label="tableColumns.is_recharged.name" min-width="80px" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.is_recharged.options[row.is_recharged] }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns.user_tag.name" min-width="180px" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div style="text-align: left;">
+                        <el-tag v-for="(tag, index) of convertUserTag(row.user_tag)" :key="index" style="margin: 3px;">
+                            {{ tag }}
+                        </el-tag>
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.first_recharge.name" prop="first_recharge" min-width="150px">
@@ -399,6 +423,27 @@ export default class PlatUserBody extends AbstractView {
 
     changeChannel(data: any) {
         this.myProxy.showChangeChannelDialog(data);
+    }
+
+    handleSelectionChange(val: any) {
+        this.myProxy.tableData.multipleSelection = [...val];
+    }
+
+    handleMutipleTag() {
+        this.myProxy.showAddMultipleTagDialog();
+    }
+
+    convertUserTag(user_tag: any) {
+        if (!user_tag) {
+            return [];
+        }
+        const arr = user_tag.split(",");
+        const newArr: any = [];
+        // @ts-ignore
+        arr.forEach(tag => {
+            newArr.push(this.tableColumns.user_tag.options[this.listQuery.plat_id][Number(tag)]);
+        });
+        return newArr;
     }
 }
 </script>

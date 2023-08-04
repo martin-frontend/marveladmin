@@ -1,6 +1,6 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, getUrl, objectRemoveNull } from "@/core/global/Functions";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import { HttpType } from "@/views/plat_user/setting";
 import { Message, MessageBox } from "element-ui";
@@ -8,7 +8,8 @@ import IPlatUserProxy from "./IPlatUserProxy";
 import { MD5 } from "@/core/global/MD5";
 import { BaseInfo } from "@/components/vo/commonVo";
 import { checkUnique, unique } from "@/core/global/Permission";
-import { DialogStatus } from "@/core/global/Constant";
+import { DialogStatus, SuccessMessage } from "@/core/global/Constant";
+import Http from "@/core/net/Http";
 
 export default class PlatUserProxy extends AbstractProxy implements IPlatUserProxy {
     static NAME = "PlatUserProxy";
@@ -136,9 +137,11 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             is_back_visit: { name: "是否回访", options: {} },
             recharge_amount: { name: "充值金额", options: [] },
             paytime: { name: "第一次充值时间", options: [] },
+            user_tag: { name: "用户标签", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        multipleSelection: <any>[],
     };
     /**查询条件 */
     listQuery = <any>{
@@ -324,6 +327,13 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         },
     };
 
+    addMutipleTagData = {
+        bShow: false,
+        form: <any>{
+            tags: [],
+        },
+    };
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -463,6 +473,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         this.dialogData.bShow = false;
         this.creditUserDialogData.bShow = false;
         this.changeChannelDialogData.bShow = false;
+        this.addMutipleTagData.bShow = false;
     }
     /**重置弹窗表单 */
     resetDialogForm() {
@@ -878,5 +889,31 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         //     this.resetTabdata(data);
         // }
         this.myExportPagedata = JSON.parse(JSON.stringify(data));
+    }
+
+    showAddMultipleTagDialog() {
+        this.addMutipleTagData.bShow = true;
+        this.addMutipleTagData.form.tags.length = 0;
+    }
+
+    onUpdateTags() {
+        let count = 0;
+        const user_tag = this.addMutipleTagData.form.tags.join();
+        // @ts-ignore
+        this.tableData.multipleSelection.forEach(item => {
+            // 发送消息
+            Http.request({ user_tag }, getUrl(HttpType.admin_plat_user_update, { user_id: item.user_id })).then(
+                (result: any) => {
+                    count++;
+                    if (this.addMutipleTagData.bShow) {
+                        this.hideDialog();
+                        Message.success(SuccessMessage.update);
+                    }
+                    if (count == this.tableData.multipleSelection.length) {
+                        this.onQuery();
+                    }
+                }
+            );
+        });
     }
 }

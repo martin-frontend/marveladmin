@@ -101,11 +101,12 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         user_level: { name: "", options: {} },
         update_type: { name: "用户等级更新类别", options: {} },
         level_type: { name: "类型", options: {} },
-        is_cash_agent: { name: '充值兑换开关', options: {} },
-        birth_date: { name: '出生年月', options: {} },
-        cpf: { name: 'cpf', options: {} },
+        is_cash_agent: { name: "充值兑换开关", options: {} },
+        birth_date: { name: "出生年月", options: {} },
+        cpf: { name: "cpf", options: {} },
         is_recharged: { name: "是否充值", options: {} },
         is_back_visit: { name: "是否回访", options: {} },
+        user_tag: { name: "用户标签", options: {} },
     };
     /**用户详情 */
     userInfo = {
@@ -125,7 +126,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         last_login_app_type: 2,
         last_login_at: "",
         last_login_device: "",
-        first_login_device:"",
+        first_login_device: "",
         last_login_ip: "",
         last_logout_at: "",
         last_logout_type: 0,
@@ -199,6 +200,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         cpf: "",
         is_recharged: "98",
         is_back_visit: "98",
+        user_tag: <any>[],
     };
     /**代理关系链 */
     relationChain: string[] = [];
@@ -222,6 +224,9 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         }
         if (filed == "gold_columns_disable") {
             this.dialogData.filedValue = this.userInfo.gold_columns_disable_ary;
+        }
+        if (filed == "user_tag") {
+            this.dialogData.filedValue = [...this.userInfo.user_tag];
         }
         this.dialogData.bShow = true;
     }
@@ -253,6 +258,10 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         }
         this.userInfo.gold_columns_disable_ary = strAry;
         this.userInfo.gold_columns_disable_list = str;
+        this.userInfo.user_tag = [];
+        if (data.user_tag) {
+            this.userInfo.user_tag = [...data.user_tag.split(",")];
+        }
     }
     /**设置关系链 */
     setRelationChain(data: any) {
@@ -265,8 +274,9 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         this.sendNotification(HttpType.admin_plat_user_agent_bind_show, { user_id, hideLoading: true });
     }
     /**修改 */
-    onEdit(filed: string, filedValue: string) {
+    onEdit(filed: string, filedValue: any) {
         if (filed == "password") filedValue = MD5.createInstance().hex_md5(filedValue);
+        if (filed == "user_tag") filedValue = filedValue.join();
         if (filed == "base_recharge" || filed == "base_water") {
             this.sendNotification(HttpType.admin_plat_user_update_level_exp, {
                 user_id: this.userInfo.user_id,
