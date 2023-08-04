@@ -21,6 +21,9 @@
             <el-dropdown-item :disabled="language === 'ko'" command="ko" class="flex">
                 <span class="lang"> <img :src="imageBox.ko" class="img" /> 한국인 </span>
             </el-dropdown-item>
+            <el-dropdown-item :disabled="language === 'es'" command="es" class="flex">
+                <span class="lang"> <img :src="imageBox.es" class="img" /> España </span>
+            </el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
 </template>
@@ -36,6 +39,7 @@ export default {
                 en: require("../../../../../assets/lang/en_logo.png"),
                 jp: require("../../../../../assets/lang/jp_logo.png"),
                 ko: require("../../../../../assets/lang/ko_logo.png"),
+                es: require("../../../../../assets/lang/es_logo.png"),
             },
         };
     },
@@ -56,6 +60,8 @@ export default {
                 str = "Japanese";
             } else if (Cookies.get("language") === "ko") {
                 str = "한국인";
+            } else if (Cookies.get("language") === "es") {
+                str = "España";
             }
             return str;
         },

@@ -17,6 +17,16 @@
         >
             <el-table-column class-name="status-col" :label="tableColumns.id.name" prop="id" min-width="70px">
             </el-table-column>
+            <el-table-column
+                class-name="status-col"
+                :label="tableColumns.default_sms_area_code.name"
+                prop="default_sms_area_code"
+                min-width="70px"
+            >
+                <template slot-scope="{ row }">
+                    {{ row.default_sms_area_code != 0 ? row.default_sms_area_code : "-" }}
+                </template>
+            </el-table-column>
             <el-table-column class-name="status-col" :label="tableColumns.plat_id.name" prop="plat_id" min-width="70px">
                 <template slot-scope="scope">
                     {{ tableColumns.plat_id.options[scope.row.plat_id] }}
