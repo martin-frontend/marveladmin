@@ -1,0 +1,15 @@
+{
+    "name": "标签列表",
+    "description": "标签列表",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75268098",
+    "list": [
+        "admin/user_tag/table_columns",
+        "admin/user_tag/index",
+        "admin/user_tag/store",
+        "admin/user_tag/show/{id}",
+        "admin/user_tag/update/{id}",
+        "admin/user_tag/delete/{id}",
+        "admin/user_tag/show_users/{id}",
+        "admin/plat_user/table_columns"
+    ]
+}
