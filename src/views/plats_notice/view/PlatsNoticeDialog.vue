@@ -374,6 +374,29 @@
                                 oninput="value=value.replace(/[^\d,]/g,'')"
                             ></el-input>
                         </el-col>
+                        <el-col :span="8" class="vi_div" v-if="item.condition == 'condition_is_login'">
+                            <el-radio-group v-model="item.isLogin">
+                                <template v-for="(value, key) in tableColumns['condition_is_login'].options">
+                                    <el-radio :key="key" :label="Number(key)" v-if="key != 0">
+                                        {{ value }}
+                                        <!-- <el-tooltip
+                                            class="tip-item"
+                                            effect="dark"
+                                            :content="
+                                                key == 1
+                                                    ? LangUtil('表示未登录过新用户')
+                                                    : LangUtil('已经登录过的老用户')
+                                            "
+                                            placement="top"
+                                            v-if="key != 0"
+                                            :key="value"
+                                        >
+                                            <i class="el-icon-question"></i>
+                                        </el-tooltip> -->
+                                    </el-radio>
+                                </template>
+                            </el-radio-group>
+                        </el-col>
                         <el-col :span="8" class="vi_div" v-if="item.condition == 'condition_is_first_login'">
                             <el-radio-group v-model="item.firstLogin">
                                 <template v-for="(value, key) in tableColumns['condition_is_first_login'].options">
