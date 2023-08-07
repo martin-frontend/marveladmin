@@ -407,7 +407,8 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
 
     setUsersData(data: any) {
         this.usersDialogData.bShow = true;
-        this.usersDialogData.list = [...data];
+        this.usersDialogData.list = [...data.list];
+        Object.assign(this.usersDialogData.pageInfo, data.pageInfo);
     }
 
     setUsersTableColumn(data: any) {
