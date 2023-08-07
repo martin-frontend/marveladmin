@@ -4,20 +4,22 @@
  */
 import cmd_admin_plat_users_payment_method_table_columns from "@/views/plat_users_payment_method/command/cmd_admin_plat_users_payment_method_table_columns";
 import cmd_admin_plat_users_payment_method_index from "@/views/plat_users_payment_method/command/cmd_admin_plat_users_payment_method_index";
+import cmd_admin_plat_users_payment_method_update from "@/views/plat_users_payment_method/command/cmd_admin_plat_users_payment_method_update";
 /**协议*/
 export var HttpType = {
     admin_plat_users_payment_method_table_columns: "admin/plat_users_payment_method/table_columns",
     admin_plat_users_payment_method_index: "admin/plat_users_payment_method/index",
+    admin_plat_users_payment_method_update: "admin/plat_users_payment_method/update/{id}",
 };
 /**事件*/
 export var EventType = {
     admin_plat_users_payment_method_table_columns: "admin_plat_users_payment_method_table_columns",
     admin_plat_users_payment_method_index: "admin_plat_users_payment_method_index",
+    admin_plat_users_payment_method_update: "admin_plat_users_payment_method_update",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
-facade.registerCommand(
-    HttpType.admin_plat_users_payment_method_table_columns,
-    cmd_admin_plat_users_payment_method_table_columns
-);
+facade.registerCommand(HttpType.admin_plat_users_payment_method_table_columns, cmd_admin_plat_users_payment_method_table_columns);
 facade.registerCommand(HttpType.admin_plat_users_payment_method_index, cmd_admin_plat_users_payment_method_index);
+facade.registerCommand(HttpType.admin_plat_users_payment_method_update, cmd_admin_plat_users_payment_method_update);
+

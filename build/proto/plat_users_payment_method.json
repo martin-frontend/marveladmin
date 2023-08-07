@@ -4,6 +4,7 @@
     "document": "http://18.166.154.73:8090/pages/viewpage.action?pageId=1705455",
     "list": [
         "admin/plat_users_payment_method/table_columns",
-        "admin/plat_users_payment_method/index"
+        "admin/plat_users_payment_method/index",
+        "admin/plat_users_payment_method/update/{id}"
     ]
 }
