@@ -132,7 +132,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
             arpu_rate: { name: "ARPU", options: [], display: true, tips: "活跃充值金额/活跃用户" },
             arppu_rate: { name: "ARPPU", options: [], display: true, tips: "活跃充值金额/活跃充值人数" },
             rech_amt: { name: "人均首存金额", options: [], display: true, tips: "首充金额/首充人数" },
-            today_new_register_recharge_total: {
+            new_reg_rech_total: {
                 name: "当天注册充值总金额",
                 options: [],
                 display: true,
@@ -365,7 +365,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         arpu_rate: "",
         arppu_rate: "",
         rech_amt: "",
-        today_new_register_recharge_total: "",
+        new_reg_rech_total: "",
         new_reg_first_rech_count: "",
         net_rech: "",
         exch_amt: "",
@@ -418,7 +418,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         this.summaryData["arpu_rate"] = data.summary.arpu_rate;
         this.summaryData["arppu_rate"] = data.summary.arppu_rate;
         this.summaryData["rech_amt"] = data.summary.rech_amt;
-        this.summaryData["today_new_register_recharge_total"] = data.summary.today_new_register_recharge_total;
+        this.summaryData["new_reg_rech_total"] = data.summary.new_reg_rech_total;
         this.summaryData["new_reg_first_rech_count"] = data.summary.new_reg_first_rech_count;
         this.summaryData["net_rech"] = data.summary.net_rech;
         this.summaryData["exch_amt"] = data.summary.exch_amt;
@@ -431,6 +431,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         this.summaryData["d_user_cont_per_user"] = data.summary.d_user_cont_per_user;
         this.summaryData["d_exch_amt_per_dau"] = data.summary.d_exch_amt_per_dau;
         this.summaryData["user_cont_per_user"] = data.summary.user_cont_per_user;
+        this.summaryData["new_user_arpu"] = data.summary.new_user_arpu;
         // 把summaryData 插入第一笔
         this.tableData.list.splice(0, 0, this.summaryData);
     }

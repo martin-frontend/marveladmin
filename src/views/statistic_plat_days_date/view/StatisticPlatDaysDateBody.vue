@@ -237,9 +237,9 @@
                 </template>
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.today_new_register_recharge_total.display"
-                prop="today_new_register_recharge_total"
-                :label="tableColumns['today_new_register_recharge_total'].name"
+                v-if="tableColumns.new_reg_rech_total.display"
+                prop="new_reg_rech_total"
+                :label="tableColumns['new_reg_rech_total'].name"
                 align="center"
                 min-width="100"
             >
@@ -247,12 +247,12 @@
                     <el-tooltip
                         class="item"
                         effect="dark"
-                        :content="tableColumns['today_new_register_recharge_total'].tips"
+                        :content="tableColumns['new_reg_rech_total'].tips"
                         placement="top"
                     >
                         <div>
                             <span style="margin-right: 5px">{{
-                                tableColumns["today_new_register_recharge_total"].name
+                                tableColumns["new_reg_rech_total"].name
                             }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
                         </div>
