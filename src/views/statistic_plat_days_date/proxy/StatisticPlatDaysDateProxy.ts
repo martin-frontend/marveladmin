@@ -131,71 +131,71 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
             recharge_seep_rate: { name: "充值渗透率", options: [], display: true, tips: "活跃充值人数/活跃用户" },
             arpu_rate: { name: "ARPU", options: [], display: true, tips: "活跃充值金额/活跃用户" },
             arppu_rate: { name: "ARPPU", options: [], display: true, tips: "活跃充值金额/活跃充值人数" },
-            arg_recharge_amount: { name: "人均首存金额", options: [], display: true, tips: "首充金额/首充人数" },
+            rech_amt: { name: "人均首存金额", options: [], display: true, tips: "首充金额/首充人数" },
             today_new_register_recharge_total: {
                 name: "当天注册充值总金额",
                 options: [],
                 display: true,
                 tips: "是当日注册的用户的充值总金额。比如当日 注册用户A , 他成功充值三次 ， 这个三次的金额都需要统计。",
             },
-            today_new_register_first_recharge_user_count: {
+            new_reg_first_rech_count: {
                 name: "当天注册充值人数",
                 options: [],
                 display: true,
                 tips: "是当日注册而且充值成功的用户。这里注意同一个用户需要去重",
             },
-            today_new_register_exchange_total: {
+            exch_amt: {
                 name: "当天注册兑换总金额",
                 options: [],
                 display: true,
                 tips: "是当日注册的用户的兑换总金额。比如当日 注册用户A , 他成功兑换三次 ， 这个三次的金额都需要统计。",
             },
-            today_new_register_first_exchange_user_count: {
+            new_exch_count: {
                 name: "当天注册兑换人数",
                 options: [],
                 display: true,
                 tips: "是当日注册而且兑换成功的用户。这里注意同一个用户需要去重",
             },
-            per_user_recharge: { name: "ARPU%(登录用户)", options: [], display: true, tips: "充值金额/注册人数" },
-            per_user_recharge_per_user: {
+            p_user_rech: { name: "ARPU%(登录用户)", options: [], display: true, tips: "充值金额/注册人数" },
+            p_rech_per_user: {
                 name: "ARPPU%(登录用户)",
                 options: [],
                 display: true,
                 tips: "充值金额/充值人数",
             },
-            net_recharge: { name: "充-兑", options: [], display: true, tips: "充值金额-兑换金额" },
-            login_count: { name: "DAU", options: [], display: true, tips: "登录人数(去重)" },
-            daily_recharge_per_new_user: {
+            net_rech: { name: "充-兑", options: [], display: true, tips: "充值金额-兑换金额" },
+            dau: { name: "DAU", options: [], display: true, tips: "登录人数(去重)" },
+            new_user_arpu: {
                 name: "新增用户ARPU",
                 options: [],
                 display: true,
                 tips: "当天注册充值总金额/当天注册人数",
             },
-            daily_recharge_per_recharging_user: {
+            new_user_arppu: {
                 name: "新增用户ARPPU",
                 options: [],
                 display: true,
                 tips: "当天注册充值总金额/当天注册充值人数",
             },
-            daily_exchange_amount_per_registered_user: {
+            d_exch_amt_per_user: {
                 name: "当天人均提现",
                 options: [],
                 display: true,
                 tips: "当天注册兑换总金额/当天注册人数",
             },
-            daily_user_contribution_per_user: {
+            d_user_cont_per_user: {
                 name: "当天用户人均贡献",
                 options: [],
                 display: true,
                 tips: "新增用户ARPU-当天人均提现",
             },
-            daily_exchange_amount_per_login_user: {
+            d_exch_amt_per_dau: {
                 name: "人均提现",
                 options: [],
                 display: true,
                 tips: "兑换金额/DAU",
             },
-            user_contribution_per_user: {
+            user_cont_per_user: {
                 name: "人均贡献",
                 options: [],
                 display: true,
@@ -364,6 +364,21 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         recharge_seep_rate: "",
         arpu_rate: "",
         arppu_rate: "",
+        rech_amt: "",
+        today_new_register_recharge_total: "",
+        new_reg_first_rech_count: "",
+        net_rech: "",
+        exch_amt: "",
+        new_exch_count: "",
+        p_user_rech: "",
+        p_rech_per_user: "",
+        dau: "",
+        new_user_arpu: "",
+        new_user_arppu: "",
+        d_exch_amt_per_user: "",
+        d_user_cont_per_user: "",
+        d_exch_amt_per_dau: "",
+        user_cont_per_user: "",
     };
     /**表格数据 */
     setTableData(data: any) {
@@ -402,6 +417,20 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         this.summaryData["recharge_seep_rate"] = data.summary.recharge_seep_rate;
         this.summaryData["arpu_rate"] = data.summary.arpu_rate;
         this.summaryData["arppu_rate"] = data.summary.arppu_rate;
+        this.summaryData["rech_amt"] = data.summary.rech_amt;
+        this.summaryData["today_new_register_recharge_total"] = data.summary.today_new_register_recharge_total;
+        this.summaryData["new_reg_first_rech_count"] = data.summary.new_reg_first_rech_count;
+        this.summaryData["net_rech"] = data.summary.net_rech;
+        this.summaryData["exch_amt"] = data.summary.exch_amt;
+        this.summaryData["new_exch_count"] = data.summary.new_exch_count;
+        this.summaryData["p_user_rech"] = data.summary.p_user_rech;
+        this.summaryData["p_rech_per_user"] = data.summary.p_rech_per_user;
+        this.summaryData["dau"] = data.summary.dau;
+        this.summaryData["new_user_arppu"] = data.summary.new_user_arppu;
+        this.summaryData["d_exch_amt_per_user"] = data.summary.d_exch_amt_per_user;
+        this.summaryData["d_user_cont_per_user"] = data.summary.d_user_cont_per_user;
+        this.summaryData["d_exch_amt_per_dau"] = data.summary.d_exch_amt_per_dau;
+        this.summaryData["user_cont_per_user"] = data.summary.user_cont_per_user;
         // 把summaryData 插入第一笔
         this.tableData.list.splice(0, 0, this.summaryData);
     }
