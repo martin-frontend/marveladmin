@@ -73,6 +73,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                     2: LangUtil("或"),
                 },
             },
+            condition_is_login: { name: "条件-是否登入", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -100,6 +101,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         relation: 2,
         balance: "", //余额
         channel_id: "",
+        isLogin: 1,
     };
 
     /**弹窗相关数据 */
@@ -224,6 +226,12 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                     balance: Object.values(condition_balance)[i],
                 });
             }
+        }
+        if (this.dialogData.form.condition_is_login) {
+            this.addCondition({
+                isLogin: this.dialogData.form.condition_is_login,
+                condition: "condition_is_login",
+            });
         }
         this.onChangeCondition();
     }
@@ -368,6 +376,9 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                     if (element.balance) {
                         formCopy.condition_balance[element.coin] = element.balance;
                     }
+                } else if (element.condition == "condition_is_login") {
+                    // 用户是否登入
+                    formCopy.condition_is_login = element.isLogin;
                 }
             });
             if (Object.keys(formCopy.condition_balance).length > 0) {
@@ -432,6 +443,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         formCopy.condition_channel_id = "";
         formCopy.condition_is_first_login = 0;
         formCopy.condition_is_first_recharge = 0;
+        formCopy.condition_is_login = 0;
         formCopy.condition_balance = "";
         if (this.dialogData.form.type_position == 15) {
             formCopy.condition_balance = {};
@@ -451,6 +463,9 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                     if (element.balance && element.coin) {
                         formCopy.condition_balance[element.coin] = element.balance;
                     }
+                } else if (element.condition == "condition_is_login") {
+                    // 用户是否登入
+                    formCopy.condition_is_login = element.isLogin;
                 }
             });
             formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
