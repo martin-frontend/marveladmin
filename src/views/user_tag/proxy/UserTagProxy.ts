@@ -392,6 +392,7 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
     };
 
     showUsersDialog(id: any) {
+        this.usersDialogData.bShow = true;
         Object.assign(this.usersDialogData.query, {
             page_count: 1,
             page_size: 20,
@@ -406,8 +407,9 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
     }
 
     setUsersData(data: any) {
-        this.usersDialogData.bShow = true;
-        this.usersDialogData.list = [...data];
+        this.usersDialogData.list.length = 0;
+        this.usersDialogData.list.push(...data.list);
+        Object.assign(this.usersDialogData.pageInfo, data.pageInfo);
     }
 
     setUsersTableColumn(data: any) {
