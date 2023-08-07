@@ -3,7 +3,8 @@ import { objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_users_payment_method/setting";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import IPlatUsersPaymentMethodProxy from "./IPlatUsersPaymentMethodProxy";
-
+import { MessageBox } from "element-ui";
+import LangUtil from "@/core/global/LangUtil";
 export default class PlatUsersPaymentMethodProxy extends AbstractProxy implements IPlatUsersPaymentMethodProxy {
     static NAME = "PlatUsersPaymentMethodProxy";
 
@@ -92,5 +93,17 @@ export default class PlatUsersPaymentMethodProxy extends AbstractProxy implement
     /**打开用户详情 */
     onShowUserDetail() {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, this.userDetailId);
+    }
+    /**删除数据 */
+    onDelete(id: any) {
+        MessageBox.confirm(<string>LangUtil("您是否删除该收款方式"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
+            type: "warning",
+        })
+            .then(() => {
+                this.sendNotification(HttpType.admin_plat_users_payment_method_update, { id, is_delete: 1 });
+            })
+            .catch(() => {});
     }
 }

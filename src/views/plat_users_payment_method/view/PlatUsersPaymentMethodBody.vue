@@ -28,7 +28,15 @@
                 </template>
             </el-table-column>
             <el-table-column prop="address" :label="LangUtil('操作')" width="80px" align="center">
-                --
+                <template slot-scope="{ row }">
+                    <el-button
+                        size="mini"
+                        type="danger"
+                        @click="handlerDelete(row)"
+                        v-if="checkUnique(unique.admin_user_delete)"
+                        >{{ LangUtil("删除") }}</el-button
+                    >
+                </template>
             </el-table-column>
         </el-table>
         <Pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch" />
@@ -68,7 +76,7 @@ export default class PlatUsersPaymentMethodBody extends AbstractView {
         const options: any = this.tableColumns.payment_method.options[data.type];
 
         let infoStr = "";
-        let keys ;
+        let keys;
         if (options) {
             keys = Object.keys(options);
         }
@@ -78,9 +86,12 @@ export default class PlatUsersPaymentMethodBody extends AbstractView {
             const element = info_keys[index];
             //检查这个字段 在 option中是否存在
             //@ts-ignore
-            const isHave = options && keys.some((ele: any, index: any, arr: any) => {
-                    return ele == element;
-                }) || false;
+            const isHave =
+                (options &&
+                    keys.some((ele: any, index: any, arr: any) => {
+                        return ele == element;
+                    })) ||
+                false;
 
             if (isHave) {
                 infoStr += options[element] + "：";
@@ -108,6 +119,9 @@ export default class PlatUsersPaymentMethodBody extends AbstractView {
     showUserDetail(user_id: number) {
         this.myProxy.userDetailId = user_id;
         this.myProxy.onShowUserDetail();
+    }
+    handlerDelete(data: any) {
+        this.myProxy.onDelete(data.id);
     }
 }
 </script>
