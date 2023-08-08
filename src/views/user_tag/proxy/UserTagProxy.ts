@@ -190,7 +190,7 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
             type: "warning",
         })
             .then(() => {
-                this.sendNotification(HttpType.admin_user_tag_update, { id, is_delete: 1 });
+                this.sendNotification(HttpType.admin_user_tag_delete, { id });
             })
             .catch(() => {});
     }

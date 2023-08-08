@@ -60,6 +60,7 @@ export default class UserTagMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_user_tag_update:
+            case EventType.admin_user_tag_delete:
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 myProxy.onQuery();
