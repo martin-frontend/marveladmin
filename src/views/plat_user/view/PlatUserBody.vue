@@ -132,8 +132,8 @@
             <el-table-column :label="tableColumns.user_tag.name" min-width="180px" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div style="text-align: left;">
-                        <el-tag v-for="(tag, index) of convertUserTag(row.user_tag)" :key="index" style="margin: 3px;">
-                            {{ tag }}
+                        <el-tag class="custom-tag" v-for="(tag, index) of row.user_tag" :key="index" style="margin: 3px;">
+                            {{ tableColumns.user_tag.options[listQuery.plat_id][Number(tag)] }}
                         </el-tag>
                     </div>
                 </template>
@@ -432,19 +432,6 @@ export default class PlatUserBody extends AbstractView {
     handleMutipleTag() {
         this.myProxy.showAddMultipleTagDialog();
     }
-
-    convertUserTag(user_tag: any) {
-        if (!user_tag) {
-            return [];
-        }
-        const arr = user_tag.split(",");
-        const newArr: any = [];
-        // @ts-ignore
-        arr.forEach(tag => {
-            newArr.push(this.tableColumns.user_tag.options[this.listQuery.plat_id][Number(tag)]);
-        });
-        return newArr;
-    }
 }
 </script>
 
@@ -452,5 +439,11 @@ export default class PlatUserBody extends AbstractView {
 @import "@/styles/common.scss";
 .blueText {
     color: rgb(79, 121, 246);
+}
+.custom-tag {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 165px;
 }
 </style>

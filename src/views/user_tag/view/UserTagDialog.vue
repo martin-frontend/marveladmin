@@ -21,7 +21,7 @@
             <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
                 <el-input
                     v-model="form.name"
-                    maxlength="16"
+                    maxlength="30"
                     show-word-limit
                     clearable
                     :placeholder="LangUtil('请输入')"

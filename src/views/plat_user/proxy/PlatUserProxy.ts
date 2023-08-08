@@ -202,6 +202,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "vendors_money",
             "safe_gold",
             "is_recharged",
+            "user_tag",
             "total_recharge",
             "total_exchange",
             "total_water",
@@ -359,6 +360,18 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                     item.gold_info[element].sum_money = "-";
                 }
             }
+
+            const newArr: any = [];
+            if (item.user_tag) {
+                const arr = item.user_tag.split(",");
+                // @ts-ignore
+                arr.forEach(tag => {
+                    if(this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
+                        newArr.push(Number(tag));
+                    }
+                });
+            }
+            item.user_tag = newArr;
         }
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
@@ -767,39 +780,35 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         // @ts-ignore
         newData.forEach(element => {
             let total_recharge: string = `${this.tableData.columns.recharge_times.name} : ${element.recharge_times};  `;
+            let total_exchange: string = `${this.tableData.columns.exchange_times.name} : ${element.exchange_times};  `;
+            let total_bet: string = ``;
+            let total_win: string = ``;
+
             for (const item of element.user_statistic) {
                 total_recharge =
                     total_recharge + `${item.coin_name_unique} : ${Math.abs(item.total_recharge).toFixed(3)};`;
-            }
-            element.total_recharge = total_recharge;
-        });
-
-        // @ts-ignore
-        newData.forEach(element => {
-            let total_exchange: string = `${this.tableData.columns.exchange_times.name} : ${element.exchange_times};  `;
-            for (const item of element.user_statistic) {
                 total_exchange =
                     total_exchange + `${item.coin_name_unique} : ${Math.abs(item.total_exchange).toFixed(3)};`;
-            }
-            element.total_exchange = total_exchange;
-        });
-
-        // @ts-ignore
-        newData.forEach(element => {
-            let total_bet: string = ``;
-            for (const item of element.user_statistic) {
                 total_bet = total_bet + `${item.coin_name_unique} : ${Math.abs(item.total_bet).toFixed(3)};`;
-            }
-            element.total_bet = total_bet;
-        });
-
-        // @ts-ignore
-        newData.forEach(element => {
-            let total_win: string = ``;
-            for (const item of element.user_statistic) {
                 total_win = total_win + `${item.coin_name_unique} : ${Math.abs(item.total_win).toFixed(3)};`;
             }
+
+            element.total_recharge = total_recharge;
+            element.total_exchange = total_exchange;
+            element.total_bet = total_bet;
             element.total_win = total_win;
+
+            if (element.user_tag) {
+                const arr = element.user_tag.split(",");
+                const newArr: any = [];
+                // @ts-ignore
+                arr.forEach(tag => {
+                    if(this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
+                        newArr.push(this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]);
+                    }
+                });
+                element.user_tag = newArr.join();
+            }
         });
 
         new BaseInfo.ExportExcel(

@@ -9,7 +9,7 @@
             style="width: 350px"
         />
         <div class="group">
-            <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
+            <!-- <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" /> -->
             <SearchInput :title="tableColumns.name.name" v-model="listQuery.name" />
             <SearchInput :title="tableColumns.remark.name" v-model="listQuery.remark" />
             <SearchInput :title="tableColumns.created_by.name" v-model="listQuery.created_by" />

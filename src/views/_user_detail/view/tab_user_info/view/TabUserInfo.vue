@@ -173,8 +173,8 @@
                     <el-select
                         v-model="userInfo.user_tag"
                         multiple
-                        class="select"
-                        :placeholder="LangUtil('请选择')"
+                        class="select custom-select"
+                        placeholder=""
                         disabled
                         style="width: 200px; margin-bottom: 3px;"
                     >
@@ -185,12 +185,7 @@
                             :value="key"
                         ></el-option>
                     </el-select>
-                    <el-button
-                        class="item"
-                        type="primary"
-                        @click="handlerEdit('user_tag')"
-                        style="margin-left: 20px"
-                    >
+                    <el-button class="item" type="primary" @click="handlerEdit('user_tag')" style="margin-left: 20px">
                         {{ LangUtil("编辑") }}
                     </el-button>
                 </el-form-item>
@@ -822,6 +817,18 @@ export default class TabUserInfo extends AbstractView {
     }
     .btn {
         margin-right: 20px;
+    }
+}
+::v-deep .custom-select {
+    .el-input__icon {
+        display: none;
+    }
+    .el-select__tags-text {
+        display: inline-block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 150px;
     }
 }
 </style>

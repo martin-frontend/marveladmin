@@ -51,7 +51,7 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
         page_count: 1,
         page_size: 20,
         plat_id: "",
-        channel_id: "",
+        // channel_id: "",
         name: "",
         remark: "",
         created_by: "",
@@ -74,13 +74,13 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
     fieldSelectionData = {
         bShow: false,
         fieldOptions: [
-            "plat_id",
-            "channel_id",
             "name",
             "tag_users_num",
-            "remark",
-            "created_by",
             "created_at",
+            "created_by",
+            "plat_id",
+            // "channel_id",
+            "remark",
             "updated_by",
             "updated_at",
         ],
@@ -119,7 +119,7 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
-            channel_id: "",
+            // channel_id: "",
             name: "",
             remark: "",
             created_by: "",
@@ -133,8 +133,9 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
         this.dialogData.bShow = true;
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
-            this.dialogData.formSource = data;
-            Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+            // this.dialogData.formSource = data;
+            // Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+            this.sendNotification(HttpType.admin_user_tag_show, { id: data.id });
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
