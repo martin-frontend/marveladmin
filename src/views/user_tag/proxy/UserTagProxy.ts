@@ -81,8 +81,6 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
             "plat_id",
             // "channel_id",
             "remark",
-            "updated_by",
-            "updated_at",
         ],
     };
 
