@@ -133,7 +133,7 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
         if (status == DialogStatus.update) {
             // this.dialogData.formSource = data;
             // Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            this.sendNotification(HttpType.admin_user_tag_show, { id: data.id });
+            this.admin_user_tag_show(data.id);
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -391,6 +391,7 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
     };
 
     showUsersDialog(id: any) {
+        this.dialogData.bShow = false;
         this.usersDialogData.bShow = true;
         Object.assign(this.usersDialogData.query, {
             page_count: 1,
@@ -418,5 +419,9 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
     // 打开用户详情页
     onShowDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
+    }
+
+    admin_user_tag_show(id: any) {
+        this.sendNotification(HttpType.admin_user_tag_show, { id });
     }
 }
