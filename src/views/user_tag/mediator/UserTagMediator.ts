@@ -4,6 +4,7 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/user_tag/setting";
 import { Message } from "element-ui";
 import UserTagProxy from "../proxy/UserTagProxy";
+import GlobalEventType from "@/core/global/GlobalEventType";
 
 interface IUserTag extends IEventDispatcher {}
 
@@ -32,6 +33,7 @@ export default class UserTagMediator extends AbstractMediator {
             EventType.admin_user_tag_delete,
             EventType.admin_user_tag_show_users,
             EventType.admin_plat_user_table_columns,
+            GlobalEventType.REFRESH_PAGE,
         ];
     }
 
@@ -71,6 +73,9 @@ export default class UserTagMediator extends AbstractMediator {
             case EventType.admin_plat_user_table_columns:
                 myProxy.setUsersTableColumn(body);
                 break;
+            case GlobalEventType.REFRESH_PAGE:
+                myProxy.onQuery();
+                myProxy.onUsersQuery();
         }
     }
 }
