@@ -138,6 +138,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             recharge_amount: { name: "充值金额", options: [] },
             paytime: { name: "第一次充值时间", options: [] },
             user_tag: { name: "用户标签", options: {} },
+            city: { name: "城市", options: [] },
+            country: { name: "国家", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -213,6 +215,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "last_online_at",
             "register_ip",
             "last_login_ip",
+            "city",
+            "country",
         ],
     };
 
