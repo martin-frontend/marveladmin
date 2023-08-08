@@ -258,10 +258,18 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         }
         this.userInfo.gold_columns_disable_ary = strAry;
         this.userInfo.gold_columns_disable_list = str;
-        this.userInfo.user_tag = [];
+
+        const newArr: any = [];
         if (data.user_tag) {
-            this.userInfo.user_tag = [...data.user_tag.split(",")];
+            const arr = data.user_tag.split(",");
+            // @ts-ignore
+            arr.forEach(tag => {
+                if (this.tableColumns.user_tag.options[data.plat_id][Number(tag)]) {
+                    newArr.push(tag);
+                }
+            });
         }
+        this.userInfo.user_tag = newArr;
     }
     /**设置关系链 */
     setRelationChain(data: any) {

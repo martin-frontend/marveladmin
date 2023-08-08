@@ -35,7 +35,7 @@
             <el-table-column :label="LangUtil('平台信息')" min-width="150px" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div>{{ LangUtil("平台") }}：{{ tableColumns.plat_id.options[row.plat_id] }}</div>
-                    <div>{{ LangUtil("渠道") }}：{{ row.channel_id }}</div>
+                    <!-- <div>{{ LangUtil("渠道") }}：{{ row.channel_id }}</div> -->
                 </template>
             </el-table-column>
             <el-table-column prop="remark" :label="tableColumns.remark.name" class-name="status-col" min-width="90px">
