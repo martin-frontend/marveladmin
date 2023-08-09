@@ -507,11 +507,11 @@
                     <el-tooltip
                         class="item"
                         effect="dark"
-                        :content="tableColumns['new_register_device'].tips"
+                        :content="tableColumns['new_register_water'].tips"
                         placement="top"
                     >
                         <div>
-                            <span style="margin-right: 5px">{{ tableColumns["new_register_device"].name }}</span>
+                            <span style="margin-right: 5px">{{ tableColumns["new_register_water"].name }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
                         </div>
                     </el-tooltip>
