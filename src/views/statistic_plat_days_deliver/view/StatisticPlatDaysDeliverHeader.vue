@@ -39,7 +39,6 @@
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
-import StatisticPlatDaysDeliverProxy from "../proxy/StatisticPlatDaysDeliverProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SearchSelect from "@/components/SearchSelect.vue";
@@ -61,7 +60,7 @@ export default class StatisticPlatDaysDeliverHeader extends AbstractView {
     unique = unique;
     checkUnique = checkUnique;
     // proxy
-    myProxy: StatisticPlatDaysDeliverProxy = this.getProxy(StatisticPlatDaysDeliverProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;

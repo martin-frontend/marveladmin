@@ -37,14 +37,13 @@
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue, Watch } from "vue-property-decorator";
-import StatisticPlatDaysDeliverProxy from "../../proxy/StatisticPlatDaysDeliverProxy";
 import LangUtil from "@/core/global/LangUtil";
 
 @Component
 export default class FieldSelectionDialog extends AbstractView {
     LangUtil = LangUtil;
     // proxy
-    myProxy: StatisticPlatDaysDeliverProxy = this.getProxy(StatisticPlatDaysDeliverProxy);
+    myProxy = this.$parent.myProxy;
     fieldOptions = this.myProxy.fieldSelectionData.fieldOptions;
     tableColumns = this.myProxy.tableData.columns;
     isIndeterminate = false;

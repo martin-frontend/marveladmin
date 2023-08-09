@@ -8,7 +8,7 @@ import StatisticPlatDaysDeliverProxy from "../proxy/StatisticPlatDaysDeliverProx
 interface IStatisticPlatDaysDeliver extends IEventDispatcher {}
 
 export default class StatisticPlatDaysDeliverMediator extends AbstractMediator {
-    private myProxy: StatisticPlatDaysDeliverProxy = <any>this.getProxy(StatisticPlatDaysDeliverProxy);
+    myProxy: StatisticPlatDaysDeliverProxy = <any>this.getProxy(StatisticPlatDaysDeliverProxy);
 
     onRegister() {
         this.myProxy.enter();
