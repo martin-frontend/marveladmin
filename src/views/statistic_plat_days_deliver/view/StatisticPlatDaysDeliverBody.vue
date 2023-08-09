@@ -167,7 +167,6 @@ import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
-import StatisticPlatDaysDeliverProxy from "../proxy/StatisticPlatDaysDeliverProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
@@ -184,7 +183,7 @@ export default class StatisticPlatDaysDeliverBody extends AbstractView {
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: StatisticPlatDaysDeliverProxy = this.getProxy(StatisticPlatDaysDeliverProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.tableData.list;

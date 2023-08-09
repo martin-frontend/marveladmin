@@ -18,7 +18,6 @@
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
-import StatisticPlatDaysDeliverProxy from "../../proxy/StatisticPlatDaysDeliverProxy";
 import LangUtil from "@/core/global/LangUtil";
 import { MessageBox } from "element-ui";
 
@@ -26,7 +25,7 @@ import { MessageBox } from "element-ui";
 export default class ProgressDialog extends AbstractView {
     LangUtil = LangUtil;
     // proxy
-    myProxy: StatisticPlatDaysDeliverProxy = this.getProxy(StatisticPlatDaysDeliverProxy);
+    myProxy = this.$parent.myProxy;
 
     cancel() {
         MessageBox.confirm(String(this.LangUtil("确定要取消汇出")), String(this.LangUtil("提示")), {

@@ -94,6 +94,10 @@ const layoutRouter = {
             name: "渠道当日统计",
             component: () => import(/* webpackChunkName: "channel_statistic_plat_days_date" */"@/views/channel_statistic_plat_days_date/view/ChannelStatisticPlatDaysDate.vue")
         },        {
+            path: "channel_statistic_plat_days_deliver",
+            name: "渠道投放日报",
+            component: () => import(/* webpackChunkName: "channel_statistic_plat_days_deliver" */"@/views/channel_statistic_plat_days_deliver/view/ChannelStatisticPlatDaysDeliver.vue")
+        },        {
             path: "channel_statistic_user_keep_days",
             name: "渠道用户留存统计",
             component: () => import(/* webpackChunkName: "channel_statistic_user_keep_days" */"@/views/channel_statistic_user_keep_days/view/ChannelStatisticUserKeepDays.vue")

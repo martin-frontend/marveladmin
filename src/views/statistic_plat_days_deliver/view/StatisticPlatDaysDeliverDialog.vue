@@ -23,7 +23,6 @@
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
-import StatisticPlatDaysDeliverProxy from "../proxy/StatisticPlatDaysDeliverProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
@@ -38,7 +37,7 @@ export default class StatisticPlatDaysDeliverDialog extends AbstractView {
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: StatisticPlatDaysDeliverProxy = this.getProxy(StatisticPlatDaysDeliverProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
