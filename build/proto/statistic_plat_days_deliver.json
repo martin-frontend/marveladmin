@@ -1,0 +1,10 @@
+{
+    "name": "投放日报",
+    "description": "投放日报",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75268145",
+    "list": [
+        "admin/statistic_plat_days_deliver/table_columns",
+        "admin/statistic_plat_days_deliver/index",
+        "admin/statistic_plat_days_deliver/edit_deliver_use"
+    ]
+}
