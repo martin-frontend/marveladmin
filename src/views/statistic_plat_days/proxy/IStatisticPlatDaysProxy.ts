@@ -54,10 +54,4 @@ export default interface IStatisticPlatDaysProxy {
 
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any): void;
-
-    /**导出资料合并 */
-    dataMatching(filterKeys: any, listData: any): void;
-
-    // 导出合计
-    getExportSummary(filterKeys: any, summary: any): void;
 }

@@ -27,7 +27,7 @@
                 </div>
                 <div>
                     <el-button @click="heandlerFieldSetting()" type="primary">{{ LangUtil("字段配置") }}</el-button>
-                    <el-button @click="heandlerExport()" type="primary">{{ LangUtil("导出") }}</el-button>
+                    <el-button @click="heandlerExport()" type="primary" :disabled="list.length == 0">{{ LangUtil("导出") }}</el-button>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ export default class StatisticPlatDaysHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
-
+    list = this.myProxy.tableData.list;
     handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
@@ -78,7 +78,7 @@ export default class StatisticPlatDaysHeader extends AbstractView {
     }
 
     heandlerExport() {
-        this.myProxy.onExportExcel();
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>

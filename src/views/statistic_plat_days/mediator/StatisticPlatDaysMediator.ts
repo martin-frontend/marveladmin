@@ -35,8 +35,8 @@ export default class StatisticPlatDaysMediator extends AbstractMediator {
                 this.myProxy.setTableColumns(body);
                 break;
             case EventType.admin_statistic_plat_days_index:
-                if (this.myProxy.listQuery.page_size == 100000) {
-                    this.myProxy.onSetExcelData(body);
+                if (this.myProxy.exportData.isExportExcel) {
+                    this.myProxy.onSaveExportData(body);
                 } else {
                     this.myProxy.setTableData(body);
                 }
