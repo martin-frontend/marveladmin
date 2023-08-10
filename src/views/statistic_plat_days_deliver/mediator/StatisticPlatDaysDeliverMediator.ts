@@ -31,26 +31,26 @@ export default class StatisticPlatDaysDeliverMediator extends AbstractMediator {
     }
 
     handleNotification(notification: puremvc.INotification) {
-        const myProxy: StatisticPlatDaysDeliverProxy = <any>(
-            this.facade.retrieveProxy(StatisticPlatDaysDeliverProxy.NAME)
-        );
+        // const myProxy: StatisticPlatDaysDeliverProxy = <any>(
+        //     this.facade.retrieveProxy(StatisticPlatDaysDeliverProxy.NAME)
+        // );
         const myView: IStatisticPlatDaysDeliver = this.viewComponent;
         const body = notification.getBody();
         switch (notification.getName()) {
             case EventType.admin_statistic_plat_days_deliver_table_columns:
-                myProxy.setTableColumns(body);
+                this.myProxy.setTableColumns(body);
                 break;
             case EventType.admin_statistic_plat_days_deliver_index:
-                if (myProxy.exportData.isExportExcel) {
-                    myProxy.onSaveExportData(body);
+                if (this.myProxy.exportData.isExportExcel) {
+                    this.myProxy.onSaveExportData(body);
                 } else {
-                    myProxy.setTableData(body);
+                    this.myProxy.setTableData(body);
                 }
                 break;
             case EventType.admin_statistic_plat_days_deliver_edit_deliver_use:
                 Message.success(SuccessMessage.update);
-                myProxy.hideDialog();
-                myProxy.onQuery();
+                this.myProxy.hideDialog();
+                this.myProxy.onQuery();
                 break;
         }
     }
