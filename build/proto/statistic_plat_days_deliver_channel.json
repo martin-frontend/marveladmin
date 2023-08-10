@@ -1,0 +1,10 @@
+{
+    "name": "投放统计",
+    "description": "投放统计",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75268194",
+    "list": [
+        "admin/statistic_plat_days_deliver_channel/table_columns",
+        "admin/statistic_plat_days_deliver_channel/index",
+        "admin/statistic_plat_days_deliver/edit_deliver_name"
+    ]
+}
