@@ -43,9 +43,9 @@ export default class DashboardDialog extends AbstractView {
         let myChart = echarts.init(chartDome);
         myChart.clear();
         myChart.setOption(this.myProxy.chartData.options);
-        window.onresize = function() {
-            myChart.resize();
-        };
+        // window.onresize = function() {
+        //     myChart.resize();
+        // };
     }
 }
 </script>
