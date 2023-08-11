@@ -42,6 +42,7 @@ export default class PlatUserMediator extends AbstractMediator {
             EventType.admin_plat_user_store_user_by_admin,
             EventType.admin_plat_user_get_admin_added_user,
             EventType.admin_plat_user_delete_admin_added_user,
+            EventType.admin_plat_user_batch_update_tag,
         ];
     }
 
@@ -76,6 +77,7 @@ export default class PlatUserMediator extends AbstractMediator {
                 this.myProxy.onQuery();
                 break;
             case EventType.admin_plat_user_update:
+            case EventType.admin_plat_user_batch_update_tag:
                 Message.success(SuccessMessage.update);
                 this.myProxy.hideDialog();
                 this.myProxy.onQuery();

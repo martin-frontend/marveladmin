@@ -334,6 +334,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
     addMutipleTagData = {
         bShow: false,
+        isUpdateAll: false,
         form: <any>{
             tags: [],
         },
@@ -370,7 +371,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 const arr = item.user_tag.split(",");
                 // @ts-ignore
                 arr.forEach(tag => {
-                    if(this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
+                    if (this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
                         newArr.push(Number(tag));
                     }
                 });
@@ -807,7 +808,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 const newArr: any = [];
                 // @ts-ignore
                 arr.forEach(tag => {
-                    if(this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
+                    if (this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
                         newArr.push(this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]);
                     }
                 });
@@ -904,29 +905,37 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         this.myExportPagedata = JSON.parse(JSON.stringify(data));
     }
 
-    showAddMultipleTagDialog() {
+    showAddMultipleTagDialog(isUpdateAll: boolean) {
         this.addMutipleTagData.bShow = true;
+        this.addMutipleTagData.isUpdateAll = isUpdateAll;
         this.addMutipleTagData.form.tags.length = 0;
     }
 
     onUpdateTags() {
-        let count = 0;
-        const user_tag = this.addMutipleTagData.form.tags.join();
-        // @ts-ignore
-        this.tableData.multipleSelection.forEach(item => {
-            // 发送消息
-            Http.request({ user_tag }, getUrl(HttpType.admin_plat_user_update, { user_id: item.user_id })).then(
-                (result: any) => {
-                    count++;
-                    if (this.addMutipleTagData.bShow) {
-                        this.hideDialog();
-                        Message.success(SuccessMessage.update);
+        const tag_ids = this.addMutipleTagData.form.tags.join();
+        if (!this.addMutipleTagData.isUpdateAll) {
+            let count = 0;
+            // @ts-ignore
+            this.tableData.multipleSelection.forEach(item => {
+                // 发送消息
+                Http.request({ tag_ids }, getUrl(HttpType.admin_plat_user_update_tag, { user_id: item.user_id })).then(
+                    (result: any) => {
+                        count++;
+                        if (this.addMutipleTagData.bShow) {
+                            this.hideDialog();
+                            Message.success(SuccessMessage.update);
+                        }
+                        if (count == this.tableData.multipleSelection.length) {
+                            this.onQuery();
+                        }
                     }
-                    if (count == this.tableData.multipleSelection.length) {
-                        this.onQuery();
-                    }
-                }
-            );
-        });
+                );
+            });
+        } else {
+            const newQuery = { ...this.listQuery, tag_ids };
+            delete newQuery.page_count;
+            delete newQuery.page_size;
+            this.sendNotification(HttpType.admin_plat_user_batch_update_tag, objectRemoveNull(newQuery));
+        }
     }
 }
