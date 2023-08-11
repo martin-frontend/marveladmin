@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="LangUtil('字段配置')" :visible.sync="myProxy.dialogData.bShow" width="600px">
+    <el-dialog :title="LangUtil('字段配置')" :visible.sync="myProxy.dialogData.bShow" width="700px">
         <el-form label-width="115px" class="form" v-loading="net_status.loading">
             <el-col :span="8" v-for="(category, key) in form" :key="key">
                 <div>{{ category.title }}</div>

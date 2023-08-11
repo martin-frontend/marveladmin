@@ -892,6 +892,30 @@
                     <span v-else> - </span>
                 </template>
             </el-table-column>
+            <el-table-column
+                prop="cost_per_user"
+                :label="tableColumns['cost_per_user'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['cost_per_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["cost_per_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.cost_per_user != null">{{ row.cost_per_user }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>

@@ -218,6 +218,11 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 display: true,
                 tips: "ARPU%(登录用户)-人均提现",
             },
+            cost_per_user: {
+                name: "投放新增用户成本/人",
+                options: [],
+                tips: "投放消耗/当天注册人数 也就是分渠道报表里面的新增注册成本",
+            },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -279,6 +284,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                     },
                     active_user_month: {
                         name: this.tableData.columns.active_user_month.name,
+                        checked: true,
+                    },
+                    cost_per_user: {
+                        name: this.tableData.columns.cost_per_user.name,
                         checked: true,
                     },
                 },
@@ -474,6 +483,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         d_user_cont_per_user: "",
         d_exch_amt_per_dau: "",
         user_cont_per_user: "",
+        cost_per_user: "",
     };
 
     /**导出 相关数据 */
@@ -535,6 +545,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "d_user_cont_per_user",
             "d_exch_amt_per_dau",
             "user_cont_per_user",
+            "cost_per_user",
         ],
     };
 
@@ -635,6 +646,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                     },
                     active_user_month: {
                         name: this.tableData.columns.active_user_month.name,
+                        checked: true,
+                    },
+                    cost_per_user: {
+                        name: this.tableData.columns.cost_per_user.name,
                         checked: true,
                     },
                 },
