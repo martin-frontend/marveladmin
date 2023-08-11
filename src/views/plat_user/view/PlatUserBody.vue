@@ -2,7 +2,14 @@
     <div>
         <div style="margin-bottom: 8px; text-align: right">
             <el-button
-                @click="handleMutipleTag"
+                @click="handleMutipleTag(true)"
+                :disabled="myProxy.tableData.multipleSelection.length > 0"
+                type="primary"
+            >
+                {{ LangUtil("一键新增标签") }}
+            </el-button>
+            <el-button
+                @click="handleMutipleTag(false)"
                 :disabled="myProxy.tableData.multipleSelection.length == 0"
                 type="primary"
             >
@@ -132,7 +139,12 @@
             <el-table-column :label="tableColumns.user_tag.name" min-width="180px" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div style="text-align: left;">
-                        <el-tag class="custom-tag" v-for="(tag, index) of row.user_tag" :key="index" style="margin: 3px;">
+                        <el-tag
+                            class="custom-tag"
+                            v-for="(tag, index) of row.user_tag"
+                            :key="index"
+                            style="margin: 3px;"
+                        >
                             {{ tableColumns.user_tag.options[listQuery.plat_id][Number(tag)] }}
                         </el-tag>
                     </div>
@@ -429,8 +441,8 @@ export default class PlatUserBody extends AbstractView {
         this.myProxy.tableData.multipleSelection = [...val];
     }
 
-    handleMutipleTag() {
-        this.myProxy.showAddMultipleTagDialog();
+    handleMutipleTag(isUpdateAll: boolean) {
+        this.myProxy.showAddMultipleTagDialog(isUpdateAll);
     }
 }
 </script>

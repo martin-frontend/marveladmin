@@ -2,7 +2,10 @@
     <el-dialog width="700px" :title="LangUtil('批量新增标签')" :visible.sync="myProxy.addMutipleTagData.bShow">
         <el-form :rules="rules" ref="form" :model="form" label-width="80px" v-loading="net_status.loading">
             <el-form-item :label="LangUtil('标签人数')">
-                <span>{{ myProxy.tableData.multipleSelection.length }}</span>
+                <span v-if="!myProxy.addMutipleTagData.isUpdateAll">
+                    {{ myProxy.tableData.multipleSelection.length }}
+                </span>
+                <span v-else>{{ myProxy.tableData.pageInfo.pageTotal }}</span>
             </el-form-item>
             <el-form-item :label="LangUtil('选择标签')" prop="tags">
                 <el-select
@@ -21,8 +24,10 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <div class="footer" @click="handleUpdate">
-                    <el-button type="primary">{{ LangUtil("确认保存") }}</el-button>
+                <div class="footer">
+                    <el-button type="primary" @click="handleUpdate">
+                        {{ LangUtil("确认保存") }}
+                    </el-button>
                 </div>
             </el-form-item>
         </el-form>
