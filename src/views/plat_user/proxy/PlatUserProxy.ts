@@ -522,13 +522,6 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull(this.listQuery));
         }
     }
-    onQueryWithParam(plat_id: any) {
-        if (checkUnique(unique.admin_plat_user_index2)) {
-            this.sendNotification(HttpType.admin_plat_user_index2, objectRemoveNull({ ...this.listQuery, plat_id }));
-        } else {
-            this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull({ ...this.listQuery, plat_id }));
-        }
-    }
     onQueryForAddMultipleUserTable() {
         this.sendNotification(HttpType.admin_plat_user_get_admin_added_user, objectRemoveNull(this.listQuery_mutiple));
     }
