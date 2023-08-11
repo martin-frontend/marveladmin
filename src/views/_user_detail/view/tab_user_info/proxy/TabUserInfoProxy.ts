@@ -290,6 +290,11 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
                 user_id: this.userInfo.user_id,
                 [filed]: filedValue,
             });
+        } else if (filed == "user_tag") {
+            this.sendNotification(HttpType.admin_plat_user_update_tag, {
+                user_id: this.userInfo.user_id,
+                tag_ids: filedValue,
+            });
         } else {
             this.sendNotification(HttpType.admin_plat_user_update, {
                 user_id: this.userInfo.user_id,
