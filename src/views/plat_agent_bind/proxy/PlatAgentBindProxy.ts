@@ -696,111 +696,111 @@ export default class PlatAgentBindProxy extends AbstractProxy implements IPlatAg
             }
         }
         // @ts-ignore
-        newData.forEach(element => {
-            if (element.group_all_recharge && element.group_all_recharge.length != 0) {
-                element.group_all_recharge = jsonStringify(element.group_all_recharge);
-            } else {
-                element.group_all_recharge = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.group_all_exchange && element.group_all_exchange.length != 0) {
-                element.group_all_exchange = jsonStringify(element.group_all_exchange);
-            } else {
-                element.group_all_exchange = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.group_all_total_water && element.group_all_total_water.length != 0) {
-                element.group_all_total_water = jsonStringify(element.group_all_total_water);
-            } else {
-                element.group_all_total_water = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.group_all_bet && element.group_all_bet.length != 0) {
-                element.group_all_bet = jsonStringify(element.group_all_bet);
-            } else {
-                element.group_all_bet = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.group_all_win_gold && element.group_all_win_gold.length != 0) {
-                element.group_all_win_gold = jsonStringify(element.group_all_win_gold);
-            } else {
-                element.group_all_win_gold = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.directly_total_water && element.directly_total_water.length != 0) {
-                element.directly_total_water = jsonStringify(element.directly_total_water);
-            } else {
-                element.directly_total_water = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.directly_recharge && element.directly_recharge.length != 0) {
-                element.directly_recharge = jsonStringify(element.directly_recharge);
-            } else {
-                element.directly_recharge = "-";
-            }
-        });
-        // 直属兑换
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.directly_exchange && element.directly_exchange.length != 0) {
-                element.directly_exchange = jsonStringify(element.directly_exchange);
-            } else {
-                element.directly_exchange = "-";
-            }
-        });
-        // 直属投注额
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.directly_bet && element.directly_bet.length != 0) {
-                element.directly_bet = jsonStringify(element.directly_bet);
-            } else {
-                element.directly_bet = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.directly_win_gold && element.directly_win_gold.length != 0) {
-                element.directly_win_gold = jsonStringify(element.directly_win_gold);
-            } else {
-                element.directly_win_gold = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.commission_awaiting_num && element.commission_awaiting_num.length != 0) {
-                element.commission_awaiting_num = jsonStringify(element.commission_awaiting_num);
-            } else {
-                element.commission_awaiting_num = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.commission_received_num && element.commission_received_num.length != 0) {
-                element.commission_received_num = jsonStringify(element.commission_received_num);
-            } else {
-                element.commission_received_num = "-";
-            }
-        });
-        // @ts-ignore
-        newData.forEach(element => {
-            if (element.commission_total && element.commission_total.length != 0) {
-                element.commission_total = jsonStringify(element.commission_total);
-            } else {
-                element.commission_total = "-";
-            }
-        });
+        // newData.forEach(element => {
+        //     if (element.group_all_recharge && element.group_all_recharge.length != 0) {
+        //         element.group_all_recharge = jsonStringify(element.group_all_recharge);
+        //     } else {
+        //         element.group_all_recharge = "-";
+        //     }
+        // });
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.group_all_exchange && element.group_all_exchange.length != 0) {
+        //         element.group_all_exchange = jsonStringify(element.group_all_exchange);
+        //     } else {
+        //         element.group_all_exchange = "-";
+        //     }
+        // });
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.group_all_total_water && element.group_all_total_water.length != 0) {
+        //         element.group_all_total_water = jsonStringify(element.group_all_total_water);
+        //     } else {
+        //         element.group_all_total_water = "-";
+        //     }
+        // });
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.group_all_bet && element.group_all_bet.length != 0) {
+        //         element.group_all_bet = jsonStringify(element.group_all_bet);
+        //     } else {
+        //         element.group_all_bet = "-";
+        //     }
+        // });
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.group_all_win_gold && element.group_all_win_gold.length != 0) {
+        //         element.group_all_win_gold = jsonStringify(element.group_all_win_gold);
+        //     } else {
+        //         element.group_all_win_gold = "-";
+        //     }
+        // });
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.directly_total_water && element.directly_total_water.length != 0) {
+        //         element.directly_total_water = jsonStringify(element.directly_total_water);
+        //     } else {
+        //         element.directly_total_water = "-";
+        //     }
+        // });
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.directly_recharge && element.directly_recharge.length != 0) {
+        //         element.directly_recharge = jsonStringify(element.directly_recharge);
+        //     } else {
+        //         element.directly_recharge = "-";
+        //     }
+        // });
+        // // 直属兑换
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.directly_exchange && element.directly_exchange.length != 0) {
+        //         element.directly_exchange = jsonStringify(element.directly_exchange);
+        //     } else {
+        //         element.directly_exchange = "-";
+        //     }
+        // });
+        // // 直属投注额
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.directly_bet && element.directly_bet.length != 0) {
+        //         element.directly_bet = jsonStringify(element.directly_bet);
+        //     } else {
+        //         element.directly_bet = "-";
+        //     }
+        // });
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.directly_win_gold && element.directly_win_gold.length != 0) {
+        //         element.directly_win_gold = jsonStringify(element.directly_win_gold);
+        //     } else {
+        //         element.directly_win_gold = "-";
+        //     }
+        // });
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.commission_awaiting_num && element.commission_awaiting_num.length != 0) {
+        //         element.commission_awaiting_num = jsonStringify(element.commission_awaiting_num);
+        //     } else {
+        //         element.commission_awaiting_num = "-";
+        //     }
+        // });
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.commission_received_num && element.commission_received_num.length != 0) {
+        //         element.commission_received_num = jsonStringify(element.commission_received_num);
+        //     } else {
+        //         element.commission_received_num = "-";
+        //     }
+        // });
+        // // @ts-ignore
+        // newData.forEach(element => {
+        //     if (element.commission_total && element.commission_total.length != 0) {
+        //         element.commission_total = jsonStringify(element.commission_total);
+        //     } else {
+        //         element.commission_total = "-";
+        //     }
+        // });
 
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
