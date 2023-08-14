@@ -498,6 +498,10 @@ const layoutRouter = {
             name: "平台当日统计",
             component: () => import(/* webpackChunkName: "statistic_plat_days_date" */"@/views/statistic_plat_days_date/view/StatisticPlatDaysDate.vue")
         },        {
+            path: "statistic_plat_days_deliver_channel",
+            name: "投放统计",
+            component: () => import(/* webpackChunkName: "statistic_plat_days_deliver_channel" */"@/views/statistic_plat_days_deliver_channel/view/StatisticPlatDaysDeliverChannel.vue")
+        },        {
             path: "statistic_plat_days_deliver",
             name: "投放日报",
             component: () => import(/* webpackChunkName: "statistic_plat_days_deliver" */"@/views/statistic_plat_days_deliver/view/StatisticPlatDaysDeliver.vue")
