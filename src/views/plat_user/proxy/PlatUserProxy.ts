@@ -902,6 +902,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         this.addMutipleTagData.bShow = true;
         this.addMutipleTagData.isUpdateAll = isUpdateAll;
         this.addMutipleTagData.form.tags.length = 0;
+        this.addMutipleTagData.form.tags.push(...this.tableData.multipleSelection[0].user_tag);
     }
 
     onUpdateTags() {

@@ -136,7 +136,7 @@
                     <div>{{ tableColumns.is_recharged.options[row.is_recharged] }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.user_tag.name" min-width="180px" class-name="status-col">
+            <el-table-column :label="tableColumns.user_tag.name" min-width="200px" class-name="status-col">
                 <template slot-scope="{ row }">
                     <div style="text-align: left;">
                         <el-tag
@@ -144,6 +144,7 @@
                             v-for="(tag, index) of row.user_tag"
                             :key="index"
                             style="margin: 3px;"
+                            :type="tagColor(index)"
                         >
                             {{ tableColumns.user_tag.options[listQuery.plat_id][Number(tag)] }}
                         </el-tag>
@@ -443,6 +444,17 @@ export default class PlatUserBody extends AbstractView {
 
     handleMutipleTag(isUpdateAll: boolean) {
         this.myProxy.showAddMultipleTagDialog(isUpdateAll);
+    }
+
+    tagColor(i: number) {
+        switch (i % 3) {
+            case 0:
+                return "danger";
+            case 1:
+                return "primary";
+            case 2:
+                return "success";
+        }
     }
 }
 </script>
