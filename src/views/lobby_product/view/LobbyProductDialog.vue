@@ -50,7 +50,7 @@
                 :data="myProxy.dialogData.productFilterList"
                 style="width: 100%"
                 @selection-change="handleSelectionChange"
-                max-height="400px"
+                height="400px"
                 v-loading="net_status.loading"
             >
                 <el-table-column type="selection" min-width="55"> </el-table-column>

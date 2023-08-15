@@ -146,6 +146,9 @@
                     >
                     </el-option>
                 </el-select>
+                <el-checkbox v-model="form.isNeedOtherParam" style="margin-left: 10px;">
+                    {{ LangUtil("是否需要额外参数") }}
+                </el-checkbox>
             </el-form-item>
             <!-- 转跳 -->
             <el-form-item size="mini" :label="tableColumns['open_mode_url'].name">
@@ -155,6 +158,12 @@
                     maxlength="100"
                     show-word-limit
                 ></el-input>
+            </el-form-item>
+
+            <el-form-item v-if="form.isNeedOtherParam" size="mini" :label="LangUtil('额外参数')" prop="other_param">
+                <div class="editor-container">
+                    <json-editor ref="jsonEditor" v-model="form.other_param" />
+                </div>
             </el-form-item>
 
             <el-form-item size="mini" :label="tableColumns['type'].name" prop="type">
@@ -515,10 +524,11 @@ import TinymceUpload from "@/components/TinymceUpload/index.vue";
 import { BaseInfo } from "@/components/vo/commonVo";
 import { dateFormat } from "@/core/global/Functions";
 import { readerData } from "@/core/global/Excel";
-
+import JsonEditor from "@/components/JsonEditor/index.vue";
 @Component({
     components: {
         TinymceUpload,
+        JsonEditor,
     },
 })
 export default class PlatsNoticeDialog extends AbstractView {
@@ -556,6 +566,13 @@ export default class PlatsNoticeDialog extends AbstractView {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
+    }
+    @Watch("myProxy.dialogData.form.isNeedOtherParam")
+    onWatchOtherParam() {
+        if (this.form.isNeedOtherParam && typeof this.form.other_param == "string") {
+            //组回原始 extends
+            this.myProxy.dialogData.form.other_param = JSON.parse(this.form.other_param);
+        }
     }
 
     get status() {

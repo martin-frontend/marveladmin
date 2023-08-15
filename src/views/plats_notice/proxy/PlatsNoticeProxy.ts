@@ -1,7 +1,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, jsonStringify, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plats_notice/setting";
 import { MessageBox } from "element-ui";
 import IPlatsNoticeProxy from "./IPlatsNoticeProxy";
@@ -132,6 +132,8 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             type_position: "",
             video_uris: "",
             condition: [],
+            other_param: {}, //跳转到游戏的参数
+            isNeedOtherParam: false,
         },
         excelColumnInfo: {
             channel_id: { name: "channel_id", options: {} },
@@ -187,8 +189,31 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
 
     /**详细数据 */
     setDetail(data: any) {
+        data.other_param = {};
+        data.isNeedOtherParam = false;
+        //将跳转URL中的参数分开
+        if (data.open_mode_url && data.open_mode_url.trim()) {
+            const str = data.open_mode_url.split("##");
+            if (str && str.length > 1) {
+                data.open_mode_url = str[0];
+                data.other_param = JSON.parse(str[1]);
+                data.isNeedOtherParam = true;
+                console.log(" 转换之后的JSONwei ", data.other_param);
+            }
+        }
+
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        // Object.assign(this.dialogData.form.other_param, data.other_param);
+        // Object.assign(
+        //     this.dialogData.form.other_param,
+        //     JSON.parse(
+        //         JSON.stringify({
+        //             other_param: data.other_param,
+        //         })
+        //     )
+        // );
+        // this.dialogData.form.other_param = JSON.parse(JSON.stringify(data.other_param ));
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.form.open_mode = this.dialogData.form.open_mode.toString();
         this.dialogData.form.time = [this.dialogData.form.start_time, this.dialogData.form.end_time];
@@ -280,6 +305,8 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             video_uris: "",
             time: [],
             condition: [],
+            other_param: {},
+            isNeedOtherParam: false,
         });
     }
 
@@ -309,6 +336,16 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             type_position,
             video_uris,
         } = this.dialogData.form;
+        if (this.dialogData.form.isNeedOtherParam) {
+            if (typeof this.dialogData.form.other_param == "string") {
+                open_mode_url = open_mode_url + "##" + this.dialogData.form.other_param;
+            } else open_mode_url = open_mode_url + "##" + JSON.stringify(this.dialogData.form.other_param);
+            // open_mode_url = open_mode_url + "##" + this.dialogData.form.other_param;
+        }
+        // else
+        // {
+        //     this.dialogData.form.open_mode_url = this.dialogData.form.open_mode_url;
+        // }
         app_platform = JSON.stringify(app_platform);
         img_uris = JSON.stringify(img_uris);
         img_urls = JSON.stringify(img_urls);
@@ -388,7 +425,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             }
         }
         delete formCopy.condition;
-
+        // console.log("添加的数据为", formCopy);
         this.sendNotification(HttpType.admin_plats_notice_store, objectRemoveNull(formCopy));
     }
 
@@ -435,6 +472,15 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                 formCopy.video_uris = JSON.stringify({ [this.type]: formCopy.video_uris });
             }
             formCopy.id = this.dialogData.form.id;
+        }
+        if (this.dialogData.form.isNeedOtherParam) {
+            if (typeof this.dialogData.form.other_param == "string")
+                formCopy.open_mode_url = this.dialogData.form.open_mode_url + "##" + this.dialogData.form.other_param;
+            else
+                formCopy.open_mode_url =
+                    this.dialogData.form.open_mode_url + "##" + JSON.stringify(this.dialogData.form.other_param);
+        } else {
+            formCopy.open_mode_url = this.dialogData.form.open_mode_url;
         }
         formCopy.start_time = this.dialogData.form.time[0];
         formCopy.end_time = this.dialogData.form.time[1];
