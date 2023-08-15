@@ -5,6 +5,7 @@ import { EventType, HttpType } from "@/views/plat_user/setting";
 import { Message, MessageBox } from "element-ui";
 import LangUtil from "@/core/global/LangUtil";
 import PlatUserProxy from "../proxy/PlatUserProxy";
+import GlobalEventType from "@/core/global/GlobalEventType";
 
 interface IPlatUser extends IEventDispatcher {}
 
@@ -42,6 +43,8 @@ export default class PlatUserMediator extends AbstractMediator {
             EventType.admin_plat_user_store_user_by_admin,
             EventType.admin_plat_user_get_admin_added_user,
             EventType.admin_plat_user_delete_admin_added_user,
+            EventType.admin_plat_user_batch_update_tag,
+            GlobalEventType.REFRESH_PAGE,
         ];
     }
 
@@ -76,6 +79,7 @@ export default class PlatUserMediator extends AbstractMediator {
                 this.myProxy.onQuery();
                 break;
             case EventType.admin_plat_user_update:
+            case EventType.admin_plat_user_batch_update_tag:
                 Message.success(SuccessMessage.update);
                 this.myProxy.hideDialog();
                 this.myProxy.onQuery();
@@ -137,6 +141,9 @@ export default class PlatUserMediator extends AbstractMediator {
                 break;
             case EventType.admin_plat_user_update_admin_added_user:
                 this.myProxy.onUpdata_multiple_callback();
+                break;
+            case GlobalEventType.REFRESH_PAGE:
+                this.myProxy.onQuery();
                 break;
         }
     }

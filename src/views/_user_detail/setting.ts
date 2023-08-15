@@ -10,6 +10,7 @@ import cmd_admin_plat_user_phone from "@/views/_user_detail/command/cmd_admin_pl
 import cmd_admin_plat_user_email from "@/views/_user_detail/command/cmd_admin_plat_user_email";
 import cmd_admin_plat_user_update_level_exp from "@/views/_user_detail/command/cmd_admin_plat_user_update_level_exp";
 import cmd_admin_plat_user_clear_cache from "@/views/_user_detail/command/cmd_admin_plat_user_clear_cache";
+import cmd_admin_plat_user_update_tag from "@/views/_user_detail/command/cmd_admin_plat_user_update_tag";
 // --用户钱包&wallet
 import cmd_admin_plat_user_vendor_withdraw from "@/views/_user_detail/command/cmd_admin_plat_user_vendor_withdraw";
 import cmd_admin_plat_user_update_safe_gold from "@/views/_user_detail/command/cmd_admin_plat_user_update_safe_gold";
@@ -64,6 +65,7 @@ export var HttpType = {
     admin_plat_user_email: "admin/plat_user/email/{user_id} ",
     admin_plat_user_update_level_exp: "admin/plat_user/update_level_exp/{user_id} ",
     admin_plat_user_clear_cache: "admin/plat_user/clear_cache/{user_id} ",
+    admin_plat_user_update_tag: "admin/plat_user/update_tag/{user_id} ",
 // --用户钱包&wallet
     admin_plat_user_vendor_withdraw: "admin/plat_user/{user_id}/vendor/withdraw ",
     admin_plat_user_update_safe_gold: "admin/plat_user/update_safe_gold/{user_id} ",
@@ -119,6 +121,7 @@ export var EventType = {
     admin_plat_user_email: "_admin_plat_user_email",
     admin_plat_user_update_level_exp: "_admin_plat_user_update_level_exp",
     admin_plat_user_clear_cache: "_admin_plat_user_clear_cache",
+    admin_plat_user_update_tag: "_admin_plat_user_update_tag",
 // --用户钱包&wallet
     admin_plat_user_vendor_withdraw: "_admin_plat_user_vendor_withdraw",
     admin_plat_user_update_safe_gold: "_admin_plat_user_update_safe_gold",
@@ -174,6 +177,7 @@ facade.registerCommand(HttpType.admin_plat_user_phone, cmd_admin_plat_user_phone
 facade.registerCommand(HttpType.admin_plat_user_email, cmd_admin_plat_user_email);
 facade.registerCommand(HttpType.admin_plat_user_update_level_exp, cmd_admin_plat_user_update_level_exp);
 facade.registerCommand(HttpType.admin_plat_user_clear_cache, cmd_admin_plat_user_clear_cache);
+facade.registerCommand(HttpType.admin_plat_user_update_tag, cmd_admin_plat_user_update_tag);
 // --用户钱包&wallet
 facade.registerCommand(HttpType.admin_plat_user_vendor_withdraw, cmd_admin_plat_user_vendor_withdraw);
 facade.registerCommand(HttpType.admin_plat_user_update_safe_gold, cmd_admin_plat_user_update_safe_gold);

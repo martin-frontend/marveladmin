@@ -1,7 +1,9 @@
 <template>
-    <el-dialog :title="LangUtil('编辑')" :visible.sync="dialogData.bShow" width="500px" :append-to-body="true">
+    <el-dialog :title="LangUtil('编辑')" :visible.sync="dialogData.bShow" width="600px" :append-to-body="true">
         <div v-loading="net_status.loading">
-            <div class="input_title">{{ LangUtil("请输入") }}</div>
+            <div v-if="dialogData.filed != 'user_tag'" class="input_title">{{ LangUtil("请输入") }}</div>
+            <div v-else class="input_title">{{ LangUtil("选择标签") }}</div>
+
             <!-- 金币明细屏蔽 start -->
             <template v-if="dialogData.filed == 'gold_columns_disable'">
                 <el-select
@@ -9,7 +11,7 @@
                     multiple
                     clearable
                     :placeholder="LangUtil('请选择')"
-                    style="width: 400px; margin-left: 25px"
+                    style="width: 500px; margin-left: 25px"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns.gold_columns_disable.options"
@@ -44,6 +46,25 @@
                     :placeholder="`${tableColumns.pretty_user_id.name} ${LangUtil('最多六位数')}`"
                 ></el-input>
             </template>
+
+            <!-- 用户标签 start-->
+            <template v-else-if="dialogData.filed == 'user_tag'">
+                <el-select
+                    v-model="dialogData.filedValue"
+                    multiple
+                    class="select"
+                    :placeholder="LangUtil('请选择')"
+                    style="width: 500px; margin-left: 25px"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns.user_tag.options[userInfo.plat_id]"
+                        :key="key"
+                        :label="value"
+                        :value="key"
+                    ></el-option>
+                </el-select>
+            </template>
+            <!--用户标签 end-->
 
             <template v-else>
                 <el-input class="dialog_input" v-model="dialogData.filedValue"></el-input>
@@ -83,6 +104,7 @@ export default class EditDialog extends AbstractView {
     myProxy: TabUserInfoProxy = getProxy(TabUserInfoProxy);
     tableColumns: any = this.myProxy.tableColumns;
     dialogData = this.myProxy.dialogData;
+    userInfo = this.myProxy.userInfo;
 
     handlerSubmit() {
         const filed = this.dialogData.filed;
@@ -135,7 +157,7 @@ export default class EditDialog extends AbstractView {
     margin-left: 25px;
 }
 .dialog_input {
-    width: 400px;
+    width: 500px;
     margin-bottom: 10px;
     margin-left: 25px;
 }

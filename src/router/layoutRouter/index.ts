@@ -542,6 +542,10 @@ const layoutRouter = {
             name: "第三方登录厂商 ",
             component: () => import(/* webpackChunkName: "third_party_vendor_login" */"@/views/third_party_vendor_login/view/ThirdPartyVendorLogin.vue")
         },        {
+            path: "user_tag",
+            name: "标签列表",
+            component: () => import(/* webpackChunkName: "user_tag" */"@/views/user_tag/view/UserTag.vue")
+        },        {
             path: "vendor",
             name: "厂商管理",
             component: () => import(/* webpackChunkName: "vendor" */"@/views/vendor/view/Vendor.vue")

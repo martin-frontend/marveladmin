@@ -20,6 +20,8 @@
         "admin/plat_user/get_admin_added_user",
         "admin/plat_user/store_user_by_admin",
         "admin/plat_user/update_admin_added_user/{admin_added_batch}",
-        "admin/plat_user/delete_admin_added_user/{admin_added_batch}"
+        "admin/plat_user/delete_admin_added_user/{admin_added_batch}",
+        "admin/plat_user/update_tag/{user_id}",
+        "admin/plat_user/batch_update_tag"
     ]
 }

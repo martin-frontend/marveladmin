@@ -6,11 +6,9 @@ import { getProxy, getPageSetting } from "@/views/_user_detail/PageSetting";
 import { Message, MessageBox } from "element-ui";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import i18n from "@/lang";
-import PlatUserProxy from "@/views/plat_user/proxy/PlatUserProxy";
 
 export default class TabUserUnfoMediator extends AbstractMediator {
     myProxy: TabUserInfoProxy = <any>getProxy(TabUserInfoProxy);
-    platUserProxy: PlatUserProxy = <any>getProxy(PlatUserProxy);
     pageSetting = getPageSetting();
 
     onRegister() {
@@ -33,6 +31,7 @@ export default class TabUserUnfoMediator extends AbstractMediator {
             EventType.admin_plat_user_clear_cache,
             GlobalEventType.REFRESH_PAGE,
             GlobalEventType.REQUEST_ERROR,
+            EventType.admin_plat_user_update_tag,
         ];
     }
 
@@ -47,7 +46,8 @@ export default class TabUserUnfoMediator extends AbstractMediator {
                     this.myProxy.setUserInfo(body);
                     break;
                 case EventType.admin_plat_user_update:
-                    this.myProxy.getUserDetail(body);
+                case EventType.admin_plat_user_update_tag:
+                    // this.myProxy.getUserDetail(body);
                     if (this.myProxy.dialogData.filed != "") {
                         // @ts-ignore
                         Message.success(
@@ -61,7 +61,6 @@ export default class TabUserUnfoMediator extends AbstractMediator {
                     this.myProxy.dialogData.filed = "";
                     this.sendNotification(GlobalEventType.REFRESH_PAGE);
                     this.myProxy.hideDialog();
-                    this.platUserProxy.onQueryWithParam(this.myProxy.userInfo.plat_id);
                     break;
                 case EventType.admin_plat_user_phone:
                 case EventType.admin_plat_user_email:

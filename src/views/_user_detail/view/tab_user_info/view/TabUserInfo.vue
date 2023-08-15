@@ -169,6 +169,26 @@
                 <el-form-item size="mini" :label="tableColumns['is_recharged'].name" prop="is_recharged">
                     {{ tableColumns["is_recharged"].options[userInfo.is_recharged] }}
                 </el-form-item>
+                <el-form-item size="mini" :label="tableColumns['user_tag'].name" prop="user_tag">
+                    <el-select
+                        v-model="userInfo.user_tag"
+                        multiple
+                        class="select custom-select"
+                        placeholder=""
+                        disabled
+                        style="width: 200px; margin-bottom: 3px;"
+                    >
+                        <el-option
+                            v-for="(value, key) in tableColumns.user_tag.options[userInfo.plat_id]"
+                            :key="key"
+                            :label="value"
+                            :value="key"
+                        ></el-option>
+                    </el-select>
+                    <el-button class="item" type="primary" @click="handlerEdit('user_tag')" style="margin-left: 20px">
+                        {{ LangUtil("编辑") }}
+                    </el-button>
+                </el-form-item>
             </el-form>
 
             <el-form ref="form" label-position="left" label-width="130px" :model="userInfo">
@@ -797,6 +817,18 @@ export default class TabUserInfo extends AbstractView {
     }
     .btn {
         margin-right: 20px;
+    }
+}
+::v-deep .custom-select {
+    .el-input__icon {
+        display: none;
+    }
+    .el-select__tags-text {
+        display: inline-block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 150px;
     }
 }
 </style>

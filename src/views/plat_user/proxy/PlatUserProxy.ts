@@ -1,6 +1,6 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, getUrl, objectRemoveNull } from "@/core/global/Functions";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import { HttpType } from "@/views/plat_user/setting";
 import { Message, MessageBox } from "element-ui";
@@ -8,7 +8,8 @@ import IPlatUserProxy from "./IPlatUserProxy";
 import { MD5 } from "@/core/global/MD5";
 import { BaseInfo } from "@/components/vo/commonVo";
 import { checkUnique, unique } from "@/core/global/Permission";
-import { DialogStatus } from "@/core/global/Constant";
+import { DialogStatus, SuccessMessage } from "@/core/global/Constant";
+import Http from "@/core/net/Http";
 
 export default class PlatUserProxy extends AbstractProxy implements IPlatUserProxy {
     static NAME = "PlatUserProxy";
@@ -138,9 +139,11 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             paytime: { name: "第一次充值时间", options: [] },
             city: { name: "城市", options: [] },
             country: { name: "国家", options: [] },
+            user_tag: { name: "用户标签", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        multipleSelection: <any>[],
     };
     /**查询条件 */
     listQuery = <any>{
@@ -201,6 +204,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "vendors_money",
             "safe_gold",
             "is_recharged",
+            "user_tag",
             "total_recharge",
             "total_exchange",
             "total_water",
@@ -328,6 +332,14 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         },
     };
 
+    addMutipleTagData = {
+        bShow: false,
+        isUpdateAll: false,
+        form: <any>{
+            tags: [],
+        },
+    };
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -353,6 +365,18 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                     item.gold_info[element].sum_money = "-";
                 }
             }
+
+            const newArr: any = [];
+            if (item.user_tag) {
+                const arr = item.user_tag.split(",");
+                // @ts-ignore
+                arr.forEach(tag => {
+                    if (this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
+                        newArr.push(Number(tag));
+                    }
+                });
+            }
+            item.user_tag = newArr;
         }
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
@@ -467,6 +491,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         this.dialogData.bShow = false;
         this.creditUserDialogData.bShow = false;
         this.changeChannelDialogData.bShow = false;
+        this.addMutipleTagData.bShow = false;
     }
     /**重置弹窗表单 */
     resetDialogForm() {
@@ -495,13 +520,6 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             this.sendNotification(HttpType.admin_plat_user_index2, objectRemoveNull(this.listQuery));
         } else {
             this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull(this.listQuery));
-        }
-    }
-    onQueryWithParam(plat_id: any) {
-        if (checkUnique(unique.admin_plat_user_index2)) {
-            this.sendNotification(HttpType.admin_plat_user_index2, objectRemoveNull({ ...this.listQuery, plat_id }));
-        } else {
-            this.sendNotification(HttpType.admin_plat_user_index, objectRemoveNull({ ...this.listQuery, plat_id }));
         }
     }
     onQueryForAddMultipleUserTable() {
@@ -760,39 +778,35 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         // @ts-ignore
         newData.forEach(element => {
             let total_recharge: string = `${this.tableData.columns.recharge_times.name} : ${element.recharge_times};  `;
+            let total_exchange: string = `${this.tableData.columns.exchange_times.name} : ${element.exchange_times};  `;
+            let total_bet: string = ``;
+            let total_win: string = ``;
+
             for (const item of element.user_statistic) {
                 total_recharge =
                     total_recharge + `${item.coin_name_unique} : ${Math.abs(item.total_recharge).toFixed(3)};`;
-            }
-            element.total_recharge = total_recharge;
-        });
-
-        // @ts-ignore
-        newData.forEach(element => {
-            let total_exchange: string = `${this.tableData.columns.exchange_times.name} : ${element.exchange_times};  `;
-            for (const item of element.user_statistic) {
                 total_exchange =
                     total_exchange + `${item.coin_name_unique} : ${Math.abs(item.total_exchange).toFixed(3)};`;
-            }
-            element.total_exchange = total_exchange;
-        });
-
-        // @ts-ignore
-        newData.forEach(element => {
-            let total_bet: string = ``;
-            for (const item of element.user_statistic) {
                 total_bet = total_bet + `${item.coin_name_unique} : ${Math.abs(item.total_bet).toFixed(3)};`;
-            }
-            element.total_bet = total_bet;
-        });
-
-        // @ts-ignore
-        newData.forEach(element => {
-            let total_win: string = ``;
-            for (const item of element.user_statistic) {
                 total_win = total_win + `${item.coin_name_unique} : ${Math.abs(item.total_win).toFixed(3)};`;
             }
+
+            element.total_recharge = total_recharge;
+            element.total_exchange = total_exchange;
+            element.total_bet = total_bet;
             element.total_win = total_win;
+
+            if (element.user_tag) {
+                const arr = element.user_tag.split(",");
+                const newArr: any = [];
+                // @ts-ignore
+                arr.forEach(tag => {
+                    if (this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
+                        newArr.push(this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]);
+                    }
+                });
+                element.user_tag = newArr.join();
+            }
         });
 
         new BaseInfo.ExportExcel(
@@ -882,5 +896,40 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         //     this.resetTabdata(data);
         // }
         this.myExportPagedata = JSON.parse(JSON.stringify(data));
+    }
+
+    showAddMultipleTagDialog(isUpdateAll: boolean) {
+        this.addMutipleTagData.bShow = true;
+        this.addMutipleTagData.isUpdateAll = isUpdateAll;
+        this.addMutipleTagData.form.tags.length = 0;
+        this.addMutipleTagData.form.tags.push(...this.tableData.multipleSelection[0].user_tag);
+    }
+
+    onUpdateTags() {
+        const tag_ids = this.addMutipleTagData.form.tags.join();
+        if (!this.addMutipleTagData.isUpdateAll) {
+            let count = 0;
+            // @ts-ignore
+            this.tableData.multipleSelection.forEach(item => {
+                // 发送消息
+                Http.request({ tag_ids }, getUrl(HttpType.admin_plat_user_update_tag, { user_id: item.user_id })).then(
+                    (result: any) => {
+                        count++;
+                        if (this.addMutipleTagData.bShow) {
+                            this.hideDialog();
+                            Message.success(SuccessMessage.update);
+                        }
+                        if (count == this.tableData.multipleSelection.length) {
+                            this.onQuery();
+                        }
+                    }
+                );
+            });
+        } else {
+            const newQuery = { ...this.listQuery, tag_ids };
+            delete newQuery.page_count;
+            delete newQuery.page_size;
+            this.sendNotification(HttpType.admin_plat_user_batch_update_tag, objectRemoveNull(newQuery));
+        }
     }
 }

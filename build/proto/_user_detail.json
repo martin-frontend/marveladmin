@@ -12,6 +12,7 @@
         "admin/plat_user/email/{user_id}",
         "admin/plat_user/update_level_exp/{user_id}",
         "admin/plat_user/clear_cache/{user_id}",
+        "admin/plat_user/update_tag/{user_id}",
         "--用户钱包&wallet",
         "admin/plat_user/{user_id}/vendor/withdraw",
         "admin/plat_user/update_safe_gold/{user_id}",

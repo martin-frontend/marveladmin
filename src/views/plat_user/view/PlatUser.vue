@@ -10,6 +10,7 @@
         <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
         <MultipleUserDialog v-if="myProxy.mutipleUserDialogData.bShow" />
         <AddMultipleUserDialog v-if="myProxy.addMutipleUserData.bShow" />
+        <AddMultipleTagDialog v-if="myProxy.addMutipleTagData.bShow" />
     </div>
 </template>
 
@@ -28,6 +29,7 @@ import ProgressDialog from "./components/ProgressDialog.vue";
 import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 import MultipleUserDialog from "./MultipleUserDialog.vue";
 import AddMultipleUserDialog from "./AddMultipleUserDialog.vue";
+import AddMultipleTagDialog from "./AddMultipleTagDialog.vue";
 
 @Component({
     components: {
@@ -41,6 +43,7 @@ import AddMultipleUserDialog from "./AddMultipleUserDialog.vue";
         FieldSelectionDialog,
         MultipleUserDialog,
         AddMultipleUserDialog,
+        AddMultipleTagDialog,
     },
 })
 export default class PlatUser extends AbstractView {

@@ -20,6 +20,8 @@ import cmd_admin_plat_user_get_admin_added_user from "@/views/plat_user/command/
 import cmd_admin_plat_user_store_user_by_admin from "@/views/plat_user/command/cmd_admin_plat_user_store_user_by_admin";
 import cmd_admin_plat_user_update_admin_added_user from "@/views/plat_user/command/cmd_admin_plat_user_update_admin_added_user";
 import cmd_admin_plat_user_delete_admin_added_user from "@/views/plat_user/command/cmd_admin_plat_user_delete_admin_added_user";
+import cmd_admin_plat_user_update_tag from "@/views/plat_user/command/cmd_admin_plat_user_update_tag";
+import cmd_admin_plat_user_batch_update_tag from "@/views/plat_user/command/cmd_admin_plat_user_batch_update_tag";
 /**协议*/
 export var HttpType = {
     admin_plat_user_table_columns: "admin/plat_user/table_columns",
@@ -40,6 +42,8 @@ export var HttpType = {
     admin_plat_user_store_user_by_admin: "admin/plat_user/store_user_by_admin",
     admin_plat_user_update_admin_added_user: "admin/plat_user/update_admin_added_user/{admin_added_batch}",
     admin_plat_user_delete_admin_added_user: "admin/plat_user/delete_admin_added_user/{admin_added_batch}",
+    admin_plat_user_update_tag: "admin/plat_user/update_tag/{user_id}",
+    admin_plat_user_batch_update_tag: "admin/plat_user/batch_update_tag",
 };
 /**事件*/
 export var EventType = {
@@ -61,6 +65,8 @@ export var EventType = {
     admin_plat_user_store_user_by_admin: "admin_plat_user_store_user_by_admin",
     admin_plat_user_update_admin_added_user: "admin_plat_user_update_admin_added_user",
     admin_plat_user_delete_admin_added_user: "admin_plat_user_delete_admin_added_user",
+    admin_plat_user_update_tag: "admin_plat_user_update_tag",
+    admin_plat_user_batch_update_tag: "admin_plat_user_batch_update_tag",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -82,4 +88,6 @@ facade.registerCommand(HttpType.admin_plat_user_get_admin_added_user, cmd_admin_
 facade.registerCommand(HttpType.admin_plat_user_store_user_by_admin, cmd_admin_plat_user_store_user_by_admin);
 facade.registerCommand(HttpType.admin_plat_user_update_admin_added_user, cmd_admin_plat_user_update_admin_added_user);
 facade.registerCommand(HttpType.admin_plat_user_delete_admin_added_user, cmd_admin_plat_user_delete_admin_added_user);
+facade.registerCommand(HttpType.admin_plat_user_update_tag, cmd_admin_plat_user_update_tag);
+facade.registerCommand(HttpType.admin_plat_user_batch_update_tag, cmd_admin_plat_user_batch_update_tag);
 
