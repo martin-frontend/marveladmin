@@ -198,7 +198,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
             channel_id: this.dialogData.form.channel_id,
             plat_id: this.dialogData.form.plat_id,
             created_date: this.dialogData.form.created_date,
-            deliver_name: Number(this.dialogData.form.deliver_name),
+            deliver_name: this.dialogData.form.deliver_name,
         };
         this.sendNotification(HttpType.admin_statistic_plat_days_deliver_edit_deliver_name, formCopy);
     }
