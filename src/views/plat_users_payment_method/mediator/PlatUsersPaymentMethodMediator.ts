@@ -4,6 +4,7 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/plat_users_payment_method/setting";
 import { Message } from "element-ui";
 import PlatUsersPaymentMethodProxy from "../proxy/PlatUsersPaymentMethodProxy";
+import LangUtil from "@/core/global/LangUtil";
 
 interface IPlatUsersPaymentMethod extends IEventDispatcher {}
 
@@ -26,6 +27,7 @@ export default class PlatUsersPaymentMethodMediator extends AbstractMediator {
         return [
             EventType.admin_plat_users_payment_method_table_columns,
             EventType.admin_plat_users_payment_method_index,
+            EventType.admin_plat_users_payment_method_update,
         ];
     }
 
@@ -39,6 +41,10 @@ export default class PlatUsersPaymentMethodMediator extends AbstractMediator {
                 break;
             case EventType.admin_plat_users_payment_method_index:
                 myProxy.setTableData(body);
+                break;
+            case EventType.admin_plat_users_payment_method_update:
+                Message.success(<any>LangUtil("操作成功"));
+                myProxy.onQuery();
                 break;
         }
     }
