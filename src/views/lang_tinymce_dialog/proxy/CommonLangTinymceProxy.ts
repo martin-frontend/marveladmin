@@ -56,6 +56,8 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
             hi_IN: { name: "", options: {} },
             de_DE: { name: "", options: {} },
             fr_FR: { name: "", options: {} },
+            tr_TR: { name: "", options: {} },
+            ms_MS: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -94,6 +96,8 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
             hi_IN: "",
             de_DE: "",
             fr_FR: "",
+            tr_TR: "",
+            ms_MS: "",
             config: <any>{
                 ar_AR: [],
                 en_EN: [],
@@ -108,6 +112,8 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
                 hi_IN: [],
                 de_DE: [],
                 fr_FR: [],
+                tr_TR: [],
+                ms_MS: [],
             },
         },
         formSource: null, // 表单的原始数据
@@ -148,6 +154,8 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
             hi_IN: "",
             de_DE: "",
             fr_FR: "",
+            tr_TR: "",
+            ms_MS: "",
             config: {
                 ar_AR: [],
                 en_EN: [],
@@ -162,6 +170,8 @@ export default class CommonLangTinymceProxy extends AbstractProxy implements ICo
                 hi_IN: [],
                 de_DE: [],
                 fr_FR: [],
+                tr_TR: [],
+                ms_MS: [],
             },
         });
         this.dialogData.status = DialogStatus.create;
