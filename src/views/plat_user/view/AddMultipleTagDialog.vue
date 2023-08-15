@@ -1,5 +1,9 @@
 <template>
-    <el-dialog width="700px" :title="LangUtil('批量新增标签')" :visible.sync="myProxy.addMutipleTagData.bShow">
+    <el-dialog
+        width="700px"
+        :title="myProxy.addMutipleTagData.isUpdateAll ? LangUtil('一键新增标签') : LangUtil('批量新增标签')"
+        :visible.sync="myProxy.addMutipleTagData.bShow"
+    >
         <el-form :rules="rules" ref="form" :model="form" label-width="80px" v-loading="net_status.loading">
             <el-form-item :label="LangUtil('标签人数')">
                 <span v-if="!myProxy.addMutipleTagData.isUpdateAll">
