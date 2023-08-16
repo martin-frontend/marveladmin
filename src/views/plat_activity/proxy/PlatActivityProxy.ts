@@ -602,9 +602,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         formCopy["publish_status"] = Object.keys(this.tableData.columns.publish_status.options)[1];
 
         console.log("---->>>", formCopy);
-        const pointForm = JSON.parse(JSON.stringify(formCopy));
-        pointForm.rules = JSON.parse(pointForm.rules);
-        console.log("----发送的JSON ", pointForm);
+        // const pointForm = JSON.parse(JSON.stringify(formCopy));
+        // pointForm.rules = JSON.parse(pointForm.rules);
+        // console.log("----发送的JSON ", pointForm);
 
         MessageBox.confirm(<string>LangUtil("发布以后活动数据不能修改，确定发布"), <string>LangUtil("提示"), {
             confirmButtonText: <string>LangUtil("确定"),
