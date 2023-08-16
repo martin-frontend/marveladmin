@@ -80,6 +80,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             rule_desc: { name: "", options: <any>{} },
             vendor_id: { name: "厂商ID", options: {} },
             vendor_ids: { name: "", options: {} },
+            show_end_time: { name: "展示-结束时间", options: {} },
+            show_start_time: { name: "展示-开始时间", options: {} },
         },
         orderData: {
             id: "",
@@ -602,14 +604,20 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         formCopy["publish_status"] = Object.keys(this.tableData.columns.publish_status.options)[1];
 
         console.log("---->>>", formCopy);
-        const pointForm = JSON.parse(JSON.stringify(formCopy));
-        try {
-            pointForm.rules = JSON.parse(pointForm.rules);
-        } catch {
-            console.log("没有配置规则");
+        // const pointForm = JSON.parse(JSON.stringify(formCopy));
+        // try {
+        //     pointForm.rules = JSON.parse(pointForm.rules);
+        // } catch {
+        //     console.log("没有配置规则");
+        // }
+        if (!formCopy.show_end_time) {
+            formCopy.show_end_time = formCopy.end_time;
+        }
+        if (!formCopy.show_start_time) {
+            formCopy.show_start_time = formCopy.start_time;
         }
         // pointForm.rules = JSON.parse(pointForm.rules);
-        console.log("----发送的JSON ", pointForm);
+        // console.log("----发送的JSON ", pointForm);
 
         MessageBox.confirm(<string>LangUtil("发布以后活动数据不能修改，确定发布"), <string>LangUtil("提示"), {
             confirmButtonText: <string>LangUtil("确定"),
