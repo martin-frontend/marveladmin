@@ -121,8 +121,8 @@
                 </template>
             </el-table-column>
             <el-table-column
-                :label="tableColumns['rech_amt'].name"
-                prop="rech_amt"
+                :label="tableColumns['new_reg_rech_total'].name"
+                prop="new_reg_rech_total"
                 min-width="100px"
                 align="center"
             ></el-table-column>
