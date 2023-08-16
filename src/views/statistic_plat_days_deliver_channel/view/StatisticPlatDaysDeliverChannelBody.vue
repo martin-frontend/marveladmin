@@ -120,11 +120,21 @@
                     </el-tooltip>
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.rech_amt.name" align="center" prop="rech_amt" min-width="150px">
+            <el-table-column
+                :label="tableColumns.new_reg_rech_total.name"
+                align="center"
+                prop="new_reg_rech_total"
+                min-width="150px"
+            >
                 <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="tableColumns['rech_amt'].tips" placement="top">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_reg_rech_total'].tips"
+                        placement="top"
+                    >
                         <div>
-                            <span style="margin-right: 5px">{{ tableColumns["rech_amt"].name }}</span>
+                            <span style="margin-right: 5px">{{ tableColumns["new_reg_rech_total"].name }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
                         </div>
                     </el-tooltip>
@@ -187,7 +197,12 @@
                 min-width="150px"
             >
                 <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="tableColumns['d_exch_amt_per_user'].tips" placement="top">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['d_exch_amt_per_user'].tips"
+                        placement="top"
+                    >
                         <div>
                             <span style="margin-right: 5px">{{ tableColumns["d_exch_amt_per_user"].name }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
@@ -202,7 +217,12 @@
                 min-width="150px"
             >
                 <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="tableColumns['d_user_cont_per_user'].tips" placement="top">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['d_user_cont_per_user'].tips"
+                        placement="top"
+                    >
                         <div>
                             <span style="margin-right: 5px">{{ tableColumns["d_user_cont_per_user"].name }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
@@ -217,7 +237,12 @@
                 min-width="150px"
             >
                 <template slot="header">
-                    <el-tooltip class="item" effect="dark" :content="tableColumns['register_cost'].tips" placement="top">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['register_cost'].tips"
+                        placement="top"
+                    >
                         <div>
                             <span style="margin-right: 5px">{{ tableColumns["register_cost"].name }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
@@ -253,7 +278,7 @@ export default class StatisticPlatDaysDeliverChannelBody extends AbstractView {
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy = this.$parent.myProxy;    // proxy property
+    myProxy = this.$parent.myProxy; // proxy property
     tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.tableData.list;
     pageInfo = this.myProxy.tableData.pageInfo;
