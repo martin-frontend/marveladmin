@@ -1,6 +1,6 @@
 <template>
     <div class="content search_date_picker">
-        <div class="title">
+        <div v-if="isNeedTitle" class="title">
             {{ title }}
             <el-tooltip v-if="tip" effect="dark" :content="tip" placement="top">
                 <i class="el-icon-question"></i>
@@ -48,7 +48,7 @@ export default class SearchDatePicker extends Vue {
     @Prop() endDate!: string;
     @Prop({ default: false }) disabled!: boolean;
     @Prop({ default: true }) clearable!: boolean;
-
+    @Prop({ default: true }) isNeedTitle!: boolean;
     @Prop({
         default: () => {
             return {
