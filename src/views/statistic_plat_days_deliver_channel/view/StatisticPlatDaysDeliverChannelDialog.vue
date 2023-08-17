@@ -1,8 +1,15 @@
 <template>
     <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow" width="550px">
         <el-form ref="form" :rules="rules" :model="form" label-width="80px" v-loading="net_status.loading">
-            <el-form-item :label="tableColumns.deliver_name.name" prop="deliver_name">
+            <el-form-item
+                v-if="myProxy.tabName == 'channel'"
+                :label="tableColumns.deliver_name.name"
+                prop="deliver_name"
+            >
                 <el-input clearable v-model="myProxy.dialogData.form.deliver_name"></el-input>
+            </el-form-item>
+            <el-form-item v-if="myProxy.tabName == 'group'" :label="tableColumns.group_name.name" prop="group_name">
+                <el-input clearable v-model="myProxy.dialogData.form.group_name"></el-input>
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button @click="myProxy.hideDialog()">
@@ -60,9 +67,15 @@ export default class StatisticPlatDaysDeliverChannelDialog extends AbstractView 
     }
 
     get rules() {
-        return {
-            deliver_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
-        };
+        if (this.myProxy.tabName == "channel") {
+            return {
+                deliver_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            };
+        } else {
+            return {
+                group_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "blur" }],
+            };
+        }
     }
 
     handleAdd() {
