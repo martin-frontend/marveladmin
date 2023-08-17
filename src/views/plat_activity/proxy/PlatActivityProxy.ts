@@ -162,6 +162,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         prize_pool_add: "",
         update_cycle_types: <any>[],
         day_init_num: 0,
+        update_cycle_type: 0,
 
         lottery_cons: <any>[],
         lottery_award: <any>[],
@@ -260,31 +261,31 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
         this.dialogData.fileList1[0].url = this.dialogData.form.icon_url;
-
-        if (data.type != 12 ) {
+        console.log( "收到的活动的数据位",data);
+        if (data.model_type != 12) {
             if (this.dialogData.form.rules)
-            for (const item of this.dialogData.form.rules) {
-                for (const child of item.list) {
-                    for (const child_1 of child.list) {
-                        if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
-                            if (this.getRuleInfo(child_1).key_value_type == 2) {
-                                if (!child_1.params) {
-                                    child_1.params = {};
-                                }
-
-                                for (const iterator of child_1.params) {
-                                    if (!iterator.percent) {
-                                        iterator.percent = 0;
+                for (const item of this.dialogData.form.rules) {
+                    for (const child of item.list) {
+                        for (const child_1 of child.list) {
+                            if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
+                                if (this.getRuleInfo(child_1).key_value_type == 2) {
+                                    if (!child_1.params) {
+                                        child_1.params = {};
                                     }
-                                    if (!iterator.max_limit) {
-                                        iterator.max_limit = 0;
+
+                                    for (const iterator of child_1.params) {
+                                        if (!iterator.percent) {
+                                            iterator.percent = 0;
+                                        }
+                                        if (!iterator.max_limit) {
+                                            iterator.max_limit = 0;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
         } else {
             this.setBallAwardData(data);
         }
@@ -295,8 +296,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.init_prize_pool = data.init_prize_pool;
         this.dialogData.form.prize_pool_add = data.prize_pool_add;
         this.dialogData.form.day_init_num = data.day_init_num;
-
         this.dialogData.form.update_cycle_types = JSON.parse(JSON.stringify(data.update_cycle_types));
+        this.dialogData.form.update_cycle_type = data.update_cycle_types[0];
         this.dialogData.form.lottery_cons = JSON.parse(JSON.stringify(data.lottery_cons));
         this.dialogData.form.lottery_award = JSON.parse(JSON.stringify(data.lottery_award));
         this.dialogData.form.ball_award = JSON.parse(JSON.stringify(data.ball_award));
@@ -615,14 +616,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             formCopy.day_num_init_config = JSON.stringify(this.dialogData.form.day_num_init_config);
         }
         console.log("---->>>", formCopy);
-        // const pointForm = JSON.parse(JSON.stringify(formCopy));
-        // try {
-        //     pointForm.rules = JSON.parse(pointForm.rules);
-        // } catch {
-        //     console.log("没有配置规则");
-        // }
-        // pointForm.rules = JSON.parse(pointForm.rules);
-        // console.log("----发送的JSON ", pointForm);
         if (!formCopy.show_end_time) {
             formCopy.show_end_time = formCopy.end_time;
         }
@@ -649,7 +642,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     //将时间只发送天
     resetDate(date: string) {
         const strArr = date.split(" ");
-        console.log("转换之后的",strArr);
+        console.log("转换之后的", strArr);
         return strArr[0];
     }
     /**关闭该活动 */

@@ -16,7 +16,7 @@
         </el-form-item>
 
         <el-form-item size="mini" :label="tableColumns['update_cycle_type'].name" prop="update_cycle_type">
-            <el-checkbox-group v-model="form.update_cycle_types">
+            <!-- <el-checkbox-group v-model="form.update_cycle_types">
                 <el-checkbox
                     v-for="(value, key) in tableColumns['update_cycle_type'].options"
                     :key="key"
@@ -24,7 +24,15 @@
                 >
                     {{ value }}
                 </el-checkbox>
-            </el-checkbox-group>
+            </el-checkbox-group> -->
+
+            <el-radio-group v-model="form.update_cycle_type">
+                <template v-for="(value, key) in tableColumns['update_cycle_type'].options">
+                    <el-radio v-if="form.update_cycle_types.includes(Number(key))" :key="key" :label="Number(key)">
+                        {{ value }}
+                    </el-radio>
+                </template>
+            </el-radio-group>
         </el-form-item>
 
         <el-form-item size="mini" :label="tableColumns['day_init_num'].name" prop="day_init_num" class="mini_input">
@@ -74,13 +82,16 @@
                     </el-select>
 
                     <template v-if="item.params">
-                        <el-select v-model="item.params.key" :placeholder="LangUtil('请选择')" style="margin-left:10px" @change="onChange">
+                        <el-select
+                            v-model="item.params.key"
+                            :placeholder="LangUtil('请选择')"
+                            style="margin-left:10px"
+                        >
                             <el-option
                                 v-for="(value, key) in tableColumns.reward_coin.options[form.plat_id]"
                                 :key="key"
                                 :label="value"
                                 :value="key"
-                                
                             ></el-option>
                         </el-select>
                         <span class="title_width">{{ LangUtil("数量") }}</span>
@@ -127,7 +138,7 @@
                         ></el-input>
                     </span>
                     <span class="title_width">{{ LangUtil("奖励类型") }}</span>
-                    <el-select v-model="item.type" filterable :placeholder="LangUtil('请选择')" >
+                    <el-select v-model="item.type" filterable :placeholder="LangUtil('请选择')">
                         <el-option
                             v-for="(value, key) in tableColumns['lottery_award_type'].options"
                             :key="key"
@@ -136,13 +147,18 @@
                         ></el-option>
                     </el-select>
                     <template v-if="item.params">
-                        <el-select v-if="item.type!=4" v-model="item.params.key" :placeholder="LangUtil('请选择')" style="margin-left:10px" @change="onChange">
+                        <el-select
+                            v-if="item.type != 4"
+                            v-model="item.params.key"
+                            :placeholder="LangUtil('请选择')"
+                            style="margin-left:10px"
+                            @change="onChange"
+                        >
                             <el-option
                                 v-for="(value, key) in tableColumns.reward_coin.options[form.plat_id]"
                                 :key="key"
                                 :label="value"
                                 :value="key"
-                                
                             ></el-option>
                         </el-select>
                         <span class="title_width">{{ LangUtil("数量") }}</span>
@@ -152,7 +168,7 @@
                             :placeholder="LangUtil('请输入')"
                             style="margin: 0px 4px;"
                         ></el-input>
-                        <span v-if="item.type==4">%</span>
+                        <span v-if="item.type == 4">%</span>
                     </template>
                 </div>
             </div>
@@ -225,7 +241,7 @@
                         ></el-input>
                     </span>
                     <span class="title_width">{{ LangUtil("奖励类型") }}</span>
-                    <el-select v-model="item.type" filterable :placeholder="LangUtil('请选择')" >
+                    <el-select v-model="item.type" filterable :placeholder="LangUtil('请选择')">
                         <el-option
                             v-for="(value, key) in tableColumns['lottery_award_type'].options"
                             :key="key"
@@ -234,23 +250,28 @@
                         ></el-option>
                     </el-select>
                     <template v-if="item.params">
-                        <el-select v-if="item.type!=4" v-model="item.params.key" :placeholder="LangUtil('请选择')" style="margin-left:10px" @change="onChange">
+                        <el-select
+                            v-if="item.type != 4"
+                            v-model="item.params.key"
+                            :placeholder="LangUtil('请选择')"
+                            style="margin-left:10px"
+                            @change="onChange"
+                        >
                             <el-option
                                 v-for="(value, key) in tableColumns.reward_coin.options[form.plat_id]"
                                 :key="key"
                                 :label="value"
                                 :value="key"
-                                
                             ></el-option>
                         </el-select>
-                        <span class="title_width" >{{ LangUtil("数量") }}</span>
+                        <span class="title_width">{{ LangUtil("数量") }}</span>
                         <el-input
                             type="number"
                             v-model="item.params.value"
                             :placeholder="LangUtil('请输入')"
                             style="margin: 0px 4px;"
                         ></el-input>
-                        <span v-if="item.type==4">%</span>
+                        <span v-if="item.type == 4">%</span>
                     </template>
                 </div>
             </div>
@@ -285,13 +306,17 @@
                         ></el-option>
                     </el-select>
                     <template v-if="item.params">
-                        <el-select v-model="item.params.key" :placeholder="LangUtil('请选择')" style="margin-left:10px" @change="onChange">
+                        <el-select
+                            v-model="item.params.key"
+                            :placeholder="LangUtil('请选择')"
+                            style="margin-left:10px"
+                            @change="onChange"
+                        >
                             <el-option
                                 v-for="(value, key) in tableColumns.reward_coin.options[form.plat_id]"
                                 :key="key"
                                 :label="value"
                                 :value="key"
-                                
                             ></el-option>
                         </el-select>
                         <span class="title_width">{{ LangUtil("数量") }}</span>
@@ -342,10 +367,6 @@ export default class PlatActivityBallAward extends AbstractView {
         } else {
             delete arr[key];
         }
-    }
-    onChange()
-    {
-        console.log("切换选项",this.form);
     }
 }
 </script>
