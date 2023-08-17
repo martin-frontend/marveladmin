@@ -5,6 +5,9 @@
     "list": [
         "admin/statistic_plat_days_deliver_channel/table_columns",
         "admin/statistic_plat_days_deliver_channel/index",
-        "admin/statistic_plat_days_deliver/edit_deliver_name"
+        "admin/statistic_plat_days_deliver/edit_deliver_name",
+        "admin/statistic_plat_days_deliver_group/table_columns",
+        "admin/statistic_plat_days_deliver_group/index",
+        "admin/statistic_plat_days_deliver_group/edit_group_name"
     ]
 }

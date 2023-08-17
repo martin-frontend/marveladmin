@@ -8,7 +8,7 @@ import StatisticPlatDaysDeliverChannelProxy from "../proxy/StatisticPlatDaysDeli
 interface IStatisticPlatDaysDeliverChannel extends IEventDispatcher {}
 
 export default class StatisticPlatDaysDeliverChannelMediator extends AbstractMediator {
-    private myProxy: StatisticPlatDaysDeliverChannelProxy = <any>this.getProxy(StatisticPlatDaysDeliverChannelProxy);
+    myProxy: StatisticPlatDaysDeliverChannelProxy = <any>this.getProxy(StatisticPlatDaysDeliverChannelProxy);
 
     onRegister() {
         this.myProxy.enter();
@@ -27,24 +27,27 @@ export default class StatisticPlatDaysDeliverChannelMediator extends AbstractMed
             EventType.admin_statistic_plat_days_deliver_channel_table_columns,
             EventType.admin_statistic_plat_days_deliver_channel_index,
             EventType.admin_statistic_plat_days_deliver_edit_deliver_name,
+            EventType.admin_statistic_plat_days_deliver_group_table_columns,
+            EventType.admin_statistic_plat_days_deliver_group_index,
+            EventType.admin_statistic_plat_days_deliver_group_edit_group_name,
         ];
     }
 
     handleNotification(notification: puremvc.INotification) {
-        const myProxy: StatisticPlatDaysDeliverChannelProxy = <any>(
-            this.facade.retrieveProxy(StatisticPlatDaysDeliverChannelProxy.NAME)
-        );
+        // const myProxy: StatisticPlatDaysDeliverChannelProxy = <any>(
+        //     this.facade.retrieveProxy(StatisticPlatDaysDeliverChannelProxy.NAME)
+        // );
         const myView: IStatisticPlatDaysDeliverChannel = this.viewComponent;
         const body = notification.getBody();
         switch (notification.getName()) {
             case EventType.admin_statistic_plat_days_deliver_channel_table_columns:
-                myProxy.setTableColumns(body);
+                this.myProxy.setTableColumns(body);
                 break;
             case EventType.admin_statistic_plat_days_deliver_channel_index:
-                if (myProxy.exportData.isExportExcel) {
-                    myProxy.onSaveExportData(body);
+                if (this.myProxy.exportData.isExportExcel) {
+                    this.myProxy.onSaveExportData(body);
                 } else {
-                    myProxy.setTableData(body);
+                    this.myProxy.setTableData(body);
                 }
                 break;
             case EventType.admin_statistic_plat_days_deliver_edit_deliver_name:
