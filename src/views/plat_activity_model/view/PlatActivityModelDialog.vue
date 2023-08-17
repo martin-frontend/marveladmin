@@ -19,6 +19,7 @@
                     <el-form-item size="mini" :label="tableColumns['active_model_tag'].name" prop="active_model_tag">
                         <el-input v-model="form.active_model_tag" :placeholder="LangUtil('请输入')"></el-input>
                     </el-form-item>
+
                     <el-form-item size="mini" :label="tableColumns['type'].name" prop="type">
                         <el-select
                             v-model="form.type"
@@ -34,153 +35,162 @@
                             ></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['category'].name"
-                        prop="category"
-                        v-if="filterCategory"
-                    >
-                        <el-select v-model="form.category" clearable filterable :placeholder="LangUtil('请选择')">
-                            <el-option
-                                v-for="(value, key) in filterCategory"
-                                :key="key"
-                                :label="value"
-                                :value="Number(key)"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item size="mini" :label="tableColumns['open_mode'].name" prop="open_mode">
-                        <el-select v-model="form.open_mode" filterable :placeholder="LangUtil('请选择')">
-                            <el-option
-                                v-for="(value, key) in tableColumns['open_mode'].options"
-                                :key="key"
-                                :label="value"
-                                :value="Number(key)"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item size="mini" :label="tableColumns['settlement_period'].name" prop="settlement_period">
-                        <el-select v-model="form.settlement_period" filterable :placeholder="LangUtil('请选择')">
-                            <el-option
-                                v-for="(value, key) in tableColumns['settlement_period'].options"
-                                :key="key"
-                                :label="value"
-                                :value="Number(key)"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item size="mini" :label="tableColumns['settlement_type'].name" prop="settlement_type">
-                        <el-radio-group v-model="form.settlement_type">
-                            <el-radio
-                                v-for="(value, key) in tableColumns['settlement_type'].options"
-                                :key="key"
-                                :label="Number(key)"
-                            >
-                                {{ value }}
-                            </el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['award_types'].name"
-                        prop="award_types"
-                        v-if="isShowAwardType"
-                    >
-                        <el-checkbox-group v-model="form.award_types">
-                            <el-checkbox
-                                v-for="(value, key) in tableColumns['award_types'].options"
-                                :key="key"
-                                :label="Number(key)"
-                            >
-                                {{ value }}
-                            </el-checkbox>
-                        </el-checkbox-group>
-                    </el-form-item>
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['award_tpl'].name"
-                        prop="award_tpl"
-                        v-if="isShowAwardTpl"
-                    >
-                        <el-input v-model="form.award_tpl" :placeholder="LangUtil('请输入')"></el-input>
-                    </el-form-item>
-                    <el-form-item v-if="form.award_types.includes(16)" size="mini" :label="LangUtil('派奖方式')">
-                        <div>
-                            <el-row>
-                                {{ tableColumns["daily_ratio"].name }}
-                            </el-row>
-                            <el-row :gutter="10">
-                                <el-col :span="3">
-                                    <div>
-                                        <el-button
-                                            @click="onDeleteDailyRatio()"
-                                            :disabled="!form.daily_ratio || form.daily_ratio.length < 1"
-                                            type="primary"
-                                            icon="el-icon-refresh"
-                                            >{{ LangUtil("删除") }}</el-button
-                                        >
-                                    </div>
-                                    <div style="margin-top: 8px;">
-                                        <el-button @click="onAddDailyRatio()" type="primary" icon="el-icon-refresh">{{
-                                            LangUtil("添加")
-                                        }}</el-button>
-                                    </div>
-                                </el-col>
+                    <template v-if="form.type != 12">
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['category'].name"
+                            prop="category"
+                            v-if="filterCategory"
+                        >
+                            <el-select v-model="form.category" clearable filterable :placeholder="LangUtil('请选择')">
+                                <el-option
+                                    v-for="(value, key) in filterCategory"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item size="mini" :label="tableColumns['open_mode'].name" prop="open_mode">
+                            <el-select v-model="form.open_mode" filterable :placeholder="LangUtil('请选择')">
+                                <el-option
+                                    v-for="(value, key) in tableColumns['open_mode'].options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['settlement_period'].name"
+                            prop="settlement_period"
+                        >
+                            <el-select v-model="form.settlement_period" filterable :placeholder="LangUtil('请选择')">
+                                <el-option
+                                    v-for="(value, key) in tableColumns['settlement_period'].options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item size="mini" :label="tableColumns['settlement_type'].name" prop="settlement_type">
+                            <el-radio-group v-model="form.settlement_type">
+                                <el-radio
+                                    v-for="(value, key) in tableColumns['settlement_type'].options"
+                                    :key="key"
+                                    :label="Number(key)"
+                                >
+                                    {{ value }}
+                                </el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['award_types'].name"
+                            prop="award_types"
+                            v-if="isShowAwardType"
+                        >
+                            <el-checkbox-group v-model="form.award_types">
+                                <el-checkbox
+                                    v-for="(value, key) in tableColumns['award_types'].options"
+                                    :key="key"
+                                    :label="Number(key)"
+                                >
+                                    {{ value }}
+                                </el-checkbox>
+                            </el-checkbox-group>
+                        </el-form-item>
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['award_tpl'].name"
+                            prop="award_tpl"
+                            v-if="isShowAwardTpl"
+                        >
+                            <el-input v-model="form.award_tpl" :placeholder="LangUtil('请输入')"></el-input>
+                        </el-form-item>
+                        <el-form-item v-if="form.award_types.includes(16)" size="mini" :label="LangUtil('派奖方式')">
+                            <div>
+                                <el-row>
+                                    {{ tableColumns["daily_ratio"].name }}
+                                </el-row>
+                                <el-row :gutter="10">
+                                    <el-col :span="3">
+                                        <div>
+                                            <el-button
+                                                @click="onDeleteDailyRatio()"
+                                                :disabled="!form.daily_ratio || form.daily_ratio.length < 1"
+                                                type="primary"
+                                                icon="el-icon-refresh"
+                                                >{{ LangUtil("删除") }}</el-button
+                                            >
+                                        </div>
+                                        <div style="margin-top: 8px;">
+                                            <el-button
+                                                @click="onAddDailyRatio()"
+                                                type="primary"
+                                                icon="el-icon-refresh"
+                                                >{{ LangUtil("添加") }}</el-button
+                                            >
+                                        </div>
+                                    </el-col>
 
-                                <el-col :span="3" v-for="(value, key) in form.daily_ratio" :key="key">
-                                    <div style="height: 30px;">{{ LangUtil("第{0}天%", key + 1) }}</div>
-                                    <div style="margin-top: 8px; height:30px">
-                                        <el-input-number
-                                            v-model="form.daily_ratio[key]"
-                                            size="mini"
-                                            :precision="1"
-                                            :step="1"
-                                            :max="100"
-                                            controls-position="right"
-                                            style="width: 100%"
-                                        ></el-input-number>
-                                    </div>
-                                </el-col>
-                            </el-row>
-                        </div>
-                    </el-form-item>
-                    <el-form-item size="mini" :label="tableColumns['show_types'].name" prop="show_types">
-                        <el-checkbox-group v-model="form.show_types">
-                            <el-checkbox
-                                v-for="(value, key) in tableColumns['show_types'].options"
-                                :key="key"
-                                :label="Number(key)"
-                                @change="onShowTypeChange($event, key)"
-                            >
-                                {{ value }}
-                            </el-checkbox>
-                        </el-checkbox-group>
-                    </el-form-item>
-                    <el-form-item size="mini" :label="tableColumns['bonus_multiple'].name" prop="bonus_multiple">
-                        <el-input
-                            type="number"
-                            v-model="form.bonus_multiple"
-                            :placeholder="LangUtil('请输入')"
-                        ></el-input>
-                    </el-form-item>
-                    <el-form-item size="mini" :label="tableColumns['is_once'].name" prop="is_once">
-                        <el-radio-group v-model="form.is_once">
-                            <el-radio
-                                v-for="(value, key) in tableColumns['is_once'].options"
-                                :key="key"
-                                :label="Number(key)"
-                            >
-                                {{ value }}
-                            </el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                    <el-form-item size="mini" :label="tableColumns['rules'].name" prop="rules">
-                        <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="onAddRule"
-                            >{{ LangUtil("新增规则") }}
-                        </el-button>
-                    </el-form-item>
-
-                    <PlatActivityRule v-if="myProxy.dialogData.isRender" />
+                                    <el-col :span="3" v-for="(value, key) in form.daily_ratio" :key="key">
+                                        <div style="height: 30px;">{{ LangUtil("第{0}天%", key + 1) }}</div>
+                                        <div style="margin-top: 8px; height:30px">
+                                            <el-input-number
+                                                v-model="form.daily_ratio[key]"
+                                                size="mini"
+                                                :precision="1"
+                                                :step="1"
+                                                :max="100"
+                                                controls-position="right"
+                                                style="width: 100%"
+                                            ></el-input-number>
+                                        </div>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                        </el-form-item>
+                        <el-form-item size="mini" :label="tableColumns['show_types'].name" prop="show_types">
+                            <el-checkbox-group v-model="form.show_types">
+                                <el-checkbox
+                                    v-for="(value, key) in tableColumns['show_types'].options"
+                                    :key="key"
+                                    :label="Number(key)"
+                                    @change="onShowTypeChange($event, key)"
+                                >
+                                    {{ value }}
+                                </el-checkbox>
+                            </el-checkbox-group>
+                        </el-form-item>
+                        <el-form-item size="mini" :label="tableColumns['bonus_multiple'].name" prop="bonus_multiple">
+                            <el-input
+                                type="number"
+                                v-model="form.bonus_multiple"
+                                :placeholder="LangUtil('请输入')"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item size="mini" :label="tableColumns['is_once'].name" prop="is_once">
+                            <el-radio-group v-model="form.is_once">
+                                <el-radio
+                                    v-for="(value, key) in tableColumns['is_once'].options"
+                                    :key="key"
+                                    :label="Number(key)"
+                                >
+                                    {{ value }}
+                                </el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item size="mini" :label="tableColumns['rules'].name" prop="rules">
+                            <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="onAddRule"
+                                >{{ LangUtil("新增规则") }}
+                            </el-button>
+                        </el-form-item>
+                        <PlatActivityRule v-if="myProxy.dialogData.isRender" />
+                    </template>
+                    <PlatActivityBallAward v-if="form.type == 12" />
                 </el-form>
             </el-scrollbar>
             <div class="dialog-footer">
@@ -213,11 +223,13 @@ import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import PlatActivityRule from "./components/PlatActivityRule.vue";
+import PlatActivityBallAward from "./components/PlatActivityBallAward.vue";
 import Cookies from "js-cookie";
 
 @Component({
     components: {
         PlatActivityRule,
+        PlatActivityBallAward,
     },
 })
 export default class PlatActivityModelDialog extends AbstractView {
