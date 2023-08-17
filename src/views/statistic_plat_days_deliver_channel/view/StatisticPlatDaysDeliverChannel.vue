@@ -18,6 +18,7 @@ import StatisticPlatDaysDeliverChannelHeader from "./StatisticPlatDaysDeliverCha
 import StatisticPlatDaysDeliverChannelBody from "./StatisticPlatDaysDeliverChannelBody.vue";
 import ProgressDialog from "./components/ProgressDialog.vue";
 import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
+import LangUtil from "@/core/global/LangUtil";
 
 @Component({
     components: {
@@ -32,6 +33,7 @@ export default class StatisticPlatDaysDeliverChannel extends AbstractView {
     constructor() {
         super(StatisticPlatDaysDeliverChannelMediator);
     }
+    LangUtil = LangUtil;
 
     destroyed() {
         super.destroyed();

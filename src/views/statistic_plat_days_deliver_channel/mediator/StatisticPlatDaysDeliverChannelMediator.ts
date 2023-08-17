@@ -44,6 +44,7 @@ export default class StatisticPlatDaysDeliverChannelMediator extends AbstractMed
                 this.myProxy.setTableColumns(body);
                 break;
             case EventType.admin_statistic_plat_days_deliver_channel_index:
+            case EventType.admin_statistic_plat_days_deliver_group_index:
                 if (this.myProxy.exportData.isExportExcel) {
                     this.myProxy.onSaveExportData(body);
                 } else {
@@ -51,9 +52,13 @@ export default class StatisticPlatDaysDeliverChannelMediator extends AbstractMed
                 }
                 break;
             case EventType.admin_statistic_plat_days_deliver_edit_deliver_name:
+            case EventType.admin_statistic_plat_days_deliver_group_edit_group_name:
                 Message.success(SuccessMessage.update);
                 this.myProxy.hideDialog();
                 this.myProxy.onQuery();
+                break;
+            case EventType.admin_statistic_plat_days_deliver_group_table_columns:
+                this.myProxy.setTableColumnsByGroyp(body);
                 break;
         }
     }

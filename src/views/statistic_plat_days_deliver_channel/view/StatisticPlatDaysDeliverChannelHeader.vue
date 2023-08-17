@@ -11,10 +11,16 @@
         </div>
         <div class="group">
             <SearchSelect
+                v-if="myProxy.tabName == 'channel'"
                 :title="tableColumns.channel_id.name"
                 v-model="listQuery.channel_id"
                 :options="tableColumns.channel_id.options"
                 :is-use-key="true"
+            />
+            <SearchInput
+                v-if="myProxy.tabName == 'group'"
+                :title="tableColumns.user_id.name"
+                v-model="listQuery.user_id"
             />
             <SearchDatePicker
                 :title="tableColumns.created_date.name"
