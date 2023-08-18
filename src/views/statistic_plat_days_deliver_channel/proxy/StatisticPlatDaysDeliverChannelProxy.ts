@@ -328,8 +328,12 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
                 group_name: "/",
             });
         }
-        data.list.unshift(data.summary);
-        return data.list;
+        if(this.exportData.isExportExcel) {
+            this.exportData.list.unshift(data.summary);
+        } else {
+            data.list.unshift(data.summary);
+            return data.list;
+        }
     }
     exportData = {
         fieldOrder: <any>[],
@@ -436,7 +440,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
 
     /**导出excel */
     exportExcel() {
-        this.exportData.list = this.addSummary(this.exportData.data);
+        this.addSummary(this.exportData.data);
         // this.exportData.list[0].channel_id = LangUtil("合计");
         const newData = JSON.parse(JSON.stringify(this.exportData.list));
         const exportField: string[] = [];
