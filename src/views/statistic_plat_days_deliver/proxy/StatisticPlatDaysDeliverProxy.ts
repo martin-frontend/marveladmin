@@ -208,8 +208,12 @@ export default class StatisticPlatDaysDeliverProxy extends AbstractProxy impleme
             channel_id: "",
             deliver_use: LangUtil("投放消耗汇总"),
         });
-        data.list.unshift(data.summary);
-        return data.list;
+        if(this.exportData.isExportExcel) {
+            this.exportData.list.unshift(data.summary);
+        } else {
+            data.list.unshift(data.summary);
+            return data.list;
+        }
     }
 
     exportData = {
@@ -284,7 +288,7 @@ export default class StatisticPlatDaysDeliverProxy extends AbstractProxy impleme
 
     /**导出excel */
     exportExcel() {
-        this.exportData.list = this.addSummary(this.exportData.data);
+        this.addSummary(this.exportData.data);
         this.exportData.list[0].channel_id = LangUtil("合计");
         const newData = JSON.parse(JSON.stringify(this.exportData.list));
         const exportField: string[] = [];
