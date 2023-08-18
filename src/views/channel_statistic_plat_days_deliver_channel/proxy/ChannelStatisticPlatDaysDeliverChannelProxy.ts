@@ -8,7 +8,9 @@ export default class ChannelStatisticPlatDaysDeliverChannelProxy extends Statist
     getExcelOutputName() {
         //@ts-ignore
         const plat_name = this.tableData.columns.plat_id.options[this.listQuery.plat_id];
-        let name = `${<string>LangUtil("渠道投放统计")}-${plat_name}`;
+        let name = `${<string>LangUtil("渠道投放统计")}`;
+        name += this.tabName == "channel" ? `(${LangUtil("按渠道")})` : `(${LangUtil("按团队")})`;
+        name += `-${plat_name}`;
         if (this.listQuery["created_date-{>=}"] && this.listQuery["created_date-{<=}"]) {
             name += `-${this.listQuery["created_date-{>=}"]}～${this.listQuery["created_date-{<=}"]}`;
         }
