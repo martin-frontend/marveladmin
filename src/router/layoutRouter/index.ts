@@ -98,6 +98,10 @@ const layoutRouter = {
             name: "渠道投放日报",
             component: () => import(/* webpackChunkName: "channel_statistic_plat_days_deliver" */"@/views/channel_statistic_plat_days_deliver/view/ChannelStatisticPlatDaysDeliver.vue")
         },        {
+            path: "channel_statistic_plat_days_deliver_channel",
+            name: "渠道投放统计",
+            component: () => import(/* webpackChunkName: "channel_statistic_plat_days_deliver_channel" */"@/views/channel_statistic_plat_days_deliver_channel/view/ChannelStatisticPlatDaysDeliverChannel.vue")
+        },        {
             path: "channel_statistic_user_keep_days",
             name: "渠道用户留存统计",
             component: () => import(/* webpackChunkName: "channel_statistic_user_keep_days" */"@/views/channel_statistic_user_keep_days/view/ChannelStatisticUserKeepDays.vue")
@@ -501,6 +505,10 @@ const layoutRouter = {
             path: "statistic_plat_days_deliver",
             name: "投放日报",
             component: () => import(/* webpackChunkName: "statistic_plat_days_deliver" */"@/views/statistic_plat_days_deliver/view/StatisticPlatDaysDeliver.vue")
+        },        {
+            path: "statistic_plat_days_deliver_channel",
+            name: "投放统计",
+            component: () => import(/* webpackChunkName: "statistic_plat_days_deliver_channel" */"@/views/statistic_plat_days_deliver_channel/view/StatisticPlatDaysDeliverChannel.vue")
         },        {
             path: "statistic_plat_funds_flow",
             name: "平台出入款",
