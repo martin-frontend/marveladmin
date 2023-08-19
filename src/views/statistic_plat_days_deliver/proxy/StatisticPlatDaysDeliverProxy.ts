@@ -206,7 +206,6 @@ export default class StatisticPlatDaysDeliverProxy extends AbstractProxy impleme
             created_date: "",
             plat_id: LangUtil("合计"),
             channel_id: "",
-            deliver_use: LangUtil("投放消耗汇总"),
         });
         if(this.exportData.isExportExcel) {
             this.exportData.list.unshift(data.summary);
