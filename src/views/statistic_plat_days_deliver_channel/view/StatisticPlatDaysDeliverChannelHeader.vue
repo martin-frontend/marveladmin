@@ -14,7 +14,7 @@
                 v-if="myProxy.tabName == 'channel'"
                 :title="tableColumns.channel_id.name"
                 v-model="listQuery.channel_id"
-                :options="tableColumns.channel_id.options"
+                :options="tableColumns.channel_id.options[listQuery.plat_id]"
                 :is-use-key="true"
             />
             <SearchInput
