@@ -76,7 +76,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        form: {
+        form: <any>{
             id: "",
             language: "",
             module: "",
@@ -115,6 +115,23 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
                 tr_TR: [],
                 ms_MS: [],
             },
+        },
+        check: <any>{
+            ar_AR: 0,
+            en_EN: 0,
+            jp_JP: 0,
+            ko_Kr: 0,
+            th_TH: 0,
+            vi_VN: 0,
+            zh_CN: 0,
+            zh_TW: 0,
+            es_ES: 0,
+            pt_PT: 0,
+            hi_IN: 0,
+            de_DE: 0,
+            fr_FR: 0,
+            tr_TR: 0,
+            ms_MS: 0,
         },
         formSource: null, // 表单的原始数据
     };
@@ -159,6 +176,7 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     showDialog(status: string, data?: any) {
         this.dialogData.bShow = true;
         this.dialogData.status = status;
+        this.resetDialogForm();
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             const copyData = JSON.parse(JSON.stringify(data));
@@ -168,7 +186,6 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
             delete copyData.config;
             Object.assign(this.dialogData.form, copyData);
         } else {
-            this.resetDialogForm();
             this.dialogData.formSource = null;
         }
     }
@@ -217,6 +234,23 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
                 tr_TR: [],
                 ms_MS: [],
             },
+        });
+        Object.assign(this.dialogData.check, {
+            ar_AR: 0,
+            en_EN: 0,
+            jp_JP: 0,
+            ko_Kr: 0,
+            th_TH: 0,
+            vi_VN: 0,
+            zh_CN: 0,
+            zh_TW: 0,
+            es_ES: 0,
+            pt_PT: 0,
+            hi_IN: 0,
+            de_DE: 0,
+            fr_FR: 0,
+            tr_TR: 0,
+            ms_MS: 0,
         });
     }
 
@@ -318,6 +352,11 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     /**获取全部翻译返回更新表单 */
     updateForm(data: any): void {
         Object.assign(this.dialogData.form, data);
+        for (const key in this.dialogData.check) {
+            if (!this.dialogData.check[key]) {
+                this.dialogData.form[key] = "";
+            }
+        }
     }
 
     /**语言包导入翻译 */
