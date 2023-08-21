@@ -28,7 +28,7 @@
                         :placeholder="`${tableColumns.template_name.name}`"
                         v-model="form.template_name"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.template_name)"
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('template_name')"
                         >{{LangUtil("翻译")}}</el-button
                     >
                 </div>
@@ -45,7 +45,7 @@
                         :placeholder="`${tableColumns.title.name}`"
                         v-model="form.title"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.title)"
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('title')"
                         >{{LangUtil("翻译")}}</el-button
                     >
                 </div>
@@ -63,7 +63,7 @@
                         :placeholder="`${tableColumns.content.name}`"
                         v-model="form.content"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.content)"
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('content')"
                         >{{LangUtil("翻译")}}</el-button
                     >
                 </div>
@@ -159,9 +159,13 @@ export default class PlatEmailHeader extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+        // data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_EMAIL;
         data.plat_id = this.form.plat_id;
+        //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data);
     }
 }

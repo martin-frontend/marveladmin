@@ -42,7 +42,7 @@
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
-                        @click="handleTranslate(form.vendor_product_name)"
+                        @click="handleTranslate('vendor_product_name')"
                     >
                         <!-- 翻译 -->
                         {{ LangUtil("翻译") }}
@@ -199,8 +199,12 @@ export default class VendorProductDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+        // data.sentence = source;
         data.type = LanguageType.TYPE_VENDER_GAME_LANGUAGE;
+        //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data);
     }
 }

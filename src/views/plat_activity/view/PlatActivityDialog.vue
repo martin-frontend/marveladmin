@@ -30,7 +30,7 @@
                             style="max-height: 35px"
                             type="primary"
                             size="mini"
-                            @click="handleTranslate(form.activity_name)"
+                            @click="handleTranslate('activity_name')"
                             >{{ LangUtil("翻译") }}</el-button
                         >
                     </div>
@@ -200,7 +200,7 @@
                             style="max-height: 35px"
                             type="primary"
                             size="mini"
-                            @click="handleTranslate(form.activity_category)"
+                            @click="handleTranslate('activity_category')"
                             >{{ LangUtil("翻译") }}</el-button
                         >
                     </div>
@@ -221,7 +221,7 @@
                             style="max-height: 35px"
                             type="primary"
                             size="mini"
-                            @click="handleTranslate(form.rule_desc)"
+                            @click="handleTranslate('rule_desc')"
                             >{{ LangUtil("翻译") }}</el-button
                         >
                     </div>
@@ -1048,9 +1048,12 @@ export default class PlatActivityDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+         //@ts-ignore
+        data.sentence = this.form[source] || source;
         data.type = LanguageType.TYPE_PLAT_ACTIVITY;
         data.plat_id = this.form.plat_id;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data);
     }
 
