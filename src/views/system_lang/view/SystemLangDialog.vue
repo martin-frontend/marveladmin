@@ -22,9 +22,10 @@
                 <el-input :placeholder="`${tableColumns.key.name}`" v-model="form.key"></el-input>
             </el-form-item>
 
-            <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value">
-                <el-form-item :label="value" prop="value">
-                    <div class="flex d-flex">
+            <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value" class="flex d-flex">
+                <el-checkbox class="mt-10" v-model="check[key]"></el-checkbox>
+                <el-form-item :label="value" prop="value" class="ml-5 wid-100">
+                    <div class="flex d-flex ml-n19">
                         <el-input
                             style="margin-right: 0.8rem"
                             type="textarea"
@@ -93,6 +94,7 @@ export default class SystemLangDialog extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
+    check = this.myProxy.dialogData.check;
 
     textMap = {
         update: this.LangUtil("编辑"),
@@ -151,4 +153,20 @@ export default class SystemLangDialog extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+::v-deep .el-form-item__label {
+    width: 110px !important;
+    text-align: left;
+}
+.wid-100 {
+    width: 100%;
+}
+.ml-n19 {
+    margin-left: -19px !important;
+}
+.mt-10 {
+    margin-top: 10px;
+}
+.ml-5 {
+    padding-left: 5px;
+}
 </style>
