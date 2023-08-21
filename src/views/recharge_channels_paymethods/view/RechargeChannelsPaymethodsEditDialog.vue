@@ -61,7 +61,7 @@
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
-                        @click="handleTranslate(addFrom.subtitle)"
+                        @click="handleTranslate('subtitle')"
                     >
                         <!-- 翻译 -->
                         {{ LangUtil("翻译") }}
@@ -84,7 +84,7 @@
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
-                        @click="handleTranslate(addFrom.notice)"
+                        @click="handleTranslate('notice')"
                     >
                         <!-- 翻译 -->
                         {{ LangUtil("翻译") }}
@@ -265,9 +265,13 @@ export default class RechargeChannelsPaymethodsEditDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+        // data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_RECHARGE_EXCHANGE;
         data.plat_id = this.form.plat_id;
+                //@ts-ignore
+                data.sentence = this.addFrom[source] || source;
+        data.refForm = this.addFrom;
+        data.useKey = source;
         this.langProxy.showDialog(data);
     }
 }

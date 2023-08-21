@@ -63,7 +63,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             de_DE: { name: "", options: {} },
             fr_FR: { name: "", options: {} },
             tr_TR: { name: "Türk dili", options: {} },
-            ms_MS: { name: "", options: {} }
+            ms_MS: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -150,23 +150,28 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
         },
         formSource: null, // 表单的原始数据
     };
-
+    translateData = <any>null;
     /**显示弹窗 */
-    showDialog(data?: any, isReservedWords: any = false) {
+    showDialog(data?: any, isReservedWords: any = false, obj: any = null) {
         //清除数据
         this.resetDialogForm();
         this.dialogData.formSource = null;
-
+        // this.translateData = data;
         this.sentence = data.sentence;
         this.type = data.type;
         this.dialogData.form.plat_id = data.plat_id != undefined ? data.plat_id : 0;
         this.dialogData.bShow = true;
         this.isReservedWords = isReservedWords;
+        this.translateData = data;
         this.enter();
     }
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
+        if (this.translateData && this.translateData.refForm && this.translateData.useKey) {
+            this.translateData.refForm[this.translateData.useKey] = this.dialogData.form.key;
+            console.warn("修改这个值", this.translateData);
+        }
     }
     /**重置弹窗表单 */
     resetDialogForm() {

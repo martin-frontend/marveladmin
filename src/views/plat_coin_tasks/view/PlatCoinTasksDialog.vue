@@ -12,7 +12,7 @@
                         v-model="form.activity_name"
                         style="margin-right: 0.8rem"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.activity_name)">
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('activity_name')">
                         {{ LangUtil("翻译") }}
                     </el-button>
                 </div>
@@ -371,9 +371,13 @@ export default class PlatCoinTasksDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+        // data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_ACTIVITY;
         data.plat_id = this.form.plat_id;
+         //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data, true);
     }
 }

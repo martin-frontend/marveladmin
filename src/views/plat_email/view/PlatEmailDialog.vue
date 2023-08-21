@@ -41,7 +41,7 @@
                         :placeholder="`${tableColumns.title.name}`"
                         v-model="form.title"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.title)"
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('title')"
                         >翻译</el-button
                     >
                 </div>
@@ -66,7 +66,7 @@
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
-                        @click="handleTranslate(form.content)"
+                        @click="handleTranslate('content')"
                         >翻译</el-button
                     >
                 </div>
@@ -125,7 +125,7 @@
                         :placeholder="`${tableColumns.remark.name}`"
                         v-model="form.remark"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.remark)"
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('remark')"
                         >翻译</el-button
                     >
                 </div>
@@ -434,9 +434,13 @@ export default class PlatEmailDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+        // data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_EMAIL;
         data.plat_id = this.form.plat_id;
+         //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data);
     }
 

@@ -26,7 +26,7 @@
                         v-model="form.name"
                         style="margin-right: 0.8rem"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)">
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('name')">
                         {{ LangUtil("翻译") }}
                     </el-button>
                 </div>
@@ -56,7 +56,7 @@
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
-                        @click="handleTranslate(form.subject)"
+                        @click="handleTranslate('subject')"
                     >
                         {{ LangUtil("翻译") }}</el-button
                     >
@@ -81,7 +81,7 @@
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
-                        @click="handleTranslate(form.content)"
+                        @click="handleTranslate('content')"
                     >
                         {{ LangUtil("翻译") }}</el-button
                     >
@@ -187,9 +187,13 @@ export default class EmailTemplateDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+        // data.sentence = source;
         data.type = LanguageType.TYPE_SYSTEM_EMAIL_MODEl;
         data.plat_id = this.form.plat_id;
+         //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data, true);
     }
 }
