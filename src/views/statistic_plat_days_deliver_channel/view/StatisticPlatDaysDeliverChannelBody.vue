@@ -3,9 +3,9 @@
         <el-tab-pane :label="LangUtil('按渠道')" name="channel">
             <StatisticPlatDaysDeliverChannelByChannelTable />
         </el-tab-pane>
-        <el-tab-pane :label="LangUtil('按团队')" name="group">
+        <!-- <el-tab-pane :label="LangUtil('按团队')" name="group">
             <StatisticPlatDaysDeliverChannelByGroupTable />
-        </el-tab-pane>
+        </el-tab-pane> -->
     </el-tabs>
 </template>
 <script lang="ts">

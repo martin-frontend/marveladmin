@@ -16,7 +16,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
     /**进入页面时调用 */
     enter() {
         this.sendNotification(HttpType.admin_statistic_plat_days_deliver_channel_table_columns);
-        this.sendNotification(HttpType.admin_statistic_plat_days_deliver_group_table_columns);
+        // this.sendNotification(HttpType.admin_statistic_plat_days_deliver_group_table_columns);
     }
 
     /**离开页面时调用 */
