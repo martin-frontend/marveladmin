@@ -325,6 +325,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
                 created_date: LangUtil("合计"),
                 plat_id: this.listQuery.plat_id,
                 user_id: this.listQuery.user_id || LangUtil("全部团队"),
+                channel_id: this.listQuery.channel_id || LangUtil("全部渠道"),
                 group_name: "/",
             });
         }

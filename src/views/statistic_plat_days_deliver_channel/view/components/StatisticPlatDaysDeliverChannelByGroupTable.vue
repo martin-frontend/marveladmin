@@ -24,6 +24,13 @@
                     <div>{{ tableColumns.plat_id.options[row.plat_id] }}</div>
                 </template>
             </el-table-column>
+            <el-table-column
+                :label="tableColumns.channel_id.name"
+                align="center"
+                prop="channel_id"
+                min-width="150px"
+            >
+            </el-table-column>
             <el-table-column :label="tableColumns.user_id.name" align="center" prop="user_id" min-width="150px">
                 <template slot="header">
                     <el-tooltip class="item" effect="dark" :content="tableColumns['user_id'].tips" placement="top">
