@@ -24,6 +24,13 @@
                     <div>{{ tableColumns.plat_id.options[row.plat_id] }}</div>
                 </template>
             </el-table-column>
+            <el-table-column
+                :label="tableColumns.channel_id.name"
+                align="center"
+                prop="channel_id"
+                min-width="150px"
+            >
+            </el-table-column>
             <el-table-column :label="tableColumns.user_id.name" align="center" prop="user_id" min-width="150px">
                 <template slot="header">
                     <el-tooltip class="item" effect="dark" :content="tableColumns['user_id'].tips" placement="top">
@@ -282,26 +289,29 @@
                     <div>{{ row.d_user_cont_per_user == null ? "-" : row.d_user_cont_per_user }}</div>
                 </template>
             </el-table-column>
-            <!-- <el-table-column
-                :label="tableColumns.register_cost.name"
+            <el-table-column
+                :label="tableColumns.d_user_cost.name"
                 align="center"
-                prop="register_cost"
+                prop="d_user_cost"
                 min-width="150px"
             >
                 <template slot="header">
                     <el-tooltip
                         class="item"
                         effect="dark"
-                        :content="tableColumns['register_cost'].tips"
+                        :content="tableColumns['d_user_cost'].tips"
                         placement="top"
                     >
                         <div>
-                            <span style="margin-right: 5px">{{ tableColumns["register_cost"].name }}</span>
+                            <span style="margin-right: 5px">{{ tableColumns["d_user_cost"].name }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
                         </div>
                     </el-tooltip>
                 </template>
-            </el-table-column> -->
+                <template slot-scope="{ row }">
+                    <div>{{ row.d_user_cost == null ? "-" : row.d_user_cost }}</div>
+                </template>
+            </el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>

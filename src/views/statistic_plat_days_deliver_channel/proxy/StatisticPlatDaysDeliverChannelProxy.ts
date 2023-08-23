@@ -16,7 +16,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
     /**进入页面时调用 */
     enter() {
         this.sendNotification(HttpType.admin_statistic_plat_days_deliver_channel_table_columns);
-        // this.sendNotification(HttpType.admin_statistic_plat_days_deliver_group_table_columns);
+        this.sendNotification(HttpType.admin_statistic_plat_days_deliver_group_table_columns);
     }
 
     /**离开页面时调用 */
@@ -325,6 +325,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
                 created_date: LangUtil("合计"),
                 plat_id: this.listQuery.plat_id,
                 user_id: this.listQuery.user_id || LangUtil("全部团队"),
+                channel_id: this.listQuery.channel_id || LangUtil("全部渠道"),
                 group_name: "/",
             });
         }
