@@ -159,6 +159,7 @@
                                     onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
                                 >
                                     <template slot="prepend">{{ LangUtil("手续费") }}</template>
+                                    <template slot="append">%</template>
                                 </el-input>
                             </div>
                         </el-col>

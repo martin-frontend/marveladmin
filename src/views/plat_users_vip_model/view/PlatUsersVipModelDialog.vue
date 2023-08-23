@@ -214,7 +214,9 @@
                                     type="number"
                                     onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
                                     style="width: 200px"
-                                ></el-input>
+                                >
+                                    <template slot="append">%</template>
+                                </el-input>
                             </el-form-item>
                         </el-form>
                     </div>
