@@ -12,7 +12,7 @@
             }"
             v-loading="net_status.loading"
         >
-            <el-table-column
+        <el-table-column
                 prop="created_date"
                 :label="tableColumns['created_date'].name"
                 align="center"
@@ -35,16 +35,37 @@
                 prop="new_register_device"
                 :label="tableColumns['new_register_device'].name"
                 align="center"
-                min-width="100"
+                min-width="120"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_register_device'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_register_device"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.new_register.display"
                 prop="new_register"
                 :label="tableColumns['new_register'].name"
                 align="center"
-                min-width="100"
+                min-width="120"
             >
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['new_register'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_register"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="effective_new_rate"
@@ -52,18 +73,24 @@
                 align="center"
                 min-width="120"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['effective_new_rate'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["effective_new_rate"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
                 <template slot-scope="{ row }">
                     <span v-if="row.effective_new_rate != null">{{ row.effective_new_rate }}</span>
                     <span v-else> - </span>
                 </template>
             </el-table-column>
-            <!-- <el-table-column
-                prop="new_user"
-                v-if="tableColumns['new_user']"｛
-                :label="tableColumns['new_user'].name"
-                align="center"
-            >
-            </el-table-column> -->
             <el-table-column
                 v-if="tableColumns.recharge.display"
                 prop="recharge"
@@ -71,6 +98,14 @@
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['recharge'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["recharge"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.recharge" :isShowColor="false" :isShowPlus="false" />
                 </template>
@@ -81,6 +116,19 @@
                 align="center"
                 min-width="120"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_user_recharge'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_user_recharge"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="old_user_recharge"
@@ -88,6 +136,19 @@
                 align="center"
                 min-width="120"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['old_user_recharge'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["old_user_recharge"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.recharge_user.display"
@@ -96,6 +157,19 @@
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['recharge_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["recharge_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.new_recharge_user.display"
@@ -104,6 +178,39 @@
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_recharge_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_recharge_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="tableColumns.rech_amt.display"
+                prop="rech_amt"
+                :label="tableColumns['rech_amt'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['rech_amt'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["rech_amt"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.rech_amt != null">{{ row.rech_amt }}</span>
+                    <span v-else> - </span>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="new_recharge_rate"
@@ -111,18 +218,72 @@
                 align="center"
                 min-width="120"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_recharge_rate'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_recharge_rate"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
                 <template slot-scope="{ row }">
                     <span v-if="row.new_recharge_rate != null">{{ row.new_recharge_rate }}</span>
                     <span v-else> - </span>
                 </template>
             </el-table-column>
             <el-table-column
-                v-if="tableColumns.repeat_recharge_user.display"
-                prop="repeat_recharge_user"
-                :label="tableColumns['repeat_recharge_user'].name"
+                v-if="tableColumns.new_reg_rech_total.display"
+                prop="new_reg_rech_total"
+                :label="tableColumns['new_reg_rech_total'].name"
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_reg_rech_total'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{
+                                tableColumns["new_reg_rech_total"].name
+                            }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                
+                <template slot-scope="{ row }">
+                    <span v-if="row.new_reg_rech_total != null">{{ row.new_reg_rech_total }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="tableColumns.new_reg_first_rech_count.display"
+                prop="new_reg_first_rech_count"
+                :label="tableColumns['new_reg_first_rech_count'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_reg_first_rech_count'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_reg_first_rech_count"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.exchange.display"
@@ -131,6 +292,14 @@
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['exchange'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["exchange"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.exchange" :isShowColor="false" :isShowPlus="false" />
                 </template>
@@ -142,8 +311,81 @@
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['exchange_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["exchange_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
-
+            <el-table-column
+                v-if="tableColumns.net_rech.display"
+                prop="net_rech"
+                :label="tableColumns['net_rech'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['net_rech'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["net_rech"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.net_rech != null">{{ row.net_rech }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="tableColumns.exch_amt.display"
+                prop="exch_amt"
+                :label="tableColumns['exch_amt'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['exch_amt'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["exch_amt"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.exch_amt != null">{{ row.exch_amt }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="tableColumns.new_exch_count.display"
+                prop="new_exch_count"
+                :label="tableColumns['new_exch_count'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_exch_count'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_exch_count"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
             <el-table-column
                 v-if="tableColumns.new_exchange_user.display"
                 prop="new_exchange_user"
@@ -151,6 +393,19 @@
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_exchange_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_exchange_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.gift_gold.display"
@@ -195,17 +450,32 @@
                     <WinLossDisplay :amount="row.backwater_gold" :isShowColor="false" :isShowPlus="false" />
                 </template>
             </el-table-column>
-            <el-table-column prop="agent_bonus_gold" :label="tableColumns['agent_bonus_gold'].name" align="center">
+            <el-table-column
+                v-if="tableColumns.win_loss.display"
+                prop="win_loss"
+                :label="tableColumns['win_loss'].name"
+                align="center"
+                min-width="130"
+            >
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['win_loss'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["win_loss"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.agent_bonus_gold" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay :amount="row.win_loss"></WinLossDisplay>
                 </template>
             </el-table-column>
+
             <el-table-column
                 v-if="tableColumns.commission_gold.display"
                 prop="commission_gold"
                 :label="tableColumns['commission_gold'].name"
                 align="center"
-                min-width="100px"
+                min-width="130"
             >
                 <template slot="header">
                     <el-tooltip
@@ -220,21 +490,6 @@
                         </div>
                     </el-tooltip>
                 </template>
-                <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.commission_gold" :isShowColor="false" :isShowPlus="false" />
-                </template>
-            </el-table-column>
-
-            <el-table-column
-                v-if="tableColumns.win_loss.display"
-                prop="win_loss"
-                :label="tableColumns['win_loss'].name"
-                align="center"
-                min-width="130"
-            >
-                <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.win_loss"></WinLossDisplay>
-                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.water.display"
@@ -243,6 +498,14 @@
                 align="center"
                 min-width="130"
             >
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['water'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["water"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.water" :isShowColor="false" :isShowPlus="false" />
                 </template>
@@ -253,6 +516,19 @@
                 align="center"
                 min-width="130"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_register_water'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_register_water"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.new_register_water" :isShowColor="false" :isShowPlus="false" />
                 </template>
@@ -264,6 +540,14 @@
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['active_user'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["active_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="active_user_week"
@@ -271,6 +555,19 @@
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['active_user_week'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["active_user_week"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="active_user_month"
@@ -278,13 +575,19 @@
                 align="center"
                 min-width="100"
             >
-            </el-table-column>
-            <el-table-column
-                prop="active_recharge_user"
-                :label="tableColumns['active_recharge_user'].name"
-                align="center"
-                min-width="100"
-            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['active_user_month'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["active_user_month"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="active_user_recharge"
@@ -292,6 +595,39 @@
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['active_user_recharge'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["active_user_recharge"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="active_recharge_user"
+                :label="tableColumns['active_recharge_user'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['active_recharge_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["active_recharge_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="recharge_seep_rate"
@@ -299,20 +635,284 @@
                 align="center"
                 min-width="100"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['recharge_seep_rate'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["recharge_seep_rate"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
                 <template slot-scope="{ row }">
                     <span v-if="row.recharge_seep_rate != null">{{ row.recharge_seep_rate }}</span>
                     <span v-else> - </span>
                 </template>
             </el-table-column>
             <el-table-column prop="arpu_rate" :label="tableColumns['arpu_rate'].name" align="center" min-width="100">
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['arpu_rate'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["arpu_rate"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
                 <template slot-scope="{ row }">
                     <span v-if="row.arpu_rate != null">{{ row.arpu_rate }}</span>
                     <span v-else> - </span>
                 </template>
             </el-table-column>
             <el-table-column prop="arppu_rate" :label="tableColumns['arppu_rate'].name" align="center" min-width="100">
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['arppu_rate'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["arppu_rate"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
                 <template slot-scope="{ row }">
                     <span v-if="row.arppu_rate != null">{{ row.arppu_rate }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="p_user_rech"
+                :label="tableColumns['p_user_rech'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['p_user_rech'].tips" placement="top">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["p_user_rech"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.p_user_rech != null">{{ row.p_user_rech }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="p_rech_per_user"
+                :label="tableColumns['p_rech_per_user'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['p_rech_per_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["p_rech_per_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.p_rech_per_user != null">{{ row.p_rech_per_user }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="dau"
+                :label="tableColumns['dau'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['dau'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["dau"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.dau != null">{{ row.dau }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="new_user_arpu"
+                :label="tableColumns['new_user_arpu'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_user_arpu'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_user_arpu"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.new_user_arpu != null">{{ row.new_user_arpu }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="new_user_arppu"
+                :label="tableColumns['new_user_arppu'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['new_user_arppu'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["new_user_arppu"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.new_user_arppu != null">{{ row.new_user_arppu }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="d_exch_amt_per_user"
+                :label="tableColumns['d_exch_amt_per_user'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['d_exch_amt_per_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["d_exch_amt_per_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.d_exch_amt_per_user != null">{{ row.d_exch_amt_per_user }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="d_user_cont_per_user"
+                :label="tableColumns['d_user_cont_per_user'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['d_user_cont_per_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["d_user_cont_per_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.d_user_cont_per_user != null">{{ row.d_user_cont_per_user }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="d_exch_amt_per_dau"
+                :label="tableColumns['d_exch_amt_per_dau'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['d_exch_amt_per_dau'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["d_exch_amt_per_dau"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.d_exch_amt_per_dau != null">{{ row.d_exch_amt_per_dau }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="user_cont_per_user"
+                :label="tableColumns['user_cont_per_user'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['user_cont_per_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["user_cont_per_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.user_cont_per_user != null">{{ row.user_cont_per_user }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="cost_per_user"
+                :label="tableColumns['cost_per_user'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['cost_per_user'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["cost_per_user"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.cost_per_user != null">{{ row.cost_per_user }}</span>
                     <span v-else> - </span>
                 </template>
             </el-table-column>

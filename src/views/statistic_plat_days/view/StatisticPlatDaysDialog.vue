@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="LangUtil('字段配置')" :visible.sync="myProxy.dialogData.bShow" width="550px">
+    <el-dialog :title="LangUtil('字段配置')" :visible.sync="myProxy.dialogData.bShow" width="700px">
         <el-form label-width="115px" class="form" v-loading="net_status.loading">
             <el-col :span="8" v-for="(category, key) in form" :key="key">
                 <div>{{ category.title }}</div>
@@ -72,7 +72,7 @@ export default class StatisticPlatDaysDialog extends AbstractView {
 <style scoped lang="scss">
 @import "@/styles/common.scss";
 .form {
-    height: 200px;
+    height: 750px;
     ::v-deep .el-checkbox {
         margin-top: 6px;
     }
