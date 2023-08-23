@@ -1,0 +1,11 @@
+{
+    "name": "活动统计",
+    "description": "活动统计",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75268319",
+    "list": [
+        "admin/plat_activity_statistic/table_columns",
+        "admin/plat_activity_statistic/index",
+        "admin/plat_activity_statistic_user/table_columns",
+        "admin/plat_activity_statistic_user/index"
+    ]
+}

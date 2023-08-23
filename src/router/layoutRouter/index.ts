@@ -218,6 +218,10 @@ const layoutRouter = {
             name: "活动规则配置",
             component: () => import(/* webpackChunkName: "plat_activity_rule" */"@/views/plat_activity_rule/view/PlatActivityRule.vue")
         },        {
+            path: "plat_activity_statistic",
+            name: "活动统计",
+            component: () => import(/* webpackChunkName: "plat_activity_statistic" */"@/views/plat_activity_statistic/view/PlatActivityStatistic.vue")
+        },        {
             path: "plat_agent",
             name: "平台代理配置",
             component: () => import(/* webpackChunkName: "plat_agent" */"@/views/plat_agent/view/PlatAgent.vue")
