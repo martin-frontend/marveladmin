@@ -220,7 +220,7 @@ export default class AdminUserDialog extends AbstractView {
             type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             plat_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             role_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
-            channel_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            // channel_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             status: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
         return {
