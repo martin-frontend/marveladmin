@@ -13,8 +13,8 @@
             <SearchInput :title="tableColumns.activity_id.name" v-model="listQuery.activity_id" />
             <SearchDatePicker
                 :title="tableColumns.created_date.name"
-                :startDate.sync="listQuery['created_date-{<=}']"
-                :endDate.sync="listQuery['created_date-{>=}']"
+                :startDate.sync="listQuery['created_date-{>=}']"
+                :endDate.sync="listQuery['created_date-{<=}']"
             />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
