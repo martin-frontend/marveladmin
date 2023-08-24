@@ -86,8 +86,8 @@
                     <el-option
                         v-for="(value, key) in channelList"
                         :key="key"
-                        :label="value.channel_id"
-                        :value="value.channel_id"
+                        :label="value"
+                        :value="value"
                     >
                     </el-option>
                 </el-select>
@@ -191,6 +191,7 @@ export default class AdminUserDialog extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     channelList = this.myProxy.channelList.list;
     form = this.myProxy.dialogData.form;
+    listQuery = this.myProxy.listQuery;
 
     textMap = {
         update: this.LangUtil("编辑"),
