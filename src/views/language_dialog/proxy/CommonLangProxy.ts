@@ -308,13 +308,16 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             });
             delete copyData.config;
         }
-        Object.assign(this.dialogData.form, copyData);
+
+        if (this.first) {
+            this.first = false;
+            return;
+        }
         for (const key in this.dialogData.check) {
-            if (!this.first && !this.dialogData.check[key]) {
-                this.dialogData.form[key] = "";
+            if (this.dialogData.check[key]) {
+                this.dialogData.form[key] = copyData[key];
             }
         }
-        this.first = false;
     }
 
     /**

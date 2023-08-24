@@ -54,7 +54,7 @@ export default class CommonLangMediator extends AbstractMediator {
                 break;
             case EventType.admin_system_lang_translate:
             case EventType.admin_system_lang_translate_skip_reserved_words:
-                // Message.success(SuccessMessage.update);
+                Message.success(SuccessMessage.update);
                 myProxy.updateForm(body);
                 break;
             case EventType.admin_system_lang_check:

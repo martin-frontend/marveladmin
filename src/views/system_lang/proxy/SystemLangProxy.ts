@@ -351,10 +351,9 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
 
     /**获取全部翻译返回更新表单 */
     updateForm(data: any): void {
-        Object.assign(this.dialogData.form, data);
         for (const key in this.dialogData.check) {
-            if (!this.dialogData.check[key]) {
-                this.dialogData.form[key] = "";
+            if (this.dialogData.check[key]) {
+                this.dialogData.form[key] = data[key];
             }
         }
     }
