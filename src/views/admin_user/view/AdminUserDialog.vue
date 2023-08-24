@@ -78,6 +78,7 @@
             <el-form-item v-if="form.type == 8 || form.type == 4" size="mini" :label="tableColumns['channel_id'].name" prop="channel_ids">
                 <el-select
                     v-model="form.channel_ids"
+                    filterable
                     multiple
                     clearable
                     :placeholder="LangUtil('请选择')"
