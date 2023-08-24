@@ -13,6 +13,7 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
     /**进入页面时调用 */
     enter() {
         this.sendNotification(HttpType.admin_plat_activity_statistic_table_columns);
+        this.sendNotification(HttpType.admin_plat_activity_statistic_user_table_columns);
     }
 
     /**离开页面时调用 */
@@ -24,22 +25,27 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
             pageCount: 1,
         });
     }
-
+    activityStatisticColumns = {
+        plat_id: { name: "平台id", options: {} },
+        channel_id: { name: "渠道id", options: [] },
+        activity_id: { name: "活动ID", options: [] },
+        data_belong: { name: "数据归属标记", options: [] },
+        created_date: { name: "统计日期", options: [] },
+        join_num: { name: "参与人数", options: [] },
+        award_amount: { name: "奖励总额", options: [] },
+        receive_award_amount: { name: "领取奖励总额", options: [] },
+        receive_award_num: { name: "领取奖励人数", options: [] },
+        created_at: { name: "创建时间", options: [] },
+        updated_at: { name: "更新时间", options: [] },
+    };
+    activityStatisticUserColumns = {
+        user_id: { name: "玩家ID", options: [] },
+        receive_award_amount: { name: "实际领取奖励", options: [] },
+        plat_id: { name: "所属平台", options: {} },
+    };
     /**表格相关数据 */
     tableData = {
-        columns: {
-            plat_id: { name: "平台id", options: {} },
-            channel_id: { name: "渠道id", options: [] },
-            activity_id: { name: "活动ID", options: [] },
-            data_belong: { name: "数据归属标记", options: [] },
-            created_date: { name: "统计日期", options: [] },
-            join_num: { name: "参与人数", options: [] },
-            award_amount: { name: "奖励总额", options: [] },
-            receive_award_amount: { name: "领取奖励总额", options: [] },
-            receive_award_num: { name: "领取奖励人数", options: [] },
-            created_at: { name: "创建时间", options: [] },
-            updated_at: { name: "更新时间", options: [] },
-        },
+        columns: <any>{ ...this.activityStatisticUserColumns, ...this.activityStatisticColumns },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
@@ -57,11 +63,6 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        columns: {
-            user_id: { name: "玩家ID", options: [] },
-            receive_award_amount: { name: "实际领取奖励", options: [] },
-            plat_id: { name: "所属平台", options: {} },
-        },
         form: {
             id: null,
             // TODO
@@ -91,7 +92,8 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
     }
 
     setUserTableColumns(data: any) {
-        Object.assign(this.dialogData.columns, data);
+        delete data.plat_id;
+        Object.assign(this.tableData.columns, data);
     }
     /**表格数据 */
     setTableData(data: any) {
@@ -123,16 +125,16 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
 
     /**显示弹窗 */
     showDialog(data: any) {
-        const { activity_id, plat_id, channel_id } = data;
+        const { activity_id, plat_id, channel_id, created_date } = data;
         Object.assign(this.dialogData.query, {
+            created_date,
             activity_id,
             plat_id,
             channel_id,
             user_id: "",
         });
         this.dialogData.bShow = true;
-        this.sendNotification(HttpType.admin_plat_activity_statistic_user_table_columns);
-        this.sendNotification(HttpType.admin_plat_activity_statistic_user_index, objectRemoveNull(this.dialogData.query));
+        this.onUserQuery();
     }
     /**隐藏弹窗 */
     hideDialog() {
@@ -148,6 +150,13 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
     /**查询 */
     onQuery() {
         this.sendNotification(HttpType.admin_plat_activity_statistic_index, objectRemoveNull(this.listQuery));
+    }
+
+    onUserQuery() {
+        this.sendNotification(
+            HttpType.admin_plat_activity_statistic_user_index,
+            objectRemoveNull(this.dialogData.query)
+        );
     }
     /**添加数据 */
     onAdd() {
@@ -215,8 +224,8 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
     getExcelOutputName() {
         //@ts-ignore
         const plat_name = this.tableData.columns.plat_id.options[this.listQuery.plat_id];
-        let name = `${<string>LangUtil("活动统计")}-${plat_name}`;
-
+        let name = this.exportData.type == "platAcititvyStatistic" ? LangUtil("活动统计") : LangUtil("参与玩家");
+        name += `-${plat_name}`;
         if (this.listQuery["created_date-{>=}"] && this.listQuery["created_date-{<=}"] != "") {
             name += `-${this.listQuery["created_date-{>=}"]}～${this.listQuery["created_date-{<=}"]}`;
         }
@@ -240,7 +249,7 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
             queryCopy.page_size = pageSize;
             queryCopy.page_count = Number(pageCurrent) + 1;
             queryCopy.plat_id = this.dialogData.query.plat_id === "0" ? "" : queryCopy.plat_id;
-            this.sendNotification(HttpType.admin_plat_activity_statistic_index, objectRemoveNull(queryCopy));
+            this.sendNotification(HttpType.admin_plat_activity_statistic_user_index, objectRemoveNull(queryCopy));
         }
     }
 
@@ -268,14 +277,12 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
                 exportField.push(item);
             }
         }
-        const columns: any =
-            this.exportData.type == "platAcititvyStatistic" ? this.tableData.columns : this.dialogData.columns;
 
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
             // this.curKeyList,
             exportField,
-            columns,
+            this.tableData.columns,
             // summary,
             newData,
             ["plat_id"],
@@ -298,8 +305,13 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
         return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
     }
 
-    showFieldSelectionDialog() {
-        this.fieldSelectionData.bShow = true;
+    showFieldSelectionDialog(type: ExportType) {
+        this.exportData.type = type;
+        this.fieldSelectionData.fieldOptions =
+            type == "platAcititvyStatistic"
+                ? [...this.platAcititvyStatisticFieldOptions]
+                : [...this.platAcititvyStatisticUserFieldOptions];
         this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
+        this.fieldSelectionData.bShow = true;
     }
 }

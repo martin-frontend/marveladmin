@@ -41,20 +41,18 @@ export default class PlatActivityStatisticUserHeader extends AbstractView {
     // proxy
     myProxy: PlatActivityStatisticProxy = this.getProxy(PlatActivityStatisticProxy);
     // proxy property
-    tableColumns = this.myProxy.dialogData.columns;
+    tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.dialogData.query;
     LangUtil = LangUtil;
     list = this.myProxy.dialogData.list;
 
     handlerSearch() {
         this.listQuery.page_count = 1;
-        this.myProxy.onQuery();
+        this.myProxy.onUserQuery();
     }
 
     handlerExport() {
-        this.myProxy.exportData.type = "platAcititvyStatisticUser";
-        this.myProxy.fieldSelectionData.fieldOptions = [...this.myProxy.platAcititvyStatisticUserFieldOptions];
-        this.myProxy.showFieldSelectionDialog();
+        this.myProxy.showFieldSelectionDialog("platAcititvyStatisticUser");
     }
 }
 </script>

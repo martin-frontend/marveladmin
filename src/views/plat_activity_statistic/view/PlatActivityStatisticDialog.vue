@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="LangUtil('活动参与玩家')" :visible.sync="myProxy.dialogData.bShow"> 
+    <el-dialog :title="LangUtil('活动参与玩家')" :visible.sync="myProxy.dialogData.bShow">
         <PlatActivityStatisticUserHeader />
         <PlatActivityStatisticUserBody />
     </el-dialog>

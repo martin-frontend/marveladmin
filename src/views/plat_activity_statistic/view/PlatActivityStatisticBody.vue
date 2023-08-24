@@ -98,9 +98,9 @@ export default class PlatActivityStatisticBody extends AbstractView {
         this.myProxy.onQuery();
     }
 
-    handleEdit(data: any) {
-        this.myProxy.showDialog(DialogStatus.update, data);
-    }
+    // handleEdit(data: any) {
+    //     this.myProxy.showDialog(DialogStatus.update, data);
+    // }
 
     handlerDetail() {
         this.$router.push("/layout/plat_activity_award");

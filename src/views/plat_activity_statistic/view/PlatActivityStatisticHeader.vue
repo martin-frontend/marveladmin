@@ -77,9 +77,7 @@ export default class PlatActivityStatisticHeader extends AbstractView {
     }
 
     handlerExport() {
-        this.myProxy.exportData.type = "platAcititvyStatistic";
-        this.myProxy.fieldSelectionData.fieldOptions = [...this.myProxy.platAcititvyStatisticFieldOptions];
-        this.myProxy.showFieldSelectionDialog();
+        this.myProxy.showFieldSelectionDialog("platAcititvyStatistic");
     }
 }
 </script>

@@ -49,7 +49,7 @@ export default class PlatActivityStatisticUserBody extends AbstractView {
     // proxy
     myProxy: PlatActivityStatisticProxy = this.getProxy(PlatActivityStatisticProxy);
     // proxy property
-    tableColumns = this.myProxy.dialogData.columns;
+    tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.dialogData.list;
     pageInfo = this.myProxy.dialogData.pageInfo;
     listQuery = this.myProxy.dialogData.query;
@@ -59,9 +59,9 @@ export default class PlatActivityStatisticUserBody extends AbstractView {
         this.myProxy.onQuery();
     }
 
-    handleEdit(data: any) {
-        this.myProxy.showDialog(DialogStatus.update, data);
-    }
+    // handleEdit(data: any) {
+    //     this.myProxy.showDialog(DialogStatus.update, data);
+    // }
 
     handlerDetail() {
         this.$router.push("/layout/plat_activity_award");
