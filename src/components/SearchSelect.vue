@@ -13,6 +13,7 @@
             :clearable="clearable"
             :placeholder="placeholder"
             :disabled="getDisabled"
+            :multiple="multiple"
             @change="onChange"
         >
             <template v-if="!isUseKey">
@@ -57,7 +58,8 @@ export default class SearchSelect extends Vue {
     @Prop({ default: true }) isNeedTitle!: boolean;
     @Prop() tip!: string;
     @Prop({ default: false }) isUseKey!: boolean;
-
+    @Prop({ default: false }) multiple!: boolean;
+    
     selectValue = this.getValue;
 
     @Prop() value!: any;
@@ -113,7 +115,7 @@ export default class SearchSelect extends Vue {
     // width: 280px;
     margin-right: 10px;
     margin-bottom: 10px;
-    el-select {
+    .el-select {
         width: 100%;
     }
 
