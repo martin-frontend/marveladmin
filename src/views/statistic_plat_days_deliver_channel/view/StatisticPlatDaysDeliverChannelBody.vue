@@ -3,9 +3,9 @@
         <el-tab-pane :label="LangUtil('按渠道')" name="channel">
             <StatisticPlatDaysDeliverChannelByChannelTable />
         </el-tab-pane>
-        <!-- <el-tab-pane :label="LangUtil('按团队')" name="group">
+        <el-tab-pane :label="LangUtil('按团队')" name="group">
             <StatisticPlatDaysDeliverChannelByGroupTable />
-        </el-tab-pane> -->
+        </el-tab-pane>
     </el-tabs>
 </template>
 <script lang="ts">
@@ -13,7 +13,7 @@ import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
-// import StatisticPlatDaysDeliverChannelProxy from "../proxy/StatisticPlatDaysDeliverChannelProxy";
+import StatisticPlatDaysDeliverChannelProxy from "../proxy/StatisticPlatDaysDeliverChannelProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
