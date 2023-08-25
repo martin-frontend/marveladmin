@@ -176,6 +176,49 @@
                                 </el-form-item>
                             </el-form>
                         </template>
+
+                        <div class="gap_line"></div>
+                        <div>{{ LangUtil("提款限制") }}</div>
+                        <el-form :inline="true" class="demo-form-inline">
+                            <el-form-item size="mini" :label="LangUtil('每日次数上限')">
+                                <el-input
+                                    v-model="item.daily_exchange_times_limit"
+                                    controls-position="right"
+                                    :min="0"
+                                    :step="0.01"
+                                    :precision="2"
+                                    type="number"
+                                    onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                    style="width: 200px"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item size="mini" :label="LangUtil('每次金额上限')">
+                                <el-input
+                                    v-model="item.exchange_amount_limit"
+                                    controls-position="right"
+                                    :min="0"
+                                    :step="0.01"
+                                    :precision="2"
+                                    type="number"
+                                    onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                    style="width: 200px"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item size="mini" :label="LangUtil('手续费')">
+                                <el-input
+                                    v-model="item.exchange_fee_rate"
+                                    controls-position="right"
+                                    :min="0"
+                                    :step="0.01"
+                                    :precision="2"
+                                    type="number"
+                                    onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                    style="width: 200px"
+                                >
+                                    <template slot="append">%</template>
+                                </el-input>
+                            </el-form-item>
+                        </el-form>
                     </div>
                 </el-col>
             </el-row>

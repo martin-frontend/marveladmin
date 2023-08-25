@@ -120,6 +120,49 @@
                                 </div>
                             </el-col>
                         </template>
+
+                        <el-col :span="6">
+                            <div style="margin-right: 8px; max-width:250px;">
+                                <div>{{ LangUtil("提款限制") }}</div>
+                                <el-input
+                                    style="width: 100%"
+                                    :min="0"
+                                    class="input"
+                                    type="number"
+                                    step="1"
+                                    v-model="item.daily_exchange_times_limit"
+                                    :disabled="!myProxy.isEdit"
+                                    onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                >
+                                    <template slot="prepend">{{ LangUtil("每日次数上限") }}</template>
+                                </el-input>
+                                <el-input
+                                    style="width: 100%"
+                                    :min="0"
+                                    class="input"
+                                    type="number"
+                                    step="1"
+                                    v-model="item.exchange_amount_limit"
+                                    :disabled="!myProxy.isEdit"
+                                    onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                >
+                                    <template slot="prepend">{{ LangUtil("每次金额上限") }}</template>
+                                </el-input>
+                                <el-input
+                                    style="width: 100%"
+                                    :min="0"
+                                    class="input"
+                                    type="number"
+                                    step="1"
+                                    v-model="item.exchange_fee_rate "
+                                    :disabled="!myProxy.isEdit"
+                                    onKeypress="return(/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+                                >
+                                    <template slot="prepend">{{ LangUtil("手续费") }}</template>
+                                    <template slot="append">%</template>
+                                </el-input>
+                            </div>
+                        </el-col>
                     </el-row>
                 </el-form-item>
             </el-form>
