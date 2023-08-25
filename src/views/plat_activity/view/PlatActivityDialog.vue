@@ -261,52 +261,6 @@
                             :disabled="isStatusUpdate"
                         ></el-input>
                     </el-form-item>
-                    <!-- 展示方式 -->
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['show_type'].name"
-                        prop="show_type"
-                        v-if="!form.model_id"
-                    >
-                        <el-radio-group :disabled="isStatusUpdate" v-model="form.show_type" @change="showTypeChange">
-                            <el-radio
-                                v-for="(value, key) in spliceShowTypes(tableColumns['show_type'].options)"
-                                :key="key"
-                                :label="Number(key)"
-                            >
-                                {{ value }}
-                            </el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['show_type'].name"
-                        prop="show_type"
-                        v-if="!isStatusUpdate && form.model_id"
-                    >
-                        <el-radio-group :disabled="isStatusUpdate" v-model="form.show_type" @change="showTypeChange">
-                            <el-radio v-for="(value, key) in form.show_types" :key="key" :label="Number(value)">
-                                {{ tableColumns["show_type"].options[value] }}
-                            </el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['show_type'].name"
-                        prop="show_type"
-                        v-if="isStatusUpdate && form.model_id"
-                    >
-                        <el-radio-group :disabled="isStatusUpdate" v-model="form.show_type" @change="showTypeChange">
-                            <el-radio
-                                v-for="(item, index) in getShowTypes(form.model_id)"
-                                :key="index"
-                                :label="Number(item)"
-                            >
-                                {{ tableColumns["show_type"].options[item] }}
-                            </el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-
                     <el-form-item
                         v-if="form.award_type == 16 || form.award_type == '16'"
                         size="mini"
@@ -318,21 +272,21 @@
                             </el-row>
                             <el-row :gutter="10">
                                 <!-- <el-col :span="3">
-                            <div>
-                                <el-button
-                                    @click="onDeleteDailyRatio()"
-                                    :disabled="!form.daily_ratio || form.daily_ratio.length < 1"
-                                    type="primary"
-                                    icon="el-icon-refresh"
-                                    >{{ LangUtil("删除") }}</el-button
-                                >
-                            </div>
-                            <div style="margin-top: 8px;">
-                                <el-button @click="onAddDailyRatio()" type="primary" icon="el-icon-refresh">{{
-                                    LangUtil("添加")
-                                }}</el-button>
-                            </div>
-                        </el-col> -->
+                        <div>
+                            <el-button
+                                @click="onDeleteDailyRatio()"
+                                :disabled="!form.daily_ratio || form.daily_ratio.length < 1"
+                                type="primary"
+                                icon="el-icon-refresh"
+                                >{{ LangUtil("删除") }}</el-button
+                            >
+                        </div>
+                        <div style="margin-top: 8px;">
+                            <el-button @click="onAddDailyRatio()" type="primary" icon="el-icon-refresh">{{
+                                LangUtil("添加")
+                            }}</el-button>
+                        </div>
+                    </el-col> -->
 
                                 <el-col :span="3" v-for="(value, key) in form.daily_ratio" :key="key">
                                     <div style="height: 30px;">{{ LangUtil("第{0}天%", key + 1) }}</div>
@@ -351,54 +305,102 @@
                             </el-row>
                         </div>
                     </el-form-item>
+                </template>
 
-                    <el-form-item size="mini" :label="LangUtil('上传图片')" v-if="form.show_type == 4" prop="link_url">
-                        <div style="display: flex">
-                            <el-upload
-                                action="#"
-                                list-type="picture-card"
-                                :on-change="handleChange"
-                                :auto-upload="false"
-                                :multiple="false"
-                                :show-file-list="false"
-                                ref="upload"
-                                v-if="!myProxy.dialogData.fileList[0].url"
-                            >
-                                <i class="el-icon-plus"></i>
-                            </el-upload>
-                            <div class="upload-box" @mouseover="showMask = true" @mouseleave="showMask = false" v-else>
-                                <div class="mask" v-show="showMask">
-                                    <div class="icon-bar">
-                                        <i class="el-icon-delete" @click="handleRemove"></i>
-                                        <i class="el-icon-zoom-in" @click="handlePictureCardPreview"></i>
-                                    </div>
+                <!-- 展示方式 -->
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['show_type'].name"
+                    prop="show_type"
+                    v-if="!form.model_id"
+                >
+                    <el-radio-group :disabled="isStatusUpdate" v-model="form.show_type" @change="showTypeChange">
+                        <el-radio
+                            v-for="(value, key) in spliceShowTypes(tableColumns['show_type'].options)"
+                            :key="key"
+                            :label="Number(key)"
+                        >
+                            {{ value }}
+                        </el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['show_type'].name"
+                    prop="show_type"
+                    v-if="!isStatusUpdate && form.model_id"
+                >
+                    <el-radio-group :disabled="isStatusUpdate" v-model="form.show_type" @change="showTypeChange">
+                        <el-radio v-for="(value, key) in form.show_types" :key="key" :label="Number(value)">
+                            {{ tableColumns["show_type"].options[value] }}
+                        </el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['show_type'].name"
+                    prop="show_type"
+                    v-if="isStatusUpdate && form.model_id"
+                >
+                    <el-radio-group :disabled="isStatusUpdate" v-model="form.show_type" @change="showTypeChange">
+                        <el-radio
+                            v-for="(item, index) in getShowTypes(form.model_id)"
+                            :key="index"
+                            :label="Number(item)"
+                        >
+                            {{ tableColumns["show_type"].options[item] }}
+                        </el-radio>
+                    </el-radio-group>
+                </el-form-item>
+
+                <el-form-item size="mini" :label="LangUtil('上传图片')" v-if="form.show_type == 4" prop="link_url">
+                    <div style="display: flex">
+                        <el-upload
+                            action="#"
+                            list-type="picture-card"
+                            :on-change="handleChange"
+                            :auto-upload="false"
+                            :multiple="false"
+                            :show-file-list="false"
+                            ref="upload"
+                            v-if="!myProxy.dialogData.fileList[0].url"
+                        >
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <div class="upload-box" @mouseover="showMask = true" @mouseleave="showMask = false" v-else>
+                            <div class="mask" v-show="showMask">
+                                <div class="icon-bar">
+                                    <i class="el-icon-delete" @click="handleRemove"></i>
+                                    <i class="el-icon-zoom-in" @click="handlePictureCardPreview"></i>
                                 </div>
-
-                                <img :src="formatImageUrl(myProxy.dialogData.fileList[0].url)" />
                             </div>
-                            <el-button
-                                style="max-height: 35px; margin-left: 10px"
-                                type="primary"
-                                size="mini"
-                                @click="handleLangImg()"
-                            >
-                                {{ LangUtil("多语言图片") }}
-                            </el-button>
+
+                            <img :src="formatImageUrl(myProxy.dialogData.fileList[0].url)" />
                         </div>
-                    </el-form-item>
-                    <el-form-item size="mini" v-if="form.show_type == 1">
-                        <el-button size="mini" type="primary" @click="handleLangTinymce">
-                            {{ LangUtil("添加内容") }}
+                        <el-button
+                            style="max-height: 35px; margin-left: 10px"
+                            type="primary"
+                            size="mini"
+                            @click="handleLangImg()"
+                        >
+                            {{ LangUtil("多语言图片") }}
                         </el-button>
-                    </el-form-item>
-                    <el-form-item
-                        size="mini"
-                        :label="tableColumns['link_url'].name"
-                        prop="link_url"
-                        v-if="form.show_type == 2"
-                    >
-                        <el-input v-model="form.link_url" :placeholder="LangUtil('请输入')"></el-input>
-                    </el-form-item>
+                    </div>
+                </el-form-item>
+                <el-form-item size="mini" v-if="form.show_type == 1">
+                    <el-button size="mini" type="primary" @click="handleLangTinymce">
+                        {{ LangUtil("添加内容") }}
+                    </el-button>
+                </el-form-item>
+                <el-form-item
+                    size="mini"
+                    :label="tableColumns['link_url'].name"
+                    prop="link_url"
+                    v-if="form.show_type == 2"
+                >
+                    <el-input v-model="form.link_url" :placeholder="LangUtil('请输入')"></el-input>
+                </el-form-item>
+                <template v-if="!isBallAward">
                     <!-- 扩展任务类型 -->
                     <el-form-item
                         size="mini"

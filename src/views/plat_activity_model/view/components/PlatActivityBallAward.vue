@@ -1,5 +1,18 @@
 <template>
     <div>
+        <el-form-item size="mini" :label="tableColumns['show_types'].name" prop="show_types">
+            <el-checkbox-group v-model="form.show_types">
+                <el-checkbox
+                    v-for="(value, key) in tableColumns['show_types'].options"
+                    :key="key"
+                    :label="Number(key)"
+                    @change="onShowTypeChange($event, key)"
+                >
+                    {{ value }}
+                </el-checkbox>
+            </el-checkbox-group>
+        </el-form-item>
+
         <el-form-item size="mini" :label="tableColumns['bonus_multiple'].name" prop="bonus_multiple" class="mini_input">
             <el-input type="number" v-model="form.bonus_multiple" :placeholder="LangUtil('请输入')"></el-input>
         </el-form-item>
@@ -303,6 +316,20 @@ export default class PlatActivityBallAward extends AbstractView {
             arr.splice(key, 1);
         } else {
             delete arr[key];
+        }
+    }
+
+    // 展示方式變動
+    onShowTypeChange(event: any, key: number) {
+        // 點選客戶端處理
+        if (key == 0 && event == true) {
+            this.form.show_types = [0];
+        } else if (key > 0 && event == true) {
+            Object.keys(this.form.show_types).forEach(element => {
+                if (this.form.show_types[element] == 0) {
+                    delete this.form.show_types[element];
+                }
+            });
         }
     }
 }

@@ -49,6 +49,7 @@
             <div class="border_div">
                 <div v-for="(item, index) of form.lottery_cons" :key="index" class="item_mini_input">
                     <span style="margin: 0px 10px;">
+                        <span>{{ index+1 }}</span>
                         <span>
                             {{ LangUtil("起始次数") }}
                         </span>
@@ -116,6 +117,7 @@
             <div class="border_div">
                 <div v-for="(item, index) of form.lottery_award" :key="index" class="item_mini_input">
                     <span style="margin: 0px 10px;">
+                        <span>{{ index+1 }}</span>
                         <span>
                             {{ LangUtil("抽奖轮数") }}
                         </span>
@@ -184,6 +186,7 @@
             <div class="border_div">
                 <div v-for="(item, index) of form.ball_award" :key="index" class="item_mini_input">
                     <span style="margin: 0px 10px;">
+                        <span>{{ index+1 }}</span>
                         <span>
                             {{ LangUtil("权重") }}
                         </span>
@@ -219,6 +222,7 @@
             <div class="border_div">
                 <div v-for="(item, index) of form.rank_award" :key="index" class="item_mini_input">
                     <span style="margin: 0px 10px;">
+                        <span>{{ index+1 }}</span>
                         <span>
                             {{ LangUtil("起始排名") }}
                         </span>
@@ -287,6 +291,7 @@
             <div class="border_div">
                 <div v-for="(item, index) of form.day_num_init_config" :key="index" class="item_mini_input">
                     <span style="margin: 0px 10px;">
+                        <span>{{ index+1 }}</span>
                         <!-- <el-input
                             v-for="(ele, key) of item.interval"
                             type="number"
@@ -367,6 +372,10 @@ export default class PlatActivityBallAward extends AbstractView {
         } else {
             delete arr[key];
         }
+    }
+    onChange()
+    {
+
     }
 }
 </script>
