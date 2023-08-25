@@ -19,17 +19,11 @@
                 min-width="150px"
             >
             </el-table-column>
-            <el-table-column :label="tableColumns.plat_id.name" align="center" prop="plat_id" min-width="150px">
+            <el-table-column :label="LangUtil('平台信息')" align="center" prop="plat_id" min-width="180px">
                 <template slot-scope="{ row }">
-                    <div>{{ tableColumns.plat_id.options[row.plat_id] }}</div>
+                    <div>{{ LangUtil("平台") }}:{{ tableColumns.plat_id.options[row.plat_id] }}</div>
+                    <div>{{ LangUtil("渠道") }}:{{ row.channel_id }}</div>
                 </template>
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns.channel_id.name"
-                align="center"
-                prop="channel_id"
-                min-width="150px"
-            >
             </el-table-column>
             <el-table-column :label="tableColumns.user_id.name" align="center" prop="user_id" min-width="150px">
                 <template slot="header">
@@ -289,19 +283,9 @@
                     <div>{{ row.d_user_cont_per_user == null ? "-" : row.d_user_cont_per_user }}</div>
                 </template>
             </el-table-column>
-            <el-table-column
-                :label="tableColumns.d_user_cost.name"
-                align="center"
-                prop="d_user_cost"
-                min-width="150px"
-            >
+            <el-table-column :label="tableColumns.d_user_cost.name" align="center" prop="d_user_cost" min-width="150px">
                 <template slot="header">
-                    <el-tooltip
-                        class="item"
-                        effect="dark"
-                        :content="tableColumns['d_user_cost'].tips"
-                        placement="top"
-                    >
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['d_user_cost'].tips" placement="top">
                         <div>
                             <span style="margin-right: 5px">{{ tableColumns["d_user_cost"].name }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
