@@ -37,7 +37,7 @@ export var EventType = {
     admin_plat_lang_import: "admin_plat_lang_import",
     admin_system_lang_store: "admin_system_lang_store",
     admin_system_lang_update: "admin_system_lang_update",
-    admin_system_lang_check: "admin_system_lang_check",
+    admin_system_lang_check: "admin/system_lang/show_key",
     admin_system_lang_translate_skip_reserved_words: "admin_system_lang_translate_skip_reserved_words",
 };
 /**注册协议*/
