@@ -9,16 +9,22 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column :label="tableColumns.plat_id.name" prop="plat_id"> </el-table-column>
+            <el-table-column :label="tableColumns.plat_id.name" prop="">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns.plat_id.options[row.plat_id] }}</div>
+                </template>
+            </el-table-column>
             <el-table-column :label="tableColumns.activity_id.name" prop="activity_id"> </el-table-column>
             <el-table-column :label="tableColumns.activity_name.name" prop="activity_name"> </el-table-column>
             <el-table-column :label="tableColumns.current_cycle.name" prop="current_cycle"> </el-table-column>
-            <el-table-column :label="tableColumns.coin_unique.name" prop="coin_unique"> </el-table-column>
             <el-table-column :label="tableColumns.start_time.name" prop="start_time"> </el-table-column>
-
             <el-table-column :label="tableColumns.end_time.name" prop="end_time"> </el-table-column>
-
+            <el-table-column :label="tableColumns.coin_unique.name" prop="coin_unique"> </el-table-column>
             <el-table-column :label="tableColumns.prize_pool_amount.name" prop="prize_pool_amount"> </el-table-column>
+            <el-table-column :label="tableColumns.join_user_num.name" prop="join_user_num"> </el-table-column>
+            <el-table-column :label="tableColumns.init_user_num.name" prop="init_user_num"> </el-table-column>
+            <el-table-column :label="tableColumns.total_cons.name" prop="total_cons"> </el-table-column>
+            <el-table-column :label="tableColumns.total_award.name" prop="total_award"> </el-table-column>
 
             <el-table-column :label="tableColumns.cycle_status.name" prop="">
                 <template slot-scope="{ row }">
@@ -34,7 +40,7 @@
                         :disabled="!checkUnique(unique.plat_activity_statistic_ball_user)"
                         @click="showDialogBallUser(row)"
                     >
-                        {{ LangUtil("玩家统计") }}
+                        {{ LangUtil("参与玩家") }}
                     </el-button>
                 </template>
             </el-table-column>

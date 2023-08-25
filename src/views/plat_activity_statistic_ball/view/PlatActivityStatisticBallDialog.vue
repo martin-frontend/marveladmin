@@ -1,27 +1,24 @@
 <template>
-    <el-dialog :title="LangUtil('彩球活动用户统计')" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="LangUtil('彩球活动用户统计')" :visible.sync="myProxy.dialogData.bShow" width="1200px">
         <div class="header-content">
             <div class="group">
                 <SearchSelect
-                    :title="tableColumns_ball.plat_id.name"
+                    :title="tableColumns.plat_id.name"
                     v-model="listQuery.plat_id"
                     :options="tableColumns.plat_id.options"
                     @change="handlerSearch"
                     :disabled="true"
                     :clearable="false"
                 />
+                <SearchInput :title="tableColumns.activity_id.name" v-model="listQuery.activity_id" :disabled="true" />
                 <SearchInput
-                    :title="tableColumns_ball.activity_id.name"
-                    v-model="listQuery.activity_id"
-                    :disabled="true"
-                />
-                <SearchInput
-                    :title="tableColumns_ball.current_cycle.name"
+                    :title="tableColumns.current_cycle.name"
                     v-model="listQuery.current_cycle"
                     :disabled="true"
                 />
+                <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
 
-                <!-- <div>
+                <div>
                     <el-button @click="handlerSearch" class="header-button" type="primary" icon="el-icon-search">
                         {{ LangUtil("查询") }}
                     </el-button>
@@ -31,11 +28,12 @@
                     <ExportDialog
                         :fiterOption="userList"
                         :proxy="myProxy"
+                        :_disabled="myProxy.tableData_ball_user.list && myProxy.tableData_ball_user.list.length > 0"
                         :export_file_name="getExcelOutputName"
                         @exportExcel="exportExcel"
                         style="margin-left: 10px;"
                     />
-                </div> -->
+                </div>
             </div>
         </div>
 
@@ -51,15 +49,20 @@
                 class="drag_table"
                 height="500"
             >
-                <el-table-column :label="tableColumns_ball.plat_id.name" prop="plat_id"> </el-table-column>
-                <el-table-column :label="tableColumns_ball.activity_id.name" prop="activity_id"> </el-table-column>
-                <el-table-column :label="tableColumns.user_id.name" prop="user_id"> </el-table-column>
-                <el-table-column :label="tableColumns.lottery_num.name" prop="lottery_num"> </el-table-column>
+                <el-table-column :label="tableColumns.plat_id.name" prop="">
+                    <template slot-scope="{ row }">
+                        <div>{{ tableColumns.plat_id.options[row.plat_id] }}</div>
+                    </template>
+                </el-table-column>
+                <!-- <el-table-column size="mini" :label="tableColumns.activity_id.name" prop="activity_id" /> -->
+                <el-table-column size="mini" :label="tableColumns.user_id.name" prop="user_id" />
+                <el-table-column size="mini" :label="tableColumns.lottery_code.name" prop="lottery_code" />
+                <el-table-column size="mini" :label="tableColumns.total_cons.name" prop="total_cons" />
+                <el-table-column size="mini" :label="tableColumns.lottery_num.name" prop="lottery_num" />
 
-                <el-table-column :label="tableColumns.lottery_code.name" prop="lottery_code"> </el-table-column>
-                <el-table-column :label="tableColumns.total_cons.name" prop="total_cons"> </el-table-column>
-                <el-table-column :label="tableColumns.lottery_award.name" prop="lottery_award"> </el-table-column>
-                <el-table-column :label="tableColumns.rank_award.name" prop="rank_award"> </el-table-column>
+                <el-table-column size="mini" :label="tableColumns.lottery_award.name" prop="lottery_award" />
+                <el-table-column size="mini" :label="tableColumns.rank_award.name" prop="rank_award" />
+                <el-table-column size="mini" :label="tableColumns.award_rank.name" prop="award_rank" />
             </el-table>
 
             <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
@@ -97,12 +100,14 @@ export default class PlatActivityStatisticBallDialog extends AbstractView {
     // proxy
     myProxy: PlatActivityStatisticBallProxy = this.getProxy(PlatActivityStatisticBallProxy);
     // proxy property
-    tableColumns_ball = this.myProxy.tableData.columns;
-    tableColumns = this.myProxy.tableData_ball_user.columns;
+    // tableColumns_ball = this.myProxy.tableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
     tableData = this.myProxy.tableData_ball_user.list;
     pageInfo = this.myProxy.tableData_ball_user.pageInfo;
     listQuery = this.myProxy.listQuery_ball_user;
+
+    userList = this.myProxy._userList_ball_user;
 
     LangUtil = LangUtil;
     private textMap = {
@@ -157,6 +162,32 @@ export default class PlatActivityStatisticBallDialog extends AbstractView {
     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery_ball_user();
+    }
+    get getExcelOutputName() {
+        //@ts-ignore
+        const plat_name = this.tableColumns.plat_id.options[this.listQuery.plat_id];
+        let name = `${LangUtil("彩球玩家统计")}-${plat_name}-${this.listQuery.activity_id}-${
+            this.listQuery.current_cycle
+        }`;
+        return name;
+    }
+    get convertKeys() {
+        return [
+            "plat_id",
+            "cycle_status",
+            "vendor_id",
+            "vendor_type",
+            "vendor_wallet_type",
+            "time_region_hour_interval",
+            "status",
+            "is_activity_task_water",
+        ];
+    }
+    exportExcel(val: boolean, pageInfo: any) {
+        this.myProxy.tableData_ball_user.isExportExcel = val;
+        if (val) {
+            this.myProxy.onQuery_export_ball_user(pageInfo);
+        }
     }
 }
 </script>
