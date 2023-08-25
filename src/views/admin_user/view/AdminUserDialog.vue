@@ -75,9 +75,10 @@
                 </el-select>
             </el-form-item>
 
-            <el-form-item v-if="form.type == 8" size="mini" :label="tableColumns['channel_id'].name" prop="channel_ids">
+            <el-form-item v-if="form.type == 8 || form.type == 4" size="mini" :label="tableColumns['channel_id'].name" prop="channel_ids">
                 <el-select
                     v-model="form.channel_ids"
+                    filterable
                     multiple
                     clearable
                     :placeholder="LangUtil('请选择')"
@@ -86,8 +87,8 @@
                     <el-option
                         v-for="(value, key) in channelList"
                         :key="key"
-                        :label="value.channel_id"
-                        :value="value.channel_id"
+                        :label="value"
+                        :value="value"
                     >
                     </el-option>
                 </el-select>
@@ -191,6 +192,7 @@ export default class AdminUserDialog extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     channelList = this.myProxy.channelList.list;
     form = this.myProxy.dialogData.form;
+    listQuery = this.myProxy.listQuery;
 
     textMap = {
         update: this.LangUtil("编辑"),
@@ -220,7 +222,7 @@ export default class AdminUserDialog extends AbstractView {
             type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             plat_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             role_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
-            channel_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            // channel_ids: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             status: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
         return {
