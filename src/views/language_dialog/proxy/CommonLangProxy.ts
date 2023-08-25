@@ -18,6 +18,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     //管理类型，options: {1: '前端WEB皮肤1语言', 2: '后端管理语言', 3: '服务器数据语言', 4: '厂商游戏', 5: '平台公告', 6: '常见问题', 7: '平台邮件', 8: '平台活动'}
     private type = "";
     private isReservedWords = false;
+    first = true;
 
     /**进入页面时调用 */
     enter() {
@@ -63,7 +64,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             de_DE: { name: "", options: {} },
             fr_FR: { name: "", options: {} },
             tr_TR: { name: "Türk dili", options: {} },
-            ms_MS: { name: "", options: {} }
+            ms_MS: { name: "", options: {} },
         },
         isExportExcel: false, //是否导出excel
         excelPageSize: 1000000, //excel 资料长度
@@ -108,7 +109,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        form: {
+        form: <any>{
             id: "",
             language: "",
             module: "",
@@ -147,6 +148,23 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
                 tr_TR: [],
                 ms_MS: [],
             },
+        },
+        check: <any>{
+            ar_AR: 0,
+            en_EN: 0,
+            jp_JP: 0,
+            ko_Kr: 0,
+            th_TH: 0,
+            vi_VN: 0,
+            zh_CN: 0,
+            zh_TW: 0,
+            es_ES: 0,
+            pt_PT: 0,
+            hi_IN: 0,
+            de_DE: 0,
+            fr_FR: 0,
+            tr_TR: 0,
+            ms_MS: 0,
         },
         formSource: null, // 表单的原始数据
     };
@@ -210,6 +228,23 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
                 ms_MS: [],
             },
         });
+        Object.assign(this.dialogData.check, {
+            ar_AR: 0,
+            en_EN: 0,
+            jp_JP: 0,
+            ko_Kr: 0,
+            th_TH: 0,
+            vi_VN: 0,
+            zh_CN: 0,
+            zh_TW: 0,
+            es_ES: 0,
+            pt_PT: 0,
+            hi_IN: 0,
+            de_DE: 0,
+            fr_FR: 0,
+            tr_TR: 0,
+            ms_MS: 0,
+        });
         this.dialogData.status = DialogStatus.create;
     }
 
@@ -268,7 +303,16 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             });
             delete copyData.config;
         }
-        Object.assign(this.dialogData.form, copyData);
+
+        if (this.first) {
+            this.first = false;
+            return;
+        }
+        for (const key in this.dialogData.check) {
+            if (this.dialogData.check[key]) {
+                this.dialogData.form[key] = copyData[key];
+            }
+        }
     }
 
     /**
