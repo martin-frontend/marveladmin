@@ -9,7 +9,7 @@
             prop="init_prize_pool"
             class="mini_input"
         >
-            <el-input v-model="form.init_prize_pool" :placeholder="LangUtil('请输入')"></el-input>
+            <el-input v-model="form.init_prize_pool" :placeholder="LangUtil('请输入')" :disabled="true" ></el-input>
         </el-form-item>
         <el-form-item size="mini" :label="tableColumns['prize_pool_add'].name" prop="prize_pool_add" class="mini_input">
             <el-input type="number" v-model="form.prize_pool_add" :placeholder="LangUtil('请输入')"></el-input>
@@ -36,7 +36,7 @@
         </el-form-item>
 
         <el-form-item size="mini" :label="tableColumns['day_init_num'].name" prop="day_init_num" class="mini_input">
-            <el-input type="number" v-model="form.day_init_num" :placeholder="LangUtil('请输入')"></el-input>
+            <el-input type="number" v-model="form.day_init_num" :placeholder="LangUtil('请输入')" :disabled="true"></el-input>
         </el-form-item>
 
         <!-- 抽奖消耗 -->
@@ -202,7 +202,7 @@
                         </span>
                         <el-input
                             type="number"
-                            :disabled="!isCanEdit"
+                            :disabled="true"
                             v-model="item.interval[1]"
                             :placeholder="LangUtil('请输入')"
                             style="margin: 0px 4px;"
@@ -302,7 +302,7 @@
                         ></el-input> -->
                     </span>
                     <span class="title_width">{{ LangUtil("消耗类型") }}</span>
-                    <el-select v-model="item.type" filterable :placeholder="LangUtil('请选择')" :disabled="!isCanEdit">
+                    <el-select v-model="item.type" filterable :placeholder="LangUtil('请选择')" :disabled="true">
                         <el-option
                             v-for="(value, key) in tableColumns['lottery_cons_type'].options"
                             :key="key"
@@ -351,7 +351,7 @@ export default class PlatActivityBallAward extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     //是否能编辑
-    isCanEdit = false;
+    isCanEdit = true;
     get form() {
         return this.myProxy.dialogData.form;
     }

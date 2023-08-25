@@ -23,14 +23,14 @@
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
                     LangUtil("重置")
                 }}</el-button>
-                <!-- <ExportDialog
+                <ExportDialog
                     :fiterOption="userList"
                     :proxy="myProxy"
                     :_convertKeys="convertKeys"
                     :export_file_name="getExcelOutputName"
                     @exportExcel="exportExcel"
                     style="margin-left: 10px;"
-                /> -->
+                />
             </div>
         </div>
     </div>

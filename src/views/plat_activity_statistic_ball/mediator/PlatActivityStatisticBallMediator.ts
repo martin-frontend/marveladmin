@@ -52,11 +52,11 @@ export default class PlatActivityStatisticBallMediator extends AbstractMediator 
                 myProxy.setTableColumns_ball_user(body);
                 break;
             case EventType.admin_plat_activity_statistic_ball_user_index:
-                // if (myProxy.tableData_ball_user.isExportExcel) {
-                //     myProxy.exportExcel_ball_user(body);
-                // } else {
+                if (myProxy.tableData_ball_user.isExportExcel) {
+                    myProxy.exportExcel_ball_user(body);
+                } else {
                     myProxy.setTableData_ball_user(body);
-                // }
+                }
                 break;
         }
     }
