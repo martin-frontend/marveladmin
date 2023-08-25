@@ -1,6 +1,6 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { dateFormat, formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_activity_statistic/setting";
 import { MessageBox } from "element-ui";
 import IPlatActivityStatisticProxy from "./IPlatActivityStatisticProxy";
@@ -126,8 +126,10 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
     /**显示弹窗 */
     showDialog(data: any) {
         const { activity_id, plat_id, channel_id, created_date } = data;
+        const tomorrowTimestamp = new Date(created_date).getTime() + 24 * 60 * 60 * 1000;
         Object.assign(this.dialogData.query, {
-            created_date,
+            "created_at-{>=}": created_date,
+            "created_at-{<}": dateFormat(new Date(tomorrowTimestamp), " yyyy-MM-dd"),
             activity_id,
             plat_id,
             channel_id,
