@@ -82,6 +82,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             vendor_ids: { name: "", options: {} },
             show_end_time: { name: "展示-结束时间", options: {} },
             show_start_time: { name: "展示-开始时间", options: {} },
+            prize_pool_amount: { name: "奖池金额", options: {} },
         },
         orderData: {
             id: "",
@@ -261,7 +262,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
         this.dialogData.fileList1[0].url = this.dialogData.form.icon_url;
-        console.log( "收到的活动的数据位",data);
+        console.log("收到的活动的数据位", data);
         if (data.model_type != 12) {
             if (this.dialogData.form.rules)
                 for (const item of this.dialogData.form.rules) {
@@ -929,5 +930,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         }
 
         return newlist;
+    }
+    admin_plat_activity_ball_prize_update(obj:any) {
+        this.sendNotification(HttpType.admin_plat_activity_ball_prize_update, obj);
     }
 }
