@@ -304,6 +304,9 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             delete copyData.config;
         }
 
+        if (!this.dialogData.form.id) {
+            this.dialogData.form.id = data.id;
+        }
         if (this.first) {
             this.first = false;
             return;
