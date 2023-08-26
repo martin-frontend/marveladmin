@@ -39,6 +39,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             is_once: { name: "", options: {} },
             link_url: { name: "", options: {} },
             open_mode: { name: "", options: {} },
+            open_mode_url: { name: "外部链接", options: {} },
             plat_id_count: { name: "", options: {} },
             public_child_rules: { name: "", options: {} },
             rules: { name: "", options: {} },
@@ -87,6 +88,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         run_type: "1", //结算次数:1-多次结算|2-单次结算
         icon: "",
         open_mode: "",
+        open_mode_url: "",
         list: [
             {
                 name: "", //子规则名称
@@ -113,6 +115,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         category: "",
         is_once: "",
         active_model_tag: "",
+        open_mode_url:"",
         rules: [JSON.parse(JSON.stringify(this.activityRules))],
 
         init_prize_pool: "",

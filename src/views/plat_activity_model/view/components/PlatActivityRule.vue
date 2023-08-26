@@ -22,6 +22,12 @@
                             :value="Number(key)"
                         ></el-option>
                     </el-select>
+                    <el-input
+                        v-model="item.open_mode_url"
+                        :placeholder="LangUtil('跳转url')"
+                        maxlength="100"
+                        show-word-limit
+                    ></el-input>
                 </el-col>
 
                 <el-col :span="8" class="vi_div">

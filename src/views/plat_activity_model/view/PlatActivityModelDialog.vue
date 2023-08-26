@@ -61,6 +61,14 @@
                                 ></el-option>
                             </el-select>
                         </el-form-item>
+                        <el-form-item size="mini" :label="tableColumns['open_mode_url'].name">
+                            <el-input
+                                v-model="form.open_mode_url"
+                                :placeholder="LangUtil('请输入')"
+                                maxlength="100"
+                                show-word-limit
+                            ></el-input>
+                        </el-form-item>
                         <el-form-item
                             size="mini"
                             :label="tableColumns['settlement_period'].name"
