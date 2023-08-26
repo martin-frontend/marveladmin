@@ -97,6 +97,68 @@
                         </template>
                     </el-table-column>
                     <el-table-column
+                        v-if="listQuery.model_type == 12"
+                        :label="tableColumns['prize_pool_amount'].name"
+                        width="210px"
+                        class-name="status-col"
+                    >
+                        <template slot-scope="{ row }">
+                            <div
+                                v-if="isWaterRate && editWaterRateID == row.id"
+                                class="d-flex align-center justify-center"
+                            >
+                                <el-input
+                                    v-model="editWaterRateValue"
+                                    style="width: 120px; margin-right: 10px"
+                                    oninput="value=value.replace(/[^\d]/g,'');"
+                                ></el-input>
+                                <div class="d-flex flex-column align-center">
+                                    <el-button
+                                        class="item"
+                                        type="warning"
+                                        size="mini"
+                                        style="margin-left: 2px;"
+                                        @click="
+                                            editWaterRateID = null;
+                                            isWaterRate = false;
+                                        "
+                                        >{{ LangUtil("取消") }}</el-button
+                                    >
+                                    <el-button
+                                        class="item"
+                                        type="danger"
+                                        size="mini"
+                                        @click="onUpdateAwardPool(row, false)"
+                                        >{{ LangUtil("减少") }}</el-button
+                                    >
+
+                                    <el-button
+                                        class="item"
+                                        type="success"
+                                        size="mini"
+                                        @click="onUpdateAwardPool(row)"
+                                        >{{ LangUtil("增加") }}</el-button
+                                    >
+                                </div>
+                            </div>
+                            <div v-else>
+                                <span style="margin-right: 10px">{{ row.prize_pool_amount }}</span>
+                                <el-button
+                                    class="item"
+                                    type="primary"
+                                    size="mini"
+                                    @click="
+                                        editWaterRateID = row.id;
+                                        isWaterRate = true;
+                                        editWaterRateValue = '0';
+                                    "
+                                    >{{ LangUtil("编辑") }}</el-button
+                                >
+                            </div>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column
                         aling="left"
                         :label="tableColumns['languages'].name"
                         prop="languages"
@@ -176,6 +238,10 @@ export default class PlatActivityBody extends AbstractView {
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
 
+    editWaterRateID: any = null;
+    isWaterRate = false;
+    editWaterRateValue = "";
+
     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
@@ -211,6 +277,14 @@ export default class PlatActivityBody extends AbstractView {
     onUpdateLanguages(row: any) {
         this.myProxy.showLanguagesDialog(DialogStatus.update, row);
     }
+    onUpdateAwardPool(data: any, isAdd: boolean = true) {
+        const obj = {
+            id: data.id,
+            pool_prize_update: isAdd ? Number(this.editWaterRateValue) : Number(this.editWaterRateValue) * -1,
+        };
+        this.isWaterRate = false;
+        this.myProxy.admin_plat_activity_ball_prize_update(obj);
+    }
 }
 </script>
 
@@ -218,5 +292,17 @@ export default class PlatActivityBody extends AbstractView {
 @import "@/styles/common.scss";
 .ml-1 {
     margin-left: 12px;
+}
+.d-flex {
+    display: flex;
+}
+.align-center {
+    align-items: center;
+}
+.flex-column {
+    flex-direction: column;
+}
+.justify-center {
+    justify-content: center;
 }
 </style>
