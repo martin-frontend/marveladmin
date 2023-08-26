@@ -174,7 +174,7 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
         //清除数据
         this.resetDialogForm();
         this.dialogData.formSource = null;
-        // this.translateData = data;
+        console.warn("---翻译的语言为--",data);
         this.sentence = data.sentence;
         this.type = data.type;
         this.dialogData.form.plat_id = data.plat_id != undefined ? data.plat_id : 0;
@@ -308,7 +308,10 @@ export default class CommonLangProxy extends AbstractProxy implements ICommonLan
             });
             delete copyData.config;
         }
-
+        Object.assign(this.dialogData.form, copyData);
+        if (!this.dialogData.form.id) {
+            this.dialogData.form.id = data.id;
+        }
         if (this.first) {
             this.first = false;
             return;
