@@ -20,6 +20,13 @@
             <el-table-column :label="tableColumns.user_id.name" min-width="130px" prop="user_id" align="center">
             </el-table-column>
             <el-table-column :label="tableColumns.receive_award_amount.name" min-width="130px" prop="receive_award_amount" align="center">
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.receive_award_amount"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    />
+                </template>
             </el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
@@ -34,10 +41,12 @@ import PlatActivityStatisticProxy from "../../proxy/PlatActivityStatisticProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
         Pagination,
+        WinLossDisplay,
     },
 })
 export default class PlatActivityStatisticUserBody extends AbstractView {

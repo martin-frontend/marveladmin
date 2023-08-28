@@ -35,6 +35,9 @@
                 prop="award_amount"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.award_amount" :isShowColor="false" :isShowPlus="false" />
+                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.receive_award_amount.name"
@@ -42,6 +45,9 @@
                 prop="receive_award_amount"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.receive_award_amount" :isShowColor="false" :isShowPlus="false" />
+                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.receive_award_num.name"
@@ -73,10 +79,13 @@ import PlatActivityStatisticProxy from "../proxy/PlatActivityStatisticProxy";
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
+import { objectRemoveNull } from "@/core/global/Functions";
 
 @Component({
     components: {
         Pagination,
+        WinLossDisplay,
     },
 })
 export default class PlatActivityStatisticBody extends AbstractView {
@@ -103,7 +112,13 @@ export default class PlatActivityStatisticBody extends AbstractView {
     // }
 
     handlerDetail() {
-        this.$router.push("/layout/plat_activity_award");
+        const newQuery: any = { ...objectRemoveNull(this.listQuery) };
+        delete newQuery.page_count;
+        delete newQuery.page_size;
+        delete newQuery.channel_id;
+
+        //@ts-ignore
+        this.$router.push({ path: "/layout/plat_activity_award", query: { ...newQuery } });
     }
 
     handlerPlayers(data: any) {
