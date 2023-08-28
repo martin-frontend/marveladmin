@@ -4,7 +4,7 @@
             :title="tableColumns.plat_id.name"
             v-model="listQuery.plat_id"
             :options="tableColumns.plat_id.options"
-            @change="handlerSearch"
+            @change="handlerPlatIdChange"
             :clearable="false"
             style="width: 350px"
         />
@@ -91,6 +91,14 @@
                 :showTime="true"
             />
         </div>
+        <SearchSelect
+            :title="tableColumns.user_tag.name"
+            v-model="listQuery.user_tag"
+            :options="tableColumns.user_tag.options[listQuery.plat_id]"
+            :multiple="true"
+            width="600"
+        />
+
         <div>
             <el-button class="header-button" @click="handlerSearch()" type="primary">{{ LangUtil("查询") }}</el-button>
             <el-button class="header-button" @click="handlerReset()" type="primary">{{ LangUtil("重置") }}</el-button>
@@ -103,9 +111,13 @@
             >
                 {{ LangUtil("导出") }}
             </el-button>
-            <el-button v-if="!myProxy.isChannelUser" class="header-button" @click="handlerSearchWallet()" type="primary">{{
-                LangUtil("平台当前用户余额")
-            }}</el-button>
+            <el-button
+                v-if="!myProxy.isChannelUser"
+                class="header-button"
+                @click="handlerSearchWallet()"
+                type="primary"
+                >{{ LangUtil("平台当前用户余额") }}</el-button
+            >
         </div>
     </div>
 </template>
@@ -168,6 +180,11 @@ export default class PlatUserHeader extends AbstractView {
 
     handlerExport() {
         this.myProxy.showFieldSelectionDialog();
+    }
+
+    handlerPlatIdChange() {
+        this.myProxy.listQuery.user_tag = '';
+        this.handlerSearch();
     }
 }
 </script>
