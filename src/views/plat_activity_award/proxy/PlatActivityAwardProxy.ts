@@ -91,7 +91,7 @@ export default class PlatActivityAwardProxy extends AbstractProxy implements IPl
         Object.assign(this.tableData.columns, data);
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
-            if (!plat_id_options_keys.includes(this.listQuery.plat_id))
+            if (!plat_id_options_keys.includes(this.listQuery.plat_id) && this.listQuery.plat_id == "")
                 this.listQuery.plat_id = plat_id_options_keys[0];
             this.onQuery();
         }

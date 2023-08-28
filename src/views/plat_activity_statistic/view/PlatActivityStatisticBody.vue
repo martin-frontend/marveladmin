@@ -58,7 +58,7 @@
             </el-table-column>
             <el-table-column :label="LangUtil('操作')" class-name="status-col" width="240px">
                 <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="handlerDetail()">{{
+                    <el-button size="mini" type="primary" @click="handlerDetail(row)">{{
                         LangUtil("派奖详情")
                     }}</el-button>
                     <el-button size="mini" type="primary" @click="handlerPlayers(row)">{{
@@ -111,14 +111,17 @@ export default class PlatActivityStatisticBody extends AbstractView {
     //     this.myProxy.showDialog(DialogStatus.update, data);
     // }
 
-    handlerDetail() {
-        const newQuery: any = { ...objectRemoveNull(this.listQuery) };
-        delete newQuery.page_count;
-        delete newQuery.page_size;
-        delete newQuery.channel_id;
-
+    handlerDetail(data: any) {
         //@ts-ignore
-        this.$router.push({ path: "/layout/plat_activity_award", query: { ...newQuery } });
+        this.$router.push({
+            path: "/layout/plat_activity_award",
+            query: {
+                plat_id: `${data.plat_id}`,
+                activity_id: data.activity_id,
+                "created_at-{>=}": `${data.created_date} 00:00:00`,
+                "created_at-{<=}": `${data.created_date} 23:59:59`,
+            },
+        });
     }
 
     handlerPlayers(data: any) {
