@@ -26,14 +26,8 @@ export default class PlatActivityAward extends AbstractView {
     constructor() {
         super(PlatActivityAwardMediator);
         const { query } = this.$route;
-        const { plat_id, activity_id } = query;
-        if (plat_id) {
-            Object.assign(this.myProxy.listQuery, {
-                plat_id,
-                activity_id,
-                "created_at-{>=}": query["created_date-{>=}"],
-                "created_at-{<=}": query["created_date-{<=}"],
-            });
+        if (query.plat_id) {
+            Object.assign(this.myProxy.listQuery, query);
         }
     }
 
