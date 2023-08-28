@@ -9,7 +9,20 @@
             prop="init_prize_pool"
             class="mini_input"
         >
-            <el-input v-model="form.init_prize_pool" :placeholder="LangUtil('请输入')" :disabled="true" ></el-input>
+            <el-input v-model="form.init_prize_pool" :placeholder="LangUtil('请输入')" :disabled="true"></el-input>
+            <el-select
+                v-model="form.coin_unique"
+                :placeholder="LangUtil('请选择')"
+                style="margin-left:10px"
+                :disabled="isStatusUpdate"
+            >
+                <el-option
+                    v-for="(value, key) in tableColumns.reward_coin.options[form.plat_id]"
+                    :key="key"
+                    :label="value"
+                    :value="key"
+                ></el-option>
+            </el-select>
         </el-form-item>
         <el-form-item size="mini" :label="tableColumns['prize_pool_add'].name" prop="prize_pool_add" class="mini_input">
             <el-input type="number" v-model="form.prize_pool_add" :placeholder="LangUtil('请输入')"></el-input>
@@ -36,7 +49,12 @@
         </el-form-item>
 
         <el-form-item size="mini" :label="tableColumns['day_init_num'].name" prop="day_init_num" class="mini_input">
-            <el-input type="number" v-model="form.day_init_num" :placeholder="LangUtil('请输入')" :disabled="true"></el-input>
+            <el-input
+                type="number"
+                v-model="form.day_init_num"
+                :placeholder="LangUtil('请输入')"
+                :disabled="true"
+            ></el-input>
         </el-form-item>
 
         <!-- 抽奖消耗 -->
@@ -49,7 +67,7 @@
             <div class="border_div">
                 <div v-for="(item, index) of form.lottery_cons" :key="index" class="item_mini_input">
                     <span style="margin: 0px 10px;">
-                        <span>{{ index+1 }}</span>
+                        <span>{{ index + 1 }}</span>
                         <span>
                             {{ LangUtil("起始次数") }}
                         </span>
@@ -83,11 +101,7 @@
                     </el-select>
 
                     <template v-if="item.params">
-                        <el-select
-                            v-model="item.params.key"
-                            :placeholder="LangUtil('请选择')"
-                            style="margin-left:10px"
-                        >
+                        <el-select v-model="item.params.key" :placeholder="LangUtil('请选择')" style="margin-left:10px">
                             <el-option
                                 v-for="(value, key) in tableColumns.reward_coin.options[form.plat_id]"
                                 :key="key"
@@ -117,7 +131,7 @@
             <div class="border_div">
                 <div v-for="(item, index) of form.lottery_award" :key="index" class="item_mini_input">
                     <span style="margin: 0px 10px;">
-                        <span>{{ index+1 }}</span>
+                        <span>{{ index + 1 }}</span>
                         <span>
                             {{ LangUtil("抽奖轮数") }}
                         </span>
@@ -186,7 +200,7 @@
             <div class="border_div">
                 <div v-for="(item, index) of form.ball_award" :key="index" class="item_mini_input">
                     <span style="margin: 0px 10px;">
-                        <span>{{ index+1 }}</span>
+                        <span>{{ index + 1 }}</span>
                         <span>
                             {{ LangUtil("权重") }}
                         </span>
@@ -222,7 +236,7 @@
             <div class="border_div">
                 <div v-for="(item, index) of form.rank_award" :key="index" class="item_mini_input">
                     <span style="margin: 0px 10px;">
-                        <span>{{ index+1 }}</span>
+                        <span>{{ index + 1 }}</span>
                         <span>
                             {{ LangUtil("起始排名") }}
                         </span>
@@ -291,7 +305,7 @@
             <div class="border_div">
                 <div v-for="(item, index) of form.day_num_init_config" :key="index" class="item_mini_input">
                     <span style="margin: 0px 10px;">
-                        <span>{{ index+1 }}</span>
+                        <span>{{ index + 1 }}</span>
                         <!-- <el-input
                             v-for="(ele, key) of item.interval"
                             type="number"
@@ -342,6 +356,7 @@ import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
 import PlatActivityModelProxy from "@/views/plat_activity/proxy/PlatActivityProxy";
+import { DialogStatus } from "@/core/global/Constant";
 
 @Component
 export default class PlatActivityBallAward extends AbstractView {
@@ -354,6 +369,13 @@ export default class PlatActivityBallAward extends AbstractView {
     isCanEdit = true;
     get form() {
         return this.myProxy.dialogData.form;
+    }
+    dialogStatus = DialogStatus;
+    get status() {
+        return this.myProxy.dialogData.status;
+    }
+    get isStatusUpdate() {
+        return this.status == DialogStatus.update;
     }
     //添加一个元素
     onAddItem(arr: any) {
@@ -373,10 +395,7 @@ export default class PlatActivityBallAward extends AbstractView {
             delete arr[key];
         }
     }
-    onChange()
-    {
-
-    }
+    onChange() {}
 }
 </script>
 <style scoped lang="scss">
