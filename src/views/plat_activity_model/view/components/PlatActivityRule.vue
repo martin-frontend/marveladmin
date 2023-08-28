@@ -22,12 +22,14 @@
                             :value="Number(key)"
                         ></el-option>
                     </el-select>
-                    <el-input
-                        v-model="item.open_mode_url"
-                        :placeholder="LangUtil('跳转url')"
-                        maxlength="100"
-                        show-word-limit
-                    ></el-input>
+                    <el-select v-model="item.open_mode_url" filterable :placeholder="LangUtil('跳转url')">
+                        <el-option
+                            v-for="(value, key) in openOptions"
+                            :key="key"
+                            :label="value.name"
+                            :value="value.value"
+                        ></el-option>
+                    </el-select>
                 </el-col>
 
                 <el-col :span="8" class="vi_div">
@@ -154,6 +156,7 @@ import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
 import PlatActivityModelProxy from "@/views/plat_activity_model/proxy/PlatActivityModelProxy";
 import Cookies from "js-cookie";
+import { ClientModuleUrl } from "@/core/global/Constant";
 
 @Component
 export default class PlatActivityRule extends AbstractView {
@@ -162,7 +165,7 @@ export default class PlatActivityRule extends AbstractView {
     myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
-
+    openOptions = ClientModuleUrl;
     get form() {
         return this.myProxy.dialogData.form;
     }

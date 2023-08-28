@@ -60,12 +60,14 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['open_mode_url'].name">
-                        <el-input
-                            v-model="form.open_mode_url"
-                            :placeholder="LangUtil('请输入')"
-                            maxlength="100"
-                            show-word-limit
-                        ></el-input>
+                        <el-select v-model="form.open_mode_url" filterable :placeholder="LangUtil('跳转url')">
+                            <el-option
+                                v-for="(value, key) in openOptions"
+                                :key="key"
+                                :label="value.name"
+                                :value="value.value"
+                            ></el-option>
+                        </el-select>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['settlement_period'].name" prop="settlement_period">
                         <el-select v-model="form.settlement_period" filterable :placeholder="LangUtil('请选择')">
@@ -218,7 +220,7 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import PlatActivityModelProxy from "@/views/plat_activity_model/proxy/PlatActivityModelProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword } from "@/core/global/Functions";
-import { DialogStatus } from "@/core/global/Constant";
+import { ClientModuleUrl, DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import PlatActivityRule from "./components/PlatActivityRule.vue";
 import Cookies from "js-cookie";
@@ -239,6 +241,7 @@ export default class PlatActivityModelDialog extends AbstractView {
     myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
+    openOptions = ClientModuleUrl;
     get form() {
         return this.myProxy.dialogData.form;
     }
