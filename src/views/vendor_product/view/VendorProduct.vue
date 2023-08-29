@@ -4,6 +4,7 @@
         <VendorProductHeader />
         <VendorProductBody />
         <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -15,6 +16,7 @@ import { Component } from "vue-property-decorator";
 import VendorProductDialog from "./VendorProductDialog.vue";
 import VendorProductHeader from "./VendorProductHeader.vue";
 import VendorProductBody from "./VendorProductBody.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 import ProgressDialog from "./components/ProgressDialog.vue";
 
 @Component({
@@ -23,6 +25,7 @@ import ProgressDialog from "./components/ProgressDialog.vue";
         VendorProductHeader,
         VendorProductBody,
         ProgressDialog,
+        FieldSelectionDialog,
     },
 })
 export default class VendorProduct extends AbstractView {
@@ -35,7 +38,7 @@ export default class VendorProduct extends AbstractView {
     }
 
     // proxy
-    private myProxy: VendorProductProxy = this.getProxy(VendorProductProxy);
+    myProxy: VendorProductProxy = this.getProxy(VendorProductProxy);
 }
 </script>
 

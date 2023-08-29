@@ -35,6 +35,20 @@
                 <el-button @click="handlerReset()" class="header-button" type="primary" icon="el-icon-search">{{
                     LangUtil("重置")
                 }}</el-button>
+                <input
+                    v-show="false"
+                    ref="excel-upload-input"
+                    class="excel-upload-input"
+                    type="file"
+                    accept=".xlsx, .xls"
+                    @change="handleClick"
+                />
+                <el-button type="primary" @click="onImportUser">
+                    {{ LangUtil("导入") }}
+                </el-button>
+                <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 0">
+                    {{ LangUtil("导出") }}
+                </el-button>
             </div>
         </div>
         <div class="group">
@@ -47,10 +61,6 @@
             >
                 {{ LangUtil("新增") }}
             </el-button>
-            <el-button style="margin-left: 8px" type="primary" class="item" icon="">
-                {{ LangUtil("导入") }}
-            </el-button>
-            <el-button @click="heandlerExport()" type="primary" class="item">{{ LangUtil("导出") }}</el-button>
         </div>
     </div>
 </template>
@@ -64,6 +74,9 @@ import { DialogStatus } from "@/core/global/Constant";
 import { checkUnique, unique } from "@/core/global/Permission";
 import SearchSelect from "@/components/SearchSelect.vue";
 import SearchInput from "@/components/SearchInput.vue";
+import { readerData } from "@/core/global/Excel";
+import { removeRepeatStr } from "@/core/global/Functions";
+import { BaseInfo } from "@/components/vo/commonVo";
 
 @Component({
     components: {
@@ -81,6 +94,7 @@ export default class VendorProductHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
 
     get vendorIdOptions() {
         return this.myProxy.vendorIdOptions;
@@ -103,8 +117,23 @@ export default class VendorProductHeader extends AbstractView {
         this.myProxy.getVendorId();
     }
 
-    heandlerExport() {
-        this.myProxy.onQueryExportData();
+    // 汇入用户excel
+    onImportUser() {
+        (this.$refs["excel-upload-input"] as any).click();
+    }
+
+    // excel 导入
+    async handleClick(e: any) {
+        const files = e.target.files;
+        const rawFile = files[0];
+        if (!rawFile) return;
+        (this.$refs["excel-upload-input"] as any).value = null;
+        const excel: any = await readerData(rawFile);
+        this.myProxy.languageImport(excel.results);
+    }
+
+    exportExcel() {
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>

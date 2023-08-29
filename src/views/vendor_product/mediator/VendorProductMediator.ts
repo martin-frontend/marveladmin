@@ -31,6 +31,7 @@ export default class VendorProductMediator extends AbstractMediator {
             EventType.admin_vendor_product_update,
             EventType.admin_vendor_show,
             EventType.admin_vendor_index,
+            EventType.admin_vendor_product_import,
         ];
     }
 
@@ -48,7 +49,6 @@ export default class VendorProductMediator extends AbstractMediator {
                 } else {
                     myProxy.setTableData(body);
                 }
-                break;
                 break;
             case EventType.admin_vendor_product_show:
                 myProxy.setDetail(body);
@@ -69,6 +69,10 @@ export default class VendorProductMediator extends AbstractMediator {
                 break;
             case EventType.admin_vendor_index:
                 myProxy.setVendorId(body);
+                break;
+            case EventType.admin_vendor_product_import:
+                Message.success(SuccessMessage.update);
+                myProxy.onQuery();
                 break;
         }
     }
