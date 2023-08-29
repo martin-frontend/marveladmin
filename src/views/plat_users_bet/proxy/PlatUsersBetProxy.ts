@@ -14,7 +14,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
 
     /**进入页面时调用 */
     enter() {
-        this.sendNotification(HttpType.admin_plat_users_bet_table_columns);
+                this.sendNotification(HttpType.admin_plat_users_bet_table_columns);
     }
 
     /**离开页面时调用 */
@@ -196,7 +196,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
                 page_size: 20,
             },
         },
-        trun_bet_detail_text:0,
+        trun_bet_detail_text: 0,
     };
 
     jsonEditorDialog = {
@@ -571,4 +571,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         this.statisticDialog.list.push(...data);
         this.statisticDialog.bShow = true;
     }
+
+    //@ts-ignore
+    lottTranslator = lottTranslator;
 }
