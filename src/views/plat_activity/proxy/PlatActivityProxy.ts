@@ -245,29 +245,31 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
         this.dialogData.fileList1[0].url = this.dialogData.form.icon_url;
+        if (this.dialogData.form.rules)
+            for (const item of this.dialogData.form.rules) {
+                if (item.list)
+                    for (const child of item.list) {
+                        if (child.list)
+                            for (const child_1 of child.list) {
+                                if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
+                                    if (this.getRuleInfo(child_1).key_value_type == 2) {
+                                        if (!child_1.params) {
+                                            child_1.params = {};
+                                        }
 
-        for (const item of this.dialogData.form.rules) {
-            for (const child of item.list) {
-                for (const child_1 of child.list) {
-                    if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
-                        if (this.getRuleInfo(child_1).key_value_type == 2) {
-                            if (!child_1.params) {
-                                child_1.params = {};
-                            }
-
-                            for (const iterator of child_1.params) {
-                                if (!iterator.percent) {
-                                    iterator.percent = 0;
-                                }
-                                if (!iterator.max_limit) {
-                                    iterator.max_limit = 0;
+                                        for (const iterator of child_1.params) {
+                                            if (!iterator.percent) {
+                                                iterator.percent = 0;
+                                            }
+                                            if (!iterator.max_limit) {
+                                                iterator.max_limit = 0;
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                        }
                     }
-                }
             }
-        }
         console.log("---->>>", this.dialogData.form);
     }
 
@@ -469,26 +471,30 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             vendorArr,
             transfer_amount_rate_Arr,
         } = this.dialogData.form;
-        for (const item of rules) {
-            for (const child of item.list) {
-                for (const child_1 of child.list) {
-                    if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
-                        // child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+        if (rules) {
+            for (const item of rules) {
+                if (item.list)
+                    for (const child of item.list) {
+                        if (child.list)
+                            for (const child_1 of child.list) {
+                                if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
+                                    // child_1.params = { [child_1.coin_type]: child_1.coin_amount };
 
-                        if (this.getRuleInfo(child_1).key_value_type == 2) {
-                            child_1.params = {};
-                            child_1.params[child_1.coin_type] = {};
-                            child_1.params[child_1.coin_type]["percent"] = child_1.coin_amount;
-                            child_1.params[child_1.coin_type]["max_limit"] = child_1.max_limit;
+                                    if (this.getRuleInfo(child_1).key_value_type == 2) {
+                                        child_1.params = {};
+                                        child_1.params[child_1.coin_type] = {};
+                                        child_1.params[child_1.coin_type]["percent"] = child_1.coin_amount;
+                                        child_1.params[child_1.coin_type]["max_limit"] = child_1.max_limit;
 
-                            delete child_1.coin_type;
-                            delete child_1.coin_amount;
-                            delete child_1.max_limit;
-                        } else {
-                            child_1.params = { [child_1.coin_type]: child_1.coin_amount };
-                        }
+                                        delete child_1.coin_type;
+                                        delete child_1.coin_amount;
+                                        delete child_1.max_limit;
+                                    } else {
+                                        child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+                                    }
+                                }
+                            }
                     }
-                }
             }
         }
         if (type === "1") {
