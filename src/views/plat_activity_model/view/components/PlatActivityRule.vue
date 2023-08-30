@@ -22,7 +22,7 @@
                             :value="Number(key)"
                         ></el-option>
                     </el-select>
-                    <el-select v-model="item.open_mode_url" filterable :placeholder="LangUtil('跳转url')">
+                    <el-select v-model="item.open_mode_url" filterable allow-create default-first-option :placeholder="LangUtil('跳转url')">
                         <el-option
                             v-for="(value, key) in openOptions"
                             :key="key"
