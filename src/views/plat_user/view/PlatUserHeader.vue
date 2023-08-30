@@ -41,6 +41,10 @@
                 v-model="listQuery.is_back_visit"
                 :options="tableColumns.is_back_visit.options"
             />
+            <SearchInput
+                :title="tableColumns.email.name"
+                v-model="listQuery.email"
+            />
         </div>
         <div class="group">
             <SearchRange
