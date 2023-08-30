@@ -182,6 +182,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         "paytime-{>=}": "",
         "paytime-{<}": "",
         user_tag: "",
+        email: "",
     };
 
     fieldSelectionData = {
@@ -452,6 +453,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "paytime-{>=}": "",
             "paytime-{<}": "",
             user_tag: "",
+            email: "",
         });
     }
 
