@@ -284,7 +284,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                                     }
                                 }
                             }
-                        }
                     }
                 }
         } else {
@@ -484,7 +483,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                             }
                         }
                     }
-                }
             }
         }
         if (type === "1") {
