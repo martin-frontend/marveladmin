@@ -199,7 +199,16 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         const xiaohao_keys = Object.keys(this.tableData.columns.lottery_cons_type.options);
         if (xiaohao_keys && xiaohao_keys.length > 0) obj.type = xiaohao_keys[0];
         this.dialogData.form.lottery_cons.push(JSON.parse(JSON.stringify(obj)));
-        this.dialogData.form.day_num_init_config.push(JSON.parse(JSON.stringify(obj)));
+        {
+            const newobj = {
+                type: "0",
+                params: {
+                    key: "",
+                    value: 0,
+                },
+            };
+            this.dialogData.form.day_num_init_config.push(JSON.parse(JSON.stringify(newobj)));
+        }
 
         const award_keys = Object.keys(this.tableData.columns.lottery_award_type.options);
         if (award_keys && award_keys.length > 0) obj.type = award_keys[0];
