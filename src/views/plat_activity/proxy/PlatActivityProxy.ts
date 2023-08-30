@@ -265,6 +265,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         console.log("收到的活动的数据位", data);
         if (data.model_type != 12) {
             if (this.dialogData.form.rules)
+            {
                 for (const item of this.dialogData.form.rules) {
                     for (const child of item.list) {
                         for (const child_1 of child.list) {
@@ -284,8 +285,11 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                                     }
                                 }
                             }
+                        }
                     }
                 }
+            }
+               
         } else {
             this.setBallAwardData(data);
         }
@@ -483,6 +487,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                             }
                         }
                     }
+                }
             }
         }
         if (type === "1") {
