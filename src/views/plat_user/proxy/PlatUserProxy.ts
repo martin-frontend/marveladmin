@@ -181,6 +181,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         page_size: 20,
         "paytime-{>=}": "",
         "paytime-{<}": "",
+        user_tag: "",
     };
 
     fieldSelectionData = {
@@ -450,6 +451,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             recharge_amount: "",
             "paytime-{>=}": "",
             "paytime-{<}": "",
+            user_tag: "",
         });
     }
 
@@ -902,7 +904,9 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         this.addMutipleTagData.bShow = true;
         this.addMutipleTagData.isUpdateAll = isUpdateAll;
         this.addMutipleTagData.form.tags.length = 0;
-        this.addMutipleTagData.form.tags.push(...this.tableData.multipleSelection[0].user_tag);
+        if (!isUpdateAll) {
+            this.addMutipleTagData.form.tags.push(...this.tableData.multipleSelection[0].user_tag);
+        }
     }
 
     onUpdateTags() {

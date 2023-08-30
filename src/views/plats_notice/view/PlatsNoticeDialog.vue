@@ -152,12 +152,14 @@
             </el-form-item>
             <!-- 转跳 -->
             <el-form-item size="mini" :label="tableColumns['open_mode_url'].name">
-                <el-input
-                    v-model="form.open_mode_url"
-                    :placeholder="LangUtil('请输入')"
-                    maxlength="100"
-                    show-word-limit
-                ></el-input>
+                <el-select v-model="form.open_mode_url" filterable allow-create default-first-option :placeholder="LangUtil('跳转url')">
+                    <el-option
+                        v-for="(value, key) in openOptions"
+                        :key="key"
+                        :label="value.name"
+                        :value="value.value"
+                    ></el-option>
+                </el-select>
             </el-form-item>
 
             <el-form-item v-if="form.isNeedOtherParam" size="mini" :label="LangUtil('额外参数')" prop="other_param">
@@ -514,7 +516,7 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import PlatsNoticeProxy from "@/views/plats_notice/proxy/PlatsNoticeProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { formatImageUrl, removeRepeatStr } from "@/core/global/Functions";
-import { DialogStatus } from "@/core/global/Constant";
+import { ClientModuleUrl, DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import { LanguageType } from "@/core/enum/UserType";
 import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
@@ -556,7 +558,7 @@ export default class PlatsNoticeDialog extends AbstractView {
         create: this.LangUtil("新增"),
     };
     showMask = false;
-
+    openOptions = ClientModuleUrl;
     mounted() {
         this.onChangePlatId();
     }

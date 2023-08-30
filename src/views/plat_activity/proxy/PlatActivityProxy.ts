@@ -262,33 +262,35 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
         this.dialogData.fileList1[0].url = this.dialogData.form.icon_url;
-        console.log("收到的活动的数据位", data);
-        if (data.model_type != 12) {
-            if (this.dialogData.form.rules)
-                for (const item of this.dialogData.form.rules) {
+        if (this.dialogData.form.rules)
+            for (const item of this.dialogData.form.rules) {
+                if (item.list)
                     for (const child of item.list) {
-                        for (const child_1 of child.list) {
-                            if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
-                                if (this.getRuleInfo(child_1).key_value_type == 2) {
-                                    if (!child_1.params) {
-                                        child_1.params = {};
-                                    }
-
-                                    for (const iterator of child_1.params) {
-                                        if (!iterator.percent) {
-                                            iterator.percent = 0;
+                        if (child.list)
+                            for (const child_1 of child.list) {
+                                if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
+                                    if (this.getRuleInfo(child_1).key_value_type == 2) {
+                                        if (!child_1.params) {
+                                            child_1.params = {};
                                         }
-                                        if (!iterator.max_limit) {
-                                            iterator.max_limit = 0;
+
+                                        for (const iterator of child_1.params) {
+                                            if (!iterator.percent) {
+                                                iterator.percent = 0;
+                                            }
+                                            if (!iterator.max_limit) {
+                                                iterator.max_limit = 0;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
                     }
-                }
-        } else {
-            this.setBallAwardData(data);
+            }
+        else {
+            if (data.model_type != 12) {
+                this.setBallAwardData(data);
+            }
         }
         console.log("---->>>", this.dialogData.form);
     }
@@ -463,28 +465,30 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_end_time,
             show_start_time,
         } = this.dialogData.form;
-        if (this.dialogData.form.model_type != 12) {
+        if (rules) {
             for (const item of rules) {
-                for (const child of item.list) {
-                    for (const child_1 of child.list) {
-                        if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
-                            // child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+                if (item.list)
+                    for (const child of item.list) {
+                        if (child.list)
+                            for (const child_1 of child.list) {
+                                if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
+                                    // child_1.params = { [child_1.coin_type]: child_1.coin_amount };
 
-                            if (this.getRuleInfo(child_1).key_value_type == 2) {
-                                child_1.params = {};
-                                child_1.params[child_1.coin_type] = {};
-                                child_1.params[child_1.coin_type]["percent"] = child_1.coin_amount;
-                                child_1.params[child_1.coin_type]["max_limit"] = child_1.max_limit;
+                                    if (this.getRuleInfo(child_1).key_value_type == 2) {
+                                        child_1.params = {};
+                                        child_1.params[child_1.coin_type] = {};
+                                        child_1.params[child_1.coin_type]["percent"] = child_1.coin_amount;
+                                        child_1.params[child_1.coin_type]["max_limit"] = child_1.max_limit;
 
-                                delete child_1.coin_type;
-                                delete child_1.coin_amount;
-                                delete child_1.max_limit;
-                            } else {
-                                child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+                                        delete child_1.coin_type;
+                                        delete child_1.coin_amount;
+                                        delete child_1.max_limit;
+                                    } else {
+                                        child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+                                    }
+                                }
                             }
-                        }
                     }
-                }
             }
         }
         if (type === "1") {
@@ -931,7 +935,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
 
         return newlist;
     }
-    admin_plat_activity_ball_prize_update(obj:any) {
+    admin_plat_activity_ball_prize_update(obj: any) {
         this.sendNotification(HttpType.admin_plat_activity_ball_prize_update, obj);
     }
 }
