@@ -935,7 +935,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
 
         return newlist;
     }
-    admin_plat_activity_ball_prize_update(obj:any) {
+    admin_plat_activity_ball_prize_update(obj: any) {
         this.sendNotification(HttpType.admin_plat_activity_ball_prize_update, obj);
     }
 }

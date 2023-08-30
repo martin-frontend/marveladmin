@@ -149,6 +149,8 @@ export default class PlatActivityStatisticBallProxy extends AbstractProxy implem
     resetListQuery_ball_user() {
         Object.assign(this.listQuery_ball_user, {
             user_id: "",
+            page_count: 1,
+            page_size: 20,
         });
     }
 
