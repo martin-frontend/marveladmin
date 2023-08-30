@@ -172,7 +172,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
         plat_id: "",
         channel_id: "",
         user_id: "",
-        "created_date-{>=}": dateFormat(getTodayOffset(), "yyyy-MM-dd"),
+        "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd"),
         "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
     };
     /**弹窗相关数据 */
@@ -206,7 +206,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
     }
     /**表格数据 */
     setTableData(data: any) {
-        data.list = this.addSummary(data);
+        // data.list = this.addSummary(data);
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
@@ -222,7 +222,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
         Object.assign(this.listQuery, {
             channel_id: "",
             user_id: "",
-            "created_date-{>=}": dateFormat(getTodayOffset(), "yyyy-MM-dd"),
+            "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd"),
             "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
         });
     }
@@ -329,7 +329,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
                 group_name: "/",
             });
         }
-        if(this.exportData.isExportExcel) {
+        if (this.exportData.isExportExcel) {
             this.exportData.list.unshift(data.summary);
         } else {
             data.list.unshift(data.summary);
@@ -370,6 +370,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
     groupFieldOptions = [
         "created_date",
         "plat_id",
+        "channel_id",
         "user_id",
         "group_name",
         "recharge",
@@ -441,9 +442,19 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
 
     /**导出excel */
     exportExcel() {
-        this.addSummary(this.exportData.data);
+        // this.addSummary(this.exportData.data);
         // this.exportData.list[0].channel_id = LangUtil("合计");
-        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        let newData = JSON.parse(JSON.stringify(this.exportData.list));
+        //@ts-ignore
+        newData = newData.map(item => {
+            if (item.channel_id == 0) {
+                item.channel_id = LangUtil("全部渠道");
+            }
+            if (this.tabName == "group" && item.user_id == 0) {
+                item.user_id = LangUtil("全部团队");
+            }
+            return item;
+        });
         const exportField: string[] = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
             if (this.exportData.fieldOrder.indexOf(item) != -1) {

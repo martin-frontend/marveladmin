@@ -120,7 +120,7 @@ export default class StatisticPlatDaysDeliverProxy extends AbstractProxy impleme
     }
     /**表格数据 */
     setTableData(data: any) {
-        data.list = this.addSummary(data);
+        // data.list = this.addSummary(data);
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
@@ -207,7 +207,7 @@ export default class StatisticPlatDaysDeliverProxy extends AbstractProxy impleme
             plat_id: LangUtil("合计"),
             channel_id: "",
         });
-        if(this.exportData.isExportExcel) {
+        if (this.exportData.isExportExcel) {
             this.exportData.list.unshift(data.summary);
         } else {
             data.list.unshift(data.summary);
@@ -287,9 +287,16 @@ export default class StatisticPlatDaysDeliverProxy extends AbstractProxy impleme
 
     /**导出excel */
     exportExcel() {
-        this.addSummary(this.exportData.data);
-        this.exportData.list[0].channel_id = LangUtil("合计");
-        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        // this.addSummary(this.exportData.data);
+        // this.exportData.list[0].channel_id = LangUtil("合计");
+        let newData = JSON.parse(JSON.stringify(this.exportData.list));
+        //@ts-ignore
+        newData = newData.map(item => {
+            if (item.channel_id == 0) {
+                item.channel_id = LangUtil("全部渠道");
+            }
+            return item;
+        });
         const exportField: string[] = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
             if (this.exportData.fieldOrder.indexOf(item) != -1) {
