@@ -23,7 +23,7 @@
             <el-table-column :label="LangUtil('平台信息')" align="center" prop="plat_id" min-width="180px">
                 <template slot-scope="{ row }">
                     <div>{{ LangUtil("平台") }}:{{ tableColumns.plat_id.options[row.plat_id] }}</div>
-                    <div v-if="row.channel_id != 0">{{ LangUtil("渠道") }}:{{ row.channel_id }}</div>
+                    <div>{{ LangUtil("渠道") }}:{{ row.channel_id != 0 ? row.channel_id : "" }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.user_id.name" align="center" prop="user_id" min-width="150px">

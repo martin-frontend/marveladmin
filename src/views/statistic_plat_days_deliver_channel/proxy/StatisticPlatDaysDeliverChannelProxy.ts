@@ -447,8 +447,8 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
         let newData = JSON.parse(JSON.stringify(this.exportData.list));
         //@ts-ignore
         newData = newData.map(item => {
-            if (this.tabName == "channel" && item.channel_id == 0) {
-                item.channel_id = LangUtil("全部渠道");
+            if (item.channel_id == 0) {
+                item.channel_id = this.tabName == "channel" ? LangUtil("全部渠道") : "";
             }
             if (this.tabName == "group" && item.user_id == 0) {
                 item.user_id = LangUtil("全部团队");
