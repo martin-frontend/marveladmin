@@ -271,8 +271,15 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
 
     /**导出excel */
     exportExcel() {
-        const newData = JSON.parse(JSON.stringify(this.exportData.list));
-
+        let newData = JSON.parse(JSON.stringify(this.exportData.list));
+        //@ts-ignore
+        newData = newData.map(item => {
+            if (this.exportData.type == "platAcititvyStatistic") {
+                item.award_amount = "$" + item.award_amount;
+            }
+            item.receive_award_amount = "$" + item.receive_award_amount;
+            return item;
+        });
         const exportField: string[] = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
             if (this.exportData.fieldOrder.indexOf(item) != -1) {
