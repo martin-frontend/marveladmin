@@ -430,4 +430,9 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         };
         this.sendNotification(HttpType.admin_cate_vendor_products_batch_copy_data, obj);
     }
+    
+    // 状态切换
+    onToggleStatus(id: number, status: number) {
+        this.facade.sendNotification(HttpType.admin_game_type_tag_update, { id, status });
+    }
 }
