@@ -260,10 +260,10 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        this.tableData.columns.plat_id.options = {
-            ...this.tableData.columns.plat_id.options,
-            "0": LangUtil("所有平台"),
-        };
+        // this.tableData.columns.plat_id.options = {
+        //     ...this.tableData.columns.plat_id.options,
+        //     "0": LangUtil("所有平台"),
+        // };
         delete this.tableData.columns.is_first_exchange.options[0]
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
@@ -347,7 +347,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
     /**查询 */
     onQuery(hideLoading: boolean = false) {
         const data: any = JSON.parse(JSON.stringify(this.listQuery));
-        data.plat_id = data.plat_id === "0" ? "" : data.plat_id;
+        // data.plat_id = data.plat_id === "0" ? "" : data.plat_id;
         data.hideLoading = hideLoading;
         this.sendNotification(HttpType.admin_exchange_orders_index, objectRemoveNull(data));
     }
@@ -461,7 +461,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         const { pageSize, pageCurrent } = this.exportData.pageInfo;
         queryCopy.page_size = pageSize;
         queryCopy.page_count = Number(pageCurrent) + 1;
-        queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
+        // queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
         this.sendNotification(HttpType.admin_exchange_orders_index, objectRemoveNull(queryCopy));
     }
 
