@@ -9,6 +9,7 @@ import cmd_admin_vendor_product_show from "@/views/vendor_product/command/cmd_ad
 import cmd_admin_vendor_product_update from "@/views/vendor_product/command/cmd_admin_vendor_product_update";
 import cmd_admin_vendor_show from "@/views/vendor_product/command/cmd_admin_vendor_show";
 import cmd_admin_vendor_index from "@/views/vendor_product/command/cmd_admin_vendor_index";
+import cmd_admin_vendor_product_import from "@/views/vendor_product/command/cmd_admin_vendor_product_import";
 /**协议*/
 export var HttpType = {
     admin_vendor_product_table_columns: "admin/vendor_product/table_columns",
@@ -18,6 +19,7 @@ export var HttpType = {
     admin_vendor_product_update: "admin/vendor_product/update/{vendor_product_id}",
     admin_vendor_show: "admin/vendor/show/{vendor_id}",
     admin_vendor_index: "admin/vendor/index",
+    admin_vendor_product_import: "admin/vendor_product/import",
 };
 /**事件*/
 export var EventType = {
@@ -28,6 +30,7 @@ export var EventType = {
     admin_vendor_product_update: "admin_vendor_product_update",
     admin_vendor_show: "admin_vendor_show",
     admin_vendor_index: "admin_vendor_index",
+    admin_vendor_product_import: "admin_vendor_product_import",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -38,3 +41,5 @@ facade.registerCommand(HttpType.admin_vendor_product_show, cmd_admin_vendor_prod
 facade.registerCommand(HttpType.admin_vendor_product_update, cmd_admin_vendor_product_update);
 facade.registerCommand(HttpType.admin_vendor_show, cmd_admin_vendor_show);
 facade.registerCommand(HttpType.admin_vendor_index, cmd_admin_vendor_index);
+facade.registerCommand(HttpType.admin_vendor_product_import, cmd_admin_vendor_product_import);
+
