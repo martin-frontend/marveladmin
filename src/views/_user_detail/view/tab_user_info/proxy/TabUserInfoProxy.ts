@@ -201,6 +201,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_recharged: "98",
         is_back_visit: "98",
         user_tag: <any>[],
+        ma_token: "",
     };
     /**代理关系链 */
     relationChain: string[] = [];
