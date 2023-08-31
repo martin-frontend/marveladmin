@@ -156,7 +156,7 @@
                     <el-option
                         v-for="(value, key) in openOptions"
                         :key="key"
-                        :label="value.name"
+                        :label="LangUtil(value.name)"
                         :value="value.value"
                     ></el-option>
                 </el-select>
