@@ -79,6 +79,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             is_first_recharge: { name: "是否首充", options: [] },
             invite_user_id: { name: "直属代理ID", options: [] },
             grant_agent_id: { name: "代理ID", options: [] },
+            user_tag: { name: "用户标签", options: {} },
         },
         list: <any>[],
         message: {
@@ -135,6 +136,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             "fee_rate",
             "created_at",
             "paytime",
+            "user_tag",
             "remark",
         ],
     };
@@ -172,6 +174,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         invite_user_id: "",
         grant_agent_id: "",
         user_remark: "",
+        user_tag: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -231,6 +234,19 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
 
     /**表格数据 */
     setTableData(data: any) {
+        for (const item of data.list) {
+            const newArr: any = [];
+            if (item.user_tag) {
+                const arr = item.user_tag.split(",");
+                // @ts-ignore
+                arr.forEach(tag => {
+                    if (this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
+                        newArr.push(Number(tag));
+                    }
+                });
+            }
+            item.user_tag = newArr;
+        }
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         this.tableData.message = {
@@ -278,6 +294,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             invite_user_id: "",
             grant_agent_id: "",
             user_remark: "",
+            user_tag: "",
         });
     }
 
@@ -406,6 +423,18 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
                 element.extends = jsonStringify(element.extends);
             } else {
                 element.extends = "-";
+            }
+
+            if (element.user_tag) {
+                const arr = element.user_tag.split(",");
+                const newArr: any = [];
+                // @ts-ignore
+                arr.forEach(tag => {
+                    if (this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
+                        newArr.push(this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]);
+                    }
+                });
+                element.user_tag = newArr.join();
             }
         });
 
