@@ -11,6 +11,7 @@
             :header-cell-style="{
                 'text-align': 'center',
             }"
+            :row-class-name="rowClassName"
         >
             <el-table-column
                 :label="tableColumns.created_date.name"
@@ -19,17 +20,11 @@
                 min-width="150px"
             >
             </el-table-column>
-            <el-table-column :label="tableColumns.plat_id.name" align="center" prop="plat_id" min-width="150px">
+            <el-table-column :label="LangUtil('平台信息')" align="center" prop="plat_id" min-width="180px">
                 <template slot-scope="{ row }">
-                    <div>{{ tableColumns.plat_id.options[row.plat_id] }}</div>
+                    <div>{{ LangUtil("平台") }} : {{ tableColumns.plat_id.options[row.plat_id] }}</div>
+                    <div>{{ LangUtil("渠道") }} : {{ row.channel_id != 0 ? row.channel_id : "/" }}</div>
                 </template>
-            </el-table-column>
-            <el-table-column
-                :label="tableColumns.channel_id.name"
-                align="center"
-                prop="channel_id"
-                min-width="150px"
-            >
             </el-table-column>
             <el-table-column :label="tableColumns.user_id.name" align="center" prop="user_id" min-width="150px">
                 <template slot="header">
@@ -40,13 +35,16 @@
                         </div>
                     </el-tooltip>
                 </template>
+                <template slot-scope="{ row }">
+                    <div>{{ groupName(row) }}</div>
+                </template>
             </el-table-column>
             <el-table-column :label="tableColumns.group_name.name" align="center" prop="group_name" min-width="150px">
-                <template slot-scope="{ row, $index }">
+                <template slot-scope="{ row }">
                     <div>
-                        <p>{{ row.group_name }}</p>
+                        <p>{{ row.channel_id != 0 ? row.group_name : "/" }}</p>
                         <el-button
-                            v-if="$index > 0"
+                            v-if="row.channel_id != 0"
                             type="primary"
                             size="mini"
                             icon="el-icon-edit"
@@ -289,19 +287,9 @@
                     <div>{{ row.d_user_cont_per_user == null ? "-" : row.d_user_cont_per_user }}</div>
                 </template>
             </el-table-column>
-            <el-table-column
-                :label="tableColumns.d_user_cost.name"
-                align="center"
-                prop="d_user_cost"
-                min-width="150px"
-            >
+            <el-table-column :label="tableColumns.d_user_cost.name" align="center" prop="d_user_cost" min-width="150px">
                 <template slot="header">
-                    <el-tooltip
-                        class="item"
-                        effect="dark"
-                        :content="tableColumns['d_user_cost'].tips"
-                        placement="top"
-                    >
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['d_user_cost'].tips" placement="top">
                         <div>
                             <span style="margin-right: 5px">{{ tableColumns["d_user_cost"].name }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
@@ -358,12 +346,33 @@ export default class StatisticPlatDaysDeliverChannelByGroupTable extends Abstrac
     handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
+    rowClassName({ row, rowIndex }): string {
+        // 在这里判断是否应用 'highlight-row' 类名
+        // 假设符合条件的行具有 isHighlighted 属性
+        if (row.channel_id == 0 || row.channel_id == "0") {
+            // if (row.channel_id == 30037001 || row.channel_id == "30037001") {
+            return "highlight-row";
+        }
+        return "";
+    }
+    channelName(row: any): string {
+        if (row.channel_id == 0 || row.channel_id == "0") {
+            return LangUtil("全部渠道");
+        }
+        return row.channel_id;
+    }
+    groupName(row: any): string {
+        if (row.user_id == 0 || row.user_id == "0") {
+            return LangUtil("全部团队");
+        }
+        return row.user_id;
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
-::v-deep .el-table tr:first-child {
+::v-deep .highlight-row {
     background-color: #f6f7fa !important;
 }
 </style>
