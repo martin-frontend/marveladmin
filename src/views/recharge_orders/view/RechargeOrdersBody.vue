@@ -78,6 +78,22 @@
                     <div>{{ LangUtil("账号创建时间") }}：{{ row.user_created_at }}</div>
                 </template>
             </el-table-column>
+            
+            <el-table-column :label="tableColumns.user_tag.name" min-width="200px" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div style="text-align: left;">
+                        <el-tag
+                            class="custom-tag"
+                            v-for="(tag, index) of row.user_tag"
+                            :key="index"
+                            style="margin: 3px;"
+                            :type="tagColor(index)"
+                        >
+                            {{ tableColumns.user_tag.options[listQuery.plat_id][Number(tag)] }}
+                        </el-tag>
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column prop="order_no" :label="tableColumns['order_no'].name" align="center" width="110px">
             </el-table-column>
             <el-table-column
@@ -215,22 +231,6 @@
                         {{ tableColumns["paytime"].name }}：<br /><span v-if="row.status === 0">-</span
                         ><span v-else>{{ row.paytime }}</span>
                     </p>
-                </template>
-            </el-table-column>
-            
-            <el-table-column :label="tableColumns.user_tag.name" min-width="200px" class-name="status-col">
-                <template slot-scope="{ row }">
-                    <div style="text-align: left;">
-                        <el-tag
-                            class="custom-tag"
-                            v-for="(tag, index) of row.user_tag"
-                            :key="index"
-                            style="margin: 3px;"
-                            :type="tagColor(index)"
-                        >
-                            {{ tableColumns.user_tag.options[listQuery.plat_id][Number(tag)] }}
-                        </el-tag>
-                    </div>
                 </template>
             </el-table-column>
             <el-table-column prop="remark" :label="tableColumns['remark'].name" align="center" min-width="100px">
