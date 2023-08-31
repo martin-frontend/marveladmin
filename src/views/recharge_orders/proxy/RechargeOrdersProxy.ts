@@ -116,6 +116,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             "nick_name",
             "user_remark",
             "user_created_at",
+            "user_tag",
             "order_no",
             "third_order_no",
             "third_name",
@@ -136,7 +137,6 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
             "fee_rate",
             "created_at",
             "paytime",
-            "user_tag",
             "remark",
         ],
     };
