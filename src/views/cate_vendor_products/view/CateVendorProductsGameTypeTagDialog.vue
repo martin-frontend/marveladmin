@@ -65,10 +65,10 @@
                 ></el-table-column>
 
                 <el-table-column
-                :label="tableColumns['icon_name'].name"
-                prop="icon_name"
-                class-name="status-col"
-            ></el-table-column>
+                    :label="tableColumns['icon_name'].name"
+                    prop="icon_name"
+                    class-name="status-col"
+                ></el-table-column>
 
                 <el-table-column :label="LangUtil('操作')" class-name="status-col" width="350px">
                     <template slot-scope="{ row, $index }">
@@ -93,15 +93,17 @@
                 </el-table-column>
                 <el-table-column :label="tableColumns['status'].name" prop="status" class-name="status-col">
                     <template slot-scope="{ row }">
-                        <el-tag :type="row.status | statusFilter">
-                            {{ tableColumns.status.options[row.status] }}
-                        </el-tag>
+                        <el-switch
+                            v-model="row.status"
+                            :active-value="1"
+                            :inactive-value="98"
+                            @change="handleToggle(row.id, row.status)"
+                        ></el-switch>
                     </template>
                 </el-table-column>
             </el-table>
 
             <pagination :pageInfo="myProxy.gameTypeTableData.pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
-
         </div>
     </el-dialog>
 </template>
@@ -176,7 +178,7 @@ export default class GameTypeTagDialog extends AbstractView {
 
     @Watch("myProxy.gameTypeTableData.isResort")
     resort() {
-        console.log(" 呗修改了000",this.myProxy.gameTypeTableData.isResort);
+        console.log(" 呗修改了000", this.myProxy.gameTypeTableData.isResort);
         if (this.myProxy.gameTypeTableData.isResort) {
             this.data = [];
             this.$nextTick(() => {
@@ -229,6 +231,11 @@ export default class GameTypeTagDialog extends AbstractView {
                 this.myProxy.onGameTypeResort(this.sortItem);
             },
         });
+    }
+
+    // 状态切换
+    handleToggle(id: number, status: number) {
+        this.myProxy.onToggleStatus(id, status);
     }
 }
 </script>
