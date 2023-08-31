@@ -5,7 +5,7 @@
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
-                @change="handlerSearch"
+                @change="listQuery.user_tag = '';handlerSearch();"
                 :clearable="false"
                 :width="350"
             />
@@ -161,7 +161,6 @@ export default class ExchangeOrdersHeader extends AbstractView {
     handlerSearch() {
         this.listQuery.page_count = 1;
         this.autoProxy.listQuery.plat_id = this.listQuery.plat_id;
-
         this.myProxy.onQuery();
         // this.autoProxy.checkVerify();
     }

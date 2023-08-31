@@ -5,7 +5,7 @@
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
-                @change="handlerSearch"
+                @change="listQuery.user_tag = '';handlerSearch();"
                 :clearable="false"
                 :width="350"
             />

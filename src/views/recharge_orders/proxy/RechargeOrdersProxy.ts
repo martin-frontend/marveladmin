@@ -325,7 +325,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
     /**查询 */
     onQuery(hideLoading: boolean = false) {
         const data: any = JSON.parse(JSON.stringify(this.listQuery));
-        // data.plat_id = data.plat_id === "0" ? "" : data.plat_id;
+        data.plat_id = data.plat_id === "0" ? "" : data.plat_id;
         data.hideLoading = hideLoading;
 
         this.sendNotification(HttpType.admin_recharge_orders_index, objectRemoveNull(data));
@@ -388,7 +388,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         const { pageSize, pageCurrent } = this.exportData.pageInfo;
         queryCopy.page_size = pageSize;
         queryCopy.page_count = Number(pageCurrent) + 1;
-        // queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
+        queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
         this.sendNotification(HttpType.admin_recharge_orders_index, objectRemoveNull(queryCopy));
     }
 
