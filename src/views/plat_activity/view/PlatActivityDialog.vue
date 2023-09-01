@@ -180,12 +180,20 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item size="mini" v-if="isCustom" :label="tableColumns['open_mode_url'].name">
-                    <el-input
+                    <el-select
                         v-model="form.open_mode_url"
-                        :placeholder="LangUtil('请输入')"
-                        maxlength="100"
-                        show-word-limit
-                    ></el-input>
+                        filterable
+                        allow-create
+                        default-first-option
+                        :placeholder="LangUtil('跳转url')"
+                    >
+                        <el-option
+                            v-for="(value, key) in openOptions"
+                            :key="key"
+                            :label="LangUtil(value.name)"
+                            :value="value.value"
+                        ></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item size="mini" :label="tableColumns['activity_category'].name">
                     <div class="flex d-flex">
@@ -809,7 +817,7 @@ import { checkUnique, unique } from "@/core/global/Permission";
 import PlatActivityProxy from "@/views/plat_activity/proxy/PlatActivityProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { checkUserName, checkUserPassword, formatImageUrl, getTodayOffset } from "@/core/global/Functions";
-import { DialogStatus } from "@/core/global/Constant";
+import { ClientModuleUrl, DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import { LanguageType } from "@/core/enum/UserType";
 import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
@@ -839,6 +847,7 @@ export default class PlatActivityDialog extends AbstractView {
     langTinymceProxy: CommonLangTinymceProxy = this.getProxy(CommonLangTinymceProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
+    openOptions = ClientModuleUrl;
     get form() {
         return this.myProxy.dialogData.form;
     }

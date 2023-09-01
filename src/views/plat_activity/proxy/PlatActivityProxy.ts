@@ -262,11 +262,11 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
         this.dialogData.fileList1[0].url = this.dialogData.form.icon_url;
-        console.log("收到的活动的数据位", data);
-        if (data.model_type != 12) {
-            if (this.dialogData.form.rules)
-            {
-                for (const item of this.dialogData.form.rules) {
+        if (this.dialogData.form.rules && data.model_type != 12)
+        {
+            for (const item of this.dialogData.form.rules) {
+                if (item.list)
+                {
                     for (const child of item.list) {
                         for (const child_1 of child.list) {
                             if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
@@ -289,9 +289,11 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                     }
                 }
             }
-               
-        } else {
-            this.setBallAwardData(data);
+        }
+        else {
+            if (data.model_type == 12) {
+                this.setBallAwardData(data);
+            }
         }
         console.log("---->>>", this.dialogData.form);
     }
@@ -466,7 +468,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_end_time,
             show_start_time,
         } = this.dialogData.form;
-        if (this.dialogData.form.model_type != 12) {
+        if (rules && this.dialogData.form.model_type != 12) {
             for (const item of rules) {
                 for (const child of item.list) {
                     for (const child_1 of child.list) {
@@ -620,6 +622,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             formCopy.day_num_init_config = JSON.stringify(this.dialogData.form.day_num_init_config);
         }
         console.log("---->>>", formCopy);
+
         if (!formCopy.show_end_time) {
             formCopy.show_end_time = formCopy.end_time;
         }

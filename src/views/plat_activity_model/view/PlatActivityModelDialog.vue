@@ -62,11 +62,17 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item size="mini" :label="tableColumns['open_mode_url'].name">
-                            <el-select v-model="form.open_mode_url" filterable allow-create default-first-option :placeholder="LangUtil('跳转url')">
+                            <el-select
+                                v-model="form.open_mode_url"
+                                filterable
+                                allow-create
+                                default-first-option
+                                :placeholder="LangUtil('跳转url')"
+                            >
                                 <el-option
                                     v-for="(value, key) in openOptions"
                                     :key="key"
-                                    :label="value.name"
+                                    :label="LangUtil(value.name)"
                                     :value="value.value"
                                 ></el-option>
                             </el-select>
