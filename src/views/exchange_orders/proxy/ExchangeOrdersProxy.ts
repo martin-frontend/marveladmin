@@ -84,6 +84,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             is_first_exchange: { name: "是否首兑", options: [] },
             invite_user_id: { name: "直属代理ID", options: [] },
             grant_agent_id: { name: "代理ID", options: [] },
+            user_tag: { name: "用户标签", options: {} },
         },
         list: <any>[],
         message: {},
@@ -101,6 +102,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             "nick_name",
             "user_remark",
             "user_created_at",
+            "user_tag",
             "accept_admin_user_id",
             "accept_admin_username",
             "order_no",
@@ -162,6 +164,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         invite_user_id: "",
         grant_agent_id: "",
         user_remark: "",
+        user_tag: "",
     };
 
     /**平台币商代付相关数据 */
@@ -257,10 +260,10 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        this.tableData.columns.plat_id.options = {
-            ...this.tableData.columns.plat_id.options,
-            "0": LangUtil("所有平台"),
-        };
+        // this.tableData.columns.plat_id.options = {
+        //     ...this.tableData.columns.plat_id.options,
+        //     "0": LangUtil("所有平台"),
+        // };
         delete this.tableData.columns.is_first_exchange.options[0]
         const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
         if (plat_id_options_keys.length > 0) {
@@ -272,6 +275,19 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
 
     /**表格数据 */
     setTableData(data: any) {
+        for (const item of data.list) {
+            const newArr: any = [];
+            if (item.user_tag) {
+                const arr = item.user_tag.split(",");
+                // @ts-ignore
+                arr.forEach(tag => {
+                    if (this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
+                        newArr.push(Number(tag));
+                    }
+                });
+            }
+            item.user_tag = newArr;
+        }
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         const {
@@ -324,6 +340,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             invite_user_id: "",
             grant_agent_id: "",
             user_remark: "",
+            user_tag: "",
         });
     }
 
@@ -485,6 +502,17 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             item.payment_method = str;
             // item.exchange_channel = this.tableData.columns["exchange_channel"].options[item.exchange_channel];
             // item.exchange_vendors_id = this.tableData.columns["exchange_vendors_id"].options[item.exchange_vendors_id];
+            if (item.user_tag) {
+                const arr = item.user_tag.split(",");
+                const newArr: any = [];
+                // @ts-ignore
+                arr.forEach(tag => {
+                    if (this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]) {
+                        newArr.push(this.tableData.columns.user_tag.options[this.listQuery.plat_id][Number(tag)]);
+                    }
+                });
+                item.user_tag = newArr.join();
+            }
         }
 
         const exportField = [];

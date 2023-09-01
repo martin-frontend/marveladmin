@@ -78,6 +78,22 @@
                     <div>{{ LangUtil("账号创建时间") }}：{{ row.user_created_at }}</div>
                 </template>
             </el-table-column>
+            
+            <el-table-column :label="tableColumns.user_tag.name" min-width="200px" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div style="text-align: left;">
+                        <el-tag
+                            class="custom-tag"
+                            v-for="(tag, index) of row.user_tag"
+                            :key="index"
+                            style="margin: 3px;"
+                            :type="tagColor(index)"
+                        >
+                            {{ tableColumns.user_tag.options[listQuery.plat_id][Number(tag)] }}
+                        </el-tag>
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column prop="order_no" :label="tableColumns['order_no'].name" align="center" width="110px">
             </el-table-column>
             <el-table-column
@@ -342,6 +358,17 @@ export default class RechargeOrdersBody extends AbstractView {
     destroyed() {
         super.destroyed();
     }
+
+    tagColor(i: number) {
+        switch (i % 3) {
+            case 0:
+                return "danger";
+            case 1:
+                return "primary";
+            case 2:
+                return "success";
+        }
+    }
 }
 </script>
 
@@ -380,5 +407,11 @@ export default class RechargeOrdersBody extends AbstractView {
             width: 150px;
         }
     }
+}
+.custom-tag {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 165px;
 }
 </style>

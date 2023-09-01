@@ -201,6 +201,23 @@
                 </template>
             </el-table-column>
 
+            <!-- 用户标签 -->
+            <el-table-column :label="tableColumns.user_tag.name" min-width="200px" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <div style="text-align: left;">
+                        <el-tag
+                            class="custom-tag"
+                            v-for="(tag, index) of row.user_tag"
+                            :key="index"
+                            style="margin: 3px;"
+                            :type="tagColor(index)"
+                        >
+                            {{ tableColumns.user_tag.options[listQuery.plat_id][Number(tag)] }}
+                        </el-tag>
+                    </div>
+                </template>
+            </el-table-column>
+
             <!-- 接单状态 -->
             <el-table-column :label="LangUtil('接单状态')" align="left" min-width="150px">
                 <template slot-scope="{ row }">
@@ -234,7 +251,7 @@
                         {{ tableColumns["status"].options[row.status] }}
                     </div>
                 </template>
-            </el-table-column>            
+            </el-table-column>
 
             <!-- 是否首兌 -->
             <el-table-column
@@ -582,6 +599,17 @@ export default class ExchangeOrdersBody extends AbstractView {
             this.myProxy.tableData.multipleSelection.push(item.id);
         });
     }
+
+    tagColor(i: number) {
+        switch (i % 3) {
+            case 0:
+                return "danger";
+            case 1:
+                return "primary";
+            case 2:
+                return "success";
+        }
+    }
 }
 </script>
 
@@ -631,5 +659,12 @@ export default class ExchangeOrdersBody extends AbstractView {
             margin-right: 6px;
         }
     }
+}
+
+.custom-tag {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 165px;
 }
 </style>

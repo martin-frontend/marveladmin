@@ -5,7 +5,7 @@
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
-                @change="handlerSearch"
+                @change="listQuery.user_tag = '';handlerSearch();"
                 :clearable="false"
                 :width="350"
             />
@@ -87,6 +87,15 @@
             <SearchInput :title="tableColumns.grant_agent_id.name" v-model="listQuery.grant_agent_id" />
             <SearchInput :title="tableColumns.user_remark.name" v-model="listQuery.user_remark" />
             <div>
+                <SearchSelect
+                    :title="tableColumns.user_tag.name"
+                    v-model="listQuery.user_tag"
+                    :options="tableColumns.user_tag.options[listQuery.plat_id]"
+                    :multiple="true"
+                    width="600"
+                />
+            </div>
+            <div>
                 <el-button @click="handlerSearch" type="primary" icon="el-icon-search">
                     {{ LangUtil("查询") }}
                 </el-button>
@@ -152,7 +161,6 @@ export default class ExchangeOrdersHeader extends AbstractView {
     handlerSearch() {
         this.listQuery.page_count = 1;
         this.autoProxy.listQuery.plat_id = this.listQuery.plat_id;
-
         this.myProxy.onQuery();
         // this.autoProxy.checkVerify();
     }
