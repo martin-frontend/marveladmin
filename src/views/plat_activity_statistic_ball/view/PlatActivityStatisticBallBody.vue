@@ -9,24 +9,24 @@
             size="mini"
             v-loading="net_status.loading"
         >
-            <el-table-column :label="tableColumns.plat_id.name" prop="">
+            <el-table-column :label="tableColumns.plat_id.name" prop="" align="center">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.plat_id.options[row.plat_id] }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.activity_id.name" prop="activity_id"> </el-table-column>
-            <el-table-column :label="tableColumns.activity_name.name" prop="activity_name"> </el-table-column>
-            <el-table-column :label="tableColumns.current_cycle.name" prop="current_cycle"> </el-table-column>
-            <el-table-column :label="tableColumns.start_time.name" prop="start_time"> </el-table-column>
-            <el-table-column :label="tableColumns.end_time.name" prop="end_time"> </el-table-column>
-            <el-table-column :label="tableColumns.coin_unique.name" prop="coin_unique"> </el-table-column>
-            <el-table-column :label="tableColumns.prize_pool_amount.name" prop="prize_pool_amount"> </el-table-column>
-            <el-table-column :label="tableColumns.join_user_num.name" prop="join_user_num"> </el-table-column>
-            <el-table-column :label="tableColumns.init_user_num.name" prop="init_user_num"> </el-table-column>
-            <el-table-column :label="tableColumns.total_cons.name" prop="total_cons"> </el-table-column>
-            <el-table-column :label="tableColumns.total_award.name" prop="total_award"> </el-table-column>
+            <el-table-column :label="tableColumns.activity_id.name" prop="activity_id" align="center"> </el-table-column>
+            <el-table-column :label="tableColumns.activity_name.name" prop="activity_name" align="center"> </el-table-column>
+            <el-table-column :label="tableColumns.current_cycle.name" prop="current_cycle" align="center"> </el-table-column>
+            <el-table-column :label="tableColumns.start_time.name" prop="start_time" align="center"> </el-table-column>
+            <el-table-column :label="tableColumns.end_time.name" prop="end_time" align="center"> </el-table-column>
+            <el-table-column :label="tableColumns.coin_unique.name" prop="coin_unique" align="center"> </el-table-column>
+            <el-table-column :label="tableColumns.prize_pool_amount.name" prop="prize_pool_amount" align="center"> </el-table-column>
+            <el-table-column :label="tableColumns.join_user_num.name" prop="join_user_num" align="center"> </el-table-column>
+            <el-table-column :label="tableColumns.init_user_num.name" prop="init_user_num" align="center"> </el-table-column>
+            <el-table-column :label="tableColumns.total_cons.name" prop="total_cons" align="center"> </el-table-column>
+            <el-table-column :label="tableColumns.total_award.name" prop="total_award" align="center"> </el-table-column>
 
-            <el-table-column :label="tableColumns.cycle_status.name" prop="">
+            <el-table-column :label="tableColumns.cycle_status.name" prop="" align="center">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.cycle_status.options[row.cycle_status] }}</div>
                 </template>
