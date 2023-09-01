@@ -48,6 +48,7 @@ export var ClientModuleUrl = [
     { sort: 1, name: "用户中心", value: "openpanel_user_center" },
     { sort: 1, name: "用户认证", value: "openpanel_plat_users_verification" },
     { sort: 1, name: "设置真实姓名", value: "openpanel_real_name" },
+    { sort: 1, name: "设置CPF", value: "openpanel_set_cpf" },
     { sort: 1, name: "设置昵称", value: "openpanel_nick_name" },
     { sort: 1, name: "安全中心", value: "openpanel_safety_center" },
     { sort: 1, name: "绑定邮箱", value: "openpanel_safety_center_email" },
