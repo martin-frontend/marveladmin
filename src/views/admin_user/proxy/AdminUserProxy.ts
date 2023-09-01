@@ -14,7 +14,7 @@ export default class AdminUserProxy extends AbstractProxy implements IAdminUserP
     /**进入页面时调用 */
     enter() {
         this.sendNotification(HttpType.admin_admin_user_table_columns);
-        this.sendNotification(HttpType.admin_plat_channel_index, { page_count: 1, page_size: 10000 });
+        // this.sendNotification(HttpType.admin_plat_channel_index, { page_count: 1, page_size: 10000 });
     }
 
     /**离开页面时调用 */
@@ -43,7 +43,7 @@ export default class AdminUserProxy extends AbstractProxy implements IAdminUserP
             password: { name: "", options: {} },
             channel_id: { name: "", options: {} },
             google_key: { name: "", options: {} },
-            diff_ip_login: { name: "", options: {}},
+            diff_ip_login: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -82,7 +82,7 @@ export default class AdminUserProxy extends AbstractProxy implements IAdminUserP
     };
     /**渠道数据 */
     channelList = {
-        list: [],
+        list: <any>[],
         listSource: [],
     };
 
@@ -167,11 +167,10 @@ export default class AdminUserProxy extends AbstractProxy implements IAdminUserP
     /**筛选渠道列表 */
     channelListFilter() {
         this.channelList.list.length = 0;
-        const tempList = this.channelList.listSource.filter((value: any) => {
-            // @ts-ignore
-            return this.dialogData.form.plat_ids.indexOf(value.plat_id) != -1;
-        }, this);
-        this.channelList.list.push(...tempList);
+        this.dialogData.form.plat_ids.forEach(plat_id => {
+            const keys = Object.keys(this.tableData.columns.channel_id.options[plat_id]);
+            this.channelList.list.push(...keys);
+        });
     }
 
     /**查询 */
@@ -231,6 +230,8 @@ export default class AdminUserProxy extends AbstractProxy implements IAdminUserP
         // 添加必填参数
         formCopy.admin_user_id = this.dialogData.form.admin_user_id;
         // 发送消息
+        console.warn("formCopy", formCopy);
+
         this.sendNotification(HttpType.admin_admin_user_update, formCopy);
     }
     /**删除数据 */

@@ -1,0 +1,11 @@
+{
+    "name": "彩球统计",
+    "description": "彩球统计",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75268263",
+    "list": [
+        "admin/plat_activity_statistic_ball/table_columns",
+        "admin/plat_activity_statistic_ball/index",
+        "admin/plat_activity_statistic_ball_user/table_columns",
+        "admin/plat_activity_statistic_ball_user/index"
+    ]
+}

@@ -54,7 +54,12 @@ LangConfig.load(GlobalVar.lang).then(() => {
 });
 
 window.onerror = function(message, source, lineno, colno, error) {
-    if (message != "" && message != "ResizeObserver loop limit exceeded") alert(message);
+    if (
+        message != "" &&
+        message != "ResizeObserver loop limit exceeded" &&
+        message != "ResizeObserver loop completed with undelivered notifications."
+    )
+        alert(message);
     return false;
 };
 window.addEventListener("unhandledrejection", (e: any) => {

@@ -11,6 +11,7 @@
             :header-cell-style="{
                 'text-align': 'center',
             }"
+            :row-class-name="rowClassName"
         >
             <el-table-column
                 :label="tableColumns['created_date'].name"
@@ -19,8 +20,8 @@
                 align="center"
             ></el-table-column>
             <el-table-column :label="tableColumns['plat_id'].name" prop="plat_id" min-width="160px" align="center">
-                <template slot-scope="{ row, $index }">
-                    <div>{{ $index == 0 ? row.plat_id : tableColumns["plat_id"].options[row.plat_id] }}</div>
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
                 </template>
             </el-table-column>
             <el-table-column
@@ -29,6 +30,7 @@
                 min-width="100px"
                 align="center"
             >
+                <template slot-scope="{ row }"> {{ channelName(row) }} </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns['deliver_use'].name"
@@ -36,10 +38,16 @@
                 min-width="100px"
                 align="center"
             >
-                <template slot-scope="{ row, $index }">
+                <template slot-scope="{ row }">
                     <div>
                         <p>{{ row.deliver_use }}</p>
-                        <el-button v-if="$index > 0" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(row)"></el-button>
+                        <el-button
+                            v-if="row.channel_id != 0"
+                            type="primary"
+                            size="mini"
+                            icon="el-icon-edit"
+                            @click="handleEdit(row)"
+                        ></el-button>
                     </div>
                 </template>
             </el-table-column>
@@ -202,19 +210,27 @@ export default class StatisticPlatDaysDeliverBody extends AbstractView {
     handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
+    rowClassName({ row, rowIndex }): string {
+        // 在这里判断是否应用 'highlight-row' 类名
+        // 假设符合条件的行具有 isHighlighted 属性
+        if (row.channel_id == 0 || row.channel_id == "0") {
+            // if (row.channel_id == 30037001 || row.channel_id == "30037001") {
+            return "highlight-row";
+        }
+        return "";
+    }
+    channelName(row: any): string {
+        if (row.channel_id == 0 || row.channel_id == "0") {
+            return LangUtil("全部渠道");
+        }
+        return row.channel_id;
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
-::v-deep .el-table__body .el-table__row:first-child {
-    background-color: #f6f7fa;
-    td:nth-child(1),
-    td:nth-child(2) {
-        border-right: 0;
-    }
-    // td:nth-child(3) {
-    //     text-align: left;
-    // }
+::v-deep .highlight-row {
+    background-color: #f6f7fa !important;
 }
 </style>

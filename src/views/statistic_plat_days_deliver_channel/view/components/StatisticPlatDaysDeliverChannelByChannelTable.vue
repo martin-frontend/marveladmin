@@ -11,6 +11,7 @@
             :header-cell-style="{
                 'text-align': 'center',
             }"
+            :row-class-name="rowClassName"
         >
             <el-table-column
                 :label="tableColumns.created_date.name"
@@ -25,6 +26,7 @@
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.channel_id.name" align="center" prop="channel_id" min-width="150px">
+                <template slot-scope="{ row }"> {{ channelName(row) }} </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.deliver_name.name"
@@ -32,11 +34,11 @@
                 prop="deliver_name"
                 min-width="150px"
             >
-                <template slot-scope="{ row, $index }">
+                <template slot-scope="{ row }">
                     <div>
-                        <p>{{ row.deliver_name }}</p>
+                        <p>{{ row.channel_id != 0 ? row.deliver_name : "/" }}</p>
                         <el-button
-                            v-if="$index > 0"
+                            v-if="row.channel_id != 0"
                             type="primary"
                             size="mini"
                             icon="el-icon-edit"
@@ -72,6 +74,9 @@
                             <i class="el-icon-question" style="font-size: 14px"></i>
                         </div>
                     </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.channel_profit" />
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.deliver_use.name" align="center" prop="deliver_use" min-width="150px">
@@ -296,12 +301,27 @@ export default class StatisticPlatDaysDeliverChannelByChannelTable extends Abstr
     handlerDelete(data: any) {
         this.myProxy.onDelete(data.id);
     }
+    rowClassName({ row, rowIndex }): string {
+        // 在这里判断是否应用 'highlight-row' 类名
+        // 假设符合条件的行具有 isHighlighted 属性
+        if (row.channel_id == 0 || row.channel_id == "0") {
+            // if (row.channel_id == 30037001 || row.channel_id == "30037001") {
+            return "highlight-row";
+        }
+        return "";
+    }
+    channelName(row: any): string {
+        if (row.channel_id == 0 || row.channel_id == "0") {
+            return LangUtil("全部渠道");
+        }
+        return row.channel_id;
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
-::v-deep .el-table tr:first-child {
+::v-deep .highlight-row {
     background-color: #f6f7fa !important;
 }
 </style>

@@ -6,6 +6,8 @@ import { HttpType } from "@/views/vendor_product/setting";
 import { Message, MessageBox } from "element-ui";
 import IVendorProductProxy from "./IVendorProductProxy";
 import i18n from "@/lang";
+import { BaseInfo } from "@/components/vo/commonVo";
+import { exportJson2Excel } from "@/core/global/Excel";
 export default class VendorProductProxy extends AbstractProxy implements IVendorProductProxy {
     static NAME = "VendorProductProxy";
 
@@ -27,17 +29,25 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
     /**表格相关数据 */
     tableData = {
         columns: {
-            vendor_id: { name: "", options: {} },
-            vendor_product_name: { name: "", options: {} },
-            vendor_type: { name: "", options: <any>{} },
-            ori_product_id: { name: "", options: {} },
-            open_mode: { name: "", options: {} },
-            icon: { name: "", options: {} },
-            status: { name: "", options: {} },
-            ori_vendor_extend: { name: "", options: {} },
-            orientation: { name: "", options: {} },
-            currency_type: { name: "", options: {} },
-            languages: { name: "", options: {} },
+            vendor_product_id: { name: "产品ID", options: [] },
+            data_belong: { name: "数据归属标记", options: [] },
+            vendor_product_name: { name: "产品名称", options: [] },
+            vendor_id: { name: "产品厂商", options: {} },
+            vendor_type: { name: "产品类型", options: {} },
+            languages: { name: "支持语言", options: {} },
+            ori_product_id: { name: "产品ID[厂商]", options: [] },
+            icon: { name: "产品图片", options: [] },
+            icon_url: { name: LangUtil("缩略图"), options: [] },
+            status: { name: "状态", options: {} },
+            orientation: { name: "方向", options: {} },
+            open_mode: { name: "打开方式", options: {} },
+            is_delete: { name: "是否删除", options: [] },
+            ori_vendor_extend: { name: "产品扩展字段", options: [] },
+            created_by: { name: "创建人", options: [] },
+            created_at: { name: "创建时间", options: [] },
+            updated_by: { name: "修改人", options: [] },
+            updated_at: { name: "修改时间", options: [] },
+            currency_type: { name: "结算方式", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -72,6 +82,32 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
         },
         formSource: null, // 表单的原始数据
         update: 1,
+    };
+
+    fieldSelectionData = {
+        bShow: false,
+        fieldOptions: [
+            "vendor_id",
+            "vendor_product_name",
+            "languages",
+            "vendor_type",
+            "ori_product_id",
+            "icon",
+            "icon_url",
+            "ori_vendor_extend",
+            "orientation",
+            "currency_type",
+            "status",
+            "open_mode",
+        ],
+    };
+
+    exportData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
     };
 
     /**产品厂商 copy */
@@ -252,5 +288,85 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
         list.forEach((ele: any) => {
             this.vendorIdOptions[ele.vendor_id] = ele.vendor_name;
         });
+    }
+
+    /**语言包导入翻译 */
+    languageImport(sentences: any): void {
+        //@ts-ignore
+        const data: any = sentences.map(item => ({ ...item, languages: item.languages?.split(",") }));
+        const newData = JSON.stringify(data);
+        this.sendNotification(HttpType.admin_vendor_product_import, { sentences: newData });
+    }
+    /**取得excel 挡案名称 */
+    getExcelOutputName() {
+        return LangUtil("厂商产品管理");
+    }
+
+    /**取得所有资料 */
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
+        this.sendNotification(HttpType.admin_vendor_product_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
+    }
+
+    /**导出excel */
+    exportExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        const exportField: string[] = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item);
+            }
+        }
+        let exportData = this.dataMatching(exportField, newData);
+        exportJson2Excel(exportField, exportData, this.getExcelOutputName(), undefined, undefined);
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
+    }
+
+    /**导出资料合并 */
+    dataMatching(filterKeys: any, listData: any) {
+        return listData.map((data: any) =>
+            filterKeys.map((key: string) => {
+                return data[key];
+            })
+        );
     }
 }

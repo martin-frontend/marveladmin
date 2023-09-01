@@ -60,185 +60,7 @@
             @selection-change="handleSelectionChange"
         >
             <el-table-column type="selection" class-name="status-col"> </el-table-column>
-            <el-table-column :label="LangUtil('平台信息')" align="left" min-width="160px">
-                <template slot-scope="{ row }">
-                    <div>{{ tableColumns["plat_id"].name }}：{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
-                    <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
-                </template>
-            </el-table-column>
-            <el-table-column :label="LangUtil('用户信息')" align="left" min-width="190px">
-                <template slot-scope="{ row }">
-                    <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
-                        {{ tableColumns["user_id"].name }}：{{ row.user_id }}
-                    </div>
-                    <div>{{ tableColumns["username"].name }}：{{ row.username }}</div>
-                    <div>{{ tableColumns["nick_name"].name }}：{{ row.nick_name }}</div>
-                    <div>
-                        {{ tableColumns["user_remark"].name }}：<span class="user_remark">{{ row.user_remark }}</span>
-                    </div>
-                    <div>{{ LangUtil("账号创建时间") }}：{{ row.user_created_at }}</div>
-                </template>
-            </el-table-column>
-            <el-table-column :label="LangUtil('接单状态')" align="left" min-width="150px">
-                <template slot-scope="{ row }">
-                    <span v-if="row.accept_admin_user_id == 0">
-                        -
-                    </span>
-                    <span v-else>
-                        <div>{{ LangUtil("接单人") }}：{{ row.accept_admin_user_id }}</div>
-                        <div>{{ LangUtil("接单人名称") }}：{{ row.accept_admin_username }}</div>
-                    </span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="order_no" :label="tableColumns['order_no'].name" align="center" min-width="90px">
-            </el-table-column>
-            <el-table-column
-                prop="third_order_no"
-                :label="tableColumns['third_order_no'].name"
-                align="center"
-                width="100px"
-            >
-            </el-table-column>
-            <el-table-column prop="status" :label="tableColumns['status'].name" min-width="90px" align="center">
-                <template slot-scope="{ row }">
-                    <div>
-                        {{ tableColumns["status"].options[row.status] }}
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="is_first_exchange" :label="tableColumns['is_first_exchange'].name" min-width="90px" align="center">
-                <template slot-scope="{ row }">
-                    <div>
-                        {{ tableColumns["is_first_exchange"].options[row.is_first_exchange] }}
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column :label="LangUtil('兑换信息')" min-width="160px" align="center">
-                <template slot-scope="{ row }">
-                    <div align="left">
-                        <template v-if="row.is_coin_user_order != 1">
-                            <p>
-                                {{ tableColumns["exchange_vendors_id"].name }}：{{
-                                    tableColumns["exchange_vendors_id"].options[row.exchange_vendors_id]
-                                }}
-                            </p>
-                            <p>
-                                {{ tableColumns["exchange_channel"].name }}：{{
-                                    tableColumns["exchange_channel"].options[row.exchange_channel]
-                                }}
-                            </p>
-                        </template>
-                        <template v-else>
-                            <p>{{ tableColumns["coin_user_id"].name }}：{{ row.coin_user_id }}</p>
-                            <p>{{ tableColumns["coin_username"].name }}：{{ row.coin_username }}</p>
-                        </template>
-
-                        <div>{{ tableColumns["coin_name_unique"].name }}：{{ row.coin_name_unique }}</div>
-                        <div>
-                            {{ tableColumns["block_network_id"].name }}：{{
-                                tableColumns["block_network_id"].options[row.block_network_id]
-                            }}
-                        </div>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="extends" :label="tableColumns['extends'].name" min-width="180px" align="center">
-                <template slot-scope="{ row }">
-                    <div align="left" v-if="row.payment_method && row.payment_method.length > 0">
-                        <p v-for="(value, key) of row.payment_method" :key="key">{{ key }}：{{ value }}</p>
-                    </div>
-                    <div align="left" v-else-if="row.payment_method && Object.keys(row.payment_method).length >0">
-                        <p v-for="(value, key) of row.payment_method" :key="key">{{ key }}：{{ value }}</p>
-                    </div>
-                    <div v-else>
-                        -
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column
-                prop="payment_method"
-                :label="tableColumns['payment_method'].name"
-                min-width="180px"
-                align="center"
-            >
-                <template slot-scope="{ row }">
-                    <div align="left">
-                        <div>
-                            {{ tableColumns["receive_payment_type"].name }}：{{
-                                tableColumns["receive_payment_type"].options[row.receive_payment_type]
-                            }}
-                        </div>
-                        <span v-if="row.receive_payment_type != 8" v-html="getAccessInfo(row)"></span>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column :label="LangUtil('订单信息')" align="left" min-width="160px">
-                <template slot-scope="{ row }">
-                    <div>{{ tableColumns["gold"].name }}：{{ row.gold }}</div>
-                    <div>{{ tableColumns["fee_rate"].name }}：{{ row.fee_rate }}</div>
-                    <div>{{ tableColumns["fee"].name }}：{{ row.fee }}</div>
-                    <div>{{ tableColumns["money"].name }}：{{ row.money }}</div>
-                    <div>{{ tableColumns["gold_scale"].name }}：{{ row.gold_scale }}</div>
-                </template>
-            </el-table-column>
-            <el-table-column :label="LangUtil('订单时间')" align="left" min-width="150px">
-                <template slot-scope="{ row }">
-                    <p>{{ tableColumns["created_at"].name }}：<br />{{ row.created_at }}</p>
-                    <p>{{ tableColumns["updated_at"].name }}：<br />{{ row.updated_at }}</p>
-                </template>
-            </el-table-column>
-
-            <el-table-column :label="tableColumns.total_recharge.name" align="left" min-width="150px">
-                <template slot-scope="{ row }">
-                    <p v-for="(value, key) of row.user_statistic" :key="key">
-                        {{ value.coin_name_unique }} : {{ value.total_recharge }}
-                    </p>
-                </template>
-            </el-table-column>
-
-            <el-table-column :label="tableColumns.total_exchange.name" align="left" min-width="150px">
-                <template slot-scope="{ row }">
-                    <p v-for="(value, key) of row.user_statistic" :key="key">
-                        {{ value.coin_name_unique }} : {{ value.total_exchange }}
-                    </p>
-                </template>
-            </el-table-column>
-
-            <el-table-column :label="tableColumns.total_bet.name" align="left" min-width="150px">
-                <template slot-scope="{ row }">
-                    <p v-for="(value, key) of row.user_statistic" :key="key">
-                        {{ value.coin_name_unique }} : {{ value.total_bet }}
-                    </p>
-                </template>
-            </el-table-column>
-
-            <el-table-column :label="tableColumns.total_win.name" align="left" min-width="150px">
-                <template slot-scope="{ row }">
-                    <p v-for="(value, key) of row.user_statistic" :key="key">
-                        {{ value.coin_name_unique }} :
-                        <WinLossDisplay :amount="value.total_win" :isShowDollar="false" />
-                    </p>
-                </template>
-            </el-table-column>
-            <el-table-column prop="remark" :label="tableColumns['remark'].name" align="center" min-width="100px">
-                <template slot-scope="{ row }">
-                    <div class="remark">
-                        <div v-if="row.auto_check_status !== 0">
-                            {{ tableColumns.auto_check_status.options[row.auto_check_status] }}
-                        </div>
-                        <div>
-                            <p>{{ row.remark }}</p>
-                            <el-button
-                                type="primary"
-                                size="mini"
-                                icon="el-icon-edit"
-                                @click="handerEditRemark(row)"
-                                v-if="checkUnique(unique.exchange_orders_update_remark)"
-                            ></el-button>
-                        </div>
-                    </div>
-                </template>
-            </el-table-column>
+            <!-- 操作 -->
             <el-table-column :label="LangUtil('操作')" class-name="status-col" :width="width">
                 <template slot-scope="{ row }">
                     <!--取消派发 -->
@@ -352,6 +174,220 @@
                     </div>
                     <div v-else>
                         {{ row.updated_by }}
+                    </div>
+                </template>
+            </el-table-column>
+
+            <!-- 平台信息 -->
+            <el-table-column :label="LangUtil('平台信息')" align="left" min-width="160px">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns["plat_id"].name }}：{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
+                    <div>{{ tableColumns["channel_id"].name }}：{{ row.channel_id }}</div>
+                </template>
+            </el-table-column>
+
+            <!-- 用户信息 -->
+            <el-table-column :label="LangUtil('用户信息')" align="left" min-width="190px">
+                <template slot-scope="{ row }">
+                    <div @click="showUserDetail(row.user_id)" style="cursor: pointer; text-decoration: underline">
+                        {{ tableColumns["user_id"].name }}：{{ row.user_id }}
+                    </div>
+                    <div>{{ tableColumns["username"].name }}：{{ row.username }}</div>
+                    <div>{{ tableColumns["nick_name"].name }}：{{ row.nick_name }}</div>
+                    <div>
+                        {{ tableColumns["user_remark"].name }}：<span class="user_remark">{{ row.user_remark }}</span>
+                    </div>
+                    <div>{{ LangUtil("账号创建时间") }}：{{ row.user_created_at }}</div>
+                </template>
+            </el-table-column>
+
+            <!-- 接单状态 -->
+            <el-table-column :label="LangUtil('接单状态')" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <span v-if="row.accept_admin_user_id == 0">
+                        -
+                    </span>
+                    <span v-else>
+                        <div>{{ LangUtil("接单人") }}：{{ row.accept_admin_user_id }}</div>
+                        <div>{{ LangUtil("接单人名称") }}：{{ row.accept_admin_username }}</div>
+                    </span>
+                </template>
+            </el-table-column>
+
+            <!-- 訂單號 -->
+            <el-table-column prop="order_no" :label="tableColumns['order_no'].name" align="center" min-width="90px">
+            </el-table-column>
+
+            <!-- 第三方訂單號 -->
+            <el-table-column
+                prop="third_order_no"
+                :label="tableColumns['third_order_no'].name"
+                align="center"
+                width="100px"
+            >
+            </el-table-column>
+
+            <!-- 訂單狀態 -->
+            <el-table-column prop="status" :label="tableColumns['status'].name" min-width="90px" align="center">
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["status"].options[row.status] }}
+                    </div>
+                </template>
+            </el-table-column>            
+
+            <!-- 是否首兌 -->
+            <el-table-column
+                prop="is_first_exchange"
+                :label="tableColumns['is_first_exchange'].name"
+                min-width="90px"
+                align="center"
+            >
+                <template slot-scope="{ row }">
+                    <div>
+                        {{ tableColumns["is_first_exchange"].options[row.is_first_exchange] }}
+                    </div>
+                </template>
+            </el-table-column>
+
+            <!-- 兑换信息 -->
+            <el-table-column :label="LangUtil('兑换信息')" min-width="160px" align="center">
+                <template slot-scope="{ row }">
+                    <div align="left">
+                        <template v-if="row.is_coin_user_order != 1">
+                            <p>
+                                {{ tableColumns["exchange_vendors_id"].name }}：{{
+                                    tableColumns["exchange_vendors_id"].options[row.exchange_vendors_id]
+                                }}
+                            </p>
+                            <p>
+                                {{ tableColumns["exchange_channel"].name }}：{{
+                                    tableColumns["exchange_channel"].options[row.exchange_channel]
+                                }}
+                            </p>
+                        </template>
+                        <template v-else>
+                            <p>{{ tableColumns["coin_user_id"].name }}：{{ row.coin_user_id }}</p>
+                            <p>{{ tableColumns["coin_username"].name }}：{{ row.coin_username }}</p>
+                        </template>
+
+                        <div>{{ tableColumns["coin_name_unique"].name }}：{{ row.coin_name_unique }}</div>
+                        <div>
+                            {{ tableColumns["block_network_id"].name }}：{{
+                                tableColumns["block_network_id"].options[row.block_network_id]
+                            }}
+                        </div>
+                    </div>
+                </template>
+            </el-table-column>
+
+            <!-- 用戶兑換信息 -->
+            <el-table-column prop="extends" :label="tableColumns['extends'].name" min-width="180px" align="center">
+                <template slot-scope="{ row }">
+                    <div align="left" v-if="row.payment_method && row.payment_method.length > 0">
+                        <p v-for="(value, key) of row.payment_method" :key="key">{{ key }}：{{ value }}</p>
+                    </div>
+                    <div align="left" v-else-if="row.payment_method && Object.keys(row.payment_method).length > 0">
+                        <p v-for="(value, key) of row.payment_method" :key="key">{{ key }}：{{ value }}</p>
+                    </div>
+                    <div v-else>
+                        -
+                    </div>
+                </template>
+            </el-table-column>
+
+            <!-- 對換帳號 -->
+            <el-table-column
+                prop="payment_method"
+                :label="tableColumns['payment_method'].name"
+                min-width="180px"
+                align="center"
+            >
+                <template slot-scope="{ row }">
+                    <div align="left">
+                        <div>
+                            {{ tableColumns["receive_payment_type"].name }}：{{
+                                tableColumns["receive_payment_type"].options[row.receive_payment_type]
+                            }}
+                        </div>
+                        <span v-if="row.receive_payment_type != 8" v-html="getAccessInfo(row)"></span>
+                    </div>
+                </template>
+            </el-table-column>
+
+            <!-- 订单信息 -->
+            <el-table-column :label="LangUtil('订单信息')" align="left" min-width="160px">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns["gold"].name }}：{{ row.gold }}</div>
+                    <div>{{ tableColumns["fee_rate"].name }}：{{ row.fee_rate }}</div>
+                    <div>{{ tableColumns["fee"].name }}：{{ row.fee }}</div>
+                    <div>{{ tableColumns["money"].name }}：{{ row.money }}</div>
+                    <div>{{ tableColumns["gold_scale"].name }}：{{ row.gold_scale }}</div>
+                </template>
+            </el-table-column>
+
+            <!-- 订单时间 -->
+            <el-table-column :label="LangUtil('订单时间')" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p>{{ tableColumns["created_at"].name }}：<br />{{ row.created_at }}</p>
+                    <p>{{ tableColumns["updated_at"].name }}：<br />{{ row.updated_at }}</p>
+                </template>
+            </el-table-column>
+
+            <!-- 用戶總充值 -->
+            <el-table-column :label="tableColumns.total_recharge.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} : {{ value.total_recharge }}
+                    </p>
+                </template>
+            </el-table-column>
+
+            <!-- 用戶總兌換 -->
+            <el-table-column :label="tableColumns.total_exchange.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} : {{ value.total_exchange }}
+                    </p>
+                </template>
+            </el-table-column>
+
+            <!-- 用戶總投注 -->
+            <el-table-column :label="tableColumns.total_bet.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} : {{ value.total_bet }}
+                    </p>
+                </template>
+            </el-table-column>
+
+            <!-- 用戶總輸贏 -->
+            <el-table-column :label="tableColumns.total_win.name" align="left" min-width="150px">
+                <template slot-scope="{ row }">
+                    <p v-for="(value, key) of row.user_statistic" :key="key">
+                        {{ value.coin_name_unique }} :
+                        <WinLossDisplay :amount="value.total_win" :isShowDollar="false" />
+                    </p>
+                </template>
+            </el-table-column>
+
+            <!-- 備註 -->
+            <el-table-column prop="remark" :label="tableColumns['remark'].name" align="center" min-width="100px">
+                <template slot-scope="{ row }">
+                    <div class="remark">
+                        <div v-if="row.auto_check_status !== 0">
+                            {{ tableColumns.auto_check_status.options[row.auto_check_status] }}
+                        </div>
+                        <div>
+                            <p>{{ row.remark }}</p>
+                            <el-button
+                                type="primary"
+                                size="mini"
+                                icon="el-icon-edit"
+                                @click="handerEditRemark(row)"
+                                v-if="checkUnique(unique.exchange_orders_update_remark)"
+                            ></el-button>
+                        </div>
                     </div>
                 </template>
             </el-table-column>

@@ -80,6 +80,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             rule_desc: { name: "", options: <any>{} },
             vendor_id: { name: "厂商ID", options: {} },
             vendor_ids: { name: "", options: {} },
+            show_end_time: { name: "展示-结束时间", options: {} },
+            show_start_time: { name: "展示-开始时间", options: {} },
+            prize_pool_amount: { name: "奖池金额", options: {} },
         },
         orderData: {
             id: "",
@@ -106,59 +109,73 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         model_type: "",
         languages: "",
     };
+    defaultForm = {
+        id: null,
+        plat_id: "",
+        activity_name: "",
+        activity_category: "",
+        is_preheat: 0,
+        start_time: "",
+        end_time: "",
+        model_open_mode: 1,
+        open_mode_url: "",
+        open_model_url: "",
+        settlement_type: "",
+        award_type: "",
+        award_types: [],
+        bonus_multiple: 1,
+        type: "2",
+        model_id: "",
+        link_url: "",
+        link_url_url: "",
+        settlement_period: "",
+        des: "",
+        show_types: [],
+        daily_ratio: [],
+        show_type: <any>2,
+        is_once: "",
+        rules: <any>[],
+        award_tpl: "",
+        award_type_map: "",
+        award_timing_map: "",
+        icon: "",
+        icon_url: "",
+        extended_task_type: 0,
+        task_days: "",
+        task_water_rate_2: "",
+        task_water_rate_4: "",
+        task_water_rate_8: "",
+        task_water_rate_16: "",
+        task_water_rate_32: "",
+        task_water_rate_64: "",
+        task_water_rate_128: "",
+        activity_coin_task: <any>{},
+        process_control: 1,
+        rule_desc: "",
+        active_model_tag: "",
+        vendorArr: <any>[],
+        transfer_amount_rate_Arr: <any>[],
+        show_end_time: "",
+        show_start_time: "",
+        model_type: 0, // 模版的类型
 
+        init_prize_pool: "",
+        prize_pool_add: "",
+        update_cycle_types: <any>[],
+        day_init_num: 0,
+        update_cycle_type: 0,
+
+        lottery_cons: <any>[],
+        lottery_award: <any>[],
+        ball_award: <any>[],
+        rank_award: <any>[],
+        day_num_init_config: <any>[],
+    };
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        form: {
-            id: null,
-            // TODO
-            plat_id: "",
-            activity_name: "",
-            activity_category: "",
-            is_preheat: 0,
-            start_time: "",
-            end_time: "",
-            model_open_mode: 1,
-            open_mode_url: "",
-            open_model_url: "",
-            settlement_type: "",
-            award_type: "",
-            award_types: [],
-            bonus_multiple: 1,
-            type: "2",
-            model_id: "",
-            link_url: "",
-            link_url_url: "",
-            settlement_period: "",
-            des: "",
-            show_types: [],
-            daily_ratio: [],
-            show_type: <any>2,
-            is_once: "",
-            rules: <any>[],
-            award_tpl: "",
-            award_type_map: "",
-            award_timing_map: "",
-            icon: "",
-            icon_url: "",
-            extended_task_type: 0,
-            task_days: "",
-            task_water_rate_2: "",
-            task_water_rate_4: "",
-            task_water_rate_8: "",
-            task_water_rate_16: "",
-            task_water_rate_32: "",
-            task_water_rate_64: "",
-            task_water_rate_128: "",
-            activity_coin_task: <any>{},
-            process_control: 1,
-            rule_desc: "",
-            active_model_tag: "",
-            vendorArr: <any>[],
-            transfer_amount_rate_Arr: <any>[],
-        },
+        form: JSON.parse(JSON.stringify(this.defaultForm)),
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据
         fileList: <any>[{ url: "" }],
@@ -245,30 +262,50 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
         this.dialogData.fileList1[0].url = this.dialogData.form.icon_url;
+        if (this.dialogData.form.rules && data.model_type != 12)
+            for (const item of this.dialogData.form.rules) {
+                if (item.list)
+                    for (const child of item.list) {
+                        if (child.list)
+                            for (const child_1 of child.list) {
+                                if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
+                                    if (this.getRuleInfo(child_1).key_value_type == 2) {
+                                        if (!child_1.params) {
+                                            child_1.params = {};
+                                        }
 
-        for (const item of this.dialogData.form.rules) {
-            for (const child of item.list) {
-                for (const child_1 of child.list) {
-                    if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
-                        if (this.getRuleInfo(child_1).key_value_type == 2) {
-                            if (!child_1.params) {
-                                child_1.params = {};
-                            }
-
-                            for (const iterator of child_1.params) {
-                                if (!iterator.percent) {
-                                    iterator.percent = 0;
-                                }
-                                if (!iterator.max_limit) {
-                                    iterator.max_limit = 0;
+                                        for (const iterator of child_1.params) {
+                                            if (!iterator.percent) {
+                                                iterator.percent = 0;
+                                            }
+                                            if (!iterator.max_limit) {
+                                                iterator.max_limit = 0;
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                        }
                     }
-                }
+            }
+        else {
+            if (data.model_type == 12) {
+                this.setBallAwardData(data);
             }
         }
         console.log("---->>>", this.dialogData.form);
+    }
+
+    setBallAwardData(data: any) {
+        this.dialogData.form.init_prize_pool = data.init_prize_pool;
+        this.dialogData.form.prize_pool_add = data.prize_pool_add;
+        this.dialogData.form.day_init_num = data.day_init_num;
+        this.dialogData.form.update_cycle_types = JSON.parse(JSON.stringify(data.update_cycle_types));
+        this.dialogData.form.update_cycle_type = data.update_cycle_types[0];
+        this.dialogData.form.lottery_cons = JSON.parse(JSON.stringify(data.lottery_cons));
+        this.dialogData.form.lottery_award = JSON.parse(JSON.stringify(data.lottery_award));
+        this.dialogData.form.ball_award = JSON.parse(JSON.stringify(data.ball_award));
+        this.dialogData.form.rank_award = JSON.parse(JSON.stringify(data.rank_award));
+        this.dialogData.form.day_num_init_config = JSON.parse(JSON.stringify(data.day_num_init_config));
     }
 
     /**重置查询条件 */
@@ -337,51 +374,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
 
     /**重置弹窗表单 */
     resetDialogForm() {
-        Object.assign(this.dialogData.form, {
-            id: null,
-            plat_id: "",
-            activity_name: "",
-            activity_category: "",
-            is_preheat: 0,
-            start_time: "",
-            end_time: "",
-            model_open_mode: 1,
-            open_model_url: "",
-            open_mode_url: "",
-            settlement_type: "",
-            award_type: "",
-            award_types: [],
-            bonus_multiple: 1,
-            type: "2",
-            model_id: "",
-            link_url: "",
-            settlement_period: "",
-            des: "",
-            show_types: [],
-            daily_ratio: [],
-            show_type: <any>1,
-            is_once: "",
-            rules: [],
-            award_tpl: "",
-            award_type_map: "",
-            icon: "",
-            extended_task_type: "",
-            task_days: "",
-            task_water_rate_2: "",
-            task_water_rate_4: "",
-            task_water_rate_8: "",
-            task_water_rate_16: "",
-            task_water_rate_32: "",
-            task_water_rate_64: "",
-            task_water_rate_128: "",
-            activity_coin_task: <any>{},
-            process_control: 1,
-            rule_desc: "",
-            active_model_tag: "",
-            vendorArr: <any>[],
-            transfer_amount_rate_Arr: <any>[],
-        });
-
+        this.dialogData.form = JSON.parse(JSON.stringify(this.defaultForm));
         this.activeModelData.options.length = 0;
         this.dialogData.fileList = [{ url: "" }];
         this.dialogData.fileList1 = [{ url: "" }];
@@ -432,6 +425,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         if (!this.chickDailyRatio()) return;
 
         let formCopy = <any>{};
+
         const {
             plat_id,
             activity_name,
@@ -468,27 +462,33 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             task_water_rate_128,
             vendorArr,
             transfer_amount_rate_Arr,
+            show_end_time,
+            show_start_time,
         } = this.dialogData.form;
-        for (const item of rules) {
-            for (const child of item.list) {
-                for (const child_1 of child.list) {
-                    if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
-                        // child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+        if (rules && this.dialogData.form.model_type != 12) {
+            for (const item of rules) {
+                if (item.list)
+                    for (const child of item.list) {
+                        if (child.list)
+                            for (const child_1 of child.list) {
+                                if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
+                                    // child_1.params = { [child_1.coin_type]: child_1.coin_amount };
 
-                        if (this.getRuleInfo(child_1).key_value_type == 2) {
-                            child_1.params = {};
-                            child_1.params[child_1.coin_type] = {};
-                            child_1.params[child_1.coin_type]["percent"] = child_1.coin_amount;
-                            child_1.params[child_1.coin_type]["max_limit"] = child_1.max_limit;
+                                    if (this.getRuleInfo(child_1).key_value_type == 2) {
+                                        child_1.params = {};
+                                        child_1.params[child_1.coin_type] = {};
+                                        child_1.params[child_1.coin_type]["percent"] = child_1.coin_amount;
+                                        child_1.params[child_1.coin_type]["max_limit"] = child_1.max_limit;
 
-                            delete child_1.coin_type;
-                            delete child_1.coin_amount;
-                            delete child_1.max_limit;
-                        } else {
-                            child_1.params = { [child_1.coin_type]: child_1.coin_amount };
-                        }
+                                        delete child_1.coin_type;
+                                        delete child_1.coin_amount;
+                                        delete child_1.max_limit;
+                                    } else {
+                                        child_1.params = { [child_1.coin_type]: child_1.coin_amount };
+                                    }
+                                }
+                            }
                     }
-                }
             }
         }
         if (type === "1") {
@@ -523,6 +523,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 task_water_rate_64,
                 task_water_rate_128,
                 process_control,
+                show_end_time,
+                show_start_time,
             };
         } else {
             formCopy = {
@@ -550,6 +552,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 process_control,
                 rule_desc,
                 active_model_tag,
+                show_end_time,
+                show_start_time,
             };
         }
         /**
@@ -601,10 +605,33 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         delete formCopy.task_water_rate_128;
         formCopy["publish_status"] = Object.keys(this.tableData.columns.publish_status.options)[1];
 
+        if (this.dialogData.form.model_type == 12) {
+            // formCopy.settlement_period =   Object.keys(this.tableData.columns.settlement_period.options)[0];
+            // formCopy.settlement_type = 1;
+            formCopy.model_type = 12;
+            formCopy.init_prize_pool = this.dialogData.form.init_prize_pool;
+            formCopy.prize_pool_add = this.dialogData.form.prize_pool_add;
+            formCopy.day_init_num = this.dialogData.form.day_init_num;
+            /**彩球模版 */
+            formCopy.update_cycle_types = JSON.stringify(this.dialogData.form.update_cycle_types);
+            formCopy.lottery_cons = JSON.stringify(this.dialogData.form.lottery_cons);
+            formCopy.lottery_award = JSON.stringify(this.dialogData.form.lottery_award);
+            formCopy.ball_award = JSON.stringify(this.dialogData.form.ball_award);
+            formCopy.rank_award = JSON.stringify(this.dialogData.form.rank_award);
+            formCopy.day_num_init_config = JSON.stringify(this.dialogData.form.day_num_init_config);
+        }
         console.log("---->>>", formCopy);
-        // const pointForm = JSON.parse(JSON.stringify(formCopy));
-        // pointForm.rules = JSON.parse(pointForm.rules);
-        // console.log("----发送的JSON ", pointForm);
+
+        if (!formCopy.show_end_time) {
+            formCopy.show_end_time = formCopy.end_time;
+        }
+        if (!formCopy.show_start_time) {
+            formCopy.show_start_time = formCopy.start_time;
+        }
+        formCopy.start_time = this.resetDate(formCopy.start_time);
+        formCopy.end_time = this.resetDate(formCopy.end_time);
+        formCopy.show_start_time = this.resetDate(formCopy.show_start_time);
+        formCopy.show_end_time = this.resetDate(formCopy.show_end_time);
 
         MessageBox.confirm(<string>LangUtil("发布以后活动数据不能修改，确定发布"), <string>LangUtil("提示"), {
             confirmButtonText: <string>LangUtil("确定"),
@@ -616,7 +643,12 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             })
             .catch(() => {});
     }
-
+    //将时间只发送天
+    resetDate(date: string) {
+        const strArr = date.split(" ");
+        console.log("转换之后的", strArr);
+        return strArr[0];
+    }
     /**关闭该活动 */
     onCloseActive() {
         MessageBox.confirm(<string>LangUtil("活动已发布，是否要关闭该活动"), <string>LangUtil("提示"), {
@@ -717,6 +749,15 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         if (formCopy.show_type == 2) {
             formCopy.link_url = this.dialogData.form.link_url;
         }
+        if (this.dialogData.form.model_type == 12) {
+            /**彩球模版 */
+            formCopy.update_cycle_types = JSON.stringify(this.dialogData.form.update_cycle_types);
+            formCopy.lottery_cons = JSON.stringify(this.dialogData.form.lottery_cons);
+            formCopy.lottery_award = JSON.stringify(this.dialogData.form.lottery_award);
+            formCopy.ball_award = JSON.stringify(this.dialogData.form.ball_award);
+            formCopy.rank_award = JSON.stringify(this.dialogData.form.rank_award);
+            formCopy.day_num_init_config = JSON.stringify(this.dialogData.form.day_num_init_config);
+        }
         // 发送消息
         this.sendNotification(HttpType.admin_plat_activity_update, formCopy);
     }
@@ -764,7 +805,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 rule_desc,
                 active_model_tag,
             } = body;
-
             this.dialogData.form.model_open_mode = open_mode;
             this.dialogData.form.settlement_type = settlement_type;
             this.dialogData.form.award_types = award_types;
@@ -777,25 +817,29 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.dialogData.form.link_url = link_url;
             this.dialogData.form.is_once = is_once;
             this.dialogData.form.show_type = show_types[0];
-
-            for (const item of rules) {
-                for (const child of item.list) {
-                    for (const child_1 of child.list) {
-                        if (child_1.params_type && child_1.type) {
-                            if (
-                                child_1.type == 61 &&
-                                child_1.params_type == 5 &&
-                                this.dialogData.form.extended_task_type != 2
-                            ) {
-                                child_1.coin_type = "USDT";
-                                child_1.coin_amount = 0;
-                            } else {
-                                child_1.coin_type = "";
-                                child_1.coin_amount = 0;
+            this.dialogData.form.model_type = body.type;
+            if (data.type != 12) {
+                for (const item of rules) {
+                    for (const child of item.list) {
+                        for (const child_1 of child.list) {
+                            if (child_1.params_type && child_1.type) {
+                                if (
+                                    child_1.type == 61 &&
+                                    child_1.params_type == 5 &&
+                                    this.dialogData.form.extended_task_type != 2
+                                ) {
+                                    child_1.coin_type = "USDT";
+                                    child_1.coin_amount = 0;
+                                } else {
+                                    child_1.coin_type = "";
+                                    child_1.coin_amount = 0;
+                                }
                             }
                         }
                     }
                 }
+            } else {
+                this.setBallAwardData(data);
             }
             this.dialogData.form.transfer_amount_rate_Arr = <any>[];
             this.dialogData.form.rules = rules;
@@ -890,5 +934,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         }
 
         return newlist;
+    }
+    admin_plat_activity_ball_prize_update(obj: any) {
+        this.sendNotification(HttpType.admin_plat_activity_ball_prize_update, obj);
     }
 }

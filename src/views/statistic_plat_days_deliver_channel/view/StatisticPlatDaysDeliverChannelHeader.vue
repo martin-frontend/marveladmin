@@ -34,7 +34,7 @@
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
                     LangUtil("重置")
                 }}</el-button>
-                <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 1">
+                <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 0">
                     {{ LangUtil("导出") }}
                 </el-button>
             </div>

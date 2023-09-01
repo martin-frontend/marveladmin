@@ -234,6 +234,8 @@ export var unique = {
     plat_activity_update: "plat_activity_update", //编辑活动
     plat_activity_close: "plat_activity_close", //关闭活动
     plat_activity_order: "plat_activity_order", //活动排序
+    plat_activity_statistic_ball_user:"plat_activity_statistic_ball_user",//彩球活动参与玩家
+    ball_prize_update: "ball_prize_update",//彩球奖池新增
     //返水明细
     plat_users_backwater_log_show: "plat_users_backwater_log_show", //详情
     //投注明细

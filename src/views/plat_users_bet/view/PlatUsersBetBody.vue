@@ -349,9 +349,11 @@
                             {{ row.league.substring(row.league.indexOf("-") + 1) }}
                         </span>
                     </p>
-                    <p>{{ tableColumns["bet_code"].name }}：{{ row.bet_code }}</p>
+                    <p v-if="row.vendor_id != 209">{{ tableColumns["bet_code"].name }}：{{ row.bet_code }}</p>
                     <p v-if="row.vendor_id == 173">{{ LangUtil("开奖结果") }}：{{ row.game_results }}</p>
-                    <p v-else-if="row.vendor_id != 136">{{ tableColumns["bet_result"].name }}：{{ row.bet_result }}</p>
+                    <p v-else-if="row.vendor_id != 136 && row.vendor_id != 209">
+                        {{ tableColumns["bet_result"].name }}：{{ row.bet_result }}
+                    </p>
                     <p v-if="row.vendor_id == 136">{{ LangUtil("彩种") }}：{{ row.vendor_game_name }}</p>
                     <p v-if="row.vendor_id == 136">{{ LangUtil("玩法") }}：{{ row.vendor_game_rules }}</p>
                     <p v-if="row.vendor_id == 136">{{ LangUtil("奖期") }}：{{ row.vendor_game_issue }}</p>
@@ -373,6 +375,15 @@
                     <el-button v-if="row.bet_detail_url" @click="showDetailPage(row)" type="text">{{
                         LangUtil("跳转详情")
                     }}</el-button>
+                    <template v-if="row.vendor_id == 209">
+                        <p>{{ LangUtil("投注玩法") }}：{{ row.play_level }}</p>
+                        <p>{{ LangUtil("注数") }}：{{ row.bet_num }}</p>
+                        <p>{{ LangUtil("投注内容") }}：{{ translateBallContentText(row) }}</p>
+                        <p>{{ LangUtil("下注赔率") }}：{{ row.odds }}</p>
+                        <p>{{ LangUtil("倍数") }}：{{ row.multiple }}</p>
+                        <p>{{ LangUtil("追号") }}：{{ row.chase }}</p>
+                        <p>{{ LangUtil("开奖结果") }}：{{ row.game_results }}</p>
+                    </template>
                 </template>
             </el-table-column>
             <el-table-column
@@ -523,6 +534,10 @@ export default class PlatUsersBetBody extends AbstractView {
     get activitySummaryCoin() {
         // @ts-ignore
         return this.myProxy.tableData.summary_coin.filter(({ coin_name_unique_type }) => coin_name_unique_type == 4);
+    }
+
+    translateBallContentText(row: any) {
+        return this.myProxy.lottTranslator.translateBallContentText(row.play_id, row.bet_content);
     }
 }
 </script>

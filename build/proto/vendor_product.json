@@ -9,6 +9,7 @@
         "admin/vendor_product/show/{vendor_product_id}",
         "admin/vendor_product/update/{vendor_product_id}",
         "admin/vendor/show/{vendor_id}",
-        "admin/vendor/index"
+        "admin/vendor/index",
+        "admin/vendor_product/import"
     ]
 }

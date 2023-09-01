@@ -12,6 +12,7 @@
         "admin/plat_activity_model/index",
         "admin/plat_activity_rule/index",
         "admin/plat_activity_model/show/{id}",
-        "admin/resource/upload"
+        "admin/resource/upload",
+        "admin/plat_activity/ball_prize_update/{id}"
     ]
 }
