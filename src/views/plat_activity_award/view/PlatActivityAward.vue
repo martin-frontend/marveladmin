@@ -25,11 +25,16 @@ import PlatActivityAwardBody from "./PlatActivityAwardBody.vue";
 export default class PlatActivityAward extends AbstractView {
     constructor() {
         super(PlatActivityAwardMediator);
+        const { query } = this.$route;
+        if (query.plat_id) {
+            Object.assign(this.myProxy.listQuery, query);
+        }
     }
 
     destroyed() {
         super.destroyed();
     }
+
     // proxy
     private myProxy: PlatActivityAwardProxy = this.getProxy(PlatActivityAwardProxy);
 }
