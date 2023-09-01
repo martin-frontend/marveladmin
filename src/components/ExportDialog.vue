@@ -86,6 +86,8 @@ export default class ExportDialog extends Vue {
     @Prop({ default: null }) _convertKeys!: string[];
     @Prop({ default: null }) _excludeKeys!: string[];
 
+    @Prop({ default: undefined }) _disabled!: boolean | undefined;
+
     get convertKeys() {
         if (!this._convertKeys) {
             return [
@@ -144,7 +146,8 @@ export default class ExportDialog extends Vue {
     alldata = {};
 
     get chickExport(): boolean {
-        return this.proxy.tableData.list && this.proxy.tableData.list.length > 0;
+        if (this._disabled == undefined) return this.proxy.tableData.list && this.proxy.tableData.list.length > 0;
+        return this._disabled;
     }
 
     openFiterDialog() {

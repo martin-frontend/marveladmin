@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/plat_activity/setting";
 import { Message } from "element-ui";
 import PlatActivityProxy from "../proxy/PlatActivityProxy";
 
-interface IPlatActivity extends IEventDispatcher { }
+interface IPlatActivity extends IEventDispatcher {}
 
 export default class PlatActivityMediator extends AbstractMediator {
     private myProxy: PlatActivityProxy = <any>this.getProxy(PlatActivityProxy);
@@ -34,6 +34,7 @@ export default class PlatActivityMediator extends AbstractMediator {
             EventType.admin_plat_activity_rule_index,
             EventType.admin_plat_activity_model_show,
             EventType.admin_resource_upload,
+            EventType.admin_plat_activity_ball_prize_update,
         ];
     }
 
@@ -76,6 +77,10 @@ export default class PlatActivityMediator extends AbstractMediator {
                 break;
             case EventType.admin_resource_upload:
                 myProxy.uploadSuccess(body);
+                break;
+            case EventType.admin_plat_activity_ball_prize_update:
+                Message.success(SuccessMessage.update);
+                myProxy.onQuery();
                 break;
         }
     }

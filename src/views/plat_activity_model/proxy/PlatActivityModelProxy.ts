@@ -49,6 +49,17 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             show_types: { name: "", options: <any>{} },
             daily_ratio: { name: "", options: <any>{} },
             type: { name: "", options: {} },
+            init_prize_pool: { name: "初始奖池", options: {} },
+            prize_pool_add: { name: "奖池新增", options: {} },
+            day_init_num: { name: "每天初始次数", options: {} },
+            update_cycle_type: { name: "期刊更新周期", options: {} },
+            lottery_cons: { name: "抽奖消耗", options: {} },
+            lottery_cons_type: { name: "抽奖消耗类型", options: {} },
+            lottery_award: { name: "抽奖奖励", options: {} },
+            lottery_award_type: { name: "奖励币种类型", options: {} },
+            ball_award: { name: "彩球奖励", options: {} },
+            rank_award: { name: "排名奖励", options: {} },
+            day_num_init_config: { name: "每日次数重置", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -106,6 +117,17 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         active_model_tag: "",
         open_mode_url:"",
         rules: [JSON.parse(JSON.stringify(this.activityRules))],
+
+        init_prize_pool: "",
+        prize_pool_add: "",
+        update_cycle_types: [],
+        day_init_num: 0,
+
+        lottery_cons: [],
+        lottery_award: [],
+        ball_award: [],
+        rank_award: [],
+        day_num_init_config: [],
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -134,6 +156,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
     setDetail(data: any) {
         setTimeout(() => {
             this.dialogData.isRender = true;
+            this.dialogData.loading = false;
             this.dialogData.form = JSON.parse(JSON.stringify(data));
         }, 300);
         this.dialogData.formSource = data;
@@ -168,6 +191,40 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
     /**重置弹窗表单 */
     resetDialogForm() {
         this.dialogData.form = JSON.parse(JSON.stringify(this.defaultForm));
+        const obj = {
+            interval: [1, 3],
+            type: "0",
+            params: {
+                key: "",
+                value: 0,
+            },
+        };
+        const xiaohao_keys = Object.keys(this.tableData.columns.lottery_cons_type.options);
+        if (xiaohao_keys && xiaohao_keys.length > 0) obj.type = xiaohao_keys[0];
+        this.dialogData.form.lottery_cons.push(JSON.parse(JSON.stringify(obj)));
+        {
+            const newobj = {
+                type: "0",
+                params: {
+                    key: "",
+                    value: 0,
+                },
+            };
+            this.dialogData.form.day_num_init_config.push(JSON.parse(JSON.stringify(newobj)));
+        }
+
+        const award_keys = Object.keys(this.tableData.columns.lottery_award_type.options);
+        if (award_keys && award_keys.length > 0) obj.type = award_keys[0];
+        this.dialogData.form.lottery_award.push(JSON.parse(JSON.stringify(obj)));
+        this.dialogData.form.rank_award.push(JSON.parse(JSON.stringify(obj)));
+
+        //彩球的
+        for (let index = 0; index < 10; index++) {
+            const ballObj = {
+                interval: [10, index],
+            };
+            this.dialogData.form.ball_award.push(ballObj);
+        }
     }
 
     /**查询 */
@@ -175,8 +232,8 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         this.sendNotification(HttpType.admin_plat_activity_model_index, objectRemoveNull(this.listQuery));
     }
     chickDailyRatio(): boolean {
-        if (this.dialogData.form.award_types.includes(16)){
-        // if (this.dialogData.form.active_model_tag == "16") {
+        if (this.dialogData.form.award_types.includes(16)) {
+            // if (this.dialogData.form.active_model_tag == "16") {
             let sumNub = 0;
             for (let index = 0; index < this.dialogData.form.daily_ratio.length; index++) {
                 sumNub += this.dialogData.form.daily_ratio[index];
@@ -202,6 +259,16 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         formCopy.award_types = JSON.stringify(formCopy.award_types);
         formCopy.show_types = JSON.stringify(formCopy.show_types);
         formCopy.daily_ratio = JSON.stringify(formCopy.daily_ratio);
+
+        /**彩球模版 */
+        if (this.dialogData.form.type == 12) {
+            formCopy.update_cycle_types = JSON.stringify(formCopy.update_cycle_types);
+            formCopy.lottery_cons = JSON.stringify(formCopy.lottery_cons);
+            formCopy.lottery_award = JSON.stringify(formCopy.lottery_award);
+            formCopy.ball_award = JSON.stringify(formCopy.ball_award);
+            formCopy.rank_award = JSON.stringify(formCopy.rank_award);
+            formCopy.day_num_init_config = JSON.stringify(formCopy.day_num_init_config);
+        }
         this.sendNotification(HttpType.admin_plat_activity_model_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
@@ -225,6 +292,17 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             show_types: JSON.stringify(this.dialogData.form.show_types),
             daily_ratio: JSON.stringify(this.dialogData.form.daily_ratio),
         });
+        /**彩球模版 */
+        if (this.dialogData.form.type == 12) {
+            Object.assign(formCopy, this.dialogData.form, {
+                update_cycle_types: JSON.stringify(this.dialogData.form.update_cycle_types),
+                lottery_cons: JSON.stringify(this.dialogData.form.lottery_cons),
+                lottery_award: JSON.stringify(this.dialogData.form.lottery_award),
+                ball_award: JSON.stringify(this.dialogData.form.ball_award),
+                rank_award: JSON.stringify(this.dialogData.form.rank_award),
+                day_num_init_config: JSON.stringify(this.dialogData.form.day_num_init_config),
+            });
+        }
         this.sendNotification(HttpType.admin_plat_activity_model_update, objectRemoveNull(formCopy));
     }
     /**删除数据 */
@@ -243,6 +321,18 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
                     daily_ratio: JSON.stringify(this.dialogData.form.daily_ratio),
                     is_delete: 1,
                 });
+
+                if (this.dialogData.form.type == 12) {
+                    Object.assign(formCopy, this.dialogData.form, {
+                        update_cycle_types: JSON.stringify(this.dialogData.form.update_cycle_types),
+                        lottery_cons: JSON.stringify(this.dialogData.form.lottery_cons),
+                        lottery_award: JSON.stringify(this.dialogData.form.lottery_award),
+                        ball_award: JSON.stringify(this.dialogData.form.ball_award),
+                        rank_award: JSON.stringify(this.dialogData.form.rank_award),
+                        day_num_init_config: JSON.stringify(this.dialogData.form.day_num_init_config),
+                        is_delete: 1,
+                    });
+                }
                 this.sendNotification(HttpType.admin_plat_activity_model_update, formCopy);
             })
             .catch(() => {});
