@@ -9,8 +9,8 @@
             :width="350"
         />
         <div class="group">
-            <SearchInput :title="LangUtil('平台ID')" v-model="listQuery.channel_id" />
-            <SearchInput :title="LangUtil('渠道ID')" v-model="listQuery.activity_id" />
+            <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
+            <SearchInput :title="tableColumns.activity_id.name" v-model="listQuery.activity_id" />
             <SearchDatePicker
                 :title="tableColumns.created_date.name"
                 :startDate.sync="listQuery['created_date-{>=}']"
