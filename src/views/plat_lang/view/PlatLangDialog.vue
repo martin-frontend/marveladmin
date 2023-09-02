@@ -45,6 +45,12 @@
                 </span>
             </el-form-item>
 
+            <el-form-item :label="LangUtil('语言选择')" prop="">
+                <el-button type="primary" size="mini" @click="selectAll(true)">{{ LangUtil("选择全部") }}</el-button>
+                <el-button type="primary" size="mini" @click="selectRev()">{{ LangUtil("反向选择") }}</el-button>
+                <el-button type="primary" size="mini" @click="selectAll(false)">{{ LangUtil("全部取消") }}</el-button>
+            </el-form-item>
+
             <div v-for="(value, key) in tableColumns.language.options" :key="key" :value="value" class="flex d-flex">
                 <el-checkbox class="mt-10" v-model="check[key]"></el-checkbox>
                 <el-form-item :label="value" prop="value" class="ml-5 wid-100">
@@ -71,7 +77,8 @@
                                 v-for="(value, key) in tableColumns.language.options"
                                 :key="key"
                                 :label="key"
-                            >{{ value }}</el-checkbox>
+                                >{{ value }}</el-checkbox
+                            >
                         </el-checkbox-group>
                     </div>
                 </el-form-item>
@@ -169,6 +176,18 @@ export default class PlatLangDialog extends AbstractView {
 
     handleTranslate(source: string, sentence: string) {
         this.myProxy.translate({ source: source, sentence: sentence, plat_id: this.form.plat_id, id: this.form.id });
+    }
+    selectAll(isSelect: boolean = true) {
+        const keys = Object.keys(this.myProxy.dialogData.check);
+        for (let index = 0; index < keys.length; index++) {
+            this.myProxy.dialogData.check[keys[index]] = isSelect;
+        }
+    }
+    selectRev() {
+        const keys = Object.keys(this.myProxy.dialogData.check);
+        for (let index = 0; index < keys.length; index++) {
+            this.myProxy.dialogData.check[keys[index]] = !this.myProxy.dialogData.check[keys[index]];
+        }
     }
 }
 </script>

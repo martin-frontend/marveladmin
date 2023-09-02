@@ -41,16 +41,16 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             plat_id: { name: "平台ID", options: {} },
             key: { name: "键", options: {} },
             ar_AR: { name: "键", options: {} },
-            de_DE: { name: 'Deutsch', options: {} },
+            de_DE: { name: "Deutsch", options: {} },
             en_EN: { name: "键", options: {} },
             es_ES: { name: "Español", options: {} },
-            fr_FR: { name: 'Français', options: {} },
-            hi_IN: { name: 'Hindi', options: {} },
+            fr_FR: { name: "Français", options: {} },
+            hi_IN: { name: "Hindi", options: {} },
             jp_JP: { name: "", options: {} },
             ko_Kr: { name: "", options: {} },
             pt_PT: { name: "", options: {} },
             th_TH: { name: "", options: {} },
-            tr_TR: { name: 'Türk dili', options: {} },
+            tr_TR: { name: "Türk dili", options: {} },
             vi_VN: { name: "", options: {} },
             zh_CN: { name: "", options: {} },
             zh_TW: { name: "", options: {} },
@@ -117,21 +117,21 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             },
         },
         check: <any>{
-            ar_AR: 0,
-            en_EN: 0,
-            jp_JP: 0,
-            ko_Kr: 0,
-            th_TH: 0,
-            vi_VN: 0,
-            zh_CN: 0,
-            zh_TW: 0,
-            es_ES: 0,
-            pt_PT: 0,
-            hi_IN: 0,
-            de_DE: 0,
-            fr_FR: 0,
-            tr_TR: 0,
-            ms_MS: 0,
+            ar_AR: true,
+            en_EN: true,
+            jp_JP: true,
+            ko_Kr: true,
+            th_TH: true,
+            vi_VN: true,
+            zh_CN: true,
+            zh_TW: true,
+            es_ES: true,
+            pt_PT: true,
+            hi_IN: true,
+            de_DE: true,
+            fr_FR: true,
+            tr_TR: true,
+            ms_MS: true,
         },
         formSource: null, // 表单的原始数据
     };
@@ -241,21 +241,21 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             },
         });
         Object.assign(this.dialogData.check, {
-            ar_AR: 0,
-            en_EN: 0,
-            jp_JP: 0,
-            ko_Kr: 0,
-            th_TH: 0,
-            vi_VN: 0,
-            zh_CN: 0,
-            zh_TW: 0,
-            es_ES: 0,
-            pt_PT: 0,
-            hi_IN: 0,
-            de_DE: 0,
-            fr_FR: 0,
-            tr_TR: 0,
-            ms_MS: 0,
+            ar_AR: true,
+            en_EN: true,
+            jp_JP: true,
+            ko_Kr: true,
+            th_TH: true,
+            vi_VN: true,
+            zh_CN: true,
+            zh_TW: true,
+            es_ES: true,
+            pt_PT: true,
+            hi_IN: true,
+            de_DE: true,
+            fr_FR: true,
+            tr_TR: true,
+            ms_MS: true,
         });
     }
 
@@ -303,7 +303,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_lang_delete, { id });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     onQueryAll() {
