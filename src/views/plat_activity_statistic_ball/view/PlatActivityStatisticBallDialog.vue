@@ -49,20 +49,20 @@
                 class="drag_table"
                 height="500"
             >
-                <el-table-column :label="tableColumns.plat_id.name" prop="">
+                <el-table-column :label="tableColumns.plat_id.name" prop="" align="center">
                     <template slot-scope="{ row }">
                         <div>{{ tableColumns.plat_id.options[row.plat_id] }}</div>
                     </template>
                 </el-table-column>
                 <!-- <el-table-column size="mini" :label="tableColumns.activity_id.name" prop="activity_id" /> -->
-                <el-table-column size="mini" :label="tableColumns.user_id.name" prop="user_id" />
-                <el-table-column size="mini" :label="tableColumns.lottery_code.name" prop="lottery_code" />
-                <el-table-column size="mini" :label="tableColumns.total_cons.name" prop="total_cons" />
-                <el-table-column size="mini" :label="tableColumns.lottery_num.name" prop="lottery_num" />
+                <el-table-column size="mini" :label="tableColumns.user_id.name" prop="user_id" align="center" />
+                <el-table-column size="mini" :label="tableColumns.lottery_code.name" prop="lottery_code" align="center" />
+                <el-table-column size="mini" :label="tableColumns.total_cons.name" prop="total_cons" align="center" />
+                <el-table-column size="mini" :label="tableColumns.lottery_num.name" prop="lottery_num" align="center" />
 
-                <el-table-column size="mini" :label="tableColumns.lottery_award.name" prop="lottery_award" />
-                <el-table-column size="mini" :label="tableColumns.rank_award.name" prop="rank_award" />
-                <el-table-column size="mini" :label="tableColumns.award_rank.name" prop="award_rank" />
+                <el-table-column size="mini" :label="tableColumns.lottery_award.name" prop="lottery_award" align="center" />
+                <el-table-column size="mini" :label="tableColumns.rank_award.name" prop="rank_award" align="center" />
+                <el-table-column size="mini" :label="tableColumns.award_rank.name" prop="award_rank" align="center" />
             </el-table>
 
             <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
