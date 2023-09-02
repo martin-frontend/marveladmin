@@ -134,6 +134,8 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
             plat_id,
             channel_id,
             user_id: "",
+            page_count: 1,
+            page_size: 20,
         });
         this.dialogData.bShow = true;
         this.onUserQuery();

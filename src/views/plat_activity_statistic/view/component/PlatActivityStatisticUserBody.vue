@@ -65,7 +65,7 @@ export default class PlatActivityStatisticUserBody extends AbstractView {
     LangUtil = LangUtil;
     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
-        this.myProxy.onQuery();
+        this.myProxy.onUserQuery();
     }
 
     // handleEdit(data: any) {
