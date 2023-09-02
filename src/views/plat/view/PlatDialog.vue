@@ -335,6 +335,17 @@
                             </el-select>
                         </div>
                         <div>
+                            <span class="title_switch">{{ tableColumns["is_bind_cpf_exchange"].name }}</span>
+                            <el-select class="select" v-model="form.is_bind_cpf_exchange">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_bind_cpf_exchange.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
+                        <div>
                             <span class="title_switch">{{ tableColumns["is_password_gold_transfer"].name }}</span>
                             <el-select class="select" v-model="form.is_password_gold_transfer">
                                 <el-option
