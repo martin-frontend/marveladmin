@@ -62,7 +62,8 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             promotion_floor_unit: { name: "", options: {} },
             is_promotion_same: { name: "", options: {} },
             is_bind_phone_transfer: { name: "", options: {} },
-            is_bind_real_name: { name: "", options: {} },
+            is_bind_real_name: { name: "兑换绑定CPF", options: {} },
+            is_bind_cpf_exchange: { name: "", options: {} },
             currency_type: { name: "", options: {} },
             is_promotion_solid: { name: "", options: {} },
             is_password_gold_transfer: { name: "", options: {} },
@@ -100,14 +101,14 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             exchange_count: { name: "玩家兑换笔数", options: {} },
             is_user_verification: { name: "", options: {} },
             register_same_ip_limit: { name: "", options: {} },
-            max_exchange_gold: {name: '最大兑换金额', options: {} },
-            forbidden_country: {name: '', options: {} },
-            is_active_digital_currency: {name: '数字货币是否参数活动', options: {} },
+            max_exchange_gold: { name: "最大兑换金额", options: {} },
+            forbidden_country: { name: "", options: {} },
+            is_active_digital_currency: { name: "数字货币是否参数活动", options: {} },
 
-            is_activity_task: {name: '活动币任务是否启用', options: {} },
-            activity_task_least_amount: {name: '活动币任务最少真实金额', options: {} },
-            is_activity_back_water: {name: '活动币任务是否返水', options: {} },
-            activity_task_pattern: {name: '活动币任务激活模式', options: {} },
+            is_activity_task: { name: "活动币任务是否启用", options: {} },
+            activity_task_least_amount: { name: "活动币任务最少真实金额", options: {} },
+            is_activity_back_water: { name: "活动币任务是否返水", options: {} },
+            activity_task_pattern: { name: "活动币任务激活模式", options: {} },
             auth_types: { name: "验证方式", options: {} },
             is_register_store_bank_info: { name: "注册是否储存银行卡信息", options: {} },
         },
@@ -144,6 +145,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_promotion_same: 0,
         is_bind_phone_transfer: 0,
         is_bind_real_name: 1,
+        is_bind_cpf_exchange: 0,
         currency_type: "CNY",
         is_promotion_solid: 98, // 1:是 98:否
         is_password_gold_transfer: 98, // 1:是 98:否
@@ -181,12 +183,12 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         max_exchange_gold: -1,
         forbidden_country: "",
         is_active_digital_currency: 1,
-        is_activity_task:"",
-        activity_task_least_amount:"",
-        is_activity_back_water:"",
-        activity_task_pattern:"",
+        is_activity_task: "",
+        activity_task_least_amount: "",
+        is_activity_back_water: "",
+        activity_task_pattern: "",
         auth_types: 1,
-        is_register_store_bank_info:98,
+        is_register_store_bank_info: 98,
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -366,7 +368,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     /**添加数据 */
     onAdd() {
         const formCopy = JSON.parse(JSON.stringify(this.dialogData.form));
-        
+
         formCopy.app_types = JSON.stringify(formCopy.app_types);
         formCopy.water_config = JSON.stringify(formCopy.water_config);
         formCopy.promotion_floor = JSON.stringify(formCopy.promotion_floor);
