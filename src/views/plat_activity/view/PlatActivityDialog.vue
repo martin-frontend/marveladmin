@@ -123,6 +123,7 @@
                         :isNeedTitle="false"
                         :pickerOptions="timeoptions"
                         :showTime="false"
+                        :disabled="isStatusUpdate"
                     />
                 </el-form-item>
                 <el-form-item :label="LangUtil('展示时间')" class="">
@@ -261,7 +262,6 @@
                         size="mini"
                         :label="tableColumns['bonus_multiple'].name"
                         prop="bonus_multiple"
-                        v-if="form.type == 1"
                     >
                         <el-input
                             v-model="form.bonus_multiple"
