@@ -57,8 +57,16 @@
                 <!-- <el-table-column size="mini" :label="tableColumns.activity_id.name" prop="activity_id" /> -->
                 <el-table-column size="mini" :label="tableColumns.user_id.name" prop="user_id" align="center" />
                 <el-table-column size="mini" :label="tableColumns.lottery_code.name" prop="lottery_code" align="center" />
+                <!-- 总消耗 -->
                 <el-table-column size="mini" :label="tableColumns.total_cons.name" prop="total_cons" align="center" />
+                <!-- 重置消耗 -->
+                <el-table-column size="mini" :label="tableColumns.init_cons.name" prop="init_cons" align="center" />
+                <!-- 抽奖消耗 -->
+                <el-table-column size="mini" :label="tableColumns.lottery_cons.name" prop="lottery_cons" align="center" />
+                <!-- 已抽奖次数 -->
                 <el-table-column size="mini" :label="tableColumns.lottery_num.name" prop="lottery_num" align="center" />
+                <!-- 总蹭送奖励 -->
+                <el-table-column size="mini" :label="tableColumns.total_award.name" prop="total_award" align="center" />
 
                 <el-table-column size="mini" :label="tableColumns.lottery_award.name" prop="lottery_award" align="center" />
                 <el-table-column size="mini" :label="tableColumns.rank_award.name" prop="rank_award" align="center" />
