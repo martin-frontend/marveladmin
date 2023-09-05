@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-form-item size="mini" :label="tableColumns['bonus_multiple'].name" prop="bonus_multiple" class="mini_input">
-            <el-input type="number" v-model="form.bonus_multiple" :placeholder="LangUtil('请输入')"></el-input>
+            <el-input type="number" v-model="form.bonus_multiple" :placeholder="LangUtil('请输入')" :disabled="isStatusUpdate"></el-input>
         </el-form-item>
         <el-form-item
             size="mini"
