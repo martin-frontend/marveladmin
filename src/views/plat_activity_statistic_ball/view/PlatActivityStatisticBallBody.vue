@@ -23,9 +23,20 @@
             <el-table-column :label="tableColumns.prize_pool_amount.name" prop="prize_pool_amount" align="center"> </el-table-column>
             <el-table-column :label="tableColumns.join_user_num.name" prop="join_user_num" align="center"> </el-table-column>
             <el-table-column :label="tableColumns.init_user_num.name" prop="init_user_num" align="center"> </el-table-column>
+            <!-- 总消耗 -->
             <el-table-column :label="tableColumns.total_cons.name" prop="total_cons" align="center"> </el-table-column>
+            <!-- 重置消耗 -->
+            <el-table-column :label="tableColumns.init_cons.name" prop="init_cons" align="center"> </el-table-column>
+            <!-- 抽奖消耗 -->
+            <el-table-column :label="tableColumns.lottery_cons.name" prop="lottery_cons" align="center"> </el-table-column>
+            <!-- 总蹭送奖励 -->
             <el-table-column :label="tableColumns.total_award.name" prop="total_award" align="center"> </el-table-column>
+            <!-- 抽奖奖励 -->
+            <el-table-column :label="tableColumns.lottery_award.name" prop="lottery_award" align="center"> </el-table-column>
+            <!-- 排名奖励 -->
+            <el-table-column :label="tableColumns.rank_award.name" prop="rank_award" align="center"> </el-table-column>
 
+            <!-- 状态 -->
             <el-table-column :label="tableColumns.cycle_status.name" prop="" align="center">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.cycle_status.options[row.cycle_status] }}</div>
