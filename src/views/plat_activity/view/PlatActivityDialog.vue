@@ -123,6 +123,7 @@
                         :isNeedTitle="false"
                         :pickerOptions="timeoptions"
                         :showTime="false"
+                        :disabled="isStatusUpdate"
                     />
                 </el-form-item>
                 <el-form-item :label="LangUtil('展示时间')" class="">

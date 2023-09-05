@@ -218,19 +218,26 @@ export default class PlatActivityStatisticBallProxy extends AbstractProxy implem
         "join_user_num",
         "init_user_num",
         "total_cons",
+        "init_cons",
+        "lottery_cons",
         "total_award",
+        "lottery_award",
+        "rank_award",
         "cycle_status",
     ];
     _userList_ball_user = [
-        "plat_id",
-        "activity_id",
-        "user_id",
-        "lottery_num",
-        "lottery_code",
-        "total_cons",
-        "lottery_award",
-        "rank_award",
-        "award_rank",
+        "activity_id", // 活動 ID
+        "plat_id", // 平台 ID
+        "user_id", // 玩家 ID
+        "lottery_code", // 中獎號碼
+        "total_cons", // 總消耗
+        "init_cons", // 重置消耗
+        "lottery_cons", // 抽奖消耗
+        "lottery_num", // 已抽獎次數
+        "total_award", // 总蹭送奖励
+        "lottery_award", // 抽獎獎勵
+        "rank_award", // 排名獎勵
+        "award_rank", // 排名
     ];
     onQuery_export_ball_user(pageInfo: any) {
         const obj = JSON.parse(JSON.stringify(this.listQuery_ball_user));

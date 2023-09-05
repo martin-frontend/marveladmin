@@ -170,6 +170,8 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         ball_award: <any>[],
         rank_award: <any>[],
         day_num_init_config: <any>[],
+
+        coin_unique: "" // 活動幣種
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -464,6 +466,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             transfer_amount_rate_Arr,
             show_end_time,
             show_start_time,
+            coin_unique
         } = this.dialogData.form;
         if (rules && this.dialogData.form.model_type != 12) {
             for (const item of rules) {
@@ -525,6 +528,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 process_control,
                 show_end_time,
                 show_start_time,
+                coin_unique
             };
         } else {
             formCopy = {
@@ -554,6 +558,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 active_model_tag,
                 show_end_time,
                 show_start_time,
+                coin_unique
             };
         }
         /**
