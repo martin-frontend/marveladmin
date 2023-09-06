@@ -8,7 +8,7 @@ import PlatUserStatisticRankDaysProxy from "../proxy/PlatUserStatisticRankDaysPr
 interface IPlatUserStatisticRankDays extends IEventDispatcher { }
 
 export default class PlatUserStatisticRankDaysMediator extends AbstractMediator {
-    private myProxy: PlatUserStatisticRankDaysProxy = <any>this.getProxy(PlatUserStatisticRankDaysProxy);
+    myProxy: PlatUserStatisticRankDaysProxy = <any>this.getProxy(PlatUserStatisticRankDaysProxy);
 
     onRegister() {
         this.myProxy.enter();
