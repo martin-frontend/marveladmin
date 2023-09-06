@@ -82,4 +82,5 @@ export var ClientModuleUrl = [
     { sort: 1, name: "每日任务", value: "openpanel_dailytask" },
     { sort: 1, name: "推广奖励", value: "openpanel_promotionreward" },
     { sort: 1, name: "自定义游戏", value: "openpanel_promotionreward" },
+    { sort: 1, name: "彩球活动", value: "openpage_activity_slots" },
 ];

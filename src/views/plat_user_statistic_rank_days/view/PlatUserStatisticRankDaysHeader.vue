@@ -1,26 +1,29 @@
 <template>
     <div class="header-content">
-        <SearchSelect
-            :title="tableColumns.plat_id.name"
-            v-model="listQuery.plat_id"
-            :options="tableColumns.plat_id.options"
-            @change="
-                changePlat();
-                handlerSearch();
-            "
-            :clearable="false"
-        />
-        <SearchSelect
-            :title="tableColumns.coin_name_unique.name"
-            v-model="listQuery.coin_name_unique"
-            :options="tableColumns.coin_name_unique_option"
-        />
-        <SearchSelect
-            :title="tableColumns.vendor_type.name"
-            v-model="listQuery.vendor_type"
-            :options="tableColumns.vendor_type.options"
-            @change="handlerSearch()"
-        />
+        <div class="group">
+            <SearchSelect
+                :title="tableColumns.plat_id.name"
+                v-model="listQuery.plat_id"
+                :options="tableColumns.plat_id.options"
+                @change="
+                    changePlat();
+                    handlerSearch();
+                "
+                :clearable="false"
+            />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique_option"
+            />
+            <SearchSelect
+                :title="tableColumns.vendor_type.name"
+                v-model="listQuery.vendor_type"
+                :options="tableColumns.vendor_type.options"
+                @change="handlerSearch()"
+            />
+            <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
+        </div>
         <div class="group">
             <SearchDatePicker
                 :title="LangUtil('投注结算时间')"

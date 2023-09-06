@@ -78,6 +78,10 @@ const layoutRouter = {
             name: "渠道用户",
             component: () => import(/* webpackChunkName: "channel_plat_user" */"@/views/channel_plat_user/view/ChannelPlatUser.vue")
         },        {
+            path: "channel_plat_user_statistic_rank_days",
+            name: "渠道用户排行榜汇总",
+            component: () => import(/* webpackChunkName: "channel_plat_user_statistic_rank_days" */"@/views/channel_plat_user_statistic_rank_days/view/ChannelPlatUserStatisticRankDays.vue")
+        },        {
             path: "channel_statistic_agent_keep_days",
             name: "渠道代理留存统计",
             component: () => import(/* webpackChunkName: "channel_statistic_agent_keep_days" */"@/views/channel_statistic_agent_keep_days/view/ChannelStatisticAgentKeepDays.vue")
