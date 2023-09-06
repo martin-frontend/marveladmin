@@ -53,7 +53,7 @@
                         :placeholder="LangUtil('请输入')"
                         v-model="form.name"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.name)">
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('name')">
                         <!-- 翻译 -->
                         {{ LangUtil("翻译") }}
                     </el-button>
@@ -96,7 +96,7 @@
                                 style="max-height: 35px"
                                 type="primary"
                                 size="mini"
-                                @click="handleTranslate(form.category)"
+                                @click="handleTranslate('category')"
                             >
                                 <!-- 翻译 -->
                                 {{ LangUtil("翻译") }}
@@ -693,9 +693,13 @@ export default class PlatsNoticeDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+        // data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_NOTICE;
         data.plat_id = this.form.plat_id;
+        //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data);
     }
 

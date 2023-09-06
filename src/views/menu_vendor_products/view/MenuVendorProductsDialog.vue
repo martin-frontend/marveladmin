@@ -41,7 +41,7 @@
                         style="margin-left: 10px;max-height: 35px"
                         type="primary"
                         size="mini"
-                        @click="handleTranslate(form.alias)"
+                        @click="handleTranslate('alias')"
                     >
                         翻译
                     </el-button>
@@ -54,7 +54,7 @@
                         style="margin-left: 10px;max-height: 35px"
                         type="primary"
                         size="mini"
-                        @click="handleTranslate(form.game_desc)"
+                        @click="handleTranslate('game_desc')"
                     >
                         翻译
                     </el-button>
@@ -319,9 +319,13 @@ export default class MenuVendorProductsDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+        // data.sentence = source;
         data.type = LanguageType.TYPE_VENDER_GAME_LANGUAGE;
         data.plat_id = this.listQuery.plat_id;
+         //@ts-ignore
+         data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data);
     }
 

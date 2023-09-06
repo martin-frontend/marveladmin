@@ -1,7 +1,6 @@
 <template>
     <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
-
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
                 <span>{{ tableColumns.plat_id.options[form.plat_id] }}</span>
             </el-form-item>
@@ -16,7 +15,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item> -->
-            
+
             <el-form-item :label="`${tableColumns.template_name.name}`" prop="template_name">
                 <div class="flex d-flex">
                     <el-input
@@ -28,8 +27,12 @@
                         :placeholder="`${tableColumns.template_name.name}`"
                         v-model="form.template_name"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.template_name)"
-                        >{{LangUtil("翻译")}}</el-button
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate('template_name')"
+                        >{{ LangUtil("翻译") }}</el-button
                     >
                 </div>
             </el-form-item>
@@ -45,8 +48,12 @@
                         :placeholder="`${tableColumns.title.name}`"
                         v-model="form.title"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.title)"
-                        >{{LangUtil("翻译")}}</el-button
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate('title')"
+                        >{{ LangUtil("翻译") }}</el-button
                     >
                 </div>
             </el-form-item>
@@ -63,22 +70,21 @@
                         :placeholder="`${tableColumns.content.name}`"
                         v-model="form.content"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate(form.content)"
-                        >{{LangUtil("翻译")}}</el-button
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate('content')"
+                        >{{ LangUtil("翻译") }}</el-button
                     >
                 </div>
             </el-form-item>
 
-
             <el-form-item class="dialog-footer">
-                <el-button
-                    type="primary"
-                    size="mini"
-                    @click="isStatusUpdate ? handleUpdate() : handleAdd()"
-                    >{{ LangUtil("确认保存") }}</el-button
-                >
+                <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
+                    LangUtil("确认保存")
+                }}</el-button>
             </el-form-item>
-
         </el-form>
     </el-dialog>
 </template>
@@ -155,9 +161,13 @@ export default class PlatMailTemplateDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+        // data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_EMAIL;
         data.plat_id = this.form.plat_id;
+        //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data);
     }
 }

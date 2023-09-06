@@ -58,7 +58,7 @@
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
-                        @click="handleTranslate(form.content)"
+                        @click="handleTranslate('content')"
                     >
                         <!-- 翻译 -->
                         {{ LangUtil("翻译") }}
@@ -194,6 +194,10 @@ export default class PlatMarqueeDialog extends AbstractView {
         data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_MARQUEE;
         data.plat_id = this.form.plat_id;
+        //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data);
     }
 }

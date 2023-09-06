@@ -37,12 +37,7 @@
                         v-model="form.tpl_id"
                         style="margin-right: 0.8rem"
                     ></el-input>
-                    <el-button
-                        style="max-height: 35px"
-                        type="primary"
-                        size="mini"
-                        @click="handleTranslate(form.tpl_id)"
-                    >
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('tpl_id')">
                         <!-- 翻译 -->
                         {{ LangUtil("翻译") }}
                     </el-button>
@@ -77,7 +72,7 @@
                         style="max-height: 35px"
                         type="primary"
                         size="mini"
-                        @click="handleTranslate(form.head_sign)"
+                        @click="handleTranslate('head_sign')"
                     >
                         <!-- 翻译 -->
                         {{ LangUtil("翻译") }}
@@ -92,12 +87,7 @@
                         v-model="form.template"
                         style="margin-right: 0.8rem"
                     ></el-input>
-                    <el-button
-                        style="max-height: 35px"
-                        type="primary"
-                        size="mini"
-                        @click="handleTranslate(form.template)"
-                    >
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('template')">
                         <!-- 翻译 -->
                         {{ LangUtil("翻译") }}
                     </el-button>
@@ -205,9 +195,13 @@ export default class PlatSmsDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-        data.sentence = source;
+        // data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_SMS;
         data.plat_id = this.form.plat_id;
+        //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
         this.langProxy.showDialog(data);
     }
 }
