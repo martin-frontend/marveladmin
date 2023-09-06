@@ -34,13 +34,8 @@
             </el-table-column>
             <el-table-column :label="`${tableColumns.username.name}`" class-name="status-col" prop="username">
             </el-table-column>
-            <!-- <el-table-column :label="`${tableColumns.is_real.name}`" class-name="status-col" prop="is_real">
-                <template slot-scope="{ row }">
-                    <div>
-                        {{ tableColumns.is_real.options[row.is_real] }}
-                    </div>
-                </template>
-            </el-table-column> -->
+            <el-table-column :label="`${tableColumns.channel_id.name}`" class-name="status-col" prop="channel_id">
+            </el-table-column>
             <el-table-column
                 :label="`${tableColumns.coin_name_unique.name}`"
                 class-name="status-col"
@@ -122,7 +117,12 @@
             >
                 <template slot-scope="{ row }">
                     <div>
-                        <WinLossDisplay :amount="row.total_bet" :isShowDollar="false" :isShowColor="false" :isShowPlus="false"/>
+                        <WinLossDisplay
+                            :amount="row.total_bet"
+                            :isShowDollar="false"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                        />
                     </div>
                 </template>
             </el-table-column>
