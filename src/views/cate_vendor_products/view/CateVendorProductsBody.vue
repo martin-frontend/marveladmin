@@ -76,6 +76,21 @@
                 </template>
             </el-table-column>
             <el-table-column
+                align="center"
+                :label="tableColumns['tags'].name"
+                prop="tags"
+                class-name="status-col"
+                min-width="140px"
+            >
+                <template slot-scope="{ row }">
+                    <el-checkbox-group v-model="row.tags" @change="handlerTags(row)">
+                        <el-checkbox v-for="(value, key) in tableColumns.tags.options" :key="key" :label="Number(key)"
+                            >{{ value }}
+                        </el-checkbox>
+                    </el-checkbox-group>
+                </template>
+            </el-table-column>
+            <el-table-column
                 :label="tableColumns['vendor_product_languages'].name"
                 prop="vendor_product_languages"
                 class-name="status-col"
@@ -249,6 +264,13 @@ export default class CateVendorProductsBody extends AbstractView {
         } else {
             return false;
         }
+    }
+
+    /**更新标签 */
+    handlerTags(row: any) {
+        console.log(row);
+
+        this.myProxy.onUpdateTags(row);
     }
 }
 </script>
