@@ -12,7 +12,12 @@
                         v-model="form.activity_name"
                         style="margin-right: 0.8rem"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('activity_name')">
+                    <el-button
+                        style="max-height: 35px"
+                        type="primary"
+                        size="mini"
+                        @click="handleTranslate('activity_name')"
+                    >
                         {{ LangUtil("翻译") }}
                     </el-button>
                 </div>
@@ -70,6 +75,7 @@
                         :placeholder="LangUtil('请输入')"
                         v-model="form.task_coin_amount"
                         oninput="value=value.replace(/[^\d]/g,'');"
+                        @blur="inputChange"
                     ></el-input>
                 </div>
             </el-form-item>
@@ -374,11 +380,15 @@ export default class PlatCoinTasksDialog extends AbstractView {
         // data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_ACTIVITY;
         data.plat_id = this.form.plat_id;
-         //@ts-ignore
+        //@ts-ignore
         data.sentence = this.form[source] || source;
         data.refForm = this.form;
         data.useKey = source;
         this.langProxy.showDialog(data, true);
+    }
+
+    inputChange(e: any) {
+        this.form.task_coin_amount = e.target.value;
     }
 }
 </script>

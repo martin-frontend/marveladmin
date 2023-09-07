@@ -27,6 +27,7 @@
                     v-model="form.user_id"
                     :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'');"
+                    @blur="inputUserIdChange"
                     style="width: 200px"
                 ></el-input>
                 <el-button type="primary" @click="onQueryUser" style="margin-left: 10px">{{
@@ -46,6 +47,7 @@
                     v-model="form.amount"
                     :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'');"
+                    @blur="inputAmountChange"
                     style="width: 200px"
                 ></el-input>
             </el-form-item>
@@ -54,6 +56,7 @@
                     v-model="form.bonus_multiple"
                     :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'');"
+                    @blur="inputBonusMultipleChange"
                     style="width: 200px"
                 ></el-input>
             </el-form-item>
@@ -187,8 +190,20 @@ export default class VipRechargeBody extends AbstractView implements IVipRecharg
         this.listQuery.coin_name_unique = coin_name_unique_options_keys[0];
     }
 
-    changeCoin(){
+    changeCoin() {
         this.myProxy.getCoinGold();
+    }
+
+    inputUserIdChange(e: any) {
+        this.form.user_id = e.target.value;
+    }
+
+    inputAmountChange(e: any) {
+        this.form.amount = e.target.value;
+    }
+
+    inputBonusMultipleChange(e: any) {
+        this.form.bonus_multiple = e.target.value;
     }
 }
 </script>

@@ -111,6 +111,7 @@
                                     v-model="editWaterRateValue"
                                     style="width: 120px; margin-right: 10px"
                                     oninput="value=value.replace(/[^\d]/g,'');"
+                                    @blur="inputChange"
                                 ></el-input>
                                 <div class="d-flex flex-column align-center">
                                     <el-button
@@ -284,6 +285,10 @@ export default class PlatActivityBody extends AbstractView {
         };
         this.isWaterRate = false;
         this.myProxy.admin_plat_activity_ball_prize_update(obj);
+    }
+
+    inputChange(e: any) {
+        this.editWaterRateValue = e.target.value;
     }
 }
 </script>
