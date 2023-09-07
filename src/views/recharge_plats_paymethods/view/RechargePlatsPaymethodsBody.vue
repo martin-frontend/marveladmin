@@ -23,6 +23,7 @@
                             v-model="editGiftRateValue"
                             style="width: 50px; margin-right: 10px"
                             oninput="value=value.replace(/[^\d]/g,'');"
+                            @blur="inputEditGiftRateValueChange"
                         ></el-input>
                         <el-button class="item" type="warning" size="mini" @click="editGiftRateID = null">{{
                             LangUtil("取消")
@@ -55,6 +56,7 @@
                             v-model="editFeeRateValue"
                             style="width: 50px; margin-right: 10px"
                             oninput="value=value.replace(/[^\d]/g,'');"
+                            @blur="inputFeeRateChange"
                         ></el-input>
                         <el-button class="item" type="warning" size="mini" @click="editFeeRateID = null">{{
                             LangUtil("取消")
@@ -228,6 +230,14 @@ export default class RechargePlatsPaymethodsBody extends AbstractView {
         this.myProxy.listDate.gift_rate = parseInt(this.editGiftRateValue) / 100;
         this.editFeeRateID = null;
         this.myProxy.onUpdate();
+    }
+
+    inputEditGiftRateValueChange(e: any) {
+        this.editGiftRateValue = e.target.value;
+    }
+
+    inputFeeRateChange(e: any) {
+        this.editFeeRateValue = e.target.value;
     }
 }
 </script>
