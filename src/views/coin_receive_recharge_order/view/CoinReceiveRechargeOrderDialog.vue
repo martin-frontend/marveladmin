@@ -14,7 +14,11 @@
                 {{ form.gold }}
             </el-form-item>
             <el-form-item :label="LangUtil('付款金额')" prop="actual_gold">
-                <el-input v-model="form.actual_gold" oninput="value=value.replace(/[^\d]/g,'');"></el-input>
+                <el-input
+                    v-model="form.actual_gold"
+                    oninput="value=value.replace(/[^\d]/g,'');"
+                    @blur="inputChange"
+                ></el-input>
             </el-form-item>
             <el-form-item>
                 <p class="ps">
@@ -97,6 +101,10 @@ export default class CoinReceiveRechargeOrderDialog extends AbstractView {
                 this.myProxy.onOrderConfirm();
             }
         });
+    }
+
+    inputChange(e: any) {
+        this.form.actual_gold = e.target.value;
     }
 }
 </script>

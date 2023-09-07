@@ -24,10 +24,11 @@
         >
             <el-form-item :label="LangUtil('充值玩家ID')" prop="user_id">
                 <el-input
-                    oninput="value=value.replace(/[^\d,]/g, '')"
+                    oninput="value=value.replace(/[^\d]/g,'');"
                     v-model="form.user_id"
                     :placeholder="LangUtil('请输入')"
                     style="width: 200px"
+                    @blur="inputUserIdChange"
                 ></el-input>
                 <el-button :disabled="!canSearchUser" type="primary" @click="onQueryUser" style="margin-left: 10px">{{
                     LangUtil("玩家查询")
@@ -60,6 +61,7 @@
                     v-model="form.amount"
                     :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'');"
+                    @blur="inputAmountChange"
                     style="width: 200px"
                 ></el-input>
             </el-form-item>
@@ -68,6 +70,7 @@
                     v-model="form.bonus_multiple"
                     :placeholder="LangUtil('请输入')"
                     oninput="value=value.replace(/[^\d]/g,'');"
+                    @blur="inputBonusMultipleChange"
                     style="width: 200px"
                 ></el-input>
             </el-form-item>
@@ -86,7 +89,6 @@
                     @click="onTopup"
                     style="margin-left: 10px"
                     v-if="checkUnique(unique.vip_recharge_recharge)"
-                    
                     >{{ LangUtil("提交充值") }}</el-button
                 >
             </el-form-item>
@@ -246,6 +248,18 @@ export default class VipReplenishRechargeBody extends AbstractView implements IV
 
     get canSearchUser() {
         return this.form.user_id != "" && !this.form.user_id.includes(",");
+    }
+
+    inputUserIdChange(e: any) {
+        this.form.user_id = e.target.value;
+    }
+
+    inputAmountChange(e: any) {
+        this.form.amount = e.target.value;
+    }
+
+    inputBonusMultipleChange(e: any) {
+        this.form.bonus_multiple = e.target.value;
     }
 }
 </script>
