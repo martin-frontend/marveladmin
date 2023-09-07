@@ -223,6 +223,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 options: [],
                 tips: "投放消耗/当天注册人数 也就是分渠道报表里面的新增注册成本",
             },
+            mail_gift_gold: { name: '邮件赠送', options: {} },
+            activity_coin_get: { name: '活动任务', options: {} },
+            activity_gift_gold: { name: '活动赠送', options: {} },
+            activity_gold_exchange: { name: '任务币转换', options: {} },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -546,6 +550,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "d_exch_amt_per_dau",
             "user_cont_per_user",
             "cost_per_user",
+            "mail_gift_gold",
+            "activity_gift_gold",
+            "activity_coin_get",
+            "activity_gold_exchange",
         ],
     };
 
@@ -855,7 +863,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any) {
-        return arr1.concat(arr2).filter(function(v: any, i: any, arr: any) {
+        return arr1.concat(arr2).filter(function (v: any, i: any, arr: any) {
             return arr.indexOf(v) === arr.lastIndexOf(v);
         });
     }
@@ -865,9 +873,8 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         let fileFirstName: any = "";
         let fileLastName: any = "";
         if (this.listQuery["created_date-{<=}"]) {
-            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${
-                this.listQuery["created_date-{<=}"].split(" ")[0]
-            }]`;
+            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${this.listQuery["created_date-{<=}"].split(" ")[0]
+                }]`;
         }
         if (this.listQuery.plat_id !== "0") {
             let str: any =

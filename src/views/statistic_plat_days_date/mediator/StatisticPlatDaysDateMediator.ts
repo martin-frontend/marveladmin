@@ -6,7 +6,7 @@ import { Message } from "element-ui";
 import StatisticPlatDaysDateProxy from "../proxy/StatisticPlatDaysDateProxy";
 
 interface IStatisticPlatDaysDate extends IEventDispatcher {
-    
+
 }
 
 export default class StatisticPlatDaysDateMediator extends AbstractMediator {
@@ -28,7 +28,6 @@ export default class StatisticPlatDaysDateMediator extends AbstractMediator {
         return [
             EventType.admin_statistic_plat_days_table_columns,
             EventType.admin_statistic_plat_days_statistic_by_date,
-
         ];
     }
 
@@ -40,23 +39,6 @@ export default class StatisticPlatDaysDateMediator extends AbstractMediator {
             case EventType.admin_statistic_plat_days_table_columns:
                 myProxy.setTableColumns(body);
                 break;
-            // case EventType.undefined:
-            //     myProxy.setTableData(body);
-            //     break;
-            // case EventType.undefined:
-            //     myProxy.setDetail(body);
-            //     break;
-            // case EventType.undefined:
-            //     Message.success(SuccessMessage.create);
-            //     myProxy.hideDialog();
-            //     myProxy.listQuery.page_count = 1;
-            //     myProxy.onQuery();
-            //     break;
-            // case EventType.undefined:
-            //     Message.success(SuccessMessage.update);
-            //     myProxy.hideDialog();
-            //     myProxy.onQuery();
-            //     break;
             case EventType.admin_statistic_plat_days_statistic_by_date:
                 myProxy.setTableData(body);
                 break;
