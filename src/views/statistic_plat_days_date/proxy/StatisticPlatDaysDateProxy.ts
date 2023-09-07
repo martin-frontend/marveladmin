@@ -206,6 +206,10 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
                 options: [],
                 tips: "投放消耗/当天注册人数 也就是分渠道报表里面的新增注册成本",
             },
+            mail_gift_gold: { name: '邮件赠送', options: {} },
+            activity_coin_get: { name: '活动任务', options: {} },
+            activity_gift_gold: { name: '活动赠送', options: {} },
+            activity_gold_exchange: { name: '任务币转换', options: {} },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -385,6 +389,10 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         d_exch_amt_per_dau: "",
         user_cont_per_user: "",
         cost_per_user: "",
+        mail_gift_gold: "",
+        activity_gift_gold: "",
+        activity_coin_get: "",
+        activity_gold_exchange: "",
     };
     /**表格数据 */
     setTableData(data: any) {
@@ -439,6 +447,10 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         this.summaryData["user_cont_per_user"] = data.summary.user_cont_per_user;
         this.summaryData["new_user_arpu"] = data.summary.new_user_arpu;
         this.summaryData["cost_per_user"] = data.summary.cost_per_user;
+        this.summaryData["mail_gift_gold"] = data.summary.mail_gift_gold;
+        this.summaryData["activity_gift_gold"] = data.summary.activity_gift_gold;
+        this.summaryData["activity_coin_get"] = data.summary.activity_coin_get;
+        this.summaryData["activity_gold_exchange"] = data.summary.activity_gold_exchange;
         // 把summaryData 插入第一笔
         this.tableData.list.splice(0, 0, this.summaryData);
     }
@@ -521,6 +533,6 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
                 //this.sendNotification(HttpType.undefined, { id, is_delete: 1 });
                 console.log("---");
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 }

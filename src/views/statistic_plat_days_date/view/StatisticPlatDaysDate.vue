@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-        <StatisticPlatDaysDateDialog v-if="myProxy.dialogData.bShow"/>
-        <StatisticPlatDaysDateHeader/>
-        <StatisticPlatDaysDateBody/>
+        <StatisticPlatDaysDateDialog v-if="myProxy.dialogData.bShow" />
+        <StatisticPlatDaysDateHeader />
+        <StatisticPlatDaysDateBody />
     </div>
 </template>
 
@@ -20,10 +20,9 @@ import StatisticPlatDaysDateBody from "./StatisticPlatDaysDateBody.vue";
         StatisticPlatDaysDateDialog,
         StatisticPlatDaysDateHeader,
         StatisticPlatDaysDateBody,
-    }
+    },
 })
 export default class StatisticPlatDaysDate extends AbstractView {
-
     constructor() {
         super(StatisticPlatDaysDateMediator);
     }
