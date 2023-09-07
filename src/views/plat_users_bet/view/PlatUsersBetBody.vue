@@ -109,6 +109,62 @@
                 <template slot="title">
                     <div>{{ LangUtil("活动币统计") }}</div>
                 </template>
+                <div class="statistics">
+                    {{ LangUtil("当前统计列表") }}
+                    <span>
+                        {{ LangUtil("总投注金额") }}:
+                        <WinLossDisplay :amount="task_coin_summary.bet_gold" :isShowColor="false" :isShowPlus="false" />
+                    </span>
+                    <span>
+                        {{ LangUtil("有效投注金额") }}:
+                        <WinLossDisplay
+                            :amount="task_coin_summary.valid_bet_gold"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                        />
+                    </span>
+                    <span>{{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="task_coin_summary.win_gold"/></span>
+                    <span>
+                        {{ LangUtil("结算流水") }}:
+                        <WinLossDisplay
+                            :amount="task_coin_summary.settlement_water"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ LangUtil("用户流水") }}:
+                        <WinLossDisplay
+                            :amount="task_coin_summary.water"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ tableColumns["water_accelerate"].name }}:
+                        <WinLossDisplay
+                            :amount="task_coin_summary.water_accelerate"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ tableColumns["backwater"].name }}:
+                        <WinLossDisplay
+                            :amount="task_coin_summary.backwater"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </span>
+                    <span>
+                        {{ LangUtil("投注總人數") }}:
+                        {{ task_coin_summary.total_bet_user_num }}
+                    </span>
+                </div>
                 <div class="statistics" :key="item.name" v-for="item in activitySummaryCoin">
                     {{ item.coin_name_unique }}
                     <span>
@@ -513,6 +569,7 @@ export default class PlatUsersBetBody extends AbstractView {
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
     summary = this.myProxy.tableData.summary;
+    task_coin_summary = this.myProxy.tableData.task_coin_summary;
 
     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
