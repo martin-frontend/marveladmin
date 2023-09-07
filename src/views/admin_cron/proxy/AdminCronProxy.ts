@@ -70,6 +70,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             run_times: { name: "执行次数", options: {} },
             status: { name: "运行状态", options: {} },
             timeout: { name: "超时时长(秒)", options: {} },
+            type: { name: '类型', options: {} },
             unique: { name: "唯一标记", options: {} },
             unique_log_id: { name: "运行LOG日志标记", options: {} },
             updated_at: { name: "更新时间", options: {} },
@@ -87,6 +88,8 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
         name: "",
         status: "",
         type: "",
+        id: "",
+        content: "",
     };
 
     /**运行日志 查询条件 */
@@ -97,6 +100,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
         unique: "",
         unique_log_id: "",
         status: "",
+        type: "",
         "next_run_date-{>=}": "",
         "next_run_date-{<=}": "",
     };
@@ -198,6 +202,8 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             name: "",
             status: "",
             type: "",
+            id: "",
+            content: "",
         });
     }
     /**运行日志 重置查询数据 */
@@ -210,6 +216,7 @@ export default class AdminCronProxy extends AbstractProxy implements IAdminCronP
             unique: "",
             unique_log_id: "",
             status: "",
+            type: "",
             "next_run_date-{>=}": "",
             "next_run_date-{<=}": "",
         });

@@ -25,6 +25,11 @@
                 v-model="listQuery.status"
                 :options="tableColumns.status.options"
             />
+            <SearchSelect
+                :title="tableColumns.type.name"
+                v-model="listQuery.type"
+                :options="tableColumns.type.options"
+            />
             <SearchDatePicker
                 :title="tableColumns.next_run_date.name"
                 :startDate.sync="listQuery['next_run_date-{>=}']"
