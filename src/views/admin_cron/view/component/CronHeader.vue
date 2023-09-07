@@ -12,6 +12,8 @@
                 v-model="listQuery.type"
                 :options="tableColumns.type.options"
             />
+            <SearchInput :title="tableColumns.id.name" v-model="listQuery.id" />
+            <SearchInput :title="tableColumns.content.name" v-model="listQuery.content" />
             <el-button class="header-button" icon="el-icon-search" @click="handlerSearch()" type="primary">{{
                 LangUtil("查询")
             }}</el-button>

@@ -10,6 +10,11 @@
             v-loading="net_status.loading"
         >
             <el-table-column prop="id" :label="tableColumns.id.name" align="center"> </el-table-column>
+            <el-table-column prop="type" :label="tableColumns.type.name" align="center">
+                <template slot-scope="{ row }">
+                    {{ tableColumns.type.options[row.type] }}
+                </template>
+            </el-table-column>
             <el-table-column prop="worker_id" :label="tableColumns.worker_id.name" align="center"></el-table-column>
             <el-table-column prop="cron_id" :label="tableColumns.cron_id.name" align="center">
                 <template slot-scope="{ row }">
