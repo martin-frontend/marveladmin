@@ -251,9 +251,7 @@
                         placement="top"
                     >
                         <div>
-                            <span style="margin-right: 5px">{{
-                                tableColumns["new_reg_rech_total"].name
-                            }}</span>
+                            <span style="margin-right: 5px">{{ tableColumns["new_reg_rech_total"].name }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
                         </div>
                     </el-tooltip>
@@ -711,19 +709,9 @@
                     <span v-else> - </span>
                 </template>
             </el-table-column>
-            <el-table-column
-                prop="dau"
-                :label="tableColumns['dau'].name"
-                align="center"
-                min-width="100"
-            >
+            <el-table-column prop="dau" :label="tableColumns['dau'].name" align="center" min-width="100">
                 <template slot="header">
-                    <el-tooltip
-                        class="item"
-                        effect="dark"
-                        :content="tableColumns['dau'].tips"
-                        placement="top"
-                    >
+                    <el-tooltip class="item" effect="dark" :content="tableColumns['dau'].tips" placement="top">
                         <div>
                             <span style="margin-right: 5px">{{ tableColumns["dau"].name }}</span>
                             <i class="el-icon-question" style="font-size: 14px"></i>
@@ -902,6 +890,34 @@
                     <span v-if="row.cost_per_user != null">{{ row.cost_per_user }}</span>
                     <span v-else> - </span>
                 </template>
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.mail_gift_gold.name"
+                align="left"
+                min-width="120"
+                prop="mail_gift_gold"
+            >
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.activity_gift_gold.name"
+                align="left"
+                min-width="120"
+                prop="activity_gift_gold"
+            >
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.activity_coin_get.name"
+                align="left"
+                min-width="120"
+                prop="activity_coin_get"
+            >
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.activity_gold_exchange.name"
+                align="left"
+                min-width="120"
+                prop="activity_gold_exchange"
+            >
             </el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>

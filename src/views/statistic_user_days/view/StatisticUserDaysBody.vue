@@ -355,6 +355,34 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column
+                :label="tableColumns.mail_gift_gold.name"
+                align="left"
+                min-width="120"
+                prop="mail_gift_gold"
+            >
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.activity_gift_gold.name"
+                align="left"
+                min-width="120"
+                prop="activity_gift_gold"
+            >
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.activity_coin_get.name"
+                align="left"
+                min-width="120"
+                prop="activity_coin_get"
+            >
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.activity_gold_exchange.name"
+                align="left"
+                min-width="120"
+                prop="activity_gold_exchange"
+            >
+            </el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>
