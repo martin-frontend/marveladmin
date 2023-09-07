@@ -14,7 +14,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
 
     /**进入页面时调用 */
     enter() {
-                this.sendNotification(HttpType.admin_plat_users_bet_table_columns);
+        this.sendNotification(HttpType.admin_plat_users_bet_table_columns);
     }
 
     /**离开页面时调用 */
@@ -122,6 +122,16 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             total_bet_user_num: "",
         },
         summary_coin: [],
+        task_coin_summary: {
+            bet_gold: "",
+            settlement_water: "",
+            valid_bet_gold: "",
+            water: "",
+            win_gold: "",
+            water_accelerate: "",
+            backwater: "",
+            total_bet_user_num: "",
+        },
     };
     /**查询条件 */
     listQuery = {
@@ -279,6 +289,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         this.tableData.list.push(...data.list);
         const { bet_gold, valid_bet_gold, water, win_gold, water_accelerate } = data.summary;
         Object.assign(this.tableData.summary, data.summary);
+        Object.assign(this.tableData.task_coin_summary, data.task_coin_summary);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
         this.tableData.summary_coin = data.summary_coin;
     }
