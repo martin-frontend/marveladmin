@@ -19,10 +19,15 @@
                 align="center"
             >
             </el-table-column>
-            <el-table-column :label="LangUtil('平台信息')" min-width="180px" align="center">
+            <el-table-column :label="tableColumns.plat_id.name" min-width="180px" align="center">
                 <template slot-scope="{ row }">
-                    <div>{{ LangUtil("平台") }}：{{ tableColumns.plat_id.options[row.plat_id] }}</div>
-                    <div>{{ LangUtil("渠道") }}：{{ row.channel_id }}</div>
+                    <div>
+                        <div v-if="row.plat_id === '合计' || row.plat_id === LangUtil('合计')">{{ row.plat_id }}</div>
+                        <div v-else>
+                            <div>{{ LangUtil("平台") }}：{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
+                            <div>{{ LangUtil("渠道") }}：{{ row.channel_id }}</div>
+                        </div>
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.activity_id.name" min-width="130px" prop="activity_id" align="center">
@@ -57,13 +62,15 @@
             >
             </el-table-column>
             <el-table-column :label="LangUtil('操作')" class-name="status-col" width="240px">
-                <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="handlerDetail(row)">{{
-                        LangUtil("派奖详情")
-                    }}</el-button>
-                    <el-button size="mini" type="primary" @click="handlerPlayers(row)">{{
-                        LangUtil("参与玩家")
-                    }}</el-button>
+                <template slot-scope="{ row, $index }">
+                    <div v-if="$index != 0">
+                        <el-button size="mini" type="primary" @click="handlerDetail(row)">
+                            {{ LangUtil("派奖详情") }}
+                        </el-button>
+                        <el-button size="mini" type="primary" @click="handlerPlayers(row)">
+                            {{ LangUtil("参与玩家") }}
+                        </el-button>
+                    </div>
                 </template>
             </el-table-column>
         </el-table>
@@ -118,6 +125,7 @@ export default class PlatActivityStatisticBody extends AbstractView {
             query: {
                 plat_id: `${data.plat_id}`,
                 activity_id: data.activity_id,
+                channel_id: data.channel_id,
                 "created_at-{>=}": `${data.created_date} 00:00:00`,
                 "created_at-{<=}": `${data.created_date} 23:59:59`,
             },
@@ -132,4 +140,12 @@ export default class PlatActivityStatisticBody extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+@for $i from 1 through 2 {
+    ::v-deep .el-table__body .el-table__row:first-child {
+        background-color: #f6f7fa;
+        td:nth-child(#{$i}) {
+            border-right: 0;
+        }
+    }
+}
 </style>
