@@ -1,0 +1,12 @@
+{
+    "name": "弹窗管理",
+    "description": "弹窗管理",
+    "document": "http://35.76.23.220:8080/pages/viewpage.action?pageId=36766151",
+    "list": [
+        "admin/plat_pops/table_columns",
+        "admin/plat_pops/index",
+        "admin/plat_pops/show/{id}",
+        "admin/plat_pops/store",
+        "admin/plat_pops/update/{id}"
+    ]
+}
