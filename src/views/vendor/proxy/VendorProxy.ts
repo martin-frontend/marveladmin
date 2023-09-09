@@ -83,6 +83,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
         vendor_name: "",
         vendor_name_unique: "",
         vendor_wallet_type: "",
+        vendor_coin_name_unique: "",
         page_count: 1,
         page_size: 20,
     };
@@ -170,6 +171,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             vendor_name: "",
             vendor_name_unique: "",
             vendor_wallet_type: "",
+            vendor_coin_name_unique: "",
             page_count: 1,
             page_size: 20,
         });
