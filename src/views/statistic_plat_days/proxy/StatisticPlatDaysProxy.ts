@@ -527,6 +527,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "new_exch_count",
             "new_exchange_user",
             "gift_gold",
+            "mail_gift_gold",
+            "activity_gift_gold",
+            "activity_coin_get",
+            "activity_gold_exchange",
             "backwater_gold",
             "win_loss",
             "commission_gold",
@@ -550,10 +554,6 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "d_exch_amt_per_dau",
             "user_cont_per_user",
             "cost_per_user",
-            "mail_gift_gold",
-            "activity_gift_gold",
-            "activity_coin_get",
-            "activity_gold_exchange",
         ],
     };
 
