@@ -4,6 +4,9 @@ import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import { HttpType } from "@/views/plat_coin_tasks/setting";
 import IPlatCoinTasksProxy from "./IPlatCoinTasksProxy";
+import { BaseInfo } from "@/components/vo/commonVo";
+import router from "@/router";
+import LangUtil from "@/core/global/LangUtil";
 
 export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCoinTasksProxy {
     static NAME = "PlatCoinTasksProxy";
@@ -64,6 +67,9 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             vendor_id: { name: "厂商ID", options: {} },
             vendor_ids: { name: "", options: {} },
             award_type: { name: "派奖类型", options: {} },
+            progress: { name: LangUtil("任务进度($)"), options: {} },
+            discount: { name: LangUtil("流水折扣"), options: {} },
+            transfer_amount: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -114,6 +120,35 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
         },
     };
 
+    fieldSelectionData = {
+        bShow: false,
+        fieldOptions: [
+            "plat_id",
+            "user_id",
+            "nick_name",
+            "type",
+            "activity_id",
+            "activity_name",
+            "start_time",
+            "end_time",
+            "progress",
+            "discount",
+            "task_coin_name_unique",
+            "task_coin_amount",
+            "transfer_amount",
+            "transfer_amount_rate",
+            "status",
+        ],
+    };
+
+    exportData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
+    };
+
     vendorDialogData = {
         bShow: false,
         form: {
@@ -126,6 +161,7 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
+        this.tableData.columns.transfer_amount.name = this.tableData.columns.current_coin_amount.name;
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
@@ -302,10 +338,10 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
     }
 
     /**更新数据 */
-    onUpdate() {}
+    onUpdate() { }
 
     /**删除数据 */
-    onDelete(id: any) {}
+    onDelete(id: any) { }
 
     /**更新数据 */
     onCancel(id: any) {
@@ -342,7 +378,97 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
                 });
             }
         }
-
         return newlist;
+    }
+
+    /**取得excel 挡案名称 */
+    getExcelOutputName() {
+        const plat_name = this.tableData.columns.plat_id.options[this.listQuery.plat_id];
+        let name = `${router.currentRoute.name}-${plat_name}`;
+        return name;
+    }
+
+    /**取得所有资料 */
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
+        this.sendNotification(HttpType.admin_plat_coin_tasks_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
+    }
+
+    /**导出excel */
+    exportExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        // @ts-ignore
+        newData.forEach(element => {
+            let progress: string = `${element.water} / ${element.water_need}`;
+            element.progress = progress;
+            element.task_config = JSON.parse(element.task_config)
+
+            const water_rates = ['task_water_rate_2', 'task_water_rate_4', 'task_water_rate_8', 'task_water_rate_16', 'task_water_rate_32', 'task_water_rate_64', 'task_water_rate_128'];
+            const water_names = ['water_2', 'water_4', 'water_8', 'water_16', 'water_32', 'water_64', 'water_128'];
+            let discount = "";
+            for (let x in water_rates) {
+                if (element.task_config[water_rates[x]] > 0) {
+                    discount += this.tableData.columns[water_names[x]].name.substring(0, 2) + " " + element.task_config[water_rates[x]] + "% ";
+                }
+            }
+            element.progress = progress;
+            element.discount = discount;
+        });
+
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item);
+            }
+        }
+
+        new BaseInfo.ExportExcel(
+            this.getExcelOutputName(),
+            exportField,
+            this.tableData.columns,
+            newData,
+            ["plat_id", "type", "status"],
+            []
+        );
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }

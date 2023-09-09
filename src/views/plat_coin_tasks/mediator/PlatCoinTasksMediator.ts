@@ -42,7 +42,11 @@ export default class PlatCoinTasksMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_coin_tasks_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_plat_coin_tasks_store:
                 Message.success(SuccessMessage.create);
