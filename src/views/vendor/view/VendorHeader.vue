@@ -22,6 +22,10 @@
                 :options="tableColumns.status.options"
                 clearable
             />
+            <SearchInput
+                :title="tableColumns.vendor_coin_name_unique.name"
+                v-model="listQuery.vendor_coin_name_unique"
+            />
             <div>
                 <el-button @click="handlerSearch()" class="header-button" type="primary" icon="el-icon-search">{{
                     LangUtil("查询")
@@ -79,7 +83,7 @@ export default class VendorHeader extends AbstractView {
         this.myProxy.onQuery();
     }
 
-    private handlerReset() {
+    handlerReset() {
         this.myProxy.resetListQuery();
     }
 
