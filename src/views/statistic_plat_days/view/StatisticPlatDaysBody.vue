@@ -430,6 +430,19 @@
                 min-width="120"
                 prop="mail_gift_gold"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['mail_gift_gold'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["mail_gift_gold"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.activity_gift_gold.name"
@@ -437,6 +450,19 @@
                 min-width="120"
                 prop="activity_gift_gold"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['activity_gift_gold'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["activity_gift_gold"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.activity_coin_get.name"
@@ -444,6 +470,19 @@
                 min-width="120"
                 prop="activity_coin_get"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['activity_coin_get'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["activity_coin_get"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 :label="tableColumns.activity_gold_exchange.name"
@@ -451,6 +490,19 @@
                 min-width="120"
                 prop="activity_gold_exchange"
             >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['activity_gold_exchange'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["activity_gold_exchange"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
             </el-table-column>
             <el-table-column
                 v-if="tableColumns.backwater_gold.display"
