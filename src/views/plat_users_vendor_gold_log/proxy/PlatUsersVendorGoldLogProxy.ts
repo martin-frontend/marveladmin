@@ -216,6 +216,7 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
         let list = data.list;
         list.map((element: any) => {
             element.response = element.status === 2 ? JSON.parse(element.response).third_response : "-";
+            element.coin_name_unique = this.converCoinName(element.coin_name_unique);
         });
         new BaseInfo.ExportExcel(
             this.getExcelOutputName(),
@@ -250,5 +251,9 @@ export default class PlatUsersVendorGoldLogProxy extends AbstractProxy implement
         this.statisticDialog.list.length = 0;
         this.statisticDialog.list.push(...data);
         this.statisticDialog.bShow = true;
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableData.columns.coin_name_unique.options[this.listQuery.plat_id][coinKey];
     }
 }
