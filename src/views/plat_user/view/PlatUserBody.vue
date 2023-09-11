@@ -458,7 +458,7 @@ export default class PlatUserBody extends AbstractView {
     }
 
     converCoinName(row: any, coinKey: any) {
-        return row.coin_name_unique_arr[coinKey];
+        return this.myProxy.converCoinName(row, coinKey);
     }
 }
 </script>

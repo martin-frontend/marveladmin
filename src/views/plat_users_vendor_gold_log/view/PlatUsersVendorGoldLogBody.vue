@@ -55,12 +55,12 @@
 
             <el-table-column :label="tableColumns['coin_name_unique'].name" min-width="240px" align="center">
                 <template slot-scope="{ row }">
-                    <div align="left">{{ tableColumns["coin_name_unique"].name }}：{{ row.coin_name_unique }}</div>
+                    <div align="left">{{ tableColumns["coin_name_unique"].name }}：{{ converCoinName(row.coin_name_unique) }}</div>
                     <div align="left">{{ tableColumns["scale"].name }}：{{ row.scale }}</div>
                     <div align="left">{{ tableColumns["gold_scale"].name }}：{{ row.gold_scale }}</div>
                     <div align="left">{{ tableColumns["exchange_scale"].name }}：{{ row.exchange_scale }}</div>
                     <div align="left">
-                        {{ tableColumns["target_coin_name_unique"].name }}：{{ row.target_coin_name_unique }}
+                        {{ tableColumns["target_coin_name_unique"].name }}：{{ converCoinName(row.target_coin_name_unique) }}
                     </div>
                 </template>
             </el-table-column>
@@ -193,6 +193,10 @@ export default class PlatUsersVendorGoldLogBody extends AbstractView {
 
     showStatus(vendor_gold_log_id: any) {
         this.myProxy.admin_plat_users_vendor_gold_log_status(vendor_gold_log_id);
+    }
+
+    converCoinName(coinKey: any) {
+        return this.myProxy.converCoinName(coinKey);
     }
 }
 </script>

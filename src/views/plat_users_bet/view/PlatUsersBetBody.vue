@@ -54,7 +54,7 @@
         </div>
         <template v-for="(item, index) in myProxy.tableData.summary_coin">
             <div class="statistics" :key="index" v-if="item.coin_name_unique_type != 4">
-                {{ item.coin_name_unique }}
+                {{ converCoinName(item.coin_name_unique) }}
                 <span>
                     {{ LangUtil("总投注金额") }}:
                     <WinLossDisplay
@@ -110,7 +110,7 @@
                     <div>{{ LangUtil("活动币统计") }}</div>
                 </template>
                 <div class="statistics" :key="item.name" v-for="item in activitySummaryCoin">
-                    {{ item.coin_name_unique }}
+                    {{ converCoinName(item.coin_name_unique) }}
                     <span>
                         {{ LangUtil("总投注金额") }}:
                         <WinLossDisplay
@@ -254,7 +254,7 @@
                 class-name="status-col"
             >
                 <template slot-scope="{ row }">
-                    <div>{{ row.coin_name_unique }}</div>
+                    <div>{{ converCoinName(row.coin_name_unique) }}</div>
                     <div>
                         {{ tableColumns["bet_gold_coin"].name }}:
                         <WinLossDisplay
@@ -538,6 +538,10 @@ export default class PlatUsersBetBody extends AbstractView {
 
     translateBallContentText(row: any) {
         return this.myProxy.lottTranslator.translateBallContentText(row.play_id, row.bet_content);
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.coin_name_unique.options[this.listQuery.plat_id][coinKey];
     }
 }
 </script>

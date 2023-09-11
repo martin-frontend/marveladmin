@@ -788,11 +788,11 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
             for (const item of element.user_statistic) {
                 total_recharge =
-                    total_recharge + `${item.coin_name_unique} : ${Math.abs(item.total_recharge).toFixed(3)};`;
+                    total_recharge + `${this.converCoinName(item, item.coin_name_unique)} : ${Math.abs(item.total_recharge).toFixed(3)};`;
                 total_exchange =
-                    total_exchange + `${item.coin_name_unique} : ${Math.abs(item.total_exchange).toFixed(3)};`;
-                total_bet = total_bet + `${item.coin_name_unique} : ${Math.abs(item.total_bet).toFixed(3)};`;
-                total_win = total_win + `${item.coin_name_unique} : ${Math.abs(item.total_win).toFixed(3)};`;
+                    total_exchange + `${this.converCoinName(item, item.coin_name_unique)} : ${Math.abs(item.total_exchange).toFixed(3)};`;
+                total_bet = total_bet + `${this.converCoinName(item, item.coin_name_unique)} : ${Math.abs(item.total_bet).toFixed(3)};`;
+                total_win = total_win + `${this.converCoinName(item, item.coin_name_unique)} : ${Math.abs(item.total_win).toFixed(3)};`;
             }
 
             element.total_recharge = total_recharge;
@@ -937,5 +937,9 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             delete newQuery.page_size;
             this.sendNotification(HttpType.admin_plat_user_batch_update_tag, objectRemoveNull(newQuery));
         }
+    }
+
+    converCoinName(row: any, coinKey: any) {
+        return row.coin_name_unique_arr[coinKey];
     }
 }
