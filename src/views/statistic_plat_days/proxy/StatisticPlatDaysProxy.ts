@@ -223,6 +223,27 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 options: [],
                 tips: "投放消耗/当天注册人数 也就是分渠道报表里面的新增注册成本",
             },
+            mail_gift_gold: {
+                name: "邮件赠送",
+                options: {},
+                display: true,
+                tips: "人工发送的邮件附件并且玩家“已领取”，不包含活动币",
+            },
+            activity_coin_get: {
+                name: '活动任务',
+                options: {},
+                tips: "玩家任务获得任务币数量",
+            },
+            activity_gift_gold: {
+                name: '活动赠送',
+                options: {},
+                tips: "活动发送并且玩家已经获得，不包含活动币",
+            },
+            activity_gold_exchange: {
+                name: '任务币转换',
+                options: {},
+                tips: "玩家完成任务获得真钱的数量",
+            },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -523,6 +544,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "new_exch_count",
             "new_exchange_user",
             "gift_gold",
+            "mail_gift_gold",
+            "activity_gift_gold",
+            "activity_coin_get",
+            "activity_gold_exchange",
             "backwater_gold",
             "win_loss",
             "commission_gold",
@@ -855,7 +880,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any) {
-        return arr1.concat(arr2).filter(function(v: any, i: any, arr: any) {
+        return arr1.concat(arr2).filter(function (v: any, i: any, arr: any) {
             return arr.indexOf(v) === arr.lastIndexOf(v);
         });
     }
@@ -865,9 +890,8 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         let fileFirstName: any = "";
         let fileLastName: any = "";
         if (this.listQuery["created_date-{<=}"]) {
-            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${
-                this.listQuery["created_date-{<=}"].split(" ")[0]
-            }]`;
+            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${this.listQuery["created_date-{<=}"].split(" ")[0]
+                }]`;
         }
         if (this.listQuery.plat_id !== "0") {
             let str: any =

@@ -213,6 +213,86 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column
+                :label="tableColumns.mail_gift_gold.name"
+                align="center"
+                min-width="120"
+                prop="mail_gift_gold"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="LangUtil('人工发送的邮件附件并且玩家“已领取”，不包含活动币')"
+                        placement="top"
+                    >
+                        <div>
+                            <span>{{ tableColumns.mail_gift_gold.name }}</span>
+                            <i class="el-icon-question"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.activity_gift_gold.name"
+                align="center"
+                min-width="120"
+                prop="activity_gift_gold"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="LangUtil('活动发送并且玩家已经获得，不包含活动币')"
+                        placement="top"
+                    >
+                        <div>
+                            <span>{{ tableColumns.activity_gift_gold.name }}</span>
+                            <i class="el-icon-question"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.activity_coin_get.name"
+                align="center"
+                min-width="120"
+                prop="activity_coin_get"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="LangUtil('玩家任务获得任务币数量')"
+                        placement="top"
+                    >
+                        <div>
+                            <span>{{ tableColumns.activity_coin_get.name }}</span>
+                            <i class="el-icon-question"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.activity_gold_exchange.name"
+                align="center"
+                min-width="120"
+                prop="activity_gold_exchange"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="LangUtil('玩家完成任务获得真钱的数量')"
+                        placement="top"
+                    >
+                        <div>
+                            <span>{{ tableColumns.activity_gold_exchange.name }}</span>
+                            <i class="el-icon-question"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
             <el-table-column :label="LangUtil('投注')" align="left" min-width="200">
                 <template slot-scope="{ row }">
                     <div>

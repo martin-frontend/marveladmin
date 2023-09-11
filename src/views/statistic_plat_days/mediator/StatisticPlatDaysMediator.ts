@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/statistic_plat_days/setting";
 import { Message } from "element-ui";
 import StatisticPlatDaysProxy from "../proxy/StatisticPlatDaysProxy";
 
-interface IStatisticPlatDays extends IEventDispatcher {}
+interface IStatisticPlatDays extends IEventDispatcher { }
 
 export default class StatisticPlatDaysMediator extends AbstractMediator {
     myProxy: StatisticPlatDaysProxy = <any>this.getProxy(StatisticPlatDaysProxy);
