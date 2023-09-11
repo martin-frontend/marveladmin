@@ -358,11 +358,11 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             item.plat_money = "-";
             item.sum_money = "-";
             item.vendors_money = "-";
-
-            if (item.coin_name_unique_arr && item.coin_name_unique_arr.length > 0) {
+            const coinKeys = Object.keys(item.coin_name_unique_arr);
+            if (coinKeys.length > 0) {
                 item.gold_info = <any>{};
-                for (let index = 0; index < item.coin_name_unique_arr.length; index++) {
-                    const element = item.coin_name_unique_arr[index];
+                for (let index = 0; index < coinKeys.length; index++) {
+                    const element = coinKeys[index];
                     item.gold_info[element] = <any>{};
                     item.gold_info[element].sum_money = "-";
                 }
