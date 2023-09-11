@@ -50,13 +50,13 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "更新人", options: {} },
             user_id: { name: "平台用户ID", options: {} },
-            water_2: { name: "棋牌流水", options: {} },
-            water_4: { name: "彩票流水", options: {} },
-            water_8: { name: "捕鱼流水", options: {} },
-            water_16: { name: "电子流水", options: {} },
-            water_32: { name: "真人流水", options: {} },
-            water_64: { name: "体育流水", options: {} },
-            water_128: { name: "电竞流水", options: {} },
+            water_2: { name: LangUtil("棋牌"), options: {} },
+            water_4: { name: LangUtil("彩票"), options: {} },
+            water_8: { name: LangUtil("捕鱼"), options: {} },
+            water_16: { name: LangUtil("电子"), options: {} },
+            water_32: { name: LangUtil("真人"), options: {} },
+            water_64: { name: LangUtil("体育"), options: {} },
+            water_128: { name: LangUtil("电竞"), options: {} },
             water_need_2: { name: "棋牌所需流水", options: {} },
             water_need_4: { name: "彩票所需流水", options: {} },
             water_need_8: { name: "捕鱼所需流水", options: {} },
@@ -428,7 +428,7 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             let discount = "";
             for (let x in water_rates) {
                 if (element.task_config[water_rates[x]] > 0) {
-                    discount += this.tableData.columns[water_names[x]].name.substring(0, 2) + " " + element.task_config[water_rates[x]] + "% ";
+                    discount += this.tableData.columns[water_names[x]].name + " " + element.task_config[water_rates[x]] + "% ";
                 }
             }
             element.progress = progress;
