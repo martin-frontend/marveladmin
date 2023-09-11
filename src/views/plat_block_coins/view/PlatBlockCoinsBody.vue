@@ -7,7 +7,7 @@
             highlight-current-row
             style="width: 100%"
             size="mini"
-            :header-cell-style="{'text-align': 'center'}"
+            :header-cell-style="{ 'text-align': 'center' }"
             v-loading="net_status.loading"
         >
             <el-table-column prop="id" :label="`${tableColumns.id.name}`" class-name="status-col" min-width="100px">
@@ -33,6 +33,13 @@
                 </template>
             </el-table-column>
             <el-table-column
+                prop="coin_alias"
+                :label="`${tableColumns.coin_alias.name}`"
+                class-name="status-col"
+                min-width="100px"
+            >
+            </el-table-column>
+            <el-table-column
                 prop="is_digital_currency"
                 :label="`${tableColumns.is_digital_currency.name}`"
                 class-name="status-col"
@@ -45,7 +52,12 @@
                     {{ tableColumns.type.options[row.type] }}
                 </template>
             </el-table-column>
-            <el-table-column prop="priority" :label="`${tableColumns.priority.name}`" class-name="status-col" min-width="100px">
+            <el-table-column
+                prop="priority"
+                :label="`${tableColumns.priority.name}`"
+                class-name="status-col"
+                min-width="100px"
+            >
                 <template slot-scope="{ row }">
                     {{ row.priority }}
                 </template>

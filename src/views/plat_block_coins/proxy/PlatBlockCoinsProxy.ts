@@ -28,7 +28,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
     /**表格相关数据 */
     tableData = {
         columns: <any>{
-            bonus_multiple: { name: '充值流水倍数', options: {} },
+            bonus_multiple: { name: "充值流水倍数", options: {} },
             can_play_game: { name: "是否允许游戏", options: {} },
             coin_name_unique: { name: "币种", options: {} },
             created_at: { name: "创建时间", options: {} },
@@ -38,20 +38,21 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             gold: { name: "公共钱包", options: {} },
             id: { name: "主键", options: {} },
             is_delete: { name: "是否删除", options: {} },
-            is_display: { name: '是否显示', options: {} },
+            is_display: { name: "是否显示", options: {} },
             plat_id: { name: "平台ID", options: {} },
             updated_at: { name: "修改时间", options: {} },
             updated_by: { name: "修改人", options: {} },
             remark: { name: "描述", options: {} },
             type: { name: "类型", options: {} },
             scale: { name: "比例", options: {} },
-            show_scale: { name: '显示比例', options: {} },
+            show_scale: { name: "显示比例", options: {} },
             languages: { name: "语言", options: {} },
-            is_digital_currency: { name: '币种类型', options: {} },
-            transfer_coin_name_unique: { name: '活动币转换币种', options: {} },
-            vendor_ids: { name: '支持产品', options: {} },
-            vendor_types: { name: '支持产品类型', options: {} },
-            priority: { name: '', options: {} }
+            is_digital_currency: { name: "币种类型", options: {} },
+            transfer_coin_name_unique: { name: "活动币转换币种", options: {} },
+            vendor_ids: { name: "支持产品", options: {} },
+            vendor_types: { name: "支持产品类型", options: {} },
+            priority: { name: "", options: {} },
+            coin_alias: { name: "别名", options: [] },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -83,7 +84,8 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             transfer_coin_name_unique: "",
             vendor_ids: "",
             vendor_types: <any>[],
-            priority:"",
+            priority: "",
+            coin_alias: "",
         },
         formSource: <any>null, // 表单的原始数据
     };
@@ -162,7 +164,8 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             transfer_coin_name_unique: "",
             vendor_ids: "",
             vendor_types: <any>[],
-            priority:"",
+            priority: "",
+            coin_alias: "",
         });
     }
 
@@ -220,7 +223,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_block_coins_update, { id, is_delete: 1 });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**排序 */
