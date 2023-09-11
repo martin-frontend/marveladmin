@@ -392,7 +392,7 @@
                     </el-tooltip>
                 </template>
             </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
                 v-if="tableColumns.gift_gold.display"
                 prop="gift_gold"
                 :label="tableColumns['gift_gold'].name"
@@ -410,7 +410,7 @@
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.gift_gold" :isShowColor="false" :isShowPlus="false" />
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
                 :label="tableColumns.mail_gift_gold.name"
                 align="center"
