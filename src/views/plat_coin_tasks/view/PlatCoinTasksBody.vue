@@ -71,7 +71,7 @@
                 <template slot-scope="{ row }">
                     <template v-for="i of [2, 4, 8, 16, 32, 64, 128]">
                         <div :key="i" class="text-left" v-if="row.task_config[`task_water_rate_${i}`] > 0">
-                            {{ tableColumns[`water_${i}`].name.substring(0, 2) }}
+                            {{ tableColumns[`water_${i}`].name }}
                             {{ row.task_config[`task_water_rate_${i}`] }}%
                         </div>
                     </template>
@@ -95,11 +95,7 @@
                 prop="task_coin_amount"
                 min-width="100px"
             ></el-table-column>
-            <el-table-column
-                :label="tableColumns.current_coin_amount.name"
-                align="center"
-                min-width="100px"
-            >
+            <el-table-column :label="tableColumns.current_coin_amount.name" align="center" min-width="100px">
                 <template slot-scope="{ row }">
                     {{ row.transfer_amount }}
                 </template>
