@@ -25,6 +25,7 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
             pageCount: 1,
         });
     }
+
     activityStatisticColumns = {
         plat_id: { name: "平台id", options: {} },
         channel_id: { name: "渠道id", options: [] },
@@ -38,17 +39,20 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
         created_at: { name: "创建时间", options: [] },
         updated_at: { name: "更新时间", options: [] },
     };
+
     activityStatisticUserColumns = {
         user_id: { name: "玩家ID", options: [] },
         receive_award_amount: { name: "实际领取奖励", options: [] },
         plat_id: { name: "所属平台", options: {} },
     };
+
     /**表格相关数据 */
     tableData = {
         columns: <any>{ ...this.activityStatisticUserColumns, ...this.activityStatisticColumns },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
+
     /**查询条件 */
     listQuery = {
         page_count: 1,
@@ -59,6 +63,7 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
         "created_date-{>=}": "",
         "created_date-{<=}": "",
     };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -91,15 +96,33 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
         }
     }
 
+    /**合计 相关数据 */
+    summaryData = {
+        created_date: "",
+        plat_id: "",
+        award_amount: "",
+        join_num: "",
+        receive_award_amount: "",
+        receive_award_num: "",
+    }
+
     setUserTableColumns(data: any) {
         delete data.plat_id;
         Object.assign(this.tableData.columns, data);
+        this.tableData.columns.plat_id.name = LangUtil("平台信息");
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        Object.assign(this.summaryData, {
+            ...data.summary,
+            plat_id: LangUtil("合计"),
+        });
+        this.summaryData.created_date = "";
+        this.tableData.list.splice(0, 0, this.summaryData);
     }
 
     setUserTableData(data: any) {
@@ -107,6 +130,7 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
         this.dialogData.list.push(...data.list);
         Object.assign(this.dialogData.pageInfo, data.pageInfo);
     }
+
     /**详细数据 */
     setDetail(data: any) {
         this.dialogData.formSource = data;
@@ -140,10 +164,12 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
         this.dialogData.bShow = true;
         this.onUserQuery();
     }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
     }
+
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
@@ -162,6 +188,7 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
             objectRemoveNull(this.dialogData.query)
         );
     }
+
     /**添加数据 */
     onAdd() {
         // const formCopy: any = {
@@ -169,6 +196,7 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
         // };
         // this.sendNotification(HttpType.undefined, objectRemoveNull(formCopy));
     }
+
     /**更新数据 */
     onUpdate() {
         // const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
@@ -184,6 +212,7 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
         // // 发送消息
         // this.sendNotification(HttpType.undefined, formCopy);
     }
+
     /**删除数据 */
     onDelete(id: any) {
         // MessageBox.confirm("您是否删除该记录", "提示", {
@@ -282,6 +311,10 @@ export default class PlatActivityStatisticProxy extends AbstractProxy implements
             item.receive_award_amount = "$" + item.receive_award_amount;
             return item;
         });
+
+        newData.splice(0, 0, this.summaryData);
+        this.summaryData.created_date = LangUtil("合计");
+
         const exportField: string[] = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
             if (this.exportData.fieldOrder.indexOf(item) != -1) {
