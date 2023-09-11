@@ -49,7 +49,7 @@
             </span>
         </div>
         <div class="statistics" v-for="(item, index) in myProxy.tableData.summary_coin" :key="index">
-            {{ item.coin_name_unique }}
+            {{ converCoinName(item.coin_name_unique) }}
             <span>
                 {{ LangUtil("总投注金额") }}:
                 <WinLossDisplay
@@ -148,7 +148,7 @@
                 class-name="status-col"
             >
                 <template slot-scope="{ row }">
-                    <div>{{ row.coin_name_unique }}</div>
+                    <div>{{ converCoinName(row.coin_name_unique) }}</div>
                     <div>
                         {{ tableColumns["bet_gold_coin"].name }}:
                         <WinLossDisplay
@@ -402,6 +402,10 @@ export default class TabBetBody extends AbstractView {
 
     showDetailPage(data: any) {
         this.myProxy.showDetailPage(data);
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.coin_name_unique.options[this.listQuery.plat_id][coinKey];
     }
 }
 </script>

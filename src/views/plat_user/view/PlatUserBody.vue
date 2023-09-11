@@ -155,21 +155,21 @@
             <el-table-column :label="tableColumns.first_recharge.name" prop="first_recharge" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.first_recharge && row.first_recharge.coin_name_unique">
                     <p>{{ row.first_recharge.pay_time }}</p>
-                    <p class="">{{ row.first_recharge.coin_name_unique }}:{{ row.first_recharge.gold }}</p>
+                    <p class="">{{ converCoinName(row, row.first_recharge.coin_name_unique) }}:{{ row.first_recharge.gold }}</p>
                 </template>
             </el-table-column>
 
             <el-table-column :label="tableColumns.last_recharge.name" prop="last_recharge" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.last_recharge && row.last_recharge.coin_name_unique">
                     <p>{{ row.last_recharge.pay_time }}</p>
-                    <p class="">{{ row.last_recharge.coin_name_unique }}:{{ row.last_recharge.gold }}</p>
+                    <p class="">{{ converCoinName(row, row.last_recharge.coin_name_unique) }}:{{ row.last_recharge.gold }}</p>
                 </template>
             </el-table-column>
 
             <el-table-column :label="tableColumns.last_exchange.name" prop="last_exchange" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.last_exchange && row.last_exchange.coin_name_unique">
                     <p>{{ row.last_exchange.pay_time }}</p>
-                    <p class="">{{ row.last_exchange.coin_name_unique }}:{{ row.last_exchange.gold }}</p>
+                    <p class="">{{ converCoinName(row, row.last_exchange.coin_name_unique) }}:{{ row.last_exchange.gold }}</p>
                 </template>
             </el-table-column>
 
@@ -183,7 +183,7 @@
                 <template slot-scope="{ row }">
                     <p style="text-align: left;">{{ tableColumns.recharge_times.name }}: {{ row.recharge_times }}</p>
                     <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
-                        {{ value.coin_name_unique }} :
+                        {{ converCoinName(row, value.coin_name_unique) }} :
                         <WinLossDisplay
                             :amount="value.total_recharge"
                             :isShowDollar="false"
@@ -203,7 +203,7 @@
                 <template slot-scope="{ row }">
                     <p style="text-align: left;">{{ tableColumns.exchange_times.name }}: {{ row.exchange_times }}</p>
                     <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
-                        {{ value.coin_name_unique }} :
+                        {{ converCoinName(row, value.coin_name_unique) }} :
                         <WinLossDisplay
                             :amount="value.total_exchange"
                             :isShowDollar="false"
@@ -221,7 +221,7 @@
             >
                 <template slot-scope="{ row }">
                     <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
-                        {{ value.coin_name_unique }} :
+                        {{ converCoinName(row, value.coin_name_unique) }} :
                         <WinLossDisplay
                             :amount="value.total_bet"
                             :isShowDollar="false"
@@ -239,7 +239,7 @@
             >
                 <template slot-scope="{ row }">
                     <p v-for="(value, key) of row.user_statistic" :key="key" style="text-align: left;">
-                        {{ value.coin_name_unique }} :
+                        {{ converCoinName(row, value.coin_name_unique) }} :
                         <WinLossDisplay :amount="value.total_win" :isShowDollar="false" />
                     </p>
                 </template>
@@ -253,7 +253,7 @@
             >
                 <template slot-scope="{ row }">
                     <p v-for="(value, key) of row.gold_info" :key="key" style="text-align: left;">
-                        {{ key }} : {{ value.sum_money }}
+                        {{ converCoinName(row, key) }} : {{ value.sum_money }}
                     </p>
                 </template>
             </el-table-column>
@@ -456,6 +456,10 @@ export default class PlatUserBody extends AbstractView {
             case 2:
                 return "success";
         }
+    }
+
+    converCoinName(row: any, coinKey: any) {
+        return row.coin_name_unique_arr[coinKey];
     }
 }
 </script>
