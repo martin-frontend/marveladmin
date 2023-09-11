@@ -55,7 +55,7 @@
                     <div>
                         ID：<span @click="showUserDetail(row.user_id)" class="user_id">{{ row.user_id }}</span>
                     </div>
-                    <div v-if="row.ma_token">ma_token：{{ row.ma_token }}</div>
+                    <div v-if="row.ma_token">{{ tableColumns.ma_token.name }}{{ row.ma_token }}</div>
                     <div>{{ LangUtil("账号") }}：{{ row.username }}</div>
                     <div>{{ LangUtil("昵称") }}：{{ row.nick_name }}</div>
                     <div>
