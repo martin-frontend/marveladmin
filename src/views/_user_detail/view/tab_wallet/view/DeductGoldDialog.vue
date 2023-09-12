@@ -8,7 +8,7 @@
                 <el-input disabled v-model="userInfo.nick_name"></el-input>
             </el-form-item>
             <el-form-item size="mini" label="币种" prop="coin_name_unique">
-                <el-input disabled v-model="dialogDeductGoldData.coin_name_unique"></el-input>
+                <el-input disabled :value="converCoinName(dialogDeductGoldData.coin_name_unique)"></el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['gold'].name" prop="gold">
                 <el-input
@@ -90,6 +90,10 @@ export default class DeductGoldDialog extends AbstractView {
                 message: errorCode,
             });
         }
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.coin_name_unique.options[this.userInfo.plat_id][coinKey];
     }
 }
 </script>

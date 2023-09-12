@@ -78,6 +78,9 @@
                     </template>
                 </el-table-column>
                 <el-table-column :label="LangUtil('币种')" prop="coin_name_unique" class-name="status-col">
+                    <template slot-scope="{ row }">
+                        {{ converCoinName(row.coin_name_unique) }}
+                    </template>
                 </el-table-column>
                 <el-table-column :label="LangUtil('操作')" class-name="status-col">
                     <template slot-scope="{ row }">
