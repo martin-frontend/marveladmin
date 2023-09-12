@@ -31,6 +31,9 @@
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
                     {{ LangUtil("重置") }}
                 </el-button>
+                <el-button @click="handlerExport()" type="primary" icon="el-icon-download" :disabled="list.length == 0">
+                    {{ LangUtil("导出") }}
+                </el-button>
             </div>
         </div>
         <div class="group">
@@ -70,6 +73,7 @@ export default class PlatCoinTasksHeader extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
     LangUtil = LangUtil;
+    list = this.myProxy.tableData.list;
 
     handlerSearch() {
         this.listQuery.page_count = 1;
@@ -101,6 +105,10 @@ export default class PlatCoinTasksHeader extends AbstractView {
         } else {
             this.tableColumns.task_coin_name_unique_options = {};
         }
+    }
+
+    handlerExport() {
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>

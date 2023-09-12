@@ -2,6 +2,8 @@
     <div class="content">
         <PlatCoinTasksDialog v-if="myProxy.dialogData.bShow" />
         <VendorDialog v-if="myProxy.vendorDialogData.bShow" />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
         <PlatCoinTasksHeader />
         <PlatCoinTasksBody />
     </div>
@@ -15,6 +17,8 @@ import { Component } from "vue-property-decorator";
 import PlatCoinTasksDialog from "./PlatCoinTasksDialog.vue";
 import PlatCoinTasksHeader from "./PlatCoinTasksHeader.vue";
 import PlatCoinTasksBody from "./PlatCoinTasksBody.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 import VendorDialog from "./VendorDialog.vue";
 
 @Component({
@@ -23,6 +27,8 @@ import VendorDialog from "./VendorDialog.vue";
         PlatCoinTasksHeader,
         PlatCoinTasksBody,
         VendorDialog,
+        ProgressDialog,
+        FieldSelectionDialog,
     },
 })
 export default class PlatCoinTasks extends AbstractView {
