@@ -2,7 +2,7 @@ import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { EventType, HttpType } from "@/views/_user_detail/setting";
 import TabUserInfoProxy from "../proxy/TabUserInfoProxy";
-import { getProxy, getPageSetting } from "@/views/_user_detail/PageSetting";
+import { getProxy, getPageSetting, userShow } from "@/views/_user_detail/PageSetting";
 import { Message, MessageBox } from "element-ui";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import i18n from "@/lang";
@@ -44,6 +44,7 @@ export default class TabUserUnfoMediator extends AbstractMediator {
                     break;
                 case EventType.admin_plat_user_show:
                     this.myProxy.setUserInfo(body);
+                    userShow.finished = true;
                     break;
                 case EventType.admin_plat_user_update:
                 case EventType.admin_plat_user_update_tag:
@@ -52,7 +53,7 @@ export default class TabUserUnfoMediator extends AbstractMediator {
                         // @ts-ignore
                         Message.success(
                             `${this.myProxy.tableColumns[this.myProxy.dialogData.filed].name}` +
-                                <any>LangUtil("修改成功")
+                            <any>LangUtil("修改成功")
                         );
                     } else {
                         // 清除谷歌验证码

@@ -50,7 +50,6 @@ export default class TabBetMediator extends AbstractMediator {
                                 if (!json) {
                                     throw "aaa";
                                 }
-                                console.log("---",json);
                                 if (json.status_code == 200) {
                                     if (json && json.data && json.data.html) {
                                         const winHandler: any = window.open("", "_blank");
