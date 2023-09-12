@@ -14,6 +14,10 @@ export var page2 = {
     proxyName: generateUUID(),
 };
 
+export var userShow = {
+    finished: false,
+};
+
 export function getPageSetting() {
     return page2.bShow ? page2 : page1;
 }

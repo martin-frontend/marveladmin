@@ -1,7 +1,7 @@
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { HttpType } from "@/views/_user_detail/setting";
 import ITabUserInfoProxy from "./ITabUserInfoProxy";
-import { getPageSetting } from "@/views/_user_detail/PageSetting";
+import { getPageSetting, userShow } from "@/views/_user_detail/PageSetting";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import { MD5 } from "@/core/global/MD5";
 import { jsonStringify } from "@/core/global/Functions";
@@ -278,6 +278,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
     }
     /**获取用户详情及关系链 */
     getUserDetail(user_id: any) {
+        userShow.finished = false;
         this.sendNotification(HttpType.admin_plat_user_show, { user_id });
         this.sendNotification(HttpType.admin_plat_user_agent_bind_show, { user_id, hideLoading: true });
     }
