@@ -737,7 +737,7 @@
 
                                                 <template v-if="status == dialogStatus.update">
                                                     <span v-for="(item, key) of childRule.params" :key="key">
-                                                        <span>{{ key }}</span>
+                                                        <span>{{ converCoinName(key) }}</span>
                                                         <el-input-number
                                                             size="small"
                                                             v-model="item.percent"
@@ -1088,7 +1088,7 @@ export default class PlatActivityDialog extends AbstractView {
 
     handleTranslate(source: string) {
         const data: any = {};
-         //@ts-ignore
+        //@ts-ignore
         data.sentence = this.form[source] || source;
         data.type = LanguageType.TYPE_PLAT_ACTIVITY;
         data.plat_id = this.form.plat_id;
@@ -1196,6 +1196,10 @@ export default class PlatActivityDialog extends AbstractView {
             },
         ],
     };
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.activity_coin.options[this.myProxy.listQuery.plat_id][coinKey];
+    }
 }
 </script>
 
