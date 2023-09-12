@@ -20,6 +20,9 @@
                 size="mini"
             >
                 <el-table-column :label="LangUtil('币种')" prop="coin_name_unique" class-name="status-col">
+                    <template slot-scope="{ row }">
+                        {{ converCoinName(row.coin_name_unique) }}
+                    </template>
                 </el-table-column>
                 <el-table-column :label="LangUtil('账户余额')" prop="sum_money" class-name="status-col">
                 </el-table-column>
@@ -156,6 +159,10 @@ export default class TabWallet extends AbstractView {
 
     withdrawVendor(row: any) {
         this.myProxy.withdrawVendor(row.coin_name_unique, row.vendor_id);
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.coin_name_unique.options[this.userInfo.plat_id][coinKey];
     }
 
     destroyed() {
