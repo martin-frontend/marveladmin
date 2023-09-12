@@ -598,7 +598,7 @@ export default class PlatUsersBetBody extends AbstractView {
     }
 
     converCoinName(coinKey: any) {
-        return this.tableColumns.coin_name_unique.options[this.listQuery.plat_id][coinKey];
+        return this.myProxy.converCoinName(coinKey);
     }
 }
 </script>
