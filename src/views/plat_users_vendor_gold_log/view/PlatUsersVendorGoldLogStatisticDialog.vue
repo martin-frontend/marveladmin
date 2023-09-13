@@ -71,7 +71,7 @@ export default class PlatUsersVendorGoldLogStatisticDialog extends AbstractView 
     }
 
     converCoinName(coinKey: any) {
-        return this.tableColumns.coin_name_unique.options[this.myProxy.listQuery.plat_id][coinKey];
+        return this.tableColumns.coin_name_unique.options[this.myProxy.listQuery.plat_id][coinKey] || coinKey;
     }
 }
 </script>
