@@ -2,17 +2,25 @@
     <div :class="lang">
         <el-dialog :title="LangUtil('用户详情')" :visible.sync="pageSetting.bShow" width="1500px">
             <el-tabs v-model="activeName">
-                <el-tab-pane :label="LangUtil('基本信息')" name="tab1">
+                <el-tab-pane
+                    :label="LangUtil('基本信息')"
+                    name="tab1"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabUserInfo v-if="activeName == 'tab1'" />
                 </el-tab-pane>
-                <el-tab-pane :label="LangUtil('用户钱包')" name="tab2" :disabled="net_status.loading">
+                <el-tab-pane
+                    :label="LangUtil('用户钱包')"
+                    name="tab2"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabWallet v-if="activeName == 'tab2'" />
                 </el-tab-pane>
                 <el-tab-pane
                     :label="LangUtil('资产明细')"
                     name="tab3"
                     v-if="checkUnique(unique.plat_users_gold_log)"
-                    :disabled="net_status.loading"
+                    :disabled="net_status.loading || !userShow.finished"
                 >
                     <TabGold v-if="activeName == 'tab3'" />
                 </el-tab-pane>
@@ -20,35 +28,71 @@
                     :label="LangUtil('投注明细')"
                     name="tab4"
                     v-if="checkUnique(unique.plat_users_bet)"
-                    :disabled="net_status.loading"
+                    :disabled="net_status.loading || !userShow.finished"
                 >
                     <TabBet v-if="activeName == 'tab4'" />
                 </el-tab-pane>
-                <el-tab-pane :label="LangUtil('流水打码')" name="tab5" :disabled="net_status.loading">
+                <el-tab-pane
+                    :label="LangUtil('流水打码')"
+                    name="tab5"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabWater v-if="activeName == 'tab5'" />
                 </el-tab-pane>
-                <el-tab-pane :label="LangUtil('返佣明细')" name="tab6" :disabled="net_status.loading">
+                <el-tab-pane
+                    :label="LangUtil('返佣明细')"
+                    name="tab6"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabCommission v-if="activeName == 'tab6'" />
                 </el-tab-pane>
-                <el-tab-pane :label="LangUtil('团队成员')" name="tab7" :disabled="net_status.loading">
+                <el-tab-pane
+                    :label="LangUtil('团队成员')"
+                    name="tab7"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabTeam v-if="activeName == 'tab7'" />
                 </el-tab-pane>
-                <el-tab-pane :label="LangUtil('关联查询')" name="tab8" :disabled="net_status.loading">
+                <el-tab-pane
+                    :label="LangUtil('关联查询')"
+                    name="tab8"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabRelatedUsers v-if="activeName == 'tab8'" />
                 </el-tab-pane>
-                <el-tab-pane :label="LangUtil('登陆日志')" name="tab9" :disabled="net_status.loading">
+                <el-tab-pane
+                    :label="LangUtil('登陆日志')"
+                    name="tab9"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabLoginRecord v-if="activeName == 'tab9'" />
                 </el-tab-pane>
-                <el-tab-pane :label="LangUtil('流水配置')" name="tab10" :disabled="net_status.loading">
+                <el-tab-pane
+                    :label="LangUtil('流水配置')"
+                    name="tab10"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabWaterRate v-if="activeName == 'tab10'" />
                 </el-tab-pane>
-                <el-tab-pane :label="LangUtil('用户厂商')" name="tab11" :disabled="net_status.loading">
+                <el-tab-pane
+                    :label="LangUtil('用户厂商')"
+                    name="tab11"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabPlatVendorUser v-if="activeName == 'tab11'" />
                 </el-tab-pane>
-                <el-tab-pane :label="LangUtil('信用代理')" name="tab12" :disabled="net_status.loading">
+                <el-tab-pane
+                    :label="LangUtil('信用代理')"
+                    name="tab12"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabCredit v-if="activeName == 'tab12'" />
                 </el-tab-pane>
-                <el-tab-pane :label="LangUtil('用户等级')" name="tab13" :disabled="net_status.loading">
+                <el-tab-pane
+                    :label="LangUtil('用户等级')"
+                    name="tab13"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
                     <TabEasybet v-if="activeName == 'tab13'" />
                 </el-tab-pane>
             </el-tabs>
@@ -78,6 +122,7 @@ import TabCredit from "./tab_credit/view/TabCredit.vue";
 import TabEasybet from "./tab_easybet/view/TabEasybet.vue";
 import Cookies from "js-cookie";
 import GlobalVar from "@/core/global/GlobalVar";
+import { userShow } from "@/views/_user_detail/PageSetting";
 
 @Component({
     components: {
@@ -100,6 +145,7 @@ export default class UserDetail extends AbstractView {
     LangUtil = LangUtil;
     checkUnique = checkUnique;
     unique = unique;
+    userShow = userShow;
     net_status = GlobalVar.net_status;
 
     @Prop() page!: number;
