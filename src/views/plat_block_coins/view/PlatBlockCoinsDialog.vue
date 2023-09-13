@@ -36,7 +36,7 @@
             </el-form-item>
 
             <el-form-item v-if="isStatusUpdate" :label="tableColumns.coin_alias.name" prop="coin_alias">
-                <el-input v-model="form.coin_alias"></el-input>
+                <el-input maxlength="12" v-model="form.coin_alias"></el-input>
             </el-form-item>
 
             <el-form-item v-if="form.type == 4" :label="tableColumns.priority.name" prop="priority">
