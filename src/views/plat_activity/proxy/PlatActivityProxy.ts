@@ -1,7 +1,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { dateFormat, getTodayOffset, formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_activity/setting";
 import { MessageBox, TableColumn } from "element-ui";
 import IPlatActivityProxy from "./IPlatActivityProxy";
@@ -109,6 +109,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         model_type: "",
         languages: "",
     };
+
     defaultForm = {
         id: null,
         plat_id: "",
@@ -171,19 +172,81 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         rank_award: <any>[],
         day_num_init_config: <any>[],
 
-        coin_unique: "" // 活動幣種
+        coin_unique: "", // 活動幣種
     };
+
+    conditionDefaultForm = {
+        show_type: "",
+        register_time_type: "",
+        register_start_time: dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
+        register_end_time: dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
+        assign_is_all: 0,
+        assign_is_user: 0,
+        assign_user: "",
+        assign_is_agent: 0,
+        assign_agent_user_id: "",
+        assign_agent_type: "",
+        assign_is_tag: 0,
+        assign_tag: "",
+        assign_is_channel: 0,
+        assign_channel: "",
+        remove_is_user: 0,
+        remove_user: "",
+        remove_is_agent: 0,
+        remove_agent_user_id: "",
+        remove_agent_type: "",
+        remove_is_tag: 0,
+        remove_tag: "",
+        remove_is_channel: 0,
+        remove_channel: "",
+        condition_unique_ip: 0,
+        condition_unique_device: 0,
+    }
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
         form: JSON.parse(JSON.stringify(this.defaultForm)),
+        excelColumnInfo: {
+            userid: { name: "userid", options: {} },
+        },
+        conditionForm: JSON.parse(JSON.stringify(this.conditionDefaultForm)),
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据
         fileList: <any>[{ url: "" }],
         fileList1: <any>[{ url: "" }],
         uploadType: "",
         update: 0,
+        columns: <any>{
+            activity_id: { name: '活动id', options: {} },
+            assign_agent_type: { name: '代理类型', options: {} },
+            assign_agent_user_id: { name: '代理id', options: {} },
+            assign_channel: { name: '指定渠道', options: {} },
+            assign_is_agent: { name: '是否指定代理', options: {} },
+            assign_is_all: { name: '参与用户', options: {} },
+            assign_is_channel: { name: '是否指定渠道', options: {} },
+            assign_is_tag: { name: '是否指定标签', options: {} },
+            assign_is_user: { name: '是否指定用户', options: {} },
+            assign_tag: { name: '指定标签', options: {} },
+            assign_user: { name: '指定用户', options: {} },
+            condition_unique_device: { name: '唯一登入设备号', options: {} },
+            condition_unique_ip: { name: '唯一登录ip', options: {} },
+            plat_id: { name: '平台id', options: {} },
+            register_end_time: { name: '注册结束时间', options: {} },
+            register_start_time: { name: '注册开始时间', options: {} },
+            register_time_type: { name: '玩家注册时间类型', options: {} },
+            remove_agent_type: { name: '排除代理类型', options: {} },
+            remove_agent_user_id: { name: '排除代理', options: {} },
+            remove_channel: { name: '排除渠道', options: {} },
+            remove_is_agent: { name: '是否排除代理', options: {} },
+            remove_is_channel: { name: '是否排除渠道', options: {} },
+            remove_is_tag: { name: '是否排除标签', options: {} },
+            remove_is_user: { name: '是否排除用户', options: {} },
+            remove_tag: { name: '排除标签', options: {} },
+            remove_user: { name: '排除用户', options: {} },
+            show_type: { name: '前台展示类型', options: {} },
+        }
     };
 
     /**弹窗相关数据 */
@@ -203,6 +266,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         ruleList: [],
     };
 
+    /**activity:活动设置, condition:条件设置*/
+    editTabsActivity = "activity";
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -220,6 +286,10 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.getPlatActivityRule();
             this.tableData.lang = Cookies.get("language") || "zh";
         }
+    }
+
+    setDialogColumns(data: any) {
+        Object.assign(this.dialogData.columns, data);
     }
 
     /**表格数据 */
@@ -297,6 +367,69 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         console.log("---->>>", this.dialogData.form);
     }
 
+    setConditionDetail(data: any) {
+        Object.assign(this.dialogData.conditionForm, JSON.parse(JSON.stringify(data)));
+        this.dialogData.conditionForm.assign_is_all = this.dialogData.conditionForm.assign_is_all == 1 ? true : false;
+        this.dialogData.conditionForm.assign_is_user = this.dialogData.conditionForm.assign_is_user == 1 ? true : false;
+        this.dialogData.conditionForm.assign_is_agent = this.dialogData.conditionForm.assign_is_agent == 1 ? true : false;
+        this.dialogData.conditionForm.assign_is_tag = this.dialogData.conditionForm.assign_is_tag == 1 ? true : false;
+        this.dialogData.conditionForm.assign_is_channel = this.dialogData.conditionForm.assign_is_channel == 1 ? true : false;
+        this.dialogData.conditionForm.remove_is_user = this.dialogData.conditionForm.remove_is_user == 1 ? true : false;
+        this.dialogData.conditionForm.remove_is_agent = this.dialogData.conditionForm.remove_is_agent == 1 ? true : false;
+        this.dialogData.conditionForm.remove_is_tag = this.dialogData.conditionForm.remove_is_tag == 1 ? true : false;
+        this.dialogData.conditionForm.remove_is_channel = this.dialogData.conditionForm.remove_is_channel == 1 ? true : false;
+        this.dialogData.conditionForm.condition_unique_ip = this.dialogData.conditionForm.condition_unique_ip == 1 ? true : false;
+        this.dialogData.conditionForm.condition_unique_device = this.dialogData.conditionForm.condition_unique_device == 1 ? true : false;
+        // 指定标签
+        const assignTagArr: any = [];
+        if (data.assign_tag) {
+            const arr = data.assign_tag.split(",");
+            // @ts-ignore
+            arr.forEach(tag => {
+                if (this.dialogData.columns.assign_tag.options[data.plat_id][Number(tag)]) {
+                    assignTagArr.push(tag);
+                }
+            });
+        }
+        this.dialogData.conditionForm.assign_tag = assignTagArr;
+        // 排除标签
+        const removeTagArr: any = [];
+        if (data.remove_tag) {
+            const arr = data.remove_tag.split(",");
+            // @ts-ignore
+            arr.forEach(tag => {
+                if (this.dialogData.columns.assign_tag.options[data.plat_id][Number(tag)]) {
+                    removeTagArr.push(tag);
+                }
+            });
+        }
+        this.dialogData.conditionForm.remove_tag = removeTagArr;
+        // 指定渠道
+        const assignChannelArr: any = [];
+        if (data.assign_channel) {
+            const arr = data.assign_channel.split(",");
+            // @ts-ignore
+            arr.forEach(tag => {
+                if (this.dialogData.columns.assign_channel.options[data.plat_id][Number(tag)]) {
+                    assignChannelArr.push(tag);
+                }
+            });
+        }
+        this.dialogData.conditionForm.assign_channel = assignChannelArr;
+        // 指定渠道
+        const removeChannelArr: any = [];
+        if (data.remove_channel) {
+            const arr = data.remove_channel.split(",");
+            // @ts-ignore
+            arr.forEach(tag => {
+                if (this.dialogData.columns.assign_channel.options[data.plat_id][Number(tag)]) {
+                    removeChannelArr.push(tag);
+                }
+            });
+        }
+        this.dialogData.conditionForm.remove_channel = removeChannelArr;
+    }
+
     setBallAwardData(data: any) {
         this.dialogData.form.init_prize_pool = data.init_prize_pool;
         this.dialogData.form.prize_pool_add = data.prize_pool_add;
@@ -339,6 +472,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.dialogData.form.model_id = this.dialogData.form.model_id.toString();
 
             this.sendNotification(HttpType.admin_plat_activity_show, { id: data.id });
+            this.sendNotification(HttpType.admin_plat_activity_condition_show, { id: data.id });
             this.getActivityModel({
                 page_count: 1,
                 page_size: 20000,
@@ -347,6 +481,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             console.log("---<<< ", this.dialogData.form);
         } else {
             this.resetDialogForm();
+            this.resetConditionForm();
             this.dialogData.formSource = null;
         }
     }
@@ -382,6 +517,10 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.fileList1 = [{ url: "" }];
     }
 
+    resetConditionForm() {
+        this.dialogData.conditionForm = JSON.parse(JSON.stringify(this.conditionDefaultForm));
+    }
+
     /**取活动规则 */
     getPlatActivityRule() {
         this.sendNotification(HttpType.admin_plat_activity_rule_index, {
@@ -399,6 +538,11 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     onQuery() {
         this.sendNotification(HttpType.admin_plat_activity_index, objectRemoveNull(this.listQuery));
     }
+
+    onQueryConditionColumns() {
+        this.sendNotification(HttpType.admin_plat_activity_condition_table_columns);
+    }
+
     getRuleInfo(rule: any) {
         let result: any = [];
         result = this.activeModelData.ruleList.filter((item: any) => parseInt(rule.rule_id) === item.id);
@@ -646,7 +790,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_activity_store, objectRemoveNull(formCopy));
             })
-            .catch(() => {});
+            .catch(() => { });
     }
     //将时间只发送天
     resetDate(date: string) {
@@ -678,7 +822,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 };
                 this.facade.sendNotification(HttpType.admin_plat_activity_update, copyForm);
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**更新活动*/
@@ -765,6 +909,57 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         }
         // 发送消息
         this.sendNotification(HttpType.admin_plat_activity_update, formCopy);
+        this.onUpdateCondition(this.dialogData.form.id);
+    }
+
+    onUpdateCondition(id: any) {
+        const { show_type, register_time_type, register_start_time, register_end_time, assign_is_all, assign_is_user, assign_user, assign_is_agent, assign_agent_user_id, assign_agent_type,
+            assign_is_tag, assign_tag, assign_is_channel, assign_channel, remove_is_user, remove_user,
+            remove_is_agent, remove_agent_user_id, remove_agent_type, remove_is_tag, remove_tag, remove_is_channel, remove_channel, condition_unique_ip, condition_unique_device, } = this.dialogData.conditionForm;
+        const formCopy: any = {
+            show_type,
+            register_time_type,
+            register_start_time,
+            register_end_time,
+            assign_is_all,
+            assign_is_user,
+            assign_user,
+            assign_is_agent,
+            assign_agent_user_id,
+            assign_agent_type,
+            assign_is_tag,
+            assign_tag,
+            assign_is_channel,
+            assign_channel,
+            remove_is_user,
+            remove_user,
+            remove_is_agent,
+            remove_agent_user_id,
+            remove_agent_type,
+            remove_is_tag,
+            remove_tag,
+            remove_is_channel,
+            remove_channel,
+            condition_unique_ip,
+            condition_unique_device,
+        };
+        formCopy.assign_is_all = formCopy.assign_is_all == true ? 1 : 98;
+        formCopy.assign_is_user = formCopy.assign_is_user == true ? 1 : 98;
+        formCopy.assign_is_agent = formCopy.assign_is_agent == true ? 1 : 98;
+        formCopy.assign_is_tag = formCopy.assign_is_tag == true ? 1 : 98;
+        formCopy.assign_is_channel = formCopy.assign_is_channel == true ? 1 : 98;
+        formCopy.remove_is_user = formCopy.remove_is_user == true ? 1 : 98;
+        formCopy.remove_is_agent = formCopy.remove_is_agent == true ? 1 : 98;
+        formCopy.remove_is_tag = formCopy.remove_is_tag == true ? 1 : 98;
+        formCopy.remove_is_channel = formCopy.remove_is_channel == true ? 1 : 98;
+        formCopy.condition_unique_ip = formCopy.condition_unique_ip == true ? 1 : 98;
+        formCopy.condition_unique_device = formCopy.condition_unique_device == true ? 1 : 98;
+        formCopy.id = id;
+        formCopy.assign_tag = formCopy.assign_tag.toString();
+        formCopy.assign_channel = formCopy.assign_channel.toString();
+        formCopy.remove_tag = formCopy.remove_tag.toString();
+        formCopy.remove_channel = formCopy.remove_channel.toString();
+        this.sendNotification(HttpType.admin_plat_activity_condition_update, formCopy);
     }
 
     /**取活动模版数据数据 */
@@ -940,6 +1135,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
 
         return newlist;
     }
+
     admin_plat_activity_ball_prize_update(obj: any) {
         this.sendNotification(HttpType.admin_plat_activity_ball_prize_update, obj);
     }

@@ -13,6 +13,9 @@ import cmd_admin_plat_activity_rule_index from "@/views/plat_activity/command/cm
 import cmd_admin_plat_activity_model_show from "@/views/plat_activity/command/cmd_admin_plat_activity_model_show";
 import cmd_admin_resource_upload from "@/views/plat_activity/command/cmd_admin_resource_upload";
 import cmd_admin_plat_activity_ball_prize_update from "@/views/plat_activity/command/cmd_admin_plat_activity_ball_prize_update";
+import cmd_admin_plat_activity_condition_table_columns from "@/views/plat_activity/command/cmd_admin_plat_activity_condition_table_columns";
+import cmd_admin_plat_activity_condition_show from "@/views/plat_activity/command/cmd_admin_plat_activity_condition_show";
+import cmd_admin_plat_activity_condition_update from "@/views/plat_activity/command/cmd_admin_plat_activity_condition_update";
 /**协议*/
 export var HttpType = {
     admin_plat_activity_table_columns: "admin/plat_activity/table_columns",
@@ -26,6 +29,9 @@ export var HttpType = {
     admin_plat_activity_model_show: "admin/plat_activity_model/show/{id}",
     admin_resource_upload: "admin/resource/upload",
     admin_plat_activity_ball_prize_update: "admin/plat_activity/ball_prize_update/{id}",
+    admin_plat_activity_condition_table_columns: "admin/plat_activity_condition/table_columns",
+    admin_plat_activity_condition_show: "admin/plat_activity_condition/show/{id}",
+    admin_plat_activity_condition_update: "admin/plat_activity_condition/update/{id}",
 };
 /**事件*/
 export var EventType = {
@@ -40,6 +46,9 @@ export var EventType = {
     admin_plat_activity_model_show: "admin_plat_activity_model_show",
     admin_resource_upload: "admin_resource_upload",
     admin_plat_activity_ball_prize_update: "admin_plat_activity_ball_prize_update",
+    admin_plat_activity_condition_table_columns: "admin_plat_activity_condition_table_columns",
+    admin_plat_activity_condition_show: "admin_plat_activity_condition_show",
+    admin_plat_activity_condition_update: "admin_plat_activity_condition_update",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -54,4 +63,7 @@ facade.registerCommand(HttpType.admin_plat_activity_rule_index, cmd_admin_plat_a
 facade.registerCommand(HttpType.admin_plat_activity_model_show, cmd_admin_plat_activity_model_show);
 facade.registerCommand(HttpType.admin_resource_upload, cmd_admin_resource_upload);
 facade.registerCommand(HttpType.admin_plat_activity_ball_prize_update, cmd_admin_plat_activity_ball_prize_update);
+facade.registerCommand(HttpType.admin_plat_activity_condition_table_columns, cmd_admin_plat_activity_condition_table_columns);
+facade.registerCommand(HttpType.admin_plat_activity_condition_show, cmd_admin_plat_activity_condition_show);
+facade.registerCommand(HttpType.admin_plat_activity_condition_update, cmd_admin_plat_activity_condition_update);
 
