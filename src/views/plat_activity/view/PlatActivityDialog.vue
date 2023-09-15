@@ -1061,7 +1061,7 @@
                                 v-for="(value, key) in dialogColumns.assign_channel.options[form.plat_id]"
                                 :key="key"
                                 :label="key"
-                                :value="Number(key)"
+                                :value="key"
                             >
                             </el-option>
                         </el-select>
@@ -1225,7 +1225,7 @@
                                 v-for="(value, key) in dialogColumns.assign_channel.options[form.plat_id]"
                                 :key="key"
                                 :label="key"
-                                :value="Number(key)"
+                                :value="key"
                             >
                             </el-option>
                         </el-select>
