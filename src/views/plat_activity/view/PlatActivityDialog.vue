@@ -1060,7 +1060,7 @@
                             <el-option
                                 v-for="(value, key) in dialogColumns.assign_channel.options[form.plat_id]"
                                 :key="key"
-                                :label="value"
+                                :label="key"
                                 :value="Number(key)"
                             >
                             </el-option>
@@ -1224,7 +1224,7 @@
                             <el-option
                                 v-for="(value, key) in dialogColumns.assign_channel.options[form.plat_id]"
                                 :key="key"
-                                :label="value"
+                                :label="key"
                                 :value="Number(key)"
                             >
                             </el-option>
@@ -1384,13 +1384,6 @@ export default class PlatActivityDialog extends AbstractView {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
-    }
-
-    @Watch("myProxy.editTabsActivity")
-    onWatchTabsActivity(value: any) {
-        if (value == "condition") {
-            this.myProxy.onQueryConditionColumns();
-        }
     }
 
     @Watch("myProxy.dialogData.update")

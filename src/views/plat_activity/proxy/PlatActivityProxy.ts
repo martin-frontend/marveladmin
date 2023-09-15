@@ -15,6 +15,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     /**进入页面时调用 */
     enter() {
         this.sendNotification(HttpType.admin_plat_activity_table_columns);
+        this.sendNotification(HttpType.admin_plat_activity_condition_table_columns);
     }
 
     /**离开页面时调用 */
@@ -141,7 +142,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         award_timing_map: "",
         icon: "",
         icon_url: "",
-        extended_task_type: 0,
+        extended_task_type: "",
         task_days: "",
         task_water_rate_2: "",
         task_water_rate_4: "",
@@ -185,7 +186,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         assign_user: "",
         assign_is_agent: 0,
         assign_agent_user_id: "",
-        assign_agent_type: "",
+        assign_agent_type: 1,
         assign_is_tag: 0,
         assign_tag: "",
         assign_is_channel: 0,
@@ -194,7 +195,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         remove_user: "",
         remove_is_agent: 0,
         remove_agent_user_id: "",
-        remove_agent_type: "",
+        remove_agent_type: 1,
         remove_is_tag: 0,
         remove_tag: "",
         remove_is_channel: 0,
@@ -463,7 +464,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     showDialog(status: string, data?: any) {
         this.dialogData.bShow = true;
         this.dialogData.status = status;
-
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
@@ -782,6 +782,16 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         formCopy.show_start_time = this.resetDate(formCopy.show_start_time);
         formCopy.show_end_time = this.resetDate(formCopy.show_end_time);
 
+        if (this.dialogData.conditionForm.assign_is_all == false &&
+            this.dialogData.conditionForm.assign_is_agent == false &&
+            this.dialogData.conditionForm.assign_is_channel == false &&
+            this.dialogData.conditionForm.assign_is_tag == false &&
+            this.dialogData.conditionForm.assign_is_user == false) {
+            this.editTabsActivity = "condition";
+            MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
+            return;
+        }
+
         MessageBox.confirm(<string>LangUtil("发布以后活动数据不能修改，确定发布"), <string>LangUtil("提示"), {
             confirmButtonText: <string>LangUtil("确定"),
             cancelButtonText: <string>LangUtil("取消"),
@@ -906,6 +916,16 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             formCopy.ball_award = JSON.stringify(this.dialogData.form.ball_award);
             formCopy.rank_award = JSON.stringify(this.dialogData.form.rank_award);
             formCopy.day_num_init_config = JSON.stringify(this.dialogData.form.day_num_init_config);
+        }
+
+        if (this.dialogData.conditionForm.assign_is_all == false &&
+            this.dialogData.conditionForm.assign_is_agent == false &&
+            this.dialogData.conditionForm.assign_is_channel == false &&
+            this.dialogData.conditionForm.assign_is_tag == false &&
+            this.dialogData.conditionForm.assign_is_user == false) {
+            this.editTabsActivity = "condition";
+            MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
+            return;
         }
         // 发送消息
         this.sendNotification(HttpType.admin_plat_activity_update, formCopy);
