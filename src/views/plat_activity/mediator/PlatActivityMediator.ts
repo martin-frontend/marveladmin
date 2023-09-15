@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/plat_activity/setting";
 import { Message } from "element-ui";
 import PlatActivityProxy from "../proxy/PlatActivityProxy";
 
-interface IPlatActivity extends IEventDispatcher {}
+interface IPlatActivity extends IEventDispatcher { }
 
 export default class PlatActivityMediator extends AbstractMediator {
     private myProxy: PlatActivityProxy = <any>this.getProxy(PlatActivityProxy);
@@ -35,6 +35,9 @@ export default class PlatActivityMediator extends AbstractMediator {
             EventType.admin_plat_activity_model_show,
             EventType.admin_resource_upload,
             EventType.admin_plat_activity_ball_prize_update,
+            EventType.admin_plat_activity_condition_table_columns,
+            EventType.admin_plat_activity_condition_show,
+            EventType.admin_plat_activity_condition_update,
         ];
     }
 
@@ -55,6 +58,7 @@ export default class PlatActivityMediator extends AbstractMediator {
             case EventType.admin_plat_activity_store:
                 Message.success(SuccessMessage.create);
                 myProxy.hideDialog();
+                myProxy.onUpdateCondition(body)
                 myProxy.listQuery.page_count = 1;
                 myProxy.onQuery();
                 break;
@@ -81,6 +85,15 @@ export default class PlatActivityMediator extends AbstractMediator {
             case EventType.admin_plat_activity_ball_prize_update:
                 Message.success(SuccessMessage.update);
                 myProxy.onQuery();
+                break;
+            case EventType.admin_plat_activity_condition_table_columns:
+                myProxy.setDialogColumns(body);
+                break;
+            case EventType.admin_plat_activity_condition_show:
+                myProxy.setConditionDetail(body);
+                break;
+            case EventType.admin_plat_activity_condition_update:
+                myProxy.hideDialog();
                 break;
         }
     }
