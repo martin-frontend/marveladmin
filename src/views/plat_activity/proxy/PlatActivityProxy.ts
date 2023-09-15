@@ -791,7 +791,26 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
             return;
         }
-
+        if (this.dialogData.conditionForm.assign_is_tag == true && this.dialogData.conditionForm.assign_tag == "") {
+            this.editTabsActivity = "condition";
+            MessageBox.alert(<any>LangUtil("指定标签必须选择"));
+            return;
+        }
+        if (this.dialogData.conditionForm.assign_is_channel == true && this.dialogData.conditionForm.assign_channel == "") {
+            this.editTabsActivity = "condition";
+            MessageBox.alert(<any>LangUtil("指定渠道必须选择"));
+            return;
+        }
+        if (this.dialogData.conditionForm.remove_is_tag == true && this.dialogData.conditionForm.remove_tag == "") {
+            this.editTabsActivity = "condition";
+            MessageBox.alert(<any>LangUtil("排除标签必须选择"));
+            return;
+        }
+        if (this.dialogData.conditionForm.remove_is_channel == true && this.dialogData.conditionForm.remove_channel == "") {
+            this.editTabsActivity = "condition";
+            MessageBox.alert(<any>LangUtil("排除渠道必须选择"));
+            return;
+        }
         MessageBox.confirm(<string>LangUtil("发布以后活动数据不能修改，确定发布"), <string>LangUtil("提示"), {
             confirmButtonText: <string>LangUtil("确定"),
             cancelButtonText: <string>LangUtil("取消"),
@@ -925,6 +944,26 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.dialogData.conditionForm.assign_is_user == false) {
             this.editTabsActivity = "condition";
             MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
+            return;
+        }
+        if (this.dialogData.conditionForm.assign_is_tag == true && this.dialogData.conditionForm.assign_tag == "") {
+            this.editTabsActivity = "condition";
+            MessageBox.alert(<any>LangUtil("指定标签必须选择"));
+            return;
+        }
+        if (this.dialogData.conditionForm.assign_is_channel == true && this.dialogData.conditionForm.assign_channel == "") {
+            this.editTabsActivity = "condition";
+            MessageBox.alert(<any>LangUtil("指定渠道必须选择"));
+            return;
+        }
+        if (this.dialogData.conditionForm.remove_is_tag == true && this.dialogData.conditionForm.remove_tag == "") {
+            this.editTabsActivity = "condition";
+            MessageBox.alert(<any>LangUtil("排除标签必须选择"));
+            return;
+        }
+        if (this.dialogData.conditionForm.remove_is_channel == true && this.dialogData.conditionForm.remove_channel == "") {
+            this.editTabsActivity = "condition";
+            MessageBox.alert(<any>LangUtil("排除渠道必须选择"));
             return;
         }
         // 发送消息

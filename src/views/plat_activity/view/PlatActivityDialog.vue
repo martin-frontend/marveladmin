@@ -1413,7 +1413,7 @@ export default class PlatActivityDialog extends AbstractView {
 
     get rules() {
         return {
-            plat_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            plat_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             activity_name: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             is_preheat: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             start_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
