@@ -791,7 +791,7 @@
                                                                     v-for="(item, key) of childRule.params"
                                                                     :key="key"
                                                                 >
-                                                                    <span>{{ key }}</span>
+                                                                    <span>{{ converCoinName(key) }}</span>
                                                                     <el-input-number
                                                                         size="small"
                                                                         v-model="item.percent"
