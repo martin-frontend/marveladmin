@@ -7,6 +7,10 @@
         "admin/plat_pops/index",
         "admin/plat_pops/show/{id}",
         "admin/plat_pops/store",
-        "admin/plat_pops/update/{id}"
+        "admin/plat_pops/update/{id}",
+        "admin/plat_pops/type/plats_notice/index",
+        "admin/plat_pops/type/plats_notice/show/{id}",
+        "admin/plat_pops/type/plat_activity/index",
+        "admin/plat_pops/type/plat_activity/show/{id}"
     ]
 }

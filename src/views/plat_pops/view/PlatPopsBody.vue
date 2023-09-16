@@ -12,12 +12,7 @@
                 'text-align': 'center',
             }"
         >
-            <el-table-column
-                :label="tableColumns.index_no.name"
-                class-name="status-col"
-                prop="index_no"
-                min-width="150px"
-            >
+            <el-table-column :label="tableColumns.id.name" class-name="status-col" prop="id" min-width="150px">
             </el-table-column>
             <el-table-column :label="tableColumns.title.name" class-name="status-col" prop="title" min-width="150px">
             </el-table-column>
@@ -79,29 +74,14 @@
             </el-table-column>
 
             <el-table-column :label="LangUtil('排序')" class-name="status-col" width="320px">
-                <template slot-scope="{ row, $index }">
-                    <div v-if="checkUnique(unique.plat_activity_order)">
-                        <el-button size="mini" @click="handlerOrder(row.id, 1)" :disabled="$index == 0">
+                <template slot-scope="{ row }">
+                    <div>
+                        <el-button size="mini" @click="handlerOrder(row.id, 2)">
                             {{ LangUtil("置顶") }}
                         </el-button>
-                        <el-button
-                            size="mini"
-                            @click="handlerOrder(row.id, 2)"
-                            :disabled="$index == tableData.length - 1"
-                            >{{ LangUtil("置底") }}</el-button
-                        >
-                        <el-button
-                            size="mini"
-                            icon="el-icon-top"
-                            @click="handlerOrder(row.id, 3)"
-                            :disabled="$index == 0"
-                        ></el-button>
-                        <el-button
-                            size="mini"
-                            icon="el-icon-bottom"
-                            @click="handlerOrder(row.id, 4)"
-                            :disabled="$index == tableData.length - 1"
-                        ></el-button>
+                        <el-button size="mini" @click="handlerOrder(row.id, 1)">{{ LangUtil("置底") }}</el-button>
+                        <el-button size="mini" icon="el-icon-top" @click="handlerOrder(row.id, 3)"></el-button>
+                        <el-button size="mini" icon="el-icon-bottom" @click="handlerOrder(row.id, 4)"></el-button>
                     </div>
                 </template>
             </el-table-column>
@@ -151,15 +131,15 @@ export default class PlatPopsBody extends AbstractView {
         next_id: 0,
     };
 
-    @Watch("myProxy.isResort")
+    @Watch("myProxy.tableData.isResort")
     resort() {
-        if (this.myProxy.isResort) {
+        if (this.myProxy.tableData.isResort) {
             this.data = [];
             this.$nextTick(() => {
                 this.data = this.tableData;
                 this.initSort();
             });
-            this.myProxy.isResort = false;
+            this.myProxy.tableData.isResort = false;
         }
     }
 

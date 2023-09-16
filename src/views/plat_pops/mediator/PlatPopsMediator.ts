@@ -6,7 +6,7 @@ import { Message } from "element-ui";
 import PlatPopsProxy from "../proxy/PlatPopsProxy";
 
 interface IPlatPops extends IEventDispatcher {
-    
+
 }
 
 export default class PlatPopsMediator extends AbstractMediator {
@@ -31,6 +31,10 @@ export default class PlatPopsMediator extends AbstractMediator {
             EventType.admin_plat_pops_show,
             EventType.admin_plat_pops_store,
             EventType.admin_plat_pops_update,
+            EventType.admin_plat_pops_type_plats_notice_index,
+            EventType.admin_plat_pops_type_plats_notice_show,
+            EventType.admin_plat_pops_type_plat_activity_index,
+            EventType.admin_plat_pops_type_plat_activity_show
         ];
     }
 
@@ -58,6 +62,16 @@ export default class PlatPopsMediator extends AbstractMediator {
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 myProxy.onQuery();
+                break;
+            case EventType.admin_plat_pops_type_plats_notice_index:
+                myProxy.setNoticeType(body);
+                break
+            case EventType.admin_plat_pops_type_plats_notice_show:
+                break;
+            case EventType.admin_plat_pops_type_plat_activity_index:
+                myProxy.setActivityType(body);
+                break
+            case EventType.admin_plat_pops_type_plat_activity_show:
                 break;
         }
     }
