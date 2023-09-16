@@ -39,6 +39,15 @@
             </el-table-column>
             <el-table-column prop="email" :label="tableColumns['email'].name" width="150px" align="center">
             </el-table-column>
+            <el-table-column prop="created_at" :label="tableColumns['created_at'].name" width="150px" align="center">
+            </el-table-column>
+            <el-table-column
+                prop="verification_time"
+                :label="tableColumns['verification_time'].name"
+                width="150px"
+                align="center"
+            >
+            </el-table-column>
             <el-table-column prop="remark" :label="tableColumns['remark'].name" align="center" min-width="100px">
                 <template slot-scope="{ row }">
                     <div class="remark">
