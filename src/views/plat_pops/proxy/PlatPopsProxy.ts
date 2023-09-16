@@ -64,6 +64,12 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             content: { name: '前端内容', options: {} },
             acitvity: { name: "活动类型", options: {} },
             notice: { name: "公告类型", options: {} },
+            mark: {
+                name: "",
+                options: {
+                    1: "<=",
+                },
+            },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -87,11 +93,20 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
         channel_id: "",
     };
 
+    /**條件规则 */
+    conditionRule: any = {
+        condition: "",
+        firstLogin: 1,
+        firstRecharge: 2,
+        coin: "", //币种
+        mark: 1,
+    };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
         status: DialogStatus.create,
-        form: {
+        form: <any>{
             id: null,
             plat_id: "",
             app_platform: <any>[],
@@ -107,6 +122,7 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             range_user_tag_ids: "",
             range_type_channel_id: 99,
             range_channel_ids: "",
+            condition: [],
             status: "",
         },
         formSource: null, // 表单的原始数据
@@ -289,5 +305,9 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
     onOrderList() {
         const formCopy = this.tableData.orderData;
         this.sendNotification(HttpType.admin_plat_pops_update, formCopy);
+    }
+
+    addCondition(option: any = {}) {
+        this.dialogData.form.condition.push(JSON.parse(JSON.stringify({ ...this.conditionRule, ...option })));
     }
 }

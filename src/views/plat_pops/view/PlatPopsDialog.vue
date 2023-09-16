@@ -212,6 +212,48 @@
                     </el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item size="mini" :label="LangUtil('受众条件')" prop="range_type_channel_id">
+                <el-button
+                    @click="myProxy.addCondition()"
+                    size="mini"
+                    type="primary"
+                    icon="el-icon-circle-plus-outline"
+                >
+                    {{ LangUtil("条件") }}
+                </el-button>
+                <div
+                    class="rules_item"
+                    v-for="(item, index) in form.condition"
+                    :key="index"
+                    style="margin-bottom: 5px; margin-top: 10px; display: flex;"
+                >
+                    <el-row type="flex" justify="start" align="middle" :gutter="24">
+                        <el-col :span="4">
+                            <el-button @click="deleteCondition(index)" size="mini" icon="el-icon-delete">
+                                {{ LangUtil("刪除") }}
+                            </el-button>
+                        </el-col>
+                    </el-row>
+                    <el-col :span="8" class="vi_div">
+                        <el-select
+                            v-model="item.condition"
+                            :placeholder="LangUtil('请选择')"
+                            filterable
+                            style="margin-left: 10px; margin-top: 1px;"
+                        >
+                            <el-option
+                                v-for="{ name, key, disabled } in newConditions"
+                                :key="key"
+                                :label="name"
+                                :value="key"
+                                :disabled="disabled"
+                            >
+                            </el-option>
+                        </el-select>
+                    </el-col>
+                </div>
+            </el-form-item>
+
             <el-form-item size="mini" :label="tableColumns['status'].name" prop="status">
                 <el-switch v-model="form.status" :active-value="1" :inactive-value="98"></el-switch>
             </el-form-item>
@@ -271,6 +313,21 @@ export default class PlatPopsDialog extends AbstractView {
 
     get curTime() {
         return dateFormat(new Date(), "yyyy-MM-dd hh-mm-ss");
+    }
+
+    get newConditions() {
+        let newArr = [];
+        const keys = Object.keys(this.tableColumns.conditions.options);
+        // @ts-ignore
+        const selectedKeys = this.form.condition.map(item => item.condition);
+        newArr = keys.map(key => {
+            return {
+                name: this.tableColumns.conditions.options[key],
+                key,
+                disabled: selectedKeys.includes(key) && key != "condition_balance",
+            };
+        });
+        return newArr;
     }
 
     get rules() {
@@ -354,6 +411,10 @@ export default class PlatPopsDialog extends AbstractView {
             [],
             []
         );
+    }
+
+    deleteCondition(index: any) {
+        this.form.condition.splice(index, 1);
     }
 }
 </script>
