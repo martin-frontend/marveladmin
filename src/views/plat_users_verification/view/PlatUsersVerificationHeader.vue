@@ -19,17 +19,34 @@
                 :options="tableColumns.user_id.options"
                 @change="handlerSearch()"
             />
+            <SearchDatePicker
+                :title="tableColumns['created_at'].name"
+                :startDate.sync="listQuery['created_at-{>=}']"
+                :endDate.sync="listQuery['created_at-{<=}']"
+                :showTime="true"
+            />
+            <SearchDatePicker
+                :title="tableColumns['verification_time'].name"
+                :startDate.sync="listQuery['verification_time-{>=}']"
+                :endDate.sync="listQuery['verification_time-{<=}']"
+                :showTime="true"
+            />
         </div>
         <div class="group">
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">查询</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">重置</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                    {{ LangUtil("查询") }}
+                </el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                    {{ LangUtil("重置") }}
+                </el-button>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component } from "vue-property-decorator";
 import PlatUsersVerificationProxy from "../proxy/PlatUsersVerificationProxy";
@@ -49,6 +66,7 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
     },
 })
 export default class PlatUsersVerificationHeader extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
     private unique = unique;
     private checkUnique = checkUnique;
