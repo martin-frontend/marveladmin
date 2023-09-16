@@ -856,7 +856,7 @@
                     label-width="160px"
                     v-loading="net_status.loading"
                 >
-                    <el-form-item size="mini" :label="dialogColumns['show_type'].name" prop="show_type">
+                    <!-- <el-form-item size="mini" :label="dialogColumns['show_type'].name" prop="show_type">
                         <el-radio-group v-model="dialogForm.show_type">
                             <el-radio
                                 v-for="(value, key) in dialogColumns['show_type'].options"
@@ -866,7 +866,7 @@
                                 {{ value }}
                             </el-radio>
                         </el-radio-group>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item
                         size="mini"
                         :label="dialogColumns['register_time_type'].name"
