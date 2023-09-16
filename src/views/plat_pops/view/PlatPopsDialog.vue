@@ -2,7 +2,7 @@
     <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow" width="1200px" top="20px">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item :label="`${tableColumns.plat_id.name}`" prop="plat_id">
-                <el-select v-model="form.plat_id" filterable :placeholder="LangUtil('请选择')">
+                <el-select v-model="form.plat_id" filterable :placeholder="LangUtil('请选择')" @change="onPlatChange">
                     <el-option
                         v-for="(value, key) in tableColumns.plat_id.options"
                         :key="key"
@@ -52,6 +52,7 @@
                     class="select"
                     placeholder="请选择"
                     style="margin-left: 20px;"
+                    @change="onNoticeChange"
                     v-if="form.type == 1"
                 >
                     <el-option
@@ -303,7 +304,15 @@ export default class PlatPopsDialog extends AbstractView {
         this.myProxy.onDelete(this.form.id);
     }
 
+    onPlatChange() {
+        if (this.form.type != "3") {
+            this.form.type = "";
+        }
+    }
+
     onTypeChange() {
+        this.form.notice = "";
+        this.form.acitvity = "";
         if (this.form.type == "1") {
             this.myProxy.onQueryNotice(this.form.plat_id);
         } else if (this.form.type == "2") {
@@ -311,7 +320,13 @@ export default class PlatPopsDialog extends AbstractView {
         }
     }
 
-    onActivityChange() {}
+    onNoticeChange() {
+        this.myProxy.onNoticeShow(this.form.notice);
+    }
+
+    onActivityChange() {
+        this.myProxy.onActivityShow(this.form.acitvity);
+    }
 
     // excel 导入
     async handleClick(e: any) {

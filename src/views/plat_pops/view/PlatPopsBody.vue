@@ -64,7 +64,7 @@
                     <el-button
                         size="mini"
                         type="danger"
-                        @click="handlerCancel(row.id)"
+                        @click="handlerRevertItem(row, 99)"
                         v-if="row.status == 1 || row.status == 2"
                     >
                         {{ LangUtil("撤销") }}
@@ -156,6 +156,16 @@ export default class PlatPopsBody extends AbstractView {
         this.myProxy.onDelete(data.id);
     }
 
+    handlerRevertItem(row: any, status: any) {
+        this.myProxy.tableData.orderData.id = row.id;
+        this.myProxy.tableData.orderData.status = status;
+        this.myProxy.onRemoveItem();
+    }
+
+    onCopyModule(data: any) {
+        this.myProxy.showCopyDialog(DialogStatus.create, data);
+    }
+
     initSort() {
         const tbody: any = document.querySelector(".el-table__body-wrapper tbody");
         new Sortable(tbody, {
@@ -179,14 +189,12 @@ export default class PlatPopsBody extends AbstractView {
         });
     }
 
-    handlerOrder(id: any, opt: string) {
+    handlerOrder(id: any, opt: any) {
         this.myProxy.tableData.orderData.id = id;
         this.myProxy.tableData.orderData.opt = opt;
         this.myProxy.tableData.orderData.plat_id = this.listQuery.plat_id;
         this.myProxy.onOrderList();
     }
-
-    handlerCopy() {}
 }
 </script>
 

@@ -1,3 +1,4 @@
+import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
@@ -25,7 +26,7 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             app_platform: { name: "应用平台", options: [] },
             channel_id: { name: '所属渠道', options: {} },
             condition_balance: { name: "条件-余额", options: [] },
@@ -67,8 +68,9 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         orderData: {
-            id: "",
-            opt: "", //操作:1-置顶 |2-置底 |3-上调 |4-下调
+            id: null,
+            opt: null, //操作:1-置顶 |2-置底 |3-上调 |4-下调
+            status: null,
             plat_id: "",
         },
         /**是否重新排序 */
@@ -93,7 +95,7 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             id: null,
             plat_id: "",
             app_platform: <any>[],
-            languages: [],
+            languages: <any>[],
             type: "",
             notice: "",
             acitvity: "",
@@ -144,6 +146,17 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
 
     setNoticeType(data: any) {
         this.tableData.columns.notice.options = data;
+    }
+
+    setActivity(data: any) {
+        const languages = JSON.parse(data.languages)
+        this.dialogData.form.languages.splice(0)
+        this.dialogData.form.languages.push(...languages);
+    }
+
+    setNotice(data: any) {
+        this.dialogData.form.app_platform.push(...data.app_platform);
+        this.dialogData.form.languages.push(...data.languages);
     }
 
     /**重置查询条件 */
@@ -198,6 +211,16 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             { plat_id: plat_id });
     }
 
+    onNoticeShow(id: any) {
+        this.sendNotification(HttpType.admin_plat_pops_type_plats_notice_show,
+            { id: id });
+    }
+
+    onActivityShow(id: any) {
+        this.sendNotification(HttpType.admin_plat_pops_type_plat_activity_show,
+            { id: id });
+    }
+
     /**添加数据 */
     onAdd() {
         const formCopy: any = {
@@ -207,7 +230,7 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
     }
 
     /**更新数据 */
-    onUpdate() {
+    onUpdate(fromTable = false) {
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
         // 删除多余无法去除的参数
         // TODO
@@ -224,9 +247,9 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
 
     /**删除数据 */
     onDelete(id: any) {
-        MessageBox.confirm("您是否删除该记录", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
         })
             .then(() => {
@@ -235,9 +258,31 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             .catch(() => { });
     }
 
+    onRemoveItem() {
+        MessageBox.confirm(<string>LangUtil("确定撤销此公告?"), <string>LangUtil("提示"), {
+            confirmButtonText: <string>LangUtil("确定"),
+            cancelButtonText: <string>LangUtil("取消"),
+            type: "warning",
+        })
+            .then(() => {
+                this.tableData.orderData.opt = null;
+                this.onUpdate(true);
+            })
+            .catch(() => { });
+    }
+
     /**重新排序 */
     onResort({ id, next_id }: { [key: string]: number }) {
         this.facade.sendNotification(HttpType.admin_plat_pops_update, { id: id, next_id: next_id, opt: 11 });
+    }
+
+    /** 显示复制模版 */
+    showCopyDialog(status: string, data?: any) {
+        this.dialogData.bShow = true;
+        this.dialogData.status = status;
+        this.resetDialogForm();
+        this.dialogData.formSource = null;
+        this.sendNotification(HttpType.admin_plat_pops_show, { id: data.id });
     }
 
     /**排序 */

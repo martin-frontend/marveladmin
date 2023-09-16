@@ -67,11 +67,13 @@ export default class PlatPopsMediator extends AbstractMediator {
                 myProxy.setNoticeType(body);
                 break
             case EventType.admin_plat_pops_type_plats_notice_show:
+                myProxy.setNotice(body);
                 break;
             case EventType.admin_plat_pops_type_plat_activity_index:
                 myProxy.setActivityType(body);
                 break
             case EventType.admin_plat_pops_type_plat_activity_show:
+                myProxy.setActivity(body);
                 break;
         }
     }
