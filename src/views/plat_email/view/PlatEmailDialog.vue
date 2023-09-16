@@ -18,14 +18,34 @@
             </el-form-item>
 
             <el-form-item :label="LangUtil('模版')" v-if="!readonly">
-                <el-select v-model="form.template_id" filterable class="select" :placeholder="LangUtil('请选择')" :disabled="!form.plat_id || !(form.template_option && form.template_option.length > 0)">
+                <el-select
+                    v-model="form.template_id"
+                    filterable
+                    class="select"
+                    :placeholder="LangUtil('请选择')"
+                    :disabled="!form.plat_id || !(form.template_option && form.template_option.length > 0)"
+                >
                     <el-option
-                        v-for="(value) in form.template_option"
+                        v-for="value in form.template_option"
                         :key="value.template_id"
                         :label="value.template_name"
                         :value="value.template_id"
                     ></el-option>
                 </el-select>
+            </el-form-item>
+
+            <el-form-item size="mini" :label="LangUtil('创建时间')" prop="time">
+                <el-date-picker
+                    v-model="form.time"
+                    type="datetimerange"
+                    :range-separator="to"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    :start-placeholder="start"
+                    :end-placeholder="end"
+                    :default-time="['00:00:00', '23:59:59']"
+                    :disabled="isStatusUpdate"
+                >
+                </el-date-picker>
             </el-form-item>
 
             <el-form-item :label="`${tableColumns.title.name}`" prop="title">
@@ -62,11 +82,7 @@
                         :placeholder="`${tableColumns.content.name}`"
                         v-model="form.content"
                     ></el-input>
-                    <el-button
-                        style="max-height: 35px"
-                        type="primary"
-                        size="mini"
-                        @click="handleTranslate('content')"
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('content')"
                         >翻译</el-button
                     >
                 </div>
@@ -307,6 +323,9 @@ export default class PlatEmailDialog extends AbstractView {
     readonly = this.myProxy.dialogData.readonly;
     // Global Function
     inputOnlyPositive = inputOnlyPositive;
+    start: any = LangUtil("开始时间");
+    end: any = LangUtil("结束时间");
+    to: any = LangUtil("至");
 
     textMap = {
         update: this.LangUtil("编辑"),
@@ -437,7 +456,7 @@ export default class PlatEmailDialog extends AbstractView {
         // data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_EMAIL;
         data.plat_id = this.form.plat_id;
-         //@ts-ignore
+        //@ts-ignore
         data.sentence = this.form[source] || source;
         data.refForm = this.form;
         data.useKey = source;
