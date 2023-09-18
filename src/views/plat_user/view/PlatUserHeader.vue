@@ -94,6 +94,10 @@
                 :endDate.sync="listQuery['paytime-{<}']"
                 :showTime="true"
             />
+            <SearchInput
+                title="ma_token"
+                v-model="listQuery.ma_token"
+            />
         </div>
         <SearchSelect
             :title="tableColumns.user_tag.name"
