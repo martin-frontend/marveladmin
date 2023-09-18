@@ -244,6 +244,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 options: {},
                 tips: "玩家完成任务获得真钱的数量",
             },
+            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' }
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -484,6 +485,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         gift_gold: "",
         backwater_gold: "",
         win_loss: "",
+        pure_win_loss: "",
         commission_gold: "",
         water: "",
         new_register_water: "",
@@ -550,6 +552,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "activity_gold_exchange",
             "backwater_gold",
             "win_loss",
+            "pure_win_loss",
             "commission_gold",
             "water",
             "new_register_water",
