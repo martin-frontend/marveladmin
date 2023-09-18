@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow" width="1200px" top="20px">
+    <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow" top="20px">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item :label="`${tableColumns.plat_id.name}`" prop="plat_id">
                 <el-select v-model="form.plat_id" filterable :placeholder="LangUtil('请选择')" @change="onPlatChange">
@@ -12,7 +12,6 @@
                 </el-select>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['app_platform'].name" prop="app_platform">
-                <!-- <el-checkbox-group v-model="form.app_platform" @change="onAppTypesChange"> -->
                 <el-checkbox-group v-model="form.app_platform">
                     <el-checkbox
                         v-for="(value, key) in tableColumns['app_platform'].options"
@@ -29,6 +28,18 @@
                         {{ value }}
                     </el-checkbox>
                 </el-checkbox-group>
+            </el-form-item>
+            <el-form-item size="mini" :label="LangUtil('有效时间')" prop="time">
+                <el-date-picker
+                    v-model="form.time"
+                    type="datetimerange"
+                    :range-separator="to"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    :start-placeholder="start"
+                    :end-placeholder="end"
+                    :default-time="['00:00:00', '23:59:59']"
+                >
+                </el-date-picker>
             </el-form-item>
             <el-form-item :label="tableColumns['type'].name" prop="type">
                 <el-select
@@ -47,7 +58,7 @@
                     ></el-option>
                 </el-select>
                 <el-select
-                    v-model="form.notice"
+                    v-model="form.type_bind_id"
                     clearable
                     class="select"
                     placeholder="请选择"
@@ -63,7 +74,7 @@
                     ></el-option>
                 </el-select>
                 <el-select
-                    v-model="form.acitvity"
+                    v-model="form.type_bind_id"
                     clearable
                     class="select"
                     placeholder="请选择"
@@ -79,10 +90,10 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item :label="tableColumns['ftitle'].name" prop="ftitle" v-if="form.type == 3">
+            <el-form-item :label="tableColumns['subject'].name" prop="subject" v-if="form.type == 3">
                 <el-input
                     :placeholder="LangUtil('请输入')"
-                    v-model="form.ftitle"
+                    v-model="form.subject"
                     maxlength="500"
                     show-word-limit
                 ></el-input>
@@ -111,7 +122,7 @@
             </div>
             <!-- 参与用户 -->
             <el-form-item size="mini" :label="LangUtil('全部用户')" prop="assign_is_all" label-width="200px">
-                <el-checkbox v-model="form.range_type_all"> </el-checkbox>
+                <el-checkbox v-model="form.range_type_all" :true-label="1" :false-label="99"> </el-checkbox>
             </el-form-item>
             <!-- 指定用户 -->
             <el-form-item
@@ -121,7 +132,7 @@
                 class="display_felx"
                 label-width="200px"
             >
-                <el-checkbox v-model="form.range_type_user_id">{{ LangUtil("是") }}</el-checkbox>
+                <el-checkbox v-model="form.range_type_user_id" :true-label="1" :false-label="99"> </el-checkbox>
                 <el-form-item
                     size="mini"
                     :label="LangUtil('用户ID')"
@@ -166,9 +177,7 @@
                 prop="range_type_user_tag_id"
                 label-width="200px"
             >
-                <el-checkbox v-model="form.range_type_user_tag_id" :true-label="1" :false-label="99">
-                    {{ LangUtil("是") }}
-                </el-checkbox>
+                <el-checkbox v-model="form.range_type_user_tag_id" :true-label="1" :false-label="99"> </el-checkbox>
                 <el-select
                     v-model="form.range_user_tag_ids"
                     multiple
@@ -192,9 +201,7 @@
                 prop="range_type_channel_id"
                 label-width="200px"
             >
-                <el-checkbox v-model="form.range_type_channel_id" :true-label="1" :false-label="99">
-                    {{ LangUtil("是") }}
-                </el-checkbox>
+                <el-checkbox v-model="form.range_type_channel_id" :true-label="1" :false-label="99"> </el-checkbox>
                 <el-select
                     v-model="form.range_channel_ids"
                     multiple
@@ -225,7 +232,7 @@
                     class="rules_item"
                     v-for="(item, index) in form.condition"
                     :key="index"
-                    style="margin-bottom: 5px; margin-top: 10px; display: flex;"
+                    style="margin-bottom: 5px; margin-top: 10px;"
                 >
                     <el-row type="flex" justify="start" align="middle" :gutter="24">
                         <el-col :span="4">
@@ -233,30 +240,100 @@
                                 {{ LangUtil("刪除") }}
                             </el-button>
                         </el-col>
+                        <el-col :span="8" class="vi_div">
+                            <el-select v-model="item.condition" :placeholder="LangUtil('请选择')" filterable>
+                                <el-option
+                                    v-for="{ name, key, disabled } in newConditions"
+                                    :key="key"
+                                    :label="name"
+                                    :value="key"
+                                    :disabled="disabled"
+                                >
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="8" class="vi_div" v-if="item.condition == 'condition_is_first_login'">
+                            <el-radio-group v-model="item.firstLogin">
+                                <template v-for="(value, key) in tableColumns['condition_is_first_login'].options">
+                                    <el-radio :key="key" :label="Number(key)" v-if="key != 0">
+                                        {{ value }}
+                                        <el-tooltip
+                                            class="tip-item"
+                                            effect="dark"
+                                            :content="
+                                                key == 1
+                                                    ? LangUtil('表示未登录过新用户')
+                                                    : LangUtil('已经登录过的老用户')
+                                            "
+                                            placement="top"
+                                            v-if="key != 0"
+                                            :key="value"
+                                        >
+                                            <i class="el-icon-question"></i>
+                                        </el-tooltip>
+                                    </el-radio>
+                                </template>
+                            </el-radio-group>
+                        </el-col>
+                        <el-col :span="8" class="vi_div" v-if="item.condition == 'condition_is_first_recharge'">
+                            <el-radio-group v-model="item.firstRecharge">
+                                <template v-for="(value, key) in tableColumns['condition_is_first_recharge'].options">
+                                    <el-radio :key="key" :label="Number(key)" v-if="key != 0">
+                                        {{ value }}
+                                        <el-tooltip
+                                            class="tip-item"
+                                            effect="dark"
+                                            :content="
+                                                key == 1
+                                                    ? LangUtil('已有首次充值的用户')
+                                                    : LangUtil('未有首次充值的用户')
+                                            "
+                                            placement="top"
+                                            v-if="key != 0"
+                                            :key="value"
+                                        >
+                                            <i class="el-icon-question"></i>
+                                        </el-tooltip>
+                                    </el-radio>
+                                </template>
+                            </el-radio-group>
+                        </el-col>
+                        <el-col :span="5" class="vi_div" v-if="item.condition == 'condition_balance'">
+                            <el-select v-model="item.coin" :placeholder="LangUtil('请选择')" filterable>
+                                <el-option
+                                    v-for="(value, key) in tableColumns['condition_balance_options']"
+                                    :key="key"
+                                    :label="value"
+                                    :value="value"
+                                >
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="3" class="vi_div" v-if="item.condition == 'condition_balance'">
+                            <el-select v-model="item.mark" :placeholder="LangUtil('请选择')" filterable disabled>
+                                <el-option
+                                    v-for="(value, key) in tableColumns['mark'].options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="key"
+                                >
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="4" class="vi_div" v-if="item.condition == 'condition_balance'">
+                            <el-input
+                                size="small"
+                                v-model="item.balance"
+                                :placeholder="LangUtil('请输入')"
+                                onkeyup="this.value=(this.value.match(/\d+(.\d{0,3})?/)||[''])[0]"
+                            ></el-input>
+                        </el-col>
                     </el-row>
-                    <el-col :span="8" class="vi_div">
-                        <el-select
-                            v-model="item.condition"
-                            :placeholder="LangUtil('请选择')"
-                            filterable
-                            style="margin-left: 10px; margin-top: 1px;"
-                        >
-                            <el-option
-                                v-for="{ name, key, disabled } in newConditions"
-                                :key="key"
-                                :label="name"
-                                :value="key"
-                                :disabled="disabled"
-                            >
-                            </el-option>
-                        </el-select>
-                    </el-col>
                 </div>
             </el-form-item>
-
-            <el-form-item size="mini" :label="tableColumns['status'].name" prop="status">
+            <!-- <el-form-item size="mini" :label="tableColumns['status'].name" prop="status">
                 <el-switch v-model="form.status" :active-value="1" :inactive-value="98"></el-switch>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item class="dialog-footer">
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">
                     {{ LangUtil("确认保存") }}
@@ -280,6 +357,7 @@ import { BaseInfo } from "@/components/vo/commonVo";
 
 @Component
 export default class PlatPopsDialog extends AbstractView {
+    LangUtil = LangUtil;
     // 权限标识
     unique = unique;
     checkUnique = checkUnique;
@@ -290,11 +368,18 @@ export default class PlatPopsDialog extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
-    LangUtil = LangUtil;
-    private textMap = {
+    start: any = LangUtil("发布时间");
+    end: any = LangUtil("结束时间");
+    to: any = LangUtil("至");
+
+    textMap = {
         update: LangUtil("编辑"),
         create: LangUtil("新增"),
     };
+
+    mounted() {
+        this.onPlatChange();
+    }
 
     @Watch("myProxy.dialogData.bShow")
     private onWatchShow() {
@@ -337,7 +422,13 @@ export default class PlatPopsDialog extends AbstractView {
             languages: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             scenarios_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
-            status: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            time: [
+                {
+                    type: "array",
+                    required: true,
+                    message: this.LangUtil("必须选择"),
+                },
+            ],
         };
     }
 
@@ -362,14 +453,14 @@ export default class PlatPopsDialog extends AbstractView {
     }
 
     onPlatChange() {
+        this.tableColumns.condition_balance_options = this.tableColumns.condition_balance.options[this.form.plat_id];
         if (this.form.type != "3") {
             this.form.type = "";
         }
     }
 
     onTypeChange() {
-        this.form.notice = "";
-        this.form.acitvity = "";
+        this.form.type_bind_id = "";
         if (this.form.type == "1") {
             this.myProxy.onQueryNotice(this.form.plat_id);
         } else if (this.form.type == "2") {
@@ -378,11 +469,11 @@ export default class PlatPopsDialog extends AbstractView {
     }
 
     onNoticeChange() {
-        this.myProxy.onNoticeShow(this.form.notice);
+        this.myProxy.onNoticeShow(this.form.type_bind_id);
     }
 
     onActivityChange() {
-        this.myProxy.onActivityShow(this.form.acitvity);
+        this.myProxy.onActivityShow(this.form.type_bind_id);
     }
 
     // excel 导入
@@ -448,5 +539,8 @@ export default class PlatPopsDialog extends AbstractView {
     font-weight: 700;
     padding: 0 12px 0 0;
     line-height: 28px;
+}
+.vi_div {
+    padding: 0 3px !important;
 }
 </style>

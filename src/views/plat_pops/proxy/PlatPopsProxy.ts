@@ -1,7 +1,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, objectRemoveNull } from "@/core/global/Functions";
+import { formCompared, jsonStringify, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_pops/setting";
 import { MessageBox } from "element-ui";
 import IPlatPopsProxy from "./IPlatPopsProxy";
@@ -59,11 +59,11 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             updated_at: { name: "修改时间", options: [] },
             updated_by: { name: "修改人", options: [] },
             user_tag: { name: '用户标签', options: {} },
-            //
-            ftitle: { name: '前端标题', options: {} },
+            condition_balance_options: { options: {} },
+            subject: { name: '前端标题', options: {} },
             content: { name: '前端内容', options: {} },
-            acitvity: { name: "活动类型", options: {} },
-            notice: { name: "公告类型", options: {} },
+            notice: { name: '公告选项', options: {} },
+            acitvity: { name: '活动选项', options: {} },
             mark: {
                 name: "",
                 options: {
@@ -99,7 +99,7 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
         firstLogin: 1,
         firstRecharge: 2,
         coin: "", //币种
-        mark: 1,
+        mark: "1",
     };
 
     /**弹窗相关数据 */
@@ -111,9 +111,13 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             plat_id: "",
             app_platform: <any>[],
             languages: <any>[],
+            time: <any>[],
+            start_time: "",
+            end_time: "",
             type: "",
-            notice: "",
-            acitvity: "",
+            type_bind_id: "",
+            subject: "",
+            content: "",
             scenarios_type: "",
             range_type_all: 99,
             range_type_user_id: 99,
@@ -123,7 +127,6 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             range_type_channel_id: 99,
             range_channel_ids: "",
             condition: [],
-            status: "",
         },
         formSource: null, // 表单的原始数据
         excelColumnInfo: {
@@ -154,6 +157,38 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
     setDetail(data: any) {
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        this.dialogData.form.time = [this.dialogData.form.start_time, this.dialogData.form.end_time];
+
+        if (this.dialogData.form.type == 3 && data.rules) {
+            this.dialogData.form.subject = data.rules.url;
+            this.dialogData.form.content = data.rules.options;
+        }
+
+        this.tableData.columns.condition_balance_options = this.tableData.columns.condition_balance.options[
+            this.dialogData.form.plat_id
+        ];
+        if (this.dialogData.form.condition_is_first_login) {
+            this.addCondition({
+                firstLogin: this.dialogData.form.condition_is_first_login,
+                condition: "condition_is_first_login",
+            });
+        }
+        if (this.dialogData.form.condition_is_first_recharge) {
+            this.addCondition({
+                condition: "condition_is_first_recharge",
+                firstRecharge: this.dialogData.form.condition_is_first_recharge,
+            });
+        }
+        if (this.dialogData.form.condition_balance) {
+            const condition_balance = this.dialogData.form.condition_balance;
+            for (let i = 0; i < Object.keys(condition_balance).length; i++) {
+                this.addCondition({
+                    condition: "condition_balance",
+                    coin: Object.keys(condition_balance)[i],
+                    balance: Object.values(condition_balance)[i],
+                });
+            }
+        }
     }
 
     setActivityType(data: any) {
@@ -190,7 +225,7 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
-            Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+            this.dialogData.form.condition = [];
             this.sendNotification(HttpType.admin_plat_pops_show, { id: data.id });
         } else {
             this.resetDialogForm();
@@ -206,7 +241,23 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
-            // TODO
+            id: null,
+            plat_id: "",
+            app_platform: <any>[],
+            languages: <any>[],
+            type: "",
+            type_bind_id: "",
+            subject: "",
+            content: "",
+            scenarios_type: "",
+            range_type_all: 99,
+            range_type_user_id: 99,
+            range_user_ids: "",
+            range_type_user_tag_id: 99,
+            range_user_tag_ids: "",
+            range_type_channel_id: 99,
+            range_channel_ids: "",
+            condition: [],
         });
     }
 
@@ -239,9 +290,68 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
 
     /**添加数据 */
     onAdd() {
+        let {
+            plat_id,
+            app_platform,
+            languages,
+            start_time,
+            end_time,
+            type,
+            type_bind_id,
+            subject,
+            content,
+            scenarios_type,
+            range_type_all,
+            range_type_user_id,
+            range_user_ids,
+            range_type_user_tag_id,
+            range_user_tag_ids,
+            range_type_channel_id,
+            range_channel_ids,
+        } = this.dialogData.form;
         const formCopy: any = {
-            // TODO
+            plat_id,
+            app_platform: jsonStringify(app_platform),
+            languages: jsonStringify(languages),
+            start_time,
+            end_time,
+            type,
+            type_bind_id,
+            scenarios_type,
+            range_type_all,
+            range_type_user_id,
+            range_user_ids,
+            range_type_user_tag_id,
+            range_user_tag_ids,
+            range_type_channel_id,
+            range_channel_ids,
         };
+
+        formCopy.start_time = this.dialogData.form.time[0];
+        formCopy.end_time = this.dialogData.form.time[1];
+        formCopy.rule = JSON.stringify({ url: subject, options: content });
+        formCopy.condition_balance = {};
+        // @ts-ignore
+        this.dialogData.form.condition.forEach(element => {
+            if (element.condition == "condition_is_first_login") {
+                // 用户首次登录
+                formCopy.condition_is_first_login = element.firstLogin;
+            } else if (element.condition == "condition_is_first_recharge") {
+                // 用户首次充值
+                formCopy.condition_is_first_recharge = element.firstRecharge;
+            } else if (element.condition == "condition_balance") {
+                // 用户首次充值
+                if (element.balance) {
+                    formCopy.condition_balance[element.coin] = element.balance;
+                }
+            }
+        });
+        if (Object.keys(formCopy.condition_balance).length > 0) {
+            formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
+        } else {
+            delete formCopy.condition_balance;
+        }
+        delete formCopy.condition;
         this.sendNotification(HttpType.admin_plat_pops_store, objectRemoveNull(formCopy));
     }
 

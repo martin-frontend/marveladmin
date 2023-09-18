@@ -57,16 +57,11 @@
             </el-table-column>
             <el-table-column :label="LangUtil('操作')" class-name="status-col" width="300px">
                 <template slot-scope="{ row }">
-                    <el-button size="mini" type="primary" @click="handlerCopy">
+                    <el-button size="mini" type="primary" @click="handlerCopy(row)">
                         {{ LangUtil("复制") }}
                     </el-button>
                     <el-button size="mini" type="primary" @click="handleEdit(row)">{{ LangUtil("编辑") }}</el-button>
-                    <el-button
-                        size="mini"
-                        type="danger"
-                        @click="handlerRevertItem(row, 99)"
-                        v-if="row.status == 1 || row.status == 2"
-                    >
+                    <el-button size="mini" type="danger" @click="handlerRevertItem(row, 99)" v-if="row.status == 21">
                         {{ LangUtil("撤销") }}
                     </el-button>
                     <el-button size="mini" type="danger" @click="handlerDelete(row)">{{ LangUtil("删除") }}</el-button>
@@ -162,7 +157,7 @@ export default class PlatPopsBody extends AbstractView {
         this.myProxy.onRemoveItem();
     }
 
-    onCopyModule(data: any) {
+    handlerCopy(data: any) {
         this.myProxy.showCopyDialog(DialogStatus.create, data);
     }
 
