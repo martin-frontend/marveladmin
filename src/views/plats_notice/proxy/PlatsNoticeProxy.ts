@@ -37,6 +37,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             created_by: { name: "创建人", options: {} },
             data_belong: { name: "数据归属标记", options: {} },
             end_time: { name: "结束时间", options: {} },
+            extends: { name: '配置参数', options: {} },
             id: { name: "公告ID", options: {} },
             img_uris: { name: "公告图片", options: {} },
             index_no: { name: "排序序号", options: {} },
@@ -134,6 +135,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             condition: [],
             other_param: {}, //跳转到游戏的参数
             isNeedOtherParam: false,
+            extends: {},
         },
         excelColumnInfo: {
             channel_id: { name: "channel_id", options: {} },
@@ -201,7 +203,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                 console.log(" 转换之后的JSONwei ", data.other_param);
             }
         }
-
+        data.extends = jsonToObject(data.extends);
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
         // Object.assign(this.dialogData.form.other_param, data.other_param);
@@ -307,6 +309,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             condition: [],
             other_param: {},
             isNeedOtherParam: false,
+            extends: {},
         });
     }
 
@@ -426,7 +429,17 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         }
         delete formCopy.condition;
         // console.log("添加的数据为", formCopy);
-        this.sendNotification(HttpType.admin_plats_notice_store, objectRemoveNull(formCopy));
+        formCopy.extends = JSON.stringify(formCopy.extends);
+        try {
+            let extendsStr: any = "{}";
+            if (Object.keys(this.dialogData.form.extends).length > 0) {
+                extendsStr = JSON.stringify(JSON.parse(this.dialogData.form.extends));
+            }
+            formCopy.extends = extendsStr;
+            this.sendNotification(HttpType.admin_plats_notice_store, objectRemoveNull(formCopy));
+        } catch (error) {
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
+        }
     }
 
     /**更新数据 */
@@ -490,6 +503,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         formCopy.condition_is_first_login = 0;
         formCopy.condition_is_first_recharge = 0;
         formCopy.condition_is_login = 0;
+
         formCopy.condition_balance = "";
         if (this.dialogData.form.type_position == 15) {
             formCopy.condition_balance = {};
@@ -518,7 +532,29 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         }
         delete formCopy.condition;
 
-        this.sendNotification(HttpType.admin_plats_notice_update, formCopy);
+        formCopy.extends = JSON.stringify(formCopy.extends);
+        try {
+            formCopy.extends = JSON.parse(formCopy.extends);
+            const temp = formCompared(formCopy, this.dialogData.formSource);
+            // 如果没有修改，就直接关闭弹窗
+            if (Object.keys(temp).length == 0) {
+                this.dialogData.bShow = false;
+                return false;
+            }
+
+            let extendsStr: any = "{}";
+            if (temp.extends) {
+                if (Object.keys(temp.extends).length > 0) {
+                    extendsStr = JSON.stringify(JSON.parse(temp.extends));
+                }
+                temp.extends = extendsStr;
+            }
+
+            temp.plat_id = this.dialogData.form.plat_id;
+            this.sendNotification(HttpType.admin_plats_notice_update, formCopy);
+        } catch (error) {
+            MessageBox.alert(<string>LangUtil("json格式不正确"));
+        }
     }
 
     /**删除数据 */
@@ -531,7 +567,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
             .then(() => {
                 this.sendNotification(HttpType.admin_plats_notice_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     onRemoveItem() {
@@ -544,7 +580,7 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
                 this.tableCtrlData.opt = null;
                 this.onUpdate(true);
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**图片上传 */
