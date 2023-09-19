@@ -1548,6 +1548,7 @@ export default class PlatActivityDialog extends AbstractView {
             remove_user: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             remove_agent_user_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             remove_agent_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            remove_channel: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
