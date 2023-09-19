@@ -222,13 +222,13 @@ const layoutRouter = {
             name: "活动规则配置",
             component: () => import(/* webpackChunkName: "plat_activity_rule" */"@/views/plat_activity_rule/view/PlatActivityRule.vue")
         },        {
-            path: "plat_activity_statistic_ball",
-            name: "彩球统计",
-            component: () => import(/* webpackChunkName: "plat_activity_statistic_ball" */"@/views/plat_activity_statistic_ball/view/PlatActivityStatisticBall.vue")
-        },        {
             path: "plat_activity_statistic",
             name: "活动统计",
             component: () => import(/* webpackChunkName: "plat_activity_statistic" */"@/views/plat_activity_statistic/view/PlatActivityStatistic.vue")
+        },        {
+            path: "plat_activity_statistic_ball",
+            name: "彩球统计",
+            component: () => import(/* webpackChunkName: "plat_activity_statistic_ball" */"@/views/plat_activity_statistic_ball/view/PlatActivityStatisticBall.vue")
         },        {
             path: "plat_agent",
             name: "平台代理配置",
@@ -325,6 +325,10 @@ const layoutRouter = {
             path: "plat_message",
             name: "消息系统",
             component: () => import(/* webpackChunkName: "plat_message" */"@/views/plat_message/view/PlatMessage.vue")
+        },        {
+            path: "plat_pops",
+            name: "弹窗管理",
+            component: () => import(/* webpackChunkName: "plat_pops" */"@/views/plat_pops/view/PlatPops.vue")
         },        {
             path: "plat_register_same_ip_log",
             name: "同IP注册用户风控",
