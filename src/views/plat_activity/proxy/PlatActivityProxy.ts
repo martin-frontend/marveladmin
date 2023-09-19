@@ -212,6 +212,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         excelColumnInfo: {
             userid: { name: "userid", options: {} },
         },
+        excelChannelColumnInfo: {
+            channelid: { name: "channelid", options: {} },
+        },
         conditionForm: JSON.parse(JSON.stringify(this.conditionDefaultForm)),
         activityModelList: [],
         formSource: <any>null, // 表单的原始数据
@@ -409,29 +412,29 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         }
         this.dialogData.conditionForm.remove_tag = removeTagArr;
         // 指定渠道
-        const assignChannelArr: any = [];
-        if (data.assign_channel) {
-            const arr = data.assign_channel.split(",");
-            // @ts-ignore
-            arr.forEach(tag => {
-                if (this.dialogData.columns.assign_channel.options[data.plat_id][Number(tag)]) {
-                    assignChannelArr.push(tag);
-                }
-            });
-        }
-        this.dialogData.conditionForm.assign_channel = assignChannelArr;
-        // 指定渠道
-        const removeChannelArr: any = [];
-        if (data.remove_channel) {
-            const arr = data.remove_channel.split(",");
-            // @ts-ignore
-            arr.forEach(tag => {
-                if (this.dialogData.columns.assign_channel.options[data.plat_id][Number(tag)]) {
-                    removeChannelArr.push(tag);
-                }
-            });
-        }
-        this.dialogData.conditionForm.remove_channel = removeChannelArr;
+        // const assignChannelArr: any = [];
+        // if (data.assign_channel) {
+        //     const arr = data.assign_channel.split(",");
+        //     // @ts-ignore
+        //     arr.forEach(tag => {
+        //         if (this.dialogData.columns.assign_channel.options[data.plat_id][Number(tag)]) {
+        //             assignChannelArr.push(tag);
+        //         }
+        //     });
+        // }
+        // this.dialogData.conditionForm.assign_channel = assignChannelArr;
+        // 排除渠道
+        // const removeChannelArr: any = [];
+        // if (data.remove_channel) {
+        //     const arr = data.remove_channel.split(",");
+        //     // @ts-ignore
+        //     arr.forEach(tag => {
+        //         if (this.dialogData.columns.assign_channel.options[data.plat_id][Number(tag)]) {
+        //             removeChannelArr.push(tag);
+        //         }
+        //     });
+        // }
+        // this.dialogData.conditionForm.remove_channel = removeChannelArr;
     }
 
     setBallAwardData(data: any) {
@@ -794,26 +797,62 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
             return;
         }
+        if (this.dialogData.conditionForm.assign_user.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("指定用户超过最大上限[100]"));
+            return;
+        }
+        if (this.dialogData.conditionForm.assign_agent_user_id.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("指定代理超过最大上限[100]"));
+            return;
+        }
+        if (this.dialogData.conditionForm.remove_user.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("排除用户超过最大上限[100]"));
+            return;
+        }
+        if (this.dialogData.conditionForm.remove_agent_user_id.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("排除代理超过最大上限[100]"));
+            return;
+        }
+        if (this.dialogData.conditionForm.assign_channel.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("指定渠道超过最大上限[100]"));
+            return;
+        }
+        if (this.dialogData.conditionForm.remove_channel.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("排除渠道超过最大上限[100]"));
+            return;
+        }
         if (this.dialogData.conditionForm.assign_is_tag == true && this.dialogData.conditionForm.assign_tag == "") {
             this.editTabsActivity = "condition";
             MessageBox.alert(<any>LangUtil("指定标签必须选择"));
             return;
-        }
-        if (this.dialogData.conditionForm.assign_is_channel == true && this.dialogData.conditionForm.assign_channel == "") {
-            this.editTabsActivity = "condition";
-            MessageBox.alert(<any>LangUtil("指定渠道必须选择"));
+        } else if (this.dialogData.conditionForm.assign_tag.length > 100) {
+            MessageBox.alert(<any>LangUtil("指定标签超过最大上限[100]"));
             return;
         }
+        // if (this.dialogData.conditionForm.assign_is_channel == true && this.dialogData.conditionForm.assign_channel == "") {
+        //     this.editTabsActivity = "condition";
+        //     MessageBox.alert(<any>LangUtil("指定渠道必须选择"));
+        //     return;
+        // } else if (this.dialogData.conditionForm.assign_channel.length > 100) {
+        //     MessageBox.alert(<any>LangUtil("指定渠道超过最大上限[100]"));
+        //     return;
+        // }
         if (this.dialogData.conditionForm.remove_is_tag == true && this.dialogData.conditionForm.remove_tag == "") {
             this.editTabsActivity = "condition";
             MessageBox.alert(<any>LangUtil("排除标签必须选择"));
             return;
-        }
-        if (this.dialogData.conditionForm.remove_is_channel == true && this.dialogData.conditionForm.remove_channel == "") {
-            this.editTabsActivity = "condition";
-            MessageBox.alert(<any>LangUtil("排除渠道必须选择"));
+        } else if (this.dialogData.conditionForm.remove_tag.length > 100) {
+            MessageBox.alert(<any>LangUtil("排除标签超过最大上限[100]"));
             return;
         }
+        // if (this.dialogData.conditionForm.remove_is_channel == true && this.dialogData.conditionForm.remove_channel == "") {
+        //     this.editTabsActivity = "condition";
+        //     MessageBox.alert(<any>LangUtil("排除渠道必须选择"));
+        //     return;
+        // } else if (this.dialogData.conditionForm.remove_channel.length > 100) {
+        //     MessageBox.alert(<any>LangUtil("排除渠道超过最大上限[100]"));
+        //     return;
+        // }
         MessageBox.confirm(<string>LangUtil("发布以后活动数据不能修改，确定发布"), <string>LangUtil("提示"), {
             confirmButtonText: <string>LangUtil("确定"),
             cancelButtonText: <string>LangUtil("取消"),
@@ -949,26 +988,62 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
             return;
         }
+        if (this.dialogData.conditionForm.assign_user.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("指定用户超过最大上限[100]"));
+            return;
+        }
+        if (this.dialogData.conditionForm.assign_agent_user_id.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("指定代理超过最大上限[100]"));
+            return;
+        }
+        if (this.dialogData.conditionForm.remove_user.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("排除用户超过最大上限[100]"));
+            return;
+        }
+        if (this.dialogData.conditionForm.remove_agent_user_id.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("排除代理超过最大上限[100]"));
+            return;
+        }
+        if (this.dialogData.conditionForm.assign_channel.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("指定渠道超过最大上限[100]"));
+            return;
+        }
+        if (this.dialogData.conditionForm.remove_channel.split(",").length > 100) {
+            MessageBox.alert(<any>LangUtil("排除渠道超过最大上限[100]"));
+            return;
+        }
         if (this.dialogData.conditionForm.assign_is_tag == true && this.dialogData.conditionForm.assign_tag == "") {
             this.editTabsActivity = "condition";
             MessageBox.alert(<any>LangUtil("指定标签必须选择"));
             return;
-        }
-        if (this.dialogData.conditionForm.assign_is_channel == true && this.dialogData.conditionForm.assign_channel == "") {
-            this.editTabsActivity = "condition";
-            MessageBox.alert(<any>LangUtil("指定渠道必须选择"));
+        } else if (this.dialogData.conditionForm.assign_tag.length > 100) {
+            MessageBox.alert(<any>LangUtil("指定标签超过最大上限[100]"));
             return;
         }
+        // if (this.dialogData.conditionForm.assign_is_channel == true && this.dialogData.conditionForm.assign_channel == "") {
+        //     this.editTabsActivity = "condition";
+        //     MessageBox.alert(<any>LangUtil("指定渠道必须选择"));
+        //     return;
+        // } else if (this.dialogData.conditionForm.assign_channel.length > 100) {
+        //     MessageBox.alert(<any>LangUtil("指定渠道超过最大上限[100]"));
+        //     return;
+        // }
         if (this.dialogData.conditionForm.remove_is_tag == true && this.dialogData.conditionForm.remove_tag == "") {
             this.editTabsActivity = "condition";
             MessageBox.alert(<any>LangUtil("排除标签必须选择"));
             return;
-        }
-        if (this.dialogData.conditionForm.remove_is_channel == true && this.dialogData.conditionForm.remove_channel == "") {
-            this.editTabsActivity = "condition";
-            MessageBox.alert(<any>LangUtil("排除渠道必须选择"));
+        } else if (this.dialogData.conditionForm.remove_tag.length > 100) {
+            MessageBox.alert(<any>LangUtil("排除标签超过最大上限[100]"));
             return;
         }
+        // if (this.dialogData.conditionForm.remove_is_channel == true && this.dialogData.conditionForm.remove_channel == "") {
+        //     this.editTabsActivity = "condition";
+        //     MessageBox.alert(<any>LangUtil("排除渠道必须选择"));
+        //     return;
+        // } else if (this.dialogData.conditionForm.remove_channel.length > 100) {
+        //     MessageBox.alert(<any>LangUtil("排除渠道超过最大上限[100]"));
+        //     return;
+        // }
         // 发送消息
         this.sendNotification(HttpType.admin_plat_activity_update, formCopy);
         this.onUpdateCondition(this.dialogData.form.id);

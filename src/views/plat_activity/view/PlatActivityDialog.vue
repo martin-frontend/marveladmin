@@ -886,7 +886,7 @@
                             :startDate.sync="dialogForm.register_start_time"
                             :endDate.sync="dialogForm.register_end_time"
                             :isNeedTitle="false"
-                            :pickerOptions="timeoptions"
+                            :pickerOptions="conditionOptions"
                             :showTime="false"
                         />
                     </el-form-item>
@@ -912,7 +912,11 @@
                         class="display_felx"
                         label-width="230px"
                     >
-                        <el-checkbox v-model="dialogForm.assign_is_user">{{ LangUtil("是") }}</el-checkbox>
+                        <el-checkbox
+                            v-model="dialogForm.assign_is_user"
+                            @change="onChangeAssignUser(dialogForm.assign_is_user)"
+                            >{{ LangUtil("是") }}</el-checkbox
+                        >
                         <el-form-item
                             size="mini"
                             :label="dialogColumns['assign_user'].name"
@@ -958,7 +962,11 @@
                         label-width="230px"
                     >
                         <div style="display: flex;">
-                            <el-checkbox v-model="dialogForm.assign_is_agent">{{ LangUtil("是") }}</el-checkbox>
+                            <el-checkbox
+                                v-model="dialogForm.assign_is_agent"
+                                @change="onChangeAssignAgent(dialogForm.assign_is_agent)"
+                                >{{ LangUtil("是") }}</el-checkbox
+                            >
                             <div>
                                 <el-form-item
                                     size="mini"
@@ -1046,10 +1054,15 @@
                         size="mini"
                         :label="dialogColumns['assign_is_channel'].name"
                         prop="assign_is_channel"
+                        class="display_felx"
                         label-width="230px"
                     >
-                        <el-checkbox v-model="dialogForm.assign_is_channel">{{ LangUtil("是") }}</el-checkbox>
-                        <el-select
+                        <el-checkbox
+                            v-model="dialogForm.assign_is_channel"
+                            @change="onChangeAssignChannel(dialogForm.assign_is_channel)"
+                            >{{ LangUtil("是") }}</el-checkbox
+                        >
+                        <!-- <el-select
                             v-model="dialogForm.assign_channel"
                             multiple
                             filterable
@@ -1064,7 +1077,43 @@
                                 :value="key"
                             >
                             </el-option>
-                        </el-select>
+                        </el-select> -->
+                        <el-form-item
+                            size="mini"
+                            :label="dialogColumns['assign_channel'].name"
+                            v-if="dialogForm.assign_is_channel == 1"
+                            class="display"
+                            prop="assign_channel"
+                        >
+                            <div class="send_users">
+                                <el-input
+                                    size="medium"
+                                    filterable
+                                    clearable
+                                    :placeholder="LangUtil('请输入单个或多个渠道')"
+                                    v-model.trim="dialogForm.assign_channel"
+                                    oninput="value=value.replace(/[^\d,]/g,'')"
+                                    style="margin-right: 0.8rem"
+                                ></el-input>
+                                <input
+                                    v-show="false"
+                                    ref="excel-upload-input-channel"
+                                    class="excel-upload-input-channel"
+                                    type="file"
+                                    accept=".xlsx, .xls"
+                                    @change="handleClickAssignChannel"
+                                />
+                                <el-button @click="onImportChannel" type="primary" icon="">
+                                    {{ LangUtil("导入渠道") }}
+                                </el-button>
+                                <el-button @click="onLoadChannelModule" type="primary" icon="">
+                                    {{ LangUtil("下载渠道模版") }}
+                                </el-button>
+                            </div>
+                            <div class="mark_font">
+                                {{ LangUtil("渠道ID, 多个渠道使用英文逗号", "区分") }}
+                            </div>
+                        </el-form-item>
                     </el-form-item>
                     <!-- 排除用户 -->
                     <el-form-item size="mini" :label="LangUtil('排除用户')"> </el-form-item>
@@ -1075,7 +1124,11 @@
                         class="display_felx"
                         label-width="230px"
                     >
-                        <el-checkbox v-model="dialogForm.remove_is_user">{{ LangUtil("是") }}</el-checkbox>
+                        <el-checkbox
+                            v-model="dialogForm.remove_is_user"
+                            @change="onChangeRemoveUser(dialogForm.remove_is_user)"
+                            >{{ LangUtil("是") }}</el-checkbox
+                        >
                         <el-form-item
                             size="mini"
                             :label="dialogColumns['remove_user'].name"
@@ -1122,7 +1175,11 @@
                         label-width="230px"
                     >
                         <div style="display: flex;">
-                            <el-checkbox v-model="dialogForm.remove_is_agent">{{ LangUtil("是") }}</el-checkbox>
+                            <el-checkbox
+                                v-model="dialogForm.remove_is_agent"
+                                @change="onChangeRemoveAgent(dialogForm.remove_is_agent)"
+                                >{{ LangUtil("是") }}</el-checkbox
+                            >
                             <div>
                                 <el-form-item
                                     size="mini"
@@ -1212,8 +1269,12 @@
                         prop="remove_is_channel"
                         label-width="230px"
                     >
-                        <el-checkbox v-model="dialogForm.remove_is_channel">{{ LangUtil("是") }}</el-checkbox>
-                        <el-select
+                        <el-checkbox
+                            v-model="dialogForm.remove_is_channel"
+                            @change="onChangeRemoveChannel(dialogForm.remove_is_channel)"
+                            >{{ LangUtil("是") }}</el-checkbox
+                        >
+                        <!-- <el-select
                             v-model="dialogForm.remove_channel"
                             multiple
                             filterable
@@ -1228,7 +1289,43 @@
                                 :value="key"
                             >
                             </el-option>
-                        </el-select>
+                        </el-select> -->
+                        <el-form-item
+                            size="mini"
+                            :label="dialogColumns['remove_channel'].name"
+                            v-if="dialogForm.remove_is_channel == 1"
+                            class="display"
+                            prop="remove_channel"
+                        >
+                            <div class="send_users">
+                                <el-input
+                                    size="medium"
+                                    filterable
+                                    clearable
+                                    :placeholder="LangUtil('请输入单个或多个渠道')"
+                                    v-model.trim="dialogForm.remove_channel"
+                                    oninput="value=value.replace(/[^\d,]/g,'')"
+                                    style="margin-right: 0.8rem"
+                                ></el-input>
+                                <input
+                                    v-show="false"
+                                    ref="excel-upload-remove-channel"
+                                    class="excel-upload-remove-channel"
+                                    type="file"
+                                    accept=".xlsx, .xls"
+                                    @change="handleClickRemoveChannel"
+                                />
+                                <el-button @click="onImportRemoveChannel" type="primary" icon="">
+                                    {{ LangUtil("导入渠道") }}
+                                </el-button>
+                                <el-button @click="onLoadChannelModule" type="primary" icon="">
+                                    {{ LangUtil("下载渠道模版") }}
+                                </el-button>
+                            </div>
+                            <div class="mark_font">
+                                {{ LangUtil("渠道ID, 多个渠道使用英文逗号", "区分") }}
+                            </div>
+                        </el-form-item>
                     </el-form-item>
                     <!-- 用户参与条件 -->
                     <el-form-item size="mini" :label="LangUtil('用户参与条件')"> </el-form-item>
@@ -1446,6 +1543,7 @@ export default class PlatActivityDialog extends AbstractView {
             register_time_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             assign_agent_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             assign_user: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            assign_channel: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             assign_agent_user_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             remove_user: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             remove_agent_user_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
@@ -1652,18 +1750,22 @@ export default class PlatActivityDialog extends AbstractView {
         data.key = this.myProxy.dialogData.form.link_url;
         this.langTinymceProxy.showDialog(data);
     }
+
     /** 添加每日返水  */
     onAddDailyRatio() {
         console.log("点击添加");
         this.form.daily_ratio.push(0);
     }
+
     onDeleteDailyRatio() {
         console.log("点击删除");
         this.form.daily_ratio.pop();
     }
+
     handleAddVendor() {
         this.myProxy.showVendorDialog();
     }
+
     handleDeleteVendor(i: any) {
         this.form.vendorArr.splice(i, 1);
     }
@@ -1722,6 +1824,34 @@ export default class PlatActivityDialog extends AbstractView {
     converCoinName(coinKey: any) {
         return this.tableColumns.activity_coin.options[this.myProxy.listQuery.plat_id][coinKey];
     }
+    conditionOptions = {
+        shortcuts: [
+            {
+                text: LangUtil("最近一周"),
+                onClick(picker: any) {
+                    const start = getTodayOffset(-6);
+                    const end = getTodayOffset(1, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+            {
+                text: LangUtil("最近一个月"),
+                onClick(picker: any) {
+                    const start = getTodayOffset(-30);
+                    const end = getTodayOffset(1, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+            {
+                text: "最近一年",
+                onClick(picker: any) {
+                    const start = getTodayOffset(-365);
+                    const end = getTodayOffset(1, 1);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+        ],
+    };
 
     // excel 导入
     async handleClick(e: any) {
@@ -1767,8 +1897,8 @@ export default class PlatActivityDialog extends AbstractView {
     }
 
     // 汇入用户excel
-    onImportRemoveAgent() {
-        (this.$refs["excel-upload-input-remove-agent"] as any).click();
+    onImportRemoveUser() {
+        (this.$refs["excel-upload-input-remove-user"] as any).click();
     }
 
     // excel 导入
@@ -1783,8 +1913,48 @@ export default class PlatActivityDialog extends AbstractView {
     }
 
     // 汇入用户excel
-    onImportRemoveUser() {
-        (this.$refs["excel-upload-input-remove-user"] as any).click();
+    onImportRemoveAgent() {
+        (this.$refs["excel-upload-input-remove-agent"] as any).click();
+    }
+
+    // excel 导入
+    async handleClickAssignChannel(e: any) {
+        const files = e.target.files;
+        const rawFile = files[0];
+        if (!rawFile) return;
+        (this.$refs["excel-upload-input-channel"] as any).value = null;
+        const excel: any = await readerData(rawFile);
+        let channelList = removeRepeatStr(
+            excel.results,
+            this.myProxy.dialogData.excelChannelColumnInfo.channelid.name,
+            ","
+        );
+        this.dialogForm.assign_channel = channelList;
+    }
+
+    // 汇入渠道excel
+    onImportChannel() {
+        (this.$refs["excel-upload-input-channel"] as any).click();
+    }
+
+    // excel 导入
+    async handleClickRemoveChannel(e: any) {
+        const files = e.target.files;
+        const rawFile = files[0];
+        if (!rawFile) return;
+        (this.$refs["excel-upload-remove-channel"] as any).value = null;
+        const excel: any = await readerData(rawFile);
+        let channelList = removeRepeatStr(
+            excel.results,
+            this.myProxy.dialogData.excelChannelColumnInfo.channelid.name,
+            ","
+        );
+        this.dialogForm.remove_channel = channelList;
+    }
+
+    // 汇入渠道excel
+    onImportRemoveChannel() {
+        (this.$refs["excel-upload-remove-channel"] as any).click();
     }
 
     // 载入模组
@@ -1797,6 +1967,53 @@ export default class PlatActivityDialog extends AbstractView {
             [],
             []
         );
+    }
+
+    onLoadChannelModule() {
+        let channelTemplate: any = this.LangUtil("渠道模版");
+        new BaseInfo.ExportExcel(
+            `【` + channelTemplate + `】${this.curTime}`,
+            [],
+            this.myProxy.dialogData.excelChannelColumnInfo,
+            [],
+            []
+        );
+    }
+
+    onChangeAssignUser(type: any) {
+        if (!type) {
+            this.dialogForm.assign_user = "";
+        }
+    }
+
+    onChangeAssignAgent(type: any) {
+        if (!type) {
+            this.dialogForm.assign_agent_user_id = "";
+        }
+    }
+
+    onChangeAssignChannel(type: any) {
+        if (!type) {
+            this.dialogForm.assign_channel = "";
+        }
+    }
+
+    onChangeRemoveUser(type: any) {
+        if (!type) {
+            this.dialogForm.remove_user = "";
+        }
+    }
+
+    onChangeRemoveAgent(type: any) {
+        if (!type) {
+            this.dialogForm.remove_agent_user_id = "";
+        }
+    }
+
+    onChangeRemoveChannel(type: any) {
+        if (!type) {
+            this.dialogForm.remove_channel = "";
+        }
     }
 }
 </script>
