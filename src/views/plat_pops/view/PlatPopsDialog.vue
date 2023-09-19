@@ -48,7 +48,7 @@
                     class="select"
                     placeholder="请选择"
                     @change="onTypeChange"
-                    :disabled="form.plat_id == ''"
+                    :disabled="form.plat_id == '' || isStatusUpdate"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns['type'].options"
@@ -65,6 +65,7 @@
                     style="margin-left: 20px;"
                     @change="onNoticeChange"
                     v-if="form.type == 1"
+                    :disabled="isStatusUpdate"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns['notice'].options"
@@ -81,6 +82,7 @@
                     style="margin-left: 20px;"
                     @change="onActivityChange"
                     v-if="form.type == 2"
+                    :disabled="isStatusUpdate"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns['acitvity'].options"
@@ -122,7 +124,8 @@
             </div>
             <!-- 参与用户 -->
             <el-form-item size="mini" :label="LangUtil('全部用户')" prop="assign_is_all" label-width="200px">
-                <el-checkbox v-model="form.range_type_all" :true-label="1" :false-label="99"> </el-checkbox>
+                <el-checkbox v-model="form.range_type_all" :true-label="1" :false-label="99" @change="onSelectAll">
+                </el-checkbox>
             </el-form-item>
             <!-- 指定用户 -->
             <el-form-item
@@ -132,7 +135,13 @@
                 class="display_felx"
                 label-width="200px"
             >
-                <el-checkbox v-model="form.range_type_user_id" :true-label="1" :false-label="99"> </el-checkbox>
+                <el-checkbox
+                    v-model="form.range_type_user_id"
+                    :true-label="1"
+                    :false-label="99"
+                    :disabled="form.range_type_all == 1"
+                >
+                </el-checkbox>
                 <el-form-item
                     size="mini"
                     :label="LangUtil('用户ID')"
@@ -177,7 +186,13 @@
                 prop="range_type_user_tag_id"
                 label-width="200px"
             >
-                <el-checkbox v-model="form.range_type_user_tag_id" :true-label="1" :false-label="99"> </el-checkbox>
+                <el-checkbox
+                    v-model="form.range_type_user_tag_id"
+                    :true-label="1"
+                    :false-label="99"
+                    :disabled="form.range_type_all == 1"
+                >
+                </el-checkbox>
                 <el-select
                     v-model="form.range_user_tag_ids"
                     multiple
@@ -201,7 +216,13 @@
                 prop="range_type_channel_id"
                 label-width="200px"
             >
-                <el-checkbox v-model="form.range_type_channel_id" :true-label="1" :false-label="99"> </el-checkbox>
+                <el-checkbox
+                    v-model="form.range_type_channel_id"
+                    :true-label="1"
+                    :false-label="99"
+                    :disabled="form.range_type_all == 1"
+                >
+                </el-checkbox>
                 <el-select
                     v-model="form.range_channel_ids"
                     multiple
@@ -474,6 +495,17 @@ export default class PlatPopsDialog extends AbstractView {
 
     onActivityChange() {
         this.myProxy.onActivityShow(this.form.type_bind_id);
+    }
+
+    onSelectAll() {
+        if (this.form.range_type_all == 1) {
+            this.form.range_type_user_id = 99;
+            this.form.range_user_ids = "";
+            this.form.range_type_user_tag_id = 99;
+            this.form.range_user_tag_ids = "";
+            this.form.range_type_channel_id = 99;
+            this.form.range_channel_ids = "";
+        }
     }
 
     // excel 导入

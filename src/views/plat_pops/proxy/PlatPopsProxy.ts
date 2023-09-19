@@ -157,6 +157,13 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
     setDetail(data: any) {
         this.dialogData.formSource = data;
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        if (this.dialogData.form.type == 1) {
+            this.onQueryNotice(this.dialogData.form.plat_id);
+        }
+        if (this.dialogData.form.type == 2) {
+            this.onQueryActivity(this.dialogData.form.plat_id);
+        }
+
         this.dialogData.form.time = [this.dialogData.form.start_time, this.dialogData.form.end_time];
 
         if (this.dialogData.form.type == 3 && data.rules) {
@@ -188,6 +195,9 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
                     balance: Object.values(condition_balance)[i],
                 });
             }
+        }
+        if (this.dialogData.status == DialogStatus.create) {
+            this.dialogData.form.type_bind_id = "";
         }
     }
 
@@ -258,6 +268,9 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             range_type_channel_id: 99,
             range_channel_ids: "",
             condition: [],
+            start_time: "",
+            end_time: "",
+            time: [],
         });
     }
 
@@ -326,10 +339,19 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             range_type_channel_id,
             range_channel_ids,
         };
+        if (this.dialogData.form.range_type_all == 99 &&
+            this.dialogData.form.range_type_user_id == 99 &&
+            this.dialogData.form.range_type_user_tag_id == 99 &&
+            this.dialogData.form.range_type_channel_id == 99) {
+            MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
+            return;
+        }
 
         formCopy.start_time = this.dialogData.form.time[0];
         formCopy.end_time = this.dialogData.form.time[1];
-        formCopy.rule = JSON.stringify({ url: subject, options: content });
+        if (formCopy.type == 3) {
+            formCopy.rules = JSON.stringify({ url: subject, options: content });
+        }
         formCopy.condition_balance = {};
         // @ts-ignore
         this.dialogData.form.condition.forEach(element => {
@@ -352,22 +374,63 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             delete formCopy.condition_balance;
         }
         delete formCopy.condition;
+        delete formCopy.time;
+        delete formCopy.subject;
+        delete formCopy.content;
         this.sendNotification(HttpType.admin_plat_pops_store, objectRemoveNull(formCopy));
     }
 
     /**更新数据 */
     onUpdate(fromTable = false) {
-        const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
-        // 删除多余无法去除的参数
-        // TODO
-        // 如果没有修改，就直接关闭弹窗
-        if (Object.keys(formCopy).length == 0) {
-            this.dialogData.bShow = false;
+        let formCopy: any = null;
+        if (fromTable) {
+            formCopy = objectRemoveNull(this.tableData.orderData);
+        } else {
+            // 删除多余无法去除的参数
+            formCopy = formCompared(this.dialogData.form, this.dialogData.formSource);
+            // 如果没有修改，就直接关闭弹窗
+            if (Object.keys(formCopy).length == 0) {
+                this.dialogData.bShow = false;
+                return;
+            }
+            // 添加必填参数
+            formCopy.id = this.dialogData.form.id;
+            // 发送消息
+        }
+        formCopy.condition_balance = {};
+        // @ts-ignore
+        this.dialogData.form.condition.forEach(element => {
+            if (element.condition == "condition_is_first_login") {
+                // 用户首次登录
+                formCopy.condition_is_first_login = element.firstLogin;
+            } else if (element.condition == "condition_is_first_recharge") {
+                // 用户首次充值
+                formCopy.condition_is_first_recharge = element.firstRecharge;
+            } else if (element.condition == "condition_balance") {
+                // 用户首次充值
+                if (element.balance) {
+                    formCopy.condition_balance[element.coin] = element.balance;
+                }
+            }
+        });
+        if (this.dialogData.form.range_type_all == 99 &&
+            this.dialogData.form.range_type_user_id == 99 &&
+            this.dialogData.form.range_type_user_tag_id == 99 &&
+            this.dialogData.form.range_type_channel_id == 99) {
+            MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
             return;
         }
-        // 添加必填参数
-        // TODO
-        // 发送消息
+        if (Object.keys(formCopy.condition_balance).length > 0) {
+            formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
+        } else {
+            delete formCopy.condition_balance;
+        }
+        delete formCopy.condition;
+        delete formCopy.time;
+        delete formCopy.subject;
+        delete formCopy.content;
+        formCopy.start_time = this.dialogData.form.time[0];
+        formCopy.end_time = this.dialogData.form.time[1];
         this.sendNotification(HttpType.admin_plat_pops_update, formCopy);
     }
 

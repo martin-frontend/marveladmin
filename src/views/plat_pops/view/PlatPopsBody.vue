@@ -61,7 +61,7 @@
                         {{ LangUtil("复制") }}
                     </el-button>
                     <el-button size="mini" type="primary" @click="handleEdit(row)">{{ LangUtil("编辑") }}</el-button>
-                    <el-button size="mini" type="danger" @click="handlerRevertItem(row, 99)" v-if="row.status == 21">
+                    <el-button size="mini" type="warning" @click="handlerRevertItem(row, 99)" v-if="row.status == 21">
                         {{ LangUtil("撤销") }}
                     </el-button>
                     <el-button size="mini" type="danger" @click="handlerDelete(row)">{{ LangUtil("删除") }}</el-button>
