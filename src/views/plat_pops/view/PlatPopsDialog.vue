@@ -23,6 +23,7 @@
                         v-for="(value, key) in tableColumns['app_platform'].options"
                         :key="key"
                         :label="Number(key)"
+                        :disabled="isStatusUpdate"
                     >
                         {{ value }}
                     </el-checkbox>
@@ -30,7 +31,12 @@
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['languages'].name" prop="languages">
                 <el-checkbox-group v-model="form.languages">
-                    <el-checkbox v-for="(value, key) in tableColumns['languages'].options" :key="key" :label="key">
+                    <el-checkbox
+                        v-for="(value, key) in tableColumns['languages'].options"
+                        :key="key"
+                        :label="key"
+                        :disabled="isStatusUpdate"
+                    >
                         {{ value }}
                     </el-checkbox>
                 </el-checkbox-group>
