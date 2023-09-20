@@ -1267,6 +1267,7 @@
                         size="mini"
                         :label="dialogColumns['remove_is_channel'].name"
                         prop="remove_is_channel"
+                        class="display_felx"
                         label-width="230px"
                     >
                         <el-checkbox
