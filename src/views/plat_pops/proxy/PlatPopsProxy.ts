@@ -199,6 +199,32 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
         if (this.dialogData.status == DialogStatus.create) {
             this.dialogData.form.type_bind_id = "";
         }
+
+        // 指定标签
+        const assignTagArr: any = [];
+        if (data.range_user_tag_ids) {
+            const arr = data.range_user_tag_ids.split(",");
+            // @ts-ignore
+            arr.forEach(tag => {
+                if (this.tableData.columns.user_tag.options[data.plat_id][Number(tag)]) {
+                    assignTagArr.push(tag);
+                }
+            });
+        }
+        this.dialogData.form.range_user_tag_ids = assignTagArr;
+        // 指定渠道
+        const assignChannelArr: any = [];
+        if (data.range_channel_ids) {
+            const arr = data.range_channel_ids.split(",");
+            // @ts-ignore
+            arr.forEach(tag => {
+                if (this.tableData.columns.channel_id.options[data.plat_id][Number(tag)]) {
+                    assignChannelArr.push(tag);
+                }
+            });
+        }
+        this.dialogData.form.range_channel_ids = assignChannelArr;
+
     }
 
     setActivityType(data: any) {
@@ -349,6 +375,8 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
 
         formCopy.start_time = this.dialogData.form.time[0];
         formCopy.end_time = this.dialogData.form.time[1];
+        formCopy.range_user_tag_ids = formCopy.range_user_tag_ids.toString();
+        formCopy.range_channel_ids = formCopy.range_channel_ids.toString();
         if (formCopy.type == 3) {
             formCopy.rules = JSON.stringify({ url: subject, options: content });
         }
@@ -395,42 +423,57 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             }
             // 添加必填参数
             formCopy.id = this.dialogData.form.id;
-            // 发送消息
-        }
-        formCopy.condition_balance = {};
-        // @ts-ignore
-        this.dialogData.form.condition.forEach(element => {
-            if (element.condition == "condition_is_first_login") {
-                // 用户首次登录
-                formCopy.condition_is_first_login = element.firstLogin;
-            } else if (element.condition == "condition_is_first_recharge") {
-                // 用户首次充值
-                formCopy.condition_is_first_recharge = element.firstRecharge;
-            } else if (element.condition == "condition_balance") {
-                // 用户首次充值
-                if (element.balance) {
-                    formCopy.condition_balance[element.coin] = element.balance;
-                }
+
+            if (this.dialogData.form.range_type_all == 99 &&
+                this.dialogData.form.range_type_user_id == 99 &&
+                this.dialogData.form.range_type_user_tag_id == 99 &&
+                this.dialogData.form.range_type_channel_id == 99) {
+                MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
+                return;
             }
-        });
-        if (this.dialogData.form.range_type_all == 99 &&
-            this.dialogData.form.range_type_user_id == 99 &&
-            this.dialogData.form.range_type_user_tag_id == 99 &&
-            this.dialogData.form.range_type_channel_id == 99) {
-            MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
-            return;
+            formCopy.range_type_all = this.dialogData.form.range_type_all;
+            formCopy.range_type_user_id = this.dialogData.form.range_type_user_id;
+            formCopy.range_user_ids = this.dialogData.form.range_user_ids;
+            formCopy.range_type_user_tag_id = this.dialogData.form.range_type_user_tag_id;
+            if (formCopy.range_user_tag_ids) {
+                formCopy.range_user_tag_ids = JSON.parse(formCopy.range_user_tag_ids).toString();
+            }
+            formCopy.range_type_channel_id = this.dialogData.form.range_type_channel_id;
+            if (formCopy.range_channel_ids) {
+                formCopy.range_channel_ids = JSON.parse(formCopy.range_channel_ids).toString();
+            }
+            if (this.dialogData.form.type == 3) {
+                formCopy.rules = JSON.stringify({ url: this.dialogData.form.subject, options: this.dialogData.form.content });
+            }
+            formCopy.condition_balance = {};
+            // @ts-ignore
+            this.dialogData.form.condition.forEach(element => {
+                if (element.condition == "condition_is_first_login") {
+                    // 用户首次登录
+                    formCopy.condition_is_first_login = element.firstLogin;
+                } else if (element.condition == "condition_is_first_recharge") {
+                    // 用户首次充值
+                    formCopy.condition_is_first_recharge = element.firstRecharge;
+                } else if (element.condition == "condition_balance") {
+                    // 用户首次充值
+                    if (element.balance) {
+                        formCopy.condition_balance[element.coin] = element.balance;
+                    }
+                }
+            });
+
+            if (Object.keys(formCopy.condition_balance).length > 0) {
+                formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
+            } else {
+                delete formCopy.condition_balance;
+            }
+            delete formCopy.condition;
+            delete formCopy.time;
+            delete formCopy.subject;
+            delete formCopy.content;
+            formCopy.start_time = this.dialogData.form.time[0];
+            formCopy.end_time = this.dialogData.form.time[1];
         }
-        if (Object.keys(formCopy.condition_balance).length > 0) {
-            formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
-        } else {
-            delete formCopy.condition_balance;
-        }
-        delete formCopy.condition;
-        delete formCopy.time;
-        delete formCopy.subject;
-        delete formCopy.content;
-        formCopy.start_time = this.dialogData.form.time[0];
-        formCopy.end_time = this.dialogData.form.time[1];
         this.sendNotification(HttpType.admin_plat_pops_update, formCopy);
     }
 

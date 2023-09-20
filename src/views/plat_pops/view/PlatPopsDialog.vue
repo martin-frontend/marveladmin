@@ -191,6 +191,7 @@
                     :true-label="1"
                     :false-label="99"
                     :disabled="form.range_type_all == 1"
+                    @change="onChangeTag(form.range_type_user_tag_id)"
                 >
                 </el-checkbox>
                 <el-select
@@ -221,6 +222,7 @@
                     :true-label="1"
                     :false-label="99"
                     :disabled="form.range_type_all == 1"
+                    @change="onChangeChannel(form.range_type_channel_id)"
                 >
                 </el-checkbox>
                 <el-select
@@ -538,6 +540,18 @@ export default class PlatPopsDialog extends AbstractView {
 
     deleteCondition(index: any) {
         this.form.condition.splice(index, 1);
+    }
+
+    onChangeTag(type: any) {
+        if (type == 99) {
+            this.form.range_user_tag_ids = "";
+        }
+    }
+
+    onChangeChannel(type: any) {
+        if (type == 99) {
+            this.form.range_channel_ids = "";
+        }
     }
 }
 </script>
