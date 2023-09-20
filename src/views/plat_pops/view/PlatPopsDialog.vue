@@ -2,7 +2,13 @@
     <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow" top="20px">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item :label="`${tableColumns.plat_id.name}`" prop="plat_id">
-                <el-select v-model="form.plat_id" filterable :placeholder="LangUtil('请选择')" @change="onPlatChange">
+                <el-select
+                    v-model="form.plat_id"
+                    filterable
+                    :placeholder="LangUtil('请选择')"
+                    @change="onPlatChange"
+                    :disabled="isStatusUpdate"
+                >
                     <el-option
                         v-for="(value, key) in tableColumns.plat_id.options"
                         :key="key"
@@ -140,6 +146,7 @@
                     :true-label="1"
                     :false-label="99"
                     :disabled="form.range_type_all == 1"
+                    @change="onChangeUser(form.range_type_user_id)"
                 >
                 </el-checkbox>
                 <el-form-item
@@ -540,6 +547,12 @@ export default class PlatPopsDialog extends AbstractView {
 
     deleteCondition(index: any) {
         this.form.condition.splice(index, 1);
+    }
+
+    onChangeUser(type: any) {
+        if (type == 99) {
+            this.form.range_user_ids = "";
+        }
     }
 
     onChangeTag(type: any) {
