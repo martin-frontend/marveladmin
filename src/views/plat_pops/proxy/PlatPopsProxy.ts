@@ -199,9 +199,9 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
                 });
             }
         }
-        if (this.dialogData.status == DialogStatus.create) {
-            this.dialogData.form.type_bind_id = "";
-        }
+        // if (this.dialogData.status == DialogStatus.create) {
+        //     this.dialogData.form.type_bind_id = "";
+        // }
 
         // 指定标签
         const assignTagArr: any = [];
