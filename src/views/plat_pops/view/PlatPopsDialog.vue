@@ -222,6 +222,7 @@
                 size="mini"
                 :label="tableColumns['range_type_channel_id'].name"
                 prop="range_type_channel_id"
+                class="display_felx"
                 label-width="200px"
             >
                 <el-checkbox
@@ -232,7 +233,7 @@
                     @change="onChangeChannel(form.range_type_channel_id)"
                 >
                 </el-checkbox>
-                <el-select
+                <!-- <el-select
                     v-model="form.range_channel_ids"
                     multiple
                     filterable
@@ -247,7 +248,43 @@
                         :value="key"
                     >
                     </el-option>
-                </el-select>
+                </el-select> -->
+                <el-form-item
+                    size="mini"
+                    :label="LangUtil('渠道ID')"
+                    class="display"
+                    prop="range_channel_ids"
+                    v-if="form.range_type_channel_id == 1"
+                >
+                    <div class="send_users">
+                        <el-input
+                            size="medium"
+                            filterable
+                            clearable
+                            :placeholder="LangUtil('请输入单个或多个渠道')"
+                            v-model.trim="form.range_channel_ids"
+                            oninput="value=value.replace(/[^\d,]/g,'')"
+                            style="margin-right: 0.8rem"
+                        ></el-input>
+                        <input
+                            v-show="false"
+                            ref="excel-upload-input-channel"
+                            class="excel-upload-input-channel"
+                            type="file"
+                            accept=".xlsx, .xls"
+                            @change="handleClickChannel"
+                        />
+                        <el-button @click="onImportChannel" type="primary" icon="">
+                            {{ LangUtil("导入渠道") }}
+                        </el-button>
+                        <el-button @click="onLoadChannelModule" type="primary" icon="">
+                            {{ LangUtil("下载导入模版") }}
+                        </el-button>
+                    </div>
+                    <div class="mark_font">
+                        {{ LangUtil("渠道ID, 多个渠道使用英文逗号", "区分") }}
+                    </div>
+                </el-form-item>
             </el-form-item>
             <el-form-item size="mini" :label="LangUtil('受众条件')" prop="range_type_channel_id">
                 <el-button
@@ -452,6 +489,8 @@ export default class PlatPopsDialog extends AbstractView {
             languages: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             scenarios_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            range_user_ids: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            range_channel_ids: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             time: [
                 {
                     type: "array",
@@ -533,6 +572,26 @@ export default class PlatPopsDialog extends AbstractView {
         (this.$refs["excel-upload-input"] as any).click();
     }
 
+    // excel 导入
+    async handleClickChannel(e: any) {
+        const files = e.target.files;
+        const rawFile = files[0];
+        if (!rawFile) return;
+        (this.$refs["excel-upload-input-channel"] as any).value = null;
+        const excel: any = await readerData(rawFile);
+        let channelList = removeRepeatStr(
+            excel.results,
+            this.myProxy.dialogData.excelChannelColumnInfo.channelid.name,
+            ","
+        );
+        this.form.range_channel_ids = channelList;
+    }
+
+    // 汇入渠道excel
+    onImportChannel() {
+        (this.$refs["excel-upload-input-channel"] as any).click();
+    }
+
     // 载入模组
     onLoadModule() {
         let emailTemplate: any = this.LangUtil("用户模版");
@@ -540,6 +599,17 @@ export default class PlatPopsDialog extends AbstractView {
             `【` + emailTemplate + `】${this.curTime}`,
             [],
             this.myProxy.dialogData.excelColumnInfo,
+            [],
+            []
+        );
+    }
+
+    onLoadChannelModule() {
+        let channelTemplate: any = this.LangUtil("渠道模版");
+        new BaseInfo.ExportExcel(
+            `【` + channelTemplate + `】${this.curTime}`,
+            [],
+            this.myProxy.dialogData.excelChannelColumnInfo,
             [],
             []
         );
