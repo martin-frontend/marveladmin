@@ -372,6 +372,18 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
             return;
         }
+        if (this.dialogData.form.range_type_user_id == true && this.dialogData.form.range_user_ids == "") {
+            MessageBox.alert(<any>LangUtil("指定用户必须选择"));
+            return;
+        }
+        if (this.dialogData.form.range_type_user_tag_id == true && this.dialogData.form.range_user_tag_ids == "") {
+            MessageBox.alert(<any>LangUtil("指定标签必须选择"));
+            return;
+        }
+        if (this.dialogData.form.range_type_channel_id == true && this.dialogData.form.range_channel_ids == "") {
+            MessageBox.alert(<any>LangUtil("指定渠道必须选择"));
+            return;
+        }
 
         formCopy.start_time = this.dialogData.form.time[0];
         formCopy.end_time = this.dialogData.form.time[1];
@@ -429,6 +441,18 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
                 this.dialogData.form.range_type_user_tag_id == 99 &&
                 this.dialogData.form.range_type_channel_id == 99) {
                 MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
+                return;
+            }
+            if (this.dialogData.form.range_type_user_id == true && this.dialogData.form.range_user_ids == "") {
+                MessageBox.alert(<any>LangUtil("指定用户必须选择"));
+                return;
+            }
+            if (this.dialogData.form.range_type_user_tag_id == true && this.dialogData.form.range_user_tag_ids == "") {
+                MessageBox.alert(<any>LangUtil("指定标签必须选择"));
+                return;
+            }
+            if (this.dialogData.form.range_type_channel_id == true && this.dialogData.form.range_channel_ids == "") {
+                MessageBox.alert(<any>LangUtil("指定渠道必须选择"));
                 return;
             }
             formCopy.range_type_all = this.dialogData.form.range_type_all;
