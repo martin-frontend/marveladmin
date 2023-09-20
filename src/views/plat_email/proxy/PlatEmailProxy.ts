@@ -48,6 +48,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             type: { name: "", options: {} },
             remark: { name: "", options: {} },
             member_analyze: { name: LangUtil("收到/阅读/奖励/发送"), options: {} },
+            start_time: { name: '开始时间', options: {} },
+            end_time: { name: '结束时间', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -119,6 +121,9 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             template_option: <any>[], // 模版的列表
             template_detail: <any>{}, // 模版的详细信息
             remark: "",
+            time: <any>[],
+            start_time: "",
+            end_time: "",
         },
         formSource: null, // 表单的原始数据
         readonly: false, //是否唯讀
@@ -160,6 +165,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         // });
         // data.attachment_content = attachment_content;
         this.dialogData.formSource = data;
+        this.dialogData.form.time = [this.dialogData.form.start_time, this.dialogData.form.end_time];
         Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
     }
 
@@ -221,6 +227,9 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             template_option: <any>[], // 模版的列表
             template_detail: <any>{}, // 模版的详细信息
             remark: "",
+            start_time: "",
+            end_time: "",
+            time: [],
         });
     }
 
@@ -245,6 +254,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             attachment_content,
             template_id,
             remark,
+            start_time,
+            end_time,
         } = this.dialogData.form;
         const formCopy: any = {
             plat_id,
@@ -260,6 +271,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             attachment_content,
             template_id,
             remark,
+            start_time,
+            end_time,
         };
         let attachment_content_copy = [];
         let bonus: any = {};
@@ -281,6 +294,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             formCopy.attachment_content = JSON.stringify(bonus);
         }
         formCopy.is_mass_mailer = this.isGroupMail ? 1 : 0;
+        formCopy.start_time = this.dialogData.form.time[0];
+        formCopy.end_time = this.dialogData.form.time[1];
         if (checkUnique(unique.plat_email_store_attachment)) {
             this.sendNotification(HttpType.admin_plat_email_store_attachment_store, objectRemoveNull(formCopy));
         } else {
@@ -298,7 +313,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_mail_content_update, { content_id: id, status: 99 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**用户邮件表格相关数据 */
@@ -324,6 +339,8 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             status: { name: "", options: {} },
             nick_name: { name: "", options: {} },
             created_at: { name: "", options: {} },
+            start_time: { name: '开始时间', options: {} },
+            end_time: { name: '结束时间', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -765,7 +782,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_mail_template_delete, { id });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     openEmailTemplateManager() {
