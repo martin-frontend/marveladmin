@@ -132,6 +132,9 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
         excelColumnInfo: {
             userid: { name: "userid", options: {} },
         },
+        excelChannelColumnInfo: {
+            channelid: { name: "channelid", options: {} },
+        },
     };
 
     /**设置表头数据 */
@@ -213,18 +216,17 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
         }
         this.dialogData.form.range_user_tag_ids = assignTagArr;
         // 指定渠道
-        const assignChannelArr: any = [];
-        if (data.range_channel_ids) {
-            const arr = data.range_channel_ids.split(",");
-            // @ts-ignore
-            arr.forEach(tag => {
-                if (this.tableData.columns.channel_id.options[data.plat_id][Number(tag)]) {
-                    assignChannelArr.push(tag);
-                }
-            });
-        }
-        this.dialogData.form.range_channel_ids = assignChannelArr;
-
+        // const assignChannelArr: any = [];
+        // if (data.range_channel_ids) {
+        //     const arr = data.range_channel_ids.split(",");
+        //     // @ts-ignore
+        //     arr.forEach(tag => {
+        //         if (this.tableData.columns.channel_id.options[data.plat_id][Number(tag)]) {
+        //             assignChannelArr.push(tag);
+        //         }
+        //     });
+        // }
+        // this.dialogData.form.range_channel_ids = assignChannelArr;
     }
 
     setActivityType(data: any) {
@@ -372,23 +374,14 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
             return;
         }
-        if (this.dialogData.form.range_type_user_id == true && this.dialogData.form.range_user_ids == "") {
-            MessageBox.alert(<any>LangUtil("指定用户必须选择"));
-            return;
-        }
         if (this.dialogData.form.range_type_user_tag_id == true && this.dialogData.form.range_user_tag_ids == "") {
             MessageBox.alert(<any>LangUtil("指定标签必须选择"));
-            return;
-        }
-        if (this.dialogData.form.range_type_channel_id == true && this.dialogData.form.range_channel_ids == "") {
-            MessageBox.alert(<any>LangUtil("指定渠道必须选择"));
             return;
         }
 
         formCopy.start_time = this.dialogData.form.time[0];
         formCopy.end_time = this.dialogData.form.time[1];
         formCopy.range_user_tag_ids = formCopy.range_user_tag_ids.toString();
-        formCopy.range_channel_ids = formCopy.range_channel_ids.toString();
         if (formCopy.type == 3) {
             formCopy.rules = JSON.stringify({ url: subject, options: content });
         }
@@ -443,29 +436,22 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
                 MessageBox.alert(<any>LangUtil("参与用户必须至少选择一项"));
                 return;
             }
-            if (this.dialogData.form.range_type_user_id == true && this.dialogData.form.range_user_ids == "") {
-                MessageBox.alert(<any>LangUtil("指定用户必须选择"));
-                return;
-            }
             if (this.dialogData.form.range_type_user_tag_id == true && this.dialogData.form.range_user_tag_ids == "") {
                 MessageBox.alert(<any>LangUtil("指定标签必须选择"));
-                return;
-            }
-            if (this.dialogData.form.range_type_channel_id == true && this.dialogData.form.range_channel_ids == "") {
-                MessageBox.alert(<any>LangUtil("指定渠道必须选择"));
                 return;
             }
             formCopy.range_type_all = this.dialogData.form.range_type_all;
             formCopy.range_type_user_id = this.dialogData.form.range_type_user_id;
             formCopy.range_user_ids = this.dialogData.form.range_user_ids;
             formCopy.range_type_user_tag_id = this.dialogData.form.range_type_user_tag_id;
+            formCopy.range_type_channel_id = this.dialogData.form.range_type_channel_id;
+            formCopy.range_channel_ids = this.dialogData.form.range_channel_ids;
             if (formCopy.range_user_tag_ids) {
                 formCopy.range_user_tag_ids = JSON.parse(formCopy.range_user_tag_ids).toString();
             }
-            formCopy.range_type_channel_id = this.dialogData.form.range_type_channel_id;
-            if (formCopy.range_channel_ids) {
-                formCopy.range_channel_ids = JSON.parse(formCopy.range_channel_ids).toString();
-            }
+            // if (formCopy.range_channel_ids) {
+            //     formCopy.range_channel_ids = JSON.parse(formCopy.range_channel_ids).toString();
+            // }
             if (this.dialogData.form.type == 3) {
                 formCopy.rules = JSON.stringify({ url: this.dialogData.form.subject, options: this.dialogData.form.content });
             }
