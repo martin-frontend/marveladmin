@@ -532,28 +532,32 @@ export default class PlatsNoticeProxy extends AbstractProxy implements IPlatsNot
         }
         delete formCopy.condition;
 
-        formCopy.extends = JSON.stringify(formCopy.extends);
-        try {
-            formCopy.extends = JSON.parse(formCopy.extends);
-            const temp = formCompared(formCopy, this.dialogData.formSource);
-            // 如果没有修改，就直接关闭弹窗
-            if (Object.keys(temp).length == 0) {
-                this.dialogData.bShow = false;
-                return false;
-            }
-
-            let extendsStr: any = "{}";
-            if (temp.extends) {
-                if (Object.keys(temp.extends).length > 0) {
-                    extendsStr = JSON.stringify(JSON.parse(temp.extends));
-                }
-                temp.extends = extendsStr;
-            }
-
-            temp.plat_id = this.dialogData.form.plat_id;
+        if (fromTable) {
             this.sendNotification(HttpType.admin_plats_notice_update, formCopy);
-        } catch (error) {
-            MessageBox.alert(<string>LangUtil("json格式不正确"));
+        } else {
+            formCopy.extends = JSON.stringify(formCopy.extends);
+            try {
+                formCopy.extends = JSON.parse(formCopy.extends);
+                const temp = formCompared(formCopy, this.dialogData.formSource);
+                // 如果没有修改，就直接关闭弹窗
+                if (Object.keys(temp).length == 0) {
+                    this.dialogData.bShow = false;
+                    return false;
+                }
+
+                let extendsStr: any = "{}";
+                if (temp.extends) {
+                    if (Object.keys(temp.extends).length > 0) {
+                        extendsStr = JSON.stringify(JSON.parse(temp.extends));
+                    }
+                    temp.extends = extendsStr;
+                }
+
+                temp.plat_id = this.dialogData.form.plat_id;
+                this.sendNotification(HttpType.admin_plats_notice_update, formCopy);
+            } catch (error) {
+                MessageBox.alert(<string>LangUtil("json格式不正确"));
+            }
         }
     }
 
