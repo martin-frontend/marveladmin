@@ -317,7 +317,6 @@
                     size="mini"
                     type="primary"
                     icon="el-icon-circle-plus-outline"
-                    :disabled="form.type == 2 && form.type_bind_id != ''"
                 >
                     {{ LangUtil("条件") }}
                 </el-button>
