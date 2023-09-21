@@ -23,7 +23,7 @@
                         v-for="(value, key) in tableColumns['app_platform'].options"
                         :key="key"
                         :label="Number(key)"
-                        :disabled="isStatusUpdate"
+                        :disabled="form.type == 1 && form.type_bind_id != ''"
                     >
                         {{ value }}
                     </el-checkbox>
@@ -35,7 +35,9 @@
                         v-for="(value, key) in tableColumns['languages'].options"
                         :key="key"
                         :label="key"
-                        :disabled="isStatusUpdate"
+                        :disabled="
+                            (form.type == 1 && form.type_bind_id != '') || (form.type == 2 && form.type_bind_id != '')
+                        "
                     >
                         {{ value }}
                     </el-checkbox>
