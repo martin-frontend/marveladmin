@@ -78,7 +78,7 @@
                     placeholder="请选择"
                     style="margin-left: 20px;"
                     @change="onNoticeChange"
-                    v-if="form.type == 1"
+                    v-if="(form.type == 1 && !isStatusUpdate) || (form.type == 1 && !myProxy.tableData.showNoticeError)"
                     :disabled="isStatusUpdate"
                 >
                     <el-option
@@ -95,7 +95,9 @@
                     placeholder="请选择"
                     style="margin-left: 20px;"
                     @change="onActivityChange"
-                    v-if="form.type == 2"
+                    v-if="
+                        (form.type == 2 && !isStatusUpdate) || (form.type == 2 && !myProxy.tableData.showActivityError)
+                    "
                     :disabled="isStatusUpdate"
                 >
                     <el-option
@@ -105,6 +107,15 @@
                         :value="value.id"
                     ></el-option>
                 </el-select>
+                <span
+                    style="margin-left: 20px;"
+                    v-if="
+                        (isStatusUpdate && myProxy.tableData.showNoticeError) ||
+                            (isStatusUpdate && myProxy.tableData.showActivityError)
+                    "
+                >
+                    {{ LangUtil("原资料已被撤销/删除") }}
+                </span>
             </el-form-item>
             <el-form-item :label="tableColumns['subject'].name" prop="subject" v-if="form.type == 3">
                 <el-input
@@ -300,6 +311,7 @@
                     size="mini"
                     type="primary"
                     icon="el-icon-circle-plus-outline"
+                    :disabled="form.type == 2 && form.type_bind_id != ''"
                 >
                     {{ LangUtil("条件") }}
                 </el-button>
@@ -546,11 +558,17 @@ export default class PlatPopsDialog extends AbstractView {
     }
 
     onNoticeChange() {
-        this.myProxy.onNoticeShow(this.form.type_bind_id);
+        if (this.form.type_bind_id) {
+            this.myProxy.onNoticeShow(this.form.type_bind_id);
+        }
     }
 
     onActivityChange() {
-        this.myProxy.onActivityShow(this.form.type_bind_id);
+        if (this.form.type_bind_id) {
+            this.myProxy.onActivityShow(this.form.type_bind_id);
+            this.form.range_type_all = 1;
+            this.onSelectAll();
+        }
     }
 
     onSelectAll() {

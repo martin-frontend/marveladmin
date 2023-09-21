@@ -81,6 +81,8 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
         },
         /**是否重新排序 */
         isResort: false,
+        showNoticeError: false,
+        showActivityError: false,
     };
 
     /**查询条件 */
@@ -231,10 +233,20 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
 
     setActivityType(data: any) {
         this.tableData.columns.acitvity.options = data;
+        if (data.find((x: { id: string }) => x.id == this.dialogData.form.type_bind_id)) {
+            this.tableData.showActivityError = false;
+        } else {
+            this.tableData.showActivityError = true;
+        }
     }
 
     setNoticeType(data: any) {
         this.tableData.columns.notice.options = data;
+        if (data.find((x: { id: string }) => x.id == this.dialogData.form.type_bind_id)) {
+            this.tableData.showNoticeError = false;
+        } else {
+            this.tableData.showNoticeError = true;
+        }
     }
 
     setActivity(data: any) {
@@ -259,6 +271,8 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
 
     /**显示弹窗 */
     showDialog(status: string, data?: any) {
+        this.tableData.showActivityError = false;
+        this.tableData.showNoticeError = false;
         this.dialogData.bShow = true;
         this.dialogData.status = status;
         if (status == DialogStatus.update) {
