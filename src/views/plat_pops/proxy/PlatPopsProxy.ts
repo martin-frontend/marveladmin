@@ -458,12 +458,9 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             formCopy.range_type_user_id = this.dialogData.form.range_type_user_id;
             formCopy.range_user_ids = this.dialogData.form.range_user_ids;
             formCopy.range_type_user_tag_id = this.dialogData.form.range_type_user_tag_id;
-            formCopy.range_user_tag_ids = this.dialogData.form.range_user_tag_ids;
             formCopy.range_type_channel_id = this.dialogData.form.range_type_channel_id;
             formCopy.range_channel_ids = this.dialogData.form.range_channel_ids;
-            if (formCopy.range_user_tag_ids) {
-                formCopy.range_user_tag_ids = JSON.parse(formCopy.range_user_tag_ids).toString();
-            }
+            formCopy.range_user_tag_ids = this.dialogData.form.range_user_tag_ids.toString();
             // if (formCopy.range_channel_ids) {
             //     formCopy.range_channel_ids = JSON.parse(formCopy.range_channel_ids).toString();
             // }
