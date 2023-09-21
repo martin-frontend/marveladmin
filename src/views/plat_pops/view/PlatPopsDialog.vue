@@ -149,7 +149,13 @@
             </div>
             <!-- 参与用户 -->
             <el-form-item size="mini" :label="LangUtil('全部用户')" prop="assign_is_all" label-width="200px">
-                <el-checkbox v-model="form.range_type_all" :true-label="1" :false-label="99" @change="onSelectAll">
+                <el-checkbox
+                    v-model="form.range_type_all"
+                    :true-label="1"
+                    :false-label="99"
+                    @change="onSelectAll"
+                    :disabled="form.type == 2 && form.type_bind_id != ''"
+                >
                 </el-checkbox>
             </el-form-item>
             <!-- 指定用户 -->
