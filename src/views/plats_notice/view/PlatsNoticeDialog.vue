@@ -9,6 +9,7 @@
                     filterable
                     style="width: 300px"
                     @change="onChangePlatId"
+                    :disabled="isStatusUpdate"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns['plat_id'].options"
