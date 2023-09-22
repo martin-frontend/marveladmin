@@ -117,7 +117,7 @@
                     {{ LangUtil("原资料已被撤销/删除") }}
                 </span>
             </el-form-item>
-            <el-form-item :label="tableColumns['subject'].name" prop="subject" v-if="form.type == 3">
+            <el-form-item :label="LangUtil('URL')" prop="subject" v-if="form.type == 3">
                 <el-input
                     :placeholder="LangUtil('请输入')"
                     v-model="form.subject"
@@ -125,7 +125,7 @@
                     show-word-limit
                 ></el-input>
             </el-form-item>
-            <el-form-item :label="tableColumns['content'].name" prop="content" v-if="form.type == 3">
+            <el-form-item :label="LangUtil('参数')" prop="content" v-if="form.type == 3">
                 <el-input
                     :placeholder="LangUtil('请输入')"
                     v-model="form.content"
