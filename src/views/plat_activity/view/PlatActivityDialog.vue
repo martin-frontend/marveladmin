@@ -192,7 +192,7 @@
                                 ></el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item size="mini" v-if="isCustom" :label="tableColumns['open_mode_url'].name">
+                        <el-form-item size="mini" :label="tableColumns['open_mode_url'].name">
                             <el-select
                                 v-model="form.open_mode_url"
                                 filterable
