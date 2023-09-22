@@ -534,7 +534,29 @@
                     <WinLossDisplay :amount="row.win_loss"></WinLossDisplay>
                 </template>
             </el-table-column>
-
+            <el-table-column
+                prop="pure_win_loss"
+                :label="tableColumns['pure_win_loss'].name"
+                align="center"
+                min-width="130"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['pure_win_loss'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["pure_win_loss"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.pure_win_loss"></WinLossDisplay>
+                </template>
+            </el-table-column>
             <el-table-column
                 v-if="tableColumns.commission_gold.display"
                 prop="commission_gold"

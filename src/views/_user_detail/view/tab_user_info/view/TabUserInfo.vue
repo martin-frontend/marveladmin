@@ -14,6 +14,9 @@
                 <el-form-item size="mini" :label="tableColumns['user_id'].name" prop="user_id">
                     {{ userInfo.user_id }}
                 </el-form-item>
+                <el-form-item v-if="userInfo.ma_token" size="mini" label="ma_token" prop="ma_token">
+                    {{ userInfo.ma_token }}
+                </el-form-item>
                 <el-form-item
                     size="mini"
                     :label="tableColumns['backup_phone'].name"
