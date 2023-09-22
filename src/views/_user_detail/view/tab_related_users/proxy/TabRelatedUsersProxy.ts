@@ -11,6 +11,7 @@ export default class TabRelatedUsersProxy extends AbstractProxy implements ITabR
     /**进入页面时调用 */
     enter() {
         this.sendNotification(HttpType.admin_plat_user_table_columns);
+        this.tableData.status = 1;
     }
 
     /**离开页面时调用 */
@@ -78,6 +79,8 @@ export default class TabRelatedUsersProxy extends AbstractProxy implements ITabR
             vip_level: { name: "VIP等级", options: {} },
             wechat: { name: "微信", options: {} },
         },
+        selected: 0,
+        status: 1,
         devicelList: <any>[],
         iplList: <any>[],
         bankList: <any>[],
@@ -171,6 +174,16 @@ export default class TabRelatedUsersProxy extends AbstractProxy implements ITabR
     // 状态切换
     onToggleStatus(user_id: number, status: number) {
         this.facade.sendNotification(HttpType.admin_plat_user_update, { user_id, status });
+    }
+
+    // 全部状态切换
+    onToggleAllStatus(status: number) {
+        this.facade.sendNotification(HttpType.admin_plat_user_related_users_update_status,
+            {
+                user_id: getPageSetting().user_id,
+                status,
+                type: this.tableData.selected
+            });
     }
 
     getRelatedUsers() {

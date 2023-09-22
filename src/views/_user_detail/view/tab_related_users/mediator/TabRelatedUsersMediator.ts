@@ -16,7 +16,11 @@ export default class TabRelatedUsersMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [EventType.admin_plat_user_table_columns, EventType.admin_plat_user_related_users];
+        return [
+            EventType.admin_plat_user_table_columns,
+            EventType.admin_plat_user_related_users,
+            EventType.admin_plat_user_related_users_update_status
+        ];
     }
 
     handleNotification(notification: puremvc.INotification) {
@@ -29,6 +33,9 @@ export default class TabRelatedUsersMediator extends AbstractMediator {
                     break;
                 case EventType.admin_plat_user_related_users:
                     this.myProxy.setTableData(body);
+                    break;
+                case EventType.admin_plat_user_related_users_update_status:
+                    this.myProxy.getRelatedUsers();
                     break;
             }
         }

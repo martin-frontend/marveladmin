@@ -43,6 +43,7 @@
         "admin/plat_user/commission/show/directs_water",
         "--关联查询&related_users",
         "admin/plat_user/related_users/{user_id}",
+        "admin/plat_user/related_users/update_status/{user_id}",
         "--登入日志&login_record",
         "admin/plat_user_login_record/table_columns",
         "admin/plat_user_login_record/index",
