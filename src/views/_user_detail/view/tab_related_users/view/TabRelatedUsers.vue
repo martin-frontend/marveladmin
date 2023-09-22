@@ -61,7 +61,19 @@
                         <div>VIP：{{ row.vip_level }}</div>
                     </template>
                 </el-table-column>
-                <el-table-column :label="tableColumns['status'].name" min-width="60px" class-name="status-col">
+                <el-table-column :label="tableColumns['status'].name" min-width="120px" class-name="status-col">
+                    <template slot="header">
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["status"].name }}</span>
+                            <el-switch
+                                @change="handleToggleAll(myProxy.tableData.status)"
+                                v-model="myProxy.tableData.status"
+                                :active-value="1"
+                                :inactive-value="98"
+                                :disabled="tableData.length == 0"
+                            ></el-switch>
+                        </div>
+                    </template>
                     <template slot-scope="{ row }">
                         <el-switch
                             @change="handleToggle(row.user_id, row.status)"
@@ -207,21 +219,29 @@ export default class TabRelatedUsers extends AbstractView {
 
     showDeviceDetail() {
         this.tableData = this.myProxy.tableData.devicelList;
+        this.myProxy.tableData.selected = 1;
+        this.myProxy.tableData.status = 1;
         this.selected = 0;
     }
 
     showIpDetail() {
         this.tableData = this.myProxy.tableData.iplList;
+        this.myProxy.tableData.selected = 2;
+        this.myProxy.tableData.status = 1;
         this.selected = 1;
     }
 
     showBankDetail() {
         this.tableData = this.myProxy.tableData.bankList;
+        this.myProxy.tableData.selected = 3;
+        this.myProxy.tableData.status = 1;
         this.selected = 2;
     }
 
     showCoinDetail() {
         this.tableData = this.myProxy.tableData.coinlList;
+        this.myProxy.tableData.selected = 4;
+        this.myProxy.tableData.status = 1;
         this.selected = 3;
     }
 
@@ -256,6 +276,11 @@ export default class TabRelatedUsers extends AbstractView {
     // 状态切换
     handleToggle(user_id: number, status: number) {
         this.myProxy.onToggleStatus(user_id, status);
+    }
+
+    // 状态切换
+    handleToggleAll(status: number) {
+        this.myProxy.onToggleAllStatus(status);
     }
 
     destroyed() {
