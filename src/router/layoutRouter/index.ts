@@ -222,13 +222,13 @@ const layoutRouter = {
             name: "活动规则配置",
             component: () => import(/* webpackChunkName: "plat_activity_rule" */"@/views/plat_activity_rule/view/PlatActivityRule.vue")
         },        {
-            path: "plat_activity_statistic_ball",
-            name: "彩球统计",
-            component: () => import(/* webpackChunkName: "plat_activity_statistic_ball" */"@/views/plat_activity_statistic_ball/view/PlatActivityStatisticBall.vue")
-        },        {
             path: "plat_activity_statistic",
             name: "活动统计",
             component: () => import(/* webpackChunkName: "plat_activity_statistic" */"@/views/plat_activity_statistic/view/PlatActivityStatistic.vue")
+        },        {
+            path: "plat_activity_statistic_ball",
+            name: "彩球统计",
+            component: () => import(/* webpackChunkName: "plat_activity_statistic_ball" */"@/views/plat_activity_statistic_ball/view/PlatActivityStatisticBall.vue")
         },        {
             path: "plat_agent",
             name: "平台代理配置",
@@ -297,6 +297,10 @@ const layoutRouter = {
             path: "plat_coin_tasks",
             name: "奖励活动任务",
             component: () => import(/* webpackChunkName: "plat_coin_tasks" */"@/views/plat_coin_tasks/view/PlatCoinTasks.vue")
+        },        {
+            path: "plat_currency_conversion_rate",
+            name: "币种汇率管理",
+            component: () => import(/* webpackChunkName: "plat_currency_conversion_rate" */"@/views/plat_currency_conversion_rate/view/PlatCurrencyConversionRate.vue")
         },        {
             path: "plat_email",
             name: "平台邮件",
