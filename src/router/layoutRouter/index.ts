@@ -298,6 +298,10 @@ const layoutRouter = {
             name: "奖励活动任务",
             component: () => import(/* webpackChunkName: "plat_coin_tasks" */"@/views/plat_coin_tasks/view/PlatCoinTasks.vue")
         },        {
+            path: "plat_currency_conversion_rate",
+            name: "币种汇率管理",
+            component: () => import(/* webpackChunkName: "plat_currency_conversion_rate" */"@/views/plat_currency_conversion_rate/view/PlatCurrencyConversionRate.vue")
+        },        {
             path: "plat_email",
             name: "平台邮件",
             component: () => import(/* webpackChunkName: "plat_email" */"@/views/plat_email/view/PlatEmail.vue")
