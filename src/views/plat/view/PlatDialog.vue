@@ -552,10 +552,10 @@
                             </el-select>
                         </div>
                         <div>
-                            <span class="title_switch">{{ tableColumns["currency_conversion"].name }}</span>
-                            <el-select class="select" v-model="form.currency_conversion">
+                            <span class="title_switch">{{ tableColumns["is_currency_conversion"].name }}</span>
+                            <el-select class="select" v-model="form.is_currency_conversion">
                                 <el-option
-                                    v-for="(value, key) in tableColumns.currency_conversion.options"
+                                    v-for="(value, key) in tableColumns.is_currency_conversion.options"
                                     :key="key"
                                     :label="value"
                                     :value="Number(key)"
