@@ -189,6 +189,7 @@
                             :placeholder="LangUtil('请输入单个或多个用户')"
                             v-model.trim="form.range_user_ids"
                             oninput="value=value.replace(/[^\d,]/g,'')"
+                            @blur="inputChangeUser"
                             style="margin-right: 0.8rem"
                         ></el-input>
                         <input
@@ -289,6 +290,7 @@
                             :placeholder="LangUtil('请输入单个或多个渠道')"
                             v-model.trim="form.range_channel_ids"
                             oninput="value=value.replace(/[^\d,]/g,'')"
+                            @blur="inputChangeChannel"
                             style="margin-right: 0.8rem"
                         ></el-input>
                         <input
@@ -666,6 +668,14 @@ export default class PlatPopsDialog extends AbstractView {
         if (type == 99) {
             this.form.range_channel_ids = "";
         }
+    }
+
+    inputChangeUser(e: any) {
+        this.form.range_user_ids = e.target.value;
+    }
+
+    inputChangeChannel(e: any) {
+        this.form.range_channel_ids = e.target.value;
     }
 }
 </script>
