@@ -932,6 +932,7 @@
                                     :placeholder="LangUtil('请输入单个或多个用户')"
                                     v-model.trim="dialogForm.assign_user"
                                     oninput="value=value.replace(/[^\d,]/g,'')"
+                                    @blur="inputChangeAssignUser"
                                     style="margin-right: 0.8rem"
                                 ></el-input>
                                 <input
@@ -1000,6 +1001,7 @@
                                             :placeholder="LangUtil('请输入单个或多个用户')"
                                             v-model.trim="dialogForm.assign_agent_user_id"
                                             oninput="value=value.replace(/[^\d,]/g,'')"
+                                            @blur="inputChangeAssignAgent"
                                             style="margin-right: 0.8rem"
                                         ></el-input>
                                         <input
@@ -1093,6 +1095,7 @@
                                     :placeholder="LangUtil('请输入单个或多个渠道')"
                                     v-model.trim="dialogForm.assign_channel"
                                     oninput="value=value.replace(/[^\d,]/g,'')"
+                                    @blur="inputChangeAssignChannel"
                                     style="margin-right: 0.8rem"
                                 ></el-input>
                                 <input
@@ -1144,6 +1147,7 @@
                                     :placeholder="LangUtil('请输入单个或多个用户')"
                                     v-model.trim="dialogForm.remove_user"
                                     oninput="value=value.replace(/[^\d,]/g,'')"
+                                    @blur="inputChangeRemoveUser"
                                     style="margin-right: 0.8rem"
                                 ></el-input>
                                 <input
@@ -1213,6 +1217,7 @@
                                             :placeholder="LangUtil('请输入单个或多个用户')"
                                             v-model.trim="dialogForm.remove_agent_user_id"
                                             oninput="value=value.replace(/[^\d,]/g,'')"
+                                            @blur="inputChangeRemoveAgent"
                                             style="margin-right: 0.8rem"
                                         ></el-input>
                                         <input
@@ -1306,6 +1311,7 @@
                                     :placeholder="LangUtil('请输入单个或多个渠道')"
                                     v-model.trim="dialogForm.remove_channel"
                                     oninput="value=value.replace(/[^\d,]/g,'')"
+                                    @blur="inputChangeRemoveChannel"
                                     style="margin-right: 0.8rem"
                                 ></el-input>
                                 <input
@@ -2013,6 +2019,30 @@ export default class PlatActivityDialog extends AbstractView {
         if (!type) {
             this.dialogForm.remove_channel = "";
         }
+    }
+
+    inputChangeAssignUser(e: any) {
+        this.dialogForm.assign_user = e.target.value;
+    }
+
+    inputChangeAssignAgent(e: any) {
+        this.dialogForm.assign_agent_user_id = e.target.value;
+    }
+
+    inputChangeAssignChannel(e: any) {
+        this.dialogForm.assign_channel = e.target.value;
+    }
+
+    inputChangeRemoveUser(e: any) {
+        this.dialogForm.remove_user = e.target.value;
+    }
+
+    inputChangeRemoveAgent(e: any) {
+        this.dialogForm.remove_agent_user_id = e.target.value;
+    }
+
+    inputChangeRemoveChannel(e: any) {
+        this.dialogForm.remove_channel = e.target.value;
     }
 }
 </script>
