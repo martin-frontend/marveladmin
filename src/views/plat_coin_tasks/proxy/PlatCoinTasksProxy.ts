@@ -72,6 +72,7 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             transfer_amount: { name: "", options: {} },
         },
         list: <any>[],
+        summary: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
 
@@ -85,6 +86,8 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
         activity_name: "",
         user_id: "",
         task_coin_name_unique: "",
+        "start_time-{<=}": "",
+        "end_time-{>=}": "",
     };
 
     /**弹窗相关数据 */
@@ -199,6 +202,7 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             element.task_config = JSON.parse(element.task_config);
         });
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        this.tableData.summary = data.summary;
     }
 
     /**详细数据 */
@@ -215,6 +219,8 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             activity_name: "",
             user_id: "",
             task_coin_name_unique: "",
+            "start_time-{<=}": "",
+            "end_time-{>=}": "",
         });
     }
 
