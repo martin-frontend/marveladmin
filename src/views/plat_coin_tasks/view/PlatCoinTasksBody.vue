@@ -1,5 +1,19 @@
 <template>
     <div>
+        <div style="display: flex;">
+            <div style="margin-bottom: 16px; margin-right: 20px;" v-if="myProxy.tableData.summary.length > 0">
+                {{ LangUtil("汇总") }}:
+            </div>
+            <div>
+                <template v-for="(item, index) in myProxy.tableData.summary">
+                    <div class="statistics" :key="index">
+                        {{ item.task_coin_name_unique }}
+                        <span> {{ LangUtil("任务数量") }}: {{ item.task_coin_amount }} </span>
+                        <span> {{ LangUtil("当前数量") }}: {{ item.current_coin_amount }} </span>
+                    </div>
+                </template>
+            </div>
+        </div>
         <el-table
             :data="tableData"
             border
@@ -200,4 +214,13 @@ export default class PlatCoinTasksBody extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.statistics {
+    margin-bottom: 16px;
+    span {
+        margin-left: 20px;
+        :nth-child(1) {
+            margin-left: 0;
+        }
+    }
+}
 </style>

@@ -120,12 +120,6 @@
                 width="110px"
                 align="center"
             ></el-table-column>
-            <el-table-column
-                :label="tableColumns.directly_users.name"
-                prop="directly_users"
-                width="110px"
-                align="center"
-            ></el-table-column>
             <!-- 直属充值 -->
             <el-table-column
                 :label="tableColumns.directly_recharge.name"
@@ -161,7 +155,7 @@
                 width="150px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.directly_win_gold" :isShowDollar="true"  />
+                    <WinLossDisplay :amount="row.directly_win_gold" :isShowDollar="true" />
                 </template>
             </el-table-column>
             <!-- 当前可领取佣金 -->
