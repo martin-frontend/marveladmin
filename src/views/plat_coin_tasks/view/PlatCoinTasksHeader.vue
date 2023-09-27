@@ -13,8 +13,8 @@
         <div class="group">
             <SearchDatePicker
                 :title="LangUtil('活动时间')"
-                :startDate.sync="listQuery['start_time-{<=}']"
-                :endDate.sync="listQuery['end_time-{>=}']"
+                :startDate.sync="listQuery['start_time-{>=}']"
+                :endDate.sync="listQuery['start_time-{<=}']"
             />
             <SearchSelect
                 :title="tableColumns.status.name"
