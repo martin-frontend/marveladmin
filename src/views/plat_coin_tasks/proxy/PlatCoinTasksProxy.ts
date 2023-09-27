@@ -86,8 +86,8 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
         activity_name: "",
         user_id: "",
         task_coin_name_unique: "",
+        "start_time-{>=}": "",
         "start_time-{<=}": "",
-        "end_time-{>=}": "",
     };
 
     /**弹窗相关数据 */
@@ -219,8 +219,8 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
             activity_name: "",
             user_id: "",
             task_coin_name_unique: "",
+            "start_time-{>=}": "",
             "start_time-{<=}": "",
-            "end_time-{>=}": "",
         });
     }
 
