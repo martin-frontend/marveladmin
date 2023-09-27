@@ -9,7 +9,7 @@
                     <div class="statistics" :key="index">
                         {{ item.task_coin_name_unique }}
                         <span> {{ LangUtil("任务数量") }}: {{ item.task_coin_amount }} </span>
-                        <span> {{ LangUtil("当前数量") }}: {{ item.current_coin_amount }} </span>
+                        <span> {{ LangUtil("当前数量") }}: {{ item.transfer_amount }} </span>
                     </div>
                 </template>
             </el-collapse-item>
