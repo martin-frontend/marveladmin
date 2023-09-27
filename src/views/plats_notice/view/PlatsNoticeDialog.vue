@@ -152,7 +152,13 @@
             </el-form-item>
             <!-- 转跳 -->
             <el-form-item size="mini" :label="tableColumns['open_mode_url'].name">
-                <el-select v-model="form.open_mode_url" filterable allow-create default-first-option :placeholder="LangUtil('跳转url')">
+                <el-select
+                    v-model="form.open_mode_url"
+                    filterable
+                    allow-create
+                    default-first-option
+                    :placeholder="LangUtil('跳转url')"
+                >
                     <el-option
                         v-for="(value, key) in openOptions"
                         :key="key"
@@ -165,6 +171,12 @@
             <el-form-item v-if="form.isNeedOtherParam" size="mini" :label="LangUtil('额外参数')" prop="other_param">
                 <div class="editor-container">
                     <json-editor ref="jsonEditor" v-model="form.other_param" />
+                </div>
+            </el-form-item>
+
+            <el-form-item size="mini" :label="tableColumns['extends'].name" prop="extends">
+                <div class="editor-container">
+                    <json-editor ref="jsonEditor" v-model="form.extends" />
                 </div>
             </el-form-item>
 
