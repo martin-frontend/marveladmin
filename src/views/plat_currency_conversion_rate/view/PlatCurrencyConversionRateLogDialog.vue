@@ -10,6 +10,7 @@
             v-loading="net_status.loading"
         >
             <el-table-column prop="id" :label="LangUtil('ID')" class-name="status-col"> </el-table-column>
+            <el-table-column prop="user_id" :label="LangUtil('用户ID')" class-name="status-col"> </el-table-column>
             <el-table-column prop="trade_time" :label="LangUtil('时间')" class-name="status-col"> </el-table-column>
             <el-table-column prop="from_coin" :label="LangUtil('转换前币种')" class-name="status-col">
             </el-table-column>
