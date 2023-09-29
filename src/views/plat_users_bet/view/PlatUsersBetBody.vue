@@ -394,16 +394,25 @@
             </el-table-column>
             <el-table-column :label="LangUtil('投注内容')" header-align="center" align="left" min-width="215px">
                 <template slot-scope="{ row }">
+                    <template v-if="row.vendor_type == 64">
+                        <p>{{ LangUtil("投注类型") }}： {{ row.bet_type }}</p>
+                        <template v-if="row.bet_type == LangUtil('单注')">
+                            <p>{{ LangUtil("提前结算") }}：{{ row.is_cash_out }}</p>
+                            <p>{{ LangUtil("返回金额") }}：{{ row.cash_out_amount }}</p>
+                            <p>{{ LangUtil("提前结算赔率") }}：{{ row.cash_out_odds }}</p>
+                        </template>
+                    </template>
                     <p>
                         {{ tableColumns["bet_gold"].name }}：
                         <WinLossDisplay :amount="row.bet_gold" :isShowColor="false" :isShowPlus="false" />
                     </p>
                     <p v-if="row.vendor_type == 64">
                         {{ LangUtil("联赛") }}：
-                        <span v-if="row.league">
+                        <span v-if="row.league && row.league.indexOf('-') > 0">
                             {{ row.league.substring(0, row.league.indexOf("-")) }}<br />
                             {{ row.league.substring(row.league.indexOf("-") + 1) }}
                         </span>
+                        <span v-else>{{ row.league }}</span>
                     </p>
                     <p v-if="row.vendor_id != 209">{{ tableColumns["bet_code"].name }}：{{ row.bet_code }}</p>
                     <p v-if="row.vendor_id == 173">{{ LangUtil("开奖结果") }}：{{ row.game_results }}</p>
