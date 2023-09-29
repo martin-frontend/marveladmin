@@ -10,7 +10,11 @@
             v-loading="net_status.loading"
         >
             <el-table-column prop="id" :label="LangUtil('ID')" class-name="status-col"> </el-table-column>
-            <el-table-column prop="user_id" :label="LangUtil('用户ID')" class-name="status-col"> </el-table-column>
+            <el-table-column prop="user_id" :label="LangUtil('用户ID')" class-name="status-col">
+                <template slot-scope="{ row }">
+                    <span @click="showUserDetail(row.user_id)" class="user_id">{{ row.user_id }}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop="trade_time" :label="LangUtil('时间')" class-name="status-col"> </el-table-column>
             <el-table-column prop="from_coin" :label="LangUtil('转换前币种')" class-name="status-col">
             </el-table-column>
@@ -57,6 +61,11 @@ export default class PlatCurrencyConversionRateLogDialog extends AbstractView {
     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onShowLog();
+    }
+
+    // 打开用户详情
+    showUserDetail(user_id: number) {
+        this.myProxy.onShowDetail(user_id);
     }
 }
 </script>

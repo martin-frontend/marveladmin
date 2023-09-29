@@ -5,6 +5,7 @@ import { HttpType } from "@/views/plat_currency_conversion_rate/setting";
 import { MessageBox } from "element-ui";
 import IPlatCurrencyConversionRateProxy from "./IPlatCurrencyConversionRateProxy";
 import LangUtil from "@/core/global/LangUtil";
+import GlobalEventType from "@/core/global/GlobalEventType";
 
 export default class PlatCurrencyConversionRateProxy extends AbstractProxy implements IPlatCurrencyConversionRateProxy {
     static NAME = "PlatCurrencyConversionRateProxy";
@@ -184,11 +185,15 @@ export default class PlatCurrencyConversionRateProxy extends AbstractProxy imple
         this.sendNotification(HttpType.admin_conversion_orders_show_index, objectRemoveNull(this.logListQuery));
     }
 
-
     setLog(data: any) {
         this.logDialogData.list.length = 0;
         this.logDialogData.bShow = true;
         this.logDialogData.list.push(...data.list);
         Object.assign(this.logDialogData.pageInfo, data.pageInfo);
+    }
+
+    // 打开用户详情页
+    onShowDetail(user_id: number) {
+        this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
     }
 }
