@@ -16,6 +16,8 @@
             </el-table-column>
             <el-table-column prop="from_coin_amount" :label="LangUtil('数量')" class-name="status-col">
             </el-table-column>
+            <el-table-column prop="conversion_current_rate" :label="tableColumns['rate'].name" class-name="status-col">
+            </el-table-column>
             <el-table-column prop="to_coin" :label="LangUtil('转换后币种')" class-name="status-col"> </el-table-column>
             <el-table-column prop="to_coin_amount" :label="LangUtil('数量')" class-name="status-col"> </el-table-column>
         </el-table>
@@ -47,6 +49,7 @@ export default class PlatCurrencyConversionRateLogDialog extends AbstractView {
     // proxy
     myProxy: PlatCurrencyConversionRateProxy = this.getProxy(PlatCurrencyConversionRateProxy);
     // proxy property
+    tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.logDialogData.list;
     pageInfo = this.myProxy.logDialogData.pageInfo;
     listQuery = this.myProxy.logListQuery;
