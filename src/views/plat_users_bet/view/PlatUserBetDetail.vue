@@ -26,12 +26,23 @@
                     <el-form-item size="mini" :label="tableColumns['vendor_type'].name" prop="vendor_type">
                         {{ tableColumns["vendor_type"].options[form["vendor_type"]] }}
                     </el-form-item>
+                    <el-form-item size="mini" :label="LangUtil('投注类型')" v-if="form.vendor_type == 64">
+                        {{ form.bet_type }}
+                    </el-form-item>
+                    <el-form-item
+                        size="mini"
+                        :label="LangUtil('联赛')"
+                        v-if="form.vendor_type == 64 && form.bet_type != LangUtil('单注')"
+                    >
+                        {{ form.league }}
+                    </el-form-item>
                     <el-form-item
                         size="mini"
                         :label="tableColumns['vendor_product_name'].name"
                         prop="vendor_product_name"
                     >
-                        {{ form["vendor_product_name"] }}
+                        <span v-if="form.vendor_type == 64 && form.bet_type != LangUtil('单注')">-</span>
+                        <span v-else>{{ form["vendor_product_name"] }}</span>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['settlement_status'].name" prop="settlement_status">
                         {{ tableColumns["settlement_status"].options[form["settlement_status"]] }}
@@ -41,6 +52,19 @@
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['settlement_at'].name" prop="settlement_at">
                         {{ form["settlement_at"] }}
+                    </el-form-item>
+                    <el-form-item size="mini" :label="LangUtil('提前结算')" v-if="form.bet_type == LangUtil('单注')">
+                        {{ form["is_cash_out"] }}
+                    </el-form-item>
+                    <el-form-item size="mini" :label="LangUtil('返回金额')" v-if="form.bet_type == LangUtil('单注')">
+                        {{ form["cash_out_amount"] }}
+                    </el-form-item>
+                    <el-form-item
+                        size="mini"
+                        :label="LangUtil('提前结算赔率')"
+                        v-if="form.bet_type == LangUtil('单注')"
+                    >
+                        {{ form["cash_out_odds"] }}
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['pull_at'].name" prop="pull_at">
                         {{ form["pull_at"] }}
@@ -274,7 +298,7 @@ export default class PlatUserBetDetail extends AbstractView {
     }
 
     get form() {
-        return  this.myProxy.dialogData.form;
+        return this.myProxy.dialogData.form;
     }
 }
 </script>
