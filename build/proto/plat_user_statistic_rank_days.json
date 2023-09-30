@@ -5,6 +5,7 @@
     "list": [
        "admin/plat_user_statistic_rank_days/table_columns",
        "admin/plat_user_statistic_rank_days/index",
+       "admin/plat_user_statistic_rank_days/index2",
        "admin/plat_user_statistic_rank_days/store",
        "admin/plat_user_statistic_rank_days/update/{id}"
     ]

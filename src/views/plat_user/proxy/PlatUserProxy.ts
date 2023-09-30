@@ -141,6 +141,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             country: { name: "国家", options: [] },
             user_tag: { name: "用户标签", options: {} },
             ma_token: { name: "ma_token", options: {} },
+            bet_at: { name: '最后投注时间', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
