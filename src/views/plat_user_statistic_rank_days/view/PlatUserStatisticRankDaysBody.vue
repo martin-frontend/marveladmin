@@ -9,6 +9,9 @@
             size="mini"
             v-loading="net_status.loading"
             @sort-change="tableSortChange"
+            :header-cell-style="{
+                'text-align': 'center',
+            }"
         >
             <el-table-column :label="`${tableColumns.plat_id.name}`" class-name="status-col" prop="plat_id">
                 <template slot-scope="{ row }">
@@ -32,7 +35,23 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="`${tableColumns.username.name}`" class-name="status-col" prop="username">
+            <el-table-column :label="LangUtil('用户信息')" prop="username">
+                <template slot-scope="{ row }">
+                    <div>{{ tableColumns.username.name }}：{{ row.username }}</div>
+                    <div>
+                        {{ tableColumns.real_name.name }}：
+                        <span v-if="row.real_name">{{ row.real_name }}</span>
+                        <span v-else>-</span>
+                    </div>
+                    <div>
+                        {{ tableColumns.phone.name }}： <span v-if="row.phone">{{ row.phone }}</span>
+                        <span v-else>-</span>
+                    </div>
+                    <div>
+                        {{ tableColumns.email.name }}：<span v-if="row.email">{{ row.email }}</span>
+                        <span v-else>-</span>
+                    </div>
+                </template>
             </el-table-column>
             <el-table-column :label="`${tableColumns.channel_id.name}`" class-name="status-col" prop="channel_id">
             </el-table-column>

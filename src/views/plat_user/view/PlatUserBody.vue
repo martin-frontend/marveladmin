@@ -277,6 +277,7 @@
                     <p>{{ tableColumns["last_online_at"].name }}：{{ row.last_online_at }}</p>
                     <p>{{ tableColumns["register_ip"].name }}：{{ row.register_ip }}</p>
                     <p>{{ tableColumns["last_login_ip"].name }}：{{ row.last_login_ip }}</p>
+                    <p>{{ tableColumns["bet_at"].name }}：{{ row.bet_at }}</p>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('操作')" :min-width="width" class-name="status-col">

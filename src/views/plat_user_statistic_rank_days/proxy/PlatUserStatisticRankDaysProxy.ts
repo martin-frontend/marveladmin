@@ -6,6 +6,7 @@ import GlobalEventType from "@/core/global/GlobalEventType";
 import { HttpType } from "@/views/plat_user_statistic_rank_days/setting";
 import IPlatUserStatisticRankDaysProxy from "./IPlatUserStatisticRankDaysProxy";
 import { BaseInfo } from "@/components/vo/commonVo";
+import { checkUnique, unique } from "@/core/global/Permission";
 
 export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implements IPlatUserStatisticRankDaysProxy {
     static NAME = "PlatUserStatisticRankDaysProxy";
@@ -94,6 +95,9 @@ export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implem
             win_gold_64: { name: '体育电竞输赢金额', options: {} },
             win_gold_128: { name: '链游输赢金额', options: {} },
             coin_name_unique_option: {},
+            real_name: { name: LangUtil("真实姓名"), options: {} },
+            phone: { name: LangUtil("手机号"), options: {} },
+            email: { name: LangUtil("邮箱"), options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -118,7 +122,10 @@ export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implem
             "plat_id",
             "user_id",
             "username",
-            // "is_real",
+            "real_name",
+            "phone",
+            "email",
+            "channel_id",
             "coin_name_unique",
             "total_recharge",
             "total_exchange",
@@ -252,7 +259,11 @@ export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implem
 
     /**查询 */
     onQuery() {
-        this.sendNotification(HttpType.admin_plat_user_statistic_rank_days_index, objectRemoveNull(this.listQuery));
+        if (checkUnique(unique.admin_plat_user_statistic_rank_days_index2)) {
+            this.sendNotification(HttpType.admin_plat_user_statistic_rank_days_index2, objectRemoveNull(this.listQuery));
+        } else {
+            this.sendNotification(HttpType.admin_plat_user_statistic_rank_days_index, objectRemoveNull(this.listQuery));
+        }
     }
 
     /**打开用户详情 */
@@ -329,7 +340,11 @@ export default class PlatUserStatisticRankDaysProxy extends AbstractProxy implem
         const { pageSize, pageCurrent } = this.exportData.pageInfo;
         queryCopy.page_size = pageSize;
         queryCopy.page_count = Number(pageCurrent) + 1;
-        this.sendNotification(HttpType.admin_plat_user_statistic_rank_days_index, objectRemoveNull(queryCopy));
+        if (checkUnique(unique.admin_plat_user_statistic_rank_days_index2)) {
+            this.sendNotification(HttpType.admin_plat_user_statistic_rank_days_index2, objectRemoveNull(queryCopy));
+        } else {
+            this.sendNotification(HttpType.admin_plat_user_statistic_rank_days_index, objectRemoveNull(queryCopy));
+        }
     }
 
     /**每1000笔保存一次 */
