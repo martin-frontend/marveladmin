@@ -5,7 +5,10 @@
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
-                @change="listQuery.user_tag = '';handlerSearch();"
+                @change="
+                    listQuery.user_tag = '';
+                    handlerSearch();
+                "
                 :clearable="false"
                 :width="350"
             />
@@ -95,6 +98,7 @@
                     width="600"
                 />
             </div>
+            <SearchInput :title="tableColumns.accept_admin_username.name" v-model="listQuery.accept_admin_username" />
             <div>
                 <el-button @click="handlerSearch" type="primary" icon="el-icon-search">
                     {{ LangUtil("查询") }}
