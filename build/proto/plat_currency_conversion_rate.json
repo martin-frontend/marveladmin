@@ -1,0 +1,14 @@
+{
+    "name": "币种汇率管理",
+    "description": "币种汇率管理",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75268574",
+    "list": [
+        "admin/plat_currency_conversion_rate/table_columns",
+        "admin/plat_currency_conversion_rate/index",
+        "admin/plat_currency_conversion_rate/show/{id}",
+        "admin/plat_currency_conversion_rate/store",
+        "admin/plat_currency_conversion_rate/update/{id}",
+        "admin/plat_currency_conversion_rate/delete/{id}",
+        "admin/conversion_orders/show_index/{id}"
+    ]
+}
