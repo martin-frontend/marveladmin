@@ -23,7 +23,11 @@ export default class StatisticPlatDaysMediator extends AbstractMediator {
     }
 
     listNotificationInterests(): string[] {
-        return [EventType.admin_statistic_plat_days_table_columns, EventType.admin_statistic_plat_days_index];
+        return [
+            EventType.admin_statistic_plat_days_table_columns,
+            EventType.admin_statistic_plat_days_index,
+            EventType.admin_statistic_plat_days_plat_summary_index
+        ];
     }
 
     handleNotification(notification: puremvc.INotification) {
@@ -34,6 +38,7 @@ export default class StatisticPlatDaysMediator extends AbstractMediator {
             case EventType.admin_statistic_plat_days_table_columns:
                 this.myProxy.setTableColumns(body);
                 break;
+            case EventType.admin_statistic_plat_days_plat_summary_index:
             case EventType.admin_statistic_plat_days_index:
                 if (this.myProxy.exportData.isExportExcel) {
                     this.myProxy.onSaveExportData(body);

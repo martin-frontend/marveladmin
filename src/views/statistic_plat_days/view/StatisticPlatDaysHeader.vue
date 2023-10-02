@@ -15,7 +15,11 @@
                 :startDate.sync="listQuery['created_date-{>=}']"
                 :endDate.sync="listQuery['created_date-{<=}']"
             />
-            <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
+            <SearchInput
+                v-if="myProxy.tableData.activeName == 'stats'"
+                :title="tableColumns.channel_id.name"
+                v-model="listQuery.channel_id"
+            />
             <div class="btn-group">
                 <div>
                     <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
@@ -27,7 +31,9 @@
                 </div>
                 <div>
                     <el-button @click="heandlerFieldSetting()" type="primary">{{ LangUtil("字段配置") }}</el-button>
-                    <el-button @click="heandlerExport()" type="primary" :disabled="list.length == 0">{{ LangUtil("导出") }}</el-button>
+                    <el-button @click="heandlerExport()" type="primary" :disabled="list.length == 0">
+                        {{ LangUtil("导出") }}
+                    </el-button>
                 </div>
             </div>
         </div>
