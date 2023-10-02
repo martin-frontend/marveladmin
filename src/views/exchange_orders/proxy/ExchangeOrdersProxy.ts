@@ -165,6 +165,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         grant_agent_id: "",
         user_remark: "",
         user_tag: "",
+        accept_admin_username: "",
     };
 
     /**平台币商代付相关数据 */
@@ -311,7 +312,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
 
-    onQueryAll() {}
+    onQueryAll() { }
 
     /**重置查询条件 */
     resetListQuery() {
@@ -341,6 +342,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             grant_agent_id: "",
             user_remark: "",
             user_tag: "",
+            accept_admin_username: "",
         });
     }
 
