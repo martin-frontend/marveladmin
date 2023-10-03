@@ -11,9 +11,16 @@
         </div>
         <div class="group">
             <SearchDatePicker
+                v-show="myProxy.tableData.activeName=='stats'"
                 :title="tableColumns.created_date.name"
                 :startDate.sync="listQuery['created_date-{>=}']"
                 :endDate.sync="listQuery['created_date-{<=}']"
+            />
+            <SearchDatePicker
+                v-show="myProxy.tableData.activeName=='summary'"
+                :title="tableColumns.created_date.name"
+                :startDate.sync="summaryListQuery['created_date-{>=}']"
+                :endDate.sync="summaryListQuery['created_date-{<=}']"
             />
             <SearchInput
                 v-if="myProxy.tableData.activeName == 'stats'"
@@ -69,10 +76,16 @@ export default class StatisticPlatDaysHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    summaryListQuery = this.myProxy.summaryListQuery;
     list = this.myProxy.tableData.list;
     handlerSearch() {
-        this.listQuery.page_count = 1;
-        this.myProxy.onQuery();
+        if (this.myProxy.tableData.activeName == "stats") {
+            this.listQuery.page_count = 1;
+            this.myProxy.onQuery();
+            return
+        }
+        this.summaryListQuery.page_count = 1;
+        this.myProxy.onQuerySummary();
     }
 
     handlerReset() {

@@ -1078,6 +1078,7 @@ export default class StatisticPlatDaysBody extends AbstractView {
     tableData = this.myProxy.tableData.list;
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
+    summaryListQuery = this.myProxy.summaryListQuery;
 
     @Watch("myProxy.tableData.updateNum")
     reload() {
@@ -1085,8 +1086,13 @@ export default class StatisticPlatDaysBody extends AbstractView {
     }
 
     handlerPageSwitch(page: number) {
-        this.listQuery.page_count = page;
-        this.myProxy.onQuery();
+        if (this.myProxy.tableData.activeName == "stats") {
+          this.listQuery.page_count = page;
+          this.myProxy.onQuery();
+          return
+        }
+        this.summaryListQuery.page_count = page;
+        this.myProxy.onQuerySummary();
     }
     @Watch("myProxy.tableData.activeName")
     tabChange() {

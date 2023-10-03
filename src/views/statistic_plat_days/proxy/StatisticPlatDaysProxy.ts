@@ -1,6 +1,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
+import { dateFormat, getTodayOffset } from "@/core/global/Functions";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/statistic_plat_days/setting";
 import { MessageBox } from "element-ui";
@@ -267,6 +268,14 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         channel_id: "",
         "created_date-{>=}": this.defaultDate,
         "created_date-{<=}": this.defaultDate,
+    };
+
+    summaryListQuery = {
+        page_count: 1,
+        page_size: 20,
+        plat_id: "",
+        "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd"),
+        "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
     };
 
     /**弹窗 相关数据 */
@@ -618,13 +627,22 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**重置查询条件 */
     resetListQuery() {
-        Object.assign(this.listQuery, {
-            // TODO
+        if (this.tableData.activeName == "stats") {
+            Object.assign(this.listQuery, {
+                page_count: 1,
+                page_size: 20,
+                channel_id: "",
+                "created_date-{>=}": this.defaultDate,
+                "created_date-{<=}": this.defaultDate,
+            });
+            return
+        }
+        Object.assign(this.summaryListQuery, {
             page_count: 1,
             page_size: 20,
             channel_id: "",
-            "created_date-{>=}": this.defaultDate,
-            "created_date-{<=}": this.defaultDate,
+            "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd"),
+            "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
         });
     }
 
@@ -839,7 +857,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**查询汇总 */
     onQuerySummary() {
-        this.sendNotification(HttpType.admin_statistic_plat_days_plat_summary_index, objectRemoveNull(this.listQuery));
+        this.sendNotification(HttpType.admin_statistic_plat_days_plat_summary_index, objectRemoveNull(this.summaryListQuery));
     }
 
     get defaultDate() {
