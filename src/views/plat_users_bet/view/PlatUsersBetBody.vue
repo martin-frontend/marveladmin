@@ -395,7 +395,8 @@
             <el-table-column :label="LangUtil('投注内容')" header-align="center" align="left" min-width="215px">
                 <template slot-scope="{ row }">
                     <template v-if="row.vendor_type == 64">
-                        <p>{{ LangUtil("投注类型") }}： {{ row.bet_type }}</p>
+                        <p v-if="row.bet_type == LangUtil('单注')">{{ LangUtil("投注类型") }}： {{ row.bet_type }}</p>
+                        <p v-else>{{ LangUtil("投注类型") }}： {{ row.bet_type }} {{ row.league }}</p>
                         <template v-if="row.bet_type == LangUtil('单注')">
                             <p>{{ LangUtil("提前结算") }}：{{ row.is_cash_out }}</p>
                             <p>{{ LangUtil("返回金额") }}：{{ row.cash_out_amount }}</p>
