@@ -1,5 +1,9 @@
 <template>
     <div>
+        <el-tabs v-model="myProxy.tableData.activeName">
+            <el-tab-pane :label="LangUtil('平台每日统计')" name="stats"> </el-tab-pane>
+            <el-tab-pane :label="LangUtil('平台每日汇总')" name="summary"> </el-tab-pane>
+        </el-tabs>
         <el-table
             :data="tableData"
             border
@@ -26,7 +30,9 @@
                         <div v-if="row.plat_id === '合计' || row.plat_id === LangUtil('合计')">{{ row.plat_id }}</div>
                         <div v-else>
                             <div>{{ LangUtil("平台") }}：{{ tableColumns["plat_id"].options[row.plat_id] }}</div>
-                            <div>{{ LangUtil("渠道") }}：{{ row.channel_id }}</div>
+                            <div v-if="myProxy.tableData.activeName == 'stats'">
+                                {{ LangUtil("渠道") }}：{{ row.channel_id }}
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -340,6 +346,33 @@
                 </template>
                 <template slot-scope="{ row }">
                     <span v-if="row.net_rech != null">{{ row.net_rech }}</span>
+                    <span v-else> - </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                v-if="tableColumns.channel_profit.display"
+                prop="channel_profit"
+                :label="tableColumns['channel_profit'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['channel_profit'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["channel_profit"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+                <template slot-scope="{ row }">
+                    <span v-if="row.channel_profit != null">
+                        <WinLossDisplay :amount="row.channel_profit"></WinLossDisplay>
+                    </span>
                     <span v-else> - </span>
                 </template>
             </el-table-column>
@@ -1125,6 +1158,7 @@ export default class StatisticPlatDaysBody extends AbstractView {
     tableData = this.myProxy.tableData.list;
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
+    summaryListQuery = this.myProxy.summaryListQuery;
 
     @Watch("myProxy.tableData.updateNum")
     reload() {
@@ -1132,8 +1166,21 @@ export default class StatisticPlatDaysBody extends AbstractView {
     }
 
     handlerPageSwitch(page: number) {
-        this.listQuery.page_count = page;
-        this.myProxy.onQuery();
+        if (this.myProxy.tableData.activeName == "stats") {
+          this.listQuery.page_count = page;
+          this.myProxy.onQuery();
+          return
+        }
+        this.summaryListQuery.page_count = page;
+        this.myProxy.onQuerySummary();
+    }
+    @Watch("myProxy.tableData.activeName")
+    tabChange() {
+        if (this.myProxy.tableData.activeName == "stats") {
+            this.myProxy.onQuery();
+        } else {
+            this.myProxy.onQuerySummary();
+        }
     }
 }
 </script>

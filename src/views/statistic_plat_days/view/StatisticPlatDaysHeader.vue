@@ -11,11 +11,22 @@
         </div>
         <div class="group">
             <SearchDatePicker
+                v-show="myProxy.tableData.activeName=='stats'"
                 :title="tableColumns.created_date.name"
                 :startDate.sync="listQuery['created_date-{>=}']"
                 :endDate.sync="listQuery['created_date-{<=}']"
             />
-            <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
+            <SearchDatePicker
+                v-show="myProxy.tableData.activeName=='summary'"
+                :title="tableColumns.created_date.name"
+                :startDate.sync="summaryListQuery['created_date-{>=}']"
+                :endDate.sync="summaryListQuery['created_date-{<=}']"
+            />
+            <SearchInput
+                v-if="myProxy.tableData.activeName == 'stats'"
+                :title="tableColumns.channel_id.name"
+                v-model="listQuery.channel_id"
+            />
             <div class="btn-group">
                 <div>
                     <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
@@ -27,7 +38,9 @@
                 </div>
                 <div>
                     <el-button @click="heandlerFieldSetting()" type="primary">{{ LangUtil("字段配置") }}</el-button>
-                    <el-button @click="heandlerExport()" type="primary" :disabled="list.length == 0">{{ LangUtil("导出") }}</el-button>
+                    <el-button @click="heandlerExport()" type="primary" :disabled="list.length == 0">
+                        {{ LangUtil("导出") }}
+                    </el-button>
                 </div>
             </div>
         </div>
@@ -63,10 +76,16 @@ export default class StatisticPlatDaysHeader extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    summaryListQuery = this.myProxy.summaryListQuery;
     list = this.myProxy.tableData.list;
     handlerSearch() {
-        this.listQuery.page_count = 1;
-        this.myProxy.onQuery();
+        if (this.myProxy.tableData.activeName == "stats") {
+            this.listQuery.page_count = 1;
+            this.myProxy.onQuery();
+            return
+        }
+        this.summaryListQuery.page_count = 1;
+        this.myProxy.onQuerySummary();
     }
 
     handlerReset() {
