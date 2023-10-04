@@ -81,6 +81,14 @@
                         width="80px"
                     >
                     </el-table-column>
+                    <!-- 充值人数 -->
+                    <el-table-column
+                        :prop="`${activeName}_recharge_user`"
+                        :label="tableColumns[`${activeName}_recharge_user`].name"
+                        align="center"
+                        width="80px"
+                    >
+                    </el-table-column>
                     <!-- 充值笔数 -->
                     <el-table-column
                         :prop="`${activeName}_recharge_count`"
