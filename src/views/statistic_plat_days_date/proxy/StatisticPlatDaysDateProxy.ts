@@ -222,7 +222,13 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
                 name: '任务币转换', options: {},
                 tips: "玩家完成任务获得真钱的数量",
             },
-            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' }
+            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' },
+            channel_profit: {
+                name: "渠道毛利",
+                options: {},
+                display: true,
+                tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%"
+            }
         },
         list: <any>[],
         columnKeys: <any>[],
