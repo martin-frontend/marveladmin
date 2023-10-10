@@ -684,7 +684,8 @@
                     </el-tooltip>
                 </template>
             </el-table-column>
-            <el-table-column
+            <!-- 周活跃用户 -->
+            <!-- <el-table-column
                 prop="active_user_week"
                 :label="tableColumns['active_user_week'].name"
                 align="center"
@@ -703,8 +704,9 @@
                         </div>
                     </el-tooltip>
                 </template>
-            </el-table-column>
-            <el-table-column
+            </el-table-column> -->
+            <!-- 月活跃用户 -->
+            <!-- <el-table-column
                 prop="active_user_month"
                 :label="tableColumns['active_user_month'].name"
                 align="center"
@@ -723,7 +725,7 @@
                         </div>
                     </el-tooltip>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
                 prop="active_user_recharge"
                 :label="tableColumns['active_user_recharge'].name"
@@ -1087,9 +1089,9 @@ export default class StatisticPlatDaysBody extends AbstractView {
 
     handlerPageSwitch(page: number) {
         if (this.myProxy.tableData.activeName == "stats") {
-          this.listQuery.page_count = page;
-          this.myProxy.onQuery();
-          return
+            this.listQuery.page_count = page;
+            this.myProxy.onQuery();
+            return;
         }
         this.summaryListQuery.page_count = page;
         this.myProxy.onQuerySummary();

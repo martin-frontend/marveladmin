@@ -247,9 +247,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             },
             pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' },
             channel_profit: {
-                "name": "渠道毛利",
-                "options": {},
-                "tips": "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%"
+                name: "渠道毛利",
+                options: {},
+                display: true,
+                tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%"
             }
         },
         list: <any>[],
@@ -273,7 +274,6 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
     summaryListQuery = {
         page_count: 1,
         page_size: 20,
-        plat_id: "",
         "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd"),
         "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
     };
@@ -315,14 +315,14 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                         name: this.tableData.columns.active_user.name,
                         checked: true,
                     },
-                    active_user_week: {
-                        name: this.tableData.columns.active_user_week.name,
-                        checked: true,
-                    },
-                    active_user_month: {
-                        name: this.tableData.columns.active_user_month.name,
-                        checked: true,
-                    },
+                    // active_user_week: {
+                    //     name: this.tableData.columns.active_user_week.name,
+                    //     checked: true,
+                    // },
+                    // active_user_month: {
+                    //     name: this.tableData.columns.active_user_month.name,
+                    //     checked: true,
+                    // },
                     cost_per_user: {
                         name: this.tableData.columns.cost_per_user.name,
                         checked: true,
@@ -383,6 +383,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                     },
                     net_rech: {
                         name: this.tableData.columns.net_rech.name,
+                        checked: true,
+                    },
+                    channel_profit: {
+                        name: this.tableData.columns.channel_profit.name,
                         checked: true,
                     },
                     exch_amt: {
@@ -573,8 +577,8 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "water",
             "new_register_water",
             "active_user",
-            "active_user_week",
-            "active_user_month",
+            // "active_user_week",
+            // "active_user_month",
             "active_user_recharge",
             "active_recharge_user",
             "recharge_seep_rate",
@@ -693,14 +697,14 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                         name: this.tableData.columns.active_user.name,
                         checked: true,
                     },
-                    active_user_week: {
-                        name: this.tableData.columns.active_user_week.name,
-                        checked: true,
-                    },
-                    active_user_month: {
-                        name: this.tableData.columns.active_user_month.name,
-                        checked: true,
-                    },
+                    // active_user_week: {
+                    //     name: this.tableData.columns.active_user_week.name,
+                    //     checked: true,
+                    // },
+                    // active_user_month: {
+                    //     name: this.tableData.columns.active_user_month.name,
+                    //     checked: true,
+                    // },
                     cost_per_user: {
                         name: this.tableData.columns.cost_per_user.name,
                         checked: true,
@@ -761,6 +765,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                     },
                     net_rech: {
                         name: this.tableData.columns.net_rech.name,
+                        checked: true,
+                    },
+                    channel_profit: {
+                        name: this.tableData.columns.channel_profit.name,
                         checked: true,
                     },
                     exch_amt: {
@@ -857,7 +865,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**查询汇总 */
     onQuerySummary() {
-        this.sendNotification(HttpType.admin_statistic_plat_days_plat_summary_index, objectRemoveNull(this.summaryListQuery));
+        this.sendNotification(HttpType.admin_statistic_plat_days_plat_summary_index, objectRemoveNull({ ...this.summaryListQuery, plat_id: this.listQuery.plat_id }));
     }
 
     get defaultDate() {
@@ -1000,11 +1008,14 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
     showFieldSelectionDialog() {
         this.fieldSelectionData.bShow = true;
         if (this.tableData.activeName == 'stats') {
-            this.fieldSelectionData.fieldOptions.splice(2, 0, 'channel_id')
-            this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
+            if (this.fieldSelectionData.fieldOptions.indexOf('channel_id') < 0) {
+                this.fieldSelectionData.fieldOptions.splice(2, 0, 'channel_id')
+            }
         } else {
-            this.fieldSelectionData.fieldOptions.splice(this.fieldSelectionData.fieldOptions.indexOf('channel_id'), 1)
-            this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
+            if (this.fieldSelectionData.fieldOptions.indexOf('channel_id') > 0) {
+                this.fieldSelectionData.fieldOptions.splice(this.fieldSelectionData.fieldOptions.indexOf('channel_id'), 1)
+            }
         }
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }
