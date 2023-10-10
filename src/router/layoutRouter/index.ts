@@ -422,6 +422,10 @@ const layoutRouter = {
             name: "VIP模版配置",
             component: () => import(/* webpackChunkName: "plat_users_vip_model" */"@/views/plat_users_vip_model/view/PlatUsersVipModel.vue")
         },        {
+            path: "plat_user_agent_bonus",
+            name: "代理分红查询",
+            component: () => import(/* webpackChunkName: "plat_user_agent_bonus" */"@/views/plat_user_agent_bonus/view/PlatUserAgentBonus.vue")
+        },        {
             path: "plat_user_login_log",
             name: "平台厂商用户登录log",
             component: () => import(/* webpackChunkName: "plat_user_login_log" */"@/views/plat_user_login_log/view/PlatUserLoginLog.vue")
