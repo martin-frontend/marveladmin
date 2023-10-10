@@ -99,7 +99,6 @@ export default class PlatUserAgentBonusHeader extends AbstractView {
         channel_id_keys.forEach((key: any) => {
             this.tableColumns.channel_id_options[key] = key;
         });
-        this.tableColumns.coin_name_unique_option = this.tableColumns.coin_name_unique.options[this.listQuery.plat_id];
     }
 
     handlerReset() {

@@ -6,6 +6,7 @@ import { BaseInfo } from "@/components/vo/commonVo";
 import IPlatUserAgentBonusProxy from "./IPlatUserAgentBonusProxy";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import router from "@/router";
+import LangUtil from "@/core/global/LangUtil";
 
 export default class PlatUserAgentBonusProxy extends AbstractProxy implements IPlatUserAgentBonusProxy {
     static NAME = "PlatUserAgentBonusProxy";
@@ -69,11 +70,11 @@ export default class PlatUserAgentBonusProxy extends AbstractProxy implements IP
             user_id: { name: "用户ID", options: {} },
             user_info: { name: "用户信息", options: {} },
             cate: {
-                name: "LangUtil('邮件分类')",
+                name: LangUtil('邮件分类'),
                 options: { 1: '平台' }
             },
             type: {
-                name: "LangUtil('邮件类型')",
+                name: LangUtil('邮件类型'),
                 options: { 3: '群发邮件' }
             },
             send_type: { name: "", options: {} },
@@ -102,8 +103,8 @@ export default class PlatUserAgentBonusProxy extends AbstractProxy implements IP
         form: {
             id: null,
             plat_id: "",
-            title: "",
-            content: "",
+            title: "代理分红发放",
+            content: "{0}月{1}日到{2}月{3}日分红金额已经发放，感谢您一直以来对{4}的支持，在今后的日子里让我们继续携手前行，共创辉煌！",
             cate: "1",
             type: "3",
             user_id: "",
@@ -203,6 +204,14 @@ export default class PlatUserAgentBonusProxy extends AbstractProxy implements IP
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+            this.dialogData.form.coin_type = data.extents.coin_name_unique;
+            this.dialogData.form.amount = data.extents.agent_bonus_gold;
+            this.dialogData.form.content = this.changeContent(this.dialogData.form.content,
+                this.listQuery.settlement_date_start.split(" ")[0].split("-")[1],
+                this.listQuery.settlement_date_start.split(" ")[0].split("-")[2],
+                this.listQuery.settlement_date_end.split(" ")[0].split("-")[1],
+                this.listQuery.settlement_date_end.split(" ")[0].split("-")[2],
+                this.tableData.columns["plat_id"].options[this.listQuery.plat_id].split("]")[1])
         } else {
             this.dialogData.formSource = null;
         }
@@ -218,8 +227,8 @@ export default class PlatUserAgentBonusProxy extends AbstractProxy implements IP
         Object.assign(this.dialogData.form, {
             id: null,
             plat_id: "",
-            title: "",
-            content: "",
+            title: "代理分红发放",
+            content: "{0}月{1}日到{2}月{3}日分红金额已经发放，感谢您一直以来对{4}的支持，在今后的日子里让我们继续携手前行，共创辉煌！",
             cate: "1",
             type: "3",
             user_id: "",
@@ -345,5 +354,13 @@ export default class PlatUserAgentBonusProxy extends AbstractProxy implements IP
     showFieldSelectionDialog() {
         this.fieldSelectionData.bShow = true;
         this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
+    }
+
+    changeContent(str: string, ...args: any[]) {
+        let result: string = str;
+        for (let i = 0; i < args.length; i++) {
+            result = result.replace(`{${i}}`, args[i]);
+        }
+        return result;
     }
 }
