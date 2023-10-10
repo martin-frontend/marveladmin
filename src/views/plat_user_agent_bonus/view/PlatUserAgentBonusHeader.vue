@@ -33,10 +33,23 @@
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
                     {{ LangUtil("重置") }}
                 </el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                <el-button @click="handlerExport()" type="primary" icon="el-icon-download" :disabled="list.length == 0">
                     {{ LangUtil("导出") }}
                 </el-button>
             </div>
+        </div>
+        <div style="margin-top:5px;">
+            {{
+                LangUtil(
+                    "代理分红：查询时间段内，该代理实际要发放的分红金额，计算公式：团队净亏损*分红比例-下级代理总分红，如果代理是最底层代理下级没有开分红的情况，代理分红=团队净亏损 * 分红比例；团队净亏损=团队游戏总输赢-团队代理总佣金-三方游戏成本-充值成本-提现成本-活动成本-挖矿返水。"
+                )
+            }}
+        </div>
+        <div>
+            {{ LangUtil("团队分红：查询时间段内，团队实际要发放的分红金额，是根据各个代理实际分红金额累加所得。") }}
+        </div>
+        <div>
+            {{ LangUtil("下级代理总分红：查询时间段内，所有下级、下下级等代理实际分红金额累加所的。") }}
         </div>
     </div>
 </template>
@@ -71,6 +84,7 @@ export default class PlatUserAgentBonusHeader extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
     LangUtil = LangUtil;
+    list = this.myProxy.tableData.list;
 
     handlerSearch() {
         this.listQuery.page_count = 1;
@@ -94,6 +108,10 @@ export default class PlatUserAgentBonusHeader extends AbstractView {
 
     handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
+    }
+
+    handlerExport() {
+        this.myProxy.showFieldSelectionDialog();
     }
 }
 </script>

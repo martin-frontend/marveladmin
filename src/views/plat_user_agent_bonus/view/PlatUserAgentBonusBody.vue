@@ -74,7 +74,16 @@
                         v-if="checkUnique(unique.admin_user_show) && row.update_btn == 1"
                         >{{LangUtil("编辑")}}</el-button
                     >  -->
-                    <el-button size="mini" type="primary" @click="handleEdit(row)">
+                    <el-button
+                        size="mini"
+                        type="primary"
+                        @click="handleEdit(row)"
+                        :disabled="
+                            row.send_bonus_time != '-' &&
+                                new Date(Date.parse(listQuery.settlement_date_start)).getTime() <
+                                    new Date(Date.parse(row.send_bonus_time)).getTime()
+                        "
+                    >
                         {{ LangUtil("发放分红") }}
                     </el-button>
                 </template>
@@ -114,6 +123,7 @@ export default class PlatUserAgentBonusBody extends AbstractView {
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
     LangUtil = LangUtil;
+
     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();

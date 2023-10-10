@@ -3,6 +3,8 @@
         <PlatUserAgentBonusDialog v-if="myProxy.dialogData.bShow" />
         <PlatUserAgentBonusHeader />
         <PlatUserAgentBonusBody />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -14,12 +16,16 @@ import { Component } from "vue-property-decorator";
 import PlatUserAgentBonusDialog from "./PlatUserAgentBonusDialog.vue";
 import PlatUserAgentBonusHeader from "./PlatUserAgentBonusHeader.vue";
 import PlatUserAgentBonusBody from "./PlatUserAgentBonusBody.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 
 @Component({
     components: {
         PlatUserAgentBonusDialog,
         PlatUserAgentBonusHeader,
         PlatUserAgentBonusBody,
+        ProgressDialog,
+        FieldSelectionDialog,
     },
 })
 export default class PlatUserAgentBonus extends AbstractView {

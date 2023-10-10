@@ -42,7 +42,11 @@ export default class PlatUserAgentBonusMediator extends AbstractMediator {
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_user_agent_bonus_index:
-                myProxy.setTableData(body);
+                if (myProxy.exportData.isExportExcel) {
+                    myProxy.onSaveExportData(body);
+                } else {
+                    myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_plat_user_agent_bonus_send_mail:
                 Message.success(LangUtil("发送成功"));

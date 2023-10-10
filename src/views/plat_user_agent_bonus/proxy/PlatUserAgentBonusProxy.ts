@@ -2,9 +2,10 @@ import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
 import { dateFormat, getTodayOffset, formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/plat_user_agent_bonus/setting";
-import { MessageBox } from "element-ui";
+import { BaseInfo } from "@/components/vo/commonVo";
 import IPlatUserAgentBonusProxy from "./IPlatUserAgentBonusProxy";
 import GlobalEventType from "@/core/global/GlobalEventType";
+import router from "@/router";
 
 export default class PlatUserAgentBonusProxy extends AbstractProxy implements IPlatUserAgentBonusProxy {
     static NAME = "PlatUserAgentBonusProxy";
@@ -116,6 +117,36 @@ export default class PlatUserAgentBonusProxy extends AbstractProxy implements IP
             settlement_date_end: "",
         },
         formSource: null, // 表单的原始数据
+    };
+
+    fieldSelectionData = {
+        bShow: false,
+        fieldOptions: [
+            "plat_id",
+            "channel_id",
+            "user_id",
+            "nick_name",
+            "binded_at",
+            "invite_user_id",
+            "parent_nick_name",
+            "bind_depth",
+            "group_users",
+            "group_recharge_users",
+            "group_all_recharge",
+            "group_loss",
+            "agent_bonus_rate",
+            "agent_bonus",
+            "group_all_bonus",
+            "child_agent_bonus",
+        ],
+    };
+
+    exportData = {
+        fieldOrder: <any>[],
+        isExportExcel: false,
+        list: <any>[],
+        isQueryExportData: false,
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
     };
 
     /**设置表头数据 */
@@ -242,5 +273,77 @@ export default class PlatUserAgentBonusProxy extends AbstractProxy implements IP
     // 打开用户详情页
     onShowDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
+    }
+
+    /**取得excel 挡案名称 */
+    getExcelOutputName() {
+        let name = `${router.currentRoute.name}`;
+        return `${name}-${this.listQuery["settlement_date_start"]}～${this.listQuery["settlement_date_end"]}`;
+    }
+
+    /**取得所有资料 */
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
+        this.sendNotification(HttpType.admin_plat_user_agent_bonus_index, objectRemoveNull(queryCopy));
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
+    }
+
+    /**导出excel */
+    exportExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item);
+            }
+        }
+
+        new BaseInfo.ExportExcel(
+            this.getExcelOutputName(),
+            exportField,
+            this.tableData.columns,
+            newData,
+            ["plat_id"],
+            []
+        );
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }
