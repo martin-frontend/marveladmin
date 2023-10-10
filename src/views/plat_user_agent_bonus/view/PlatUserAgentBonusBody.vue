@@ -24,20 +24,21 @@
                     <div>{{ tableColumns.binded_at.name }}：{{ row.binded_at }}</div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('上级信息')" align="center" min-width="120">
+            <el-table-column :label="LangUtil('上级信息')" align="center" min-width="160">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.invite_user_id.name }}：{{ row.invite_user_id }}</div>
                     <div>{{ tableColumns.parent_nick_name.name }}：{{ row.parent_nick_name }}</div>
                 </template>
             </el-table-column>
-            <el-table-column prop="bind_depth" :label="tableColumns.bind_depth.name" align="center"> </el-table-column>
-            <el-table-column prop="group_users" :label="tableColumns.group_users.name" align="center">
+            <el-table-column prop="bind_depth" :label="tableColumns.bind_depth.name" align="center" width="80">
+            </el-table-column>
+            <el-table-column prop="group_users" :label="tableColumns.group_users.name" align="center" width="80">
             </el-table-column>
             <el-table-column prop="group_recharge_users" :label="tableColumns.group_recharge_users.name" align="center">
             </el-table-column>
             <el-table-column prop="group_all_recharge" :label="tableColumns.group_all_recharge.name" align="center">
             </el-table-column>
-            <el-table-column prop="group_loss" :label="tableColumns.group_loss.name" align="center">
+            <el-table-column prop="group_loss" :label="tableColumns.group_loss.name" align="center" min-width="90">
                 <template slot="header">
                     <el-tooltip class="item" effect="dark" :content="tableColumns['group_loss'].tips" placement="top">
                         <div>
