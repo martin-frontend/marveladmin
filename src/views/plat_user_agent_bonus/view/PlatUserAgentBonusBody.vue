@@ -56,7 +56,12 @@
             </el-table-column>
             <el-table-column prop="group_all_bonus" :label="tableColumns.group_all_bonus.name" align="center">
             </el-table-column>
-            <el-table-column prop="child_agent_bonus" :label="tableColumns.child_agent_bonus.name" align="center">
+            <el-table-column
+                prop="child_agent_bonus"
+                :label="tableColumns.child_agent_bonus.name"
+                align="center"
+                min-width="100"
+            >
             </el-table-column>
             <el-table-column :label="LangUtil('操作')" class-name="status-col" width="160px">
                 <template slot-scope="{ row }">
