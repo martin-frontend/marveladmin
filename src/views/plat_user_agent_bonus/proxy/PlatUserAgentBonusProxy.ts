@@ -169,7 +169,7 @@ export default class PlatUserAgentBonusProxy extends AbstractProxy implements IP
                     this.tableData.columns.channel_id_options[key] = key;
                 });
             }
-            this.onQuery();
+            // this.onQuery();
         }
     }
 
