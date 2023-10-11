@@ -413,6 +413,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         activity_coin_get: "",
         activity_gold_exchange: "",
         pure_win_loss: "",
+        channel_profit: "",
     };
     /**表格数据 */
     setTableData(data: any) {
@@ -472,6 +473,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         this.summaryData["activity_coin_get"] = data.summary.activity_coin_get;
         this.summaryData["activity_gold_exchange"] = data.summary.activity_gold_exchange;
         this.summaryData["pure_win_loss"] = data.summary.pure_win_loss;
+        this.summaryData["channel_profit"] = data.summary.channel_profit;
         // 把summaryData 插入第一笔
         this.tableData.list.splice(0, 0, this.summaryData);
     }
