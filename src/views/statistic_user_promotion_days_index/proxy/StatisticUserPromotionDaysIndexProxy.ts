@@ -178,7 +178,7 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
         page_size: 20,
         plat_id: "",
         "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd hh:mm:ss"),
-        "created_date-{<=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
+        "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
         username: "",
         user_id: "",
     };
@@ -223,7 +223,7 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
             page_count: 1,
             page_size: 20,
             "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd hh:mm:ss"),
-            "created_date-{<=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
+            "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
             username: "",
             user_id: "",
         });
