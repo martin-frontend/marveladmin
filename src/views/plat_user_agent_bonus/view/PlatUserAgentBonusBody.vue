@@ -30,11 +30,16 @@
                     <div>{{ tableColumns.parent_nick_name.name }}：{{ row.parent_nick_name }}</div>
                 </template>
             </el-table-column>
-            <el-table-column prop="bind_depth" :label="tableColumns.bind_depth.name" align="center" width="80">
+            <el-table-column prop="bind_depth" :label="tableColumns.bind_depth.name" align="center" width="50">
             </el-table-column>
-            <el-table-column prop="group_users" :label="tableColumns.group_users.name" align="center" width="80">
+            <el-table-column prop="group_users" :label="tableColumns.group_users.name" align="center" width="50">
             </el-table-column>
-            <el-table-column prop="group_recharge_users" :label="tableColumns.group_recharge_users.name" align="center">
+            <el-table-column
+                prop="group_recharge_users"
+                :label="tableColumns.group_recharge_users.name"
+                align="center"
+                width="60"
+            >
             </el-table-column>
             <el-table-column prop="group_all_recharge" :label="tableColumns.group_all_recharge.name" align="center">
             </el-table-column>
@@ -51,7 +56,12 @@
                     <WinLossDisplay :amount="row.group_loss" />
                 </template>
             </el-table-column>
-            <el-table-column prop="agent_bonus_rate" :label="tableColumns.agent_bonus_rate.name" align="center">
+            <el-table-column
+                prop="agent_bonus_rate"
+                :label="tableColumns.agent_bonus_rate.name"
+                align="center"
+                width="60"
+            >
                 <template slot-scope="{ row }">
                     {{ row.agent_bonus_rate * 100 }}
                 </template>
@@ -64,10 +74,12 @@
                 prop="child_agent_bonus"
                 :label="tableColumns.child_agent_bonus.name"
                 align="center"
-                min-width="100"
+                width="70"
             >
             </el-table-column>
-            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="160px">
+            <el-table-column prop="send_bonus_time" :label="tableColumns.send_bonus_time.name" align="center">
+            </el-table-column>
+            <el-table-column :label="LangUtil('操作')" class-name="status-col" width="110px">
                 <template slot-scope="{ row }">
                     <!-- <el-button
                         size="mini"

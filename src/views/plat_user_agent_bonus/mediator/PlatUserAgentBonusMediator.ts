@@ -51,6 +51,7 @@ export default class PlatUserAgentBonusMediator extends AbstractMediator {
             case EventType.admin_plat_user_agent_bonus_send_mail:
                 Message.success(LangUtil("发送成功"));
                 myProxy.hideDialog();
+                myProxy.onQuery();
                 break;
         }
     }
