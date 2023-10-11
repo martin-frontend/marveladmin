@@ -52,6 +52,9 @@
                 </template>
             </el-table-column>
             <el-table-column prop="agent_bonus_rate" :label="tableColumns.agent_bonus_rate.name" align="center">
+                <template slot-scope="{ row }">
+                    {{ row.agent_bonus_rate * 100 }}
+                </template>
             </el-table-column>
             <el-table-column prop="agent_bonus" :label="tableColumns.agent_bonus.name" align="center">
             </el-table-column>
