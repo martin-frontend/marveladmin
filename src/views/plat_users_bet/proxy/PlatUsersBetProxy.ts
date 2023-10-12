@@ -206,7 +206,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
                 page_size: 20,
             },
         },
-        trun_bet_detail_text: 0,
+        trun_bet_detail_text: <any>0,
     };
 
     jsonEditorDialog = {
