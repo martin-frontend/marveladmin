@@ -267,15 +267,15 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         page_size: 20,
         plat_id: "",
         channel_id: "",
-        "created_date-{>=}": this.defaultDate,
-        "created_date-{<=}": this.defaultDate,
+        "created_date-{>=}": dateFormat(getTodayOffset(-1), "yyyy-MM-dd hh:mm:ss"),
+        "created_date-{<=}": dateFormat(getTodayOffset(0, 1), "yyyy-MM-dd hh:mm:ss"),
     };
 
     summaryListQuery = {
         page_count: 1,
         page_size: 20,
-        "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd"),
-        "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
+        "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd hh:mm:ss"),
+        "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
     };
 
     /**弹窗 相关数据 */
