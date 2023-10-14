@@ -88,7 +88,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
     /**查询条件 */
     listQuery = {
         page_count: 1,
-        page_size: 100,
+        page_size: 300,
         plat_id: "",
         type: "1",
         category: "",
@@ -204,7 +204,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         Object.assign(this.listQuery, {
             category: "",
             page_count: 1,
-            page_size: 100,
+            page_size: 300,
         });
     }
 
