@@ -732,7 +732,7 @@
                                                         v-model="childRule.params"
                                                         :placeholder="LangUtil('请输入')"
                                                         :disabled="isStatusUpdate"
-                                                        style="width: 80px"
+                                                        style="width: 200px"
                                                     ></el-input>
                                                     <template v-if="childRule.type == 61 && childRule.params_type == 5">
                                                         <!-- 币种选择 -->
