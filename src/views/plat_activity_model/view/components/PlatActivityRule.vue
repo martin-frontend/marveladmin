@@ -124,6 +124,12 @@
                                 v-model="childRule.params"
                                 :placeholder="LangUtil('请输入')"
                             ></el-input>
+                            <el-input
+                                size="small"
+                                v-if="childRule.params_type == '6'"
+                                v-model="childRule.params"
+                                :placeholder="LangUtil('请输入')"
+                            ></el-input>
                             <el-radio-group v-model="childRule.params" v-if="childRule.params_type == '2'">
                                 <el-radio v-for="(value, key) in boolOptions" :key="key" :label="Number(key)">
                                     {{ value }}
