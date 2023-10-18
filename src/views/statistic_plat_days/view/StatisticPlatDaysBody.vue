@@ -606,6 +606,17 @@
             </el-table-column>
 
             <el-table-column
+                prop="pure_win_loss"
+                :label="tableColumns['activity_coin_win_loss'].name"
+                align="center"
+                min-width="130"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.activity_coin_win_loss"></WinLossDisplay>
+                </template>
+            </el-table-column>
+
+            <el-table-column
                 v-if="tableColumns.commission_gold.display"
                 prop="commission_gold"
                 :label="tableColumns['commission_gold'].name"

@@ -231,32 +231,33 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 tips: "人工发送的邮件附件并且玩家“已领取”，不包含活动币",
             },
             activity_coin_get: {
-                name: '活动任务',
+                name: "活动任务",
                 options: {},
                 tips: "玩家任务获得任务币数量",
             },
             activity_gift_gold: {
-                name: '活动赠送',
+                name: "活动赠送",
                 options: {},
                 tips: "活动发送并且玩家已经获得，不包含活动币",
             },
             activity_gold_exchange: {
-                name: '任务币转换',
+                name: "任务币转换",
                 options: {},
                 tips: "玩家完成任务获得真钱的数量",
             },
-            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' },
+            pure_win_loss: { name: "纯游戏输赢", options: {}, tips: "游戏输赢-游戏挖矿-任务币转换-活动赠送" },
             channel_profit: {
                 name: "渠道毛利",
                 options: {},
                 display: true,
-                tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%"
-            }
+                tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%",
+            },
+            activity_coin_win_loss: { name: "活动币游戏输赢", options: {} },
         },
         list: <any>[],
         columnKeys: <any>[],
         hideColumns: <any>[],
-        activeName: 'stats',
+        activeName: "stats",
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         updateNum: 0,
     };
@@ -639,7 +640,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 "created_date-{>=}": this.defaultDate,
                 "created_date-{<=}": this.defaultDate,
             });
-            return
+            return;
         }
         Object.assign(this.summaryListQuery, {
             page_count: 1,
@@ -865,7 +866,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**查询汇总 */
     onQuerySummary() {
-        this.sendNotification(HttpType.admin_statistic_plat_days_plat_summary_index, objectRemoveNull({ ...this.summaryListQuery, plat_id: this.listQuery.plat_id }));
+        this.sendNotification(
+            HttpType.admin_statistic_plat_days_plat_summary_index,
+            objectRemoveNull({ ...this.summaryListQuery, plat_id: this.listQuery.plat_id })
+        );
     }
 
     get defaultDate() {
@@ -921,7 +925,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any) {
-        return arr1.concat(arr2).filter(function (v: any, i: any, arr: any) {
+        return arr1.concat(arr2).filter(function(v: any, i: any, arr: any) {
             return arr.indexOf(v) === arr.lastIndexOf(v);
         });
     }
@@ -931,10 +935,11 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         let fileFirstName: any = "";
         let fileLastName: any = "";
         if (this.listQuery["created_date-{<=}"]) {
-            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${this.listQuery["created_date-{<=}"].split(" ")[0]
-                }]`;
+            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${
+                this.listQuery["created_date-{<=}"].split(" ")[0]
+            }]`;
         }
-        if (this.tableData.activeName == 'stats') {
+        if (this.tableData.activeName == "stats") {
             if (this.listQuery.plat_id !== "0") {
                 let str: any =
                     this.listQuery.plat_id == "0"
@@ -969,7 +974,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         queryCopy.page_size = pageSize;
         queryCopy.page_count = Number(pageCurrent) + 1;
         queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
-        if (this.tableData.activeName == 'stats') {
+        if (this.tableData.activeName == "stats") {
             this.sendNotification(HttpType.admin_statistic_plat_days_index, objectRemoveNull(queryCopy));
         } else {
             this.sendNotification(HttpType.admin_statistic_plat_days_plat_summary_index, objectRemoveNull(queryCopy));
@@ -1007,13 +1012,16 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     showFieldSelectionDialog() {
         this.fieldSelectionData.bShow = true;
-        if (this.tableData.activeName == 'stats') {
-            if (this.fieldSelectionData.fieldOptions.indexOf('channel_id') < 0) {
-                this.fieldSelectionData.fieldOptions.splice(2, 0, 'channel_id')
+        if (this.tableData.activeName == "stats") {
+            if (this.fieldSelectionData.fieldOptions.indexOf("channel_id") < 0) {
+                this.fieldSelectionData.fieldOptions.splice(2, 0, "channel_id");
             }
         } else {
-            if (this.fieldSelectionData.fieldOptions.indexOf('channel_id') > 0) {
-                this.fieldSelectionData.fieldOptions.splice(this.fieldSelectionData.fieldOptions.indexOf('channel_id'), 1)
+            if (this.fieldSelectionData.fieldOptions.indexOf("channel_id") > 0) {
+                this.fieldSelectionData.fieldOptions.splice(
+                    this.fieldSelectionData.fieldOptions.indexOf("channel_id"),
+                    1
+                );
             }
         }
         this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
