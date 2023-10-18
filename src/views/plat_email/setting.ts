@@ -16,6 +16,7 @@ import cmd_admin_plat_mail_template_show from "@/views/plat_email/command/cmd_ad
 import cmd_admin_plat_mail_template_store from "@/views/plat_email/command/cmd_admin_plat_mail_template_store";
 import cmd_admin_plat_mail_template_update from "@/views/plat_email/command/cmd_admin_plat_mail_template_update";
 import cmd_admin_plat_mail_template_delete from "@/views/plat_email/command/cmd_admin_plat_mail_template_delete";
+import cmd_admin_plat_mail_content_store_user from "@/views/plat_email/command/cmd_admin_plat_mail_content_store_user";
 /**协议*/
 export var HttpType = {
     admin_plat_mail_content_table_columns: "admin/plat_mail_content/table_columns",
@@ -32,6 +33,7 @@ export var HttpType = {
     admin_plat_mail_template_store: "admin/plat_mail_template/store",
     admin_plat_mail_template_update: "admin/plat_mail_template/update/{id}",
     admin_plat_mail_template_delete: "admin/plat_mail_template/delete/{id}",
+    admin_plat_mail_content_store_user: "admin/plat_mail_content/store_user",
 };
 /**事件*/
 export var EventType = {
@@ -49,6 +51,7 @@ export var EventType = {
     admin_plat_mail_template_store: "admin_plat_mail_template_store",
     admin_plat_mail_template_update: "admin_plat_mail_template_update",
     admin_plat_mail_template_delete: "admin_plat_mail_template_delete",
+    admin_plat_mail_content_store_user: "admin_plat_mail_content_store_user",
 };
 /**注册协议*/
 const facade = puremvc.Facade.getInstance();
@@ -66,4 +69,5 @@ facade.registerCommand(HttpType.admin_plat_mail_template_show, cmd_admin_plat_ma
 facade.registerCommand(HttpType.admin_plat_mail_template_store, cmd_admin_plat_mail_template_store);
 facade.registerCommand(HttpType.admin_plat_mail_template_update, cmd_admin_plat_mail_template_update);
 facade.registerCommand(HttpType.admin_plat_mail_template_delete, cmd_admin_plat_mail_template_delete);
+facade.registerCommand(HttpType.admin_plat_mail_content_store_user, cmd_admin_plat_mail_content_store_user);
 
