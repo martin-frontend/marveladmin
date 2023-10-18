@@ -397,6 +397,7 @@
                     <template v-if="row.vendor_type == 64">
                         <p v-if="row.bet_type == LangUtil('单注')">{{ LangUtil("投注类型") }}： {{ row.bet_type }}</p>
                         <p v-else>{{ LangUtil("投注类型") }}： {{ row.bet_type }} {{ row.league }}</p>
+                        <p>{{ LangUtil("滚球") }}： {{ row.is_inplay }}</p>
                         <p>{{ LangUtil("提前结算") }}：{{ row.is_cash_out }}</p>
                         <template v-if="row.bet_type == LangUtil('单注') && row.is_cash_out == LangUtil('是')">
                             <p>{{ LangUtil("返回金额") }}：{{ row.cash_out_amount }}</p>
