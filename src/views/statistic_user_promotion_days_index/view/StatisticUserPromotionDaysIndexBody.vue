@@ -273,6 +273,36 @@
                             </div>
                         </template>
                     </el-table-column>
+                    <!-- 活动币总投注 -->
+                    <el-table-column
+                        :prop="`${activeName}_total_activity_coin_bet`"
+                        :label="tableColumns[`${activeName}_total_activity_coin_bet`].name"
+                        align="center"
+                        min-width="100px"
+                    >
+                        <template slot-scope="{ row }">
+                            <WinLossDisplay
+                                :amount="row[activeName + `_total_activity_coin_bet`]"
+                                :isShowColor="false"
+                                :isShowPlus="false"
+                            />
+                        </template>
+                    </el-table-column>
+                    <!-- 活动币总输赢 -->
+                    <el-table-column
+                        :prop="`${activeName}_total_activity_coin_win_loss`"
+                        :label="tableColumns[`${activeName}_total_activity_coin_win_loss`].name"
+                        align="center"
+                        min-width="100px"
+                    >
+                        <template slot-scope="{ row }">
+                            <WinLossDisplay
+                                :amount="row[activeName + `_total_activity_coin_win_loss`]"
+                                :isShowColor="false"
+                                :isShowPlus="false"
+                            />
+                        </template>
+                    </el-table-column>
                     <!-- 游戏总流水 -->
                     <el-table-column
                         :prop="`${activeName}_total_water`"
@@ -302,7 +332,7 @@
                                 </span>
                             </div>
                         </template>
-                    </el-table-column>
+                    </el-table-column> 
                     <!-- 游戏总流水 -->
                     <el-table-column
                         :prop="`${activeName}_bonus_pool`"

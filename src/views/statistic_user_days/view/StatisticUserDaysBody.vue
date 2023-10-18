@@ -347,6 +347,18 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column
+                :label="tableColumns.total_activity_coin_bet.name"
+                align="center"
+                min-width="120"
+                prop="total_activity_coin_bet"
+            >
+                <template slot-scope="{ row }">
+                    <span>
+                        <WinLossDisplay :amount="row.total_activity_coin_bet" :isShowColor="false" :isShowPlus="false" />
+                    </span>
+                </template>
+            </el-table-column>
             <el-table-column :label="LangUtil('流水')" align="left" min-width="200">
                 <template slot-scope="{ row }">
                     <div>
@@ -433,6 +445,18 @@
                         <span>{{ tableColumns["win_loss_128"].name }}:</span>
                         <WinLossDisplay :amount="row.win_loss_128" />
                     </div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.total_activity_coin_win_loss.name"
+                align="center"
+                min-width="120"
+                prop="total_activity_coin_win_loss"
+            >
+                <template slot-scope="{ row }">
+                    <span>
+                        <WinLossDisplay :amount="row.total_activity_coin_win_loss" :isShowColor="false" :isShowPlus="false" />
+                    </span>
                 </template>
             </el-table-column>
         </el-table>

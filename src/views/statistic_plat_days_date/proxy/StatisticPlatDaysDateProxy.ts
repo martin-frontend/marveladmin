@@ -207,22 +207,27 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
                 tips: "投放消耗/当天注册人数 也就是分渠道报表里面的新增注册成本",
             },
             mail_gift_gold: {
-                name: '邮件赠送', options: {},
+                name: "邮件赠送",
+                options: {},
                 tips: "人工发送的邮件附件并且玩家“已领取”，不包含活动币",
             },
             activity_coin_get: {
-                name: '活动任务', options: {},
+                name: "活动任务",
+                options: {},
                 tips: "玩家任务获得任务币数量",
             },
             activity_gift_gold: {
-                name: '活动赠送', options: {},
+                name: "活动赠送",
+                options: {},
                 tips: "活动发送并且玩家已经获得，不包含活动币",
             },
             activity_gold_exchange: {
-                name: '任务币转换', options: {},
+                name: "任务币转换",
+                options: {},
                 tips: "玩家完成任务获得真钱的数量",
             },
-            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' }
+            activity_coin_win_loss: { name: "活动币游戏输赢", options: {} },
+            pure_win_loss: { name: "纯游戏输赢", options: {}, tips: "游戏输赢-游戏挖矿-任务币转换-活动赠送" },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -548,6 +553,6 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
                 //this.sendNotification(HttpType.undefined, { id, is_delete: 1 });
                 console.log("---");
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 }

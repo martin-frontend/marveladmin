@@ -230,21 +230,22 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 tips: "人工发送的邮件附件并且玩家“已领取”，不包含活动币",
             },
             activity_coin_get: {
-                name: '活动任务',
+                name: "活动任务",
                 options: {},
                 tips: "玩家任务获得任务币数量",
             },
             activity_gift_gold: {
-                name: '活动赠送',
+                name: "活动赠送",
                 options: {},
                 tips: "活动发送并且玩家已经获得，不包含活动币",
             },
             activity_gold_exchange: {
-                name: '任务币转换',
+                name: "任务币转换",
                 options: {},
                 tips: "玩家完成任务获得真钱的数量",
             },
-            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' }
+            activity_coin_win_loss: { name: "活动币游戏输赢", options: {} },
+            pure_win_loss: { name: "纯游戏输赢", options: {}, tips: "游戏输赢-游戏挖矿-任务币转换-活动赠送" },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -883,7 +884,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**取出没被字串配置过滤的columns */
     getArrDifference(arr1: any, arr2: any) {
-        return arr1.concat(arr2).filter(function (v: any, i: any, arr: any) {
+        return arr1.concat(arr2).filter(function(v: any, i: any, arr: any) {
             return arr.indexOf(v) === arr.lastIndexOf(v);
         });
     }
@@ -893,8 +894,9 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         let fileFirstName: any = "";
         let fileLastName: any = "";
         if (this.listQuery["created_date-{<=}"]) {
-            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${this.listQuery["created_date-{<=}"].split(" ")[0]
-                }]`;
+            fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${
+                this.listQuery["created_date-{<=}"].split(" ")[0]
+            }]`;
         }
         if (this.listQuery.plat_id !== "0") {
             let str: any =
