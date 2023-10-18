@@ -222,7 +222,13 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
                 name: '任务币转换', options: {},
                 tips: "玩家完成任务获得真钱的数量",
             },
-            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' }
+            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' },
+            channel_profit: {
+                name: "渠道毛利",
+                options: {},
+                display: true,
+                tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%"
+            }
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -407,6 +413,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         activity_coin_get: "",
         activity_gold_exchange: "",
         pure_win_loss: "",
+        channel_profit: "",
     };
     /**表格数据 */
     setTableData(data: any) {
@@ -466,6 +473,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         this.summaryData["activity_coin_get"] = data.summary.activity_coin_get;
         this.summaryData["activity_gold_exchange"] = data.summary.activity_gold_exchange;
         this.summaryData["pure_win_loss"] = data.summary.pure_win_loss;
+        this.summaryData["channel_profit"] = data.summary.channel_profit;
         // 把summaryData 插入第一笔
         this.tableData.list.splice(0, 0, this.summaryData);
     }

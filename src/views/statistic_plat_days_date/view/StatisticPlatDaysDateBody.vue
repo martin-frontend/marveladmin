@@ -335,6 +335,27 @@
                 </template>
             </el-table-column>
             <el-table-column
+                v-if="tableColumns.channel_profit.display"
+                prop="channel_profit"
+                :label="tableColumns['channel_profit'].name"
+                align="center"
+                min-width="100"
+            >
+                <template slot="header">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="tableColumns['channel_profit'].tips"
+                        placement="top"
+                    >
+                        <div>
+                            <span style="margin-right: 5px">{{ tableColumns["channel_profit"].name }}</span>
+                            <i class="el-icon-question" style="font-size: 14px"></i>
+                        </div>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
+            <el-table-column
                 v-if="tableColumns.exch_amt.display"
                 prop="exch_amt"
                 :label="tableColumns['exch_amt'].name"
@@ -636,7 +657,8 @@
                     </el-tooltip>
                 </template>
             </el-table-column>
-            <el-table-column
+            <!-- 周活跃用户 -->
+            <!-- <el-table-column
                 prop="active_user_week"
                 :label="tableColumns['active_user_week'].name"
                 align="center"
@@ -655,8 +677,9 @@
                         </div>
                     </el-tooltip>
                 </template>
-            </el-table-column>
-            <el-table-column
+            </el-table-column> -->
+            <!-- 月活跃用户 -->
+            <!-- <el-table-column
                 prop="active_user_month"
                 :label="tableColumns['active_user_month'].name"
                 align="center"
@@ -675,7 +698,7 @@
                         </div>
                     </el-tooltip>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
                 prop="active_user_recharge"
                 :label="tableColumns['active_user_recharge'].name"

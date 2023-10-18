@@ -1,6 +1,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
+import { dateFormat, getTodayOffset } from "@/core/global/Functions";
 import { formCompared, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/statistic_plat_days/setting";
 import { MessageBox } from "element-ui";
@@ -244,11 +245,18 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 options: {},
                 tips: "玩家完成任务获得真钱的数量",
             },
-            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' }
+            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' },
+            channel_profit: {
+                name: "渠道毛利",
+                options: {},
+                display: true,
+                tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%"
+            }
         },
         list: <any>[],
         columnKeys: <any>[],
         hideColumns: <any>[],
+        activeName: 'stats',
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
         updateNum: 0,
     };
@@ -259,8 +267,15 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         page_size: 20,
         plat_id: "",
         channel_id: "",
-        "created_date-{>=}": this.defaultDate,
-        "created_date-{<=}": this.defaultDate,
+        "created_date-{>=}": dateFormat(getTodayOffset(-1), "yyyy-MM-dd hh:mm:ss"),
+        "created_date-{<=}": dateFormat(getTodayOffset(0, 1), "yyyy-MM-dd hh:mm:ss"),
+    };
+
+    summaryListQuery = {
+        page_count: 1,
+        page_size: 20,
+        "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd hh:mm:ss"),
+        "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
     };
 
     /**弹窗 相关数据 */
@@ -300,14 +315,14 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                         name: this.tableData.columns.active_user.name,
                         checked: true,
                     },
-                    active_user_week: {
-                        name: this.tableData.columns.active_user_week.name,
-                        checked: true,
-                    },
-                    active_user_month: {
-                        name: this.tableData.columns.active_user_month.name,
-                        checked: true,
-                    },
+                    // active_user_week: {
+                    //     name: this.tableData.columns.active_user_week.name,
+                    //     checked: true,
+                    // },
+                    // active_user_month: {
+                    //     name: this.tableData.columns.active_user_month.name,
+                    //     checked: true,
+                    // },
                     cost_per_user: {
                         name: this.tableData.columns.cost_per_user.name,
                         checked: true,
@@ -368,6 +383,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                     },
                     net_rech: {
                         name: this.tableData.columns.net_rech.name,
+                        checked: true,
+                    },
+                    channel_profit: {
+                        name: this.tableData.columns.channel_profit.name,
                         checked: true,
                     },
                     exch_amt: {
@@ -507,6 +526,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         d_exch_amt_per_dau: "",
         user_cont_per_user: "",
         cost_per_user: "",
+        channel_profit: "",
     };
 
     /**导出 相关数据 */
@@ -525,7 +545,6 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         fieldOptions: [
             "created_date",
             "plat_id",
-            "channel_id",
             "new_register_device",
             "new_register",
             "effective_new_rate",
@@ -542,6 +561,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "exchange",
             "exchange_user",
             "net_rech",
+            "channel_profit",
             "exch_amt",
             "new_exch_count",
             "new_exchange_user",
@@ -557,8 +577,8 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "water",
             "new_register_water",
             "active_user",
-            "active_user_week",
-            "active_user_month",
+            // "active_user_week",
+            // "active_user_month",
             "active_user_recharge",
             "active_recharge_user",
             "recharge_seep_rate",
@@ -611,13 +631,22 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**重置查询条件 */
     resetListQuery() {
-        Object.assign(this.listQuery, {
-            // TODO
+        if (this.tableData.activeName == "stats") {
+            Object.assign(this.listQuery, {
+                page_count: 1,
+                page_size: 20,
+                channel_id: "",
+                "created_date-{>=}": this.defaultDate,
+                "created_date-{<=}": this.defaultDate,
+            });
+            return
+        }
+        Object.assign(this.summaryListQuery, {
             page_count: 1,
             page_size: 20,
             channel_id: "",
-            "created_date-{>=}": this.defaultDate,
-            "created_date-{<=}": this.defaultDate,
+            "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd"),
+            "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
         });
     }
 
@@ -668,14 +697,14 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                         name: this.tableData.columns.active_user.name,
                         checked: true,
                     },
-                    active_user_week: {
-                        name: this.tableData.columns.active_user_week.name,
-                        checked: true,
-                    },
-                    active_user_month: {
-                        name: this.tableData.columns.active_user_month.name,
-                        checked: true,
-                    },
+                    // active_user_week: {
+                    //     name: this.tableData.columns.active_user_week.name,
+                    //     checked: true,
+                    // },
+                    // active_user_month: {
+                    //     name: this.tableData.columns.active_user_month.name,
+                    //     checked: true,
+                    // },
                     cost_per_user: {
                         name: this.tableData.columns.cost_per_user.name,
                         checked: true,
@@ -736,6 +765,10 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                     },
                     net_rech: {
                         name: this.tableData.columns.net_rech.name,
+                        checked: true,
+                    },
+                    channel_profit: {
+                        name: this.tableData.columns.channel_profit.name,
                         checked: true,
                     },
                     exch_amt: {
@@ -830,6 +863,11 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         this.sendNotification(HttpType.admin_statistic_plat_days_index, objectRemoveNull(this.listQuery));
     }
 
+    /**查询汇总 */
+    onQuerySummary() {
+        this.sendNotification(HttpType.admin_statistic_plat_days_plat_summary_index, objectRemoveNull({ ...this.summaryListQuery, plat_id: this.listQuery.plat_id }));
+    }
+
     get defaultDate() {
         let d1 = new Date();
         d1.setTime(d1.getTime() - 24 * 60 * 60 * 1000);
@@ -896,15 +934,28 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             fileLastName = `-[${this.listQuery["created_date-{>=}"].split(" ")[0]}-${this.listQuery["created_date-{<=}"].split(" ")[0]
                 }]`;
         }
-        if (this.listQuery.plat_id !== "0") {
-            let str: any =
-                this.listQuery.plat_id == "0"
-                    ? LangUtil("所有平台")
-                    : this.tableData.columns["plat_id"].options[this.listQuery.plat_id];
-            // fileFirstName = `平台每日统计[${str}]`;
-            fileFirstName = LangUtil("平台每日统计[{0}]", str);
+        if (this.tableData.activeName == 'stats') {
+            if (this.listQuery.plat_id !== "0") {
+                let str: any =
+                    this.listQuery.plat_id == "0"
+                        ? LangUtil("所有平台")
+                        : this.tableData.columns["plat_id"].options[this.listQuery.plat_id];
+                // fileFirstName = `平台每日统计[${str}]`;
+                fileFirstName = LangUtil("平台每日统计[{0}]", str);
+            } else {
+                fileFirstName = LangUtil("平台每日统计[所有平台]");
+            }
         } else {
-            fileFirstName = LangUtil("平台每日统计[所有平台]");
+            if (this.listQuery.plat_id !== "0") {
+                let str: any =
+                    this.listQuery.plat_id == "0"
+                        ? LangUtil("所有平台")
+                        : this.tableData.columns["plat_id"].options[this.listQuery.plat_id];
+                // fileFirstName = `平台每日统计[${str}]`;
+                fileFirstName = LangUtil("平台每日汇总[{0}]", str);
+            } else {
+                fileFirstName = LangUtil("平台每日汇总[所有平台]");
+            }
         }
         return `${fileFirstName}${fileLastName}`;
     }
@@ -918,7 +969,11 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         queryCopy.page_size = pageSize;
         queryCopy.page_count = Number(pageCurrent) + 1;
         queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
-        this.sendNotification(HttpType.admin_statistic_plat_days_index, objectRemoveNull(queryCopy));
+        if (this.tableData.activeName == 'stats') {
+            this.sendNotification(HttpType.admin_statistic_plat_days_index, objectRemoveNull(queryCopy));
+        } else {
+            this.sendNotification(HttpType.admin_statistic_plat_days_plat_summary_index, objectRemoveNull(queryCopy));
+        }
     }
 
     /**每1000笔保存一次 */
@@ -952,6 +1007,15 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     showFieldSelectionDialog() {
         this.fieldSelectionData.bShow = true;
+        if (this.tableData.activeName == 'stats') {
+            if (this.fieldSelectionData.fieldOptions.indexOf('channel_id') < 0) {
+                this.fieldSelectionData.fieldOptions.splice(2, 0, 'channel_id')
+            }
+        } else {
+            if (this.fieldSelectionData.fieldOptions.indexOf('channel_id') > 0) {
+                this.fieldSelectionData.fieldOptions.splice(this.fieldSelectionData.fieldOptions.indexOf('channel_id'), 1)
+            }
+        }
         this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
     }
 }
