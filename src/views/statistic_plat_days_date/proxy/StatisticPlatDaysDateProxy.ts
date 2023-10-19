@@ -561,6 +561,6 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
                 //this.sendNotification(HttpType.undefined, { id, is_delete: 1 });
                 console.log("---");
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 }

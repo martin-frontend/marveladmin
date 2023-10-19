@@ -9,6 +9,7 @@
         <FieldSelectionEmailDialog v-if="myProxy.fieldSelectionEmailData.bShow" />
         <PlatEmailTemplateEdit v-if="myProxy.platEmailTemplateManager_dialogData.bShow" />
         <PlatEmailTemplateManager v-if="myProxy.platEmailTemplateManager_data.bShow" />
+        <DialogPreview v-if="myProxy.dialogPreviewValue.bShow" />
     </div>
 </template>
 
@@ -26,6 +27,8 @@ import FieldSelectionEmailDialog from "./components/FieldSelectionEmailDialog.vu
 import ProgressEmailDialog from "./components/ProgressEmailDialog.vue";
 import PlatEmailTemplateEdit from "./PlatEmailTemplateEdit.vue";
 import PlatEmailTemplateManager from "./PlatEmailTemplateManager.vue";
+import DialogPreview from "./components/DialogPreview.vue";
+
 @Component({
     components: {
         PlatEmailDialog,
@@ -37,6 +40,7 @@ import PlatEmailTemplateManager from "./PlatEmailTemplateManager.vue";
         ProgressEmailDialog,
         PlatEmailTemplateEdit,
         PlatEmailTemplateManager,
+        DialogPreview,
     },
 })
 export default class PlatEmail extends AbstractView {

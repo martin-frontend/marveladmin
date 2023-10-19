@@ -130,6 +130,13 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         excelColumnInfo: {
             userid: { name: "userid", options: {} },
         },
+        userListExceed: false,
+    };
+
+    /**展示参数值 */
+    dialogPreviewValue = {
+        bShow: false,
+        value: "",
     };
 
     /**设置表头数据 */
@@ -240,6 +247,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
 
     /**添加数据 */
     onAdd() {
+        this.dialogData.userListExceed = false;
         const {
             plat_id,
             title,
@@ -296,10 +304,40 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         formCopy.is_mass_mailer = this.isGroupMail ? 1 : 0;
         formCopy.start_time = this.dialogData.form.time[0];
         formCopy.end_time = this.dialogData.form.time[1];
+        let groupSize = 1000;
         if (checkUnique(unique.plat_email_store_attachment)) {
-            this.sendNotification(HttpType.admin_plat_email_store_attachment_store, objectRemoveNull(formCopy));
+            if (user_list.split(",").length <= groupSize) {
+                this.sendNotification(HttpType.admin_plat_email_store_attachment_store, objectRemoveNull(formCopy));
+            } else {
+                this.dialogData.userListExceed = true;
+                let group = user_list.split(",").slice(0, groupSize);
+                formCopy.user_list = group;
+                this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
+            }
         } else {
-            this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
+            if (user_list.split(",").length <= groupSize) {
+                this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
+            } else {
+                this.dialogData.userListExceed = true;
+                let group = user_list.split(",").slice(0, groupSize);
+                formCopy.user_list = group;
+                this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
+            }
+        }
+    }
+
+    sendRestUsers(content_id: any) {
+        const { user_list } = this.dialogData.form;
+        let groupSize = 1000;
+        // 计算需要分成多少组
+        let numGroups = Math.ceil(user_list.split(",").length / groupSize);
+
+        for (let i = 0; i < numGroups; i++) {
+            // 使用 slice 方法从原数组中截取一组数据
+            let group = user_list.split(",").slice(i * groupSize, (i + 1) * groupSize);
+            if (i > 0) {
+                this.sendNotification(HttpType.admin_plat_mail_content_store_user, objectRemoveNull({ content_id: content_id, user_list: group }));
+            }
         }
     }
 
@@ -789,5 +827,11 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         this.platEmailTemplateManager_data.bShow = true;
         this.platEmailTemplateManager_listQuery.plat_id = this.listQuery.plat_id;
         this.sendNotification(HttpType.admin_plat_mail_template_table_columns);
+    }
+
+    /**展示参数值 */
+    previewValue(value: string) {
+        this.dialogPreviewValue.value = value;
+        this.dialogPreviewValue.bShow = true;
     }
 }

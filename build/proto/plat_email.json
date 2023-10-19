@@ -16,6 +16,7 @@
         "admin/plat_mail_template/show/{id}",
         "admin/plat_mail_template/store",
         "admin/plat_mail_template/update/{id}",
-        "admin/plat_mail_template/delete/{id}"
+        "admin/plat_mail_template/delete/{id}",
+        "admin/plat_mail_content/store_user"
     ]
 }
