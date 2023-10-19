@@ -27,9 +27,26 @@
                     {{ row.default_sms_area_code != 0 ? row.default_sms_area_code : "-" }}
                 </template>
             </el-table-column>
+            <el-table-column
+                class-name="status-col"
+                :label="tableColumns.show_sms_area_code.name"
+                prop="show_sms_area_code"
+                min-width="70px"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.show_sms_area_code != ''">
+                        <el-tag v-for="item of getAreaCodes(row.area_region, row.show_sms_area_code.split(','))" :key="item">
+                            {{item}}
+                        </el-tag>
+                    </div>
+                    <div v-else>
+                        -
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column class-name="status-col" :label="tableColumns.plat_id.name" prop="plat_id" min-width="70px">
-                <template slot-scope="scope">
-                    {{ tableColumns.plat_id.options[scope.row.plat_id] }}
+                <template slot-scope="{ row }">
+                    {{ tableColumns.plat_id.options[row.plat_id] }}
                 </template>
             </el-table-column>
             <el-table-column
@@ -105,12 +122,20 @@ import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import Sortable from "sortablejs";
 
+interface RowFace {
+    plat_id: string;
+    area_region: string;
+    default_sms_area_code: number;
+    show_sms_area_code: string;
+}
+
 @Component({
     components: {
         Pagination,
     },
 })
 export default class PlatAreaRegionBody extends AbstractView {
+    public row!: RowFace;
     LangUtil = LangUtil;
     //权限标识
     unique = unique;
@@ -143,13 +168,19 @@ export default class PlatAreaRegionBody extends AbstractView {
         }
     }
 
+    getAreaCodes(area_region: string, area_ids: string[]) {
+        const entries = Object.entries(this.tableColumns.show_sms_area_code.options[area_region])
+                            .filter(([id, _]) => area_ids.includes(id) )
+        return entries.map(i => i[1].area_code)
+    }
+
     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
     }
 
     handleEdit(data: any) {
-        this.myProxy.showDialog(DialogStatus.update, data);
+        this.myProxy.showDialog(DialogStatus.update as "create"|"update", data);
     }
 
     handlerDelete(data: any) {
