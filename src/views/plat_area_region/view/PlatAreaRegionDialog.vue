@@ -1,6 +1,6 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="700px">
-        <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
+        <el-form ref="form" style="overflow-y: auto; max-height: 70vh;" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item :label="`${tableColumns.plat_id.name}`" prop="plat_id" label-width="100px">
                 <el-select
                     style="width:100%"
@@ -54,6 +54,18 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item
+                v-if="form.area_region"
+                :label="`${tableColumns.show_sms_area_code.name}`"
+                prop="show_sms_area_code"
+                label-width="100px"
+            >
+                <el-checkbox-group v-model="form.show_sms_area_code">
+                    <el-checkbox v-for="(value, key) in tableColumns.show_sms_area_code.options[form.area_region]" :key="key" :label="key">
+                        (+{{ value.area_code }}) {{ value.name }}
+                    </el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button v-if="isStatusUpdate" type="danger" size="mini" @click="handleDelete()">{{
                     LangUtil("删除")
@@ -72,7 +84,6 @@ import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
 import PlatAreaRegionProxy from "@/views/plat_area_region/proxy/PlatAreaRegionProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
-import { checkUserName, checkUserPassword } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 
