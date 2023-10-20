@@ -130,7 +130,6 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         excelColumnInfo: {
             userid: { name: "userid", options: {} },
         },
-        userListExceed: false,
     };
 
     /**展示参数值 */
@@ -138,6 +137,15 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         bShow: false,
         value: "",
     };
+
+    sendData = {
+        groupSize: 1000,
+        userListExceed: false,
+        bShow: false,
+        groupsCount: 0, // 全部组数
+        groupsCurrent: 0, // 目前组数
+        content_id: 0,
+    }
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -247,7 +255,6 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
 
     /**添加数据 */
     onAdd() {
-        this.dialogData.userListExceed = false;
         const {
             plat_id,
             title,
@@ -304,41 +311,56 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         formCopy.is_mass_mailer = this.isGroupMail ? 1 : 0;
         formCopy.start_time = this.dialogData.form.time[0];
         formCopy.end_time = this.dialogData.form.time[1];
-        let groupSize = 1000;
+
         if (checkUnique(unique.plat_email_store_attachment)) {
-            if (user_list.split(",").length <= groupSize) {
+            if (user_list.split(",").length <= this.sendData.groupSize) {
                 this.sendNotification(HttpType.admin_plat_email_store_attachment_store, objectRemoveNull(formCopy));
             } else {
-                this.dialogData.userListExceed = true;
-                let group = user_list.split(",").slice(0, groupSize);
+                // 大于 groupSize
+                this.sendData.userListExceed = true;
+                // 计算需要分成多少组
+                this.sendData.groupsCount = Math.ceil(user_list.split(",").length / this.sendData.groupSize);
+                let group = user_list.split(",").slice(0, this.sendData.groupSize);
                 formCopy.user_list = group;
+                this.sendData.groupsCurrent = 1;
                 this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
             }
         } else {
-            if (user_list.split(",").length <= groupSize) {
+            if (user_list.split(",").length <= this.sendData.groupSize) {
                 this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
             } else {
-                this.dialogData.userListExceed = true;
-                let group = user_list.split(",").slice(0, groupSize);
+                this.sendData.userListExceed = true;
+                let group = user_list.split(",").slice(0, this.sendData.groupSize);
                 formCopy.user_list = group;
                 this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
             }
         }
     }
 
-    sendRestUsers(content_id: any) {
-        const { user_list } = this.dialogData.form;
-        let groupSize = 1000;
-        // 计算需要分成多少组
-        let numGroups = Math.ceil(user_list.split(",").length / groupSize);
-
-        for (let i = 0; i < numGroups; i++) {
-            // 使用 slice 方法从原数组中截取一组数据
-            let group = user_list.split(",").slice(i * groupSize, (i + 1) * groupSize);
-            if (i > 0) {
-                this.sendNotification(HttpType.admin_plat_mail_content_store_user, objectRemoveNull({ content_id: content_id, user_list: group }));
+    sendRestUsers(content_id?: any) {
+        this.sendData.bShow = true;
+        if (this.sendData.groupsCurrent < this.sendData.groupsCount) {
+            const { user_list } = this.dialogData.form;
+            if (content_id) {
+                this.sendData.content_id = content_id;
             }
+            let group = user_list.split(",").slice(this.sendData.groupsCurrent * this.sendData.groupSize, (this.sendData.groupsCurrent + 1) * this.sendData.groupSize);
+
+            this.sendNotification(HttpType.admin_plat_mail_content_store_user, objectRemoveNull({ content_id: this.sendData.content_id, user_list: group }));
+            this.sendData.groupsCurrent++;
+        } else {
+            this.resetSendData()
         }
+    }
+
+    resetSendData() {
+        Object.assign(this.sendData, {
+            userListExceed: false,
+            bShow: false,
+            groupsCount: 0, // 全部组数
+            groupsCurrent: 0, // 目前组数
+            content_id: 0,
+        })
     }
 
     /**删除数据 */
@@ -664,6 +686,11 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         return Math.round((this.exportEmailData.pageInfo.pageCurrent / this.exportEmailData.pageInfo.pageCount) * 100);
     }
 
+    /** 邮件批次進度 */
+    get sendPercentage() {
+        return Math.round((this.sendData.groupsCurrent / this.sendData.groupsCount) * 100);
+    }
+
     showFieldSelectionDialog() {
         this.fieldSelectionData.bShow = true;
         this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
@@ -673,21 +700,25 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         this.fieldSelectionEmailData.bShow = true;
         this.exportEmailData.fieldOrder = [...this.fieldSelectionEmailData.fieldOptions];
     }
+
     setTemplateArrData(data: any) {
         console.log(" 模版返回", data);
         this.dialogData.form.template_option.length = 0;
         this.dialogData.form.template_option = JSON.parse(JSON.stringify(data.list));
         this.dialogData.form.template_id = "";
     }
+
     setTemplateDetail(data: any) {
         console.log("设置模版", data);
 
         this.dialogData.form.title = data.title;
         this.dialogData.form.content = data.content;
     }
+
     admin_plat_mail_template_index() {
         this.sendNotification(HttpType.admin_plat_mail_template_index, { plat_id: this.dialogData.form.plat_id });
     }
+
     admin_plat_mail_template_show() {
         if (!this.dialogData.form.template_id) return;
         this.sendNotification(HttpType.admin_plat_mail_template_show, { id: this.dialogData.form.template_id });
@@ -711,6 +742,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
+
     /**查询条件 */
     platEmailTemplateManager_listQuery = {
         page_count: 1,
@@ -751,11 +783,13 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         this.platEmailTemplateManager_data.list.push(...data.list);
         Object.assign(this.platEmailTemplateManager_data.pageInfo, data.pageInfo);
     }
+
     /**详细数据 */
     setDetail_templateManager(data: any) {
         this.platEmailTemplateManager_dialogData.formSource = data;
         Object.assign(this.platEmailTemplateManager_dialogData.form, JSON.parse(JSON.stringify(data)));
     }
+
     /**显示弹窗 */
     showDialog_templateManager(status: string, data?: any) {
         this.platEmailTemplateManager_dialogData.bShow = true;
@@ -770,10 +804,12 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             this.platEmailTemplateManager_dialogData.formSource = null;
         }
     }
+
     /**隐藏弹窗 */
     hideDialog_templateManager() {
         this.platEmailTemplateManager_dialogData.bShow = false;
     }
+
     /**重置弹窗表单 */
     resetDialogForm_templateManager() {
         Object.assign(this.platEmailTemplateManager_dialogData.form, {
@@ -785,6 +821,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             template_id: "",
         });
     }
+
     /**查询 */
     onQuery_templateManager() {
         this.sendNotification(
@@ -792,11 +829,13 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
             objectRemoveNull(this.platEmailTemplateManager_listQuery)
         );
     }
+
     /**添加数据 */
     onAdd_templateManager() {
         const formCopy = JSON.parse(JSON.stringify(this.platEmailTemplateManager_dialogData.form));
         this.sendNotification(HttpType.admin_plat_mail_template_store, objectRemoveNull(formCopy));
     }
+
     /**更新数据 */
     onUpdate_templateManager() {
         const formCopy: any = formCompared(
@@ -810,6 +849,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
         formCopy.id = this.platEmailTemplateManager_dialogData.form.template_id;
         this.sendNotification(HttpType.admin_plat_mail_template_update, formCopy);
     }
+
     /**删除数据 */
     onDelete_templateManager(id: any) {
         MessageBox.confirm("您是否删除该记录", "提示", {

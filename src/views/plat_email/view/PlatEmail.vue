@@ -4,6 +4,7 @@
         <PlatEmailHeader />
         <PlatEmailBody />
         <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <SendProgressDialog v-if="myProxy.sendData.userListExceed" />
         <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
         <ProgressEmailDialog v-if="myProxy.exportEmailData.isExportExcel" />
         <FieldSelectionEmailDialog v-if="myProxy.fieldSelectionEmailData.bShow" />
@@ -22,6 +23,7 @@ import PlatEmailDialog from "./PlatEmailDialog.vue";
 import PlatEmailHeader from "./PlatEmailHeader.vue";
 import PlatEmailBody from "./PlatEmailBody.vue";
 import ProgressDialog from "./components/ProgressDialog.vue";
+import SendProgressDialog from "./components/SendProgressDialog.vue";
 import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 import FieldSelectionEmailDialog from "./components/FieldSelectionEmailDialog.vue";
 import ProgressEmailDialog from "./components/ProgressEmailDialog.vue";
@@ -35,6 +37,7 @@ import DialogPreview from "./components/DialogPreview.vue";
         PlatEmailHeader,
         PlatEmailBody,
         ProgressDialog,
+        SendProgressDialog,
         FieldSelectionDialog,
         FieldSelectionEmailDialog,
         ProgressEmailDialog,
