@@ -417,6 +417,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         activity_gift_gold: "",
         activity_coin_get: "",
         activity_gold_exchange: "",
+        activity_coin_win_loss: "",
         pure_win_loss: "",
         channel_profit: "",
     };
@@ -477,6 +478,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         this.summaryData["activity_gift_gold"] = data.summary.activity_gift_gold;
         this.summaryData["activity_coin_get"] = data.summary.activity_coin_get;
         this.summaryData["activity_gold_exchange"] = data.summary.activity_gold_exchange;
+        this.summaryData["activity_coin_win_loss"] = data.summary.activity_coin_win_loss;
         this.summaryData["pure_win_loss"] = data.summary.pure_win_loss;
         this.summaryData["channel_profit"] = data.summary.channel_profit;
         // 把summaryData 插入第一笔
