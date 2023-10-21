@@ -82,9 +82,9 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('推广')" width="160">
+            <el-table-column :label="LangUtil('推广')" align="center" width="160">
                 <template slot-scope="{ row }">
-                    <div>
+                    <div class="text-left">
                         <div>
                             <span>{{ tableColumns["directly_users"].name }}:</span>
                             <span>{{ row.directly_users }}</span>
@@ -140,7 +140,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('平台赠金')" min-width="180">
+            <el-table-column :label="LangUtil('平台赠金')" align="center" min-width="180">
                 <template slot="header">
                     <el-tooltip
                         class="item"
@@ -155,7 +155,7 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <div>
+                    <div class="text-left">
                         <div>
                             <span>{{ tableColumns["gift_gold"].name }}:</span>
                             <span>
@@ -293,9 +293,9 @@
                     </el-tooltip>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('投注')" align="left" min-width="200">
+            <el-table-column :label="LangUtil('投注')" align="center" min-width="200">
                 <template slot-scope="{ row }">
-                    <div>
+                    <div class="text-left">
                         <div>
                             <span>{{ tableColumns["total_bet"].name }}:</span>
                             <span>
@@ -344,94 +344,108 @@
                                 <WinLossDisplay :amount="row.bet_128" :isShowColor="false" :isShowPlus="false" />
                             </span>
                         </div>
+                        <div>
+                            <span>{{ tableColumns.total_activity_coin_bet.name }}:</span>
+                            <span>
+                                <WinLossDisplay :amount="row.total_activity_coin_bet" :isShowColor="false" :isShowPlus="false" />
+                            </span>
+                        </div>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('流水')" align="left" min-width="200">
+            <el-table-column :label="LangUtil('流水')" align="center" min-width="200">
                 <template slot-scope="{ row }">
-                    <div>
-                        <span>{{ tableColumns["total_water"].name }}:</span>
-                        <span>
-                            <WinLossDisplay :amount="row.total_water" :isShowColor="false" :isShowPlus="false" />
-                        </span>
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["water_2"].name }}:</span>
-                        <span>
-                            <WinLossDisplay :amount="row.water_2" :isShowColor="false" :isShowPlus="false" />
-                        </span>
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["water_16"].name }}:</span>
-                        <span>
-                            <WinLossDisplay :amount="row.water_16" :isShowColor="false" :isShowPlus="false" />
-                        </span>
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["water_8"].name }}:</span>
-                        <span>
-                            <WinLossDisplay :amount="row.water_8" :isShowColor="false" :isShowPlus="false" />
-                        </span>
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["water_4"].name }}:</span>
-                        <span>
-                            <WinLossDisplay :amount="row.water_4" :isShowColor="false" :isShowPlus="false" />
-                        </span>
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["water_32"].name }}:</span>
-                        <span>
-                            <WinLossDisplay :amount="row.water_32" :isShowColor="false" :isShowPlus="false" />
-                        </span>
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["water_64"].name }}:</span>
-                        <span>
-                            <WinLossDisplay :amount="row.water_64" :isShowColor="false" :isShowPlus="false" />
-                        </span>
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["water_128"].name }}:</span>
-                        <span>
-                            <WinLossDisplay :amount="row.water_128" :isShowColor="false" :isShowPlus="false" />
-                        </span>
+                    <div class="text-left">
+                        <div>
+                            <span>{{ tableColumns["total_water"].name }}:</span>
+                            <span>
+                                <WinLossDisplay :amount="row.total_water" :isShowColor="false" :isShowPlus="false" />
+                            </span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["water_2"].name }}:</span>
+                            <span>
+                                <WinLossDisplay :amount="row.water_2" :isShowColor="false" :isShowPlus="false" />
+                            </span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["water_16"].name }}:</span>
+                            <span>
+                                <WinLossDisplay :amount="row.water_16" :isShowColor="false" :isShowPlus="false" />
+                            </span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["water_8"].name }}:</span>
+                            <span>
+                                <WinLossDisplay :amount="row.water_8" :isShowColor="false" :isShowPlus="false" />
+                            </span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["water_4"].name }}:</span>
+                            <span>
+                                <WinLossDisplay :amount="row.water_4" :isShowColor="false" :isShowPlus="false" />
+                            </span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["water_32"].name }}:</span>
+                            <span>
+                                <WinLossDisplay :amount="row.water_32" :isShowColor="false" :isShowPlus="false" />
+                            </span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["water_64"].name }}:</span>
+                            <span>
+                                <WinLossDisplay :amount="row.water_64" :isShowColor="false" :isShowPlus="false" />
+                            </span>
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["water_128"].name }}:</span>
+                            <span>
+                                <WinLossDisplay :amount="row.water_128" :isShowColor="false" :isShowPlus="false" />
+                            </span>
+                        </div>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('输赢')" align="left" min-width="200">
+            <el-table-column :label="LangUtil('输赢')" align="center" min-width="200">
                 <template slot-scope="{ row }">
-                    <div>
-                        <span>{{ tableColumns["total_win_loss"].name }}:</span>
-                        <WinLossDisplay :amount="row.total_win_loss" />
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["win_loss_2"].name }}:</span>
-                        <WinLossDisplay :amount="row.win_loss_2" />
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["win_loss_16"].name }}:</span>
-                        <WinLossDisplay :amount="row.win_loss_16" />
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["win_loss_8"].name }}:</span>
-                        <WinLossDisplay :amount="row.win_loss_8" />
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["win_loss_4"].name }}:</span>
-                        <WinLossDisplay :amount="row.win_loss_4" />
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["win_loss_32"].name }}:</span>
-                        <WinLossDisplay :amount="row.win_loss_32" />
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["win_loss_64"].name }}:</span>
-                        <WinLossDisplay :amount="row.win_loss_64" />
-                    </div>
-                    <div>
-                        <span>{{ tableColumns["win_loss_128"].name }}:</span>
-                        <WinLossDisplay :amount="row.win_loss_128" />
+                    <div class="text-left">
+                        <div>
+                            <span>{{ tableColumns["total_win_loss"].name }}:</span>
+                            <WinLossDisplay :amount="row.total_win_loss" />
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["win_loss_2"].name }}:</span>
+                            <WinLossDisplay :amount="row.win_loss_2" />
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["win_loss_16"].name }}:</span>
+                            <WinLossDisplay :amount="row.win_loss_16" />
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["win_loss_8"].name }}:</span>
+                            <WinLossDisplay :amount="row.win_loss_8" />
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["win_loss_4"].name }}:</span>
+                            <WinLossDisplay :amount="row.win_loss_4" />
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["win_loss_32"].name }}:</span>
+                            <WinLossDisplay :amount="row.win_loss_32" />
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["win_loss_64"].name }}:</span>
+                            <WinLossDisplay :amount="row.win_loss_64" />
+                        </div>
+                        <div>
+                            <span>{{ tableColumns["win_loss_128"].name }}:</span>
+                            <WinLossDisplay :amount="row.win_loss_128" />
+                        </div>
+                        <div>
+                            <span>{{ tableColumns.total_activity_coin_win_loss.name }}:</span>
+                            <WinLossDisplay :amount="row.total_activity_coin_win_loss" />
+                        </div>
                     </div>
                 </template>
             </el-table-column>

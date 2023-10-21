@@ -231,27 +231,33 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 tips: "人工发送的邮件附件并且玩家“已领取”，不包含活动币",
             },
             activity_coin_get: {
-                name: '活动任务',
+                name: "活动任务",
                 options: {},
                 tips: "玩家任务获得任务币数量",
             },
             activity_gift_gold: {
-                name: '活动赠送',
+                name: "活动赠送",
                 options: {},
                 tips: "活动发送并且玩家已经获得，不包含活动币",
             },
             activity_gold_exchange: {
-                name: '任务币转换',
+                name: "任务币转换",
                 options: {},
                 tips: "玩家完成任务获得真钱的数量",
             },
-            pure_win_loss: { name: '纯游戏输赢', options: {}, tips: '游戏输赢-游戏挖矿-任务币转换-活动赠送' },
+            pure_win_loss: {
+                name: "纯游戏输赢",
+                display: true,
+                options: {},
+                tips: "游戏输赢-游戏挖矿-任务币转换-活动赠送",
+            },
             channel_profit: {
                 name: "渠道毛利",
                 options: {},
                 display: true,
-                tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%"
-            }
+                tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%",
+            },
+            activity_coin_win_loss: { name: "活动币游戏输赢", display: true, options: {} },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -463,6 +469,14 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                         name: this.tableData.columns.win_loss.name,
                         checked: true,
                     },
+                    pure_win_loss: {
+                        name: this.tableData.columns.pure_win_loss.name,
+                        checked: true,
+                    },
+                    activity_coin_win_loss: {
+                        name: this.tableData.columns.activity_coin_win_loss.name,
+                        checked: true,
+                    },
                     water: {
                         name: this.tableData.columns.water.name,
                         checked: true,
@@ -505,6 +519,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         backwater_gold: "",
         win_loss: "",
         pure_win_loss: "",
+        activity_coin_win_loss: "",
         commission_gold: "",
         water: "",
         new_register_water: "",
@@ -573,6 +588,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
             "backwater_gold",
             "win_loss",
             "pure_win_loss",
+            "activity_coin_win_loss",
             "commission_gold",
             "water",
             "new_register_water",
@@ -843,6 +859,14 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 options: {
                     win_loss: {
                         name: this.tableData.columns.win_loss.name,
+                        checked: true,
+                    },
+                    pure_win_loss: {
+                        name: this.tableData.columns.pure_win_loss.name,
+                        checked: true,
+                    },
+                    activity_coin_win_loss: {
+                        name: this.tableData.columns.activity_coin_win_loss.name,
                         checked: true,
                     },
                     water: {

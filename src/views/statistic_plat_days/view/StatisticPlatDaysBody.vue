@@ -582,6 +582,7 @@
             </el-table-column>
 
             <el-table-column
+                v-if="tableColumns.pure_win_loss.display"
                 prop="pure_win_loss"
                 :label="tableColumns['pure_win_loss'].name"
                 align="center"
@@ -602,6 +603,18 @@
                 </template>
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.pure_win_loss"></WinLossDisplay>
+                </template>
+            </el-table-column>
+
+            <el-table-column
+                v-if="tableColumns.activity_coin_win_loss.display"
+                prop="activity_coin_win_loss"
+                :label="tableColumns['activity_coin_win_loss'].name"
+                align="center"
+                min-width="130"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.activity_coin_win_loss"></WinLossDisplay>
                 </template>
             </el-table-column>
 

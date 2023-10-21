@@ -249,6 +249,16 @@
                                     />
                                 </span>
                             </div>
+                            <div class="text-left">
+                                <span>{{ tableColumns[`${activeName}_total_activity_coin_bet`].name }}:</span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_total_activity_coin_bet`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                    />
+                                </span>
+                            </div>
                         </template>
                     </el-table-column>
                     <!-- 游戏总输赢 -->
@@ -271,8 +281,14 @@
                                     <WinLossDisplay :amount="row[`${activeName}_win_loss_${i}`]" />
                                 </span>
                             </div>
+                            <div class="text-left">
+                                <span>{{ tableColumns[`${activeName}_total_activity_coin_win_loss`].name }}:</span>
+                                <span>
+                                    <WinLossDisplay :amount="row[`${activeName}_total_activity_coin_win_loss`]" />
+                                </span>
+                            </div>
                         </template>
-                    </el-table-column>
+                    </el-table-column> 
                     <!-- 游戏总流水 -->
                     <el-table-column
                         :prop="`${activeName}_total_water`"
@@ -302,7 +318,7 @@
                                 </span>
                             </div>
                         </template>
-                    </el-table-column>
+                    </el-table-column> 
                     <!-- 游戏总流水 -->
                     <el-table-column
                         :prop="`${activeName}_bonus_pool`"
