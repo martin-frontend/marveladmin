@@ -323,7 +323,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
                 let group = user_list.split(",").slice(0, this.sendData.groupSize);
                 formCopy.user_list = group;
                 this.sendData.groupsCurrent = 1;
-                this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
+                this.sendNotification(HttpType.admin_plat_email_store_attachment_store, objectRemoveNull(formCopy));
             }
         } else {
             if (user_list.split(",").length <= this.sendData.groupSize) {
@@ -332,6 +332,7 @@ export default class PlatEmailProxy extends AbstractProxy implements IPlatEmailP
                 this.sendData.userListExceed = true;
                 let group = user_list.split(",").slice(0, this.sendData.groupSize);
                 formCopy.user_list = group;
+                this.sendData.groupsCurrent = 1;
                 this.sendNotification(HttpType.admin_plat_mail_content_store, objectRemoveNull(formCopy));
             }
         }
