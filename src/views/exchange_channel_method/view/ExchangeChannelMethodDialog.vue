@@ -59,6 +59,10 @@
                 <el-input v-model="form.free_time" type="number" min="0"></el-input>
             </el-form-item>
 
+            <el-form-item size="mini" :label="methodTableColumns['month_free_time'].name" prop="month_free_time">
+                <el-input v-model="form.month_free_time" type="number" min="0"></el-input>
+            </el-form-item>
+
             <el-form-item size="mini" :label="methodTableColumns['balance'].name" prop="balance">
                 <el-input v-model="form.balance" type="number" min="0"></el-input>
             </el-form-item>
@@ -74,12 +78,7 @@
             <el-form-item size="mini" :label="methodTableColumns['explain'].name" prop="explain">
                 <div class="flex d-flex">
                     <el-input type="textarea" v-model="form.explain" style="margin-right: 0.8rem"></el-input>
-                    <el-button
-                        style="max-height: 35px"
-                        type="primary"
-                        size="mini"
-                        @click="handleTranslate('explain')"
-                    >
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('explain')">
                         <!-- 翻译 -->
                         {{ LangUtil("翻译") }}
                     </el-button>
@@ -180,6 +179,7 @@ export default class ExchangeChannelMethodDialog extends AbstractView {
             min_gold: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             max_gold: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             free_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            month_free_time: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             fee: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             min_fee: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             balance: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
@@ -218,8 +218,8 @@ export default class ExchangeChannelMethodDialog extends AbstractView {
         // data.sentence = source;
         data.type = LanguageType.TYPE_PLAT_RECHARGE_EXCHANGE;
         data.plat_id = this.form.plat_id;
-         //@ts-ignore
-         data.sentence = this.form[source] || source;
+        //@ts-ignore
+        data.sentence = this.form[source] || source;
         data.refForm = this.form;
         data.useKey = source;
         this.langProxy.showDialog(data);

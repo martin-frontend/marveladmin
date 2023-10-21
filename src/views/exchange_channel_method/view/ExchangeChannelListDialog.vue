@@ -50,6 +50,11 @@
             <el-table-column :label="methodTableColumns.min_gold.name" class-name="status-col" prop="min_gold" />
             <el-table-column :label="methodTableColumns.max_gold.name" class-name="status-col" prop="max_gold" />
             <el-table-column :label="methodTableColumns.free_time.name" class-name="status-col" prop="free_time" />
+            <el-table-column
+                :label="methodTableColumns.month_free_time.name"
+                class-name="status-col"
+                prop="month_free_time"
+            />
             <el-table-column :label="methodTableColumns.fee.name" class-name="status-col" prop="fee" />
             <el-table-column :label="methodTableColumns.explain.name" class-name="status-col" prop="explain" />
             <el-table-column :label="methodTableColumns.status.name" class-name="status-col" prop="status">
