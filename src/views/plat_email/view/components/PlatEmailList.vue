@@ -107,9 +107,20 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="`${tableColumns.receive_users.name}`" class-name="status-col" min-width="80px">
+            <el-table-column :label="`${tableColumns.receive_users.name}`" class-name="status-col" min-width="120px">
                 <template slot-scope="{ row }">
-                    {{ row.receive_users }}
+                    <div v-if="!row.receive_users">
+                        {{ row.receive_users }}
+                    </div>
+                    <div v-else-if="row.receive_users.length <= 81">
+                        {{ row.receive_users }}
+                    </div>
+                    <div v-else class="preview">
+                        <span> {{ row.receive_users.substring(0, 60) }}... </span><br />
+                        <el-button size="mini" type="primary" @click="onPreview(row.receive_users)">
+                            {{ LangUtil("展示全部") }}
+                        </el-button>
+                    </div>
                 </template>
             </el-table-column>
 
@@ -250,6 +261,10 @@ export default class PlatEmailList extends AbstractView {
 
     handlerExport() {
         this.myProxy.showEmailFieldSelectionDialog();
+    }
+
+    onPreview(value: string) {
+        this.myProxy.previewValue(value);
     }
 }
 </script>

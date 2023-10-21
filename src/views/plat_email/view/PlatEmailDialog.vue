@@ -383,14 +383,14 @@ export default class PlatEmailDialog extends AbstractView {
 
     handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
-            let atMostUser: any = this.LangUtil("最多群发1000个用户");
+            let atMostUser: any = this.LangUtil("最多群发30000个用户");
             let emailConfirm: any = this.LangUtil("发布以后邮件不能修改，确定发布?");
             let prompt: any = this.LangUtil("提示");
             let determine: any = this.LangUtil("确定");
             let cancel: any = this.LangUtil("取消");
             if (valid) {
                 let userCount: number = this.myProxy.dialogData.form.user_list.split(",").length;
-                if (userCount > 1000) {
+                if (userCount > 30000) {
                     this.$message.warning(atMostUser);
                     return;
                 }
