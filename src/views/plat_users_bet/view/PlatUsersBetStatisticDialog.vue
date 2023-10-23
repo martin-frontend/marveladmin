@@ -20,6 +20,9 @@
                 width="130px"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <div>{{ converCoinName(row.coin_name_unique) }}</div>
+                </template>
             </el-table-column>
             <el-table-column prop="bet_gold_coin" :label="tableColumns['bet_gold_coin'].name" align="center">
             </el-table-column>
@@ -61,6 +64,10 @@ export default class PlatUsersBetDialog extends AbstractView {
     tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.statisticDialog.list;
     form = this.myProxy.dialogData.form;
+
+    converCoinName(coinKey: any) {
+        return this.myProxy.converCoinName(coinKey);
+    }
 }
 </script>
 

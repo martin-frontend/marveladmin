@@ -15,6 +15,9 @@
                 width="130px"
                 align="center"
             >
+                <template slot-scope="{ row }">
+                    <div>{{ converCoinName(row.coin_name_unique) }}</div>
+                </template>
             </el-table-column>
             <el-table-column prop="gold_scale" :label="tableColumns['gold_scale'].name" align="center">
             </el-table-column>
@@ -65,6 +68,10 @@ export default class PlatUsersVendorGoldLogStatisticDialog extends AbstractView 
 
     handleCancel() {
         this.myProxy.statusDialog.bShow = false;
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.coin_name_unique.options[this.myProxy.listQuery.plat_id][coinKey] || coinKey;
     }
 }
 </script>

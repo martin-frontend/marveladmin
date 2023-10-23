@@ -421,6 +421,10 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
                 exportField.push(item);
             }
         }
+        // @ts-ignore
+        newData.forEach(item => {
+            item.coin_name_unique = this.converCoinName(item.coin_name_unique);
+        });
 
         new BaseInfo.ExportExcel(
             `${this.getExcelOutputName}`,
@@ -585,4 +589,8 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
 
     //@ts-ignore
     lottTranslator = lottTranslator;
+
+    converCoinName(coinKey: any) {
+        return this.tableData.columns.coin_name_unique.options[this.listQuery.plat_id][coinKey];
+    }
 }

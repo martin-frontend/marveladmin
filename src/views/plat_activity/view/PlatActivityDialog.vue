@@ -798,7 +798,7 @@
                                                                     v-for="(item, key) of childRule.params"
                                                                     :key="key"
                                                                 >
-                                                                    <span>{{ key }}</span>
+                                                                    <span>{{ converCoinName(key) }}</span>
                                                                     <el-input-number
                                                                         size="small"
                                                                         v-model="item.percent"
@@ -2050,6 +2050,10 @@ export default class PlatActivityDialog extends AbstractView {
 
     inputChangeRemoveChannel(e: any) {
         this.dialogForm.remove_channel = e.target.value;
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.activity_coin.options[this.myProxy.listQuery.plat_id][coinKey];
     }
 }
 </script>
