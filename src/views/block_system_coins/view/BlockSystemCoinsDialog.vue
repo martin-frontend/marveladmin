@@ -2,10 +2,10 @@
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="105px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.coin_name.name" prop="coin_name">
-                <el-input v-model="form.coin_name"></el-input>
+                <el-input v-model="form.coin_name" :disabled="isStatusUpdate"></el-input>
             </el-form-item>
             <el-form-item :label="tableColumns.coin_name_unique.name" prop="coin_name_unique">
-                <el-input v-model="form.coin_name_unique"></el-input>
+                <el-input v-model="form.coin_name_unique" :disabled="isStatusUpdate"></el-input>
             </el-form-item>
             <el-form-item :label="tableColumns.icon.name" prop="icon">
                 <el-input v-model="form.icon"></el-input>
@@ -29,7 +29,7 @@
             </el-form-item>
         </el-form>
         <div class="btn_group">
-            <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ LangUtil("删除") }}</el-button>
+            <!-- <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ LangUtil("删除") }}</el-button> -->
             <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
                 LangUtil("确认保存")
             }}</el-button>
