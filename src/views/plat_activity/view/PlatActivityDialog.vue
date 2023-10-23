@@ -726,7 +726,14 @@
                                                         :disabled="isStatusUpdate"
                                                         style="width: 80px"
                                                     ></el-input>
-
+                                                    <el-input
+                                                        size="small"
+                                                        v-if="childRule.params_type == '6'"
+                                                        v-model="childRule.params"
+                                                        :placeholder="LangUtil('请输入')"
+                                                        :disabled="isStatusUpdate"
+                                                        style="width: 200px"
+                                                    ></el-input>
                                                     <template v-if="childRule.type == 61 && childRule.params_type == 5">
                                                         <!-- 币种选择 -->
                                                         <el-select
