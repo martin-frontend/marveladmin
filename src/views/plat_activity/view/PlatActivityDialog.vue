@@ -1836,9 +1836,6 @@ export default class PlatActivityDialog extends AbstractView {
         ],
     };
 
-    converCoinName(coinKey: any) {
-        return this.tableColumns.activity_coin.options[this.myProxy.listQuery.plat_id][coinKey];
-    }
     conditionOptions = {
         shortcuts: [
             {
@@ -2053,6 +2050,10 @@ export default class PlatActivityDialog extends AbstractView {
 
     inputChangeRemoveChannel(e: any) {
         this.dialogForm.remove_channel = e.target.value;
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.activity_coin.options[this.myProxy.listQuery.plat_id][coinKey];
     }
 }
 </script>
