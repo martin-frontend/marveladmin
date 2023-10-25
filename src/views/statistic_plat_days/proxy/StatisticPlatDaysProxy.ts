@@ -258,6 +258,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
                 tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%",
             },
             activity_coin_win_loss: { name: "活动币游戏输赢", display: true, options: {} },
+            coin_name_unique: { name: '币种', options: {} },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -273,6 +274,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
         page_size: 20,
         plat_id: "",
         channel_id: "",
+        coin_name_unique: "",
         "created_date-{>=}": dateFormat(getTodayOffset(-1), "yyyy-MM-dd hh:mm:ss"),
         "created_date-{<=}": dateFormat(getTodayOffset(0, 1), "yyyy-MM-dd hh:mm:ss"),
     };
@@ -647,6 +649,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**重置查询条件 */
     resetListQuery() {
+        Object.assign(this.listQuery, { coin_name_unique: "" })
         if (this.tableData.activeName == "stats") {
             Object.assign(this.listQuery, {
                 page_count: 1,
@@ -889,10 +892,7 @@ export default class StatisticPlatDaysProxy extends AbstractProxy implements ISt
 
     /**查询汇总 */
     onQuerySummary() {
-        this.sendNotification(
-            HttpType.admin_statistic_plat_days_plat_summary_index,
-            objectRemoveNull({ ...this.summaryListQuery, plat_id: this.listQuery.plat_id })
-        );
+        this.sendNotification(HttpType.admin_statistic_plat_days_plat_summary_index, objectRemoveNull({ ...this.summaryListQuery, plat_id: this.listQuery.plat_id, coin_name_unique: this.listQuery.coin_name_unique }));
     }
 
     get defaultDate() {

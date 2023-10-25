@@ -6,7 +6,7 @@
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
                 :clearable="false"
-                @change="handlerSearch"
+                @change="changePlat(), handlerSearch()"
             />
         </div>
         <div class="group">
@@ -16,6 +16,11 @@
                 v-model="listQuery.channel_id"
                 :options="tableColumns.channel_id.options[listQuery.plat_id]"
                 :is-use-key="true"
+            />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
             />
             <SearchInput
                 v-if="myProxy.tabName == 'group'"
@@ -89,6 +94,10 @@ export default class StatisticPlatDaysDeliverChannelHeader extends AbstractView 
 
     exportExcel() {
         this.myProxy.showFieldSelectionDialog();
+    }
+
+    changePlat() {
+        this.listQuery.coin_name_unique = "";
     }
 }
 </script>

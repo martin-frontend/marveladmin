@@ -98,6 +98,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
             tips: "渠道充值金额-渠道提现-游戏输赢*0.15-充值金额1%-投放消耗。",
         },
         new_reg_rech_total: { name: "当天注册充值总金额", options: [], tips: "当天注册的用户并且充值的总金额" },
+        coin_name_unique: { name: '币种', options: {} },
     };
     groupColumns = {
         id: { name: "ID", options: [] },
@@ -172,6 +173,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
         plat_id: "",
         channel_id: "",
         user_id: "",
+        coin_name_unique: "",
         "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd"),
         "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
     };
@@ -222,6 +224,7 @@ export default class StatisticPlatDaysDeliverChannelProxy extends AbstractProxy
         Object.assign(this.listQuery, {
             channel_id: "",
             user_id: "",
+            coin_name_unique: "",
             "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd"),
             "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd"),
         });

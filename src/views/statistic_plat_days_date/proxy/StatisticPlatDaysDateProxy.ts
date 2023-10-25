@@ -26,7 +26,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             id: { name: "平台统计ID", options: [], display: true },
             data_belong: { name: "数据归属标记", options: [], display: true },
             created_date: { name: "日期", options: [], display: true },
@@ -231,9 +231,9 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
                 name: "渠道毛利",
                 options: {},
                 display: true,
-                tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%",
+                tips: "市场推广渠道毛利=团队充值-团队提现-游戏输赢*0.15-充值金额1%"
             },
-            activity_coin_win_loss: { name: "活动币游戏输赢", options: {} },
+            coin_name_unique: { name: '币种', options: {} },
         },
         list: <any>[],
         columnKeys: <any>[],
@@ -247,6 +247,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
         page_size: 20,
         plat_id: "",
         channel_id: "",
+        coin_name_unique: "",
         //start_date: this.defaultDate,
     };
     /**弹窗相关数据 */
@@ -498,6 +499,7 @@ export default class StatisticPlatDaysDateProxy extends AbstractProxy implements
             page_size: 20,
             plat_id: "",
             channel_id: "",
+            coin_name_unique: "",
             //start_date: this.defaultDate,
         });
     }
