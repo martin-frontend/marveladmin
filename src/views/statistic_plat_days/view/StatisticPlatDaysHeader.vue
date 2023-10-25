@@ -6,7 +6,7 @@
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
                 :clearable="false"
-                @change="handlerSearch"
+                @change="changePlat(), handlerSearch()"
             />
         </div>
         <div class="group">
@@ -26,6 +26,11 @@
                 v-if="myProxy.tableData.activeName == 'stats'"
                 :title="tableColumns.channel_id.name"
                 v-model="listQuery.channel_id"
+            />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
             />
             <div class="btn-group">
                 <div>
@@ -78,6 +83,7 @@ export default class StatisticPlatDaysHeader extends AbstractView {
     listQuery = this.myProxy.listQuery;
     summaryListQuery = this.myProxy.summaryListQuery;
     list = this.myProxy.tableData.list;
+
     handlerSearch() {
         if (this.myProxy.tableData.activeName == "stats") {
             this.listQuery.page_count = 1;
@@ -98,6 +104,10 @@ export default class StatisticPlatDaysHeader extends AbstractView {
 
     heandlerExport() {
         this.myProxy.showFieldSelectionDialog();
+    }
+
+    changePlat() {
+        this.listQuery.coin_name_unique = "";
     }
 }
 </script>

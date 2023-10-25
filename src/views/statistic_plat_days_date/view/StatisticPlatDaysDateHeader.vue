@@ -6,24 +6,21 @@
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
                 :clearable="false"
-                @change="handlerSearch"
+                @change="changePlat(), handlerSearch()"
+            />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
             />
         </div>
-        <!-- <div class="group">
-            <SearchDatePicker
-                :title="tableColumns.created_date.name"
-                :startDate.sync="listQuery.start_date"
-                :endDate.sync="endtime"
-            />
+        <div class="group">
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    LangUtil("查询")
-                }}</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    LangUtil("重置")
-                }}</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                    {{ LangUtil("查询") }}
+                </el-button>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
@@ -70,6 +67,10 @@ export default class StatisticPlatDaysDateHeader extends AbstractView {
 
     handlerCreate() {
         this.myProxy.showDialog(DialogStatus.create);
+    }
+
+    changePlat() {
+        this.listQuery.coin_name_unique = "";
     }
 }
 </script>
