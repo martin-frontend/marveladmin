@@ -280,6 +280,7 @@
                 class-name="status-col"
                 min-width="100px"
             ></el-table-column>
+            <!-- 游戏类型 -->
             <el-table-column
                 :label="tableColumns['vendor_type'].name"
                 prop="vendor_type"
@@ -290,13 +291,47 @@
                     <div>{{ tableColumns.vendor_type.options[row.vendor_type] }}</div>
                 </template>
             </el-table-column>
+            <!-- 厂商订单 -->
             <el-table-column
                 :label="tableColumns['vendor_order_no'].name"
                 prop="vendor_order_no"
                 min-width="80px"
                 class-name="status-col"
             ></el-table-column>
-
+            <!-- 体育类型 -->
+            <el-table-column
+                :label="tableColumns['sports_type'].name"
+                prop="sports_type"
+                min-width="100px"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.sports_type == 0">-</div>
+                    <div v-else>
+                        <template v-for="(item, index) in row.sports_type.split('|')">
+                            <span :key="index">
+                                {{ tableColumns["sports_type"].options[item] }}
+                                <span v-if="index + 1 != row.sports_type.split('|').length">
+                                    x
+                                </span>
+                            </span>
+                        </template>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 滚球比分 -->
+            <el-table-column
+                :label="tableColumns['bet_score'].name"
+                prop="bet_score"
+                min-width="80px"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.bet_score">{{ row.bet_score }}</div>
+                    <div v-else>-</div>
+                </template>
+            </el-table-column>
+            <!-- 下注订单 -->
             <el-table-column
                 :label="tableColumns['order_no'].name"
                 prop="order_no"
