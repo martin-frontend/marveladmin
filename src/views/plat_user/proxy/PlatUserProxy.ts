@@ -778,10 +778,10 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         // 导出资料
         // let exportData = this.dataMatching(exportColumn, data);
         // exportJson2Excel(exportHeader, exportData, this.getFileName, undefined, undefined);
-        const filteredField = this.fieldSelectionData.fieldOptions.filter(
+        let exportField = this.fieldSelectionData.fieldOptions.filter(
             item => this.exportData.fieldOrder.indexOf(item) != -1
         );
-        const totalRechargeIdx = filteredField.indexOf("total_recharge");
+        const totalRechargeIdx = exportField.indexOf("total_recharge");
         const coinNamesMap = new Map<string, string | null>();
         newData.forEach(({ coin_name_unique_arr }: { coin_name_unique_arr: Record<string, string | null> }) => {
             Object.entries(coin_name_unique_arr).forEach(([k, v]) => coinNamesMap.set(k, v));
@@ -791,29 +791,37 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         const exchange_fields_keys = coinNames.map(i => `exchange_${i}`);
         const bet_fields_keys = coinNames.map(i => `bet_${i}`);
         const win_fields_keys = coinNames.map(i => `win_${i}`);
-        let exportField = [
-            ...filteredField.slice(0, totalRechargeIdx + 1),
-            ...recharge_fields_keys,
-            ...filteredField.slice(totalRechargeIdx + 1),
-        ];
+        if (totalRechargeIdx > -1) {
+            exportField = [
+                ...exportField.slice(0, totalRechargeIdx + 1),
+                ...recharge_fields_keys,
+                ...exportField.slice(totalRechargeIdx + 1),
+            ];
+        }
         const totalExchangeIdx = exportField.indexOf("total_exchange");
-        exportField = [
-            ...exportField.slice(0, totalExchangeIdx + 1),
-            ...exchange_fields_keys,
-            ...exportField.slice(totalExchangeIdx + 1),
-        ];
+        if (totalExchangeIdx > -1) {
+            exportField = [
+                ...exportField.slice(0, totalExchangeIdx + 1),
+                ...exchange_fields_keys,
+                ...exportField.slice(totalExchangeIdx + 1),
+            ];
+        }
         const totalBetIdx = exportField.indexOf("total_bet");
-        exportField = [
-            ...exportField.slice(0, totalBetIdx + 1),
-            ...bet_fields_keys,
-            ...exportField.slice(totalBetIdx + 1),
-        ];
+        if (totalBetIdx > -1) {
+            exportField = [
+                ...exportField.slice(0, totalBetIdx + 1),
+                ...bet_fields_keys,
+                ...exportField.slice(totalBetIdx + 1),
+            ];
+        }
         const totalWinIdx = exportField.indexOf("total_win");
-        exportField = [
-            ...exportField.slice(0, totalWinIdx + 1),
-            ...win_fields_keys,
-            ...exportField.slice(totalWinIdx + 1),
-        ];
+        if (totalWinIdx > -1) {
+            exportField = [
+                ...exportField.slice(0, totalWinIdx + 1),
+                ...win_fields_keys,
+                ...exportField.slice(totalWinIdx + 1),
+            ];
+        }
 
         const total_recharge = this.tableData.columns?.total_recharge ?? { name: "" };
         const total_exchange = this.tableData.columns?.total_exchange ?? { name: "" };
