@@ -811,7 +811,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         const totalBetIdx = exportField.indexOf("total_bet");
         if (totalBetIdx > -1) {
             exportField = [
-                ...exportField.slice(0, totalBetIdx + 1),
+                ...exportField.slice(0, totalBetIdx),
                 ...bet_fields_keys,
                 ...exportField.slice(totalBetIdx + 1),
             ];
@@ -819,7 +819,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         const totalWinIdx = exportField.indexOf("total_win");
         if (totalWinIdx > -1) {
             exportField = [
-                ...exportField.slice(0, totalWinIdx + 1),
+                ...exportField.slice(0, totalWinIdx),
                 ...win_fields_keys,
                 ...exportField.slice(totalWinIdx + 1),
             ];
