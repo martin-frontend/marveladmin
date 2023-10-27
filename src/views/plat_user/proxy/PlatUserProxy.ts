@@ -770,8 +770,6 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
     /**导出 Excel */
     exportExcel() {
         const newData = JSON.parse(JSON.stringify(this.exportData.list));
-        console.log(newData);
-
 
         // 要导出的栏位
         // let exportColumn = this.exportData.fieldOrder;
