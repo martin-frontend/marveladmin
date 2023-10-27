@@ -35,6 +35,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             activity_category: { name: "活动分类", options: {} },
             activity_desc: { name: "活动描述", options: {} },
             activity_name: { name: "活动名称", options: {} },
+            all_coin: { name: "所有币种", options: {} },
             award_timing: { name: "派奖时间点", options: {} },
             award_timing_map: { name: "派奖时间点", options: {} },
             award_tpl: { name: "派奖内容模版", options: {} },
