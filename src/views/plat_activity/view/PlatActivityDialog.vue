@@ -798,7 +798,9 @@
                                                                     v-for="(item, key) of childRule.params"
                                                                     :key="key"
                                                                 >
-                                                                    <span style="margin-right: 10px;">{{ converCoinName(key) }}</span>
+                                                                    <span style="margin-right: 10px;">
+                                                                        {{ converCoinName(key) }}
+                                                                    </span>
                                                                     <el-input-number
                                                                         size="small"
                                                                         v-model="item.percent"
@@ -2053,7 +2055,7 @@ export default class PlatActivityDialog extends AbstractView {
     }
 
     converCoinName(coinKey: any) {
-        return this.tableColumns.reward_coin.options[this.myProxy.listQuery.plat_id][coinKey];
+        return this.tableColumns.all_coin.options[this.myProxy.listQuery.plat_id][coinKey];
     }
 }
 </script>
