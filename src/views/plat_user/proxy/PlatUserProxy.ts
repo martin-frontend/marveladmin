@@ -863,10 +863,10 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             element.total_recharge = element.recharge_times;
             element.total_exchange = element.exchange_times;
             for (const item of element.user_statistic) {
-                element[`recharge_${item.coin_name_unique}`] = Math.abs(item.total_recharge).toFixed(3);
-                element[`exchange_${item.coin_name_unique}`] = Math.abs(item.total_exchange).toFixed(3);
-                element[`bet_${item.coin_name_unique}`] = Math.abs(item.total_bet).toFixed(3);
-                element[`win_${item.coin_name_unique}`] = Math.abs(item.total_win).toFixed(3);
+                element[`recharge_${item.coin_name_unique}`] = Number(item.total_recharge).toFixed(3);
+                element[`exchange_${item.coin_name_unique}`] = Number(item.total_exchange).toFixed(3);
+                element[`bet_${item.coin_name_unique}`] = Number(item.total_bet).toFixed(3);
+                element[`win_${item.coin_name_unique}`] = Number(item.total_win).toFixed(3);
             }
 
             if (element.user_tag) {
