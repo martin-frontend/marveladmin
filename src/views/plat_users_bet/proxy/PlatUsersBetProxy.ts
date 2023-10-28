@@ -105,9 +105,11 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             league: { name: LangUtil("联赛") },
             market_type_text: { name: LangUtil("盘口") },
             odds: { name: LangUtil("赔率") },
-            vendor_order_no: { name: "", options: [] },
-            vendor_coin_name_unicode: { name: "", options: [] },
-            vendor_win_gold: { name: "", options: [] },
+            vendor_order_no: { name: "厂商订单", options: [] },
+            vendor_coin_name_unicode: { name: "厂商币种", options: [] },
+            vendor_win_gold: { name: "厂商输赢", options: [] },
+            sports_type: { name: '体育类型', options: {} },
+            bet_score: { name: '滚球比分', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -160,6 +162,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         is_export: false,
         vendor_order_no: "",
         channel_id: "",
+        sports_type: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -231,6 +234,8 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             "nick_name",
             "vendor_product_name",
             "vendor_type",
+            "sports_type",
+            "bet_score",
             "order_no",
             "coin_name_unique",
             "bet_gold_coin",
@@ -331,6 +336,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             resettlement_status: "",
             vendor_order_no: "",
             channel_id: "",
+            sports_type: "",
         });
     }
 
@@ -343,28 +349,28 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         //return `${name}-${this.listQuery["bet_at-{>=}"]}～${this.listQuery["bet_at-{<=}"]}`;
         return name;
     }
-    _gameKeyList = [
-        "vendor_id",
-        "user_id",
-        "is_credit_user",
-        "nick_name",
-        "vendor_product_name",
-        "vendor_type",
-        "order_no",
-        "coin_name_unique",
-        "win_gold",
-        "bet_at",
-        "settlement_at",
-        "pull_at",
-        "league",
-        "bet_code",
-        "market_type_text",
-        "odds",
-        "bet_gold",
-        "valid_bet_gold",
-        "water",
-        "settlement_status",
-    ];
+    // _gameKeyList = [
+    //     "vendor_id",
+    //     "user_id",
+    //     "is_credit_user",
+    //     "nick_name",
+    //     "vendor_product_name",
+    //     "vendor_type",
+    //     "order_no",
+    //     "coin_name_unique",
+    //     "win_gold",
+    //     "bet_at",
+    //     "settlement_at",
+    //     "pull_at",
+    //     "league",
+    //     "bet_code",
+    //     "market_type_text",
+    //     "odds",
+    //     "bet_gold",
+    //     "valid_bet_gold",
+    //     "water",
+    //     "settlement_status",
+    // ];
 
     /**取得当前页签导出栏位顺序 */
     // get curKeyList() {
@@ -414,6 +420,25 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     /**导出excel */
     exportExcel() {
         const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        // @ts-ignore
+        newData.forEach(element => {
+            if (element.sports_type == 0) {
+                element.sports_type = "-";
+            } else {
+                let sports_type = '';
+                for (let i = 0; i < element.sports_type.split('|').length; i++) {
+                    sports_type =
+                        sports_type + this.tableData.columns.sports_type.options[element.sports_type.split('|')[i]];
+                    if (i + 1 != element.sports_type.split('|').length) {
+                        sports_type = sports_type + 'x';
+                    }
+                }
+                element.sports_type = sports_type;
+            }
+            if (!element.bet_score) {
+                element.bet_score = "-";
+            }
+        });
 
         const exportField = [];
         for (const item of this.fieldSelectionData.fieldOptions) {
