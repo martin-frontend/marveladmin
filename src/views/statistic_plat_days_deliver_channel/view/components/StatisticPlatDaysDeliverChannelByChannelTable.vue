@@ -53,7 +53,7 @@
             </el-table-column>
             <el-table-column :label="tableColumns.win_loss.name" align="center" prop="win_loss" min-width="150px">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.win_loss" />
+                    <WinLossDisplay :amount="row.win_loss" :isShowDollar="false" />
                 </template>
             </el-table-column>
             <el-table-column
@@ -76,7 +76,7 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.channel_profit" />
+                    <WinLossDisplay :amount="row.channel_profit" :isShowDollar="false" />
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.deliver_use.name" align="center" prop="deliver_use" min-width="150px">
