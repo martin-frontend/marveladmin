@@ -25,10 +25,11 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             created_at: { name: "", options: {} },
             created_by: { name: "", options: {} },
             data_belong: { name: "", options: {} },
+            icon: { name: '产品图片', options: {} },
             index_no: { name: "", options: {} },
             lobby_vendor_product_id: { name: "", options: {} },
             ori_product_id: { name: "", options: {} },
@@ -80,6 +81,11 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
     rowRateAccelerateData = {
         lobby_vendor_product_id: "",
         water_rate_accelerate: 0,
+    };
+
+    rowIcon = {
+        lobby_vendor_product_id: "",
+        icon: "",
     };
 
     rowActivityTaskWaterData = {
@@ -178,6 +184,10 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
     /**更新流水加速配置 */
     onUpdateWaterRateAccelerate() {
         this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowRateAccelerateData);
+    }
+    /**更新产品图片 */
+    onUpdateIcon() {
+        this.sendNotification(HttpType.admin_lobby_vendor_products_update, this.rowIcon);
     }
     /**更新活动币 */
     onUpdateActivithTaskWaterData() {
