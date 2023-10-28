@@ -113,7 +113,12 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.recharge" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.recharge"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column
@@ -305,7 +310,12 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.exchange" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.exchange"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column
@@ -371,7 +381,7 @@
                 </template>
                 <template slot-scope="{ row }">
                     <span v-if="row.channel_profit != null">
-                        <WinLossDisplay :amount="row.channel_profit"></WinLossDisplay>
+                        <WinLossDisplay :amount="row.channel_profit" :isShowDollar="false"></WinLossDisplay>
                     </span>
                     <span v-else> - </span>
                 </template>
@@ -454,7 +464,12 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.gift_gold" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.gift_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column
@@ -558,7 +573,12 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.backwater_gold" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.backwater_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column
@@ -577,7 +597,7 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.win_loss"></WinLossDisplay>
+                    <WinLossDisplay :amount="row.win_loss" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
@@ -602,7 +622,7 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.pure_win_loss"></WinLossDisplay>
+                    <WinLossDisplay :amount="row.pure_win_loss" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
@@ -614,7 +634,7 @@
                 min-width="130"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.activity_coin_win_loss"></WinLossDisplay>
+                    <WinLossDisplay :amount="row.activity_coin_win_loss" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
@@ -655,7 +675,12 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.water" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column
@@ -678,7 +703,12 @@
                     </el-tooltip>
                 </template>
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.new_register_water" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.new_register_water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column

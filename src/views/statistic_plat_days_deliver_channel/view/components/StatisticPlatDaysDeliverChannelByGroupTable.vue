@@ -86,7 +86,7 @@
             </el-table-column>
             <el-table-column :label="tableColumns.win_loss.name" align="center" prop="win_loss" min-width="150px">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.win_loss" />
+                    <WinLossDisplay :amount="row.win_loss" :isShowDollar="false" />
                 </template>
             </el-table-column>
             <el-table-column
