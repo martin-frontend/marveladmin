@@ -97,17 +97,19 @@ export default class PlatUsersBetMediator extends AbstractMediator {
                 myProxy.showStatisticDialog(body);
                 break;
             case GlobalEventType.IO_ERROR:
-                MessageBox.confirm(<string>LangUtil("网络错误，是否继续下载？"), <string>LangUtil("提示"), {
-                    confirmButtonText: <string>LangUtil("继续下载"),
-                    cancelButtonText: <string>LangUtil("取消下载"),
-                    type: "warning",
-                }).then(() => {
-                    this.myProxy.onQueryExportData();
-                }).catch(() => {
-                    this.myProxy.exportData.stop = true;
-                    this.myProxy.resetExportData(0);
-                    this.myProxy.exportData.isSearch = true;
-                });
+                if (myProxy.exportData.isExportExcel) {
+                    MessageBox.confirm(<string>LangUtil("网络错误，是否继续下载？"), <string>LangUtil("提示"), {
+                        confirmButtonText: <string>LangUtil("继续下载"),
+                        cancelButtonText: <string>LangUtil("取消下载"),
+                        type: "warning",
+                    }).then(() => {
+                        this.myProxy.onQueryExportData();
+                    }).catch(() => {
+                        this.myProxy.exportData.stop = true;
+                        this.myProxy.resetExportData(0);
+                        this.myProxy.exportData.isSearch = true;
+                    });
+                }
                 break;
         }
     }
