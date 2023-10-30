@@ -238,6 +238,7 @@ export default class LobbyVendorProductsProxy extends AbstractProxy implements I
         "vendor_type",
         "water_rate",
         "water_rate_accelerate",
+        "icon",
         "languages",
         "vendor_languages",
         "is_activity_task_water",
