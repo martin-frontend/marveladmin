@@ -6,6 +6,7 @@
                 :startDate.sync="listQuery.start_date"
                 :endDate.sync="listQuery.end_date"
                 :clearable="false"
+                :showTime="true"
             />
             <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
                 {{ LangUtil("查询") }}
