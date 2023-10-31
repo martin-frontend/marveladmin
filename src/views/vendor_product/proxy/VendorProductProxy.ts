@@ -436,7 +436,10 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
         if (!this.imgBatchDialogData.selectedItems.length) {
             return;
         }
-        const images = this.imgBatchDialogData.selectedItems.map(i => [i.icon, i.icon_url] as const);
+        const imgReg = /\.(gif|png|jpg|webp|heic)$/;
+        const filteredItems = this.imgBatchDialogData.selectedItems.filter(i => i.icon && i.icon_url.match(imgReg));
+        if (!filteredItems.length) return;
+        const images = filteredItems.map(i => [i.icon, i.icon_url] as const);
         const promises = images.map(([name, url]) =>
             fetch(url)
                 .then(response => response.blob())
