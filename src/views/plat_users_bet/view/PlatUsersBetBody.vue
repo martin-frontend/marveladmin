@@ -235,7 +235,7 @@
                 min-width="80px"
             >
                 <template slot-scope="{ row }">
-                    <div>{{ tableColumns.vendor_id.options[row.vendor_id] }}</div>
+                    <div>{{ tableColumns.vendor_id.options[listQuery.plat_id][row.vendor_id] }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('平台信息')" min-width="200px" class-name="status-col">
