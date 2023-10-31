@@ -50,3 +50,8 @@ export default interface IVendorProductProxy {
     /**设置厂商类型数据 */
     setVendorTypes(ary: string[]): void;
 }
+
+export enum BatchStatus {
+    Download = "下载中",
+    BatchDelete = "删除中",
+}
