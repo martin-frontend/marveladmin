@@ -188,6 +188,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         email: "",
         ma_token: "",
         is_ma_token: "",
+        city: "",
     };
 
     fieldSelectionData = {
@@ -462,6 +463,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             email: "",
             ma_token: "",
             is_ma_token: "",
+            city: "",
         });
     }
 
