@@ -1,6 +1,6 @@
 import { EventType, HttpType } from "@/views/_user_detail/setting";
 import TabCreditProxy from "../proxy/TabCreditProxy";
-import { getPageSetting, getProxy } from "@/views/_user_detail/PageSetting";
+import { getPageSetting, getProxy, userShow } from "@/views/_user_detail/PageSetting";
 import { Message, MessageBox } from "element-ui";
 import LangUtil from "@/core/global/LangUtil";
 import AbstractMediator from "@/core/abstract/AbstractMediator";
@@ -59,6 +59,7 @@ export default class TabCreditMediator extends AbstractMediator {
                     break;
                 case EventType.admin_plat_user_show:
                     this.myProxy.setUserInfo(body);
+                    userShow.finished = true;
                     break;
                 case EventType.admin_plat_user_agent_bind_show:
                     this.myProxy.setRelationChain(body);
