@@ -4,7 +4,7 @@ import { DialogStatus } from "@/core/global/Constant";
 import { formCompared, jsonStringify, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
 import { HttpType } from "@/views/vendor_product/setting";
 import { Message, MessageBox } from "element-ui";
-import IVendorProductProxy from "./IVendorProductProxy";
+import IVendorProductProxy, { BatchStatus } from "./IVendorProductProxy";
 import i18n from "@/lang";
 import { BaseInfo } from "@/components/vo/commonVo";
 import { exportJson2Excel } from "@/core/global/Excel";
@@ -120,6 +120,14 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
 
     /**产品厂商 copy */
     vendorIdOptions = <any>{};
+
+    imgBatchDialogData = {
+        bShow: false,
+        status: "",
+        fileTotalCount: 0,
+        selectedItems: <{ vendor_product_id: string; icon: string; icon_url: string }[]>[],
+        deleteTotalCount: 0,
+    };
 
     /**设置表头数据 */
     setTableColumns(data: any) {
@@ -403,5 +411,56 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
                 return data[key];
             })
         );
+    }
+
+    /** 处理批次操作 */
+    showBatchDialog(status: BatchStatus) {
+        this.imgBatchDialogData.status = status;
+        this.imgBatchDialogData.bShow = true;
+        this.imgBatchDialogData.fileTotalCount = this.imgBatchDialogData.selectedItems.length;
+        if (status == BatchStatus.Download) {
+            this.hideDialog();
+            this.onBatchDownload();
+        } else {
+            this.onBatchDelete();
+        }
+    }
+
+    /**隐藏批次处理弹窗 */
+    hideBatchDialog() {
+        this.resetDialogForm();
+    }
+
+    /**批量下载 */
+    onBatchDownload() {
+        if (!this.imgBatchDialogData.selectedItems.length) {
+            return;
+        }
+        const images = this.imgBatchDialogData.selectedItems.map(i => [i.icon, i.icon_url] as const);
+        const promises = images.map(([name, url]) =>
+            fetch(url)
+                .then(response => response.blob())
+                .then(blobImage => {
+                    const href = URL.createObjectURL(blobImage);
+                    const anchorElement = document.createElement("a");
+                    anchorElement.href = href;
+                    anchorElement.download = name;
+                    document.body.appendChild(anchorElement);
+                    anchorElement.click();
+                    document.body.removeChild(anchorElement);
+                    window.URL.revokeObjectURL(href);
+                })
+                .catch(err => console.log(err))
+        );
+        Promise.allSettled(promises);
+    }
+
+    /**批次删除 */
+    onBatchDelete() {
+        if (!this.imgBatchDialogData.selectedItems.length) {
+            return;
+        }
+        const id = this.imgBatchDialogData.selectedItems.map(i => i.vendor_product_id);
+        this.sendNotification(HttpType.admin_vendor_product_delete_batch, { id });
     }
 }

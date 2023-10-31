@@ -29,6 +29,7 @@ export default class VendorProductMediator extends AbstractMediator {
             EventType.admin_vendor_product_store,
             EventType.admin_vendor_product_show,
             EventType.admin_vendor_product_update,
+            EventType.admin_vendor_product_delete_batch,
             EventType.admin_vendor_show,
             EventType.admin_vendor_index,
             EventType.admin_vendor_product_import,
@@ -60,6 +61,7 @@ export default class VendorProductMediator extends AbstractMediator {
                 myProxy.onQuery();
                 break;
             case EventType.admin_vendor_product_update:
+            case EventType.admin_vendor_product_delete_batch:
                 Message.success(SuccessMessage.update);
                 myProxy.hideDialog();
                 myProxy.onQuery();
