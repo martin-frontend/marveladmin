@@ -74,6 +74,11 @@
                 </el-radio-group>
             </SearchRange>
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
+            <SearchSelect
+                :title="tableColumns.sports_type.name"
+                v-model="listQuery.sports_type"
+                :options="tableColumns.sports_type.options"
+            />
             <div>
                 <el-button
                     @click="handlerSearch()"
