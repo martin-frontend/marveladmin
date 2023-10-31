@@ -147,6 +147,42 @@
                     </div>
                 </template>
             </el-table-column>
+            <el-table-column prop="icon" :label="tableColumns['icon'].name" min-width="220px" align="center">
+                <template slot-scope="{ row }">
+                    <div v-if="isIcon && editWaterRateID == row.lobby_vendor_product_id">
+                        <el-input v-model="editIcon" style="width: 60px; margin-right: 10px"></el-input>
+                        <el-button
+                            class="item"
+                            type="warning"
+                            size="mini"
+                            @click="
+                                editWaterRateID = null;
+                                isIcon = false;
+                            "
+                        >
+                            {{ LangUtil("取消") }}
+                        </el-button>
+                        <el-button class="item" type="success" size="mini" @click="onEditIcon(row)">
+                            {{ LangUtil("确定") }}
+                        </el-button>
+                    </div>
+                    <div v-else>
+                        <span style="margin-right: 10px">{{ row.icon }}</span>
+                        <el-button
+                            class="item"
+                            type="primary"
+                            size="mini"
+                            @click="
+                                editWaterRateID = row.lobby_vendor_product_id;
+                                isIcon = true;
+                                editIcon = row.icon;
+                            "
+                        >
+                            {{ LangUtil("编辑") }}
+                        </el-button>
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column aling="left" :label="tableColumns['languages'].name" prop="languages" min-width="260px">
                 <template slot-scope="{ row }">
                     <el-tag v-for="item of row.languages" :key="item">{{
@@ -290,8 +326,10 @@ export default class VendorProductBody extends AbstractView {
     editWaterRateID: any = null;
     isWaterRate = false;
     isWaterRateAccelerate = false;
+    isIcon = false;
     editWaterRateValue = "";
     editWaterRateAccelerateValue = "";
+    editIcon = "";
 
     editOrdernoID: any = null;
     isorderno = false;
@@ -318,17 +356,20 @@ export default class VendorProductBody extends AbstractView {
         }
         this.myProxy.onUpdate();
     }
+
     /**更新排序 */
     handlerOpt(row: any, value: any) {
         const { opt } = value;
         this.onUpdate(row, opt);
     }
+
     onUpdateStatus(row: any) {
         this.myProxy.tableData.ctrlData.lobby_vendor_product_id = row.lobby_vendor_product_id;
         this.myProxy.tableData.ctrlData.status = row.status;
         this.myProxy.tableData.ctrlData.opt = "0";
         this.myProxy.onUpdate();
     }
+
     onEditOrderNo(row: any) {
         this.editOrdernoID = null;
         this.isorderno = false;
@@ -349,6 +390,14 @@ export default class VendorProductBody extends AbstractView {
         this.editWaterRateID = null;
         this.isWaterRateAccelerate = false;
         this.myProxy.onUpdateWaterRateAccelerate();
+    }
+
+    onEditIcon(row: any) {
+        this.myProxy.rowIcon.lobby_vendor_product_id = row.lobby_vendor_product_id;
+        this.myProxy.rowIcon.icon = this.editIcon;
+        this.editWaterRateID = null;
+        this.isIcon = false;
+        this.myProxy.onUpdateIcon();
     }
 
     onUpdateLanguages(row: any) {
