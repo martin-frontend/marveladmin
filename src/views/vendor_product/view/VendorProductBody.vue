@@ -2,6 +2,7 @@
     <div>
         <el-table
             :data="tableData"
+            @selection-change="handleSelectionChange"
             border
             fit
             highlight-current-row
@@ -15,6 +16,7 @@
                 'text-align': 'center',
             }"
         >
+            <el-table-column type="selection" :selectable="checkSelectable" class-name="status-col"> </el-table-column>
             <el-table-column :label="tableColumns['vendor_id'].name" prop="vendor_id" min-width="120px">
                 <template slot-scope="{ row }">
                     <div>{{ tableColumns.vendor_id.options[row.vendor_id] }}</div>
@@ -167,6 +169,14 @@ export default class VendorProductBody extends AbstractView {
 
     onOrientationChange(row: any) {
         this.myProxy.onUpdateOrientation(row);
+    }
+
+    handleSelectionChange(selectItems: any) {
+        this.myProxy.imgBatchDialogData.selectedItems = selectItems;
+    }
+
+    checkSelectable(row: any, index: number) {
+        return !(row.is_delete == 1);
     }
 }
 </script>

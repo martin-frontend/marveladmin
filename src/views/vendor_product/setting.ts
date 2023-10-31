@@ -7,6 +7,7 @@ import cmd_admin_vendor_product_index from "@/views/vendor_product/command/cmd_a
 import cmd_admin_vendor_product_store from "@/views/vendor_product/command/cmd_admin_vendor_product_store";
 import cmd_admin_vendor_product_show from "@/views/vendor_product/command/cmd_admin_vendor_product_show";
 import cmd_admin_vendor_product_update from "@/views/vendor_product/command/cmd_admin_vendor_product_update";
+import cmd_admin_vendor_product_delete_batch from "@/views/vendor_product/command/cmd_admin_vendor_product_delete_batch";
 import cmd_admin_vendor_show from "@/views/vendor_product/command/cmd_admin_vendor_show";
 import cmd_admin_vendor_index from "@/views/vendor_product/command/cmd_admin_vendor_index";
 import cmd_admin_vendor_product_import from "@/views/vendor_product/command/cmd_admin_vendor_product_import";
@@ -17,6 +18,7 @@ export var HttpType = {
     admin_vendor_product_store: "admin/vendor_product/store",
     admin_vendor_product_show: "admin/vendor_product/show/{vendor_product_id}",
     admin_vendor_product_update: "admin/vendor_product/update/{vendor_product_id}",
+    admin_vendor_product_delete_batch: "admin/vendor_product/delete_batch",
     admin_vendor_show: "admin/vendor/show/{vendor_id}",
     admin_vendor_index: "admin/vendor/index",
     admin_vendor_product_import: "admin/vendor_product/import",
@@ -28,6 +30,7 @@ export var EventType = {
     admin_vendor_product_store: "admin_vendor_product_store",
     admin_vendor_product_show: "admin_vendor_product_show",
     admin_vendor_product_update: "admin_vendor_product_update",
+    admin_vendor_product_delete_batch: "admin_vendor_product_delete_batch",
     admin_vendor_show: "admin_vendor_show",
     admin_vendor_index: "admin_vendor_index",
     admin_vendor_product_import: "admin_vendor_product_import",
@@ -39,7 +42,7 @@ facade.registerCommand(HttpType.admin_vendor_product_index, cmd_admin_vendor_pro
 facade.registerCommand(HttpType.admin_vendor_product_store, cmd_admin_vendor_product_store);
 facade.registerCommand(HttpType.admin_vendor_product_show, cmd_admin_vendor_product_show);
 facade.registerCommand(HttpType.admin_vendor_product_update, cmd_admin_vendor_product_update);
+facade.registerCommand(HttpType.admin_vendor_product_delete_batch, cmd_admin_vendor_product_delete_batch);
 facade.registerCommand(HttpType.admin_vendor_show, cmd_admin_vendor_show);
 facade.registerCommand(HttpType.admin_vendor_index, cmd_admin_vendor_index);
 facade.registerCommand(HttpType.admin_vendor_product_import, cmd_admin_vendor_product_import);
-

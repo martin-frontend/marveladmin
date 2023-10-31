@@ -61,6 +61,22 @@
             >
                 {{ LangUtil("新增") }}
             </el-button>
+            <el-button
+                v-if="hasSelectedItems && checkUnique(unique.vendor_product_delete)"
+                class="item"
+                @click="handleBatchDelete()"
+                type="primary"
+                icon="el-icon-delete"
+                >{{ LangUtil("批量删除") }}</el-button
+            >
+            <el-button
+                v-if="hasSelectedItems"
+                class="item"
+                @click="handleBatchDownload()"
+                type="primary"
+                icon="el-icon-download"
+                >{{ LangUtil("批量下载") }}</el-button
+            >
         </div>
     </div>
 </template>
@@ -77,6 +93,7 @@ import SearchInput from "@/components/SearchInput.vue";
 import { readerData } from "@/core/global/Excel";
 import { removeRepeatStr } from "@/core/global/Functions";
 import { BaseInfo } from "@/components/vo/commonVo";
+import { BatchStatus } from "../proxy/IVendorProductProxy";
 
 @Component({
     components: {
@@ -98,6 +115,10 @@ export default class VendorProductHeader extends AbstractView {
 
     get vendorIdOptions() {
         return this.myProxy.vendorIdOptions;
+    }
+
+    get hasSelectedItems() {
+        return this.myProxy.imgBatchDialogData.selectedItems.length > 0;
     }
 
     handlerSearch() {
@@ -134,6 +155,40 @@ export default class VendorProductHeader extends AbstractView {
 
     exportExcel() {
         this.myProxy.showFieldSelectionDialog();
+    }
+
+    confirmObj: any = {
+        str1: this.LangUtil("是否删除勾选内容?"),
+        str2: this.LangUtil("是否下载当前查询产品图标?"),
+        prompt: this.LangUtil("提示"),
+        determine: this.LangUtil("确定"),
+        cancel: this.LangUtil("取消"),
+    };
+
+    /**批量删除 */
+    handleBatchDelete() {
+        this.$confirm(this.confirmObj.str1, this.confirmObj.prompt, {
+            confirmButtonText: this.confirmObj.determine,
+            cancelButtonText: this.confirmObj.cancel,
+            type: "warning",
+        })
+            .then(() => {
+                this.myProxy.showBatchDialog(BatchStatus.BatchDelete);
+            })
+            .catch(() => {});
+    }
+
+    /**批量下载 */
+    handleBatchDownload() {
+        this.$confirm(this.confirmObj.str2, this.confirmObj.prompt, {
+            confirmButtonText: this.confirmObj.determine,
+            cancelButtonText: this.confirmObj.cancel,
+            type: "warning",
+        })
+            .then(() => {
+                this.myProxy.showBatchDialog(BatchStatus.Download);
+            })
+            .catch(() => {});
     }
 }
 </script>
