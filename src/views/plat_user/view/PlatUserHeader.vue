@@ -42,7 +42,7 @@
                 :options="tableColumns.is_back_visit.options"
             />
             <SearchInput :title="tableColumns.email.name" v-model="listQuery.email" />
-            <SearchInput :title="tableColumns.city.name" v-model="listQuery.city" />
+            <SearchInput :title="LangUtil('国家/城市')" v-model="listQuery.city" />
         </div>
         <div class="group">
             <SearchRange
