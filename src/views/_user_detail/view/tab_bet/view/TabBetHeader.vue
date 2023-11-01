@@ -4,7 +4,7 @@
             <SearchSelect
                 :title="tableColumns.vendor_id.name"
                 v-model="listQuery.vendor_id"
-                :options="tableColumns.vendor_id.options"
+                :options="tableColumns.vendor_id.options[listQuery.plat_id]"
             />
             <SearchSelect
                 :title="tableColumns.vendor_type.name"
