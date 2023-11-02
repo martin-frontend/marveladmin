@@ -298,6 +298,10 @@ const layoutRouter = {
             name: "奖励活动任务",
             component: () => import(/* webpackChunkName: "plat_coin_tasks" */"@/views/plat_coin_tasks/view/PlatCoinTasks.vue")
         },        {
+            path: "plat_currency_conversion_rate",
+            name: "币种汇率管理",
+            component: () => import(/* webpackChunkName: "plat_currency_conversion_rate" */"@/views/plat_currency_conversion_rate/view/PlatCurrencyConversionRate.vue")
+        },        {
             path: "plat_email",
             name: "平台邮件",
             component: () => import(/* webpackChunkName: "plat_email" */"@/views/plat_email/view/PlatEmail.vue")
@@ -417,6 +421,10 @@ const layoutRouter = {
             path: "plat_users_vip_model",
             name: "VIP模版配置",
             component: () => import(/* webpackChunkName: "plat_users_vip_model" */"@/views/plat_users_vip_model/view/PlatUsersVipModel.vue")
+        },        {
+            path: "plat_user_agent_bonus",
+            name: "代理分红查询",
+            component: () => import(/* webpackChunkName: "plat_user_agent_bonus" */"@/views/plat_user_agent_bonus/view/PlatUserAgentBonus.vue")
         },        {
             path: "plat_user_login_log",
             name: "平台厂商用户登录log",

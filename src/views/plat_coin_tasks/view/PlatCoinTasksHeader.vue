@@ -11,6 +11,11 @@
             :clearable="false"
         />
         <div class="group">
+            <SearchDatePicker
+                :title="LangUtil('活动时间')"
+                :startDate.sync="listQuery['start_time-{>=}']"
+                :endDate.sync="listQuery['start_time-{<=}']"
+            />
             <SearchSelect
                 :title="tableColumns.status.name"
                 v-model="listQuery.status"
@@ -61,6 +66,7 @@ import LangUtil from "@/core/global/LangUtil";
         SearchSelect,
         SearchInput,
         SearchRange,
+        SearchDatePicker,
     },
 })
 export default class PlatCoinTasksHeader extends AbstractView {

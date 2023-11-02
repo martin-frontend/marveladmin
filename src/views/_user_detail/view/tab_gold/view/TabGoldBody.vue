@@ -25,18 +25,17 @@
             ></el-table-column>
             <el-table-column :label="tableColumns['gold'].name" prop="gold" min-width="100px"></el-table-column>
             <el-table-column :label="tableColumns['balance'].name" prop="balance" min-width="100px"></el-table-column>
-            <el-table-column
-                :label="tableColumns['coin_name_unique'].name"
-                prop="coin_name_unique"
-                min-width="100px"
-            ></el-table-column>
+            <el-table-column :label="tableColumns['coin_name_unique'].name" prop="coin_name_unique" min-width="100px">
+                <template slot-scope="{ row }">
+                    {{ converCoinName(row.coin_name_unique) }}
+                </template>
+            </el-table-column>
             <el-table-column :label="tableColumns['remark'].name" min-width="100px">
                 <template slot-scope="{ row }">
                     <p>{{ tableColumns["remark"].name }}:{{ row.remark }}</p>
                     <p>{{ tableColumns["order_no"].name }}:{{ row.order_no }}</p>
                     <p>{{ tableColumns["vendor_order_no"].name }}:{{ row.vendor_order_no }}</p>
                 </template>
-
             </el-table-column>
             <el-table-column
                 :label="tableColumns['created_at'].name"
@@ -78,6 +77,10 @@ export default class TabGoldBody extends AbstractView {
     private handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.coin_name_unique.options[this.listQuery.plat_id][coinKey];
     }
 }
 </script>

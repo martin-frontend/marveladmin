@@ -1,0 +1,10 @@
+{
+    "name": "代理分红查询",
+    "description": "代理分红查询",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75268726",
+    "list": [
+        "admin/plat_user/agent_bonus/table_columns",
+        "admin/plat_user/agent_bonus/index",
+        "admin/plat_user/agent_bonus/send_mail"
+    ]
+}

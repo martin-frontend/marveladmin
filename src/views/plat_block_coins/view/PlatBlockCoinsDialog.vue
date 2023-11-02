@@ -18,7 +18,12 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.coin_name_unique.name" prop="coin_name_unique">
-                <el-select filterable v-model="form.coin_name_unique" :placeholder="LangUtil('请选择')">
+                <el-select
+                    filterable
+                    v-model="form.coin_name_unique"
+                    :placeholder="LangUtil('请选择')"
+                    :disabled="isStatusUpdate"
+                >
                     <el-option
                         v-for="(item, key) of tableColumns.coin_name_unique.options"
                         :label="item"
@@ -33,6 +38,10 @@
                     <el-option v-for="(item, key) of tableColumns.type.options" :label="item" :value="key" :key="key">
                     </el-option>
                 </el-select>
+            </el-form-item>
+
+            <el-form-item v-if="isStatusUpdate" :label="tableColumns.coin_alias.name" prop="coin_alias">
+                <el-input maxlength="12" v-model="form.coin_alias"></el-input>
             </el-form-item>
 
             <el-form-item v-if="form.type == 4" :label="tableColumns.priority.name" prop="priority">
@@ -121,7 +130,7 @@
             </el-form-item>
         </el-form>
         <div class="btn_group">
-            <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ LangUtil("删除") }}</el-button>
+            <!-- <el-button type="danger" v-if="isStatusUpdate" @click="handleDelete()">{{ LangUtil("删除") }}</el-button> -->
             <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
                 LangUtil("确认保存")
             }}</el-button>

@@ -141,6 +141,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             country: { name: "国家", options: [] },
             user_tag: { name: "用户标签", options: {} },
             ma_token: { name: "ma_token", options: {} },
+            bet_at: { name: "最后投注时间", options: {} },
+            is_ma_token: { name: "ma_token用户", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -185,6 +187,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         user_tag: "",
         email: "",
         ma_token: "",
+        is_ma_token: "",
+        city: "",
     };
 
     fieldSelectionData = {
@@ -212,7 +216,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             "user_tag",
             "total_recharge",
             "total_exchange",
-            "total_water",
+            "total_bet",
             "total_win",
             "first_login_device",
             "last_login_device",
@@ -361,11 +365,11 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             item.plat_money = "-";
             item.sum_money = "-";
             item.vendors_money = "-";
-
-            if (item.coin_name_unique_arr && item.coin_name_unique_arr.length > 0) {
+            const coinKeys = Object.keys(item.coin_name_unique_arr);
+            if (coinKeys.length > 0) {
                 item.gold_info = <any>{};
-                for (let index = 0; index < item.coin_name_unique_arr.length; index++) {
-                    const element = item.coin_name_unique_arr[index];
+                for (let index = 0; index < coinKeys.length; index++) {
+                    const element = coinKeys[index];
                     item.gold_info[element] = <any>{};
                     item.gold_info[element].sum_money = "-";
                 }
@@ -458,6 +462,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             user_tag: "",
             email: "",
             ma_token: "",
+            is_ma_token: "",
+            city: "",
         });
     }
 
@@ -727,7 +733,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 const { channel_id, user_id } = this.changeChannelDialogData.form;
                 this.sendNotification(HttpType.admin_plat_user_change_channel, { channel_id, user_id });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     /**取得所有资料 */
@@ -763,8 +769,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
 
     /**导出 Excel */
     exportExcel() {
-        const newData = JSON.parse(JSON.stringify(this.exportData.list));
-
+        const newData = JSON.parse(JSON.stringify(this.exportData.list)) as any[];
         // 要导出的栏位
         // let exportColumn = this.exportData.fieldOrder;
         // 栏位中文名称
@@ -775,34 +780,94 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         // 导出资料
         // let exportData = this.dataMatching(exportColumn, data);
         // exportJson2Excel(exportHeader, exportData, this.getFileName, undefined, undefined);
-
-        const exportField = [];
-        for (const item of this.fieldSelectionData.fieldOptions) {
-            if (this.exportData.fieldOrder.indexOf(item) != -1) {
-                exportField.push(item);
-            }
+        let exportField = this.fieldSelectionData.fieldOptions.filter(
+            item => this.exportData.fieldOrder.indexOf(item) != -1
+        );
+        const totalRechargeIdx = exportField.indexOf("total_recharge");
+        const coinNamesMap = new Map<string, string | null>();
+        newData.forEach(({ coin_name_unique_arr }: { coin_name_unique_arr: Record<string, string | null> }) => {
+            Object.entries(coin_name_unique_arr).forEach(([k, v]) => coinNamesMap.set(k, v));
+        });
+        const coinNames = [...coinNamesMap.keys()];
+        const recharge_fields_keys = coinNames.map(i => `recharge_${i}`);
+        const exchange_fields_keys = coinNames.map(i => `exchange_${i}`);
+        const bet_fields_keys = coinNames.map(i => `bet_${i}`);
+        const win_fields_keys = coinNames.map(i => `win_${i}`);
+        if (totalRechargeIdx > -1) {
+            exportField = [
+                ...exportField.slice(0, totalRechargeIdx + 1),
+                ...recharge_fields_keys,
+                ...exportField.slice(totalRechargeIdx + 1),
+            ];
+        }
+        const totalExchangeIdx = exportField.indexOf("total_exchange");
+        if (totalExchangeIdx > -1) {
+            exportField = [
+                ...exportField.slice(0, totalExchangeIdx + 1),
+                ...exchange_fields_keys,
+                ...exportField.slice(totalExchangeIdx + 1),
+            ];
+        }
+        const totalBetIdx = exportField.indexOf("total_bet");
+        if (totalBetIdx > -1) {
+            exportField = [
+                ...exportField.slice(0, totalBetIdx),
+                ...bet_fields_keys,
+                ...exportField.slice(totalBetIdx + 1),
+            ];
+        }
+        const totalWinIdx = exportField.indexOf("total_win");
+        if (totalWinIdx > -1) {
+            exportField = [
+                ...exportField.slice(0, totalWinIdx),
+                ...win_fields_keys,
+                ...exportField.slice(totalWinIdx + 1),
+            ];
         }
 
-        // @ts-ignore
-        newData.forEach(element => {
-            let total_recharge: string = `${this.tableData.columns.recharge_times.name} : ${element.recharge_times};  `;
-            let total_exchange: string = `${this.tableData.columns.exchange_times.name} : ${element.exchange_times};  `;
-            let total_bet: string = ``;
-            let total_win: string = ``;
+        const total_recharge = this.tableData.columns?.total_recharge ?? { name: "" };
+        const total_exchange = this.tableData.columns?.total_exchange ?? { name: "" };
+        const recharge_times = this.tableData.columns?.recharge_times ?? { name: "" };
+        const exchange_times = this.tableData.columns?.exchange_times ?? { name: "" };
+        const userStatisticFields = coinNames.reduce(
+            (prev, cur) => ({
+                ...prev,
+                [`recharge_${cur}`]: { name: `${total_recharge?.name}-${cur}`, options: {} },
+                [`exchange_${cur}`]: { name: `${total_exchange?.name}-${cur}`, options: {} },
+                [`bet_${cur}`]: { name: `${this.tableData.columns?.total_bet?.name}-${cur}`, options: {} },
+                [`win_${cur}`]: { name: `${this.tableData.columns?.total_win?.name}-${cur}`, options: {} },
+            }),
+            {}
+        );
+        const otherColumns = {
+            ...userStatisticFields,
+            total_recharge: { ...total_recharge, name: `${total_recharge.name}-${recharge_times.name}` },
+            total_exchange: { ...total_exchange, name: `${total_exchange.name}-${exchange_times.name}` },
+        };
 
+        const list = newData.map(i => ({
+            ...i,
+            ...coinNames.reduce(
+                (prev, cur) => ({
+                    ...prev,
+                    [`recharge_${cur}`]: "",
+                    [`exchange_${cur}`]: "",
+                    [`bet_${cur}`]: "",
+                    [`win_${cur}`]: "",
+                }),
+                {}
+            ),
+        }));
+
+        list.forEach(element => {
+            element.total_recharge = element.recharge_times;
+            element.total_exchange = element.exchange_times;
             for (const item of element.user_statistic) {
-                total_recharge =
-                    total_recharge + `${item.coin_name_unique} : ${Math.abs(item.total_recharge).toFixed(3)};`;
-                total_exchange =
-                    total_exchange + `${item.coin_name_unique} : ${Math.abs(item.total_exchange).toFixed(3)};`;
-                total_bet = total_bet + `${item.coin_name_unique} : ${Math.abs(item.total_bet).toFixed(3)};`;
-                total_win = total_win + `${item.coin_name_unique} : ${Math.abs(item.total_win).toFixed(3)};`;
+                element[`recharge_${item.coin_name_unique}`] = Number(item.total_recharge).toFixed(3);
+                element[`exchange_${item.coin_name_unique}`] = Number(item.total_exchange).toFixed(3);
+                element[`bet_${item.coin_name_unique}`] = Number(item.total_bet).toFixed(3);
+                element[`win_${item.coin_name_unique}`] = Number(item.total_win).toFixed(3);
             }
-
-            element.total_recharge = total_recharge;
-            element.total_exchange = total_exchange;
-            element.total_bet = total_bet;
-            element.total_win = total_win;
 
             if (element.user_tag) {
                 const arr = element.user_tag.split(",");
@@ -820,8 +885,8 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
         new BaseInfo.ExportExcel(
             this.getFileName,
             exportField,
-            this.tableData.columns,
-            newData,
+            { ...this.tableData.columns, ...otherColumns },
+            list,
             ["plat_id", "is_credit_user", "status", "is_recharged", "is_back_visit"],
             []
         );
@@ -871,7 +936,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             .then(() => {
                 // this.sendNotification(HttpType.admin_plat_mail_content_update, { admin_added_batch: batchId });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
     /**删除数据 */
     onDelete_multiple(batchId: any) {
@@ -883,7 +948,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_user_delete_admin_added_user, { admin_added_batch: batchId });
             })
-            .catch(() => { });
+            .catch(() => {});
     }
 
     _userList = [
@@ -941,5 +1006,9 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             delete newQuery.page_size;
             this.sendNotification(HttpType.admin_plat_user_batch_update_tag, objectRemoveNull(newQuery));
         }
+    }
+
+    converCoinName(row: any, coinKey: any) {
+        return row.coin_name_unique_arr[coinKey];
     }
 }

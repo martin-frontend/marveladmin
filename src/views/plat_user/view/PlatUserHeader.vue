@@ -41,10 +41,8 @@
                 v-model="listQuery.is_back_visit"
                 :options="tableColumns.is_back_visit.options"
             />
-            <SearchInput
-                :title="tableColumns.email.name"
-                v-model="listQuery.email"
-            />
+            <SearchInput :title="tableColumns.email.name" v-model="listQuery.email" />
+            <SearchInput :title="LangUtil('国家/城市')" v-model="listQuery.city" />
         </div>
         <div class="group">
             <SearchRange
@@ -94,9 +92,11 @@
                 :endDate.sync="listQuery['paytime-{<}']"
                 :showTime="true"
             />
-            <SearchInput
-                title="ma_token"
-                v-model="listQuery.ma_token"
+            <SearchInput title="ma_token" v-model="listQuery.ma_token" />
+            <SearchSelect
+                :title="tableColumns.is_ma_token.name"
+                v-model="listQuery.is_ma_token"
+                :options="tableColumns.is_ma_token.options"
             />
         </div>
         <SearchSelect
@@ -191,7 +191,7 @@ export default class PlatUserHeader extends AbstractView {
     }
 
     handlerPlatIdChange() {
-        this.myProxy.listQuery.user_tag = '';
+        this.myProxy.listQuery.user_tag = "";
         this.handlerSearch();
     }
 }

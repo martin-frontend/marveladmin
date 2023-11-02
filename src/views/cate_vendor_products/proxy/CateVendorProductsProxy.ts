@@ -51,6 +51,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             vendor_product_name: { name: "产品名称", options: {} },
             vendor_product_status: { name: "游戏状态", options: {} },
             vendor_product_languages: { name: "支持语言", options: {} },
+            tags: { name: "标签", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 3000 },
@@ -87,7 +88,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
     /**查询条件 */
     listQuery = {
         page_count: 1,
-        page_size: 100,
+        page_size: 300,
         plat_id: "",
         type: "1",
         category: "",
@@ -203,7 +204,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         Object.assign(this.listQuery, {
             category: "",
             page_count: 1,
-            page_size: 100,
+            page_size: 300,
         });
     }
 
@@ -375,7 +376,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             .then(() => {
                 this.sendNotification(HttpType.admin_cate_vendor_products_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**删除数据 */
@@ -388,7 +389,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
             .then(() => {
                 this.sendNotification(HttpType.admin_game_type_tag_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**更新排序 */
@@ -430,7 +431,17 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         };
         this.sendNotification(HttpType.admin_cate_vendor_products_batch_copy_data, obj);
     }
-    
+
+    /**更新标签数据 */
+    onUpdateTags(data: any) {
+        const { id } = data;
+        data.tags = JSON.stringify(data.tags);
+        this.sendNotification(HttpType.admin_cate_vendor_products_update, {
+            id: id,
+            tags: data.tags,
+        });
+    }
+
     // 状态切换
     onToggleStatus(id: number, status: number) {
         this.facade.sendNotification(HttpType.admin_game_type_tag_update, { id, status });

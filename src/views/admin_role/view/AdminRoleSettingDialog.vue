@@ -27,6 +27,7 @@
                         show-checkbox
                         :default-checked-keys="dialogData.detailPermission"
                         :expand-on-click-node="false"
+                        :check-strictly="true"
                         :filter-node-method="filterNode"
                     >
                         <span
@@ -93,6 +94,7 @@ export default class AdminRoleSettingDialog extends AbstractView {
         //@ts-ignore
         this.$refs.tree.filter(this.dialogData.inputSearch);
     }
+
     // tree筛选
     filterNode(value: string, data: any) {
         if (!value) return true;
@@ -112,6 +114,7 @@ export default class AdminRoleSettingDialog extends AbstractView {
         const tree: any = this.$refs.tree;
         dis(tree.store.root.childNodes);
     }
+
     // 全选/取消全选
     checkedAll(selected: boolean) {
         const tree: any = this.$refs.tree;

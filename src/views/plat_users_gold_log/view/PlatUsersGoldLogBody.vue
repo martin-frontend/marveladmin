@@ -38,11 +38,11 @@
                     <span>{{ tableColumns.type.options[row.type] }}</span>
                 </template>
             </el-table-column>
-            <el-table-column
-                :label="tableColumns['coin_name_unique'].name"
-                prop="coin_name_unique"
-                min-width="110px"
-            ></el-table-column>
+            <el-table-column :label="tableColumns['coin_name_unique'].name" prop="coin_name_unique" min-width="110px">
+                <template slot-scope="{ row }">
+                    <span>{{ converCoinName(row.coin_name_unique) }}</span>
+                </template>
+            </el-table-column>
             <el-table-column :label="tableColumns['gold_before'].name" prop="gold_before" min-width="110px">
                 <template slot-scope="{ row }">
                     <WinLossDisplay
@@ -70,11 +70,12 @@
             </el-table-column>
             <el-table-column :label="tableColumns['remark'].name" prop="remark" min-width="80px"></el-table-column>
 
-
             <el-table-column :label="LangUtil('订单')" width="300px" align="left">
                 <template slot-scope="{ row }">
-                    <div style="text-align: start;">{{tableColumns['order_no'].name }}:{{ row.order_no }}</div>
-                    <div style="text-align: start;">{{tableColumns['vendor_order_no'].name }}:{{ row.vendor_order_no }}</div>
+                    <div style="text-align: start;">{{ tableColumns["order_no"].name }}:{{ row.order_no }}</div>
+                    <div style="text-align: start;">
+                        {{ tableColumns["vendor_order_no"].name }}:{{ row.vendor_order_no }}
+                    </div>
                 </template>
             </el-table-column>
 
@@ -107,7 +108,7 @@ export default class PlatUsersGoldLogBody extends AbstractView {
     //权限标识
     private unique = unique;
     private checkUnique = checkUnique;
-    LangUtil=LangUtil;
+    LangUtil = LangUtil;
     //网络状态
     private net_status = GlobalVar.net_status;
     // proxy
@@ -125,6 +126,10 @@ export default class PlatUsersGoldLogBody extends AbstractView {
 
     private showUserDetail(user_id: number) {
         this.myProxy.showUserDetail(user_id);
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.coin_name_unique.options[this.listQuery.plat_id][coinKey];
     }
 }
 </script>

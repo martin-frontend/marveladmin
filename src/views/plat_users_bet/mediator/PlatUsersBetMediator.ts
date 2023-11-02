@@ -3,7 +3,10 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/plat_users_bet/setting";
 import PlatUsersBetProxy from "../proxy/PlatUsersBetProxy";
 import { Message } from "element-ui";
-interface IPlatUsersBet extends IEventDispatcher {}
+import GlobalEventType from "@/core/global/GlobalEventType";
+import { MessageBox } from "element-ui";
+import LangUtil from "@/core/global/LangUtil";
+interface IPlatUsersBet extends IEventDispatcher { }
 
 export default class PlatUsersBetMediator extends AbstractMediator {
     private myProxy: PlatUsersBetProxy = <any>this.getProxy(PlatUsersBetProxy);
@@ -29,6 +32,7 @@ export default class PlatUsersBetMediator extends AbstractMediator {
             EventType.admin_plat_users_bet_credit_log_table_columns,
             EventType.admin_plat_users_bet_credit_log_index,
             EventType.admin_plat_users_bet_vendors,
+            GlobalEventType.IO_ERROR,
         ];
     }
 
@@ -64,7 +68,7 @@ export default class PlatUsersBetMediator extends AbstractMediator {
                             if (!json) {
                                 throw "aaa";
                             }
-                            console.log("---",json);
+                            console.log("---", json);
                             if (json.status_code == 200) {
                                 if (json && json.data && json.data.html) {
                                     const winHandler: any = window.open("", "_blank");
@@ -91,6 +95,21 @@ export default class PlatUsersBetMediator extends AbstractMediator {
                 break;
             case EventType.admin_plat_users_bet_vendors:
                 myProxy.showStatisticDialog(body);
+                break;
+            case GlobalEventType.IO_ERROR:
+                if (myProxy.exportData.isExportExcel) {
+                    MessageBox.confirm(<string>LangUtil("网络错误，是否继续下载？"), <string>LangUtil("提示"), {
+                        confirmButtonText: <string>LangUtil("继续下载"),
+                        cancelButtonText: <string>LangUtil("取消下载"),
+                        type: "warning",
+                    }).then(() => {
+                        this.myProxy.onQueryExportData();
+                    }).catch(() => {
+                        this.myProxy.exportData.stop = true;
+                        this.myProxy.resetExportData(0);
+                        this.myProxy.exportData.isSearch = true;
+                    });
+                }
                 break;
         }
     }

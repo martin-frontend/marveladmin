@@ -68,6 +68,7 @@ export default class TabWalletProxy extends AbstractProxy implements ITabWalletP
         vendors_money: { name: "厂商余额", options: {}, tips: "在游戏厂商中的金币余额" },
         vip_level: { name: "VIP等级", options: {} },
         wechat: { name: "微信", options: {} },
+        coin_name_unique: { name: "币种", options: {} },
     };
     /**用户详情 */
     userInfo = {

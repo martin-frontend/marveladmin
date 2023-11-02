@@ -61,7 +61,12 @@
                 </el-form-item>
 
                 <el-form-item size="mini" :label="tableColumns['is_register_store_bank_info'].name">
-                    <el-select v-model="form.is_register_store_bank_info" filterable class="select" :placeholder="LangUtil('请选择')">
+                    <el-select
+                        v-model="form.is_register_store_bank_info"
+                        filterable
+                        class="select"
+                        :placeholder="LangUtil('请选择')"
+                    >
                         <el-option
                             v-for="(value, key) in tableColumns.is_register_store_bank_info.options"
                             :key="key"
@@ -540,6 +545,17 @@
                             <el-select class="select" v-model="form.is_active_digital_currency">
                                 <el-option
                                     v-for="(value, key) in tableColumns.is_active_digital_currency.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
+                        <div>
+                            <span class="title_switch">{{ tableColumns["is_currency_conversion"].name }}</span>
+                            <el-select class="select" v-model="form.is_currency_conversion">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_currency_conversion.options"
                                     :key="key"
                                     :label="value"
                                     :value="Number(key)"

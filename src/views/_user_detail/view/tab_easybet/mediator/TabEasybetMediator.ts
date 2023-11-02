@@ -1,7 +1,7 @@
 import AbstractMediator from "@/core/abstract/AbstractMediator";
 import { EventType, HttpType } from "@/views/_user_detail/setting";
 import TabEasybetProxy from "../proxy/TabEasybetProxy";
-import { getProxy, getPageSetting } from "@/views/_user_detail/PageSetting";
+import { getProxy, getPageSetting, userShow } from "@/views/_user_detail/PageSetting";
 import { Message } from "element-ui";
 import { SuccessMessage } from "@/core/global/Constant";
 
@@ -34,6 +34,7 @@ export default class TabEasybetMediator extends AbstractMediator {
                     break;
                 case EventType.admin_plat_user_show:
                     this.myProxy.setUserInfo(body);
+                    userShow.finished = true;
                     break;
                 case EventType.admin_plat_user_update_user_level:
                     Message.success(SuccessMessage.update);

@@ -142,6 +142,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
     };
 
     exportData = {
+        exportCount: 1,
         fieldOrder: <any>[],
         isExportExcel: false,
         list: <any>[],
@@ -398,7 +399,12 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         this.exportData.list.push(...list);
         Object.assign(this.exportData.pageInfo, pageInfo);
         const { pageCount, pageCurrent } = pageInfo;
-        if (pageCurrent < pageCount) {
+        if (pageCurrent % 20 == 0) {
+            this.exportExcel();
+            this.exportData.list = [];
+            ++this.exportData.exportCount;
+            this.onQueryExportData();
+        } else if (pageCurrent < pageCount) {
             this.onQueryExportData();
         } else {
             this.exportExcel();
@@ -468,6 +474,7 @@ export default class RechargeOrdersProxy extends AbstractProxy implements IRecha
         setTimeout(() => {
             this.exportData.isExportExcel = false;
             this.exportData.list = [];
+            this.exportData.exportCount = 1;
             Object.assign(this.exportData.pageInfo, {
                 pageCurrent: 0,
             });

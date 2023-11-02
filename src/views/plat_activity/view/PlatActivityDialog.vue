@@ -726,7 +726,14 @@
                                                         :disabled="isStatusUpdate"
                                                         style="width: 80px"
                                                     ></el-input>
-
+                                                    <el-input
+                                                        size="small"
+                                                        v-if="childRule.params_type == '6'"
+                                                        v-model="childRule.params"
+                                                        :placeholder="LangUtil('请输入')"
+                                                        :disabled="isStatusUpdate"
+                                                        style="width: 200px"
+                                                    ></el-input>
                                                     <template v-if="childRule.type == 61 && childRule.params_type == 5">
                                                         <!-- 币种选择 -->
                                                         <el-select
@@ -791,7 +798,9 @@
                                                                     v-for="(item, key) of childRule.params"
                                                                     :key="key"
                                                                 >
-                                                                    <span>{{ key }}</span>
+                                                                    <span style="margin-right: 10px;">
+                                                                        {{ converCoinName(key) }}
+                                                                    </span>
                                                                     <el-input-number
                                                                         size="small"
                                                                         v-model="item.percent"
@@ -2043,6 +2052,10 @@ export default class PlatActivityDialog extends AbstractView {
 
     inputChangeRemoveChannel(e: any) {
         this.dialogForm.remove_channel = e.target.value;
+    }
+
+    converCoinName(coinKey: any) {
+        return this.tableColumns.all_coin.options[this.myProxy.listQuery.plat_id][coinKey];
     }
 }
 </script>

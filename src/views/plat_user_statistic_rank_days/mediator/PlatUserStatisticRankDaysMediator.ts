@@ -26,6 +26,7 @@ export default class PlatUserStatisticRankDaysMediator extends AbstractMediator 
         return [
             EventType.admin_plat_user_statistic_rank_days_table_columns,
             EventType.admin_plat_user_statistic_rank_days_index,
+            EventType.admin_plat_user_statistic_rank_days_index2,
             EventType.admin_plat_user_statistic_rank_days_store,
             EventType.admin_plat_user_statistic_rank_days_update,
         ];
@@ -42,6 +43,7 @@ export default class PlatUserStatisticRankDaysMediator extends AbstractMediator 
                 myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_user_statistic_rank_days_index:
+            case EventType.admin_plat_user_statistic_rank_days_index2:
                 if (myProxy.exportData.isExportExcel) {
                     myProxy.onSaveExportData(body);
                 } else {

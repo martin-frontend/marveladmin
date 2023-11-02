@@ -54,7 +54,7 @@
         </div>
         <template v-for="(item, index) in myProxy.tableData.summary_coin">
             <div class="statistics" :key="index" v-if="item.coin_name_unique_type != 4">
-                {{ item.coin_name_unique }}
+                {{ converCoinName(item.coin_name_unique) }}
                 <span>
                     {{ LangUtil("总投注金额") }}:
                     <WinLossDisplay
@@ -166,7 +166,7 @@
                     </span>
                 </div>
                 <div class="statistics" :key="item.name" v-for="item in activitySummaryCoin">
-                    {{ item.coin_name_unique }}
+                    {{ converCoinName(item.coin_name_unique) }}
                     <span>
                         {{ LangUtil("总投注金额") }}:
                         <WinLossDisplay
@@ -235,7 +235,7 @@
                 min-width="80px"
             >
                 <template slot-scope="{ row }">
-                    <div>{{ tableColumns.vendor_id.options[row.vendor_id] }}</div>
+                    <div>{{ tableColumns.vendor_id.options[listQuery.plat_id][row.vendor_id] }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('平台信息')" min-width="200px" class-name="status-col">
@@ -280,6 +280,7 @@
                 class-name="status-col"
                 min-width="100px"
             ></el-table-column>
+            <!-- 游戏类型 -->
             <el-table-column
                 :label="tableColumns['vendor_type'].name"
                 prop="vendor_type"
@@ -290,13 +291,47 @@
                     <div>{{ tableColumns.vendor_type.options[row.vendor_type] }}</div>
                 </template>
             </el-table-column>
+            <!-- 厂商订单 -->
             <el-table-column
                 :label="tableColumns['vendor_order_no'].name"
                 prop="vendor_order_no"
                 min-width="80px"
                 class-name="status-col"
             ></el-table-column>
-
+            <!-- 体育类型 -->
+            <el-table-column
+                :label="tableColumns['sports_type'].name"
+                prop="sports_type"
+                min-width="100px"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.sports_type == 0">-</div>
+                    <div v-else>
+                        <template v-for="(item, index) in row.sports_type.split('|')">
+                            <span :key="index">
+                                {{ tableColumns["sports_type"].options[item] }}
+                                <span v-if="index + 1 != row.sports_type.split('|').length">
+                                    x
+                                </span>
+                            </span>
+                        </template>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 滚球比分 -->
+            <el-table-column
+                :label="tableColumns['bet_score'].name"
+                prop="bet_score"
+                min-width="80px"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.bet_score">{{ row.bet_score }}</div>
+                    <div v-else>-</div>
+                </template>
+            </el-table-column>
+            <!-- 下注订单 -->
             <el-table-column
                 :label="tableColumns['order_no'].name"
                 prop="order_no"
@@ -310,7 +345,7 @@
                 class-name="status-col"
             >
                 <template slot-scope="{ row }">
-                    <div>{{ row.coin_name_unique }}</div>
+                    <div>{{ converCoinName(row.coin_name_unique) }}</div>
                     <div>
                         {{ tableColumns["bet_gold_coin"].name }}:
                         <WinLossDisplay
@@ -611,6 +646,10 @@ export default class PlatUsersBetBody extends AbstractView {
 
     translateBallContentText(row: any) {
         return this.myProxy.lottTranslator.translateBallContentText(row.play_id, row.bet_content);
+    }
+
+    converCoinName(coinKey: any) {
+        return this.myProxy.converCoinName(coinKey);
     }
 }
 </script>
