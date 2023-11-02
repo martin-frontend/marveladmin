@@ -1,7 +1,7 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractProxy from "@/core/abstract/AbstractProxy";
 import { DialogStatus } from "@/core/global/Constant";
-import { formCompared, jsonStringify, jsonToObject, objectRemoveNull } from "@/core/global/Functions";
+import { downloadImg, formCompared, jsonToObject, objectRemoveNull, pause } from "@/core/global/Functions";
 import { HttpType } from "@/views/vendor_product/setting";
 import { Message, MessageBox } from "element-ui";
 import IVendorProductProxy, { BatchStatus } from "./IVendorProductProxy";
@@ -438,24 +438,13 @@ export default class VendorProductProxy extends AbstractProxy implements IVendor
         }
         const imgReg = /\.(gif|png|jpg|webp|heic)$/;
         const filteredItems = this.imgBatchDialogData.selectedItems.filter(i => i.icon && i.icon_url.match(imgReg));
-        if (!filteredItems.length) return;
+        const itemsCount = filteredItems.length;
+        if (!itemsCount) return;
         const images = filteredItems.map(i => [i.icon, i.icon_url] as const);
-        const promises = images.map(([name, url]) =>
-            fetch(url)
-                .then(response => response.blob())
-                .then(blobImage => {
-                    const href = URL.createObjectURL(blobImage);
-                    const anchorElement = document.createElement("a");
-                    anchorElement.href = href;
-                    anchorElement.download = name;
-                    document.body.appendChild(anchorElement);
-                    anchorElement.click();
-                    document.body.removeChild(anchorElement);
-                    window.URL.revokeObjectURL(href);
-                })
-                .catch(err => console.log(err))
-        );
-        Promise.allSettled(promises);
+        const promises = images.map(([name, url]) => () => downloadImg(name, url));
+        for (let i = 0; i < itemsCount; ++i) {
+            pause(i * 200).then(promises[i]);
+        }
     }
 
     /**批次删除 */
