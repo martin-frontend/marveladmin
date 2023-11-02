@@ -114,7 +114,7 @@ export function moneyFormat(s: any, symbol: string = "¥"): string {
  */
 export function generateUUID() {
     var d = new Date().getTime();
-    var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
         var r = (d + Math.random() * 16) % 16 | 0;
         d = Math.floor(d / 16);
         return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
@@ -470,8 +470,8 @@ export function inputOnlyPositive(e: any) {
     return true;
 }
 // 首字大写
-String.prototype.firstUpperCase = function () {
-    return this.replace(/^\S/, function (s) {
+String.prototype.firstUpperCase = function() {
+    return this.replace(/^\S/, function(s) {
         return s.toUpperCase();
     });
 };
@@ -483,4 +483,28 @@ export function convertToNum(value: string): number {
 export function getFileVersion(): string {
     const min = (new Date().getTime() / 1000 / 60) >> 0;
     return ((min / 60) >> 0).toString() + (((min % 60) / 15) >> 0).toString();
+}
+/**
+ * pause 暂停
+ */
+export function pause(msec?: number) {
+    return new Promise(resolve => setTimeout(resolve, msec ?? 1000));
+}
+/**
+ * downloadImg 下载图片
+ */
+export async function downloadImg(name: string, url: string) {
+    return fetch(url)
+        .then(response => response.blob())
+        .then(blobImage => {
+            const href = URL.createObjectURL(blobImage);
+            const anchorElement = document.createElement("a");
+            anchorElement.href = href;
+            anchorElement.download = name;
+            document.body.appendChild(anchorElement);
+            anchorElement.click();
+            document.body.removeChild(anchorElement);
+            window.URL.revokeObjectURL(href);
+        })
+        .catch(err => console.log(err));
 }
