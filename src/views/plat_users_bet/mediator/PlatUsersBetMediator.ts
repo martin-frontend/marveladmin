@@ -6,7 +6,7 @@ import { Message } from "element-ui";
 import GlobalEventType from "@/core/global/GlobalEventType";
 import { MessageBox } from "element-ui";
 import LangUtil from "@/core/global/LangUtil";
-interface IPlatUsersBet extends IEventDispatcher { }
+interface IPlatUsersBet extends IEventDispatcher {}
 
 export default class PlatUsersBetMediator extends AbstractMediator {
     private myProxy: PlatUsersBetProxy = <any>this.getProxy(PlatUsersBetProxy);
@@ -50,7 +50,8 @@ export default class PlatUsersBetMediator extends AbstractMediator {
                     myProxy.exportData.stop = false;
                 } else {
                     if (myProxy.exportData.isExportExcel) {
-                        myProxy.onSaveExportData(body);
+                        const { pageInfo } = body;
+                        if (pageInfo.pageSize >= 1000) myProxy.onSaveExportData(body);
                     } else {
                         myProxy.setTableData(body);
                     }
@@ -61,7 +62,10 @@ export default class PlatUsersBetMediator extends AbstractMediator {
                 break;
             case EventType.admin_plat_users_bet_show_url:
                 {
-                    if (myProxy.dialogData.trun_bet_detail_text == 1 || myProxy.dialogData.trun_bet_detail_text == "1") {
+                    if (
+                        myProxy.dialogData.trun_bet_detail_text == 1 ||
+                        myProxy.dialogData.trun_bet_detail_text == "1"
+                    ) {
                         let json;
                         try {
                             json = JSON.parse(body);
@@ -102,13 +106,15 @@ export default class PlatUsersBetMediator extends AbstractMediator {
                         confirmButtonText: <string>LangUtil("继续下载"),
                         cancelButtonText: <string>LangUtil("取消下载"),
                         type: "warning",
-                    }).then(() => {
-                        this.myProxy.onQueryExportData();
-                    }).catch(() => {
-                        this.myProxy.exportData.stop = true;
-                        this.myProxy.resetExportData(0);
-                        this.myProxy.exportData.isSearch = true;
-                    });
+                    })
+                        .then(() => {
+                            this.myProxy.onQueryExportData();
+                        })
+                        .catch(() => {
+                            this.myProxy.exportData.stop = true;
+                            this.myProxy.resetExportData(0);
+                            this.myProxy.exportData.isSearch = true;
+                        });
                 }
                 break;
         }
