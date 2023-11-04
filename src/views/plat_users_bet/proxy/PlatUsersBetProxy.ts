@@ -105,12 +105,12 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             league: { name: LangUtil("联赛") },
             market_type_text: { name: LangUtil("盘口") },
             odds: { name: LangUtil("赔率") },
-            is_inplay: { name: LangUtil("滚球") },
             vendor_order_no: { name: "厂商订单", options: [] },
             vendor_coin_name_unicode: { name: "厂商币种", options: [] },
             vendor_win_gold: { name: "厂商输赢", options: [] },
-            sports_type: { name: '体育类型', options: {} },
-            bet_score: { name: '滚球比分', options: {} },
+            sports_type: { name: "体育类型", options: {} },
+            bet_score: { name: "滚球比分", options: {} },
+            is_inplay: { name: LangUtil("滚球") },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -427,12 +427,12 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             if (element.sports_type == 0) {
                 element.sports_type = "-";
             } else {
-                let sports_type = '';
-                for (let i = 0; i < element.sports_type.split('|').length; i++) {
+                let sports_type = "";
+                for (let i = 0; i < element.sports_type.split("|").length; i++) {
                     sports_type =
-                        sports_type + this.tableData.columns.sports_type.options[element.sports_type.split('|')[i]];
-                    if (i + 1 != element.sports_type.split('|').length) {
-                        sports_type = sports_type + 'x';
+                        sports_type + this.tableData.columns.sports_type.options[element.sports_type.split("|")[i]];
+                    if (i + 1 != element.sports_type.split("|").length) {
+                        sports_type = sports_type + "x";
                     }
                 }
                 element.sports_type = sports_type;
