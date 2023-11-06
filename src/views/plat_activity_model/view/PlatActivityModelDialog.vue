@@ -35,7 +35,7 @@
                             ></el-option>
                         </el-select>
                     </el-form-item>
-                    <template v-if="form.type != 12">
+                    <template v-if="form.type != 12 && form.type != 13">
                         <el-form-item
                             size="mini"
                             :label="tableColumns['category'].name"
@@ -207,6 +207,7 @@
                         <PlatActivityRule v-if="myProxy.dialogData.isRender" />
                     </template>
                     <PlatActivityBallAward v-if="form.type == 12" />
+                    <PlatActivitySpinAward v-if="form.type == 13" />
                 </el-form>
             </el-scrollbar>
             <div class="dialog-footer">
@@ -240,12 +241,14 @@ import { ClientModuleUrl, DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import PlatActivityRule from "./components/PlatActivityRule.vue";
 import PlatActivityBallAward from "./components/PlatActivityBallAward.vue";
+import PlatActivitySpinAward from "./components/PlatActivitySpinAward.vue";
 import Cookies from "js-cookie";
 
 @Component({
     components: {
         PlatActivityRule,
         PlatActivityBallAward,
+        PlatActivitySpinAward,
     },
 })
 export default class PlatActivityModelDialog extends AbstractView {
@@ -349,6 +352,7 @@ export default class PlatActivityModelDialog extends AbstractView {
             filterCategory = "";
         }
         this.form.category = "";
+        this.myProxy.resetSpinForm();
         this.filterCategory = filterCategory;
     }
 
