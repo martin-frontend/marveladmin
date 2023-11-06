@@ -16,7 +16,7 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
     }
 
     /**离开页面时调用 */
-    leave() { }
+    leave() {}
 
     /**表格相关数据 */
     tableData = {
@@ -51,8 +51,8 @@ export default class DashboardProxy extends AbstractProxy implements IDashboardP
     /**查询条件 */
     listQuery = {
         plat_id: "",
-        start_date: dateFormat(getTodayOffset(), "yyyy-MM-dd"),
-        end_date: dateFormat(getTodayOffset(), "yyyy-MM-dd"),
+        start_date: dateFormat(getTodayOffset(), "yyyy-MM-dd 00:00:00"),
+        end_date: dateFormat(getTodayOffset(), "yyyy-MM-dd 23:59:59"),
     };
 
     /**昨天统计数据 */

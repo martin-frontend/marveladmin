@@ -4,7 +4,10 @@
             :title="tableColumns.plat_id.name"
             v-model="listQuery.plat_id"
             :options="tableColumns.plat_id.options"
-            @change="handlerSearch"
+            @change="
+                changePlat();
+                handlerSearch();
+            "
             :clearable="false"
         />
         <div class="group">
@@ -29,7 +32,7 @@
             <SearchSelect
                 :title="tableColumns.vendor_id.name"
                 v-model="listQuery.vendor_id"
-                :options="tableColumns.vendor_id.options"
+                :options="tableColumns.vendor_id.options[listQuery.plat_id]"
             />
             <SearchSelect
                 :title="tableColumns.vendor_type.name"
@@ -74,6 +77,11 @@
                 </el-radio-group>
             </SearchRange>
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
+            <SearchSelect
+                :title="tableColumns.sports_type.name"
+                v-model="listQuery.sports_type"
+                :options="tableColumns.sports_type.options"
+            />
             <div>
                 <el-button
                     @click="handlerSearch()"
@@ -152,6 +160,11 @@ export default class PlatUsersBetHeader extends AbstractView {
 
     heandlerStatistic() {
         this.myProxy.admin_plat_users_bet_vendors();
+    }
+
+    changePlat() {
+        this.listQuery.vendor_id = "";
+        this.listQuery.coin_name_unique = "";
     }
 }
 </script>

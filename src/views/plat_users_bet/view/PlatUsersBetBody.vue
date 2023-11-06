@@ -235,7 +235,7 @@
                 min-width="80px"
             >
                 <template slot-scope="{ row }">
-                    <div>{{ tableColumns.vendor_id.options[row.vendor_id] }}</div>
+                    <div>{{ tableColumns.vendor_id.options[listQuery.plat_id][row.vendor_id] }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('平台信息')" min-width="200px" class-name="status-col">
@@ -280,6 +280,7 @@
                 class-name="status-col"
                 min-width="100px"
             ></el-table-column>
+            <!-- 游戏类型 -->
             <el-table-column
                 :label="tableColumns['vendor_type'].name"
                 prop="vendor_type"
@@ -290,13 +291,47 @@
                     <div>{{ tableColumns.vendor_type.options[row.vendor_type] }}</div>
                 </template>
             </el-table-column>
+            <!-- 厂商订单 -->
             <el-table-column
                 :label="tableColumns['vendor_order_no'].name"
                 prop="vendor_order_no"
                 min-width="80px"
                 class-name="status-col"
             ></el-table-column>
-
+            <!-- 体育类型 -->
+            <el-table-column
+                :label="tableColumns['sports_type'].name"
+                prop="sports_type"
+                min-width="100px"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.sports_type == 0">-</div>
+                    <div v-else>
+                        <template v-for="(item, index) in row.sports_type.split('|')">
+                            <span :key="index">
+                                {{ tableColumns["sports_type"].options[item] }}
+                                <span v-if="index + 1 != row.sports_type.split('|').length">
+                                    x
+                                </span>
+                            </span>
+                        </template>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 滚球比分 -->
+            <el-table-column
+                :label="tableColumns['bet_score'].name"
+                prop="bet_score"
+                min-width="80px"
+                class-name="status-col"
+            >
+                <template slot-scope="{ row }">
+                    <div v-if="row.bet_score">{{ row.bet_score }}</div>
+                    <div v-else>-</div>
+                </template>
+            </el-table-column>
+            <!-- 下注订单 -->
             <el-table-column
                 :label="tableColumns['order_no'].name"
                 prop="order_no"
@@ -394,16 +429,32 @@
             </el-table-column>
             <el-table-column :label="LangUtil('投注内容')" header-align="center" align="left" min-width="215px">
                 <template slot-scope="{ row }">
+                    <template v-if="row.vendor_type == 64">
+                        <template v-if="row.bet_type == LangUtil('单注')">
+                            <p>{{ LangUtil("投注类型") }}： {{ row.bet_type }}</p>
+                            <p>{{ LangUtil("滚球") }}： {{ row.is_inplay }}</p>
+                        </template>
+                        <template v-else>
+                            <p>{{ LangUtil("投注类型") }}： {{ row.bet_type }} {{ row.league }}</p>
+                            <p>{{ LangUtil("滚球") }}： -</p>
+                        </template>
+                        <p>{{ LangUtil("提前结算") }}：{{ row.is_cash_out }}</p>
+                        <template v-if="row.bet_type == LangUtil('单注') && row.is_cash_out == LangUtil('是')">
+                            <p>{{ LangUtil("返回金额") }}：{{ row.cash_out_amount }}</p>
+                            <p>{{ LangUtil("提前结算赔率") }}：{{ row.cash_out_odds }}</p>
+                        </template>
+                    </template>
                     <p>
                         {{ tableColumns["bet_gold"].name }}：
                         <WinLossDisplay :amount="row.bet_gold" :isShowColor="false" :isShowPlus="false" />
                     </p>
                     <p v-if="row.vendor_type == 64">
                         {{ LangUtil("联赛") }}：
-                        <span v-if="row.league">
+                        <span v-if="row.league && row.league.indexOf('-') > 0">
                             {{ row.league.substring(0, row.league.indexOf("-")) }}<br />
                             {{ row.league.substring(row.league.indexOf("-") + 1) }}
                         </span>
+                        <span v-else>{{ row.league }}</span>
                     </p>
                     <p v-if="row.vendor_id != 209">{{ tableColumns["bet_code"].name }}：{{ row.bet_code }}</p>
                     <p v-if="row.vendor_id == 173">{{ LangUtil("开奖结果") }}：{{ row.game_results }}</p>
