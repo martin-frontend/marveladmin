@@ -36,7 +36,7 @@ export default class PlatActivity extends AbstractView {
         super.destroyed();
     }
     // proxy
-    private myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
+    myProxy: PlatActivityProxy = this.getProxy(PlatActivityProxy);
 }
 </script>
 
