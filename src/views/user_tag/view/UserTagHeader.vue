@@ -3,7 +3,7 @@
         <SearchSelect
             :title="tableColumns.plat_id.name"
             v-model="listQuery.plat_id"
-            :options="tableColumns.plat_id.options"
+            :options="myProxy.platIdOptions"
             @change="handlerSearch"
             :clearable="false"
             style="width: 350px"
