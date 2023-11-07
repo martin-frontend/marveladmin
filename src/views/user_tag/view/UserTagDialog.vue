@@ -11,7 +11,7 @@
                     placeholder="请选择"
                 >
                     <el-option
-                        v-for="(value, key) in tableColumns.plat_id.options"
+                        v-for="(value, key) in platIdOptions"
                         :key="key"
                         :label="value"
                         :value="Number(key)"
@@ -94,6 +94,12 @@ export default class UserTagDialog extends AbstractView {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
         });
+    }
+
+    get platIdOptions() {
+        return this.myProxy.dialogData.status == 'update' ?
+            this.myProxy.tableData.columns.plat_id.options :
+            this.myProxy.platIdOptions
     }
 
     get status() {
