@@ -11,7 +11,7 @@
                     placeholder="请选择"
                 >
                     <el-option
-                        v-for="(value, key) in tableColumns['plat_id'].options"
+                        v-for="(value, key) in myProxy.platIdOptions"
                         :key="key"
                         :label="value"
                         :value="Number(key)"
@@ -36,6 +36,7 @@
                     show-word-limit
                     clearable
                     :placeholder="LangUtil('请输入')"
+                    :disabled="form.plat_id==0"
                 >
                 </el-input>
             </el-form-item>
@@ -52,7 +53,7 @@
             </el-form-item>
 
             <el-form-item class="dialog-footer">
-                <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">
+                <el-button v-if="form.plat_id != 0" type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">
                     {{ LangUtil("确认保存") }}
                 </el-button>
             </el-form-item>
@@ -131,7 +132,7 @@ export default class UserTagDialog extends AbstractView {
     }
 
     showUsers() {
-        this.myProxy.showUsersDialog(this.form.id);
+        this.myProxy.showUsersDialog(this.form.id, this.form.plat_id);
     }
 }
 </script>

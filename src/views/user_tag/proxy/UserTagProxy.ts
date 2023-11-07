@@ -92,10 +92,13 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 1000 },
     };
 
+    platIdOptions = {};
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
-        const plat_id_options_keys = Object.keys(this.tableData.columns["plat_id"].options);
+        this.platIdOptions = Object.fromEntries(Object.entries(data?.plat_id?.options).filter(([id, _]) => id != "0"));
+        const plat_id_options_keys = Object.keys(this.platIdOptions);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id))
                 this.listQuery.plat_id = plat_id_options_keys[0];
@@ -133,7 +136,7 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
         if (status == DialogStatus.update) {
             // this.dialogData.formSource = data;
             // Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            this.admin_user_tag_show(data.id);
+            this.admin_user_tag_show(data.id, data.plat_id);
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -390,13 +393,14 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
 
-    showUsersDialog(id: any) {
+    showUsersDialog(id: any, plat_id: any) {
         this.dialogData.bShow = false;
         this.usersDialogData.bShow = true;
         Object.assign(this.usersDialogData.query, {
             page_count: 1,
             page_size: 20,
             id,
+            plat_id,
         });
         this.sendNotification(HttpType.admin_plat_user_table_columns);
         this.onUsersQuery();
@@ -421,7 +425,11 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
     }
 
-    admin_user_tag_show(id: any) {
-        this.sendNotification(HttpType.admin_user_tag_show, { id });
+    admin_user_tag_show(id: any, plat_id?: number) {
+        const body = {
+            id,
+            ...(typeof plat_id === "number" ? { plat_id } : {}),
+        };
+        this.sendNotification(HttpType.admin_user_tag_show, body);
     }
 }
