@@ -136,7 +136,7 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
         if (status == DialogStatus.update) {
             // this.dialogData.formSource = data;
             // Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-            this.admin_user_tag_show(data.id, data.plat_id);
+            this.admin_user_tag_show(data.id, Number(this.listQuery.plat_id));
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
@@ -400,7 +400,7 @@ export default class UserTagProxy extends AbstractProxy implements IUserTagProxy
             page_count: 1,
             page_size: 20,
             id,
-            plat_id,
+            plat_id: this.listQuery.plat_id,
         });
         this.sendNotification(HttpType.admin_plat_user_table_columns);
         this.onUsersQuery();

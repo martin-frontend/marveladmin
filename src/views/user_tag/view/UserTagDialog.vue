@@ -11,7 +11,7 @@
                     placeholder="请选择"
                 >
                     <el-option
-                        v-for="(value, key) in myProxy.platIdOptions"
+                        v-for="(value, key) in tableColumns.plat_id.options"
                         :key="key"
                         :label="value"
                         :value="Number(key)"
