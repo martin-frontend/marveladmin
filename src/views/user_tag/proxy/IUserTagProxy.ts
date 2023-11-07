@@ -1,20 +1,25 @@
 import { PageInfoVO } from "@/core/vo/PageInfoVO";
 
+interface ColumnFace {
+    name: string;
+    options: Record<string, string> | any[];
+}
+
 export default interface IUserTagProxy {
     /**表格相关数据 */
     tableData: {
-        columns: any,
-        list: any,
-        pageInfo: PageInfoVO
+        columns: Record<string, ColumnFace>;
+        list: any;
+        pageInfo: PageInfoVO;
     };
     /**查询条件 */
     listQuery: any;
     /**弹窗相关数据 */
     dialogData: {
-        bShow: boolean,
-        status: string,
-        form: any,
-        formSource: any
+        bShow: boolean;
+        status: string;
+        form: any;
+        formSource: any;
     };
 
     /**设置表头数据 */

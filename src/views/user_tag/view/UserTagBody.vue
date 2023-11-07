@@ -43,7 +43,7 @@
             <el-table-column :label="LangUtil('操作')" class-name="status-col" width="180px">
                 <template slot-scope="{ row }">
                     <el-button size="mini" type="primary" @click="handleEdit(row)">{{ LangUtil("详情") }}</el-button>
-                    <el-button size="mini" type="danger" @click="handlerDelete(row)">{{ LangUtil("删除") }}</el-button>
+                    <el-button v-if="row.plat_id != '0'" size="mini" type="danger" @click="handlerDelete(row)">{{ LangUtil("删除") }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
