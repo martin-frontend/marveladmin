@@ -50,6 +50,14 @@
                     <el-form-item size="mini" :label="tableColumns['bet_at'].name" prop="bet_at">
                         {{ form["bet_at"] }}
                     </el-form-item>
+                    <el-form-item
+                        size="mini"
+                        :label="LangUtil('取消时间')"
+                        prop="cancel_time"
+                        v-if="form.vendor_type == 64"
+                    >
+                        {{ form["cancel_time"] }}
+                    </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['settlement_at'].name" prop="settlement_at">
                         {{ form["settlement_at"] }}
                     </el-form-item>
