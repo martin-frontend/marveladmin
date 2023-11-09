@@ -83,4 +83,5 @@ export var ClientModuleUrl = [
     { sort: 1, name: "推广奖励", value: "openpanel_promotionreward" },
     { sort: 1, name: "自定义游戏", value: "openpanel_promotionreward" },
     { sort: 1, name: "彩球活动", value: "openpage_activity_slots" },
+    { sort: 1, name: "转盘活动", value: "openpanel_spin_lottery" },
 ];
