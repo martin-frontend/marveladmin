@@ -427,7 +427,7 @@
                     <p>{{ tableColumns["pull_at"].name }}：{{ row.pull_at }}</p>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('投注内容')" header-align="center" align="left" min-width="215px">
+            <el-table-column :label="LangUtil('投注内容')" header-align="center" align="left" min-width="220px">
                 <template slot-scope="{ row }">
                     <template v-if="row.vendor_type == 64">
                         <template v-if="row.bet_type == LangUtil('单注')">
@@ -435,7 +435,18 @@
                             <p>{{ LangUtil("滚球") }}： {{ row.is_inplay }}</p>
                         </template>
                         <template v-else>
-                            <p>{{ LangUtil("投注类型") }}： {{ row.bet_type }} {{ row.league }}</p>
+                            <div style="display: flex;">
+                                <p style="display: flex; align-items: center;">
+                                    {{ LangUtil("投注类型") }}： {{ row.bet_type }} {{ row.league }}
+                                </p>
+                                <el-button
+                                    class="mini"
+                                    size="mini"
+                                    type="primary"
+                                    @click="showMultiDetail(row.combo_list)"
+                                    >{{ LangUtil("详情") }}
+                                </el-button>
+                            </div>
                             <p>{{ LangUtil("滚球") }}： -</p>
                         </template>
                         <p>{{ LangUtil("提前结算") }}：{{ row.is_cash_out }}</p>
@@ -635,6 +646,10 @@ export default class PlatUsersBetBody extends AbstractView {
         this.myProxy.showUserDetail(user_id);
     }
 
+    showMultiDetail(data: any) {
+        this.myProxy.showMultiDetail(data);
+    }
+
     showDetailPage(data: any) {
         this.myProxy.showDetailPage(data);
     }
@@ -683,5 +698,9 @@ export default class PlatUsersBetBody extends AbstractView {
     .el-collapse-item__wrap {
         border: 0;
     }
+}
+.mini {
+    margin-left: 4px;
+    padding: 4px 10px;
 }
 </style>
