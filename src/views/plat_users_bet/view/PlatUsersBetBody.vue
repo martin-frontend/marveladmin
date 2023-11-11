@@ -427,7 +427,7 @@
                     <p>{{ tableColumns["pull_at"].name }}：{{ row.pull_at }}</p>
                 </template>
             </el-table-column>
-            <el-table-column :label="LangUtil('投注内容')" header-align="center" align="left" min-width="220px">
+            <el-table-column :label="LangUtil('投注内容')" header-align="center" align="left" min-width="240px">
                 <template slot-scope="{ row }">
                     <template v-if="row.vendor_type == 64">
                         <template v-if="row.bet_type == LangUtil('单注')">
@@ -442,7 +442,7 @@
                                     size="mini"
                                     type="primary"
                                     @click="showMultiDetail(row.combo_list)"
-                                    >{{ LangUtil("详情") }}
+                                    >{{ LangUtil("串关详情") }}
                                 </el-button>
                             </div>
                             <p>{{ LangUtil("滚球") }}： -</p>
