@@ -435,10 +435,8 @@
                             <p>{{ LangUtil("滚球") }}： {{ row.is_inplay }}</p>
                         </template>
                         <template v-else>
-                            <div style="display: flex;">
-                                <p style="display: flex; align-items: center;">
-                                    {{ LangUtil("投注类型") }}： {{ row.bet_type }} {{ row.league }}
-                                </p>
+                            <div style="display: flex; align-items: center;">
+                                <p>{{ LangUtil("投注类型") }}： {{ row.bet_type }} {{ row.league }}</p>
                                 <el-button
                                     class="mini"
                                     size="mini"
@@ -702,5 +700,6 @@ export default class PlatUsersBetBody extends AbstractView {
 .mini {
     margin-left: 4px;
     padding: 4px 10px;
+    max-height: 24px;
 }
 </style>
