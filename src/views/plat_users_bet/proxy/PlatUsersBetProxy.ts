@@ -213,6 +213,11 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         trun_bet_detail_text: <any>0,
     };
 
+    dialogMultiData = {
+        bShow: false,
+        list: <any>[],
+    }
+
     jsonEditorDialog = {
         bShow: false,
         data: <any>{},
@@ -495,6 +500,10 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         this.dialogData.bShow = false;
     }
 
+    hideMultiDetailDialog() {
+        this.dialogMultiData.bShow = false;
+    }
+
     /**查询 */
     onQuery() {
         const query = JSON.parse(JSON.stringify(this.listQuery));
@@ -565,6 +574,12 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     /**显示用户详情弹窗 */
     showUserDetail(user_id: number) {
         this.sendNotification(GlobalEventType.SHOW_USER_DETAIL, user_id);
+    }
+
+    showMultiDetail(data: any) {
+        this.dialogMultiData.list.length = 0;
+        this.dialogMultiData.list.push(...data);
+        this.dialogMultiData.bShow = true;
     }
 
     /**跳转详情 */
