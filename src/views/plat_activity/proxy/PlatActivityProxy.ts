@@ -782,7 +782,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         }
         if (this.dialogData.form.model_type == 13) {
             formCopy.model_type = 13;
-            this.dialogData.form.lottery_cons[0].interval[1] = this.dialogData.form.lottery_cons[0].interval[0];
+            this.dialogData.form.lottery_cons.forEach((item: { interval: any[]; }) => {
+                item.interval[1] = item.interval[0];
+            });
             formCopy.lottery_cons = JSON.stringify(this.dialogData.form.lottery_cons);
             formCopy.lottery_award = JSON.stringify(this.dialogData.form.lottery_award);
         }
@@ -992,7 +994,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             formCopy.day_num_init_config = JSON.stringify(this.dialogData.form.day_num_init_config);
         }
         if (this.dialogData.form.model_type == 13) {
-            this.dialogData.form.lottery_cons[0].interval[1] = this.dialogData.form.lottery_cons[0].interval[0];
+            this.dialogData.form.lottery_cons.forEach((item: { interval: any[]; }) => {
+                item.interval[1] = item.interval[0];
+            });
             formCopy.lottery_cons = JSON.stringify(this.dialogData.form.lottery_cons);
             formCopy.lottery_award = JSON.stringify(this.dialogData.form.lottery_award);
         }

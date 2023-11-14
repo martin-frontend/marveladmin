@@ -291,7 +291,9 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             formCopy.day_num_init_config = JSON.stringify(formCopy.day_num_init_config);
         }
         if (this.dialogData.form.type == 13) {
-            formCopy.lottery_cons[0].interval[1] = formCopy.lottery_cons[0].interval[0];
+            formCopy.lottery_cons.forEach((item: { interval: any[]; }) => {
+                item.interval[1] = item.interval[0];
+            });
             formCopy.lottery_cons = JSON.stringify(formCopy.lottery_cons);
             formCopy.lottery_award = JSON.stringify(formCopy.lottery_award);
         }
@@ -330,7 +332,9 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             });
         }
         if (this.dialogData.form.type == 13) {
-            formCopy.lottery_cons[0].interval[1] = formCopy.lottery_cons[0].interval[0];
+            formCopy.lottery_cons.forEach((item: { interval: any[]; }) => {
+                item.interval[1] = item.interval[0];
+            });
             Object.assign(formCopy, this.dialogData.form, {
                 lottery_cons: JSON.stringify(this.dialogData.form.lottery_cons),
                 lottery_award: JSON.stringify(this.dialogData.form.lottery_award),
