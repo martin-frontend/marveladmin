@@ -30,7 +30,7 @@
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
                     {{ LangUtil("重置") }}
                 </el-button>
-                <el-button @click="exportExcel" type="primary" icon="el-icon-download">
+                <el-button @click="exportExcel()" type="primary" icon="el-icon-download">
                     {{ LangUtil("导出") }}
                 </el-button>
             </div>
@@ -82,7 +82,7 @@ export default class StatisticPlatDaysChannelCoreChannelHeader extends AbstractV
     }
 
     exportExcel() {
-        // this.myProxy.showFieldSelectionDialog();
+        this.myProxy.showFieldSelectionDialog();
     }
 
     //更换平台切换对应币种

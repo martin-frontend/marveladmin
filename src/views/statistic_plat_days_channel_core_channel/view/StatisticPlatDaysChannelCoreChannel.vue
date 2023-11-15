@@ -1,8 +1,10 @@
 <template>
     <div class="content">
-        <StatisticPlatDaysChannelCoreChannelDialog v-if="myProxy.dialogData.bShow"/>
-        <StatisticPlatDaysChannelCoreChannelHeader/>
-        <StatisticPlatDaysChannelCoreChannelBody/>
+        <StatisticPlatDaysChannelCoreChannelDialog v-if="myProxy.dialogData.bShow" />
+        <StatisticPlatDaysChannelCoreChannelHeader />
+        <StatisticPlatDaysChannelCoreChannelBody />
+        <ProgressDialog />
+        <FieldSelectionDialog />
     </div>
 </template>
 
@@ -14,16 +16,19 @@ import { Component } from "vue-property-decorator";
 import StatisticPlatDaysChannelCoreChannelDialog from "./StatisticPlatDaysChannelCoreChannelDialog.vue";
 import StatisticPlatDaysChannelCoreChannelHeader from "./StatisticPlatDaysChannelCoreChannelHeader.vue";
 import StatisticPlatDaysChannelCoreChannelBody from "./StatisticPlatDaysChannelCoreChannelBody.vue";
+import ProgressDialog from "./components/ProgressDialog.vue";
+import FieldSelectionDialog from "./components/FieldSelectionDialog.vue";
 
 @Component({
     components: {
         StatisticPlatDaysChannelCoreChannelDialog,
         StatisticPlatDaysChannelCoreChannelHeader,
         StatisticPlatDaysChannelCoreChannelBody,
-    }
+        ProgressDialog,
+        FieldSelectionDialog,
+    },
 })
 export default class StatisticPlatDaysChannelCoreChannel extends AbstractView {
-
     constructor() {
         super(StatisticPlatDaysChannelCoreChannelMediator);
     }
@@ -32,7 +37,7 @@ export default class StatisticPlatDaysChannelCoreChannel extends AbstractView {
         super.destroyed();
     }
     // proxy
-    private myProxy: StatisticPlatDaysChannelCoreChannelProxy = this.getProxy(StatisticPlatDaysChannelCoreChannelProxy);
+    myProxy: StatisticPlatDaysChannelCoreChannelProxy = this.getProxy(StatisticPlatDaysChannelCoreChannelProxy);
 }
 </script>
 
