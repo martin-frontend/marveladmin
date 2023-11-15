@@ -1,0 +1,29 @@
+/**
+ * description: 渠道核心报表
+ * document: http://35.220.178.180:8090/pages/viewpage.action?pageId=75269714
+ */
+import cmd_admin_statistic_plat_days_channel_core_channel_table_columns from "@/views/statistic_plat_days_channel_core_channel/command/cmd_admin_statistic_plat_days_channel_core_channel_table_columns";
+import cmd_admin_statistic_plat_days_channel_core_channel_index from "@/views/statistic_plat_days_channel_core_channel/command/cmd_admin_statistic_plat_days_channel_core_channel_index";
+import cmd_admin_statistic_plat_days_channel_core_group_table_columns from "@/views/statistic_plat_days_channel_core_channel/command/cmd_admin_statistic_plat_days_channel_core_group_table_columns";
+import cmd_admin_statistic_plat_days_channel_core_group_index from "@/views/statistic_plat_days_channel_core_channel/command/cmd_admin_statistic_plat_days_channel_core_group_index";
+/**协议*/
+export var HttpType = {
+    admin_statistic_plat_days_channel_core_channel_table_columns: "admin/statistic_plat_days_channel_core_channel/table_columns",
+    admin_statistic_plat_days_channel_core_channel_index: "admin/statistic_plat_days_channel_core_channel/index",
+    admin_statistic_plat_days_channel_core_group_table_columns: "admin/statistic_plat_days_channel_core_group/table_columns",
+    admin_statistic_plat_days_channel_core_group_index: "admin/statistic_plat_days_channel_core_group/index",
+};
+/**事件*/
+export var EventType = {
+    admin_statistic_plat_days_channel_core_channel_table_columns: "admin_statistic_plat_days_channel_core_channel_table_columns",
+    admin_statistic_plat_days_channel_core_channel_index: "admin_statistic_plat_days_channel_core_channel_index",
+    admin_statistic_plat_days_channel_core_group_table_columns: "admin_statistic_plat_days_channel_core_group_table_columns",
+    admin_statistic_plat_days_channel_core_group_index: "admin_statistic_plat_days_channel_core_group_index",
+};
+/**注册协议*/
+const facade = puremvc.Facade.getInstance();
+facade.registerCommand(HttpType.admin_statistic_plat_days_channel_core_channel_table_columns, cmd_admin_statistic_plat_days_channel_core_channel_table_columns);
+facade.registerCommand(HttpType.admin_statistic_plat_days_channel_core_channel_index, cmd_admin_statistic_plat_days_channel_core_channel_index);
+facade.registerCommand(HttpType.admin_statistic_plat_days_channel_core_group_table_columns, cmd_admin_statistic_plat_days_channel_core_group_table_columns);
+facade.registerCommand(HttpType.admin_statistic_plat_days_channel_core_group_index, cmd_admin_statistic_plat_days_channel_core_group_index);
+
