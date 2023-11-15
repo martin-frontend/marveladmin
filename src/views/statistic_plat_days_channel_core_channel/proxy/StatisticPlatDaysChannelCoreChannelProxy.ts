@@ -5,6 +5,7 @@ import { dateFormat, getTodayOffset, objectRemoveNull } from "@/core/global/Func
 import { HttpType } from "@/views/statistic_plat_days_channel_core_channel/setting";
 import { MessageBox } from "element-ui";
 import IStatisticPlatDaysChannelCoreChannelProxy from "./IStatisticPlatDaysChannelCoreChannelProxy";
+import { BaseInfo } from "@/components/vo/commonVo";
 
 type TagName = "group" | "channel";
 export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractProxy implements IStatisticPlatDaysChannelCoreChannelProxy {
@@ -125,6 +126,7 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
+        Object.assign(this.channelColumns, data);
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         const channel_id_options_keys = Object.keys(this.tableData.columns.channel_id.options);
         if (plat_id_options_keys.length > 0) {
@@ -253,16 +255,141 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
     };
 
     channelFieldOptions = [
-
+        "time_period",
+        "plat_id",
+        "channel_id",
+        "new_register",
+        "active_user",
+        "recharge",
+        "recharge_user",
+        "exchange",
+        "nor_exchange",
+        "blog_exchange",
+        "exchange_user",
+        "net_rech",
+        "win_loss",
     ];
-    groupFieldOptions = [
 
+    groupFieldOptions = [
+        "time_period",
+        "plat_id",
+        "channel_id",
+        "user_id",
+        "new_register",
+        "active_user",
+        "recharge",
+        "recharge_user",
+        "exchange",
+        "nor_exchange",
+        "blog_exchange",
+        "exchange_user",
+        "net_rech",
+        "win_loss",
     ];
 
     fieldSelectionData = {
         bShow: false,
         fieldOptions: [...this.channelFieldOptions],
     };
+
+    /**取得所有资料 */
+    onQueryExportData() {
+        this.exportData.isExportExcel = true;
+        let queryCopy: any = {};
+        queryCopy = JSON.parse(JSON.stringify(this.listQuery));
+        const { pageSize, pageCurrent } = this.exportData.pageInfo;
+        queryCopy.page_size = pageSize;
+        queryCopy.page_count = Number(pageCurrent) + 1;
+        queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
+        if (this.tabName == "channel") {
+            this.sendNotification(HttpType.admin_statistic_plat_days_channel_core_channel_index, objectRemoveNull(queryCopy));
+        } else {
+            this.sendNotification(HttpType.admin_statistic_plat_days_channel_core_group_index, objectRemoveNull(queryCopy));
+        }
+    }
+
+    /**每1000笔保存一次 */
+    onSaveExportData(data: any) {
+        const { list, pageInfo } = data;
+        this.exportData.list.push(...list);
+        Object.assign(this.exportData.pageInfo, pageInfo);
+        const { pageCount, pageCurrent } = pageInfo;
+        if (pageCurrent < pageCount) {
+            this.onQueryExportData();
+        } else {
+            this.exportExcel();
+            this.resetExportData(500);
+        }
+    }
+
+    /**导出 Excel */
+    exportExcel() {
+        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        newData.forEach((item: any) => {
+            if (item.plat_id !== LangUtil('合计')) {
+                item.plat_id = this.tableData.columns.plat_id.options[item.plat_id];
+            }
+            for (const field of this.fieldSelectionData.fieldOptions) {
+                if (this.exportData.fieldOrder.indexOf(field) != -1) {
+                    item[field] = item[field] == null ? "-" : item[field];
+                }
+            }
+        });
+        newData.splice(0, 0, this.summaryData);
+        const exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item);
+            }
+        }
+
+        new BaseInfo.ExportExcel(
+            this.getFileName,
+            exportField,
+            this.tableData.columns,
+            newData,
+            [],
+            []
+        );
+    }
+
+    // 导出挡案名
+    get getFileName() {
+        let fileFirstName: any = "";
+        let fileLastName: any = "";
+        if (this.listQuery["time_period-{<=}"]) {
+            fileLastName = `-[${this.listQuery["time_period-{>=}"].split(" ")[0]}-${this.listQuery["time_period-{<=}"].split(" ")[0]
+                }]`;
+        }
+        if (this.tabName == "channel") {
+            let str: any = this.tableData.columns["plat_id"].options[this.listQuery.plat_id];
+            fileFirstName = LangUtil("渠道核心报表按渠道统计[{0}]", str);
+        } else {
+            let str: any = this.tableData.columns["plat_id"].options[this.listQuery.plat_id];
+            fileFirstName = LangUtil("渠道核心报表按团队统计[{0}]", str);
+        }
+        return `${fileFirstName}${fileLastName}`;
+    }
+
+    resetExportData(timeout: any) {
+        setTimeout(() => {
+            this.exportData.isExportExcel = false;
+            this.exportData.list = [];
+            Object.assign(this.exportData.pageInfo, {
+                pageCurrent: 0,
+            });
+        }, timeout);
+    }
+
+    /** 批次進度 */
+    get percentage() {
+        return Math.round((this.exportData.pageInfo.pageCurrent / this.exportData.pageInfo.pageCount) * 100);
+    }
+
+    showFieldSelectionDialog() {
+        this.fieldSelectionData.bShow = true;
+        this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
+    }
 
     onChangeTab() {
         this.fieldSelectionData.fieldOptions.length = 0;
@@ -275,5 +402,6 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
         }
         this.listQuery.page_count = 1;
         this.onQuery();
+        console.log(this.tableData.columns);
     }
 }

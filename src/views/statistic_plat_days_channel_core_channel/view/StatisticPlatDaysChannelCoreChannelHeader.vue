@@ -11,18 +11,23 @@
                 "
                 :clearable="false"
             />
-            <SearchSelect
-                :title="tableColumns.channel_id.name"
-                v-model="listQuery.channel_id"
-                :options="tableColumns.channel_id_options"
-            />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <SearchDatePicker
                 :title="tableColumns.time_period.name"
                 :startDate.sync="listQuery['time_period-{>=}']"
                 :endDate.sync="listQuery['time_period-{<=}']"
                 :showTime="true"
+                :clearable="false"
             />
+            <div>
+                <SearchSelect
+                    :title="tableColumns.channel_id.name"
+                    v-model="listQuery.channel_id"
+                    :options="tableColumns.channel_id_options"
+                    :multiple="true"
+                    width="600"
+                />
+            </div>
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
                     {{ LangUtil("查询") }}
@@ -30,7 +35,7 @@
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
                     {{ LangUtil("重置") }}
                 </el-button>
-                <el-button @click="exportExcel" type="primary" icon="el-icon-download">
+                <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 1">
                     {{ LangUtil("导出") }}
                 </el-button>
             </div>
@@ -66,6 +71,7 @@ export default class StatisticPlatDaysChannelCoreChannelHeader extends AbstractV
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
     LangUtil = LangUtil;
 
     handlerSearch() {
@@ -82,7 +88,7 @@ export default class StatisticPlatDaysChannelCoreChannelHeader extends AbstractV
     }
 
     exportExcel() {
-        // this.myProxy.showFieldSelectionDialog();
+        this.myProxy.showFieldSelectionDialog();
     }
 
     //更换平台切换对应币种

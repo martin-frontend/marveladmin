@@ -43,8 +43,11 @@ export default class StatisticPlatDaysChannelCoreChannelMediator extends Abstrac
                 break;
             case EventType.admin_statistic_plat_days_channel_core_channel_index:
             case EventType.admin_statistic_plat_days_channel_core_group_index:
-                myProxy.setTableData(body);
-                break;
+                if (this.myProxy.exportData.isExportExcel) {
+                    this.myProxy.onSaveExportData(body);
+                } else {
+                    this.myProxy.setTableData(body);
+                }
                 break;
             case EventType.admin_statistic_plat_days_channel_core_group_table_columns:
                 this.myProxy.setTableColumnsByGroyp(body);
