@@ -11,11 +11,6 @@
                 "
                 :clearable="false"
             />
-            <SearchSelect
-                :title="tableColumns.channel_id.name"
-                v-model="listQuery.channel_id"
-                :options="tableColumns.channel_id_options"
-            />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <SearchDatePicker
                 :title="tableColumns.time_period.name"
@@ -24,6 +19,15 @@
                 :showTime="true"
                 :clearable="false"
             />
+            <div>
+                <SearchSelect
+                    :title="tableColumns.channel_id.name"
+                    v-model="listQuery.channel_id"
+                    :options="tableColumns.channel_id_options"
+                    :multiple="true"
+                    width="600"
+                />
+            </div>
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
                     {{ LangUtil("查询") }}
