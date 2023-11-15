@@ -111,6 +111,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             sports_type: { name: '体育类型', options: {} },
             bet_score: { name: '滚球比分', options: {} },
             is_inplay: { name: LangUtil("滚球") },
+            combo: { name: LangUtil("串关"), options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -426,9 +427,85 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
 
     /**导出excel */
     exportExcel() {
-        const newData = JSON.parse(JSON.stringify(this.exportData.list));
+        const newData = JSON.parse(JSON.stringify(this.exportData.list)) as any[];
+
+        let maxComboListLength = 0;
+        for (let i = 0; i < newData.length; i++) {
+            if (newData[i].combo_list && newData[i].combo_list.length) {
+                const comboListLength = newData[i].combo_list.length;
+                if (comboListLength > maxComboListLength) {
+                    maxComboListLength = comboListLength;
+                }
+            }
+        }
+        const length = maxComboListLength; // 串关最大值
+        const comboList: any[] = Array.from({ length }).map((_, index) => index + 1); // [1,2,3]
+        const combo = this.tableData.columns?.combo ?? { name: "" };
+
+        const comboFields = comboList.reduce(
+            (prev: any, cur: any) => ({
+                ...prev,
+                [`combo_${cur}`]: { name: `${combo?.name}${cur}`, options: {} },
+            }),
+            {}
+        ); // 串关表头
+
+
+        const comboColumns = {
+            ...comboFields,
+        };
+
+        const list = newData.map(i => ({
+            ...i,
+            ...comboList.reduce(
+                (prev, cur) => ({
+                    ...prev,
+                    [`combo_${cur}`]: "",
+                }),
+                {}
+            ),
+        }));
+
         // @ts-ignore
         newData.forEach(element => {
+            // if (element.sports_type == 0) {
+            //     element.sports_type = "-";
+            // } else {
+            //     let sports_type = '';
+            //     for (let i = 0; i < element.sports_type.split('|').length; i++) {
+            //         sports_type =
+            //             sports_type + this.tableData.columns.sports_type.options[element.sports_type.split('|')[i]];
+            //         if (i + 1 != element.sports_type.split('|').length) {
+            //             sports_type = sports_type + 'x';
+            //         }
+            //     }
+            //     element.sports_type = sports_type;
+            // }
+            // if (!element.bet_score) {
+            //     element.bet_score = "-";
+            // }
+        });
+
+        let exportField = [];
+        for (const item of this.fieldSelectionData.fieldOptions) {
+            if (this.exportData.fieldOrder.indexOf(item) != -1) {
+                exportField.push(item);
+            }
+        }
+
+        const combo_fields_keys = comboList.map(i => `combo_${i}`);
+        exportField = [
+            ...exportField, ...combo_fields_keys
+        ];
+
+        // @ts-ignore
+        newData.forEach(item => {
+            // item.coin_name_unique = this.converCoinName(item.coin_name_unique);
+        });
+
+        list.forEach(element => {
+            element.vendor_id = this.tableData.columns.vendor_id.options[this.listQuery.plat_id][element.vendor_id]
+            element.coin_name_unique = this.converCoinName(element.coin_name_unique);
             if (element.sports_type == 0) {
                 element.sports_type = "-";
             } else {
@@ -445,27 +522,28 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             if (!element.bet_score) {
                 element.bet_score = "-";
             }
-        });
-
-        const exportField = [];
-        for (const item of this.fieldSelectionData.fieldOptions) {
-            if (this.exportData.fieldOrder.indexOf(item) != -1) {
-                exportField.push(item);
+            if (element.combo_list && element.combo_list.length) {
+                for (let i = 0; i < element.combo_list.length; i++) {
+                    element[`combo_${i + 1}`] =
+                        LangUtil('投注赔率') + ':' + element.combo_list[i].odds + '|' +
+                        LangUtil('盘口玩法') + ':' + element.combo_list[i].market_type_text + '|' +
+                        LangUtil('投注内容') + ':' + element.combo_list[i].content + '|' +
+                        LangUtil('赛果') + ':' + element.combo_list[i].win_type + '|' +
+                        LangUtil('联赛名称') + ':' + element.combo_list[i].competition_name + '|' +
+                        LangUtil('比赛队伍') + ':' + element.combo_list[i].home_name + '-' + element.combo_list[i].away_name + '|' +
+                        LangUtil('开赛时间') + ':' + element.combo_list[i].start_time;
+                }
             }
-        }
-        // @ts-ignore
-        newData.forEach(item => {
-            item.coin_name_unique = this.converCoinName(item.coin_name_unique);
         });
 
         new BaseInfo.ExportExcel(
             `${this.getExcelOutputName}`,
             // this.curKeyList,
             exportField,
-            this.tableData.columns,
+            { ...this.tableData.columns, ...comboColumns },
             // summary,
-            newData,
-            ["plat_id", "is_credit_user", "vendor_id", "vendor_type", "settlement_status"],
+            list,
+            ["plat_id", "is_credit_user", "vendor_type", "settlement_status"],
             []
         );
     }
