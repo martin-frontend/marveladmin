@@ -1,0 +1,11 @@
+{
+    "name": "渠道核心报表",
+    "description": "渠道核心报表",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75269714",
+    "list": [
+        "admin/statistic_plat_days_channel_core_channel/table_columns",
+        "admin/statistic_plat_days_channel_core_channel/index",
+        "admin/statistic_plat_days_channel_core_group/table_columns",
+        "admin/statistic_plat_days_channel_core_group/index"
+    ]
+}
