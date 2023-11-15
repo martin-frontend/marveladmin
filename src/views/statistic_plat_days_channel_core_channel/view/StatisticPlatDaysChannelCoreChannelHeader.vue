@@ -22,6 +22,7 @@
                 :startDate.sync="listQuery['time_period-{>=}']"
                 :endDate.sync="listQuery['time_period-{<=}']"
                 :showTime="true"
+                :clearable="false"
             />
             <div>
                 <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
@@ -30,7 +31,7 @@
                 <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
                     {{ LangUtil("重置") }}
                 </el-button>
-                <el-button @click="exportExcel()" type="primary" icon="el-icon-download">
+                <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 1">
                     {{ LangUtil("导出") }}
                 </el-button>
             </div>
@@ -66,6 +67,7 @@ export default class StatisticPlatDaysChannelCoreChannelHeader extends AbstractV
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    list = this.myProxy.tableData.list;
     LangUtil = LangUtil;
 
     handlerSearch() {
