@@ -268,6 +268,7 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
         "exchange_user",
         "net_rech",
         "win_loss",
+        "water",
     ];
 
     groupFieldOptions = [
@@ -285,6 +286,7 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
         "exchange_user",
         "net_rech",
         "win_loss",
+        "water",
     ];
 
     fieldSelectionData = {
