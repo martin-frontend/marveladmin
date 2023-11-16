@@ -85,8 +85,8 @@ export default class StatisticPlatDaysChannelCoreChannelChannelBody extends Abst
     myProxy: StatisticPlatDaysChannelCoreChannelProxy = this.getProxy(StatisticPlatDaysChannelCoreChannelProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
-    tableData = this.myProxy.tableData.list;
-    pageInfo = this.myProxy.tableData.pageInfo;
+    tableData = this.myProxy.tableData.channelList;
+    pageInfo = this.myProxy.tableData.channePageInfo;
     listQuery = this.myProxy.listQuery;
     LangUtil = LangUtil;
     handlerPageSwitch(page: number) {

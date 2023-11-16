@@ -19,8 +19,14 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
 
     /**离开页面时调用 */
     leave() {
-        this.tableData.list = [];
-        Object.assign(this.tableData.pageInfo, {
+        this.tableData.channelList = [];
+        this.tableData.groupList = [];
+        Object.assign(this.tableData.channePageInfo, {
+            pageTotal: 0,
+            pageCurrent: 0,
+            pageCount: 1,
+        });
+        Object.assign(this.tableData.groupPageInfo, {
             pageTotal: 0,
             pageCurrent: 0,
             pageCount: 1,
@@ -74,31 +80,11 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
             ...this.channelColumns,
         },
         list: <any>[],
+        groupList: <any>[],
+        channelList: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
-    };
-
-    /**团队表格相关数据 */
-    groupTableData = {
-        columns: <any>{
-            active_user: { name: '活跃人数', options: {} },
-            blog_exchange: { name: '博主兑换金额', options: {} },
-            channel_id: { options: {} },
-            exchange: { name: '总兑换金额', options: {} },
-            exchange_user: { name: '兑换人数', options: {} },
-            net_rech: { name: '充-兑', options: {} },
-            new_register: { name: '注册人数', options: {} },
-            nor_exchange: { name: '玩家兑换金额', tips: '玩家兑换金额 = 总兑换金额 - 博主兑换金额', options: {} },
-            plat_id: { options: {} },
-            plat_info: { name: '平台信息', options: {} },
-            recharge: { name: '充值金额', options: {} },
-            recharge_user: { name: '充值人数', options: {} },
-            time_period: { name: '日期', options: {} },
-            user_id: { name: '用户ID', options: {} },
-            water: { name: '游戏流水', options: {} },
-            win_loss: { name: '游戏输赢', options: {} },
-        },
-        list: <any>[],
-        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        groupPageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
+        channePageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
 
     /**查询条件 */
@@ -166,17 +152,30 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
         win_loss: ""
     }
 
-    /**表格数据 */
+    /**渠道表格数据 */
     setTableData(data: any) {
-        this.tableData.list.length = 0;
-        this.tableData.list.push(...data.list);
-        Object.assign(this.tableData.pageInfo, data.pageInfo);
+        this.tableData.channelList.length = 0;
+        this.tableData.channelList.push(...data.list);
+        Object.assign(this.tableData.channePageInfo, data.pageInfo);
         Object.assign(this.summaryData, {
             ...data.summary,
             plat_id: LangUtil("合计"),
         });
         // 把summaryData 插入第一笔
-        this.tableData.list.splice(0, 0, this.summaryData);
+        this.tableData.channelList.splice(0, 0, this.summaryData);
+    }
+
+    /**团体表格数据 */
+    setGroupTableData(data: any) {
+        this.tableData.groupList.length = 0;
+        this.tableData.groupList.push(...data.list);
+        Object.assign(this.tableData.groupPageInfo, data.pageInfo);
+        Object.assign(this.summaryData, {
+            ...data.summary,
+            plat_id: LangUtil("合计"),
+        });
+        // 把summaryData 插入第一笔
+        this.tableData.groupList.splice(0, 0, this.summaryData);
     }
 
     /**详细数据 */
@@ -226,12 +225,12 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
             delete query.user_id;
             this.sendNotification(
                 HttpType.admin_statistic_plat_days_channel_core_channel_index,
-                objectRemoveNull(this.listQuery)
+                objectRemoveNull(query)
             );
         } else {
             this.sendNotification(
                 HttpType.admin_statistic_plat_days_channel_core_group_index,
-                objectRemoveNull(this.listQuery)
+                objectRemoveNull(query)
             );
         }
     }
@@ -304,6 +303,7 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
         queryCopy.page_count = Number(pageCurrent) + 1;
         queryCopy.plat_id = queryCopy.plat_id === "0" ? "" : queryCopy.plat_id;
         if (this.tabName == "channel") {
+            delete queryCopy.user_id;
             this.sendNotification(HttpType.admin_statistic_plat_days_channel_core_channel_index, objectRemoveNull(queryCopy));
         } else {
             this.sendNotification(HttpType.admin_statistic_plat_days_channel_core_group_index, objectRemoveNull(queryCopy));
@@ -398,12 +398,13 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
         if (this.tabName == "channel") {
             Object.assign(this.tableData.columns, JSON.parse(JSON.stringify(this.channelColumns)));
             this.fieldSelectionData.fieldOptions.push(...this.channelFieldOptions);
+            this.onQuery();
         } else {
             Object.assign(this.tableData.columns, JSON.parse(JSON.stringify(this.groupColumns)));
             this.fieldSelectionData.fieldOptions.push(...this.groupFieldOptions);
+            this.listQuery.user_id = "";
+            this.tableData.groupList.length = 0;
         }
         this.listQuery.page_count = 1;
-        this.onQuery();
-        console.log(this.tableData.columns);
     }
 }
