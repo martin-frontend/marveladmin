@@ -5,13 +5,14 @@
                 :title="tableColumns.plat_id.name"
                 v-model="listQuery.plat_id"
                 :options="tableColumns.plat_id.options"
-                @change="
-                    changePlat();
-                    handlerSearch();
-                "
+                @change="changePlat()"
                 :clearable="false"
             />
-            <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
+            <SearchInput
+                :title="tableColumns.user_id.name"
+                v-model="listQuery.user_id"
+                v-if="myProxy.tabName == 'group'"
+            />
             <SearchDatePicker
                 :title="tableColumns.time_period.name"
                 :startDate.sync="listQuery['time_period-{>=}']"
@@ -19,26 +20,30 @@
                 :showTime="true"
                 :clearable="false"
             />
-            <div>
-                <SearchSelect
-                    :title="tableColumns.channel_id.name"
-                    v-model="listQuery.channel_id"
-                    :options="tableColumns.channel_id_options"
-                    :multiple="true"
-                    width="600"
-                />
-            </div>
-            <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
-                    {{ LangUtil("查询") }}
-                </el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
-                    {{ LangUtil("重置") }}
-                </el-button>
-                <el-button @click="exportExcel" type="primary" icon="el-icon-download" :disabled="list.length == 1">
-                    {{ LangUtil("导出") }}
-                </el-button>
-            </div>
+        </div>
+        <div>
+            <SearchSelect
+                v-if="myProxy.tabName == 'channel'"
+                :title="tableColumns.channel_id.name"
+                v-model="listQuery.channel_id"
+                :options="tableColumns.channel_id_options"
+                :multiple="true"
+                width="600"
+            />
+            <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                {{ LangUtil("查询") }}
+            </el-button>
+            <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                {{ LangUtil("重置") }}
+            </el-button>
+            <el-button
+                @click="exportExcel"
+                type="primary"
+                icon="el-icon-download"
+                :disabled="list.length == 1 || list.length == 0"
+            >
+                {{ LangUtil("导出") }}
+            </el-button>
         </div>
     </div>
 </template>
@@ -71,8 +76,13 @@ export default class StatisticPlatDaysChannelCoreChannelHeader extends AbstractV
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
-    list = this.myProxy.tableData.list;
     LangUtil = LangUtil;
+
+    get list() {
+        return this.myProxy.tabName == "channel"
+            ? this.myProxy.tableData.channelList
+            : this.myProxy.tableData.groupList;
+    }
 
     handlerSearch() {
         this.listQuery.page_count = 1;
