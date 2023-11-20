@@ -3,7 +3,7 @@
         <el-tab-pane :label="LangUtil('按渠道统计')" name="channel">
             <StatisticPlatDaysChannelCoreChannelChannelBody />
         </el-tab-pane>
-        <el-tab-pane :label="LangUtil('按团队统计')" name="group">
+        <el-tab-pane :label="LangUtil('按总团队统计')" name="group">
             <StatisticPlatDaysChannelCoreChannelGroupBody />
         </el-tab-pane>
     </el-tabs>
