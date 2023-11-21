@@ -208,6 +208,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
+        copy: false,
         status: DialogStatus.create,
         form: JSON.parse(JSON.stringify(this.defaultForm)),
         excelColumnInfo: {
@@ -479,7 +480,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         if (status == DialogStatus.update) {
             this.dialogData.formSource = data;
             Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
-
             this.dialogData.form.type = this.dialogData.form.model_id ? "1" : "2";
             this.dialogData.form.model_id = this.dialogData.form.model_id.toString();
 
@@ -496,6 +496,26 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.resetConditionForm();
             this.dialogData.formSource = null;
         }
+    }
+
+    /** 显示复制模版 */
+    showCopyDialog(status: string, data?: any) {
+        this.dialogData.bShow = true;
+        this.dialogData.status = status;
+        this.dialogData.copy = true;
+        this.resetDialogForm();
+        this.resetConditionForm();
+        Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
+        this.dialogData.form.type = this.dialogData.form.model_id ? "1" : "2";
+        this.dialogData.form.model_id = this.dialogData.form.model_id.toString();
+        this.sendNotification(HttpType.admin_plat_activity_show, { id: data.id });
+        this.sendNotification(HttpType.admin_plat_activity_condition_show, { id: data.id });
+        this.getActivityModel({
+            page_count: 1,
+            page_size: 20000,
+            plat_id: data.plat_id,
+        });
+        this.dialogData.formSource = null;
     }
 
     /**显示弹窗 */
@@ -1142,8 +1162,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
 
     /**写入活动模版数 详细数据 */
     setModelDetail(body: any) {
-        if (this.dialogData.status == DialogStatus.update) {
+        if (this.dialogData.status == DialogStatus.update || this.dialogData.copy == true) {
             this.dialogData.form.des = body.activity_desc;
+            this.dialogData.copy = false;
         } else {
             let data = JSON.parse(JSON.stringify(body));
             const {

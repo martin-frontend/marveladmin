@@ -19,12 +19,8 @@
                         'text-align': 'center',
                     }"
                 >
-                    <el-table-column
-                        :label="tableColumns['id'].name"
-                        width="65px"
-                        prop="id"
-                        class-name="status-col"
-                    ></el-table-column>
+                    <el-table-column :label="tableColumns['id'].name" width="65px" prop="id" class-name="status-col">
+                    </el-table-column>
                     <el-table-column :label="tableColumns['plat_id'].name" min-width="100px" align="center">
                         <template slot-scope="{ row }">
                             {{ tableColumns.plat_id.options[row.plat_id] }}
@@ -35,13 +31,15 @@
                         prop="activity_name"
                         align="center"
                         min-width="100px"
-                    ></el-table-column>
+                    >
+                    </el-table-column>
                     <el-table-column
                         :label="tableColumns['activity_category'].name"
                         prop="activity_category"
                         align="center"
                         min-width="100px"
-                    ></el-table-column>
+                    >
+                    </el-table-column>
                     <el-table-column
                         :label="tableColumns['publish_status'].name"
                         class-name="status-col"
@@ -153,8 +151,9 @@
                                         isWaterRate = true;
                                         editWaterRateValue = '0';
                                     "
-                                    >{{ LangUtil("编辑") }}</el-button
                                 >
+                                    {{ LangUtil("编辑") }}
+                                </el-button>
                             </div>
                         </template>
                     </el-table-column>
@@ -174,26 +173,35 @@
                             }}</el-button>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="LangUtil('操作')" width="110px" class-name="status-col">
+                    <el-table-column :label="LangUtil('操作')" width="160px" class-name="status-col">
                         <template slot-scope="{ row }">
+                            <el-button
+                                size="mini"
+                                type="primary"
+                                @click="onCopyModule(row)"
+                                v-if="row.process_status == 21 || row.process_status == 91"
+                            >
+                                {{ LangUtil("复制") }}
+                            </el-button>
                             <el-button
                                 size="mini"
                                 type="primary"
                                 @click="handleEdit(row)"
                                 v-if="checkUnique(unique.plat_activity_show)"
-                                >{{ LangUtil("编辑") }}</el-button
                             >
+                                {{ LangUtil("编辑") }}
+                            </el-button>
                         </template>
                     </el-table-column>
                     <el-table-column :label="LangUtil('排序')" class-name="status-col" :width="width">
                         <template slot-scope="{ row }">
                             <div v-if="checkUnique(unique.plat_activity_order)">
-                                <el-button size="mini" @click="handlerOrder(row.id, 1)">{{
-                                    LangUtil("置顶")
-                                }}</el-button>
-                                <el-button size="mini" @click="handlerOrder(row.id, 2)">{{
-                                    LangUtil("置底")
-                                }}</el-button>
+                                <el-button size="mini" @click="handlerOrder(row.id, 1)">
+                                    {{ LangUtil("置顶") }}
+                                </el-button>
+                                <el-button size="mini" @click="handlerOrder(row.id, 2)">
+                                    {{ LangUtil("置底") }}
+                                </el-button>
                                 <el-button size="mini" icon="el-icon-top" @click="handlerOrder(row.id, 3)"></el-button>
                                 <el-button
                                     size="mini"
@@ -262,6 +270,10 @@ export default class PlatActivityBody extends AbstractView {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
+    onCopyModule(data: any) {
+        this.myProxy.showCopyDialog(DialogStatus.create, data);
+    }
+
     handleClick(type: any) {
         this.listQuery.model_type = type.name;
         this.listQuery.page_count = 1;
@@ -278,6 +290,7 @@ export default class PlatActivityBody extends AbstractView {
     onUpdateLanguages(row: any) {
         this.myProxy.showLanguagesDialog(DialogStatus.update, row);
     }
+
     onUpdateAwardPool(data: any, isAdd: boolean = true) {
         const obj = {
             id: data.id,
