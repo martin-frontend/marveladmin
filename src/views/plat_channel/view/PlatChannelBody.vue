@@ -34,6 +34,11 @@
                     {{ tableColumns.plat_id.options[row.plat_id] }}
                 </template>
             </el-table-column>
+            <el-table-column :label="`${tableColumns.coin_name_unique.name}`" prop="coin_name_unique" align="center">
+                <template slot-scope="{ row }">
+                    {{ tableColumns.coin_name_unique.options[row.plat_id][row.coin_name_unique] }}
+                </template>
+            </el-table-column>
             <el-table-column :label="LangUtil('操作')" class-name="status-col" width="160px">
                 <template slot-scope="{ row }">
                     <el-button

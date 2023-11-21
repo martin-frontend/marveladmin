@@ -12,6 +12,23 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['coin_name_unique'].name" prop="coin_name_unique">
+                <el-select
+                    v-model="form.coin_name_unique"
+                    filterable
+                    clearable
+                    class="select"
+                    :placeholder="LangUtil('请选择')"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns.coin_name_unique.options[listQuery.plat_id]"
+                        :key="key"
+                        :label="value"
+                        :value="key"
+                    >
+                    </el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item size="mini" :label="tableColumns['channel_name'].name" prop="channel_name">
                 <el-input v-model="form.channel_name" :placeholder="LangUtil('请输入')"></el-input>
             </el-form-item>
@@ -61,6 +78,7 @@ export default class PlatChannelDialog extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
+    listQuery = this.myProxy.listQuery;
 
     textMap = {
         update: LangUtil("编辑"),

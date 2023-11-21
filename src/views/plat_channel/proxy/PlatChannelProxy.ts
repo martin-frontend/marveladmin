@@ -27,10 +27,10 @@ export default class PlatChannelProxy extends AbstractProxy implements IPlatChan
 
     /**表格相关数据 */
     tableData = {
-        columns: {
-            // TODO
+        columns: <any>{
             channel_id: { name: "渠道ID", options: {} },
             channel_name: { name: "渠道名称", options: {} },
+            coin_name_unique: { name: '币种', options: {} },
             created_at: { name: "创建时间", options: {} },
             created_by: { name: "创建人", options: {} },
             data_belong: { name: "数据归属标记", options: {} },
@@ -59,11 +59,11 @@ export default class PlatChannelProxy extends AbstractProxy implements IPlatChan
         status: DialogStatus.create,
         form: {
             id: null,
-            // TODO
             channel_name: "",
             plat_id: "",
             ios_download_link: "",
             android_download_link: "",
+            coin_name_unique: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -113,6 +113,7 @@ export default class PlatChannelProxy extends AbstractProxy implements IPlatChan
             plat_id: "",
             ios_download_link: "",
             android_download_link: "",
+            coin_name_unique: "",
         });
     }
 
@@ -123,9 +124,9 @@ export default class PlatChannelProxy extends AbstractProxy implements IPlatChan
 
     /**添加数据 */
     onAdd() {
-        const { channel_name, plat_id, ios_download_link, android_download_link } = this.dialogData.form;
+        const { channel_name, coin_name_unique, plat_id, ios_download_link, android_download_link } = this.dialogData.form;
         const formCopy: any = {
-            // TODO
+            coin_name_unique,
             channel_name,
             plat_id,
             ios_download_link,
