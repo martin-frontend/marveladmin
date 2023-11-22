@@ -3,13 +3,36 @@
         <el-form ref="form" :rules="rules" :model="form" label-width="120px" v-loading="net_status.loading">
             <!--  -->
             <el-form-item size="mini" :label="tableColumns['plat_id'].name" prop="plat_id">
-                <el-select v-model="form.plat_id" filterable class="select" :placeholder="LangUtil('请选择')">
+                <el-select
+                    v-model="form.plat_id"
+                    filterable
+                    class="select"
+                    :placeholder="LangUtil('请选择')"
+                    @change="changePlatId()"
+                >
                     <el-option
                         v-for="(value, key) in tableColumns.plat_id.options"
                         :key="key"
                         :label="value"
                         :value="Number(key)"
                     ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item size="mini" :label="tableColumns['coin_name_unique'].name" prop="coin_name_unique">
+                <el-select
+                    v-model="form.coin_name_unique"
+                    filterable
+                    clearable
+                    class="select"
+                    :placeholder="LangUtil('请选择')"
+                >
+                    <el-option
+                        v-for="(value, key) in tableColumns.coin_name_unique.options[form.plat_id]"
+                        :key="key"
+                        :label="value"
+                        :value="key"
+                    >
+                    </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['channel_name'].name" prop="channel_name">
@@ -61,6 +84,7 @@ export default class PlatChannelDialog extends AbstractView {
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
+    listQuery = this.myProxy.listQuery;
 
     textMap = {
         update: LangUtil("编辑"),
@@ -107,6 +131,10 @@ export default class PlatChannelDialog extends AbstractView {
 
     handleDelete() {
         this.myProxy.onDelete(this.form.id);
+    }
+
+    changePlatId() {
+        this.form.coin_name_unique = "";
     }
 }
 </script>
