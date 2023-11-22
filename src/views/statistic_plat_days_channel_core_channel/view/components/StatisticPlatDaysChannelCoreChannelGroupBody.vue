@@ -71,7 +71,9 @@
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.water.name" align="center" prop="water">
-                <template slot-scope="{ row }"> <WinLossDisplay :amount="row.water" /> </template>
+                <template slot-scope="{ row }">
+                    <WinLossDisplay :amount="row.water" :isShowColor="false" :isShowPlus="false" />
+                </template>
             </el-table-column>
         </el-table>
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
