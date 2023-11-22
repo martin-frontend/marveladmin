@@ -443,7 +443,7 @@
                         >
                             <el-input v-model="form.link_url" :placeholder="LangUtil('请输入')"></el-input>
                         </el-form-item>
-                        <template v-if="!isBallAward">
+                        <template v-if="!isBallAward && !isSpinAward">
                             <!-- 扩展任务类型 -->
                             <el-form-item
                                 size="mini"
@@ -641,8 +641,8 @@
                             </div>
                         </template>
                         <PlatActivityBallAward v-if="isBallAward" />
-
-                        <template v-if="!isBallAward">
+                        <PlatActivitySpinAward v-else-if="isSpinAward" />
+                        <template v-if="!isBallAward && !isSpinAward">
                             <!-- 奖励规则 -->
                             <div v-if="form.type == 1 && form.model_id" class="_title">
                                 {{ LangUtil("奖励规则") }}
@@ -1402,11 +1402,13 @@ import CommonLangTinymceProxy from "@/views/lang_tinymce_dialog/proxy/CommonLang
 import { readerData } from "@/core/global/Excel";
 import { BaseInfo } from "@/components/vo/commonVo";
 import PlatActivityBallAward from "./components/PlatActivityBallAward.vue";
+import PlatActivitySpinAward from "./components/PlatActivitySpinAward.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
     components: {
         PlatActivityBallAward,
+        PlatActivitySpinAward,
         SearchDatePicker,
     },
 })
@@ -1441,6 +1443,10 @@ export default class PlatActivityDialog extends AbstractView {
 
     get isBallAward() {
         return this.form.model_type == 12;
+    }
+
+    get isSpinAward() {
+        return this.form.model_type == 13;
     }
 
     get curTime() {

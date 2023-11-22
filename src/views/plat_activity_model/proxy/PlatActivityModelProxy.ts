@@ -60,6 +60,8 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             ball_award: { name: "彩球奖励", options: {} },
             rank_award: { name: "排名奖励", options: {} },
             day_num_init_config: { name: "每日次数重置", options: {} },
+            spin_lottery_award_type: { name: "抽奖奖励", options: {} },
+            spin_lottery_cons_type: { name: "抽奖消耗", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -115,7 +117,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         category: "",
         is_once: "",
         active_model_tag: "",
-        open_mode_url:"",
+        open_mode_url: "",
         rules: [JSON.parse(JSON.stringify(this.activityRules))],
 
         init_prize_pool: "",
@@ -227,6 +229,25 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         }
     }
 
+    resetSpinForm() {
+        const obj = {
+            interval: [1, 3],
+            type: "0",
+            params: {
+                key: "",
+                value: 0,
+            },
+        };
+        this.dialogData.form.lottery_cons = [];
+        this.dialogData.form.lottery_award = [];
+        const xiaohao_keys = Object.keys(this.tableData.columns.lottery_cons_type.options);
+        if (xiaohao_keys && xiaohao_keys.length > 0) obj.type = xiaohao_keys[0];
+        this.dialogData.form.lottery_cons.push(JSON.parse(JSON.stringify(obj)));
+        const award_keys = Object.keys(this.tableData.columns.lottery_award_type.options);
+        if (award_keys && award_keys.length > 0) obj.type = award_keys[0];
+        this.dialogData.form.lottery_award.push(JSON.parse(JSON.stringify(obj)));
+    }
+
     /**查询 */
     onQuery() {
         this.sendNotification(HttpType.admin_plat_activity_model_index, objectRemoveNull(this.listQuery));
@@ -269,6 +290,13 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             formCopy.rank_award = JSON.stringify(formCopy.rank_award);
             formCopy.day_num_init_config = JSON.stringify(formCopy.day_num_init_config);
         }
+        if (this.dialogData.form.type == 13) {
+            formCopy.lottery_cons.forEach((item: { interval: any[]; }) => {
+                item.interval[1] = item.interval[0];
+            });
+            formCopy.lottery_cons = JSON.stringify(formCopy.lottery_cons);
+            formCopy.lottery_award = JSON.stringify(formCopy.lottery_award);
+        }
         this.sendNotification(HttpType.admin_plat_activity_model_store, objectRemoveNull(formCopy));
     }
     /**更新数据 */
@@ -303,6 +331,15 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
                 day_num_init_config: JSON.stringify(this.dialogData.form.day_num_init_config),
             });
         }
+        if (this.dialogData.form.type == 13) {
+            formCopy.lottery_cons.forEach((item: { interval: any[]; }) => {
+                item.interval[1] = item.interval[0];
+            });
+            Object.assign(formCopy, this.dialogData.form, {
+                lottery_cons: JSON.stringify(this.dialogData.form.lottery_cons),
+                lottery_award: JSON.stringify(this.dialogData.form.lottery_award),
+            });
+        }
         this.sendNotification(HttpType.admin_plat_activity_model_update, objectRemoveNull(formCopy));
     }
     /**删除数据 */
@@ -333,9 +370,16 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
                         is_delete: 1,
                     });
                 }
+                if (this.dialogData.form.type == 13) {
+                    Object.assign(formCopy, this.dialogData.form, {
+                        lottery_cons: JSON.stringify(this.dialogData.form.lottery_cons),
+                        lottery_award: JSON.stringify(this.dialogData.form.lottery_award),
+                        is_delete: 1,
+                    });
+                }
                 this.sendNotification(HttpType.admin_plat_activity_model_update, formCopy);
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**平台数据 */
