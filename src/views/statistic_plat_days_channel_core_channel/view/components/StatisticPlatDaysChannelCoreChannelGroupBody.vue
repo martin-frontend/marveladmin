@@ -62,7 +62,7 @@
             </el-table-column>
             <el-table-column :label="tableColumns.net_rech.name" align="center" prop="net_rech">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.net_rech" :isShowColor="false" />
+                    <WinLossDisplay :amount="row.net_rech" />
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.win_loss.name" align="center" prop="win_loss">
