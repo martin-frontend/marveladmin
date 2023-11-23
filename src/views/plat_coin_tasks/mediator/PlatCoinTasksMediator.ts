@@ -4,6 +4,7 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/plat_coin_tasks/setting";
 import { Message } from "element-ui";
 import PlatCoinTasksProxy from "../proxy/PlatCoinTasksProxy";
+import LangUtil from "@/core/global/LangUtil";
 
 interface IPlatCoinTasks extends IEventDispatcher {
 
@@ -30,6 +31,7 @@ export default class PlatCoinTasksMediator extends AbstractMediator {
             EventType.admin_plat_coin_tasks_index,
             EventType.admin_plat_coin_tasks_store,
             EventType.admin_plat_coin_tasks_update,
+            EventType.admin_plat_coin_tasks_batch_cancel,
         ];
     }
 
@@ -56,6 +58,10 @@ export default class PlatCoinTasksMediator extends AbstractMediator {
                 break;
             case EventType.admin_plat_coin_tasks_update:
                 Message.success(SuccessMessage.update);
+                myProxy.onQuery();
+                break;
+            case EventType.admin_plat_coin_tasks_batch_cancel:
+                Message.success(LangUtil("批量撤销成功"));
                 myProxy.onQuery();
                 break;
         }

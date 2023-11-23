@@ -6,6 +6,7 @@
         "admin/plat_coin_tasks/table_columns",
         "admin/plat_coin_tasks/index",
         "admin/plat_coin_tasks/store",
-        "admin/plat_coin_tasks/update/{id}"
+        "admin/plat_coin_tasks/update/{id}",
+        "admin/plat_coin_tasks/batch_cancel"
     ]
 }

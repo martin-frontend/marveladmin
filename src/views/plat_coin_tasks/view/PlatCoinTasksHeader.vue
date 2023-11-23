@@ -1,5 +1,5 @@
 <template>
-    <div class="header-content">
+    <div class="header-content" style="margin-bottom: 0px;">
         <SearchSelect
             :title="tableColumns.plat_id.name"
             v-model="listQuery.plat_id"
@@ -40,11 +40,6 @@
                     {{ LangUtil("导出") }}
                 </el-button>
             </div>
-        </div>
-        <div class="group">
-            <el-button icon="el-icon-circle-plus-outline" @click="handlerCreate()" type="primary" class="item">
-                {{ LangUtil("手动添加任务") }}
-            </el-button>
         </div>
     </div>
 </template>
@@ -88,10 +83,6 @@ export default class PlatCoinTasksHeader extends AbstractView {
 
     handlerReset() {
         this.myProxy.resetListQuery();
-    }
-
-    handlerCreate() {
-        this.myProxy.showDialog(DialogStatus.create);
     }
 
     //更换平台切换任务币种
