@@ -573,7 +573,12 @@
 
                 <el-form-item size="mini" :label="tableColumns['remark'].name" prop="remark">
                     <div class="remark_group">
-                        <div class="content">{{ userInfo.remark | remarkFilter }}</div>
+                        <template v-if="userInfo.remark == ''">
+                            <div class="content">-</div>
+                        </template>
+                        <template v-else>
+                            <div class="content" v-html="userInfo.remark.replace(/\n/g, '<br>')"></div>
+                        </template>
                         <el-button class="btn" type="primary" @click="handlerEdit('remark')">
                             {{ LangUtil("编辑") }}
                         </el-button>
@@ -582,11 +587,12 @@
                 <div class="bind_relation" v-if="checkUnique(unique.plat_agent_bind)">
                     <div>{{ LangUtil("上级关系键条") }}</div>
                     <p>
-                        <span v-for="(value, key) in relationChain" :key="key" :value="key"
-                            ><span style="cursor: pointer; text-decoration: underline" @click="showUserDetail(value)"
-                                >[{{ key + 1 }}]{{ value }}</span
-                            >＜</span
-                        >
+                        <span v-for="(value, key) in relationChain" :key="key" :value="key">
+                            <span style="cursor: pointer; text-decoration: underline" @click="showUserDetail(value)"
+                                >[{{ key + 1 }}]{{ value }}
+                            </span>
+                            ＜
+                        </span>
                         <span>-{{ userInfo.user_id }}</span>
                     </p>
                 </div>
