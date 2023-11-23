@@ -27,8 +27,9 @@
             <!-- 备注 start -->
             <template v-else-if="dialogData.filed == `remark`">
                 <el-input
+                    type="textarea"
                     v-model="dialogData.filedValue"
-                    rows="2"
+                    rows="5"
                     show-word-limit
                     class="dialog_input"
                     :placeholder="LangUtil('输入用户备注信息 最多10个字')"
