@@ -73,6 +73,7 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
         },
         list: <any>[],
         summary: <any>[],
+        multipleSelection: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
 
@@ -476,5 +477,10 @@ export default class PlatCoinTasksProxy extends AbstractProxy implements IPlatCo
     showFieldSelectionDialog() {
         this.fieldSelectionData.bShow = true;
         this.exportData.fieldOrder = [...this.fieldSelectionData.fieldOptions];
+    }
+
+    /**批量取消 */
+    onBatchCancel(data: any) {
+        this.sendNotification(HttpType.admin_plat_coin_tasks_batch_cancel, data);
     }
 }

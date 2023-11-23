@@ -1,5 +1,20 @@
 <template>
-    <div>
+    <div style="margin-top: 0px;">
+        <div class="header-content" style="margin-top: 0px;">
+            <div class="group">
+                <el-button icon="el-icon-circle-plus-outline" @click="handlerCreate()" type="primary" class="item">
+                    {{ LangUtil("手动添加任务") }}
+                </el-button>
+                <el-button
+                    @click="handlerBatchCancel()"
+                    type="primary"
+                    class="item"
+                    :disabled="myProxy.tableData.multipleSelection.length == 0"
+                >
+                    {{ LangUtil("批量撤销") }}
+                </el-button>
+            </div>
+        </div>
         <el-collapse v-if="myProxy.tableData.summary.length > 0" class="custom-collapse">
             <el-collapse-item>
                 <template slot="title">
@@ -22,7 +37,10 @@
             style="width: 100%"
             size="mini"
             v-loading="net_status.loading"
+            @selection-change="handleSelectionChange"
+            ref="multipleTable"
         >
+            <el-table-column type="selection" width="50" align="center"></el-table-column>
             <el-table-column prop="plat_id" :label="tableColumns.plat_id.name" align="center" min-width="140px">
                 <template slot-scope="{ row }">
                     <div>
@@ -160,6 +178,7 @@ import { jsonToObject } from "@/core/global/Functions";
     },
 })
 export default class PlatCoinTasksBody extends AbstractView {
+    LangUtil = LangUtil;
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
@@ -173,7 +192,6 @@ export default class PlatCoinTasksBody extends AbstractView {
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
 
-    LangUtil = LangUtil;
     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
@@ -208,6 +226,33 @@ export default class PlatCoinTasksBody extends AbstractView {
             return jsonToObject(j);
         }
         return j;
+    }
+
+    handlerCreate() {
+        this.myProxy.showDialog(DialogStatus.create);
+    }
+
+    handleSelectionChange(val: any) {
+        this.myProxy.tableData.multipleSelection = [...val];
+    }
+
+    handlerBatchCancel() {
+        this.$confirm(this.LangUtil("是否批量撤销?"), this.LangUtil("提示"), {
+            confirmButtonText: this.LangUtil("确定"),
+            cancelButtonText: this.LangUtil("取消"),
+            type: "warning",
+        })
+            .then(() => {
+                const ids = this.myProxy.tableData.multipleSelection.map((item: any) => item.id);
+                this.myProxy.onBatchCancel({ task_ids: JSON.stringify(ids), status: 6 });
+                this.clearSelection();
+            })
+            .catch(() => {});
+    }
+
+    clearSelection() {
+        this.myProxy.tableData.multipleSelection.length = 0;
+        this.$refs.multipleTable.clearSelection();
     }
 }
 </script>
