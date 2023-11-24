@@ -26,8 +26,7 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
 
     /**表格相关数据 */
     tableData = {
-        columns: {
-            // TODO
+        columns: <any>{
             backwater_gold: { name: "游戏挖矿", options: {} },
             backwater_2: { name: "棋牌挖矿", options: {} },
             backwater_4: { name: "彩票挖矿", options: {} },
@@ -44,6 +43,7 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
             bet_64: { name: "体育投注", options: {} },
             bet_128: { name: "电竞投注", options: {} },
             channel_id: { name: "所属渠道", options: {} },
+            coin_name_unique: { name: '币种', options: {} },
             commission: { name: "结算佣金", options: {} },
             commission_2: { name: "棋牌佣金", options: {} },
             commission_4: { name: "彩票佣金", options: {} },
@@ -109,6 +109,7 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
         nick_name: "",
         user_id: "",
         is_credit_user: "",
+        coin_name_unique: "",
     };
 
     /**设置表头数据 */
@@ -119,7 +120,11 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
                 this.listQuery.plat_id = plat_id_options_keys[0];
             }
-            this.onQuery();
+            if (this.listQuery.plat_id) {
+                //@ts-ignore
+                this.tableData.columns.coin_name_unique_option = this.tableData.columns.coin_name_unique.options[this.listQuery.plat_id];
+                this.onQuery();
+            }
         }
     }
 
@@ -145,6 +150,7 @@ export default class StatisticUserDaysProxy extends AbstractProxy implements ISt
             nick_name: "",
             user_id: "",
             is_credit_user: "",
+            coin_name_unique: "",
         });
     }
 

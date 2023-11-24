@@ -7,7 +7,10 @@
                     :options="tableColumns.plat_id.options"
                     :clearable="false"
                     v-model="listQuery.plat_id"
-                    @change="handlerSearch"
+                    @change="
+                        changePlat();
+                        handlerSearch();
+                    "
                 />
             </div>
             <div class="group">
@@ -16,11 +19,16 @@
                     :startDate.sync="listQuery['created_date-{>=}']"
                     :endDate.sync="listQuery['created_date-{<=}']"
                 />
+                <SearchSelect
+                    :title="tableColumns.coin_name_unique.name"
+                    v-model="listQuery.coin_name_unique"
+                    :options="tableColumns.coin_name_unique_option"
+                />
                 <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
                 <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
                 <SearchInput :title="tableColumns.nick_name.name" v-model="listQuery.nick_name" />
                 <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
-                <SearchSelect 
+                <SearchSelect
                     :title="tableColumns.is_credit_user.name"
                     :options="tableColumns.is_credit_user.options"
                     v-model="listQuery.is_credit_user"
@@ -80,6 +88,13 @@ export default class StatisticUserDaysHeader extends AbstractView {
 
     handlerReset() {
         this.myProxy.resetListQuery();
+    }
+
+    //更换平台切换对应币种
+    changePlat() {
+        this.listQuery.coin_name_unique = "";
+        //@ts-ignore
+        this.tableColumns.coin_name_unique_option = this.tableColumns.coin_name_unique.options[this.listQuery.plat_id];
     }
 }
 </script>

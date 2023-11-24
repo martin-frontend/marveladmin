@@ -54,7 +54,7 @@
                             </el-tooltip>
                         </template>
                         <template slot-scope="{ row }">
-                            <WinLossDisplay :amount="row[activeName + `_profit`]" />
+                            <WinLossDisplay :amount="row[activeName + `_profit`]" :isShowDollar="false" />
                         </template>
                     </el-table-column>
                     <!-- 人数 -->
@@ -109,6 +109,7 @@
                                 :amount="row[activeName + `_recharge`]"
                                 :isShowColor="false"
                                 :isShowPlus="false"
+                                :isShowDollar="false"
                             />
                         </template>
                     </el-table-column>
@@ -131,6 +132,7 @@
                                 :amount="row[activeName + `_exchange`]"
                                 :isShowColor="false"
                                 :isShowPlus="false"
+                                :isShowDollar="false"
                             />
                         </template>
                     </el-table-column>
@@ -149,6 +151,7 @@
                                         :amount="row[`${activeName}_commission`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
@@ -159,6 +162,7 @@
                                         :amount="row[`${activeName}_commission_${i}`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
@@ -188,6 +192,7 @@
                                 :amount="row[activeName + `_gift_gold`]"
                                 :isShowColor="false"
                                 :isShowPlus="false"
+                                :isShowDollar="false"
                             />
                         </template>
                     </el-table-column>
@@ -206,6 +211,7 @@
                                         :amount="row[`${activeName}_backwater_gold`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
@@ -216,6 +222,7 @@
                                         :amount="row[`${activeName}_backwater_${i}`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
@@ -236,6 +243,7 @@
                                         :amount="row[`${activeName}_total_bet`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
@@ -246,6 +254,7 @@
                                         :amount="row[`${activeName}_bet_${i}`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
@@ -256,6 +265,7 @@
                                         :amount="row[`${activeName}_total_activity_coin_bet`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
@@ -272,23 +282,32 @@
                             <div class="text-left">
                                 <span>{{ tableColumns[`${activeName}_total_win_loss`].name }}:</span>
                                 <span>
-                                    <WinLossDisplay :amount="row[`${activeName}_total_win_loss`]" />
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_total_win_loss`]"
+                                        :isShowDollar="false"
+                                    />
                                 </span>
                             </div>
                             <div v-for="i of [2, 4, 8, 16, 32, 64, 128]" :key="i" class="text-left">
                                 <span>{{ tableColumns[`${activeName}_win_loss_${i}`].name }}:</span>
                                 <span>
-                                    <WinLossDisplay :amount="row[`${activeName}_win_loss_${i}`]" />
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_win_loss_${i}`]"
+                                        :isShowDollar="false"
+                                    />
                                 </span>
                             </div>
                             <div class="text-left">
                                 <span>{{ tableColumns[`${activeName}_total_activity_coin_win_loss`].name }}:</span>
                                 <span>
-                                    <WinLossDisplay :amount="row[`${activeName}_total_activity_coin_win_loss`]" />
+                                    <WinLossDisplay
+                                        :amount="row[`${activeName}_total_activity_coin_win_loss`]"
+                                        :isShowDollar="false"
+                                    />
                                 </span>
                             </div>
                         </template>
-                    </el-table-column> 
+                    </el-table-column>
                     <!-- 游戏总流水 -->
                     <el-table-column
                         :prop="`${activeName}_total_water`"
@@ -304,6 +323,7 @@
                                         :amount="row[`${activeName}_total_water`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
@@ -314,11 +334,12 @@
                                         :amount="row[`${activeName}_water_${i}`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
                         </template>
-                    </el-table-column> 
+                    </el-table-column>
                     <!-- 游戏总流水 -->
                     <el-table-column
                         :prop="`${activeName}_bonus_pool`"
@@ -334,6 +355,7 @@
                                         :amount="row[`${activeName}_bonus_pool`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
@@ -344,6 +366,7 @@
                                         :amount="row[`${activeName}_bonus_pool_${i}`]"
                                         :isShowColor="false"
                                         :isShowPlus="false"
+                                        :isShowDollar="false"
                                     />
                                 </span>
                             </div>
@@ -361,6 +384,7 @@
                                 :amount="row[activeName + `_recharge_fee`]"
                                 :isShowColor="false"
                                 :isShowPlus="false"
+                                :isShowDollar="false"
                             />
                         </template>
                     </el-table-column>
@@ -376,6 +400,7 @@
                                 :amount="row[activeName + `_exchange_fee`]"
                                 :isShowColor="false"
                                 :isShowPlus="false"
+                                :isShowDollar="false"
                             />
                         </template>
                     </el-table-column>

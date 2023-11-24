@@ -5,7 +5,10 @@
                 :title="tableColumns.plat_id.name"
                 :options="tableColumns.plat_id.options"
                 v-model="listQuery.plat_id"
-                @change="handlerSearch"
+                @change="
+                    changePlat();
+                    handlerSearch();
+                "
                 :clearable="false"
             />
         </div>
@@ -16,15 +19,20 @@
                 :endDate.sync="listQuery['created_date-{<=}']"
                 :showTime="false"
             />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique_option"
+            />
             <SearchInput :title="tableColumns.username.name" v-model="listQuery.username" />
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <div>
-                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">{{
-                    LangUtil("查询")
-                }}</el-button>
-                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">{{
-                    LangUtil("重置")
-                }}</el-button>
+                <el-button @click="handlerSearch()" type="primary" icon="el-icon-search">
+                    {{ LangUtil("查询") }}
+                </el-button>
+                <el-button @click="handlerReset()" type="primary" icon="el-icon-refresh">
+                    {{ LangUtil("重置") }}
+                </el-button>
             </div>
         </div>
         <div class="notic">
@@ -58,7 +66,7 @@ export default class StatisticUserPromotionDaysIndexHeader extends AbstractView 
     //权限标识
     unique = unique;
     checkUnique = checkUnique;
-    
+
     // proxy
     myProxy = this.$parent.myProxy;
     // proxy property
@@ -72,6 +80,13 @@ export default class StatisticUserPromotionDaysIndexHeader extends AbstractView 
 
     handlerReset() {
         this.myProxy.resetListQuery();
+    }
+
+    //更换平台切换对应币种
+    changePlat() {
+        this.listQuery.coin_name_unique = "";
+        //@ts-ignore
+        this.tableColumns.coin_name_unique_option = this.tableColumns.coin_name_unique.options[this.listQuery.plat_id];
     }
 }
 </script>
