@@ -56,7 +56,12 @@
                         <div>
                             <span>{{ tableColumns["recharge"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.recharge" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.recharge"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div v-show="row.display !== true">
@@ -76,7 +81,12 @@
                         <div>
                             <span>{{ tableColumns["exchange"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.exchange" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.exchange"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                     </div>
@@ -92,49 +102,89 @@
                         <div>
                             <span>{{ tableColumns["commission"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.commission" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.commission"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["commission_2"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.commission_2" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.commission_2"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["commission_4"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.commission_4" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.commission_4"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["commission_8"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.commission_8" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.commission_8"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["commission_16"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.commission_16" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.commission_16"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["commission_32"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.commission_32" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.commission_32"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["commission_64"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.commission_64" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.commission_64"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["commission_128"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.commission_128" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.commission_128"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                     </div>
@@ -159,55 +209,100 @@
                         <div>
                             <span>{{ tableColumns["gift_gold"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.gift_gold" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.gift_gold"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["backwater_gold"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.backwater_gold" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.backwater_gold"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["backwater_2"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.backwater_2" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.backwater_2"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["backwater_4"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.backwater_4" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.backwater_4"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["backwater_8"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.backwater_8" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.backwater_8"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["backwater_16"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.backwater_16" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.backwater_16"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["backwater_32"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.backwater_32" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.backwater_32"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["backwater_64"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.backwater_64" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.backwater_64"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["backwater_128"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.backwater_128" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.backwater_128"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                     </div>
@@ -299,55 +394,100 @@
                         <div>
                             <span>{{ tableColumns["total_bet"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.total_bet" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.total_bet"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["bet_2"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.bet_2" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.bet_2"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["bet_16"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.bet_16" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.bet_16"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["bet_8"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.bet_8" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.bet_8"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["bet_4"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.bet_4" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.bet_4"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["bet_32"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.bet_32" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.bet_32"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["bet_64"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.bet_64" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.bet_64"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["bet_128"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.bet_128" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.bet_128"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns.total_activity_coin_bet.name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.total_activity_coin_bet" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.total_activity_coin_bet"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                     </div>
@@ -359,49 +499,89 @@
                         <div>
                             <span>{{ tableColumns["total_water"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.total_water" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.total_water"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["water_2"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.water_2" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.water_2"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["water_16"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.water_16" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.water_16"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["water_8"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.water_8" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.water_8"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["water_4"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.water_4" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.water_4"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["water_32"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.water_32" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.water_32"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["water_64"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.water_64" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.water_64"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                         <div>
                             <span>{{ tableColumns["water_128"].name }}:</span>
                             <span>
-                                <WinLossDisplay :amount="row.water_128" :isShowColor="false" :isShowPlus="false" />
+                                <WinLossDisplay
+                                    :amount="row.water_128"
+                                    :isShowColor="false"
+                                    :isShowPlus="false"
+                                    :isShowDollar="false"
+                                />
                             </span>
                         </div>
                     </div>
@@ -412,39 +592,39 @@
                     <div class="text-left">
                         <div>
                             <span>{{ tableColumns["total_win_loss"].name }}:</span>
-                            <WinLossDisplay :amount="row.total_win_loss" />
+                            <WinLossDisplay :amount="row.total_win_loss" :isShowDollar="false" />
                         </div>
                         <div>
                             <span>{{ tableColumns["win_loss_2"].name }}:</span>
-                            <WinLossDisplay :amount="row.win_loss_2" />
+                            <WinLossDisplay :amount="row.win_loss_2" :isShowDollar="false" />
                         </div>
                         <div>
                             <span>{{ tableColumns["win_loss_16"].name }}:</span>
-                            <WinLossDisplay :amount="row.win_loss_16" />
+                            <WinLossDisplay :amount="row.win_loss_16" :isShowDollar="false" />
                         </div>
                         <div>
                             <span>{{ tableColumns["win_loss_8"].name }}:</span>
-                            <WinLossDisplay :amount="row.win_loss_8" />
+                            <WinLossDisplay :amount="row.win_loss_8" :isShowDollar="false" />
                         </div>
                         <div>
                             <span>{{ tableColumns["win_loss_4"].name }}:</span>
-                            <WinLossDisplay :amount="row.win_loss_4" />
+                            <WinLossDisplay :amount="row.win_loss_4" :isShowDollar="false" />
                         </div>
                         <div>
                             <span>{{ tableColumns["win_loss_32"].name }}:</span>
-                            <WinLossDisplay :amount="row.win_loss_32" />
+                            <WinLossDisplay :amount="row.win_loss_32" :isShowDollar="false" />
                         </div>
                         <div>
                             <span>{{ tableColumns["win_loss_64"].name }}:</span>
-                            <WinLossDisplay :amount="row.win_loss_64" />
+                            <WinLossDisplay :amount="row.win_loss_64" :isShowDollar="false" />
                         </div>
                         <div>
                             <span>{{ tableColumns["win_loss_128"].name }}:</span>
-                            <WinLossDisplay :amount="row.win_loss_128" />
+                            <WinLossDisplay :amount="row.win_loss_128" :isShowDollar="false" />
                         </div>
                         <div>
                             <span>{{ tableColumns.total_activity_coin_win_loss.name }}:</span>
-                            <WinLossDisplay :amount="row.total_activity_coin_win_loss" />
+                            <WinLossDisplay :amount="row.total_activity_coin_win_loss" :isShowDollar="false" />
                         </div>
                     </div>
                 </template>

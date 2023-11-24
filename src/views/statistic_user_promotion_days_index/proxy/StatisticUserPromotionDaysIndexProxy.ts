@@ -28,7 +28,8 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
+            coin_name_unique: { name: '币种', options: {} },
             created_date: { name: "统计日期", options: [] },
             data_belong: { name: "数据归属标记", options: [] },
             directly_backwater_2: { name: "棋牌挖矿", options: [] },
@@ -187,6 +188,7 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
         "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
         username: "",
         user_id: "",
+        coin_name_unique: "",
     };
 
     /**tabs 數據 */
@@ -207,6 +209,8 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
             }
         }
         if (this.listQuery.plat_id && this.listQuery.user_id) {
+            //@ts-ignore
+            this.tableData.columns.coin_name_unique_option = this.tableData.columns.coin_name_unique.options[this.listQuery.plat_id];
             this.onQuery();
         }
     }
@@ -225,13 +229,13 @@ export default class StatisticUserPromotionDaysIndexProxy extends AbstractProxy
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
-            // TODO
             page_count: 1,
             page_size: 20,
             "created_date-{>=}": dateFormat(getTodayOffset(-29), "yyyy-MM-dd hh:mm:ss"),
             "created_date-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
             username: "",
             user_id: "",
+            coin_name_unique: "",
         });
     }
 
