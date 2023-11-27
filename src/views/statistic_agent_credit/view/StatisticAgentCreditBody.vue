@@ -139,7 +139,21 @@
                     <WinLossDisplay :amount="row.plat_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
-
+            <el-table-column
+                :label="tableColumns['game_valid_bet_gold'].name"
+                prop="game_valid_bet_gold"
+                class-name="status-col"
+                sortable="custom"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.game_valid_bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    ></WinLossDisplay>
+                </template>
+            </el-table-column>
             <el-table-column prop="amount_to_the_company" :label="LangUtil('到公司货量')" align="center">
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.amount_to_the_company" :isShowDollar="false"></WinLossDisplay>
