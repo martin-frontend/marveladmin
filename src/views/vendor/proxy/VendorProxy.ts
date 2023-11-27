@@ -65,6 +65,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             vendor_coin_name_unique: { name: '厂商币种编号' },
             cancel_order: { name: '取消订单', options: {} },
             white_ip: { name: 'IP白名單', options: {} },
+            maintain_end_time: { name: '维护结束时间', options: {} },
+            maintain_start_time: { name: '维护开始时间', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -115,6 +117,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             extends_coin: "",
             cancel_order: "",
             white_ip: "",
+            maintain_end_time: "",
+            maintain_start_time: "",
         },
         formSource: null, // 表单的原始数据
         // 扩展数据
@@ -222,6 +226,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             extends_coin: "",
             cancel_order: "",
             white_ip: "",
+            maintain_end_time: "",
+            maintain_start_time: "",
         });
         this.dialogData.extendsData = {};
         this.dialogData.betCodeContentData = {};
@@ -260,6 +266,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             visitor_allowed,
             cancel_order,
             white_ip,
+            maintain_end_time,
+            maintain_start_time,
         } = this.dialogData.form;
         const formCopy: any = {
             bet_detail_url,
@@ -281,6 +289,8 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             visitor_allowed,
             cancel_order,
             white_ip,
+            maintain_end_time,
+            maintain_start_time,
         };
         formCopy.vendor_types = JSON.stringify(formCopy.vendor_types);
         formCopy.languages = JSON.stringify(formCopy.languages);
