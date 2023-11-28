@@ -132,17 +132,6 @@
                 </el-select>
                 <el-button type="primary" @click="handleAddCoin()">{{ LangUtil("添加币种") }}</el-button>
             </el-form-item>
-            <el-form-item :label="LangUtil('维护时间段')" class="">
-                <SearchDatePicker
-                    :title="LangUtil('维护时间段')"
-                    :startDate.sync="form.maintain_start_time"
-                    :endDate.sync="form.maintain_end_time"
-                    :isNeedTitle="false"
-                    :pickerOptions="timeoptions"
-                    :showTime="true"
-                />
-            </el-form-item>
-            {{ form.maintain_start_time }}
             <div class="table">
                 <el-table :data="list.list" border style="width: 100%" v-loading="net_status.loading">
                     <el-table-column
@@ -200,6 +189,16 @@
                         {{ value }}
                     </el-radio>
                 </el-radio-group>
+            </el-form-item>
+            <el-form-item :label="LangUtil('维护时间段')" class="">
+                <SearchDatePicker
+                    :title="LangUtil('维护时间段')"
+                    :startDate.sync="form.maintain_start_time"
+                    :endDate.sync="form.maintain_end_time"
+                    :isNeedTitle="false"
+                    :pickerOptions="timeoptions"
+                    :showTime="true"
+                />
             </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button
