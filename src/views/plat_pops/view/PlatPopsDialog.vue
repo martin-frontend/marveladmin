@@ -392,7 +392,20 @@
                                 </template>
                             </el-radio-group>
                         </el-col>
-                        <el-col :span="5" class="vi_div" v-if="item.condition == 'condition_balance'">
+                        <el-col
+                            :span="5"
+                            class="vi_div"
+                            v-if="
+                                item.condition != 'condition_is_first_login' &&
+                                    item.condition != 'condition_is_first_recharge' &&
+                                    item.condition != 'condition_exchange' &&
+                                    item.condition != 'condition_recharge' &&
+                                    item.condition != 'condition_vip_level' &&
+                                    item.condition != 'condition_water' &&
+                                    item.condition != 'condition_win_loss' &&
+                                    item.condition != ''
+                            "
+                        >
                             <el-select v-model="item.coin" :placeholder="LangUtil('请选择')" filterable>
                                 <el-option
                                     v-for="(value, key) in tableColumns['condition_balance_options']"
@@ -403,8 +416,21 @@
                                 </el-option>
                             </el-select>
                         </el-col>
-                        <el-col :span="3" class="vi_div" v-if="item.condition == 'condition_balance'">
-                            <el-select v-model="item.mark" :placeholder="LangUtil('请选择')" filterable disabled>
+                        <el-col
+                            :span="3"
+                            class="vi_div"
+                            v-if="
+                                item.condition != 'condition_is_first_login' &&
+                                    item.condition != 'condition_is_first_recharge' &&
+                                    item.condition != ''
+                            "
+                        >
+                            <el-select
+                                v-model="item.mark"
+                                :placeholder="LangUtil('请选择')"
+                                filterable
+                                :disabled="item.condition == 'condition_balance'"
+                            >
                                 <el-option
                                     v-for="(value, key) in tableColumns['mark'].options"
                                     :key="key"
@@ -414,7 +440,15 @@
                                 </el-option>
                             </el-select>
                         </el-col>
-                        <el-col :span="4" class="vi_div" v-if="item.condition == 'condition_balance'">
+                        <el-col
+                            :span="4"
+                            class="vi_div"
+                            v-if="
+                                item.condition != 'condition_is_first_login' &&
+                                    item.condition != 'condition_is_first_recharge' &&
+                                    item.condition != ''
+                            "
+                        >
                             <el-input
                                 size="small"
                                 v-model="item.balance"
@@ -425,9 +459,6 @@
                     </el-row>
                 </div>
             </el-form-item>
-            <!-- <el-form-item size="mini" :label="tableColumns['status'].name" prop="status">
-                <el-switch v-model="form.status" :active-value="1" :inactive-value="98"></el-switch>
-            </el-form-item> -->
             <el-form-item class="dialog-footer">
                 <el-button type="primary" size="mini" @click="isStatusUpdate ? handleUpdate() : handleAdd()">
                     {{ LangUtil("确认保存") }}
@@ -503,7 +534,14 @@ export default class PlatPopsDialog extends AbstractView {
             return {
                 name: this.tableColumns.conditions.options[key],
                 key,
-                disabled: selectedKeys.includes(key) && key != "condition_balance",
+                disabled:
+                    selectedKeys.includes(key) &&
+                    key != "condition_balance" &&
+                    key != "condition_exchange" &&
+                    key != "condition_recharge" &&
+                    key != "condition_vip_level" &&
+                    key != "condition_water" &&
+                    key != "condition_win_loss",
             };
         });
         return newArr;
