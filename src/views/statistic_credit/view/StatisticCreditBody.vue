@@ -137,6 +137,22 @@
             </el-table-column>
 
             <el-table-column
+                prop="game_valid_bet_gold"
+                :label="tableColumns['game_valid_bet_gold'].name"
+                align="center"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.game_valid_bet_gold"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    >
+                    </WinLossDisplay>
+                </template>
+            </el-table-column>
+
+            <el-table-column
                 :label="tableColumns['credit_rate_superior'].name"
                 prop="credit_rate_superior"
                 class-name="status-col"
