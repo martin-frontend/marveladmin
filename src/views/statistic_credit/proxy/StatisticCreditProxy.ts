@@ -28,7 +28,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             plat_id: { name: "", options: {} },
             record_count: { name: "", options: {} },
             bet_gold: { name: "", options: {} },
@@ -49,6 +49,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             credit_rate_self: { name: "我的占成", options: {} },
             credit_rate_subordinate: { name: "代理商占成", options: {} },
             credit_rate_superior: { name: "平台占成", options: {} },
+            game_valid_bet_gold: { name: '游戏有效投注', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -80,6 +81,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             credit_rate_self: "",
             credit_rate_subordinate: "",
             credit_rate_superior: "",
+            game_valid_bet_gold: "",
         },
     };
 
@@ -122,6 +124,7 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         sumData.credit_rate_self = data.credit_rate_self;
         sumData.credit_rate_subordinate = data.credit_rate_subordinate;
         sumData.credit_rate_superior = data.credit_rate_superior;
+        sumData.game_valid_bet_gold = data.game_valid_bet_gold;
         sumData.contribute_to_the_company = data.contribute_to_the_company;
         sumData.amount_to_the_company = data.amount_to_the_company;
         return sumData;
