@@ -44,7 +44,7 @@ import LangUtil from "@/core/global/LangUtil";
 export default class FieldSelectionDialog extends AbstractView {
     LangUtil = LangUtil;
     // proxy
-    myProxy: PlatUserStatisticRankDaysProxy = this.getProxy(PlatUserStatisticRankDaysProxy);
+    myProxy = this.$parent.myProxy;
     fieldOptions = this.myProxy.fieldSelectionData.fieldOptions;
     tableColumns = this.myProxy.tableData.columns;
     isIndeterminate = false;
