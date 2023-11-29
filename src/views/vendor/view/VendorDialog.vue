@@ -146,8 +146,8 @@
                     >
                         <template slot-scope="{ row }">
                             <div>{{ tableColumns.is_digital_currency.options[row.is_digital_currency] }}</div>
-                        </template></el-table-column
-                    >
+                        </template>
+                    </el-table-column>
                     <el-table-column
                         prop="coin_tag"
                         :label="tableColumns['coin_tag'].name"
@@ -190,6 +190,16 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item :label="LangUtil('维护时间段')" class="">
+                <SearchDatePicker
+                    :title="LangUtil('维护时间段')"
+                    :startDate.sync="form.maintain_start_time"
+                    :endDate.sync="form.maintain_end_time"
+                    :isNeedTitle="false"
+                    :pickerOptions="timeoptions"
+                    :showTime="true"
+                />
+            </el-form-item>
             <el-form-item class="dialog-footer">
                 <el-button
                     v-if="isStatusUpdate && checkUnique(unique.vendor_delete)"
@@ -218,12 +228,14 @@ import VendorProxy from "@/views/vendor/proxy/VendorProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import JsonEditor from "@/components/JsonEditor/index.vue";
-import { jsonStringify, jsonToObject } from "@/core/global/Functions";
+import { getTodayOffset } from "@/core/global/Functions";
 import GlobalVar from "@/core/global/GlobalVar";
+import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
     components: {
         JsonEditor,
+        SearchDatePicker,
     },
 })
 export default class VendorDialog extends AbstractView {
@@ -270,6 +282,35 @@ export default class VendorDialog extends AbstractView {
             languages: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
+
+    timeoptions = {
+        shortcuts: [
+            {
+                text: LangUtil("将来一周"),
+                onClick(picker: any) {
+                    const start = getTodayOffset(-1);
+                    const end = getTodayOffset(7);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+            {
+                text: LangUtil("将来一个月"),
+                onClick(picker: any) {
+                    const start = getTodayOffset(-1);
+                    const end = getTodayOffset(30);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+            {
+                text: "将来一年",
+                onClick(picker: any) {
+                    const start = getTodayOffset(-1);
+                    const end = getTodayOffset(365);
+                    picker.$emit("pick", [start, end]);
+                },
+            },
+        ],
+    };
 
     handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
