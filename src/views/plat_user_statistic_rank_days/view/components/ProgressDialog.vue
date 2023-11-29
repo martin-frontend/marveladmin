@@ -26,7 +26,7 @@ import { MessageBox } from "element-ui";
 export default class ProgressDialog extends AbstractView {
     LangUtil = LangUtil;
     // proxy
-    private myProxy: PlatUserStatisticRankDaysProxy = this.getProxy(PlatUserStatisticRankDaysProxy);
+    myProxy = this.$parent.myProxy;
 
     cancel() {
         MessageBox.confirm(String(this.LangUtil("确定要取消汇出")), String(this.LangUtil("提示")), {
