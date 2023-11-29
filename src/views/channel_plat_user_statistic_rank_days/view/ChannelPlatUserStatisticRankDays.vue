@@ -3,6 +3,8 @@
         <PlatUserStatisticRankDaysDialog v-if="myProxy.dialogData.bShow" />
         <PlatUserStatisticRankDaysHeader />
         <PlatUserStatisticRankDaysBody />
+        <ProgressDialog v-if="myProxy.exportData.isExportExcel" />
+        <FieldSelectionDialog v-if="myProxy.fieldSelectionData.bShow" />
     </div>
 </template>
 
@@ -14,12 +16,16 @@ import { Component } from "vue-property-decorator";
 import PlatUserStatisticRankDaysDialog from "@/views/plat_user_statistic_rank_days/view/PlatUserStatisticRankDaysDialog.vue";
 import PlatUserStatisticRankDaysHeader from "@/views/plat_user_statistic_rank_days/view/PlatUserStatisticRankDaysHeader.vue";
 import PlatUserStatisticRankDaysBody from "@/views/plat_user_statistic_rank_days/view/PlatUserStatisticRankDaysBody.vue";
+import ProgressDialog from "@/views/plat_user_statistic_rank_days/view/components/ProgressDialog.vue";
+import FieldSelectionDialog from "@/views/plat_user_statistic_rank_days/view/components/FieldSelectionDialog.vue";
 
 @Component({
     components: {
         PlatUserStatisticRankDaysDialog,
         PlatUserStatisticRankDaysHeader,
         PlatUserStatisticRankDaysBody,
+        ProgressDialog,
+        FieldSelectionDialog,
     },
 })
 export default class ChannelPlatUserStatisticRankDays extends AbstractView {

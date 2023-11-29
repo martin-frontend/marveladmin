@@ -82,7 +82,7 @@ export default class PlatUserStatisticRankDaysHeader extends AbstractView {
     unique = unique;
     checkUnique = checkUnique;
     // proxy
-    myProxy: PlatUserStatisticRankDaysProxy = this.getProxy(PlatUserStatisticRankDaysProxy);
+    myProxy = this.$parent.myProxy;
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;

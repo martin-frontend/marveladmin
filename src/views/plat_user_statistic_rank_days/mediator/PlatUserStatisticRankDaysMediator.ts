@@ -33,32 +33,32 @@ export default class PlatUserStatisticRankDaysMediator extends AbstractMediator 
     }
 
     handleNotification(notification: puremvc.INotification) {
-        const myProxy: PlatUserStatisticRankDaysProxy = <any>(
-            this.facade.retrieveProxy(PlatUserStatisticRankDaysProxy.NAME)
-        );
+        // const myProxy: PlatUserStatisticRankDaysProxy = <any>(
+        //     this.facade.retrieveProxy(PlatUserStatisticRankDaysProxy.NAME)
+        // );
         const myView: IPlatUserStatisticRankDays = this.viewComponent;
         const body = notification.getBody();
         switch (notification.getName()) {
             case EventType.admin_plat_user_statistic_rank_days_table_columns:
-                myProxy.setTableColumns(body);
+                this.myProxy.setTableColumns(body);
                 break;
             case EventType.admin_plat_user_statistic_rank_days_index:
             case EventType.admin_plat_user_statistic_rank_days_index2:
-                if (myProxy.exportData.isExportExcel) {
-                    myProxy.onSaveExportData(body);
+                if (this.myProxy.exportData.isExportExcel) {
+                    this.myProxy.onSaveExportData(body);
                 } else {
-                    myProxy.setTableData(body);
+                    this.myProxy.setTableData(body);
                 }
                 break;
             case EventType.admin_plat_user_statistic_rank_days_store:
                 Message.success(SuccessMessage.create);
-                myProxy.hideDialog();
-                myProxy.onQuery();
+                this.myProxy.hideDialog();
+                this.myProxy.onQuery();
                 break;
             case EventType.admin_plat_user_statistic_rank_days_update:
                 Message.success(SuccessMessage.update);
-                myProxy.hideDialog();
-                myProxy.onQuery();
+                this.myProxy.hideDialog();
+                this.myProxy.onQuery();
                 break;
         }
     }
