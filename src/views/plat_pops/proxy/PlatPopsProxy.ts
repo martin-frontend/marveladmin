@@ -460,13 +460,9 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
                     formCopy.condition_balance[element.coin] = element.balance;
                 }
             } else {
-                let mark = '';
-                if (element.mark == 1) {
-                    mark = ">="
-                } else {
-                    mark = "<="
+                if (element.balance) {
+                    formCopy[element.condition].push({ "operator": element.mark, "value": element.balance })
                 }
-                formCopy[element.condition].push({ "operator": mark, "value": element.balance })
             }
         });
         formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
@@ -562,13 +558,9 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
                         formCopy.condition_balance[element.coin] = element.balance;
                     }
                 } else {
-                    let mark = '';
-                    if (element.mark == 1) {
-                        mark = ">="
-                    } else {
-                        mark = "<="
+                    if (element.balance) {
+                        formCopy[element.condition].push({ "operator": element.mark, "value": element.balance })
                     }
-                    formCopy[element.condition].push({ "operator": element.mark, "value": element.balance })
                 }
             });
             formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
