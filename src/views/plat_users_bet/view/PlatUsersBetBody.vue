@@ -227,6 +227,7 @@
             style="width: 100%"
             size="mini"
             v-loading="net_status.loading"
+            @sort-change="tableSortChange"
         >
             <el-table-column
                 :label="tableColumns['vendor_id'].name"
@@ -414,7 +415,13 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns['win_gold'].name" prop="win_gold" class-name="status-col">
+            <el-table-column
+                :label="tableColumns['win_gold'].name"
+                prop="win_gold"
+                class-name="status-col"
+                sortable="custom"
+                width="100px"
+            >
                 <template slot-scope="{ row }">
                     <div v-if="row.win_gold == '-'">{{ row.win_gold }}</div>
                     <WinLossDisplay v-else :amount="row.win_gold" />
@@ -663,6 +670,23 @@ export default class PlatUsersBetBody extends AbstractView {
 
     converCoinName(coinKey: any) {
         return this.myProxy.converCoinName(coinKey);
+    }
+
+    // 排序
+    private tableSortChange(column: any) {
+        let order_by = {};
+        if (column.order === "descending") {
+            order_by = {
+                [column.prop]: "DESC",
+            };
+        } else {
+            order_by = {
+                [column.prop]: "ASC",
+            };
+        }
+        this.listQuery.page_count = 1;
+        this.listQuery.order_by = JSON.stringify(order_by);
+        this.myProxy.onQuery();
     }
 }
 </script>
