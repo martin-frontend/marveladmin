@@ -454,6 +454,7 @@
                                 v-model="item.balance"
                                 :placeholder="LangUtil('请输入')"
                                 onkeyup="this.value=(this.value.match(/\d+(.\d{0,3})?/)||[''])[0]"
+                                @blur="inputChangeBalance($event, item)"
                             ></el-input>
                         </el-col>
                     </el-row>
@@ -714,6 +715,10 @@ export default class PlatPopsDialog extends AbstractView {
 
     inputChangeChannel(e: any) {
         this.form.range_channel_ids = e.target.value;
+    }
+
+    inputChangeBalance(e: any, item: any) {
+        item.balance = e.target.value;
     }
 }
 </script>
