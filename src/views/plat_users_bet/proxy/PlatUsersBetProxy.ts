@@ -170,6 +170,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
         vendor_order_no: "",
         channel_id: "",
         sports_type: "",
+        order_by: "",
     };
     /**弹窗相关数据 */
     dialogData = {
@@ -353,6 +354,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             vendor_order_no: "",
             channel_id: "",
             sports_type: "",
+            order_by: "",
         });
     }
 
