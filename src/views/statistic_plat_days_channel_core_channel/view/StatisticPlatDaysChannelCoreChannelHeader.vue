@@ -20,6 +20,11 @@
                 :showTime="true"
                 :clearable="false"
             />
+            <SearchSelect
+                :title="tableColumns.coin_name_unique.name"
+                v-model="listQuery.coin_name_unique"
+                :options="tableColumns.coin_name_unique.options[listQuery.plat_id]"
+            />
         </div>
         <div>
             <SearchSelect
@@ -104,6 +109,7 @@ export default class StatisticPlatDaysChannelCoreChannelHeader extends AbstractV
     //更换平台切换对应币种
     changePlat() {
         this.listQuery.channel_id = "";
+        this.listQuery.coin_name_unique = "";
         this.tableColumns.channel_id_options = this.tableColumns.channel_id.options[this.listQuery.plat_id];
         const channel_id_keys = Object.keys(this.tableColumns.channel_id_options);
         channel_id_keys.forEach((key: any) => {
