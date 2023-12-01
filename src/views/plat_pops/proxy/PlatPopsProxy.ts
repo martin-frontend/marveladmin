@@ -67,7 +67,7 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             mark: {
                 name: "",
                 options: {
-                    1: "<=",
+                    ">=": ">=", "<=": "<="
                 },
             },
         },
@@ -101,7 +101,7 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
         firstLogin: 1,
         firstRecharge: 2,
         coin: "", //币种
-        mark: "1",
+        mark: ">=",
     };
 
     /**弹窗相关数据 */
@@ -201,10 +201,51 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
                 });
             }
         }
-        // if (this.dialogData.status == DialogStatus.create) {
-        //     this.dialogData.form.type_bind_id = "";
-        // }
-
+        if (this.dialogData.form.condition_vip_level.length > 0) {
+            for (let i = 0; i < this.dialogData.form.condition_vip_level.length; i++) {
+                this.addCondition({
+                    condition: "condition_vip_level",
+                    mark: this.dialogData.form.condition_vip_level[i].operator,
+                    balance: this.dialogData.form.condition_vip_level[i].value,
+                });
+            }
+        }
+        if (this.dialogData.form.condition_exchange.length > 0) {
+            for (let i = 0; i < this.dialogData.form.condition_exchange.length; i++) {
+                this.addCondition({
+                    condition: "condition_exchange",
+                    mark: this.dialogData.form.condition_exchange[i].operator,
+                    balance: this.dialogData.form.condition_exchange[i].value,
+                });
+            }
+        }
+        if (this.dialogData.form.condition_recharge.length > 0) {
+            for (let i = 0; i < this.dialogData.form.condition_recharge.length; i++) {
+                this.addCondition({
+                    condition: "condition_recharge",
+                    mark: this.dialogData.form.condition_recharge[i].operator,
+                    balance: this.dialogData.form.condition_recharge[i].value,
+                });
+            }
+        }
+        if (this.dialogData.form.condition_water.length > 0) {
+            for (let i = 0; i < this.dialogData.form.condition_water.length; i++) {
+                this.addCondition({
+                    condition: "condition_water",
+                    mark: this.dialogData.form.condition_water[i].operator,
+                    balance: this.dialogData.form.condition_water[i].value,
+                });
+            }
+        }
+        if (this.dialogData.form.condition_win_loss.length > 0) {
+            for (let i = 0; i < this.dialogData.form.condition_win_loss.length; i++) {
+                this.addCondition({
+                    condition: "condition_win_loss",
+                    mark: this.dialogData.form.condition_win_loss[i].operator,
+                    balance: this.dialogData.form.condition_win_loss[i].value,
+                });
+            }
+        }
         // 指定标签
         const assignTagArr: any = [];
         if (data.range_user_tag_ids) {
@@ -400,6 +441,11 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
             formCopy.rules = JSON.stringify({ url: subject, options: content });
         }
         formCopy.condition_balance = {};
+        formCopy.condition_exchange = [];
+        formCopy.condition_recharge = [];
+        formCopy.condition_vip_level = [];
+        formCopy.condition_water = [];
+        formCopy.condition_win_loss = [];
         // @ts-ignore
         this.dialogData.form.condition.forEach(element => {
             if (element.condition == "condition_is_first_login") {
@@ -409,16 +455,41 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
                 // 用户首次充值
                 formCopy.condition_is_first_recharge = element.firstRecharge;
             } else if (element.condition == "condition_balance") {
-                // 用户首次充值
+                // 余额
                 if (element.balance) {
                     formCopy.condition_balance[element.coin] = element.balance;
                 }
+            } else {
+                if (element.balance) {
+                    formCopy[element.condition].push({ "operator": element.mark, "value": element.balance })
+                }
             }
         });
-        if (Object.keys(formCopy.condition_balance).length > 0) {
-            formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
+        formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
+        if (formCopy.condition_exchange.length > 0) {
+            formCopy.condition_exchange = JSON.stringify(formCopy.condition_exchange);
         } else {
-            delete formCopy.condition_balance;
+            delete formCopy.condition_exchange;
+        }
+        if (formCopy.condition_recharge.length > 0) {
+            formCopy.condition_recharge = JSON.stringify(formCopy.condition_recharge);
+        } else {
+            delete formCopy.condition_recharge;
+        }
+        if (formCopy.condition_vip_level.length > 0) {
+            formCopy.condition_vip_level = JSON.stringify(formCopy.condition_vip_level);
+        } else {
+            delete formCopy.condition_vip_level;
+        }
+        if (formCopy.condition_water.length > 0) {
+            formCopy.condition_water = JSON.stringify(formCopy.condition_water);
+        } else {
+            delete formCopy.condition_water;
+        }
+        if (formCopy.condition_win_loss.length > 0) {
+            formCopy.condition_win_loss = JSON.stringify(formCopy.condition_win_loss);
+        } else {
+            delete formCopy.condition_win_loss;
         }
         delete formCopy.condition;
         delete formCopy.time;
@@ -468,6 +539,11 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
                 formCopy.rules = JSON.stringify({ url: this.dialogData.form.subject, options: this.dialogData.form.content });
             }
             formCopy.condition_balance = {};
+            formCopy.condition_exchange = [];
+            formCopy.condition_recharge = [];
+            formCopy.condition_vip_level = [];
+            formCopy.condition_water = [];
+            formCopy.condition_win_loss = [];
             // @ts-ignore
             this.dialogData.form.condition.forEach(element => {
                 if (element.condition == "condition_is_first_login") {
@@ -481,13 +557,37 @@ export default class PlatPopsProxy extends AbstractProxy implements IPlatPopsPro
                     if (element.balance) {
                         formCopy.condition_balance[element.coin] = element.balance;
                     }
+                } else {
+                    if (element.balance) {
+                        formCopy[element.condition].push({ "operator": element.mark, "value": element.balance })
+                    }
                 }
             });
-
-            if (Object.keys(formCopy.condition_balance).length > 0) {
-                formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
+            formCopy.condition_balance = JSON.stringify(formCopy.condition_balance);
+            if (formCopy.condition_exchange.length > 0) {
+                formCopy.condition_exchange = JSON.stringify(formCopy.condition_exchange);
             } else {
-                delete formCopy.condition_balance;
+                delete formCopy.condition_exchange;
+            }
+            if (formCopy.condition_recharge.length > 0) {
+                formCopy.condition_recharge = JSON.stringify(formCopy.condition_recharge);
+            } else {
+                delete formCopy.condition_recharge;
+            }
+            if (formCopy.condition_vip_level.length > 0) {
+                formCopy.condition_vip_level = JSON.stringify(formCopy.condition_vip_level);
+            } else {
+                delete formCopy.condition_vip_level;
+            }
+            if (formCopy.condition_water.length > 0) {
+                formCopy.condition_water = JSON.stringify(formCopy.condition_water);
+            } else {
+                delete formCopy.condition_water;
+            }
+            if (formCopy.condition_win_loss.length > 0) {
+                formCopy.condition_win_loss = JSON.stringify(formCopy.condition_win_loss);
+            } else {
+                delete formCopy.condition_win_loss;
             }
             delete formCopy.condition;
             delete formCopy.time;
