@@ -7,7 +7,11 @@
                 <WinLossDisplay :amount="summary.bet_gold" :isShowColor="false" :isShowPlus="false" />
             </span>
             <span>
-                {{ LangUtil("有效投注金额") }}:
+                {{ LangUtil("游戏有效投注金额") }}:
+                <WinLossDisplay :amount="summary.game_valid_bet_gold" :isShowColor="false" :isShowPlus="false" />
+            </span>
+            <span>
+                {{ LangUtil("用户有效投注金额") }}:
                 <WinLossDisplay :amount="summary.valid_bet_gold" :isShowColor="false" :isShowPlus="false" />
             </span>
             <span>{{ LangUtil("玩家输赢") }}:<WinLossDisplay :amount="summary.win_gold"/></span>
@@ -116,7 +120,15 @@
                         <WinLossDisplay :amount="task_coin_summary.bet_gold" :isShowColor="false" :isShowPlus="false" />
                     </span>
                     <span>
-                        {{ LangUtil("有效投注金额") }}:
+                        {{ LangUtil("游戏有效投注金额") }}:
+                        <WinLossDisplay
+                            :amount="task_coin_summary.game_valid_bet_gold"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                        />
+                    </span>
+                    <span>
+                        {{ LangUtil("用户有效投注金额") }}:
                         <WinLossDisplay
                             :amount="task_coin_summary.valid_bet_gold"
                             :isShowColor="false"
@@ -357,6 +369,15 @@
                         />
                     </div>
                     <div>
+                        {{ tableColumns["game_valid_bet_gold_coin"].name }}:
+                        <WinLossDisplay
+                            :amount="row.game_valid_bet_gold_coin"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                            :isShowDollar="false"
+                        />
+                    </div>
+                    <div>
                         {{ tableColumns["valid_bet_gold_coin"].name }}:
                         <WinLossDisplay
                             :amount="row.valid_bet_gold_coin"
@@ -510,13 +531,26 @@
                 </template>
             </el-table-column>
             <el-table-column
-                :label="tableColumns['valid_bet_gold'].name"
+                :label="LangUtil('有效投注$')"
                 prop="valid_bet_gold"
                 class-name="status-col"
-                min-width="80px"
+                min-width="200px"
             >
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.valid_bet_gold" :isShowColor="false" :isShowPlus="false" />
+                    <div>
+                        {{ tableColumns["game_valid_bet_gold"].name }}:<WinLossDisplay
+                            :amount="row.game_valid_bet_gold"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                        />
+                    </div>
+                    <div>
+                        {{ tableColumns["valid_bet_gold"].name }}:<WinLossDisplay
+                            :amount="row.valid_bet_gold"
+                            :isShowColor="false"
+                            :isShowPlus="false"
+                        />
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('流水')" prop="water" class-name="status-col" min-width="170px">

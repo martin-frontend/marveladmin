@@ -113,6 +113,8 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             is_inplay: { name: LangUtil("滚球") },
             combo: { name: LangUtil("串关"), options: {} },
             combo_detail: { name: LangUtil("串关详情"), options: {} },
+            game_valid_bet_gold: { name: '游戏有效投注', options: {} },
+            game_valid_bet_gold_coin: { name: '游戏有效投注', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -120,6 +122,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             bet_gold: "",
             settlement_water: "",
             valid_bet_gold: "",
+            game_valid_bet_gold: "",
             water: "",
             win_gold: "",
             water_accelerate: "",
@@ -131,6 +134,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             bet_gold: "",
             settlement_water: "",
             valid_bet_gold: "",
+            game_valid_bet_gold: "",
             water: "",
             win_gold: "",
             water_accelerate: "",
@@ -248,6 +252,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             "order_no",
             "coin_name_unique",
             "bet_gold_coin",
+            "game_valid_bet_gold_coin",
             "valid_bet_gold_coin",
             "win_gold_coin",
             "settlement_water_coin",
@@ -263,6 +268,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
             "bet_result",
             "market_type_text",
             "odds",
+            "game_valid_bet_gold",
             "valid_bet_gold",
             "water_type",
             "water_rate",
@@ -290,7 +296,7 @@ export default class PlatUsersBetProxy extends AbstractProxy implements IPlatUse
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
         this.tableData.columns.win_gold.name = LangUtil("输赢金额$");
-        this.tableData.columns.valid_bet_gold.name = LangUtil("有效投注$");
+        // this.tableData.columns.valid_bet_gold.name = LangUtil("有效投注$");
         const plat_id_options_keys = Object.keys(this.tableData.columns.plat_id.options);
         if (plat_id_options_keys.length > 0) {
             if (!plat_id_options_keys.includes(this.listQuery.plat_id)) {
