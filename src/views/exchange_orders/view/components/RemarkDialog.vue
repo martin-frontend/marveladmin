@@ -14,9 +14,11 @@
                 </p>
                 <el-form-item :label="tableColumns.remark.name" prop="remark">
                     <el-input
+                        type="textarea"
                         show-word-limit
                         clearable
-                        maxlength="30"
+                        maxlength="50"
+                        rows="4"
                         v-model="myProxy.remarkDialogData.form.remark"
                     ></el-input>
                 </el-form-item>
