@@ -173,7 +173,7 @@
                         :prop="`${activeName}_gift_gold`"
                         :label="tableColumns[`${activeName}_gift_gold`].name"
                         align="center"
-                        min-width="160px"
+                        min-width="200px"
                     >
                         <!-- <template slot="header">
                             <el-tooltip
@@ -189,7 +189,18 @@
                         </template> -->
                         <template slot-scope="{ row }">
                             <div class="text-left">
-                                <span>{{ tableColumns[`${activeName}_mail_gift_gold`].name }}:</span>
+                                <span>
+                                    <el-tooltip
+                                        effect="dark"
+                                        :content="tableColumns[`${activeName}_mail_gift_gold`].tips"
+                                        placement="top"
+                                    >
+                                        <span>
+                                            <span>{{ tableColumns[`${activeName}_mail_gift_gold`].name }}</span>
+                                            <i class="el-icon-question"></i>
+                                        </span> </el-tooltip
+                                    >:
+                                </span>
                                 <span>
                                     <WinLossDisplay
                                         :amount="row[activeName + `_mail_gift_gold`]"
@@ -200,7 +211,18 @@
                                 </span>
                             </div>
                             <div class="text-left">
-                                <span>{{ tableColumns[`${activeName}_activity_gift_gold`].name }}:</span>
+                                <span>
+                                    <el-tooltip
+                                        effect="dark"
+                                        :content="tableColumns[`${activeName}_activity_gift_gold`].tips"
+                                        placement="top"
+                                    >
+                                        <span>
+                                            <span>{{ tableColumns[`${activeName}_activity_gift_gold`].name }}</span>
+                                            <i class="el-icon-question"></i>
+                                        </span> </el-tooltip
+                                    >:
+                                </span>
                                 <span>
                                     <WinLossDisplay
                                         :amount="row[activeName + `_activity_gift_gold`]"
@@ -211,7 +233,18 @@
                                 </span>
                             </div>
                             <div class="text-left">
-                                <span>{{ tableColumns[`${activeName}_activity_coin_get`].name }}:</span>
+                                <span>
+                                    <el-tooltip
+                                        effect="dark"
+                                        :content="tableColumns[`${activeName}_activity_coin_get`].tips"
+                                        placement="top"
+                                    >
+                                        <span>
+                                            <span>{{ tableColumns[`${activeName}_activity_coin_get`].name }}</span>
+                                            <i class="el-icon-question"></i>
+                                        </span> </el-tooltip
+                                    >:
+                                </span>
                                 <span>
                                     <WinLossDisplay
                                         :amount="row[activeName + `_activity_coin_get`]"
@@ -222,7 +255,18 @@
                                 </span>
                             </div>
                             <div class="text-left">
-                                <span>{{ tableColumns[`${activeName}_activity_gold_exchange`].name }}:</span>
+                                <span>
+                                    <el-tooltip
+                                        effect="dark"
+                                        :content="tableColumns[`${activeName}_activity_gold_exchange`].tips"
+                                        placement="top"
+                                    >
+                                        <span>
+                                            <span>{{ tableColumns[`${activeName}_activity_gold_exchange`].name }}</span>
+                                            <i class="el-icon-question"></i>
+                                        </span> </el-tooltip
+                                    >:
+                                </span>
                                 <span>
                                     <WinLossDisplay
                                         :amount="row[activeName + `_activity_gold_exchange`]"
