@@ -39,6 +39,7 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
         active_user: { name: '活跃人数', options: {} },
         blog_exchange: { name: '博主兑换金额', options: {} },
         channel_id: { name: '所属渠道', options: {} },
+        coin_name_unique: { name: '币种', options: {} },
         exchange: { name: '总兑换金额', options: {} },
         exchange_user: { name: '兑换人数', options: {} },
         net_rech: { name: '充-兑', options: {} },
@@ -94,6 +95,7 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
         plat_id: "",
         channel_id: "",
         user_id: "",
+        coin_name_unique: "",
         "time_period-{>=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
         "time_period-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
     };
@@ -189,6 +191,7 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
         Object.assign(this.listQuery, {
             channel_id: "",
             user_id: "",
+            coin_name_unique: "",
             "time_period-{>=}": dateFormat(getTodayOffset(), "yyyy-MM-dd hh:mm:ss"),
             "time_period-{<=}": dateFormat(getTodayOffset(1, 1), "yyyy-MM-dd hh:mm:ss"),
         });
@@ -403,6 +406,7 @@ export default class StatisticPlatDaysChannelCoreChannelProxy extends AbstractPr
             Object.assign(this.tableData.columns, JSON.parse(JSON.stringify(this.groupColumns)));
             this.fieldSelectionData.fieldOptions.push(...this.groupFieldOptions);
             this.listQuery.user_id = "";
+            this.listQuery.coin_name_unique = "";
             this.tableData.groupList.length = 0;
         }
         this.listQuery.page_count = 1;
