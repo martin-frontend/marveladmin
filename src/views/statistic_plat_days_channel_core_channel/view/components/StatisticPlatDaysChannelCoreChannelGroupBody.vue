@@ -38,41 +38,66 @@
             </el-table-column>
             <el-table-column :label="tableColumns.recharge.name" align="center" prop="recharge">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.recharge" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.recharge"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.recharge_user.name" align="center" prop="recharge_user">
             </el-table-column>
             <el-table-column :label="tableColumns.exchange.name" align="center" prop="exchange">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.exchange" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.exchange"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.nor_exchange.name" align="center" prop="nor_exchange">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.nor_exchange" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.nor_exchange"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.blog_exchange.name" align="center" prop="blog_exchange">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.blog_exchange" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.blog_exchange"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.exchange_user.name" align="center" prop="exchange_user">
             </el-table-column>
             <el-table-column :label="tableColumns.net_rech.name" align="center" prop="net_rech">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.net_rech" />
+                    <WinLossDisplay :amount="row.net_rech" :isShowDollar="false" />
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.win_loss.name" align="center" prop="win_loss">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.win_loss" />
+                    <WinLossDisplay :amount="row.win_loss" :isShowDollar="false" />
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.water.name" align="center" prop="water">
                 <template slot-scope="{ row }">
-                    <WinLossDisplay :amount="row.water" :isShowColor="false" :isShowPlus="false" />
+                    <WinLossDisplay
+                        :amount="row.water"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
         </el-table>
