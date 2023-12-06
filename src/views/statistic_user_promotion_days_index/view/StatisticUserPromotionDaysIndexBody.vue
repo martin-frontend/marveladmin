@@ -192,6 +192,28 @@
                                 <span>
                                     <el-tooltip
                                         effect="dark"
+                                        :content="tableColumns[`${activeName}_gift_gold`].tips"
+                                        placement="top"
+                                    >
+                                        <span>
+                                            <span>{{ tableColumns[`${activeName}_gift_gold`].name }}</span>
+                                            <i class="el-icon-question"></i>
+                                        </span> </el-tooltip
+                                    >:</span
+                                >
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[activeName + `_gift_gold`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                        :isShowDollar="false"
+                                    />
+                                </span>
+                            </div>
+                            <div class="text-left">
+                                <span>
+                                    <el-tooltip
+                                        effect="dark"
                                         :content="tableColumns[`${activeName}_mail_gift_gold`].tips"
                                         placement="top"
                                     >
