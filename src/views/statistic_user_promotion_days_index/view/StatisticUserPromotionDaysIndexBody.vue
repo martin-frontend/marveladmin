@@ -173,9 +173,9 @@
                         :prop="`${activeName}_gift_gold`"
                         :label="tableColumns[`${activeName}_gift_gold`].name"
                         align="center"
-                        min-width="100px"
+                        min-width="200px"
                     >
-                        <template slot="header">
+                        <!-- <template slot="header">
                             <el-tooltip
                                 effect="dark"
                                 :content="tableColumns[`${activeName}_gift_gold`].tips"
@@ -186,14 +186,96 @@
                                     <i class="el-icon-question"></i>
                                 </div>
                             </el-tooltip>
-                        </template>
+                        </template> -->
                         <template slot-scope="{ row }">
-                            <WinLossDisplay
-                                :amount="row[activeName + `_gift_gold`]"
-                                :isShowColor="false"
-                                :isShowPlus="false"
-                                :isShowDollar="false"
-                            />
+                            <div class="text-left">
+                                <span>
+                                    <el-tooltip
+                                        effect="dark"
+                                        :content="tableColumns[`${activeName}_mail_gift_gold`].tips"
+                                        placement="top"
+                                    >
+                                        <span>
+                                            <span>{{ tableColumns[`${activeName}_mail_gift_gold`].name }}</span>
+                                            <i class="el-icon-question"></i>
+                                        </span> </el-tooltip
+                                    >:
+                                </span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[activeName + `_mail_gift_gold`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                        :isShowDollar="false"
+                                    />
+                                </span>
+                            </div>
+                            <div class="text-left">
+                                <span>
+                                    <el-tooltip
+                                        effect="dark"
+                                        :content="tableColumns[`${activeName}_activity_gift_gold`].tips"
+                                        placement="top"
+                                    >
+                                        <span>
+                                            <span>{{ tableColumns[`${activeName}_activity_gift_gold`].name }}</span>
+                                            <i class="el-icon-question"></i>
+                                        </span> </el-tooltip
+                                    >:
+                                </span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[activeName + `_activity_gift_gold`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                        :isShowDollar="false"
+                                    />
+                                </span>
+                            </div>
+                            <div class="text-left">
+                                <span>
+                                    <el-tooltip
+                                        effect="dark"
+                                        :content="tableColumns[`${activeName}_activity_coin_get`].tips"
+                                        placement="top"
+                                    >
+                                        <span>
+                                            <span>{{ tableColumns[`${activeName}_activity_coin_get`].name }}</span>
+                                            <i class="el-icon-question"></i>
+                                        </span> </el-tooltip
+                                    >:
+                                </span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[activeName + `_activity_coin_get`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                        :isShowDollar="false"
+                                    />
+                                </span>
+                            </div>
+                            <div class="text-left">
+                                <span>
+                                    <el-tooltip
+                                        effect="dark"
+                                        :content="tableColumns[`${activeName}_activity_gold_exchange`].tips"
+                                        placement="top"
+                                    >
+                                        <span>
+                                            <span>{{ tableColumns[`${activeName}_activity_gold_exchange`].name }}</span>
+                                            <i class="el-icon-question"></i>
+                                        </span> </el-tooltip
+                                    >:
+                                </span>
+                                <span>
+                                    <WinLossDisplay
+                                        :amount="row[activeName + `_activity_gold_exchange`]"
+                                        :isShowColor="false"
+                                        :isShowPlus="false"
+                                        :isShowDollar="false"
+                                    />
+                                </span>
+                            </div>
                         </template>
                     </el-table-column>
                     <!-- 时时反水 -->
