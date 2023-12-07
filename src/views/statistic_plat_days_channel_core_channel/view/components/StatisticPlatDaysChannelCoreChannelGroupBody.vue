@@ -13,10 +13,10 @@
                 prop="time_period"
                 :label="tableColumns['time_period'].name"
                 align="center"
-                min-width="230px"
+                min-width="300"
             >
             </el-table-column>
-            <el-table-column :label="LangUtil('平台信息')" min-width="170" align="center">
+            <el-table-column :label="LangUtil('平台信息')" min-width="180" align="center">
                 <template slot-scope="{ row }">
                     <div>
                         <div v-if="row.plat_id === '合计' || row.plat_id === LangUtil('合计')">
@@ -46,9 +46,58 @@
                     />
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.recharge_user.name" align="center" prop="recharge_user">
+            <el-table-column
+                :label="tableColumns.recharge_user.name"
+                align="center"
+                prop="recharge_user"
+                min-width="100"
+            >
             </el-table-column>
-            <el-table-column :label="tableColumns.exchange.name" align="center" prop="exchange">
+            <el-table-column
+                :label="tableColumns.new_user_recharge.name"
+                align="center"
+                prop="new_user_recharge"
+                min-width="100"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.new_user_recharge"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.new_recharge_user.name"
+                align="center"
+                prop="new_recharge_user"
+                min-width="100"
+            >
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.old_user_recharge.name"
+                align="center"
+                prop="old_user_recharge"
+                min-width="120"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.old_user_recharge"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                        :isShowDollar="false"
+                    />
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.old_recharge_user.name"
+                align="center"
+                prop="old_recharge_user"
+                min-width="120"
+            >
+            </el-table-column>
+            <el-table-column :label="tableColumns.exchange.name" align="center" prop="exchange" min-width="100">
                 <template slot-scope="{ row }">
                     <WinLossDisplay
                         :amount="row.exchange"
@@ -58,7 +107,7 @@
                     />
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.nor_exchange.name" align="center" prop="nor_exchange">
+            <el-table-column :label="tableColumns.nor_exchange.name" align="center" prop="nor_exchange" min-width="100">
                 <template slot-scope="{ row }">
                     <WinLossDisplay
                         :amount="row.nor_exchange"
@@ -68,7 +117,12 @@
                     />
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.blog_exchange.name" align="center" prop="blog_exchange">
+            <el-table-column
+                :label="tableColumns.blog_exchange.name"
+                align="center"
+                prop="blog_exchange"
+                min-width="100"
+            >
                 <template slot-scope="{ row }">
                     <WinLossDisplay
                         :amount="row.blog_exchange"
