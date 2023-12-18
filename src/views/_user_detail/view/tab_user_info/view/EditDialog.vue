@@ -67,6 +67,10 @@
             </template>
             <!--用户标签 end-->
 
+            <template v-else-if="dialogData.filed == 'password'">
+                <el-input class="dialog_input" v-model="dialogData.filedValue" @input="onInputValue"></el-input>
+            </template>
+
             <template v-else>
                 <el-input class="dialog_input" v-model="dialogData.filedValue"></el-input>
             </template>
@@ -74,7 +78,7 @@
             <!-- 密码 start-->
             <template v-if="dialogData.filed == 'password'">
                 <div class="input_title">{{ LangUtil("请再次输入") }}{{ tableColumns[dialogData.filed].name }}</div>
-                <el-input class="dialog_input" v-model="dialogData.filedValue1"></el-input>
+                <el-input class="dialog_input" v-model="dialogData.filedValue1" @input="onInputValue1"></el-input>
             </template>
             <!--密码 end-->
 
@@ -134,13 +138,23 @@ export default class EditDialog extends AbstractView {
         }
     }
 
+    onInputValue() {
+        this.dialogData.filedValue = this.dialogData.filedValue.replace(/[\u4e00-\u9fa5]/g, "");
+        this.dialogData.filedValue = this.dialogData.filedValue.replace(/\s*/g, "");
+    }
+
+    onInputValue1() {
+        this.dialogData.filedValue1 = this.dialogData.filedValue1.replace(/[\u4e00-\u9fa5]/g, "");
+        this.dialogData.filedValue1 = this.dialogData.filedValue1.replace(/\s*/g, "");
+    }
+
     /**
      * 验证密码是否合法
      * @param value
      */
     checkUserPassword(value: string): boolean {
-        const Regx = /^[A-Za-z0-9]*$/;
-        return value.length >= 6 && value.length <= 20 && Regx.test(value);
+        // const Regx = /^[A-Za-z0-9]*$/;
+        return value.length >= 6 && value.length <= 20; // && Regx.test(value);
     }
 
     checkBaseInput(value: string): boolean {
