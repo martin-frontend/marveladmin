@@ -36,13 +36,14 @@
                 :showTime="true"
             />
             <div>
-                <el-button @click="handlerSearch()" class="item" type="primary" icon="el-icon-search">{{
-                    LangUtil("查询")
-                }}</el-button>
-                <el-button @click="handlerReset()" class="item" type="primary" icon="el-icon-refresh">{{
-                    LangUtil("重置")
-                }}</el-button>
+                <el-button @click="handlerSearch()" class="item" type="primary" icon="el-icon-search">
+                    {{ LangUtil("查询") }}
+                </el-button>
+                <el-button @click="handlerReset()" class="item" type="primary" icon="el-icon-refresh">
+                    {{ LangUtil("重置") }}
+                </el-button>
                 <el-button @click="heandlerExport()" type="primary">{{ LangUtil("导出") }}</el-button>
+                <el-button @click="heandlerAdd()" type="primary">{{ LangUtil("添加") }}</el-button>
             </div>
         </div>
     </div>
@@ -90,6 +91,10 @@ export default class GoldWaterHeader extends AbstractView {
 
     heandlerExport() {
         this.myProxy.onQueryAll();
+    }
+
+    heandlerAdd() {
+        this.myProxy.showDialog();
     }
 }
 </script>
