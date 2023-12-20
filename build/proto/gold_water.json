@@ -5,6 +5,7 @@
     "list": [
         "admin/gold_water/table_columns",
         "admin/gold_water/index",
-        "admin/gold_water/approved/{id}"
+        "admin/gold_water/approved/{id}",
+        "admin/gold_water/store"
     ]
 }

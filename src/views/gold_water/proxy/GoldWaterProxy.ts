@@ -73,6 +73,15 @@ export default class GoldWaterProxy extends AbstractProxy implements IGoldWaterP
         type: "",
     };
 
+    /**弹窗相关数据 */
+    dialogData = {
+        bShow: false,
+        form: {
+            user_id: "",
+            water_limit: "",
+        },
+    };
+
     /**设置通过 ID */
     approvedId = "";
 
@@ -90,11 +99,20 @@ export default class GoldWaterProxy extends AbstractProxy implements IGoldWaterP
             this.onQuery();
         }
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+    }
+
+    /**重置弹窗表单 */
+    resetDialogForm() {
+        Object.assign(this.dialogData.form, {
+            user_id: "",
+            water_limit: "",
+        });
     }
 
     /**重置查询条件 */
@@ -110,6 +128,12 @@ export default class GoldWaterProxy extends AbstractProxy implements IGoldWaterP
             "created_at-{>=}": dateFormat(getTodayOffset(-1), "yyyy-MM-dd hh:mm:ss"),
             type: "",
         });
+    }
+
+    /**显示弹窗 */
+    showDialog() {
+        this.dialogData.bShow = true;
+        this.resetDialogForm();
     }
 
     /**查询 */
@@ -150,6 +174,16 @@ export default class GoldWaterProxy extends AbstractProxy implements IGoldWaterP
         );
     }
 
+    /**添加流水审核 */
+    onAddWaterLimit() {
+        const { user_id, water_limit } = this.dialogData.form;
+        const formCopy: any = {
+            user_id,
+            water_limit,
+        };
+        this.sendNotification(HttpType.admin_gold_water_store, formCopy);
+    }
+
     /**更新数据 */
     onUpdate() {
         MessageBox.confirm(<string>LangUtil("是否通过此兑换兑换流水审核"), <string>LangUtil("提示"), {
@@ -160,7 +194,7 @@ export default class GoldWaterProxy extends AbstractProxy implements IGoldWaterP
             .then(() => {
                 this.sendNotification(HttpType.admin_gold_water_approved, { id: this.approvedId });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**打开用户详情 */
