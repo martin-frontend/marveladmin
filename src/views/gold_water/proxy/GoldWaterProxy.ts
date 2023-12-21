@@ -107,6 +107,11 @@ export default class GoldWaterProxy extends AbstractProxy implements IGoldWaterP
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
 
+    /**隐藏弹窗 */
+    hideDialog() {
+        this.dialogData.bShow = false;
+    }
+
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
