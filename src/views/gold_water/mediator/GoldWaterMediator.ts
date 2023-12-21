@@ -29,6 +29,7 @@ export default class GoldWaterMediator extends AbstractMediator {
             EventType.admin_gold_water_table_columns,
             EventType.admin_gold_water_index,
             EventType.admin_gold_water_approved,
+            EventType.admin_gold_water_store,
         ];
     }
 
