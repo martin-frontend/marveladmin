@@ -7,7 +7,7 @@ import { Message } from "element-ui";
 import GoldWaterProxy from "../proxy/GoldWaterProxy";
 import i18n from "@/lang";
 
-interface IGoldWater extends IEventDispatcher {}
+interface IGoldWater extends IEventDispatcher { }
 
 export default class GoldWaterMediator extends AbstractMediator {
     private myProxy: GoldWaterProxy = <any>this.getProxy(GoldWaterProxy);
@@ -29,6 +29,7 @@ export default class GoldWaterMediator extends AbstractMediator {
             EventType.admin_gold_water_table_columns,
             EventType.admin_gold_water_index,
             EventType.admin_gold_water_approved,
+            EventType.admin_gold_water_store,
         ];
     }
 
@@ -49,6 +50,11 @@ export default class GoldWaterMediator extends AbstractMediator {
                 break;
             case EventType.admin_gold_water_approved:
                 Message.success(<any>LangUtil("操作成功"));
+                myProxy.onQuery();
+                break;
+            case EventType.admin_gold_water_store:
+                Message.success(<any>LangUtil("操作成功"));
+                myProxy.hideDialog();
                 myProxy.onQuery();
                 break;
         }
