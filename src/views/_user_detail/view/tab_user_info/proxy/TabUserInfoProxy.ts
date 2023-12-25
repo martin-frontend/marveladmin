@@ -107,6 +107,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_recharged: { name: "是否充值", options: {} },
         is_back_visit: { name: "是否回访", options: {} },
         user_tag: { name: "用户标签", options: {} },
+        kyc_status: { name: 'KYC状态', options: {} },
     };
     /**用户详情 */
     userInfo = {
@@ -202,6 +203,8 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_back_visit: "98",
         user_tag: <any>[],
         ma_token: "",
+        kyc_status: "",
+        kyc_data: <any>{},
     };
     /**代理关系链 */
     relationChain: string[] = [];
