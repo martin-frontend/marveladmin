@@ -302,6 +302,10 @@ const layoutRouter = {
             name: "币种汇率管理",
             component: () => import(/* webpackChunkName: "plat_currency_conversion_rate" */"@/views/plat_currency_conversion_rate/view/PlatCurrencyConversionRate.vue")
         },        {
+            path: "plat_directly_commission_model",
+            name: "直属分红模版",
+            component: () => import(/* webpackChunkName: "plat_directly_commission_model" */"@/views/plat_directly_commission_model/view/PlatDirectlyCommissionModel.vue")
+        },        {
             path: "plat_email",
             name: "平台邮件",
             component: () => import(/* webpackChunkName: "plat_email" */"@/views/plat_email/view/PlatEmail.vue")
