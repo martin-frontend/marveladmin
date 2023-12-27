@@ -302,6 +302,10 @@ const layoutRouter = {
             name: "币种汇率管理",
             component: () => import(/* webpackChunkName: "plat_currency_conversion_rate" */"@/views/plat_currency_conversion_rate/view/PlatCurrencyConversionRate.vue")
         },        {
+            path: "plat_directly_commission_model",
+            name: "直属分红模版",
+            component: () => import(/* webpackChunkName: "plat_directly_commission_model" */"@/views/plat_directly_commission_model/view/PlatDirectlyCommissionModel.vue")
+        },        {
             path: "plat_email",
             name: "平台邮件",
             component: () => import(/* webpackChunkName: "plat_email" */"@/views/plat_email/view/PlatEmail.vue")
@@ -537,6 +541,10 @@ const layoutRouter = {
             path: "statistic_plat_days_deliver",
             name: "投放日报",
             component: () => import(/* webpackChunkName: "statistic_plat_days_deliver" */"@/views/statistic_plat_days_deliver/view/StatisticPlatDaysDeliver.vue")
+        },        {
+            path: "statistic_plat_directly_commission",
+            name: "直属亏损分红管理",
+            component: () => import(/* webpackChunkName: "statistic_plat_directly_commission" */"@/views/statistic_plat_directly_commission/view/StatisticPlatDirectlyCommission.vue")
         },        {
             path: "statistic_plat_funds_flow",
             name: "平台出入款",

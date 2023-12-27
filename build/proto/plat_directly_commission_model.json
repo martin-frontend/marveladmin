@@ -1,0 +1,13 @@
+{
+    "name": "直属分红模版",
+    "description": "直属分红模版",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75270767",
+    "list": [
+        "admin/plat_directly_commission_model/table_columns",
+        "admin/plat_directly_commission_model/index",
+        "admin/plat_directly_commission_model/show/{commission_model_id}",
+        "admin/plat_directly_commission_model/store",
+        "admin/plat_directly_commission_model/update/{commission_model_id}",
+        "admin/plat/update/{plat_id}"
+    ]
+}

@@ -112,10 +112,13 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_register_store_bank_info: { name: "注册是否储存银行卡信息", options: {} },
             is_currency_conversion: { name: '汇率转换', options: {} },
             is_need_kyc: { name: 'KYC认证', options: {} },
+            commission_config: { name: '直属分红配置', options: {} },
+            commission_model_id: { name: '直属分红配置', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
+
     /**查询条件 */
     listQuery = {
         plat_id: "",
@@ -124,6 +127,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         page_count: 1,
         page_size: 20,
     };
+
     /**初始表单数据 */
     defaultForm = {
         plat_id: 0,
@@ -193,6 +197,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_currency_conversion: 98,
         is_need_kyc: 1,
     };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -203,6 +208,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         initWater_config: <any>{},
         forbidden_country: "",
     };
+
     /**初始返佣折扣数据 */
     defaultPromotionConfig = {
         0: {
@@ -254,6 +260,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             start_num: 0,
         },
     };
+
     /**折扣返佣弹窗数据 */
     promotionDiscountDialogData = {
         bShow: false,
@@ -270,12 +277,14 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         this.setInitConfig();
         this.onQuery();
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
+
     /**详细数据 */
     setDetail(data: any) {
         data.extends = jsonToObject(data.extends);
@@ -314,6 +323,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         this.dialogData.bShow = true;
         // console.log(">>>>>>>", this.dialogData.form.language)
     }
+
     /**设置配置初始数据 */
     setInitConfig() {
         let type = getFirstKey(this.tableData.columns.vendor_type.options_type[0]);
@@ -322,6 +332,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             this.dialogData.initWater_config[element] = { type: type, rate: 1 };
         });
     }
+
     /**设置推广配置数据 */
     setPromotionModel(data: any[]) {
         if (this.promotionModelDialogData.promotionModelList.length == 0) {
@@ -353,10 +364,12 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             this.dialogData.formSource = null;
         }
     }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
     }
+
     /**重置弹窗表单 */
     resetDialogForm() {
         this.dialogData.form = JSON.parse(JSON.stringify(this.defaultForm));
@@ -368,6 +381,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
     onQuery() {
         this.sendNotification(HttpType.admin_plat_index, objectRemoveNull(this.listQuery));
     }
+
     /**添加数据 */
     onAdd() {
         const formCopy = JSON.parse(JSON.stringify(this.dialogData.form));
@@ -411,6 +425,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
+
     /**更新数据 */
     onUpdate() {
         const formCopy: any = Object.assign({}, this.dialogData.form);
@@ -457,6 +472,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             MessageBox.alert(<string>LangUtil("json格式不正确"));
         }
     }
+
     /**删除数据 */
     onDelete(id: any) {
         MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
@@ -480,6 +496,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         },
         formSource: null, // 表单的原始数据
     };
+
     /**顯示Vip Model弹窗 */
     showVipModelDialog(data: any) {
         this.vipModelDialogData.bShow = true;
@@ -492,10 +509,12 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         Object.assign(this.vipModelDialogData.form, JSON.parse(JSON.stringify(formCopy)));
         this.vipModelDialogData.formSource = formCopy;
     }
+
     /**隱藏Vip Model弹窗 */
     hideVipModelDialog() {
         this.vipModelDialogData.bShow = false;
     }
+
     /**更新Vip数据 */
     onUpdateVipModel() {
         const formCopy: any = formCompared(this.vipModelDialogData.form, this.vipModelDialogData.formSource);
@@ -520,6 +539,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         },
         formSource: null, // 表单的原始数据
     };
+
     /**顯示Backwater Model弹窗 */
     showBackwaterModelDialog(data: any) {
         this.backwaterModelDialogData.bShow = true;
@@ -532,10 +552,34 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         Object.assign(this.backwaterModelDialogData.form, JSON.parse(JSON.stringify(formCopy)));
         this.backwaterModelDialogData.formSource = formCopy;
     }
+
+    commissionDialogData = {
+        bShow: false,
+        form: {
+            plat_id: 0,
+            plat_name: "",
+            commission_model_id: "",
+        },
+        formSource: null, // 表单的原始数据
+    };
+
+    showCommissionDialog(data: any) {
+        this.commissionDialogData.bShow = true;
+        const { plat_id, commission_model_id, plat_name } = data;
+        const formCopy: any = {
+            plat_id,
+            plat_name,
+            commission_model_id: commission_model_id || "",
+        };
+        Object.assign(this.commissionDialogData.form, JSON.parse(JSON.stringify(formCopy)));
+        this.commissionDialogData.formSource = formCopy;
+    }
+
     /**隱藏Vip Model弹窗 */
     hideBackwaterModelDialog() {
         this.backwaterModelDialogData.bShow = false;
     }
+
     /**更新Vip数据 */
     onUpdateBackwaterModel() {
         const formCopy: any = formCompared(
@@ -553,6 +597,23 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         });
     }
 
+    /**更新直属分红数据 */
+    onUpdateCommissionModel() {
+        const formCopy: any = formCompared(
+            this.commissionDialogData.form,
+            this.commissionDialogData.formSource
+        );
+        if (Object.keys(formCopy).length == 0) {
+            this.commissionDialogData.bShow = false;
+            return;
+        }
+        const { plat_id, commission_model_id } = this.commissionDialogData.form;
+        this.sendNotification(HttpType.admin_plat_update, {
+            plat_id: plat_id,
+            commission_model_id: commission_model_id == "" ? 0 : commission_model_id,
+        });
+    }
+
     /**Promotion Model弹窗相关数据 */
     promotionModelDialogData = {
         bShow: false,
@@ -564,6 +625,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         formSource: null, // 表单的原始数据
         promotionModelList: <any>[],
     };
+
     /**顯示Promotion Model弹窗 */
     showPromotionModelDialog(data: any) {
         this.promotionModelDialogData.bShow = true;
@@ -576,10 +638,12 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         Object.assign(this.promotionModelDialogData.form, JSON.parse(JSON.stringify(formCopy)));
         this.promotionModelDialogData.formSource = formCopy;
     }
+
     /**隱藏Promotion Model弹窗 */
     hidePromotionModelDialog() {
         this.promotionModelDialogData.bShow = false;
     }
+
     /**更新Vip数据 */
     onUpdatePromotionModel() {
         const formCopy: any = formCompared(
@@ -626,10 +690,12 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         this.sendNotification(HttpType.admin_plat_show, { plat_id: data.plat_id });
         this.promotionDiscountDialogData.bShow = true;
     }
+
     /**隐藏折扣返佣弹窗 */
     hidePromotionDiscountDialog() {
         this.promotionDiscountDialogData.bShow = false;
     }
+
     /**更新返佣折扣 */
     onUpdatePromotionDiscount() {
         const { plat_id, promotion_discount } = this.promotionDiscountDialogData.form;
@@ -650,6 +716,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         formSource: null, // 表单的原始数据
         allBonusModelList: <any>[],
     };
+
     /**顯示All Bonus Model弹窗 */
     showAllBonusModelDialog(data: any) {
         this.allBonusModelDialogData.bShow = true;
@@ -662,10 +729,17 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         Object.assign(this.allBonusModelDialogData.form, JSON.parse(JSON.stringify(formCopy)));
         this.allBonusModelDialogData.formSource = formCopy;
     }
+
     /**隱藏顯示All Bonus Model弹窗 */
     hideAllBonusModelDialog() {
         this.allBonusModelDialogData.bShow = false;
     }
+
+    /**隱藏顯示直属分红配置弹窗 */
+    hideCommissionDialog() {
+        this.commissionDialogData.bShow = false;
+    }
+
     // /**更新All Bonus数据 */
     // onUpdateAllBonusModel() {
     //     const formCopy: any = formCompared(this.allBonusModelDialogData.form, this.allBonusModelDialogData.formSource);

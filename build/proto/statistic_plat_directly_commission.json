@@ -1,0 +1,17 @@
+{
+    "name": "直属亏损分红管理",
+    "description": "直属亏损分红管理",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75270763",
+    "list": [
+        "admin/statistic_plat_directly_commission/table_columns",
+        "admin/statistic_plat_directly_commission/index",
+        "admin/statistic_plat_directly_user_commission/table_columns",
+        "admin/statistic_plat_directly_user_commission/index",
+        "admin/plat_channel/table_columns",
+        "admin/plat_channel/index",
+        "admin/plat_channel/update/{id}",
+        "admin/plat_agent_bind/update/{user_id}",
+        "admin_plat_user_agent_bonus_send_mail",
+        "admin/plat/update/{plat_id}"
+    ]
+}
