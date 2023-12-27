@@ -6,7 +6,7 @@ import { EventType, HttpType } from "@/views/plat/setting";
 import { Message } from "element-ui";
 import PlatProxy from "../proxy/PlatProxy";
 import i18n from "@/lang";
-interface IPlat extends IEventDispatcher {}
+interface IPlat extends IEventDispatcher { }
 
 export default class PlatMediator extends AbstractMediator {
     private myProxy: PlatProxy = <any>this.getProxy(PlatProxy);
@@ -66,6 +66,7 @@ export default class PlatMediator extends AbstractMediator {
                 myProxy.hidePromotionModelDialog();
                 myProxy.hidePromotionDiscountDialog();
                 myProxy.hideAllBonusModelDialog();
+                myProxy.hideCommissionDialog();
                 myProxy.onQuery();
                 break;
             case EventType.admin_plat_agent_promotion_model_index:

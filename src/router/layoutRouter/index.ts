@@ -542,6 +542,10 @@ const layoutRouter = {
             name: "投放统计",
             component: () => import(/* webpackChunkName: "statistic_plat_days_deliver_channel" */"@/views/statistic_plat_days_deliver_channel/view/StatisticPlatDaysDeliverChannel.vue")
         },        {
+            path: "statistic_plat_directly_commission",
+            name: "直属亏损分红管理",
+            component: () => import(/* webpackChunkName: "statistic_plat_directly_commission" */"@/views/statistic_plat_directly_commission/view/StatisticPlatDirectlyCommission.vue")
+        },        {
             path: "statistic_plat_funds_flow",
             name: "平台出入款",
             component: () => import(/* webpackChunkName: "statistic_plat_funds_flow" */"@/views/statistic_plat_funds_flow/view/StatisticPlatFundsFlow.vue")

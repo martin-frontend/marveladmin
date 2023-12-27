@@ -77,6 +77,21 @@
                     </el-button>
                 </template>
             </el-table-column>
+            <el-table-column :label="tableColumns['commission_model_id'].name" min-width="200">
+                <template slot-scope="{ row }">
+                    <el-button
+                        size="mini"
+                        :type="tableColumns.commission_model_id.options[row.commission_model_id] ? 'success' : 'danger'"
+                        @click="handlerCommissionModel(row)"
+                    >
+                        {{
+                            tableColumns.commission_model_id.options[row.commission_model_id]
+                                ? tableColumns.commission_model_id.options[row.commission_model_id]
+                                : LangUtil("未设定")
+                        }}
+                    </el-button>
+                </template>
+            </el-table-column>
             <!-- 质押分红 -->
             <el-table-column :label="tableColumns['stake_bonus_model_id'].name" min-width="160">
                 <template slot-scope="{ row }">
@@ -149,6 +164,7 @@
         <PromotionDialog v-if="myProxy.promotionModelDialogData.bShow" />
         <PromotionDiscountDialog v-if="myProxy.promotionDiscountDialogData.bShow" />
         <AllBonusModelDialog v-if="myProxy.allBonusModelDialogData.bShow" />
+        <CommissionDialog v-if="myProxy.commissionDialogData.bShow" />
         <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
     </div>
 </template>
@@ -167,6 +183,7 @@ import BackwaterDialog from "./components/BackwaterModelDialog.vue";
 import PromotionDialog from "./components/PromotionModelDialog.vue";
 import PromotionDiscountDialog from "./components/PromotionDiscountDialog.vue";
 import AllBonusModelDialog from "./components/AllBonusModelDialog.vue";
+import CommissionDialog from "./components/CommissionDialog.vue";
 
 @Component({
     components: {
@@ -175,6 +192,7 @@ import AllBonusModelDialog from "./components/AllBonusModelDialog.vue";
         PromotionDialog,
         PromotionDiscountDialog,
         AllBonusModelDialog,
+        CommissionDialog,
         Pagination,
     },
     filters: {
@@ -230,6 +248,10 @@ export default class PlatBody extends AbstractView {
 
     handlerBackwaterModel(row: any) {
         this.myProxy.showBackwaterModelDialog(row);
+    }
+
+    handlerCommissionModel(row: any) {
+        this.myProxy.showCommissionDialog(row);
     }
 
     handlerPromotionModel(row: any) {

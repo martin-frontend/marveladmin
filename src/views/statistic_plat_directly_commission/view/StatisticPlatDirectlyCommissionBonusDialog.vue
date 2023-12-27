@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogBonusData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
                 <el-select
@@ -101,7 +101,7 @@
             <el-form-item size="mini" :label="LangUtil('奖励币种')">
                 <el-select style="margin-right: 8px; width: 120px" v-model="form.coin_type" filterable>
                     <el-option
-                        v-for="(key, value) in tableColumns.attachment_content.options[form.plat_id]"
+                        v-for="(key, value) in detailTableColumns.coin_name_unique.options[form.plat_id]"
                         :key="value"
                         :label="key"
                         :value="value"
@@ -133,7 +133,7 @@
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
-import PlatUserAgentBonusProxy from "../proxy/PlatUserAgentBonusProxy";
+import StatisticPlatDirectlyCommissionProxy from "../proxy/StatisticPlatDirectlyCommissionProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { inputOnlyPositive } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
@@ -155,18 +155,19 @@ import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
         },
     },
 })
-export default class PlatUserAgentBonusDialog extends AbstractView {
+export default class StatisticPlatDirectlyCommissionBonusDialog extends AbstractView {
     // 权限标识
     unique = unique;
     checkUnique = checkUnique;
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: PlatUserAgentBonusProxy = this.getProxy(PlatUserAgentBonusProxy);
+    myProxy: StatisticPlatDirectlyCommissionProxy = this.getProxy(StatisticPlatDirectlyCommissionProxy);
     langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
-    form = this.myProxy.dialogData.form;
+    detailTableColumns = this.myProxy.detailTableData.columns;
+    form = this.myProxy.dialogBonusData.form;
     LangUtil = LangUtil;
     inputOnlyPositive = inputOnlyPositive;
     private textMap = {
@@ -174,7 +175,7 @@ export default class PlatUserAgentBonusDialog extends AbstractView {
         create: this.LangUtil("新增"),
     };
 
-    @Watch("myProxy.dialogData.bShow")
+    @Watch("myProxy.dialogBonusData.bShow")
     private onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
@@ -182,7 +183,7 @@ export default class PlatUserAgentBonusDialog extends AbstractView {
     }
 
     get status() {
-        return this.myProxy.dialogData.status;
+        return this.myProxy.dialogBonusData.status;
     }
 
     get isStatusUpdate() {
@@ -203,15 +204,7 @@ export default class PlatUserAgentBonusDialog extends AbstractView {
     handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
-                this.myProxy.onAdd();
-            }
-        });
-    }
-
-    handleUpdate() {
-        (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
-            if (valid) {
-                this.myProxy.onUpdate();
+                this.myProxy.onAddBonus();
             }
         });
     }
