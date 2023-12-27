@@ -53,8 +53,7 @@ export default class StatisticPlatDirectlyCommissionMediator extends AbstractMed
                 break;
             case EventType.admin_plat_channel_update:
                 Message.success(SuccessMessage.update);
-                myProxy.hideDialog();
-                myProxy.onQuery();
+                myProxy.onQueryChannel();
                 break;
             case EventType.admin_statistic_plat_directly_user_commission_table_columns:
                 myProxy.setDetailTableColumns(body);
@@ -74,6 +73,9 @@ export default class StatisticPlatDirectlyCommissionMediator extends AbstractMed
                 Message.success(LangUtil("发送成功"));
                 myProxy.hideBonusDialog();
                 myProxy.onQueryDetailTable();
+                break;
+            case EventType.admin_plat_channel_index:
+                myProxy.setChannelTableData(body);
                 break;
         }
     }

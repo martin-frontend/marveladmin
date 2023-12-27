@@ -3,6 +3,7 @@
         <StatisticPlatDirectlyCommissionSettingDialog v-if="myProxy.dialogSettingData.bShow" />
         <StatisticPlatDirectlyCommissionDetailDialog v-if="myProxy.dialogDetailData.bShow" />
         <StatisticPlatDirectlyCommissionBonusDialog v-if="myProxy.dialogBonusData.bShow" />
+        <StatisticPlatDirectlyCommissionChannelDialog v-if="myProxy.dialogChannelData.bShow" />
         <StatisticPlatDirectlyCommissionHeader />
         <StatisticPlatDirectlyCommissionBody />
     </div>
@@ -16,6 +17,7 @@ import { Component } from "vue-property-decorator";
 import StatisticPlatDirectlyCommissionSettingDialog from "./StatisticPlatDirectlyCommissionSettingDialog.vue";
 import StatisticPlatDirectlyCommissionDetailDialog from "./StatisticPlatDirectlyCommissionDetailDialog.vue";
 import StatisticPlatDirectlyCommissionBonusDialog from "./StatisticPlatDirectlyCommissionBonusDialog.vue";
+import StatisticPlatDirectlyCommissionChannelDialog from "./StatisticPlatDirectlyCommissionChannelDialog.vue";
 import StatisticPlatDirectlyCommissionHeader from "./StatisticPlatDirectlyCommissionHeader.vue";
 import StatisticPlatDirectlyCommissionBody from "./StatisticPlatDirectlyCommissionBody.vue";
 
@@ -24,6 +26,7 @@ import StatisticPlatDirectlyCommissionBody from "./StatisticPlatDirectlyCommissi
         StatisticPlatDirectlyCommissionSettingDialog,
         StatisticPlatDirectlyCommissionDetailDialog,
         StatisticPlatDirectlyCommissionBonusDialog,
+        StatisticPlatDirectlyCommissionChannelDialog,
         StatisticPlatDirectlyCommissionHeader,
         StatisticPlatDirectlyCommissionBody,
     },
