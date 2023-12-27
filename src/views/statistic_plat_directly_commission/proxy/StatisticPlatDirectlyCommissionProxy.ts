@@ -101,6 +101,13 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
         send_bonus_status: "",
     };
 
+    channelListQuery = <any>{
+        page_count: 1,
+        page_size: 20,
+        channel_id: "",
+        directly_commission_status: "",
+    };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -125,6 +132,12 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
 
     dialogDetailData = {
         bShow: false,
+    };
+
+    dialogChannelData = {
+        bShow: false,
+        list: <any>[],
+        pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
 
     dialogBonusData = {
@@ -178,14 +191,16 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
 
         // 设定配置内容
         Object.assign(this.dialogSettingData.form, JSON.parse(JSON.stringify(data.commission_info)));
-        this.dialogSettingData.form.settlement_type = data.commission_info.commission_config.settlement_type;
-        this.dialogSettingData.form.settlement_period = data.commission_info.commission_config.settlement_period;
-        if (data.max_level) {
-            this.dialogSettingData.form.max_level = data.max_level;
-        } else {
-            this.dialogSettingData.form.max_level = data.commission_info.commission_config.commission_config.length;
+        if (Object.keys(data.commission_info).length > 0) {
+            this.dialogSettingData.form.settlement_type = data.commission_info.commission_config.settlement_type;
+            this.dialogSettingData.form.settlement_period = data.commission_info.commission_config.settlement_period;
+            if (data.commission_info.commission_config.max_level) {
+                this.dialogSettingData.form.max_level = data.commission_info.commission_config.max_level;
+            } else {
+                this.dialogSettingData.form.max_level = data.commission_info.commission_config.commission_config.length;
+            }
             let result = <any>{};
-            for (let i = 1; i <= this.dialogSettingData.form.max_level; i++) {
+            for (let i = 1; i <= data.commission_info.commission_config.commission_config.length; i++) {
                 result[i] = i;
             }
             this.tableData.columns.max_level.options = result;
@@ -196,6 +211,12 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
         this.detailTableData.list.length = 0;
         this.detailTableData.list.push(...data.list);
         Object.assign(this.detailTableData.pageInfo, data.pageInfo);
+    }
+
+    setChannelTableData(data: any) {
+        this.dialogChannelData.list.length = 0;
+        this.dialogChannelData.list.push(...data.list);
+        Object.assign(this.dialogChannelData.pageInfo, data.pageInfo);
     }
 
     /**详细数据 */
@@ -217,6 +238,13 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
             user_id: "",
             directly_commission_status: "",
             send_bonus_status: "",
+        });
+    }
+
+    resetChannelListQuery() {
+        Object.assign(this.channelListQuery, {
+            channel_id: "",
+            directly_commission_status: "",
         });
     }
 
@@ -261,6 +289,12 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
     showSettingDialog() {
         this.dialogSettingData.bShow = true;
         this.onQuery();
+    }
+
+    showChannelDialog() {
+        this.dialogChannelData.bShow = true;
+        this.resetChannelListQuery();
+        this.onQueryChannel();
     }
 
     /**隐藏弹窗 */
@@ -310,6 +344,10 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
 
     onQueryDetailTable() {
         this.sendNotification(HttpType.admin_statistic_plat_directly_user_commission_index, objectRemoveNull({ plat_id: this.listQuery.plat_id, ...this.detailListQuery }));
+    }
+
+    onQueryChannel() {
+        this.sendNotification(HttpType.admin_plat_channel_index, objectRemoveNull(this.channelListQuery));
     }
 
     /**添加数据 */
@@ -368,6 +406,10 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
     /**更新状态数据 */
     onUpdateSwitch(data: any) {
         this.sendNotification(HttpType.admin_plat_agent_bind_update, data);
+    }
+
+    onUpdateSwitchChannel(data: any) {
+        this.sendNotification(HttpType.admin_plat_channel_update, data);
     }
 
     changeContent(str: string, ...args: any[]) {

@@ -40,6 +40,7 @@
             <div class="levels">
                 <div>
                     <el-table
+                        ref="multipleTable"
                         class="status-col"
                         :data="form.commission_config.commission_config"
                         border
@@ -47,6 +48,7 @@
                         highlight-current-row
                         style="width: 100%"
                         size="mini"
+                        :row-class-name="rowClassName"
                     >
                         <el-table-column :label="LangUtil('等级')" type="index" width="80"></el-table-column>
                         <el-table-column :label="LangUtil('等级描述名称')" min-width="100">
@@ -125,7 +127,9 @@ export default class StatisticPlatDirectlyCommissionSettingDialog extends Abstra
         };
     }
 
-    handleChannel() {}
+    handleChannel() {
+        this.myProxy.showChannelDialog();
+    }
 
     handleUpdate() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
@@ -156,6 +160,13 @@ export default class StatisticPlatDirectlyCommissionSettingDialog extends Abstra
             }
         });
     }
+
+    //每一行的回调方法
+    rowClassName({ rowIndex }: any) {
+        if (this.form.max_level <= rowIndex) {
+            return "hide";
+        }
+    }
 }
 </script>
 
@@ -169,5 +180,8 @@ export default class StatisticPlatDirectlyCommissionSettingDialog extends Abstra
 }
 .dialog-footer {
     margin-top: 16px;
+}
+::v-deep .hide {
+    display: none;
 }
 </style>
