@@ -187,8 +187,16 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
-        Object.assign(this.tableData.commission_info, JSON.parse(JSON.stringify(data.commission_info)));
         Object.assign(this.tableData.pageInfo, data.pageInfo);
+        if (Object.keys(data.commission_info).length > 0) {
+            Object.assign(this.tableData.commission_info, JSON.parse(JSON.stringify(data.commission_info)));
+        } else {
+            Object.assign(this.tableData.commission_info, {
+                commission_config: {},
+                desc: "",
+                name: "",
+            });
+        }
 
         // 设定配置内容
         Object.assign(this.dialogSettingData.form, JSON.parse(JSON.stringify(data.commission_info)));
