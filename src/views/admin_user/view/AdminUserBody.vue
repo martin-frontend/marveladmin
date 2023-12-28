@@ -54,7 +54,7 @@
 
             <el-table-column :label="tableColumns['channel_id'].name" prop="channel_id" class-name="status-col">
                 <template slot-scope="{ row }">
-                    <span>{{ row.type == 8 ? row.channel_ids.toString() : row.channel_id }}</span>
+                    <span>{{ row.channel_id }}</span>
                 </template>
             </el-table-column>
 
