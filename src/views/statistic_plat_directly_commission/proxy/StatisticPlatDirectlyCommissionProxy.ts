@@ -276,7 +276,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
             this.dialogBonusData.formSource = data;
             Object.assign(this.dialogBonusData.form, JSON.parse(JSON.stringify(data)));
             this.dialogBonusData.form.coin_type = data.direct_total_win_loss.coin_name_unique;
-            this.dialogBonusData.form.amount = data.direct_total_win_loss.value;
+            this.dialogBonusData.form.amount = data.direct_commission.value;
             this.dialogBonusData.form.content = this.changeContent(this.dialogBonusData.form.content,
                 data.settlement_date_start.split("-")[1],
                 data.settlement_date_start.split("-")[2],
