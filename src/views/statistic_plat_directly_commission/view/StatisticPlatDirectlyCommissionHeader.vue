@@ -7,7 +7,13 @@
             @change="handlerSearch"
             :clearable="false"
         />
-        <el-button @click="handlerManage" type="primary" class="item">{{ LangUtil("分红模版配置") }}</el-button>
+        <el-button
+            v-if="Object.keys(commission_info.commission_config).length != 0"
+            @click="handlerManage"
+            type="primary"
+            class="item"
+            >{{ LangUtil("分红模版配置") }}</el-button
+        >
     </div>
 </template>
 
@@ -34,6 +40,7 @@ export default class StatisticPlatDirectlyCommissionHeader extends AbstractView 
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     listQuery = this.myProxy.listQuery;
+    commission_info = this.myProxy.tableData.commission_info;
     LangUtil = LangUtil;
 
     handlerSearch() {

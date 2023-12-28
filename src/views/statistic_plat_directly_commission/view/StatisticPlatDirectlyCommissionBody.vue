@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="tableData.length == 0" style="color: #F56C6C">
+        <div v-if="Object.keys(commission_info.commission_config).length == 0" style="color: #F56C6C">
             {{ LangUtil("功能未开启-请联系客服开启") }}
         </div>
         <div v-else>
