@@ -91,6 +91,7 @@
                                     v-model="row.loss_bonus_ratio"
                                     style="width: 100%"
                                     :min="0"
+                                    :max="30"
                                 ></el-input-number>
                             </template>
                         </el-table-column>
@@ -165,6 +166,8 @@ export default class PlatDirectlyCommissionModelDialog extends AbstractView {
                 let errorCode2: any = this.LangUtil("直属亏损金额没有输入数据");
                 let errorCode3: any = this.LangUtil("直属亏损分红百分比没有输入数据");
                 let errorCode4: any = this.LangUtil("等级没有输入数据");
+                let errorCode5: any = this.LangUtil("直属亏损金额需要大于0，没有小数点");
+                let errorCode6: any = this.LangUtil("等级描述名称最多50个字符");
                 let isValide = true;
                 const config: any = this.myProxy.dialogData.form.commission_config;
 
@@ -180,12 +183,20 @@ export default class PlatDirectlyCommissionModelDialog extends AbstractView {
                         this.$message.warning(errorCode1);
                         isValide = false;
                         return;
+                    } else if (!this.isMaxLength50(item.level_desc)) {
+                        this.$message.warning(errorCode6);
+                        isValide = false;
+                        return;
                     } else if (item.loss_amount === undefined) {
                         this.$message.warning(errorCode2);
                         isValide = false;
                         return;
                     } else if (item.loss_bonus_ratio === undefined) {
                         this.$message.warning(errorCode3);
+                        isValide = false;
+                        return;
+                    } else if (!this.isPositiveInteger(item.loss_amount)) {
+                        this.$message.warning(errorCode5);
                         isValide = false;
                         return;
                     }
@@ -206,6 +217,8 @@ export default class PlatDirectlyCommissionModelDialog extends AbstractView {
                 let errorCode2: any = this.LangUtil("直属亏损金额没有输入数据");
                 let errorCode3: any = this.LangUtil("直属亏损分红百分比没有输入数据");
                 let errorCode4: any = this.LangUtil("等级没有输入数据");
+                let errorCode5: any = this.LangUtil("直属亏损金额需要大于0，没有小数点");
+                let errorCode6: any = this.LangUtil("等级描述名称最多50个字符");
                 let isValide = true;
                 const config: any = this.myProxy.dialogData.form.commission_config;
 
@@ -221,12 +234,20 @@ export default class PlatDirectlyCommissionModelDialog extends AbstractView {
                         this.$message.warning(errorCode1);
                         isValide = false;
                         return;
+                    } else if (!this.isMaxLength50(item.level_desc)) {
+                        this.$message.warning(errorCode6);
+                        isValide = false;
+                        return;
                     } else if (item.loss_amount === undefined) {
                         this.$message.warning(errorCode2);
                         isValide = false;
                         return;
                     } else if (item.loss_bonus_ratio === undefined) {
                         this.$message.warning(errorCode3);
+                        isValide = false;
+                        return;
+                    } else if (!this.isPositiveInteger(item.loss_amount)) {
+                        this.$message.warning(errorCode5);
                         isValide = false;
                         return;
                     }
@@ -238,6 +259,14 @@ export default class PlatDirectlyCommissionModelDialog extends AbstractView {
                 this.myProxy.onUpdate();
             }
         });
+    }
+
+    isMaxLength50(str: any) {
+        return str.length <= 50;
+    }
+
+    isPositiveInteger(number: any) {
+        return Number.isInteger(number) && number > 0;
     }
 
     addLevel(value: any) {

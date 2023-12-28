@@ -5,11 +5,6 @@
                 <SearchInput :title="tableColumns.channel_id.name" v-model="listQuery.channel_id" />
                 <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
                 <SearchSelect
-                    :title="tableColumns.directly_commission_status.name"
-                    v-model="listQuery.directly_commission_status"
-                    :options="tableColumns.directly_commission_status.options"
-                />
-                <SearchSelect
                     :title="tableColumns.send_bonus_status.name"
                     v-model="listQuery.send_bonus_status"
                     :options="tableColumns.send_bonus_status.options"
@@ -32,6 +27,7 @@
             style="width: 100%; margin-top: 16px;"
             size="mini"
             v-loading="net_status.loading"
+            @sort-change="tableSortChange"
         >
             <el-table-column class-name="status-col" :label="tableColumns.plat_id.name" prop="plat_id">
             </el-table-column>
@@ -62,9 +58,12 @@
                 :label="tableColumns.direct_total_win_loss.name"
                 prop="direct_total_win_loss"
                 min-width="120px"
+                sortable="custom"
             >
                 <template slot-scope="{ row }">
-                    {{ row.direct_total_win_loss.coin_name_unique }}: {{ row.direct_total_win_loss.value }}
+                    <span :class="row.direct_total_win_loss.value | winLossFilter">
+                        {{ row.direct_total_win_loss.coin_name_unique }}: {{ row.direct_total_win_loss.value }}
+                    </span>
                 </template>
             </el-table-column>
             <el-table-column class-name="status-col" :label="tableColumns.bonus_ratio.name" prop="bonus_ratio">
@@ -74,6 +73,7 @@
                 :label="tableColumns.direct_commission.name"
                 prop="direct_commission"
                 min-width="120px"
+                sortable="custom"
             >
                 <template slot-scope="{ row }">
                     {{ row.direct_commission.coin_name_unique }}: {{ row.direct_commission.value }}
@@ -128,6 +128,17 @@ import { MessageBox } from "element-ui";
         SearchSelect,
         SearchInput,
         Pagination,
+    },
+    filters: {
+        winLossFilter(value: any) {
+            if (value > 0) {
+                return "red-color";
+            } else if (value < 0) {
+                return "green-color";
+            } else {
+                return "";
+            }
+        },
     },
 })
 export default class StatisticPlatDirectlyCommissionDetailDialog extends AbstractView {
@@ -195,6 +206,27 @@ export default class StatisticPlatDirectlyCommissionDetailDialog extends Abstrac
     handleSend(data: any) {
         this.myProxy.showBonusDialog(DialogStatus.update, data);
     }
+
+    // 排序
+    tableSortChange(column: any) {
+        let order_by = {};
+        if (column.order === "descending") {
+            order_by = {
+                [column.prop]: "DESC",
+            };
+            this.listQuery.order_by = JSON.stringify(order_by);
+        } else if (column.order === "ascending") {
+            order_by = {
+                [column.prop]: "ASC",
+            };
+            this.listQuery.order_by = JSON.stringify(order_by);
+        } else {
+            this.listQuery.order_by = null;
+        }
+        this.listQuery.page_count = 1;
+        console.log(this.listQuery);
+        this.myProxy.onQueryDetailTable();
+    }
 }
 </script>
 
@@ -202,5 +234,11 @@ export default class StatisticPlatDirectlyCommissionDetailDialog extends Abstrac
 @import "@/styles/common.scss";
 ::v-deep .el-dialog {
     margin-top: 20px !important;
+}
+.green-color {
+    color: green;
+}
+.red-color {
+    color: red;
 }
 </style>
