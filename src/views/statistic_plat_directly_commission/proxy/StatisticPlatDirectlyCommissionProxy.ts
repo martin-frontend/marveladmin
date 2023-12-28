@@ -97,8 +97,8 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
         page_size: 20,
         channel_id: "",
         user_id: "",
-        directly_commission_status: "",
         send_bonus_status: "",
+        order_by: <any>null,
     };
 
     channelListQuery = <any>{
@@ -234,10 +234,11 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
 
     resetDetailListQuery() {
         Object.assign(this.detailListQuery, {
+            page_count: 1,
             channel_id: "",
             user_id: "",
-            directly_commission_status: "",
             send_bonus_status: "",
+            order_by: <any>null,
         });
     }
 
@@ -262,6 +263,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
     }
 
     showDetailDialog() {
+        this.resetDetailListQuery();
         this.sendNotification(HttpType.admin_statistic_plat_directly_user_commission_table_columns);
     }
 
