@@ -7,7 +7,7 @@
             </el-form-item>
             <el-form-item :label="tableColumns['category'].name" prop="category">
                 <div class="flex d-flex">
-                    <el-select v-model="form.category" filterable :placeholder="LangUtil('请选择')" >
+                    <el-select v-model="form.category" filterable :placeholder="LangUtil('请选择')">
                         <el-option
                             v-for="(value, key) in myProxy.gameTypeTableData.list"
                             :key="key"
@@ -57,7 +57,28 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.vendor_product_id.name" prop="vendor_product_id">
-                <el-select v-model="form.vendor_product_id" filterable :placeholder="LangUtil('请选择')">
+                <el-select
+                    v-model="form.vendor_product_id"
+                    filterable
+                    :placeholder="LangUtil('请选择')"
+                    v-if="isStatusUpdate"
+                >
+                    <template v-for="items of tableColumns.vendor_product_id.options[form.vendor_id]">
+                        <el-option
+                            v-for="(item, key2) of items"
+                            :key="key2"
+                            :label="item"
+                            :value="Number(key2)"
+                        ></el-option>
+                    </template>
+                </el-select>
+                <el-select
+                    v-else
+                    multiple
+                    v-model="form.vendor_product_id"
+                    filterable
+                    :placeholder="LangUtil('请选择')"
+                >
                     <template v-for="items of tableColumns.vendor_product_id.options[form.vendor_id]">
                         <el-option
                             v-for="(item, key2) of items"
@@ -69,12 +90,12 @@
                 </el-select>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="danger" @click="handleDelete()" v-if="isStatusUpdate">{{
-                    LangUtil("删除")
-                }}</el-button>
-                <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">{{
-                    LangUtil("确认保存")
-                }}</el-button>
+                <el-button type="danger" @click="handleDelete()" v-if="isStatusUpdate">
+                    {{ LangUtil("删除") }}
+                </el-button>
+                <el-button type="primary" @click="isStatusUpdate ? handleUpdate() : handleAdd()">
+                    {{ LangUtil("确认保存") }}
+                </el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -125,7 +146,6 @@ export default class CateVendorProductsDialog extends AbstractView {
         // this.myProxy.dialogData.form.icon_name = this.myProxy.gameTypeTableData.list[this.form.category].icon_name;
         this.myProxy.dialogData.form.icon_name = this.myProxy.getGameTypeName(this.form.category).icon_name;
     }
-
 
     get status() {
         return this.myProxy.dialogData.status;
