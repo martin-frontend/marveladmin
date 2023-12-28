@@ -11,7 +11,7 @@
         "admin/plat_channel/index",
         "admin/plat_channel/update/{id}",
         "admin/plat_agent_bind/update/{user_id}",
-        "admin_plat_user_agent_bonus_send_mail",
+        "admin/plat_user/agent_bonus/send_mail",
         "admin/plat/update/{plat_id}"
     ]
 }

@@ -30,9 +30,9 @@
                         :placeholder="LangUtil('邮件标题')"
                         v-model="form.title"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('title')"
-                        >翻译</el-button
-                    >
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('title')">
+                        翻译
+                    </el-button>
                 </div>
             </el-form-item>
 
@@ -50,9 +50,9 @@
                         :placeholder="LangUtil('邮件内容')"
                         v-model="form.content"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('content')"
-                        >翻译</el-button
-                    >
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('content')">
+                        翻译
+                    </el-button>
                 </div>
             </el-form-item>
 

@@ -159,6 +159,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
             attachment_type: 11, //附件类型 1-无附件 | 11-奖励物件
             settlement_date_start: "",
             settlement_date_end: "",
+            settlement_type: "",
         },
         formSource: null, // 表单的原始数据
     };
@@ -336,6 +337,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
             attachment_type: 11, //附件类型 1-无附件 | 11-奖励物件
             settlement_date_start: "",
             settlement_date_end: "",
+            settlement_type: "",
         });
     }
 
@@ -378,7 +380,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
 
     /**发放分红 */
     onAddBonus() {
-        const { plat_id, title, content, cate, type, user_id, bonus_multiple, attachment_content, coin_type, amount, send_type, attachment_type, settlement_date_start, settlement_date_end } = this.dialogBonusData.form;
+        const { plat_id, title, content, cate, type, user_id, bonus_multiple, attachment_content, coin_type, amount, send_type, attachment_type, settlement_date_start, settlement_date_end, settlement_type, } = this.dialogBonusData.form;
         const formCopy: any = {
             plat_id,
             title,
@@ -390,13 +392,15 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
             send_type,
             attachment_type,
             settlement_date_start,
-            settlement_date_end
+            settlement_date_end,
+            settlement_type,
         };
         formCopy.user_list = user_id;
         let bonus: any = {};
         bonus[coin_type] = amount;
         formCopy.attachment_content = JSON.stringify(bonus);
         formCopy.custom_send_type = 2;
+        formCopy.direct_commission_id = this.dialogBonusData.form.id;
         this.sendNotification(HttpType.admin_plat_user_agent_bonus_send_mail, formCopy);
     }
 

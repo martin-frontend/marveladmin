@@ -22,7 +22,7 @@ export var HttpType = {
     admin_plat_channel_index: "admin/plat_channel/index",
     admin_plat_channel_update: "admin/plat_channel/update/{id}",
     admin_plat_agent_bind_update: "admin/plat_agent_bind/update/{user_id}",
-    admin_plat_user_agent_bonus_send_mail: "admin_plat_user_agent_bonus_send_mail",
+    admin_plat_user_agent_bonus_send_mail: "admin/plat_user/agent_bonus/send_mail",
     admin_plat_update: "admin/plat/update/{plat_id}",
 };
 /**事件*/
