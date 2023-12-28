@@ -29,7 +29,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
     }
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             id: { name: "ID", options: {} },
             data_belong: { name: "数据归属标记", options: {} },
             plat_id: { name: "平台ID", options: {} },
@@ -221,12 +221,14 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
     setDialogData(data: any) {
         this.dialogData.typeOption = data;
     }
+
     sendGameTypeTagIndex() {
         this.sendNotification(HttpType.admin_game_type_tag_index, {
             plat_id: this.listQuery.plat_id,
             game_type: this.listQuery.type,
         });
     }
+
     /**显示弹窗 */
     showDialog(status: string, data?: any) {
         this.dialogData.bShow = true;
@@ -309,15 +311,15 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
 
     /**添加数据 */
     onAdd() {
-        const { category, vendor_id, vendor_product_id, plat_id, type, icon_name } = this.dialogData.form;
+        const { vendor_id, vendor_product_id, plat_id, type, icon_name } = this.dialogData.form;
         const formCopy: any = {
-            category,
             vendor_id,
             vendor_product_id,
             plat_id,
             type,
             icon_name,
         };
+        formCopy.category = this.dialogData.form.category.toString();
         this.sendNotification(HttpType.admin_cate_vendor_products_store, objectRemoveNull(formCopy));
     }
 
@@ -346,6 +348,7 @@ export default class CateVendorProductsProxy extends AbstractProxy implements IC
         }
         // 添加必填参数
         formCopy.id = this.dialogData.form.id;
+        formCopy.category = this.dialogData.form.category.toString();
         // 发送消息
         this.sendNotification(HttpType.admin_cate_vendor_products_update, formCopy);
     }
