@@ -95,9 +95,8 @@
                         type="primary"
                         @click="handleSend(row)"
                         :disabled="
-                            row.send_bonus_status == 2 ||
-                                row.settlement_type == 4 ||
-                                row.settlement_type == 8 ||
+                            (row.settlement_type != 1 && row.settlement_type != 2) ||
+                                row.send_bonus_status == 2 ||
                                 row.direct_commission.value == 0
                         "
                     >
