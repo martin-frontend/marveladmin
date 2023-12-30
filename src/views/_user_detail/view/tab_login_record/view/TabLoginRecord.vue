@@ -20,7 +20,14 @@
         >
             <el-table-column :label="tableColumns['created_at'].name" prop="created_at"></el-table-column>
             <el-table-column :label="tableColumns['device'].name" prop="device">
-                <template slot-scope="{ row }"> {{ row.device }} ({{ LangUtil("人数") }} {{ row.user_device_count }})</template>
+                <template slot-scope="{ row }">
+                    {{ row.device }} ({{ LangUtil("人数") }} {{ row.user_device_count }})
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns['app_plat_type'].name" prop="app_plat_type">
+                <template slot-scope="{ row }">
+                    {{ tableColumns["app_plat_type"].options[row.app_plat_type] }}
+                </template>
             </el-table-column>
             <el-table-column :label="tableColumns['login_ip'].name" prop="login_ip">
                 <template slot-scope="{ row }">
