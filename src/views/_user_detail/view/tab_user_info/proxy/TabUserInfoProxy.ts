@@ -97,7 +97,6 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         credit_rate_min: { name: "信用占成-最小", options: {} },
         show_credit_set: { name: "允许多层", options: {} },
         easybet_level_type: { name: "easybet用户等级更新类别", options: {} },
-
         user_level: { name: "", options: {} },
         update_type: { name: "用户等级更新类别", options: {} },
         level_type: { name: "类型", options: {} },
@@ -108,6 +107,7 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         is_back_visit: { name: "是否回访", options: {} },
         user_tag: { name: "用户标签", options: {} },
         kyc_status: { name: 'KYC状态', options: {} },
+        is_need_kyc: { name: '是否需要KYC', options: {} },
     };
     /**用户详情 */
     userInfo = {
@@ -205,6 +205,8 @@ export default class TabUserInfoProxy extends AbstractProxy implements ITabUserI
         ma_token: "",
         kyc_status: "",
         kyc_data: <any>{},
+        is_need_kyc: "98",
+
     };
     /**代理关系链 */
     relationChain: string[] = [];
