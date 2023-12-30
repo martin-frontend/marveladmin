@@ -71,7 +71,7 @@ export default class StatisticPlatDirectlyCommissionDialog extends AbstractView 
     // proxy
     myProxy: StatisticPlatDirectlyCommissionProxy = this.getProxy(StatisticPlatDirectlyCommissionProxy);
     // proxy property
-    tableColumns = this.myProxy.detailTableData.columns;
+    tableColumns = this.myProxy.tableData.columns;
     tableData = this.myProxy.dialogChannelData.list;
     pageInfo = this.myProxy.dialogChannelData.pageInfo;
     listQuery = this.myProxy.channelListQuery;
