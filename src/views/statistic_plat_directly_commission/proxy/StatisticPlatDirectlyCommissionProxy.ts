@@ -32,6 +32,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
             created_at: { name: '创建时间', options: {} },
             direct_commission: { name: '分红金额', options: {} },
             direct_total_win_loss: { name: '平台直属总亏损', options: {} },
+            directly_commission_status: { name: '是否参与分红', options: {} },
             id: { name: 'ID', options: {} },
             plat_id: { name: '平台ID', options: {} },
             settlement_date: { name: '结算日期', options: {} },
@@ -359,7 +360,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
     }
 
     onQueryChannel() {
-        this.sendNotification(HttpType.admin_plat_channel_index, objectRemoveNull(this.channelListQuery));
+        this.sendNotification(HttpType.admin_plat_channel_index, objectRemoveNull({ plat_id: this.listQuery.plat_id, ...this.channelListQuery }));
     }
 
     /**添加数据 */
