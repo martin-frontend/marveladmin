@@ -44,7 +44,7 @@
                 <el-input maxlength="12" v-model="form.coin_alias"></el-input>
             </el-form-item>
 
-            <el-form-item :label="tableColumns.priority.name" prop="priority">
+            <el-form-item v-if="form.type == 4" :label="tableColumns.priority.name" prop="priority">
                 <el-input
                     type="number"
                     oninput="value=value.replace(/[^\d]/g,'')"
