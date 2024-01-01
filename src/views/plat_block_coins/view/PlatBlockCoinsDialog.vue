@@ -34,7 +34,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.type.name" prop="type">
-                <el-select filterable v-model="form.type" :placeholder="LangUtil('请选择')" @change="onChangeType()">
+                <el-select filterable v-model="form.type" :placeholder="LangUtil('请选择')">
                     <el-option v-for="(item, key) of tableColumns.type.options" :label="item" :value="key" :key="key">
                     </el-option>
                 </el-select>
@@ -205,14 +205,6 @@ export default class PlatBlockCoinsDialog extends AbstractView {
     onChangePlatId() {
         this.form.vendor_ids = "";
         this.form.transfer_coin_name_unique = "";
-    }
-
-    onChangeType() {
-        if (this.form.type == "1" || this.form.type == "2" || this.form.type == "3") {
-            this.form.vendor_types = Object.keys(this.tableColumns["vendor_types"].options);
-        } else {
-            this.form.vendor_types = [];
-        }
     }
 }
 </script>
