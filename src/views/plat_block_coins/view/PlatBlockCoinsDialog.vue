@@ -34,7 +34,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="tableColumns.type.name" prop="type">
-                <el-select filterable v-model="form.type" :placeholder="LangUtil('请选择')">
+                <el-select filterable v-model="form.type" :placeholder="LangUtil('请选择')" @change="onChangeType()">
                     <el-option v-for="(item, key) of tableColumns.type.options" :label="item" :value="key" :key="key">
                     </el-option>
                 </el-select>
@@ -44,7 +44,7 @@
                 <el-input maxlength="12" v-model="form.coin_alias"></el-input>
             </el-form-item>
 
-            <el-form-item v-if="form.type == 4" :label="tableColumns.priority.name" prop="priority">
+            <el-form-item :label="tableColumns.priority.name" prop="priority">
                 <el-input
                     type="number"
                     oninput="value=value.replace(/[^\d]/g,'')"
@@ -52,20 +52,14 @@
                     v-model="form.priority"
                 ></el-input>
             </el-form-item>
-
-            <el-form-item
-                size="mini"
-                :label="tableColumns['vendor_types'].name"
-                prop="vendor_types"
-                v-if="form.type == 4"
-            >
+            <el-form-item size="mini" :label="tableColumns['vendor_types'].name" prop="vendor_types">
                 <el-checkbox-group v-model="form.vendor_types">
                     <el-checkbox v-for="(value, key) in tableColumns['vendor_types'].options" :key="key" :label="key">
                         {{ value }}
                     </el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
-            <el-form-item :label="tableColumns.vendor_ids.name" prop="vendor_ids" v-if="form.type == 4">
+            <el-form-item :label="tableColumns.vendor_ids.name" prop="vendor_ids">
                 <el-select filterable multiple v-model="form.vendor_ids" :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(item, key) of tableColumns.vendor_ids.options[form.plat_id]"
@@ -211,6 +205,14 @@ export default class PlatBlockCoinsDialog extends AbstractView {
     onChangePlatId() {
         this.form.vendor_ids = "";
         this.form.transfer_coin_name_unique = "";
+    }
+
+    onChangeType() {
+        if (this.form.type == "1" || this.form.type == "2" || this.form.type == "3") {
+            this.form.vendor_types = Object.keys(this.tableColumns["vendor_types"].options);
+        } else {
+            this.form.vendor_types = [];
+        }
     }
 }
 </script>
