@@ -52,20 +52,14 @@
                     v-model="form.priority"
                 ></el-input>
             </el-form-item>
-
-            <el-form-item
-                size="mini"
-                :label="tableColumns['vendor_types'].name"
-                prop="vendor_types"
-                v-if="form.type == 4"
-            >
+            <el-form-item size="mini" :label="tableColumns['vendor_types'].name" prop="vendor_types">
                 <el-checkbox-group v-model="form.vendor_types">
                     <el-checkbox v-for="(value, key) in tableColumns['vendor_types'].options" :key="key" :label="key">
                         {{ value }}
                     </el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
-            <el-form-item :label="tableColumns.vendor_ids.name" prop="vendor_ids" v-if="form.type == 4">
+            <el-form-item :label="tableColumns.vendor_ids.name" prop="vendor_ids">
                 <el-select filterable multiple v-model="form.vendor_ids" :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(item, key) of tableColumns.vendor_ids.options[form.plat_id]"
