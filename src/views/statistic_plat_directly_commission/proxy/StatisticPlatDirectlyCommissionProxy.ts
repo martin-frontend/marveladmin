@@ -100,6 +100,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
         user_id: "",
         send_bonus_status: "",
         order_by: <any>null,
+        settlement_date: "",
     };
 
     channelListQuery = <any>{
@@ -249,6 +250,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
             user_id: "",
             send_bonus_status: "",
             order_by: <any>null,
+            settlement_date: "",
         });
     }
 
@@ -272,8 +274,9 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
         }
     }
 
-    showDetailDialog() {
+    showDetailDialog(settlement_date: any) {
         this.resetDetailListQuery();
+        this.detailListQuery.settlement_date = settlement_date;
         this.sendNotification(HttpType.admin_statistic_plat_directly_user_commission_table_columns);
     }
 

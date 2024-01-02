@@ -73,9 +73,11 @@
                     </template>
                 </el-table-column>
                 <el-table-column :label="LangUtil('操作')" class-name="status-col" width="160px">
-                    <el-button size="mini" type="primary" @click="handleDetail()">
-                        {{ LangUtil("代理分红明细") }}
-                    </el-button>
+                    <template slot-scope="{ row }">
+                        <el-button size="mini" type="primary" @click="handleDetail(row)">
+                            {{ LangUtil("代理分红明细") }}
+                        </el-button>
+                    </template>
                 </el-table-column>
             </el-table>
             <pagination :pageInfo="pageInfo" @pageSwitch="handlerPageSwitch"></pagination>
@@ -122,8 +124,8 @@ export default class StatisticPlatDirectlyCommissionBody extends AbstractView {
         this.myProxy.showDialog(DialogStatus.update, data);
     }
 
-    handleDetail() {
-        this.myProxy.showDetailDialog();
+    handleDetail(data: any) {
+        this.myProxy.showDetailDialog(data.settlement_date);
     }
 
     handlerDelete(data: any) {
