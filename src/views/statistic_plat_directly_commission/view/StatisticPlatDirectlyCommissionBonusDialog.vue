@@ -18,7 +18,7 @@
                 </el-select>
             </el-form-item>
 
-            <el-form-item :label="LangUtil('邮件标题')" prop="title">
+            <!-- <el-form-item :label="LangUtil('邮件标题')" prop="title">
                 <div class="flex d-flex">
                     <el-input
                         style="margin-right: 0.8rem"
@@ -54,7 +54,7 @@
                         翻译
                     </el-button>
                 </div>
-            </el-form-item>
+            </el-form-item> -->
 
             <!-- 邮件分类 -->
             <el-form-item size="mini" :label="LangUtil('邮件分类')" prop="cate">
@@ -193,8 +193,8 @@ export default class StatisticPlatDirectlyCommissionBonusDialog extends Abstract
     get rules() {
         return {
             plat_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
-            title: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
-            content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            // title: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            // content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             cate: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             user_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
