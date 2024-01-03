@@ -74,7 +74,7 @@
                                 ></el-input>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="LangUtil('直属亏损金额')" min-width="100">
+                        <el-table-column :label="LangUtil('直属亏损金额$')" min-width="100">
                             <template slot-scope="{ row }">
                                 <el-input-number
                                     type="number"
