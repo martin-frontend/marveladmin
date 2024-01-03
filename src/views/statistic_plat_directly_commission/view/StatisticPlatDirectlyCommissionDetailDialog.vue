@@ -67,6 +67,7 @@
                 </template>
             </el-table-column>
             <el-table-column class-name="status-col" :label="tableColumns.bonus_ratio.name" prop="bonus_ratio">
+                <template slot-scope="{ row }"> {{ row.bonus_ratio }}% </template>
             </el-table-column>
             <el-table-column
                 class-name="status-col"
