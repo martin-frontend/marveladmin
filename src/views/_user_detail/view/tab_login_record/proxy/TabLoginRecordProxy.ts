@@ -11,11 +11,12 @@ export default class TabLoginRecordProxy extends AbstractProxy implements ITabLo
     }
 
     /**离开页面时调用 */
-    leave() {}
+    leave() { }
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
+            app_plat_type: { name: '设备类型', options: {} },
             bet_id: { name: "默认主键编号", options: {} },
             channel_id: { name: "渠道ID", options: {} },
             created_at: { name: "创建时间", options: {} },
