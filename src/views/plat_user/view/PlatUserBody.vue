@@ -69,6 +69,7 @@
                             tableColumns.is_credit_user.options[row.is_credit_user]
                         }}
                     </div>
+                    <div>{{ tableColumns.kyc_status.name }}：{{ tableColumns.kyc_status.options[row.kyc_status] }}</div>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.contact_info.name" min-width="100px" class-name="status-col">
@@ -155,21 +156,27 @@
             <el-table-column :label="tableColumns.first_recharge.name" prop="first_recharge" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.first_recharge && row.first_recharge.coin_name_unique">
                     <p>{{ row.first_recharge.pay_time }}</p>
-                    <p class="">{{ converCoinName(row, row.first_recharge.coin_name_unique) }}:{{ row.first_recharge.gold }}</p>
+                    <p class="">
+                        {{ converCoinName(row, row.first_recharge.coin_name_unique) }}:{{ row.first_recharge.gold }}
+                    </p>
                 </template>
             </el-table-column>
 
             <el-table-column :label="tableColumns.last_recharge.name" prop="last_recharge" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.last_recharge && row.last_recharge.coin_name_unique">
                     <p>{{ row.last_recharge.pay_time }}</p>
-                    <p class="">{{ converCoinName(row, row.last_recharge.coin_name_unique) }}:{{ row.last_recharge.gold }}</p>
+                    <p class="">
+                        {{ converCoinName(row, row.last_recharge.coin_name_unique) }}:{{ row.last_recharge.gold }}
+                    </p>
                 </template>
             </el-table-column>
 
             <el-table-column :label="tableColumns.last_exchange.name" prop="last_exchange" min-width="150px">
                 <template slot-scope="{ row }" v-if="row.last_exchange && row.last_exchange.coin_name_unique">
                     <p>{{ row.last_exchange.pay_time }}</p>
-                    <p class="">{{ converCoinName(row, row.last_exchange.coin_name_unique) }}:{{ row.last_exchange.gold }}</p>
+                    <p class="">
+                        {{ converCoinName(row, row.last_exchange.coin_name_unique) }}:{{ row.last_exchange.gold }}
+                    </p>
                 </template>
             </el-table-column>
 

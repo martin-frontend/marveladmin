@@ -85,6 +85,7 @@ export default class ExchangeOrdersProxy extends AbstractProxy implements IExcha
             invite_user_id: { name: "直属代理ID", options: [] },
             grant_agent_id: { name: "代理ID", options: [] },
             user_tag: { name: "用户标签", options: {} },
+            kyc_status: { name: 'KYC状态', options: {} },
         },
         list: <any>[],
         message: {},
