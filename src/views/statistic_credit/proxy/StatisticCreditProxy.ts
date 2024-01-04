@@ -50,6 +50,8 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             credit_rate_subordinate: { name: "代理商占成", options: {} },
             credit_rate_superior: { name: "平台占成", options: {} },
             game_valid_bet_gold: { name: '游戏有效投注', options: {} },
+            un_settle_bet_gold: { name: '未结算金额', options: {} },
+            un_settle_count: { name: '未结算笔数', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -82,6 +84,8 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
             credit_rate_subordinate: "",
             credit_rate_superior: "",
             game_valid_bet_gold: "",
+            un_settle_bet_gold: "",
+            un_settle_count: "",
         },
     };
 
@@ -127,6 +131,8 @@ export default class StatisticCreditProxy extends AbstractProxy implements IStat
         sumData.game_valid_bet_gold = data.game_valid_bet_gold;
         sumData.contribute_to_the_company = data.contribute_to_the_company;
         sumData.amount_to_the_company = data.amount_to_the_company;
+        sumData.un_settle_bet_gold = data.un_settle_bet_gold;
+        sumData.un_settle_count = data.un_settle_count;
         return sumData;
     }
     /**设置表头数据 */

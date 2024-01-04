@@ -46,6 +46,8 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
             // 假数据 导出名称用
             top_invite_user_id: { name: LangUtil("总代理用户ID"), options: {} },
             top_invite_username: { name: LangUtil("总代理用户帐号"), options: {} },
+            un_settle_bet_gold_coin: { name: '未结算金额', options: {} },
+            un_settle_count: { name: '未结算笔数', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -64,6 +66,8 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
             "coin_name_unique",
             "record_count",
             "bet_gold_coin",
+            "un_settle_count",
+            "un_settle_bet_gold_coin",
             "win_gold_coin",
             "valid_bet_gold_coin",
             "backwater_coin",
@@ -214,13 +218,13 @@ export default class StatisticCreditUserProxy extends AbstractProxy implements I
     }
 
     /**添加数据 */
-    onAdd() {}
+    onAdd() { }
 
     /**更新数据 */
-    onUpdate() {}
+    onUpdate() { }
 
     /**删除数据 */
-    onDelete(id: any) {}
+    onDelete(id: any) { }
 
     /**取得excel 挡案名称 */
     getExcelOutputName() {

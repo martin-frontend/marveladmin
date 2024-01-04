@@ -46,7 +46,9 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
             remark: { name: "备注", options: {} },
             valid_bet_gold: { name: "备注", options: {} },
             vendor_type: { name: "游戏类型", options: {} },
-            game_valid_bet_gold: {name: '游戏有效投注', options: {} },
+            game_valid_bet_gold: { name: '游戏有效投注', options: {} },
+            un_settle_bet_gold: { name: '未结算金额', options: {} },
+            un_settle_count: { name: '未结算笔数', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -58,8 +60,10 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
             plat_amount: "",
             record_count: "",
             valid_bet_gold: "",
-            game_valid_bet_gold:"",
+            game_valid_bet_gold: "",
             win_gold: "",
+            un_settle_bet_gold: "",
+            un_settle_count: "",
         },
     };
     /**查询条件 */
@@ -128,6 +132,8 @@ export default class StatisticAgentCreditProxy extends AbstractProxy implements 
         sumData.win_gold = data.win_gold.toString();
         sumData.contribute_to_the_company = data.contribute_to_the_company.toString();
         sumData.amount_to_the_company = data.amount_to_the_company.toString();
+        sumData.un_settle_bet_gold = data.un_settle_bet_gold.toString();
+        sumData.un_settle_count = data.un_settle_count.toString();
         return sumData;
     }
     /**详细数据 */
