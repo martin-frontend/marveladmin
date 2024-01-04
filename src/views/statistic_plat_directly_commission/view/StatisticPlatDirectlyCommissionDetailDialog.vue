@@ -62,7 +62,12 @@
             >
                 <template slot-scope="{ row }">
                     <span :class="row.direct_total_win_loss.value | winLossFilter">
-                        {{ row.direct_total_win_loss.coin_name_unique }}: {{ row.direct_total_win_loss.value }}
+                        {{ row.direct_total_win_loss.coin_name_unique }}:
+                        <WinLossDisplay
+                            :amount="row.direct_total_win_loss.value"
+                            :isShowColor="false"
+                            :isShowDollar="false"
+                        />
                     </span>
                 </template>
             </el-table-column>
@@ -77,7 +82,13 @@
                 sortable="custom"
             >
                 <template slot-scope="{ row }">
-                    {{ row.direct_commission.coin_name_unique }}: {{ row.direct_commission.value }}
+                    {{ row.direct_commission.coin_name_unique }}:
+                    <WinLossDisplay
+                        :amount="row.direct_commission.value"
+                        :isShowPlus="false"
+                        :isShowColor="false"
+                        :isShowDollar="false"
+                    />
                 </template>
             </el-table-column>
             <el-table-column
@@ -122,12 +133,14 @@ import Pagination from "@/components/Pagination.vue";
 import SearchSelect from "@/components/SearchSelect.vue";
 import SearchInput from "@/components/SearchInput.vue";
 import { MessageBox } from "element-ui";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
         SearchSelect,
         SearchInput,
         Pagination,
+        WinLossDisplay,
     },
     filters: {
         winLossFilter(value: any) {
