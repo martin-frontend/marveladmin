@@ -256,6 +256,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
 
     resetChannelListQuery() {
         Object.assign(this.channelListQuery, {
+            order_by: "{\"channel_id\":\"ASC\"}",
             channel_id: "",
             directly_commission_status: "",
         });
