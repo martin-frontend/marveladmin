@@ -502,7 +502,21 @@
                     <p v-if="row.vendor_id == 136">{{ LangUtil("玩法") }}：{{ row.vendor_game_rules }}</p>
                     <p v-if="row.vendor_id == 136">{{ LangUtil("奖期") }}：{{ row.vendor_game_issue }}</p>
                     <p v-if="row.vendor_type == 64">{{ LangUtil("盘口") }}：{{ row.market_type_text }}</p>
-                    <p v-if="row.vendor_type == 64">{{ LangUtil("赔率") }}：{{ row.odds }}</p>
+                    <p v-if="row.is_race">{{ LangUtil("是否为sp下注") }}：{{ row.is_sp_text }}</p>
+                    <p v-if="row.vendor_type == 64">
+                        <span v-if="row.is_race">
+                            <span v-if="row.is_sp == 1">
+                                <span v-if="row.settlement_status == 1"> {{ LangUtil("赔率") }}：SP </span>
+                                <span v-else-if="row.settlement_status == 3"
+                                    >{{ LangUtil("赔率") }}：SP{{ row.odds }}
+                                </span>
+                                <span v-else>{{ LangUtil("赔率") }}：{{ row.odds }} </span>
+                            </span>
+                            <span v-else> {{ LangUtil("赔率") }}：{{ row.odds }} </span>
+                        </span>
+                        <span v-else> {{ LangUtil("赔率") }}：{{ row.odds }}</span>
+                    </p>
+
                     <p v-if="row.user_level">{{ LangUtil("等级") }}：{{ row.user_level }}</p>
                     <template v-if="row.vendor_id == 187">
                         <p>{{ LangUtil("倍率") }}：{{ row.agdz_betx }}</p>
