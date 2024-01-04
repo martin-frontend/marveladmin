@@ -42,7 +42,12 @@
                     prop="direct_total_win_loss"
                 >
                     <template slot-scope="{ row }">
-                        {{ row.direct_total_win_loss.coin_name_unique }}: {{ row.direct_total_win_loss.value }}
+                        {{ row.direct_total_win_loss.coin_name_unique }}:
+                        <WinLossDisplay
+                            :amount="row.direct_total_win_loss.value"
+                            :isShowColor="false"
+                            :isShowDollar="false"
+                        />
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -51,7 +56,12 @@
                     prop="direct_commission"
                 >
                     <template slot-scope="{ row }">
-                        {{ row.direct_commission.coin_name_unique }}: {{ row.direct_commission.value }}
+                        {{ row.direct_commission.coin_name_unique }}:<WinLossDisplay
+                            :amount="row.direct_commission.value"
+                            :isShowPlus="false"
+                            :isShowColor="false"
+                            :isShowDollar="false"
+                        />
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -60,7 +70,12 @@
                     prop="already_direct_commission"
                 >
                     <template slot-scope="{ row }">
-                        {{ row.already_direct_commission.coin_name_unique }}: {{ row.already_direct_commission.value }}
+                        {{ row.already_direct_commission.coin_name_unique }}:<WinLossDisplay
+                            :amount="row.already_direct_commission.value"
+                            :isShowPlus="false"
+                            :isShowColor="false"
+                            :isShowDollar="false"
+                        />
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -93,10 +108,12 @@ import StatisticPlatDirectlyCommissionProxy from "../proxy/StatisticPlatDirectly
 import Pagination from "@/components/Pagination.vue";
 import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
+import WinLossDisplay from "@/components/WinLossDisplay.vue";
 
 @Component({
     components: {
         Pagination,
+        WinLossDisplay,
     },
 })
 export default class StatisticPlatDirectlyCommissionBody extends AbstractView {
