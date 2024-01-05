@@ -80,44 +80,48 @@
                 </el-form-item>
             </template>
 
-            <!-- 提现流水倍数 -->
-            <el-form-item size="mini" :label="LangUtil('提现流水倍数')">
-                <div class="withdraw_rate">
+            <template v-if="form.settlement_type != 1">
+                <!-- 提现流水倍数 -->
+                <el-form-item size="mini" :label="LangUtil('提现流水倍数')">
+                    <div class="withdraw_rate">
+                        <el-input
+                            style="width: 120px; margin-right: 8pxrem"
+                            type="number"
+                            step="0.1"
+                            min="0"
+                            v-model="form.bonus_multiple"
+                            @keydown.native="inputOnlyPositive"
+                        ></el-input>
+                        <span class="mark_font">
+                            {{
+                                LangUtil(
+                                    "附件奖励为金币的时候有作用, 该笔金币奖励满足: 提领流水倍数X奖励金币数量才可提现"
+                                )
+                            }}
+                        </span>
+                    </div>
+                </el-form-item>
+                <el-form-item size="mini" :label="LangUtil('奖励币种')">
+                    <el-select style="margin-right: 8px; width: 120px" v-model="form.coin_type" filterable>
+                        <el-option
+                            v-for="(key, value) in detailTableColumns.coin_name_unique.options[form.plat_id]"
+                            :key="value"
+                            :label="key"
+                            :value="value"
+                        >
+                        </el-option> </el-select
+                ></el-form-item>
+                <el-form-item size="mini" :label="LangUtil('奖励金额')">
                     <el-input
-                        style="width: 120px; margin-right: 8pxrem"
-                        type="number"
-                        step="0.1"
                         min="0"
-                        v-model="form.bonus_multiple"
+                        step="1"
+                        style="width: 120px"
+                        type="number"
+                        v-model="form.amount"
                         @keydown.native="inputOnlyPositive"
                     ></el-input>
-                    <span class="mark_font">
-                        {{
-                            LangUtil("附件奖励为金币的时候有作用, 该笔金币奖励满足: 提领流水倍数X奖励金币数量才可提现")
-                        }}
-                    </span>
-                </div>
-            </el-form-item>
-            <el-form-item size="mini" :label="LangUtil('奖励币种')">
-                <el-select style="margin-right: 8px; width: 120px" v-model="form.coin_type" filterable>
-                    <el-option
-                        v-for="(key, value) in detailTableColumns.coin_name_unique.options[form.plat_id]"
-                        :key="value"
-                        :label="key"
-                        :value="value"
-                    >
-                    </el-option> </el-select
-            ></el-form-item>
-            <el-form-item size="mini" :label="LangUtil('奖励金额')">
-                <el-input
-                    min="0"
-                    step="1"
-                    style="width: 120px"
-                    type="number"
-                    v-model="form.amount"
-                    @keydown.native="inputOnlyPositive"
-                ></el-input>
-            </el-form-item>
+                </el-form-item>
+            </template>
             <el-form-item class="dialog-footer">
                 <div class="submit">
                     <el-button @click="handleAdd" type="primary">{{ LangUtil("发送邮件") }}</el-button>
