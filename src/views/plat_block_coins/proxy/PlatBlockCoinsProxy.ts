@@ -53,6 +53,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             vendor_types: { name: "支持产品类型", options: {} },
             priority: { name: "", options: {} },
             coin_alias: { name: "别名", options: [] },
+            vendor_ids_by_type: { name: "", options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -82,7 +83,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             languages: <any>[],
             bonus_multiple: 0,
             transfer_coin_name_unique: "",
-            vendor_ids: "",
+            vendor_ids: <any>[],
             vendor_types: <any>[],
             priority: "",
             coin_alias: "",
@@ -162,7 +163,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             languages: <any>[],
             bonus_multiple: 1,
             transfer_coin_name_unique: "",
-            vendor_ids: "",
+            vendor_ids: <any>[],
             vendor_types: <any>[],
             priority: "",
             coin_alias: "",
@@ -223,7 +224,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_block_coins_update, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**排序 */
