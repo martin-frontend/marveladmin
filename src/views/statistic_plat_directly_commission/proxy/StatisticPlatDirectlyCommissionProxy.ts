@@ -161,7 +161,7 @@ export default class StatisticPlatDirectlyCommissionProxy extends AbstractProxy 
             attachment_type: 11, //附件类型 1-无附件 | 11-奖励物件
             settlement_date_start: "",
             settlement_date_end: "",
-            settlement_type: "",
+            settlement_type: <any>"",
         },
         formSource: null, // 表单的原始数据
     };
