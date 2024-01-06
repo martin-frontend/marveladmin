@@ -259,10 +259,11 @@
                     </el-option>
                 </el-select>
                 <el-input
-                    v-model="form.point_lottery_cons[0].params"
+                    v-model="form.point_lottery_cons[0].params[0]"
                     type="number"
                     :placeholder="LangUtil('请输入')"
                     style="margin: 0px 4px;"
+                    @change="OnChangeParams(form.point_lottery_cons[0].params)"
                 >
                 </el-input>
             </div>
@@ -305,10 +306,11 @@
                     </el-select>
                     <el-input
                         v-if="item.type != 3"
-                        v-model="item.params"
+                        v-model="item.params[0]"
                         type="number"
                         :placeholder="LangUtil('请输入')"
                         style="margin: 0px 4px;"
+                        @change="OnChangeParams(item.params)"
                     >
                     </el-input>
                 </div>
@@ -390,6 +392,7 @@
                                 type="number"
                                 :placeholder="LangUtil('请输入')"
                                 style="margin: 0px 4px;"
+                                @change="OnChangeParams(item.award.params)"
                             >
                             </el-input>
                         </span>
