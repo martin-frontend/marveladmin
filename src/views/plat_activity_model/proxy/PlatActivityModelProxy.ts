@@ -62,10 +62,16 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             day_num_init_config: { name: "每日次数重置", options: {} },
             spin_lottery_award_type: { name: "抽奖奖励", options: {} },
             spin_lottery_cons_type: { name: "抽奖消耗", options: {} },
+            user_term: { name: "用户期限", options: {} },
+            every_point_award_settlement_type: { name: '奖励方式', options: {} },
+            every_point_award_type: { name: '抽奖奖励', options: {} },
+            every_point_cons_type: { name: '抽奖消耗', options: {} },
+            every_point_lottery_condition_type: { name: '抽奖条件', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
+
     /**查询条件 */
     listQuery = {
         id: "",
@@ -83,6 +89,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         params: 0, //独立规则-参数值
         params_probability: "", //独立规则-第二参数值
     };
+
     /**活动规则 */
     activityRules: any = {
         name: "", //大规则名称
@@ -98,6 +105,23 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             },
         ],
     };
+
+    /**平台数据 */
+    platOptions = <any>{};
+    /**活动模型平台授权 */
+    platSettingDialogData = {
+        bShow: false,
+        selectedAll: false,
+        form: {
+            model_id: 0,
+            authorize_plats: <any>[],
+            all_plats: {},
+        },
+        formSource: null, // 表单的原始数据
+    };
+
+    /** 活动规则数据 */
+    activityRuleList: any = [];
 
     /**预设弹窗数据 */
     defaultForm = {
@@ -130,7 +154,13 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         ball_award: [],
         rank_award: [],
         day_num_init_config: [],
+        every_task: [],          // 每日任务
+        cycle_task: [],          // 循环任务
+        point_lottery_cons: [],  // 抽奖消耗
+        point_lottery_award: [], // 抽奖奖励
+        routine_task: [],        // 普通任务
     };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -148,20 +178,24 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         Object.assign(this.tableData.columns, data);
         this.onQuery();
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
+
     /**详细数据 */
     setDetail(data: any) {
         setTimeout(() => {
             this.dialogData.isRender = true;
             this.dialogData.loading = false;
             this.dialogData.form = JSON.parse(JSON.stringify(data));
+            console.log(this.dialogData.form);
         }, 300);
         this.dialogData.formSource = data;
+        console.log(this.dialogData.form);
     }
 
     /**重置查询条件 */
@@ -186,10 +220,12 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             this.dialogData.formSource = null;
         }
     }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
     }
+
     /**重置弹窗表单 */
     resetDialogForm() {
         this.dialogData.form = JSON.parse(JSON.stringify(this.defaultForm));
@@ -227,6 +263,47 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             };
             this.dialogData.form.ball_award.push(ballObj);
         }
+
+        const every_task = [{
+            condition: {
+                type: "",
+                params: [0, 0]
+            },
+            award: {
+                type: "",
+                settlement_type: "",
+                params: [0, 0]
+            }
+        }];
+
+        const cycle_task = {
+            condition: {
+                type: "",
+                params: [0, 0]
+            },
+            award: {
+                type: "",
+                settlement_type: "",
+                params: [0, 0]
+            }
+        };
+
+        const lottery_cons = {
+            weight: 0,
+            type: "",
+            params: 0
+        }
+
+        // 每日任务 
+        this.dialogData.form.every_task.push(JSON.parse(JSON.stringify(every_task)));
+        // 循环任务
+        this.dialogData.form.cycle_task.push(JSON.parse(JSON.stringify(cycle_task)));
+        // 抽奖消耗
+        this.dialogData.form.point_lottery_cons.push(JSON.parse(JSON.stringify(lottery_cons)));
+        // 抽奖奖励
+        this.dialogData.form.point_lottery_award.push(JSON.parse(JSON.stringify(lottery_cons)));
+        // 普通任务
+        this.dialogData.form.routine_task.push(JSON.parse(JSON.stringify(cycle_task)));
     }
 
     resetSpinForm() {
@@ -252,6 +329,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
     onQuery() {
         this.sendNotification(HttpType.admin_plat_activity_model_index, objectRemoveNull(this.listQuery));
     }
+
     chickDailyRatio(): boolean {
         if (this.dialogData.form.award_types.includes(16)) {
             // if (this.dialogData.form.active_model_tag == "16") {
@@ -273,7 +351,6 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
     /**添加数据 */
     onAdd() {
         if (!this.chickDailyRatio()) return;
-
         const formCopy: any = JSON.parse(JSON.stringify(this.dialogData.form));
         delete formCopy.id;
         formCopy.rules = JSON.stringify(formCopy.rules);
@@ -297,8 +374,22 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             formCopy.lottery_cons = JSON.stringify(formCopy.lottery_cons);
             formCopy.lottery_award = JSON.stringify(formCopy.lottery_award);
         }
+        if (this.dialogData.form.type == 14) {
+            formCopy.every_task = JSON.stringify(formCopy.every_task);
+            formCopy.cycle_task = JSON.stringify(formCopy.cycle_task);
+            formCopy.point_lottery_cons = JSON.stringify(formCopy.point_lottery_cons);
+            formCopy.point_lottery_award = JSON.stringify(formCopy.point_lottery_award);
+            formCopy.routine_task = JSON.stringify(formCopy.routine_task);
+            delete formCopy.award_types;
+            delete formCopy.ball_award;
+            delete formCopy.day_num_init_config;
+            delete formCopy.lottery_award;
+            delete formCopy.lottery_cons;
+            delete formCopy.rank_award;
+        }
         this.sendNotification(HttpType.admin_plat_activity_model_store, objectRemoveNull(formCopy));
     }
+
     /**更新数据 */
     onUpdate() {
         if (!this.chickDailyRatio()) return;
@@ -340,8 +431,22 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
                 lottery_award: JSON.stringify(this.dialogData.form.lottery_award),
             });
         }
+        if (this.dialogData.form.type == 14) {
+            formCopy.every_task = JSON.stringify(formCopy.every_task);
+            formCopy.cycle_task = JSON.stringify(formCopy.cycle_task);
+            formCopy.point_lottery_cons = JSON.stringify(formCopy.point_lottery_cons);
+            formCopy.point_lottery_award = JSON.stringify(formCopy.point_lottery_award);
+            formCopy.routine_task = JSON.stringify(formCopy.routine_task);
+            delete formCopy.award_types;
+            delete formCopy.ball_award;
+            delete formCopy.day_num_init_config;
+            delete formCopy.lottery_award;
+            delete formCopy.lottery_cons;
+            delete formCopy.rank_award;
+        }
         this.sendNotification(HttpType.admin_plat_activity_model_update, objectRemoveNull(formCopy));
     }
+
     /**删除数据 */
     onDelete(id: any) {
         MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
@@ -382,21 +487,6 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             .catch(() => { });
     }
 
-    /**平台数据 */
-    platOptions = <any>{};
-    /**活动模型平台授权 */
-    platSettingDialogData = {
-        bShow: false,
-        selectedAll: false,
-        form: {
-            model_id: 0,
-            authorize_plats: <any>[],
-            all_plats: {},
-        },
-        formSource: null, // 表单的原始数据
-    };
-    /** 活动规则数据 */
-    activityRuleList: any = [];
     /**取得平台与活动规则数据 */
     onGetPlatData() {
         this.sendNotification(HttpType.admin_plat_index, {
@@ -408,6 +498,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             page_size: 3000,
         });
     }
+
     /**平台数据 */
     setPlatList(data: any) {
         const obj = <any>{};
@@ -416,14 +507,17 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         });
         this.platOptions = obj;
     }
+
     /**显示活动模型平台授权弹窗 */
     showPlatSettingDialog(id: string) {
         this.sendNotification(HttpType.admin_plat_activity_model_plat_index, { model_id: id });
     }
+
     /**隐藏活动模型平台授权弹窗 */
     hidePlatSettingDialog() {
         this.platSettingDialogData.bShow = false;
     }
+
     /**设置活动模型平台授权 */
     setPlatSetting(data: any) {
         this.platSettingDialogData.form = data;
@@ -433,6 +527,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             this.platSettingDialogData.form.authorize_plats.length ==
             Object.keys(this.platSettingDialogData.form.all_plats).length;
     }
+
     /**更新活动模型平台授权数据 */
     onUpdatePlatSetting() {
         const formCopy: any = formCompared(this.platSettingDialogData.form, this.platSettingDialogData.formSource);
@@ -452,10 +547,12 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
     addRule() {
         this.dialogData.form.rules.push(JSON.parse(JSON.stringify(this.activityRules)));
     }
+
     /** 设置活动规则数据 */
     setActivityRuleList(body: any) {
         this.activityRuleList = body.list;
     }
+
     /** 显示复制模版 */
     showCopyDialog(status: string, data?: any) {
         this.dialogData.bShow = true;

@@ -1,11 +1,13 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="1300px" @close="hide">
         <el-form v-loading="myProxy.dialogData.loading">
-            <el-scrollbar style="height: 860px">
+            <el-scrollbar style="height: 90%">
                 <el-form ref="form" :rules="rules" :model="form" label-width="115px">
+                    <!-- 模版名称 -->
                     <el-form-item size="mini" :label="tableColumns.activity_name.name" prop="activity_name">
                         <el-input v-model="form.activity_name" :placeholder="LangUtil('请输入')"></el-input>
                     </el-form-item>
+                    <!-- 活动描述 -->
                     <el-form-item size="mini" :label="tableColumns['activity_desc'].name" prop="activity_desc">
                         <el-input
                             type="textarea"
@@ -19,7 +21,7 @@
                     <el-form-item size="mini" :label="tableColumns['active_model_tag'].name" prop="active_model_tag">
                         <el-input v-model="form.active_model_tag" :placeholder="LangUtil('请输入')"></el-input>
                     </el-form-item>
-
+                    <!-- 模型类型 -->
                     <el-form-item size="mini" :label="tableColumns['type'].name" prop="type">
                         <el-select
                             v-model="form.type"
@@ -35,7 +37,13 @@
                             ></el-option>
                         </el-select>
                     </el-form-item>
-                    <template v-if="form.type != 12 && form.type != 13">
+                    <template v-if="form.type != 12 && form.type != 13 && form.type != 14">
+                        <!--  
+                            12: "彩球排名活动"
+                            13: "转盘抽奖"
+                            14: "每日积分抽奖活动"
+                        -->
+                        <!-- 模型分类 -->
                         <el-form-item
                             size="mini"
                             :label="tableColumns['category'].name"
@@ -51,6 +59,7 @@
                                 ></el-option>
                             </el-select>
                         </el-form-item>
+                        <!-- 打开模块 -->
                         <el-form-item size="mini" :label="tableColumns['open_mode'].name" prop="open_mode">
                             <el-select v-model="form.open_mode" filterable :placeholder="LangUtil('请选择')">
                                 <el-option
@@ -61,6 +70,7 @@
                                 ></el-option>
                             </el-select>
                         </el-form-item>
+                        <!-- 外部链接 -->
                         <el-form-item size="mini" :label="tableColumns['open_mode_url'].name">
                             <el-select
                                 v-model="form.open_mode_url"
@@ -77,6 +87,7 @@
                                 ></el-option>
                             </el-select>
                         </el-form-item>
+                        <!-- 结算周期 -->
                         <el-form-item
                             size="mini"
                             :label="tableColumns['settlement_period'].name"
@@ -91,6 +102,7 @@
                                 ></el-option>
                             </el-select>
                         </el-form-item>
+                        <!-- 结算方式 -->
                         <el-form-item size="mini" :label="tableColumns['settlement_type'].name" prop="settlement_type">
                             <el-radio-group v-model="form.settlement_type">
                                 <el-radio
@@ -169,6 +181,7 @@
                                 </el-row>
                             </div>
                         </el-form-item>
+                        <!-- 展示方式 -->
                         <el-form-item size="mini" :label="tableColumns['show_types'].name" prop="show_types">
                             <el-checkbox-group v-model="form.show_types">
                                 <el-checkbox
@@ -208,6 +221,7 @@
                     </template>
                     <PlatActivityBallAward v-if="form.type == 12" />
                     <PlatActivitySpinAward v-if="form.type == 13" />
+                    <PlatActivityLotteryAward v-if="form.type == 14" />
                 </el-form>
             </el-scrollbar>
             <div class="dialog-footer">
@@ -242,13 +256,14 @@ import GlobalVar from "@/core/global/GlobalVar";
 import PlatActivityRule from "./components/PlatActivityRule.vue";
 import PlatActivityBallAward from "./components/PlatActivityBallAward.vue";
 import PlatActivitySpinAward from "./components/PlatActivitySpinAward.vue";
-import Cookies from "js-cookie";
+import PlatActivityLotteryAward from "./components/PlatActivityLotteryAward.vue";
 
 @Component({
     components: {
         PlatActivityRule,
         PlatActivityBallAward,
         PlatActivitySpinAward,
+        PlatActivityLotteryAward,
     },
 })
 export default class PlatActivityModelDialog extends AbstractView {
@@ -305,6 +320,7 @@ export default class PlatActivityModelDialog extends AbstractView {
             category: [{ required: false, message: this.LangUtil("必须选择"), trigger: "change" }],
             is_once: [{ required: false, message: this.LangUtil("必须填写"), trigger: "change" }],
             rules: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            user_term: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
@@ -396,5 +412,20 @@ export default class PlatActivityModelDialog extends AbstractView {
 }
 ::v-deep .el-scrollbar__wrap {
     overflow-x: auto;
+}
+::v-deep .el-scrollbar {
+    height: 100%;
+}
+::v-deep .el-dialog {
+    margin-top: 0 !important;
+    height: 99%;
+}
+
+::v-deep .el-dialog__body {
+    height: 95%;
+}
+
+::v-deep .el-form {
+    height: 100%;
 }
 </style>
