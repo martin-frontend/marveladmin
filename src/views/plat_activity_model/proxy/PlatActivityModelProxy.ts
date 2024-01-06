@@ -192,10 +192,8 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             this.dialogData.isRender = true;
             this.dialogData.loading = false;
             this.dialogData.form = JSON.parse(JSON.stringify(data));
-            console.log(this.dialogData.form);
         }, 300);
         this.dialogData.formSource = data;
-        console.log(this.dialogData.form);
     }
 
     /**重置查询条件 */
@@ -291,7 +289,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         const lottery_cons = {
             weight: 0,
             type: "",
-            params: 0
+            params: [0, 0]
         }
 
         // 每日任务 
