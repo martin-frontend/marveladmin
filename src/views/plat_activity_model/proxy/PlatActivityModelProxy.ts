@@ -480,6 +480,16 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
                         is_delete: 1,
                     });
                 }
+                if (this.dialogData.form.type == 14) {
+                    Object.assign(formCopy, this.dialogData.form, {
+                        every_task: JSON.stringify(formCopy.every_task),
+                        cycle_task: JSON.stringify(formCopy.cycle_task),
+                        point_lottery_cons: JSON.stringify(formCopy.point_lottery_cons),
+                        point_lottery_award: JSON.stringify(formCopy.point_lottery_award),
+                        routine_task: JSON.stringify(formCopy.routine_task),
+                        is_delete: 1,
+                    });
+                }
                 this.sendNotification(HttpType.admin_plat_activity_model_update, formCopy);
             })
             .catch(() => { });
