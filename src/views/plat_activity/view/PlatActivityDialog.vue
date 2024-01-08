@@ -642,7 +642,8 @@
                         </template>
                         <PlatActivityBallAward v-if="isBallAward" />
                         <PlatActivitySpinAward v-else-if="isSpinAward" />
-                        <template v-if="!isBallAward && !isSpinAward">
+                        <PlatActivityLotteryAward v-else-if="isActivityLotteryAward" />
+                        <template v-if="!isBallAward && !isSpinAward && !isActivityLotteryAward">
                             <!-- 奖励规则 -->
                             <div v-if="form.type == 1 && form.model_id" class="_title">
                                 {{ LangUtil("奖励规则") }}
@@ -1403,12 +1404,14 @@ import { readerData } from "@/core/global/Excel";
 import { BaseInfo } from "@/components/vo/commonVo";
 import PlatActivityBallAward from "./components/PlatActivityBallAward.vue";
 import PlatActivitySpinAward from "./components/PlatActivitySpinAward.vue";
+import PlatActivityLotteryAward from "./components/PlatActivityLotteryAward.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
     components: {
         PlatActivityBallAward,
         PlatActivitySpinAward,
+        PlatActivityLotteryAward,
         SearchDatePicker,
     },
 })
@@ -1447,6 +1450,10 @@ export default class PlatActivityDialog extends AbstractView {
 
     get isSpinAward() {
         return this.form.model_type == 13;
+    }
+
+    get isActivityLotteryAward() {
+        return this.form.model_type == 14;
     }
 
     get curTime() {
@@ -1556,6 +1563,7 @@ export default class PlatActivityDialog extends AbstractView {
             task_water_rate_32: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             task_water_rate_64: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             task_water_rate_128: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            user_term: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
