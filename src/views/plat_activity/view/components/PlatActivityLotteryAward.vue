@@ -1,8 +1,5 @@
 <template>
     <div>
-        <el-form-item size="mini" :label="tableColumns['bonus_multiple'].name" prop="bonus_multiple" class="mini_input">
-            <el-input type="number" v-model="form.bonus_multiple" :placeholder="LangUtil('请输入')"></el-input>
-        </el-form-item>
         <!-- 用户期限 -->
         <el-form-item size="mini" :label="tableColumns['user_term'].name" prop="user_term" class="mini_input">
             <el-input
@@ -10,17 +7,13 @@
                 :placeholder="LangUtil('请输入')"
                 oninput="value=value.replace(/[^\d]/g,'');"
                 @blur="inputUserTerm"
-            >
-            </el-input>
+            ></el-input>
         </el-form-item>
         <div class="border_div_max">
             <div class="title_font">
                 <span>
                     {{ LangUtil("每日任务") }}
                 </span>
-                <el-button type="primary" size="mini" @click="onAdd(form.every_task)">
-                    {{ LangUtil("添加") }}
-                </el-button>
             </div>
             <div class="border_div" v-for="(daily_item, daily_index) of form.every_task" :key="daily_index">
                 <div class="item_mini_input">
@@ -29,19 +22,8 @@
                             <span>
                                 {{ LangUtil("第{0}天", daily_index + 1) }}
                             </span>
-                            <el-button type="primary" size="mini" @click="onAddCycleTask(form.every_task, daily_index)">
-                                {{ LangUtil("添加") }}
-                            </el-button>
                         </span>
-                        <span>
-                            <el-button
-                                size="mini"
-                                icon="el-icon-delete"
-                                @click="onDelete(form.every_task, daily_index)"
-                            >
-                                {{ LangUtil("删除") }}
-                            </el-button>
-                        </span>
+                        <span> </span>
                     </span>
                 </div>
                 <div class="border_div" v-for="(item, index) of form.every_task[daily_index]" :key="index">
@@ -51,7 +33,12 @@
                                 <span>
                                     {{ LangUtil("条件") }}
                                 </span>
-                                <el-select v-model="item.condition.type" filterable :placeholder="LangUtil('请选择')">
+                                <el-select
+                                    v-model="item.condition.type"
+                                    filterable
+                                    :placeholder="LangUtil('请选择')"
+                                    disabled
+                                >
                                     <el-option
                                         v-for="(value, key) in tableColumns['every_point_lottery_condition_type']
                                             .options"
@@ -70,15 +57,7 @@
                                 >
                                 </el-input>
                             </span>
-                            <span>
-                                <el-button
-                                    size="mini"
-                                    icon="el-icon-delete"
-                                    @click="onDeleteCycleTask(form.every_task, daily_index, index)"
-                                >
-                                    {{ LangUtil("删除") }}
-                                </el-button>
-                            </span>
+                            <span> </span>
                         </span>
                     </div>
                     <div class="item_mini_input">
@@ -86,7 +65,7 @@
                             <span>
                                 {{ LangUtil("奖励") }}
                             </span>
-                            <el-select v-model="item.award.type" filterable :placeholder="LangUtil('请选择')">
+                            <el-select v-model="item.award.type" filterable :placeholder="LangUtil('请选择')" disabled>
                                 <el-option
                                     v-for="(value, key) in tableColumns['every_point_award_type'].options"
                                     :key="key"
@@ -147,9 +126,6 @@
                 <span>
                     {{ LangUtil("循环任务") }}
                 </span>
-                <el-button type="primary" size="mini" @click="onAdd(form.cycle_task)">
-                    {{ LangUtil("添加") }}
-                </el-button>
             </div>
             <div class="border_div" v-for="(item, index) of form.cycle_task" :key="index">
                 <div class="item_mini_input">
@@ -158,7 +134,12 @@
                             <span>
                                 {{ LangUtil("条件") }}
                             </span>
-                            <el-select v-model="item.condition.type" filterable :placeholder="LangUtil('请选择')">
+                            <el-select
+                                v-model="item.condition.type"
+                                filterable
+                                :placeholder="LangUtil('请选择')"
+                                disabled
+                            >
                                 <el-option
                                     v-for="(value, key) in tableColumns['every_point_lottery_condition_type'].options"
                                     :key="key"
@@ -176,11 +157,7 @@
                             >
                             </el-input>
                         </span>
-                        <span>
-                            <el-button size="mini" icon="el-icon-delete" @click="onDelete(form.cycle_task, index)">
-                                {{ LangUtil("删除") }}
-                            </el-button>
-                        </span>
+                        <span> </span>
                     </span>
                 </div>
                 <div class="item_mini_input">
@@ -188,7 +165,7 @@
                         <span>
                             {{ LangUtil("奖励") }}
                         </span>
-                        <el-select v-model="item.award.type" filterable :placeholder="LangUtil('请选择')">
+                        <el-select v-model="item.award.type" filterable :placeholder="LangUtil('请选择')" disabled>
                             <el-option
                                 v-for="(value, key) in tableColumns['every_point_award_type'].options"
                                 :key="key"
@@ -250,7 +227,12 @@
                 </span>
             </div>
             <div class="item_mini_input">
-                <el-select v-model="form.point_lottery_cons[0].type" filterable :placeholder="LangUtil('请选择')">
+                <el-select
+                    v-model="form.point_lottery_cons[0].type"
+                    filterable
+                    :placeholder="LangUtil('请选择')"
+                    disabled
+                >
                     <el-option
                         v-for="(value, key) in tableColumns['every_point_cons_type'].options"
                         :key="key"
@@ -274,15 +256,9 @@
                 <span>
                     {{ tableColumns["lottery_award"].name }}
                 </span>
-                <el-button type="primary" size="mini" @click="onAdd(form.point_lottery_award)">
-                    {{ LangUtil("添加") }}
-                </el-button>
             </div>
             <div class="border_div">
                 <div v-for="(item, index) of form.point_lottery_award" :key="index" class="item_mini_input">
-                    <el-button size="mini" icon="el-icon-delete" @click="onDelete(form.point_lottery_award, index)">
-                        {{ LangUtil("刪除") }}
-                    </el-button>
                     <span style="margin: 0px 10px;">
                         <span>
                             {{ LangUtil("权重") }}
@@ -305,8 +281,29 @@
                         >
                         </el-option>
                     </el-select>
+                    <!-- 代币 -->
+                    <span v-if="item.type == 3">
+                        <el-select v-model="item.params[0]" filterable :placeholder="LangUtil('请选择')">
+                            <el-option
+                                v-for="(value, key) in tableColumns['all_coin'].options[form.plat_id]"
+                                :key="key"
+                                :label="value"
+                                :value="key"
+                            >
+                            </el-option>
+                        </el-select>
+                        <el-input
+                            v-model="item.params[1]"
+                            type="number"
+                            :placeholder="LangUtil('请输入')"
+                            style="margin: 0px 4px;"
+                        >
+                        </el-input>
+                    </span>
+
+                    <!-- 奖池百分比 -->
                     <el-input
-                        v-if="item.type != 3"
+                        v-else
                         v-model="item.params[0]"
                         type="number"
                         :placeholder="LangUtil('请输入')"
@@ -322,9 +319,6 @@
                 <span>
                     {{ LangUtil("普通任务") }}
                 </span>
-                <el-button type="primary" size="mini" @click="onAdd(form.routine_task)">
-                    {{ LangUtil("添加") }}
-                </el-button>
             </div>
             <div class="border_div" v-for="(item, index) of form.routine_task" :key="index">
                 <div class="item_mini_input">
@@ -333,7 +327,12 @@
                             <span>
                                 {{ LangUtil("条件") }}
                             </span>
-                            <el-select v-model="item.condition.type" filterable :placeholder="LangUtil('请选择')">
+                            <el-select
+                                v-model="item.condition.type"
+                                filterable
+                                :placeholder="LangUtil('请选择')"
+                                disabled
+                            >
                                 <el-option
                                     v-for="(value, key) in tableColumns['every_point_lottery_condition_type'].options"
                                     :key="key"
@@ -351,11 +350,6 @@
                             >
                             </el-input>
                         </span>
-                        <span>
-                            <el-button size="mini" icon="el-icon-delete" @click="onDelete(form.routine_task, index)">
-                                {{ LangUtil("删除") }}
-                            </el-button>
-                        </span>
                     </span>
                 </div>
                 <div class="item_mini_input">
@@ -363,7 +357,7 @@
                         <span>
                             {{ LangUtil("奖励") }}
                         </span>
-                        <el-select v-model="item.award.type" filterable :placeholder="LangUtil('请选择')">
+                        <el-select v-model="item.award.type" filterable :placeholder="LangUtil('请选择')" disabled>
                             <el-option
                                 v-for="(value, key) in tableColumns['every_point_award_type'].options"
                                 :key="key"
@@ -424,7 +418,8 @@
 import LangUtil from "@/core/global/LangUtil";
 import AbstractView from "@/core/abstract/AbstractView";
 import { Component, Vue } from "vue-property-decorator";
-import PlatActivityModelProxy from "@/views/plat_activity_model/proxy/PlatActivityModelProxy";
+import PlatActivityModelProxy from "@/views/plat_activity/proxy/PlatActivityProxy";
+import { DialogStatus } from "@/core/global/Constant";
 
 @Component
 export default class PlatActivityLotteryAward extends AbstractView {
@@ -438,44 +433,6 @@ export default class PlatActivityLotteryAward extends AbstractView {
         return this.myProxy.dialogData.form;
     }
 
-    onAdd(arr: any) {
-        let obj = null;
-        if (arr && arr.length >= 0) {
-            obj = JSON.parse(JSON.stringify(arr[0]));
-        }
-        arr.push(obj);
-    }
-
-    onDelete(arr: any, key: any, isArr: boolean = true) {
-        // if (arr.length == 1) {
-        //     return;
-        // }
-        if (isArr) {
-            arr.splice(key, 1);
-        } else {
-            delete arr[key];
-        }
-    }
-
-    onAddCycleTask(arr: any, daily_index: any) {
-        let obj = null;
-        if (arr[0] && arr[0].length >= 0) {
-            obj = JSON.parse(JSON.stringify(arr[0][0]));
-        }
-        arr[daily_index].push(obj);
-    }
-
-    onDeleteCycleTask(arr: any, daily_index: any, cycle_index: any, isArr: boolean = true) {
-        // if (arr[daily_index].length == 1) {
-        //     return;
-        // }
-        if (isArr) {
-            arr[daily_index].splice(cycle_index, 1);
-        } else {
-            delete arr[daily_index][cycle_index];
-        }
-    }
-
     inputUserTerm(e: any) {
         this.form.user_term = e.target.value;
     }
@@ -483,6 +440,17 @@ export default class PlatActivityLotteryAward extends AbstractView {
     OnChangeParams(arr: any) {
         arr.splice(1, 1, arr[0]);
     }
+
+    // onChangeAwardType(award: any) {
+    //     if (award.type == 3) {
+    //         award.params = {
+    //             key: "",
+    //             value: "",
+    //         };
+    //     } else {
+    //         award.params = [0, 0];
+    //     }
+    // }
 }
 </script>
 <style scoped lang="scss">
@@ -502,7 +470,6 @@ export default class PlatActivityLotteryAward extends AbstractView {
     border: 1px solid #dcdfe6;
     border-radius: 10px;
     padding: 10px;
-    margin-top: 10px;
 }
 .border_div_max {
     border: 1px solid #dcdfe6;
@@ -514,6 +481,7 @@ export default class PlatActivityLotteryAward extends AbstractView {
     margin-right: 10px;
 }
 .title_font {
+    height: 50px;
     font-weight: 700;
 }
 </style>
