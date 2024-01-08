@@ -40,8 +40,7 @@
                                     disabled
                                 >
                                     <el-option
-                                        v-for="(value, key) in tableColumns['every_point_lottery_condition_type']
-                                            .options"
+                                        v-for="(value, key) in tableColumns['every_point_every_condition_type'].options"
                                         :key="key"
                                         :label="value"
                                         :value="Number(key)"
@@ -141,7 +140,7 @@
                                 disabled
                             >
                                 <el-option
-                                    v-for="(value, key) in tableColumns['every_point_lottery_condition_type'].options"
+                                    v-for="(value, key) in tableColumns['every_point_cycle_condition_type'].options"
                                     :key="key"
                                     :label="value"
                                     :value="Number(key)"
@@ -334,7 +333,7 @@
                                 disabled
                             >
                                 <el-option
-                                    v-for="(value, key) in tableColumns['every_point_lottery_condition_type'].options"
+                                    v-for="(value, key) in tableColumns['every_point_routine_condition_type'].options"
                                     :key="key"
                                     :label="value"
                                     :value="Number(key)"
