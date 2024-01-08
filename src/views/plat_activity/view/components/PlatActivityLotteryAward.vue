@@ -48,6 +48,7 @@
                                     </el-option>
                                 </el-select>
                                 <el-input
+                                    v-if="item.condition.type != 80 && item.condition.type != ''"
                                     v-model="item.condition.params[0]"
                                     type="number"
                                     :placeholder="LangUtil('请输入')"
