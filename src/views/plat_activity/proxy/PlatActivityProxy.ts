@@ -86,6 +86,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_start_time: { name: "展示-开始时间", options: {} },
             prize_pool_amount: { name: "奖池金额", options: {} },
             user_term: { name: "用户期限", options: {} },
+            every_point_cycle_condition_type: { name: '循环任务-条件', options: {} },
+            every_point_every_condition_type: { name: '每日任务-条件', options: {} },
+            every_point_routine_condition_type: { name: '普通任务-条件', options: {} },
         },
         orderData: {
             id: "",
