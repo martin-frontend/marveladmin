@@ -275,7 +275,7 @@
                     <span class="title_width">{{ LangUtil("奖励类型") }}</span>
                     <el-select v-model="item.type" filterable :placeholder="LangUtil('请选择')">
                         <el-option
-                            v-for="(value, key) in tableColumns['lottery_award_type'].options"
+                            v-for="(value, key) in tableColumns['every_point_award_type'].options"
                             :key="key"
                             :label="value"
                             :value="Number(key)"
