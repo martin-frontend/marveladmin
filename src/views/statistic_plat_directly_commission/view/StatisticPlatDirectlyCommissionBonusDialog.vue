@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow">
+    <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogBonusData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
             <el-form-item :label="tableColumns.plat_id.name" prop="plat_id">
                 <el-select
@@ -18,7 +18,7 @@
                 </el-select>
             </el-form-item>
 
-            <el-form-item :label="LangUtil('邮件标题')" prop="title">
+            <!-- <el-form-item :label="LangUtil('邮件标题')" prop="title">
                 <div class="flex d-flex">
                     <el-input
                         style="margin-right: 0.8rem"
@@ -30,9 +30,9 @@
                         :placeholder="LangUtil('邮件标题')"
                         v-model="form.title"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('title')"
-                        >翻译</el-button
-                    >
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('title')">
+                        翻译
+                    </el-button>
                 </div>
             </el-form-item>
 
@@ -50,11 +50,11 @@
                         :placeholder="LangUtil('邮件内容')"
                         v-model="form.content"
                     ></el-input>
-                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('content')"
-                        >翻译</el-button
-                    >
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('content')">
+                        翻译
+                    </el-button>
                 </div>
-            </el-form-item>
+            </el-form-item> -->
 
             <!-- 邮件分类 -->
             <el-form-item size="mini" :label="LangUtil('邮件分类')" prop="cate">
@@ -80,44 +80,48 @@
                 </el-form-item>
             </template>
 
-            <!-- 提现流水倍数 -->
-            <el-form-item size="mini" :label="LangUtil('提现流水倍数')">
-                <div class="withdraw_rate">
+            <template v-if="form.settlement_type != 1">
+                <!-- 提现流水倍数 -->
+                <el-form-item size="mini" :label="LangUtil('提现流水倍数')">
+                    <div class="withdraw_rate">
+                        <el-input
+                            style="width: 120px; margin-right: 8pxrem"
+                            type="number"
+                            step="0.1"
+                            min="0"
+                            v-model="form.bonus_multiple"
+                            @keydown.native="inputOnlyPositive"
+                        ></el-input>
+                        <span class="mark_font">
+                            {{
+                                LangUtil(
+                                    "附件奖励为金币的时候有作用, 该笔金币奖励满足: 提领流水倍数X奖励金币数量才可提现"
+                                )
+                            }}
+                        </span>
+                    </div>
+                </el-form-item>
+                <el-form-item size="mini" :label="LangUtil('奖励币种')">
+                    <el-select style="margin-right: 8px; width: 120px" v-model="form.coin_type" filterable>
+                        <el-option
+                            v-for="(key, value) in detailTableColumns.coin_name_unique.options[form.plat_id]"
+                            :key="value"
+                            :label="key"
+                            :value="value"
+                        >
+                        </el-option> </el-select
+                ></el-form-item>
+                <el-form-item size="mini" :label="LangUtil('奖励金额')">
                     <el-input
-                        style="width: 120px; margin-right: 8pxrem"
-                        type="number"
-                        step="0.1"
                         min="0"
-                        v-model="form.bonus_multiple"
+                        step="1"
+                        style="width: 120px"
+                        type="number"
+                        v-model="form.amount"
                         @keydown.native="inputOnlyPositive"
                     ></el-input>
-                    <span class="mark_font">
-                        {{
-                            LangUtil("附件奖励为金币的时候有作用, 该笔金币奖励满足: 提领流水倍数X奖励金币数量才可提现")
-                        }}
-                    </span>
-                </div>
-            </el-form-item>
-            <el-form-item size="mini" :label="LangUtil('奖励币种')">
-                <el-select style="margin-right: 8px; width: 120px" v-model="form.coin_type" filterable>
-                    <el-option
-                        v-for="(key, value) in tableColumns.attachment_content.options[form.plat_id]"
-                        :key="value"
-                        :label="key"
-                        :value="value"
-                    >
-                    </el-option> </el-select
-            ></el-form-item>
-            <el-form-item size="mini" :label="LangUtil('奖励金额')">
-                <el-input
-                    min="0"
-                    step="1"
-                    style="width: 120px"
-                    type="number"
-                    v-model="form.amount"
-                    @keydown.native="inputOnlyPositive"
-                ></el-input>
-            </el-form-item>
+                </el-form-item>
+            </template>
             <el-form-item class="dialog-footer">
                 <div class="submit">
                     <el-button @click="handleAdd" type="primary">{{ LangUtil("发送邮件") }}</el-button>
@@ -133,7 +137,7 @@
 <script lang="ts">
 import AbstractView from "@/core/abstract/AbstractView";
 import { checkUnique, unique } from "@/core/global/Permission";
-import PlatUserAgentBonusProxy from "../proxy/PlatUserAgentBonusProxy";
+import StatisticPlatDirectlyCommissionProxy from "../proxy/StatisticPlatDirectlyCommissionProxy";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { inputOnlyPositive } from "@/core/global/Functions";
 import { DialogStatus } from "@/core/global/Constant";
@@ -155,18 +159,19 @@ import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
         },
     },
 })
-export default class PlatUserAgentBonusDialog extends AbstractView {
+export default class StatisticPlatDirectlyCommissionBonusDialog extends AbstractView {
     // 权限标识
     unique = unique;
     checkUnique = checkUnique;
     //网络状态
     net_status = GlobalVar.net_status;
     // proxy
-    myProxy: PlatUserAgentBonusProxy = this.getProxy(PlatUserAgentBonusProxy);
+    myProxy: StatisticPlatDirectlyCommissionProxy = this.getProxy(StatisticPlatDirectlyCommissionProxy);
     langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
-    form = this.myProxy.dialogData.form;
+    detailTableColumns = this.myProxy.detailTableData.columns;
+    form = this.myProxy.dialogBonusData.form;
     LangUtil = LangUtil;
     inputOnlyPositive = inputOnlyPositive;
     private textMap = {
@@ -174,7 +179,7 @@ export default class PlatUserAgentBonusDialog extends AbstractView {
         create: this.LangUtil("新增"),
     };
 
-    @Watch("myProxy.dialogData.bShow")
+    @Watch("myProxy.dialogBonusData.bShow")
     private onWatchShow() {
         this.$nextTick(() => {
             (this.$refs["form"] as Vue & { clearValidate: () => void }).clearValidate();
@@ -182,7 +187,7 @@ export default class PlatUserAgentBonusDialog extends AbstractView {
     }
 
     get status() {
-        return this.myProxy.dialogData.status;
+        return this.myProxy.dialogBonusData.status;
     }
 
     get isStatusUpdate() {
@@ -192,8 +197,8 @@ export default class PlatUserAgentBonusDialog extends AbstractView {
     get rules() {
         return {
             plat_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
-            title: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
-            content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            // title: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            // content: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             cate: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             user_id: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
@@ -203,15 +208,7 @@ export default class PlatUserAgentBonusDialog extends AbstractView {
     handleAdd() {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
-                this.myProxy.onAdd();
-            }
-        });
-    }
-
-    handleUpdate() {
-        (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
-            if (valid) {
-                this.myProxy.onUpdate();
+                this.myProxy.onAddBonus();
             }
         });
     }
