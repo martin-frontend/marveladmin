@@ -475,12 +475,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.point_lottery_cons = JSON.parse(JSON.stringify(data.point_lottery_cons));
         this.dialogData.form.point_lottery_award = JSON.parse(JSON.stringify(data.point_lottery_award));
         this.dialogData.form.routine_task = JSON.parse(JSON.stringify(data.routine_task));
-        this.dialogData.form.point_lottery_award.forEach((award: { type: number; params: (string | number)[]; }) => {
-            if (award.type == 3) {
-                award.params = ["", 0]
-
-            }
-        })
     }
 
     /**重置查询条件 */
