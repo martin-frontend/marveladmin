@@ -161,6 +161,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         point_lottery_cons: [],  // 抽奖消耗
         point_lottery_award: [], // 抽奖奖励
         routine_task: [],        // 普通任务
+        user_term: "",
     };
 
     /**弹窗相关数据 */
