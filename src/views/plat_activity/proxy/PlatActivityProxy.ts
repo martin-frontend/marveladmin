@@ -1048,6 +1048,14 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             formCopy.lottery_cons = JSON.stringify(this.dialogData.form.lottery_cons);
             formCopy.lottery_award = JSON.stringify(this.dialogData.form.lottery_award);
         }
+        if (this.dialogData.form.model_type == 14) {
+            formCopy.model_type = 14;
+            formCopy.every_task = JSON.stringify(this.dialogData.form.every_task);
+            formCopy.cycle_task = JSON.stringify(this.dialogData.form.cycle_task);
+            formCopy.point_lottery_cons = JSON.stringify(this.dialogData.form.point_lottery_cons);
+            formCopy.point_lottery_award = JSON.stringify(this.dialogData.form.point_lottery_award);
+            formCopy.routine_task = JSON.stringify(this.dialogData.form.routine_task);
+        }
         if (this.dialogData.conditionForm.assign_is_all == false &&
             this.dialogData.conditionForm.assign_is_agent == false &&
             this.dialogData.conditionForm.assign_is_channel == false &&
