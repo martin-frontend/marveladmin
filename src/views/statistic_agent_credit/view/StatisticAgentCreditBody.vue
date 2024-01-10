@@ -63,6 +63,32 @@
                 </template>
             </el-table-column>
 
+            <el-table-column
+                :label="tableColumns.un_settle_count.name"
+                prop="un_settle_count"
+                min-width="100px"
+                align="center"
+                sortable="custom"
+            >
+            </el-table-column>
+
+            <el-table-column
+                :label="tableColumns.un_settle_bet_gold.name"
+                prop="un_settle_bet_gold"
+                min-width="100px"
+                align="center"
+                sortable="custom"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.un_settle_bet_gold"
+                        :isShowDollar="false"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    />
+                </template>
+            </el-table-column>
+
             <el-table-column prop="win_gold" :label="tableColumns['win_gold'].name" align="center" sortable="custom">
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.win_gold" :isShowDollar="false"></WinLossDisplay>

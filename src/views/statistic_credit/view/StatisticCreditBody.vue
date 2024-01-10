@@ -38,7 +38,12 @@
             <el-table-column :label="tableColumns['record_count'].name" prop="record_count" class-name="status-col">
             </el-table-column>
 
-            <el-table-column :label="tableColumns['bet_gold'].name" prop="bet_gold" class-name="status-col">
+            <el-table-column
+                :label="tableColumns['bet_gold'].name"
+                min-width="100px"
+                prop="bet_gold"
+                class-name="status-col"
+            >
                 <template slot-scope="{ row }">
                     <WinLossDisplay
                         :amount="row.bet_gold"
@@ -49,13 +54,42 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="win_gold" :label="tableColumns['win_gold'].name" align="center">
+            <el-table-column
+                :label="tableColumns.un_settle_count.name"
+                prop="un_settle_count"
+                min-width="100px"
+                align="center"
+            >
+            </el-table-column>
+
+            <el-table-column
+                :label="tableColumns.un_settle_bet_gold.name"
+                prop="un_settle_bet_gold"
+                min-width="100px"
+                align="center"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.un_settle_bet_gold"
+                        :isShowDollar="false"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    />
+                </template>
+            </el-table-column>
+
+            <el-table-column prop="win_gold" :label="tableColumns['win_gold'].name" min-width="100px" align="center">
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.win_gold" :isShowDollar="false"></WinLossDisplay>
                 </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['valid_bet_gold'].name" prop="valid_bet_gold" class-name="status-col">
+            <el-table-column
+                :label="tableColumns['valid_bet_gold'].name"
+                min-width="100px"
+                prop="valid_bet_gold"
+                class-name="status-col"
+            >
                 <template slot-scope="{ row }">
                     <WinLossDisplay
                         :amount="row.valid_bet_gold"
@@ -92,7 +126,12 @@
                 </template>
             </el-table-column>
 
-            <el-table-column :label="tableColumns['self_amount'].name" prop="self_amount" class-name="status-col">
+            <el-table-column
+                :label="tableColumns['self_amount'].name"
+                min-width="100px"
+                prop="self_amount"
+                class-name="status-col"
+            >
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.self_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
@@ -111,7 +150,12 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="agent_amount" :label="tableColumns['agent_amount'].name" align="center">
+            <el-table-column
+                prop="agent_amount"
+                :label="tableColumns['agent_amount'].name"
+                min-width="100px"
+                align="center"
+            >
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.agent_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
@@ -130,7 +174,12 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="plat_amount" :label="tableColumns['plat_amount'].name" align="center">
+            <el-table-column
+                prop="plat_amount"
+                :label="tableColumns['plat_amount'].name"
+                min-width="100px"
+                align="center"
+            >
                 <template slot-scope="{ row }">
                     <WinLossDisplay :amount="row.plat_amount" :isShowDollar="false"></WinLossDisplay>
                 </template>
@@ -140,6 +189,7 @@
                 prop="game_valid_bet_gold"
                 :label="tableColumns['game_valid_bet_gold'].name"
                 align="center"
+                min-width="100px"
             >
                 <template slot-scope="{ row }">
                     <WinLossDisplay
