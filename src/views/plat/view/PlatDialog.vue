@@ -1,6 +1,6 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="90%">
-        <el-form ref="form" :rules="rules" :model="form" label-width="125px" v-loading="net_status.loading">
+        <el-form ref="form" :rules="rules" :model="form" label-width="180px" v-loading="net_status.loading">
             <el-scrollbar>
                 <el-form-item size="mini" :label="tableColumns['plat_name'].name" prop="plat_name">
                     <el-input v-model="form.plat_name" :placeholder="LangUtil('请输入')"></el-input>
@@ -731,6 +731,30 @@
                     </div>
                 </el-form-item>
 
+                <el-form-item size="mini" :label="tableColumns['betting_tax'].name">
+                    <span slot="label">
+                        {{ tableColumns["betting_tax"].name }}
+                        <el-tooltip
+                            :content="
+                                LangUtil(
+                                    '控制单钱包游戏投注盈利按照此比例收税，设置为0不收税，设置0.01表示收1%税，设置范围[0,1]'
+                                )
+                            "
+                            placement="top"
+                        >
+                            <i class="el-icon-question"></i>
+                        </el-tooltip>
+                    </span>
+                    <div class="item-content">
+                        <el-input
+                            class="select"
+                            v-model="form.betting_tax"
+                            onkeyup="this.value=(this.value.match(/\d+(.\d{0,15})?/)||[''])[0]"
+                            @blur="inputBettingTaxChange"
+                        ></el-input>
+                    </div>
+                </el-form-item>
+
                 <el-form-item size="mini" :label="tableColumns['client_config'].name" prop="client_config">
                     <div class="editor-container">
                         <json-editor ref="jsonEditor" v-model="form.client_config" />
@@ -856,6 +880,10 @@ export default class PlatDialog extends AbstractView {
             return false;
         }
         return true;
+    }
+
+    inputBettingTaxChange(e: any) {
+        this.form.betting_tax = e.target.value;
     }
 }
 </script>

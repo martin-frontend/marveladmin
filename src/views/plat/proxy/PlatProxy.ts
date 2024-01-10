@@ -114,6 +114,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             is_need_kyc: { name: 'KYC认证', options: {} },
             commission_config: { name: '直属分红配置', options: {} },
             commission_model_id: { name: '直属分红配置', options: {} },
+            betting_tax: { name: '游戏投注营利税收', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -196,6 +197,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_register_store_bank_info: 98,
         is_currency_conversion: 98,
         is_need_kyc: 1,
+        betting_tax: 0,
     };
 
     /**弹窗相关数据 */
