@@ -75,40 +75,22 @@
                                 >
                                 </el-option>
                             </el-select>
-                            <el-select
-                                v-model="item.award.settlement_type"
-                                filterable
-                                :placeholder="LangUtil('请选择')"
-                                style="margin-left: 4px;"
-                            >
-                                <el-option
-                                    v-for="(value, key) in tableColumns['every_point_award_settlement_type'].options"
-                                    :key="key"
-                                    :label="value"
-                                    :value="Number(key)"
-                                >
-                                </el-option>
-                            </el-select>
-                            <!-- 数值 -->
-                            <span v-if="item.award.settlement_type == 70">
-                                <el-input
+                            <!-- 代币 -->
+                            <template v-if="item.award.type == 3">
+                                <el-select
                                     v-model="item.award.params[0]"
-                                    type="number"
-                                    :placeholder="LangUtil('请输入')"
-                                    style="margin-left: 4px;"
-                                    @change="OnChangeParams(item.award.params)"
-                                >
-                                </el-input>
-                            </span>
-                            <!-- 随机 -->
-                            <span v-if="item.award.settlement_type == 71">
-                                <el-input
-                                    v-model="item.award.params[0]"
-                                    type="number"
-                                    :placeholder="LangUtil('请输入')"
+                                    filterable
+                                    :placeholder="LangUtil('请选择')"
                                     style="margin-left: 4px;"
                                 >
-                                </el-input>
+                                    <el-option
+                                        v-for="(value, key) in tableColumns['all_coin'].options[form.plat_id]"
+                                        :key="key"
+                                        :label="value"
+                                        :value="key"
+                                    >
+                                    </el-option>
+                                </el-select>
                                 <el-input
                                     v-model="item.award.params[1]"
                                     type="number"
@@ -116,7 +98,52 @@
                                     style="margin-left: 4px;"
                                 >
                                 </el-input>
-                            </span>
+                            </template>
+                            <template v-else>
+                                <el-select
+                                    v-model="item.award.settlement_type"
+                                    filterable
+                                    :placeholder="LangUtil('请选择')"
+                                    style="margin-left: 4px;"
+                                >
+                                    <el-option
+                                        v-for="(value, key) in tableColumns['every_point_award_settlement_type']
+                                            .options"
+                                        :key="key"
+                                        :label="value"
+                                        :value="Number(key)"
+                                    >
+                                    </el-option>
+                                </el-select>
+                                <!-- 数值 -->
+                                <span v-if="item.award.settlement_type == 70">
+                                    <el-input
+                                        v-model="item.award.params[0]"
+                                        type="number"
+                                        :placeholder="LangUtil('请输入')"
+                                        style="margin-left: 4px;"
+                                        @change="OnChangeParams(item.award.params)"
+                                    >
+                                    </el-input>
+                                </span>
+                                <!-- 随机 -->
+                                <span v-if="item.award.settlement_type == 71">
+                                    <el-input
+                                        v-model="item.award.params[0]"
+                                        type="number"
+                                        :placeholder="LangUtil('请输入')"
+                                        style="margin-left: 4px;"
+                                    >
+                                    </el-input>
+                                    <el-input
+                                        v-model="item.award.params[1]"
+                                        type="number"
+                                        :placeholder="LangUtil('请输入')"
+                                        style="margin-left: 4px;"
+                                    >
+                                    </el-input>
+                                </span>
+                            </template>
                         </span>
                     </div>
                 </div>
@@ -175,40 +202,22 @@
                             >
                             </el-option>
                         </el-select>
-                        <el-select
-                            v-model="item.award.settlement_type"
-                            filterable
-                            :placeholder="LangUtil('请选择')"
-                            style="margin-left: 4px;"
-                        >
-                            <el-option
-                                v-for="(value, key) in tableColumns['every_point_award_settlement_type'].options"
-                                :key="key"
-                                :label="value"
-                                :value="Number(key)"
-                            >
-                            </el-option>
-                        </el-select>
-                        <!-- 数值 -->
-                        <span v-if="item.award.settlement_type == 70">
-                            <el-input
+                        <!-- 代币 -->
+                        <template v-if="item.award.type == 3">
+                            <el-select
                                 v-model="item.award.params[0]"
-                                type="number"
-                                :placeholder="LangUtil('请输入')"
-                                style="margin-left: 4px;"
-                                @change="OnChangeParams(item.award.params)"
-                            >
-                            </el-input>
-                        </span>
-                        <!-- 随机 -->
-                        <span v-if="item.award.settlement_type == 71">
-                            <el-input
-                                v-model="item.award.params[0]"
-                                type="number"
-                                :placeholder="LangUtil('请输入')"
+                                filterable
+                                :placeholder="LangUtil('请选择')"
                                 style="margin-left: 4px;"
                             >
-                            </el-input>
+                                <el-option
+                                    v-for="(value, key) in tableColumns['all_coin'].options[form.plat_id]"
+                                    :key="key"
+                                    :label="value"
+                                    :value="key"
+                                >
+                                </el-option>
+                            </el-select>
                             <el-input
                                 v-model="item.award.params[1]"
                                 type="number"
@@ -216,7 +225,51 @@
                                 style="margin-left: 4px;"
                             >
                             </el-input>
-                        </span>
+                        </template>
+                        <template v-else>
+                            <el-select
+                                v-model="item.award.settlement_type"
+                                filterable
+                                :placeholder="LangUtil('请选择')"
+                                style="margin-left: 4px;"
+                            >
+                                <el-option
+                                    v-for="(value, key) in tableColumns['every_point_award_settlement_type'].options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                >
+                                </el-option>
+                            </el-select>
+                            <!-- 数值 -->
+                            <span v-if="item.award.settlement_type == 70">
+                                <el-input
+                                    v-model="item.award.params[0]"
+                                    type="number"
+                                    :placeholder="LangUtil('请输入')"
+                                    style="margin-left: 4px;"
+                                    @change="OnChangeParams(item.award.params)"
+                                >
+                                </el-input>
+                            </span>
+                            <!-- 随机 -->
+                            <span v-if="item.award.settlement_type == 71">
+                                <el-input
+                                    v-model="item.award.params[0]"
+                                    type="number"
+                                    :placeholder="LangUtil('请输入')"
+                                    style="margin-left: 4px;"
+                                >
+                                </el-input>
+                                <el-input
+                                    v-model="item.award.params[1]"
+                                    type="number"
+                                    :placeholder="LangUtil('请输入')"
+                                    style="margin-left: 4px;"
+                                >
+                                </el-input>
+                            </span>
+                        </template>
                     </span>
                 </div>
             </div>
@@ -372,40 +425,22 @@
                             >
                             </el-option>
                         </el-select>
-                        <el-select
-                            v-model="item.award.settlement_type"
-                            filterable
-                            :placeholder="LangUtil('请选择')"
-                            style="margin-left: 4px;"
-                        >
-                            <el-option
-                                v-for="(value, key) in tableColumns['every_point_award_settlement_type'].options"
-                                :key="key"
-                                :label="value"
-                                :value="Number(key)"
-                            >
-                            </el-option>
-                        </el-select>
-                        <!-- 数值 -->
-                        <span v-if="item.award.settlement_type == 70">
-                            <el-input
+                        <!-- 代币 -->
+                        <template v-if="item.award.type == 3">
+                            <el-select
                                 v-model="item.award.params[0]"
-                                type="number"
-                                :placeholder="LangUtil('请输入')"
-                                style="margin-left: 4px;"
-                                @change="OnChangeParams(item.award.params)"
-                            >
-                            </el-input>
-                        </span>
-                        <!-- 随机 -->
-                        <span v-if="item.award.settlement_type == 71">
-                            <el-input
-                                v-model="item.award.params[0]"
-                                type="number"
-                                :placeholder="LangUtil('请输入')"
+                                filterable
+                                :placeholder="LangUtil('请选择')"
                                 style="margin-left: 4px;"
                             >
-                            </el-input>
+                                <el-option
+                                    v-for="(value, key) in tableColumns['all_coin'].options[form.plat_id]"
+                                    :key="key"
+                                    :label="value"
+                                    :value="key"
+                                >
+                                </el-option>
+                            </el-select>
                             <el-input
                                 v-model="item.award.params[1]"
                                 type="number"
@@ -413,7 +448,51 @@
                                 style="margin-left: 4px;"
                             >
                             </el-input>
-                        </span>
+                        </template>
+                        <template v-else>
+                            <el-select
+                                v-model="item.award.settlement_type"
+                                filterable
+                                :placeholder="LangUtil('请选择')"
+                                style="margin-left: 4px;"
+                            >
+                                <el-option
+                                    v-for="(value, key) in tableColumns['every_point_award_settlement_type'].options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                >
+                                </el-option>
+                            </el-select>
+                            <!-- 数值 -->
+                            <span v-if="item.award.settlement_type == 70">
+                                <el-input
+                                    v-model="item.award.params[0]"
+                                    type="number"
+                                    :placeholder="LangUtil('请输入')"
+                                    style="margin-left: 4px;"
+                                    @change="OnChangeParams(item.award.params)"
+                                >
+                                </el-input>
+                            </span>
+                            <!-- 随机 -->
+                            <span v-if="item.award.settlement_type == 71">
+                                <el-input
+                                    v-model="item.award.params[0]"
+                                    type="number"
+                                    :placeholder="LangUtil('请输入')"
+                                    style="margin-left: 4px;"
+                                >
+                                </el-input>
+                                <el-input
+                                    v-model="item.award.params[1]"
+                                    type="number"
+                                    :placeholder="LangUtil('请输入')"
+                                    style="margin-left: 4px;"
+                                >
+                                </el-input>
+                            </span>
+                        </template>
                     </span>
                 </div>
             </div>

@@ -1254,6 +1254,23 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                     this.setSpinAwardData(data);
                 } else if (data.type == 14) {
                     this.setActivityLotteryAwardData(data);
+                    this.dialogData.form.every_task.forEach((day: { award: { type: number; params: string[]; }; }[]) => {
+                        day.forEach((task: { award: { type: number; params: string[]; }; }) => {
+                            if (task.award.type == 3) {
+                                task.award.params = ["", ""]
+                            }
+                        })
+                    })
+                    this.dialogData.form.cycle_task.forEach((task: { award: { type: number; params: string[]; }; }) => {
+                        if (task.award.type == 3) {
+                            task.award.params = ["", ""]
+                        }
+                    })
+                    this.dialogData.form.routine_task.forEach((task: { award: { type: number; params: string[]; }; }) => {
+                        if (task.award.type == 3) {
+                            task.award.params = ["", ""]
+                        }
+                    })
                 }
             }
             this.dialogData.form.transfer_amount_rate_Arr = <any>[];
