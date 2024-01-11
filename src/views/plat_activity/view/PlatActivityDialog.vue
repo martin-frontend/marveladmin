@@ -199,6 +199,7 @@
                                 allow-create
                                 default-first-option
                                 :placeholder="LangUtil('跳转url')"
+                                clearable
                             >
                                 <el-option
                                     v-for="(value, key) in openOptions"
