@@ -59,7 +59,7 @@ export default class PlatDirectlyCommissionModelProxy extends AbstractProxy impl
             settlement_period: "",
             commission_config: [
                 {
-                    name: "", // 等级描述名称
+                    level_desc: "", // 等级描述名称
                     loss_amount: 0, // 直属亏损金额
                     loss_bonus_ratio: 0, // 直属亏损分红百分比
                 },
@@ -122,7 +122,7 @@ export default class PlatDirectlyCommissionModelProxy extends AbstractProxy impl
             settlement_period: "",
             commission_config: [
                 {
-                    name: "", // 等级描述名称
+                    level_desc: "", // 等级描述名称
                     loss_amount: 0, // 直属亏损金额
                     loss_bonus_ratio: 0, // 直属亏损分红百分比
                 },

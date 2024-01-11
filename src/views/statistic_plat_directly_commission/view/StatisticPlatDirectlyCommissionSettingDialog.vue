@@ -177,7 +177,7 @@ export default class StatisticPlatDirectlyCommissionSettingDialog extends Abstra
     }
 
     isPositiveInteger(number: any) {
-        return Number.isInteger(number) && number > 0;
+        return Number.isInteger(number) && number >= 0;
     }
 
     //每一行的回调方法

@@ -1,13 +1,32 @@
 <template>
     <el-dialog :title="LangUtil(textMap[status])" :visible.sync="myProxy.dialogData.bShow">
         <el-form ref="form" :rules="rules" :model="form" label-width="115px" v-loading="net_status.loading">
-            <el-form-item size="mini" :label="tableColumns['name'].name" prop="name">
-                <el-input v-model="form.name" :placeholder="LangUtil('请输入')"></el-input>
+            <el-form-item :label="tableColumns['name'].name" prop="name">
+                <div class="flex d-flex">
+                    <el-input
+                        v-model="form.name"
+                        :placeholder="LangUtil('请输入')"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('name')">
+                        {{ LangUtil("翻译") }}
+                    </el-button>
+                </div>
             </el-form-item>
-            <el-form-item size="mini" :label="tableColumns['desc'].name" prop="desc">
-                <el-input type="textarea" v-model="form.desc" :placeholder="LangUtil('请输入')"></el-input>
+            <el-form-item :label="tableColumns['desc'].name" prop="desc">
+                <div class="flex d-flex">
+                    <el-input
+                        type="textarea"
+                        v-model="form.desc"
+                        :placeholder="LangUtil('请输入')"
+                        style="margin-right: 0.8rem"
+                    ></el-input>
+                    <el-button style="max-height: 35px" type="primary" size="mini" @click="handleTranslate('desc')">
+                        {{ LangUtil("翻译") }}
+                    </el-button>
+                </div>
             </el-form-item>
-            <el-form-item size="mini" :label="tableColumns['settlement_type'].name" prop="settlement_type">
+            <el-form-item :label="tableColumns['settlement_type'].name" prop="settlement_type">
                 <el-select v-model="form.settlement_type" filterable :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in tableColumns['settlement_type'].options"
@@ -17,7 +36,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item size="mini" :label="tableColumns['settlement_period'].name" prop="settlement_period">
+            <el-form-item :label="tableColumns['settlement_period'].name" prop="settlement_period">
                 <el-select v-model="form.settlement_period" filterable :placeholder="LangUtil('请选择')">
                     <el-option
                         v-for="(value, key) in tableColumns['settlement_period'].options"
@@ -115,6 +134,8 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import { DialogStatus } from "@/core/global/Constant";
 import GlobalVar from "@/core/global/GlobalVar";
 import LangUtil from "@/core/global/LangUtil";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component
 export default class PlatDirectlyCommissionModelDialog extends AbstractView {
@@ -125,6 +146,7 @@ export default class PlatDirectlyCommissionModelDialog extends AbstractView {
     net_status = GlobalVar.net_status;
     // proxy
     myProxy: PlatDirectlyCommissionModelProxy = this.getProxy(PlatDirectlyCommissionModelProxy);
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
     form = this.myProxy.dialogData.form;
@@ -266,7 +288,7 @@ export default class PlatDirectlyCommissionModelDialog extends AbstractView {
     }
 
     isPositiveInteger(number: any) {
-        return Number.isInteger(number) && number > 0;
+        return Number.isInteger(number) && number >= 0;
     }
 
     addLevel(value: any) {
@@ -279,6 +301,17 @@ export default class PlatDirectlyCommissionModelDialog extends AbstractView {
 
     deleteLevel(index: any, value: any[]) {
         value.splice(index, 1);
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        // data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_EMAIL;
+        //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
+        this.langProxy.showDialog(data, true);
     }
 }
 </script>
