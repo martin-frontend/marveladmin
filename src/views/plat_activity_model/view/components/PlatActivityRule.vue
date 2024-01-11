@@ -22,7 +22,13 @@
                             :value="Number(key)"
                         ></el-option>
                     </el-select>
-                    <el-select v-model="item.open_mode_url" filterable allow-create default-first-option :placeholder="LangUtil('跳转url')">
+                    <el-select
+                        v-model="item.open_mode_url"
+                        filterable
+                        allow-create
+                        default-first-option
+                        :placeholder="LangUtil('跳转url')"
+                    >
                         <el-option
                             v-for="(value, key) in openOptions"
                             :key="key"
@@ -126,7 +132,7 @@
                             ></el-input>
                             <el-input
                                 size="small"
-                                v-if="childRule.params_type == '6'"
+                                v-if="childRule.params_type == '6' && childRule.rule_id != '93'"
                                 v-model="childRule.params"
                                 :placeholder="LangUtil('请输入')"
                             ></el-input>
