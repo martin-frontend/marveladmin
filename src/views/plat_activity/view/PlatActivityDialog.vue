@@ -729,7 +729,12 @@
                                                     </el-input>
                                                     <el-select
                                                         size="small"
-                                                        v-if="childRule.params_type == '6' && childRule.rule_id == '93'"
+                                                        v-if="
+                                                            (childRule.params_type == '6' &&
+                                                                childRule.rule_id == '93') ||
+                                                                (childRule.params_type == '6' &&
+                                                                    childRule.rule_id == '94')
+                                                        "
                                                         v-model="childRule.params"
                                                         multiple
                                                         :placeholder="LangUtil('请输入')"
@@ -747,7 +752,11 @@
                                                     </el-select>
                                                     <el-input
                                                         size="small"
-                                                        v-if="childRule.params_type == '6' && childRule.rule_id != '93'"
+                                                        v-if="
+                                                            childRule.params_type == '6' &&
+                                                                childRule.rule_id != '93' &&
+                                                                childRule.rule_id != '94'
+                                                        "
                                                         v-model="childRule.params"
                                                         :placeholder="LangUtil('请输入')"
                                                         :disabled="isStatusUpdate"
