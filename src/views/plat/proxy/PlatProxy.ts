@@ -115,6 +115,11 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             commission_config: { name: '直属分红配置', options: {} },
             commission_model_id: { name: '直属分红配置', options: {} },
             betting_tax: { name: '游戏投注营利税收', options: {} },
+            is_game_audit: { name: '游戏稽核开关', options: {} },
+            start_audit_amount: { name: '起点稽核金额', options: {} },
+            trigger_audit_jackpot_multiplier: { name: '触发稽核爆奖倍数', options: {} },
+            trigger_audit_profit_amount: { name: '触发稽核盈利金额', options: {} },
+            audit_turnover_multiplier: { name: '稽核流水倍数', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -198,6 +203,11 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         is_currency_conversion: 98,
         is_need_kyc: 1,
         betting_tax: 0,
+        is_game_audit: 98,
+        start_audit_amount: "",
+        trigger_audit_profit_amount: "",
+        trigger_audit_jackpot_multiplier: "",
+        audit_turnover_multiplier: "",
     };
 
     /**弹窗相关数据 */
