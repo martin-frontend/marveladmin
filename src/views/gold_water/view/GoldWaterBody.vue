@@ -38,7 +38,12 @@
                     {{ tableColumns["type"].options[row.type] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.coin_name_unique.name" class-name="status-col" min-width="100px" prop="coin_name_unique">
+            <el-table-column
+                :label="tableColumns.coin_name_unique.name"
+                class-name="status-col"
+                min-width="100px"
+                prop="coin_name_unique"
+            >
             </el-table-column>
             <el-table-column :label="tableColumns.gold.name" class-name="status-col" min-width="100px">
                 <template slot-scope="{ row }">
@@ -70,6 +75,12 @@
             <el-table-column :label="tableColumns.pass_type.name" class-name="status-col" min-width="160px">
                 <template slot-scope="{ row }">
                     {{ row.pass_type === 0 ? "-" : tableColumns["pass_type"].options[row.pass_type] }}
+                </template>
+            </el-table-column>
+            <el-table-column :label="tableColumns.relation_ids.name" class-name="status-col" min-width="100px">
+                <template slot-scope="{ row }">
+                    <span v-if="row.relation_ids"> {{ LangUtil("下注订单编号") }}:{{ row.relation_ids }} </span>
+                    <span v-else> - </span>
                 </template>
             </el-table-column>
             <el-table-column :label="LangUtil('操作')" class-name="status-col" min-width="160px">
