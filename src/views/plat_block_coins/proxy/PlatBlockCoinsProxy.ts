@@ -58,12 +58,14 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
     };
+
     /**查询条件 */
     listQuery = {
         plat_id: "",
         page_count: 1,
         page_size: 20,
     };
+
     /**弹窗相关数据 */
     dialogData = {
         bShow: false,
@@ -107,12 +109,14 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             this.onQuery();
         }
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
         this.tableData.list.push(...data.list);
         Object.assign(this.tableData.pageInfo, data.pageInfo);
     }
+
     /**详细数据 */
     setDetail(data: any) {
         this.dialogData.formSource = data;
@@ -136,16 +140,32 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
             this.dialogData.form.plat_id = data.plat_id.toString();
             this.dialogData.form.type = data.type.toString();
             this.dialogData.form.vendor_types = this.dialogData.form.vendor_types.map(String);
-            // this.sendNotification(HttpType.undefined, { id: data.id });
+            /**依照支持产品类型筛选支持产品 */
+            let uniqueObject = {};
+            this.tableData.columns.vendor_ids.options[this.dialogData.form.plat_id];
+            this.dialogData.form.vendor_types.forEach(key => {
+                let selectedObject = this.tableData.columns.vendor_ids.options[this.dialogData.form.plat_id][key];
+
+                if (selectedObject) {
+                    Object.entries(selectedObject).forEach(([subKey, value]) => {
+                        if (!uniqueObject[subKey]) {
+                            uniqueObject[subKey] = value;
+                        }
+                    });
+                }
+            });
+            this.tableData.columns.vendor_ids_by_type.options = uniqueObject;
         } else {
             this.resetDialogForm();
             this.dialogData.formSource = null;
         }
     }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
     }
+
     /**重置弹窗表单 */
     resetDialogForm() {
         Object.assign(this.dialogData.form, {
@@ -174,6 +194,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
     onQuery() {
         this.sendNotification(HttpType.admin_plat_block_coins_index, objectRemoveNull(this.listQuery));
     }
+
     /**添加数据 */
     onAdd() {
         const form = this.dialogData.form;
@@ -198,6 +219,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
 
         this.sendNotification(HttpType.admin_plat_block_coins_store, objectRemoveNull(formCopy));
     }
+
     /**更新数据 */
     onUpdate() {
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
@@ -214,6 +236,7 @@ export default class PlatBlockCoinsProxy extends AbstractProxy implements IPlatB
         // 发送消息
         this.sendNotification(HttpType.admin_plat_block_coins_update, formCopy);
     }
+
     /**删除数据 */
     onDelete(id: any) {
         MessageBox.confirm(<string>LangUtil("是否删除该权限组？"), <string>LangUtil("提示"), {
