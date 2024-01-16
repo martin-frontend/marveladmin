@@ -21,6 +21,29 @@ Vue.use(Element, {
     size: "medium", // set element-ui default size
 });
 Vue.use(VueRouter);
+
+Vue.directive('el-select-loadmore', {
+    bind: function (el: any, binding: any) {
+        // 获取element-ui定义好的scroll父元素
+        const wrapEl = el.querySelector(".el-select-dropdown .el-select-dropdown__wrap");
+        if (wrapEl) {
+            wrapEl.addEventListener("scroll", function () {
+                /**
+                 * scrollHeight 获取元素内容高度(只读)
+                 * scrollTop 获取或者设置元素的偏移值, 常用于计算滚动条的位置, 当一个元素的容器没有产生垂直方向的滚动条, 那它的scrollTop 的值默认为0.
+                 * clientHeight 读取元素的可见高度(只读)
+                 * 如果元素滚动到底, 下面等式返回 true, 没有则返回 false:
+                 * ele.scrollHeight - ele.scrollTop === ele.clientHeight;
+                 */
+                if (this.scrollTop + this.clientHeight >= this.scrollHeight) {
+                    // binding 的 value 就是绑定的 loadmore 函数
+                    binding.value();
+                }
+            });
+        }
+    }
+})
+
 Vue.config.productionTip = false;
 // @ts-ignore
 Element.Dialog.props.closeOnClickModal.default = false;
@@ -42,6 +65,7 @@ LangConfig.load(GlobalVar.lang).then(() => {
         router,
         i18n,
         render: h => h(App),
+
     }).$mount("#app");
 
     //临时
@@ -53,7 +77,7 @@ LangConfig.load(GlobalVar.lang).then(() => {
     }
 });
 
-window.onerror = function(message, source, lineno, colno, error) {
+window.onerror = function (message, source, lineno, colno, error) {
     if (
         message != "" &&
         message != "ResizeObserver loop limit exceeded" &&
@@ -68,7 +92,7 @@ window.addEventListener("unhandledrejection", (e: any) => {
     }
 });
 
-document.onclick = function() {
+document.onclick = function () {
     GlobalVar.play_video = true;
     // document.onclick = null;
 };

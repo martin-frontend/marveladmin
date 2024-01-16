@@ -11,11 +11,24 @@
                 "
                 :clearable="false"
             />
-            <SearchSelect
-                :title="tableColumns.channel_id.name"
-                :options="tableColumns.channel_id_options"
-                v-model="listQuery.channel_id"
-            />
+            <div class="content">
+                <span class="title">
+                    {{ tableColumns.channel_id.name }}
+                </span>
+                <el-select
+                    style="margin-top: 0px"
+                    v-model="listQuery.channel_id"
+                    clearable
+                    filterable
+                    v-el-select-loadmore="loadMore"
+                    :filter-method="filterMethod"
+                    @blur.capture.native="onBlurChannel"
+                    @change="onChangeChannel"
+                >
+                    <el-option v-for="(item, key) in myProxy.options" :key="key" :label="item.key" :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
             <SearchInput :title="tableColumns.user_id.name" v-model="listQuery.user_id" />
             <SearchSelect
                 :title="tableColumns.event_type.name"
@@ -74,6 +87,21 @@ export default class PlatUsersEventRecordHeader extends AbstractView {
     listQuery = this.myProxy.listQuery;
     list = this.myProxy.tableData.list;
 
+    getPageList() {
+        this.myProxy.getPageList();
+    }
+
+    loadMore() {
+        this.getPageList();
+    }
+
+    filterMethod(val: any) {
+        this.myProxy.data = val
+            ? this.myProxy.allChannelData.filter(item => item.key.indexOf(val) > -1)
+            : this.myProxy.allChannelData;
+        this.getPageList();
+    }
+
     handlerSearch() {
         this.listQuery.page_count = 1;
         this.myProxy.onQuery();
@@ -81,6 +109,7 @@ export default class PlatUsersEventRecordHeader extends AbstractView {
 
     handlerReset() {
         this.myProxy.resetListQuery();
+        this.resetChannelOptions();
     }
 
     changePlat() {
@@ -95,9 +124,58 @@ export default class PlatUsersEventRecordHeader extends AbstractView {
     exportExcel() {
         this.myProxy.showFieldSelectionDialog();
     }
+
+    onBlurChannel(e: any) {
+        if (e.target.value) {
+            if (this.myProxy.options.length == 0) {
+                this.resetChannelOptions();
+            }
+        }
+    }
+
+    onChangeChannel() {
+        if (this.listQuery.channel_id == "") {
+            this.resetChannelOptions();
+        }
+    }
+
+    resetChannelOptions() {
+        this.myProxy.pageNo = 0;
+        this.myProxy.data = this.myProxy.allChannelData;
+        this.getPageList();
+    }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.title {
+    min-width: 97px;
+    text-align: center;
+    border-radius: 4px 0 0px 4px;
+    border: 1px solid #dcdfe6;
+    border-right: 0;
+    font-size: 14px;
+    background-color: #f5f7fa;
+    color: #909399;
+    vertical-align: middle;
+    display: table-cell;
+    position: relative;
+    padding: 0 20px;
+    width: 1px;
+    white-space: nowrap;
+}
+.content {
+    display: inline-table;
+    // width: 280px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    .el-select {
+        width: 100%;
+    }
+    ::v-deep .el-input__inner {
+        width: 100%;
+        border-radius: 0px 4px 4px 0px;
+    }
+}
 </style>
