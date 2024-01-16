@@ -190,7 +190,11 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
                 this.listQuery.plat_id = plat_id_options_keys[0];
                 // this.listQuery.plat_id = "30024";
             }
-
+            this.tableData.columns.channel_id_options = this.tableData.columns.channel_id.options[this.listQuery.plat_id];
+            const channel_id_keys = Object.keys(this.tableData.columns.channel_id_options);
+            channel_id_keys.forEach((key: any) => {
+                this.tableData.columns.channel_id_options[key] = key;
+            });
             this.onQuery();
         }
     }
@@ -252,7 +256,7 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
         this.dialogData.bShow = false;
     }
     /**重置弹窗表单 */
-    resetDialogForm() {}
+    resetDialogForm() { }
 
     /**查询 */
     onQuery() {
@@ -312,7 +316,7 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
             .then(() => {
                 // this.sendNotification(HttpType.undefined, { id, is_delete: 1 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
     get _userList() {
         const list = <any>["plat_id", "channel_id", "coin_name_unique"];

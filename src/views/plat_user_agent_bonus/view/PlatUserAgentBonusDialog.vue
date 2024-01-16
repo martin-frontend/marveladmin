@@ -238,6 +238,5 @@ export default class PlatUserAgentBonusDialog extends AbstractView {
 @import "@/styles/common.scss";
 .mark_font {
     color: red;
-    font-size: 0.5rem;
 }
 </style>

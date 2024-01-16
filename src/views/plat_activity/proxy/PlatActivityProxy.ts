@@ -355,6 +355,13 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                     for (const child of item.list) {
                         if (child.list)
                             for (const child_1 of child.list) {
+                                if ((child_1.type == 1 &&
+                                    child_1.rule_id
+                                    == 93) || (child_1.type == 1 &&
+                                        child_1.rule_id
+                                        == 94)) {
+                                    child_1.params = child_1.params.split(',')
+                                }
                                 if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
                                     if (this.getRuleInfo(child_1).key_value_type == 2) {
                                         if (!child_1.params) {
@@ -669,6 +676,13 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                     for (const child of item.list) {
                         if (child.list)
                             for (const child_1 of child.list) {
+                                if ((child_1.type == 1 &&
+                                    child_1.rule_id
+                                    == 93) || (child_1.type == 1 &&
+                                        child_1.rule_id
+                                        == 94)) {
+                                    child_1.params = child_1.params.join()
+                                }
                                 if (child_1.coin_type && child_1.type == "61" && child_1.params_type == 5) {
                                     // child_1.params = { [child_1.coin_type]: child_1.coin_amount };
 

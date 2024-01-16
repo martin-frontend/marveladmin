@@ -45,15 +45,11 @@
             </el-form-item>
 
             <el-form-item v-if="form.type == 4" :label="tableColumns.priority.name" prop="priority">
-                <el-input
-                    type="number"
-                    oninput="value=value.replace(/[^\d]/g,'')"
-                    min="0"
-                    v-model="form.priority"
-                ></el-input>
+                <el-input type="number" oninput="value=value.replace(/[^\d]/g,'')" min="0" v-model="form.priority">
+                </el-input>
             </el-form-item>
             <el-form-item size="mini" :label="tableColumns['vendor_types'].name" prop="vendor_types">
-                <el-checkbox-group v-model="form.vendor_types">
+                <el-checkbox-group v-model="form.vendor_types" @change="OnChangeVendorTypes">
                     <el-checkbox v-for="(value, key) in tableColumns['vendor_types'].options" :key="key" :label="key">
                         {{ value }}
                     </el-checkbox>
@@ -62,7 +58,7 @@
             <el-form-item :label="tableColumns.vendor_ids.name" prop="vendor_ids">
                 <el-select filterable multiple v-model="form.vendor_ids" :placeholder="LangUtil('请选择')">
                     <el-option
-                        v-for="(item, key) of tableColumns.vendor_ids.options[form.plat_id]"
+                        v-for="(item, key) of tableColumns.vendor_ids_by_type.options"
                         :label="item"
                         :value="key"
                         :key="key"
@@ -203,8 +199,30 @@ export default class PlatBlockCoinsDialog extends AbstractView {
     }
 
     onChangePlatId() {
-        this.form.vendor_ids = "";
+        this.form.vendor_ids = [];
         this.form.transfer_coin_name_unique = "";
+        this.form.vendor_types = [];
+        this.tableColumns.vendor_ids_by_type.options = {};
+    }
+
+    /**依照支持产品类型筛选支持产品 */
+    OnChangeVendorTypes() {
+        this.form.vendor_ids = [];
+
+        let uniqueObject = {};
+        this.tableColumns.vendor_ids.options[this.form.plat_id];
+        this.form.vendor_types.forEach(key => {
+            let selectedObject = this.tableColumns.vendor_ids.options[this.form.plat_id][key];
+
+            if (selectedObject) {
+                Object.entries(selectedObject).forEach(([subKey, value]) => {
+                    if (!uniqueObject[subKey]) {
+                        uniqueObject[subKey] = value;
+                    }
+                });
+            }
+        });
+        this.tableColumns.vendor_ids_by_type.options = uniqueObject;
     }
 }
 </script>

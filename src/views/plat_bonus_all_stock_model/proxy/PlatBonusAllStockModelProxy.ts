@@ -161,7 +161,7 @@ export default class PlatBonusAllStockModelProxy extends AbstractProxy implement
     }
     /**删除数据 */
     onDelete(data: any) {
-        MessageBox.confirm(<string>LangUtil("是否删除该权限组？"), <string>LangUtil("提示"), {
+        MessageBox.confirm(<string>LangUtil("您是否删除该记录"), <string>LangUtil("提示"), {
             confirmButtonText: <string>LangUtil("确定"),
             cancelButtonText: <string>LangUtil("取消"),
             type: "warning",
@@ -173,6 +173,6 @@ export default class PlatBonusAllStockModelProxy extends AbstractProxy implement
                     is_delete: 1,
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 }

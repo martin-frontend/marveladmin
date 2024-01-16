@@ -37,19 +37,52 @@
                 prop="coin_name_unique"
                 min-width="120px"
                 align="center"
-            ></el-table-column>
+            >
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.record_count.name"
                 prop="record_count"
                 min-width="100px"
                 align="center"
-            ></el-table-column>
+            >
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.bet_gold_coin.name"
                 prop="bet_gold_coin"
                 min-width="100px"
                 align="center"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.bet_gold_coin"
+                        :isShowDollar="false"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    />
+                </template>
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.un_settle_count.name"
+                prop="un_settle_count"
+                min-width="100px"
+                align="center"
+            >
+            </el-table-column>
+            <el-table-column
+                :label="tableColumns.un_settle_bet_gold_coin.name"
+                prop="un_settle_bet_gold_coin"
+                min-width="100px"
+                align="center"
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.un_settle_bet_gold_coin"
+                        :isShowDollar="false"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    />
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.win_gold_coin.name"
                 prop="win_gold_coin"
@@ -65,19 +98,46 @@
                 prop="valid_bet_gold_coin"
                 min-width="100px"
                 align="center"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.valid_bet_gold_coin"
+                        :isShowDollar="false"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    />
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.backwater_coin.name"
                 prop="backwater_coin"
                 min-width="100px"
                 align="center"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.backwater_coin"
+                        :isShowDollar="false"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    />
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.backwater_except_user_coin.name"
                 prop="backwater_except_user_coin"
                 min-width="100px"
                 align="center"
-            ></el-table-column>
+            >
+                <template slot-scope="{ row }">
+                    <WinLossDisplay
+                        :amount="row.backwater_except_user_coin"
+                        :isShowDollar="false"
+                        :isShowColor="false"
+                        :isShowPlus="false"
+                    />
+                </template>
+            </el-table-column>
             <el-table-column
                 :label="tableColumns.credit_rate_self.name"
                 prop="credit_rate_self"

@@ -199,6 +199,7 @@
                                 allow-create
                                 default-first-option
                                 :placeholder="LangUtil('跳转url')"
+                                clearable
                             >
                                 <el-option
                                     v-for="(value, key) in openOptions"
@@ -726,10 +727,38 @@
                                                         :placeholder="LangUtil('请输入')"
                                                         :disabled="isStatusUpdate"
                                                         style="width: 80px"
-                                                    ></el-input>
+                                                    >
+                                                    </el-input>
+                                                    <el-select
+                                                        size="small"
+                                                        v-if="
+                                                            (childRule.params_type == '6' &&
+                                                                childRule.rule_id == '93') ||
+                                                                (childRule.params_type == '6' &&
+                                                                    childRule.rule_id == '94')
+                                                        "
+                                                        v-model="childRule.params"
+                                                        multiple
+                                                        :placeholder="LangUtil('请输入')"
+                                                        :disabled="isStatusUpdate"
+                                                        style="width: 200px"
+                                                    >
+                                                        <el-option
+                                                            v-for="(value, key) in dialogColumns.assign_tag.options[
+                                                                form.plat_id
+                                                            ]"
+                                                            :key="key"
+                                                            :label="value"
+                                                            :value="key"
+                                                        ></el-option>
+                                                    </el-select>
                                                     <el-input
                                                         size="small"
-                                                        v-if="childRule.params_type == '6'"
+                                                        v-if="
+                                                            childRule.params_type == '6' &&
+                                                                childRule.rule_id != '93' &&
+                                                                childRule.rule_id != '94'
+                                                        "
                                                         v-model="childRule.params"
                                                         :placeholder="LangUtil('请输入')"
                                                         :disabled="isStatusUpdate"
