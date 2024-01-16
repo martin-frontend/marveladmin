@@ -205,6 +205,7 @@ export default class PlatBlockCoinsDialog extends AbstractView {
         this.tableColumns.vendor_ids_by_type.options = {};
     }
 
+    /**依照支持产品类型筛选支持产品 */
     OnChangeVendorTypes() {
         this.form.vendor_ids = [];
 
