@@ -370,14 +370,14 @@
                         </span>
                         <el-select v-model="item.award.type" filterable :placeholder="LangUtil('请选择')">
                             <el-option
-                                v-for="(value, key) in tableColumns['every_point_award_type'].options"
+                                v-for="(value, key) in tableColumns['every_point_award_type_fix'].options"
                                 :key="key"
                                 :label="value"
                                 :value="Number(key)"
                             >
                             </el-option>
                         </el-select>
-                        <template v-if="item.award.type != 3">
+                        <!-- <template v-if="item.award.type != 3">
                             <el-select
                                 v-model="item.award.settlement_type"
                                 filterable
@@ -392,7 +392,6 @@
                                 >
                                 </el-option>
                             </el-select>
-                            <!-- 数值 -->
                             <span v-if="item.award.settlement_type == 70">
                                 <el-input
                                     v-model="item.award.params[0]"
@@ -403,7 +402,6 @@
                                 >
                                 </el-input>
                             </span>
-                            <!-- 随机 -->
                             <span v-if="item.award.settlement_type == 71">
                                 <el-input
                                     v-model="item.award.params[0]"
@@ -420,7 +418,7 @@
                                 >
                                 </el-input>
                             </span>
-                        </template>
+                        </template> -->
                     </span>
                 </div>
             </div>
