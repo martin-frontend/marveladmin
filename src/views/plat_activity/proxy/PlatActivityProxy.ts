@@ -89,6 +89,10 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             every_point_cycle_condition_type: { name: '循环任务-条件', options: {} },
             every_point_every_condition_type: { name: '每日任务-条件', options: {} },
             every_point_routine_condition_type: { name: '普通任务-条件', options: {} },
+            rank_type: { name: '排行榜类型', options: {} },
+            lowest_score: { name: '最低分数', options: {} },
+            vendor_product_id: { name: '指定游戏', options: {} },
+            vendor_type: { name: '游戏类型', options: {} },
         },
         orderData: {
             id: "",
@@ -184,6 +188,11 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         routine_task: [],        // 普通任务
         user_term: "",
         coin_unique: "", // 活動幣種
+        rank_type: "",
+        lowest_score: "",
+        vendor_id: "",
+        vendor_product_id: "",
+        vendor_type: "",
     };
 
     conditionDefaultForm = {
@@ -349,7 +358,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
         this.dialogData.fileList1[0].url = this.dialogData.form.icon_url;
-        if (this.dialogData.form.rules && data.model_type != 12 && data.model_type != 13 && data.model_type != 14) {
+        if (this.dialogData.form.rules && data.model_type != 12 && data.model_type != 13 && data.model_type != 14 && this.dialogData.form.model_type != 15) {
             for (const item of this.dialogData.form.rules) {
                 if (item.list)
                     for (const child of item.list) {
@@ -391,6 +400,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             }
             else if (data.model_type == 14) {
                 this.setActivityLotteryAwardData(data);
+            }
+            else if (data.model_type == 15) {
+                this.setActivityRankingAwardData(data);
             }
         }
     }
@@ -482,6 +494,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.point_lottery_cons = JSON.parse(JSON.stringify(data.point_lottery_cons));
         this.dialogData.form.point_lottery_award = JSON.parse(JSON.stringify(data.point_lottery_award));
         this.dialogData.form.routine_task = JSON.parse(JSON.stringify(data.routine_task));
+    }
+
+    setActivityRankingAwardData(data: any) {
     }
 
     /**重置查询条件 */
@@ -670,7 +685,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_start_time,
             coin_unique
         } = this.dialogData.form;
-        if (rules && this.dialogData.form.model_type != 12 && this.dialogData.form.model_type != 13 && this.dialogData.form.model_type != 14) {
+        if (rules && this.dialogData.form.model_type != 12 && this.dialogData.form.model_type != 13 && this.dialogData.form.model_type != 14 && this.dialogData.form.model_type != 15) {
             for (const item of rules) {
                 if (item.list)
                     for (const child of item.list) {
@@ -850,7 +865,15 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             formCopy.point_lottery_award = JSON.stringify(this.dialogData.form.point_lottery_award);
             formCopy.routine_task = JSON.stringify(this.dialogData.form.routine_task);
         }
-
+        if (this.dialogData.form.model_type == 15) {
+            formCopy.model_type = 15;
+            formCopy.rank_award = JSON.stringify(this.dialogData.form.rank_award);
+            formCopy.rank_type = this.dialogData.form.rank_type;
+            formCopy.lowest_score = this.dialogData.form.lowest_score;
+            formCopy.vendor_id = this.dialogData.form.vendor_id;
+            formCopy.vendor_type = this.dialogData.form.vendor_type;
+            formCopy.vendor_product_id = JSON.stringify(this.dialogData.form.vendor_product_id);
+        }
         if (!formCopy.show_end_time) {
             formCopy.show_end_time = formCopy.end_time;
         }
@@ -1064,6 +1087,10 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             formCopy.point_lottery_award = JSON.stringify(this.dialogData.form.point_lottery_award);
             formCopy.routine_task = JSON.stringify(this.dialogData.form.routine_task);
         }
+        if (this.dialogData.form.model_type == 15) {
+            formCopy.model_type = 15;
+            formCopy.rank_award = JSON.stringify(this.dialogData.form.rank_award);
+        }
         if (this.dialogData.conditionForm.assign_is_all == false &&
             this.dialogData.conditionForm.assign_is_agent == false &&
             this.dialogData.conditionForm.assign_is_channel == false &&
@@ -1227,6 +1254,11 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 is_once,
                 rule_desc,
                 active_model_tag,
+                rank_type,
+                lowest_score,
+                vendor_id,
+                vendor_product_id,
+                vendor_type,
             } = body;
             this.dialogData.form.model_open_mode = open_mode;
             this.dialogData.form.settlement_type = settlement_type;
@@ -1241,7 +1273,12 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.dialogData.form.is_once = is_once;
             this.dialogData.form.show_type = show_types[0];
             this.dialogData.form.model_type = body.type;
-            if (data.type != 12 && data.type != 13 && data.type != 14) {
+            this.dialogData.form.rank_type = rank_type;
+            this.dialogData.form.lowest_score = lowest_score;
+            this.dialogData.form.vendor_id = vendor_id;
+            this.dialogData.form.vendor_product_id = vendor_product_id;
+            this.dialogData.form.vendor_type = vendor_type;
+            if (data.type != 12 && data.type != 13 && data.type != 14 && data.type != 15) {
                 for (const item of rules) {
                     for (const child of item.list) {
                         for (const child_1 of child.list) {
@@ -1285,6 +1322,18 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                             task.award.params = ["", ""]
                         }
                     })
+                } else if (data.type == 15) {
+                    const obj = {
+                        interval: ["", ""],
+                        type: "0",
+                        params: {
+                            key: "",
+                            value: 0,
+                        },
+                        award: { key: "", value: 0 },
+                        bonus_multiple: ""
+                    };
+                    this.dialogData.form.rank_award.push(JSON.parse(JSON.stringify(obj)));
                 }
             }
             this.dialogData.form.transfer_amount_rate_Arr = <any>[];
