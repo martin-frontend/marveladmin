@@ -65,6 +65,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             user_term: { name: "用户期限", options: {} },
             every_point_award_settlement_type: { name: '奖励方式', options: {} },
             every_point_award_type: { name: '抽奖奖励', options: {} },
+            every_point_award_type_fix: { name: '抽奖奖励', options: { 3: LangUtil('代币') } },
             every_point_cons_type: { name: '抽奖消耗', options: {} },
             every_point_cycle_condition_type: { name: '循环任务-条件', options: {} },
             every_point_every_condition_type: { name: '每日任务-条件', options: {} },
