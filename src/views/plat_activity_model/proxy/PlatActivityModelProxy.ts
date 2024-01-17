@@ -26,7 +26,7 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
 
     /**表格相关数据 */
     tableData = {
-        columns: {
+        columns: <any>{
             activity_desc: { name: "", options: {} },
             active_model_tag: { name: "", options: {} },
             activity_name: { name: "", options: {} },
@@ -70,6 +70,11 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             every_point_cycle_condition_type: { name: '循环任务-条件', options: {} },
             every_point_every_condition_type: { name: '每日任务-条件', options: {} },
             every_point_routine_condition_type: { name: '普通任务-条件', options: {} },
+            rank_type: { name: '排行榜类型', options: {} },
+            lowest_score: { name: '最低分数', options: {} },
+            vendor_id: { name: '指定厂商', options: {} },
+            vendor_product_id: { name: '指定游戏', options: {} },
+            vendor_type: { name: '游戏类型', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -163,6 +168,11 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
         point_lottery_award: [], // 抽奖奖励
         routine_task: [],        // 普通任务
         user_term: "",
+        rank_type: "",
+        lowest_score: "",
+        vendor_id: "",
+        vendor_product_id: "",
+        vendor_type: "",
     };
 
     /**弹窗相关数据 */
@@ -232,12 +242,14 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
     resetDialogForm() {
         this.dialogData.form = JSON.parse(JSON.stringify(this.defaultForm));
         const obj = {
-            interval: [1, 3],
+            interval: ["", ""],
             type: "0",
             params: {
                 key: "",
                 value: 0,
             },
+            award: { key: "", value: 0 },
+            bonus_multiple: ""
         };
         const xiaohao_keys = Object.keys(this.tableData.columns.lottery_cons_type.options);
         if (xiaohao_keys && xiaohao_keys.length > 0) obj.type = xiaohao_keys[0];
@@ -389,6 +401,20 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             delete formCopy.lottery_cons;
             delete formCopy.rank_award;
         }
+        if (this.dialogData.form.type == 15) {
+            formCopy.vendor_product_id = JSON.stringify(formCopy.vendor_product_id);
+            delete formCopy.award_types;
+            delete formCopy.ball_award;
+            delete formCopy.cycle_task;
+            delete formCopy.every_task;
+            delete formCopy.day_num_init_config;
+            delete formCopy.lottery_award;
+            delete formCopy.point_lottery_cons;
+            delete formCopy.point_lottery_award;
+            delete formCopy.lottery_cons;
+            delete formCopy.rank_award;
+            delete formCopy.routine_task;
+        }
         this.sendNotification(HttpType.admin_plat_activity_model_store, objectRemoveNull(formCopy));
     }
 
@@ -445,6 +471,20 @@ export default class PlatActivityModelProxy extends AbstractProxy implements IPl
             delete formCopy.lottery_award;
             delete formCopy.lottery_cons;
             delete formCopy.rank_award;
+        }
+        if (this.dialogData.form.type == 15) {
+            formCopy.vendor_product_id = JSON.stringify(formCopy.vendor_product_id);
+            delete formCopy.award_types;
+            delete formCopy.ball_award;
+            delete formCopy.cycle_task;
+            delete formCopy.every_task;
+            delete formCopy.day_num_init_config;
+            delete formCopy.lottery_award;
+            delete formCopy.point_lottery_cons;
+            delete formCopy.point_lottery_award;
+            delete formCopy.lottery_cons;
+            delete formCopy.rank_award;
+            delete formCopy.routine_task;
         }
         this.sendNotification(HttpType.admin_plat_activity_model_update, objectRemoveNull(formCopy));
     }

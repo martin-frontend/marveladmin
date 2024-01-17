@@ -254,8 +254,12 @@
                                 size="mini"
                                 :label="tableColumns['award_type'].name"
                                 prop="award_type"
-                                v-if="form.type == 1 && (form.settlement_type == 1 || form.settlement_type == 2)"
-                            >
+                                v-if="
+                                    form.type == 1 &&
+                                        (form.settlement_type == 1 || form.settlement_type == 2) &&
+                                        !isActivityRankingAward
+                                "
+                                >{{}}
                                 <el-radio-group v-model="form.award_type" disabled v-if="isStatusUpdate">
                                     <el-radio
                                         v-for="(value, key) in tableColumns['award_type'].options"
@@ -644,7 +648,10 @@
                         <PlatActivityBallAward v-if="isBallAward" />
                         <PlatActivitySpinAward v-else-if="isSpinAward" />
                         <PlatActivityLotteryAward v-else-if="isActivityLotteryAward" />
-                        <template v-if="!isBallAward && !isSpinAward && !isActivityLotteryAward">
+                        <PlatActivityRankingAward v-else-if="isActivityRankingAward" />
+                        <template
+                            v-if="!isBallAward && !isSpinAward && !isActivityLotteryAward && !isActivityRankingAward"
+                        >
                             <!-- 奖励规则 -->
                             <div v-if="form.type == 1 && form.model_id" class="_title">
                                 {{ LangUtil("奖励规则") }}
@@ -1434,6 +1441,7 @@ import { BaseInfo } from "@/components/vo/commonVo";
 import PlatActivityBallAward from "./components/PlatActivityBallAward.vue";
 import PlatActivitySpinAward from "./components/PlatActivitySpinAward.vue";
 import PlatActivityLotteryAward from "./components/PlatActivityLotteryAward.vue";
+import PlatActivityRankingAward from "./components/PlatActivityRankingAward.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
@@ -1441,6 +1449,7 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
         PlatActivityBallAward,
         PlatActivitySpinAward,
         PlatActivityLotteryAward,
+        PlatActivityRankingAward,
         SearchDatePicker,
     },
 })
@@ -1483,6 +1492,10 @@ export default class PlatActivityDialog extends AbstractView {
 
     get isActivityLotteryAward() {
         return this.form.model_type == 14;
+    }
+
+    get isActivityRankingAward() {
+        return this.form.model_type == 15;
     }
 
     get curTime() {
@@ -1593,6 +1606,11 @@ export default class PlatActivityDialog extends AbstractView {
             task_water_rate_64: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             task_water_rate_128: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             user_term: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            rank_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            lowest_score: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            vendor_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            vendor_product_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            vendor_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 
