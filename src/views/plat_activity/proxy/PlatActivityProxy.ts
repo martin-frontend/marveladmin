@@ -849,6 +849,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             formCopy.point_lottery_cons = JSON.stringify(this.dialogData.form.point_lottery_cons);
             formCopy.point_lottery_award = JSON.stringify(this.dialogData.form.point_lottery_award);
             formCopy.routine_task = JSON.stringify(this.dialogData.form.routine_task);
+            formCopy.user_term = this.dialogData.form.user_term;
         }
 
         if (!formCopy.show_end_time) {
@@ -1063,6 +1064,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             formCopy.point_lottery_cons = JSON.stringify(this.dialogData.form.point_lottery_cons);
             formCopy.point_lottery_award = JSON.stringify(this.dialogData.form.point_lottery_award);
             formCopy.routine_task = JSON.stringify(this.dialogData.form.routine_task);
+            formCopy.user_term = this.dialogData.form.user_term;
         }
         if (this.dialogData.conditionForm.assign_is_all == false &&
             this.dialogData.conditionForm.assign_is_agent == false &&
