@@ -1335,7 +1335,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                             key: "",
                             value: 0,
                         },
-                        award: { key: "", value: 0 },
+                        award: { key: "", value: "" },
                         bonus_multiple: ""
                     };
                     this.dialogData.form.rank_award.push(JSON.parse(JSON.stringify(obj)));

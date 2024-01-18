@@ -1632,6 +1632,7 @@ export default class PlatActivityDialog extends AbstractView {
     handleAdd() {
         let activity = false;
         let condition = false;
+        let isValide = true;
         (this.$refs["dialogForm"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 condition = true;
@@ -1642,11 +1643,47 @@ export default class PlatActivityDialog extends AbstractView {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 activity = true;
+                const config: any = this.myProxy.dialogData.form.rank_award;
+                const element = config;
+                element.forEach((item: any) => {
+                    if (!isValide) return;
+                    let errorCode1: any = this.LangUtil("开始排名必须填写");
+                    let errorCode2: any = this.LangUtil("结束排名必须填写");
+                    let errorCode3: any = this.LangUtil("奖励币种必须选择");
+                    let errorCode4: any = this.LangUtil("奖励数量必须填写");
+                    let errorCode5: any = this.LangUtil("提现流水倍数必须填写");
+                    if (item.interval[0] == "") {
+                        this.$message.warning(errorCode1);
+                        this.myProxy.editTabsActivity = "activity";
+                        isValide = false;
+                        return;
+                    } else if (item.interval[1] == "") {
+                        this.$message.warning(errorCode2);
+                        this.myProxy.editTabsActivity = "activity";
+                        isValide = false;
+                        return;
+                    } else if (item.award.key == "") {
+                        this.$message.warning(errorCode3);
+                        this.myProxy.editTabsActivity = "activity";
+                        isValide = false;
+                        return;
+                    } else if (item.award.value == "") {
+                        this.$message.warning(errorCode4);
+                        this.myProxy.editTabsActivity = "activity";
+                        isValide = false;
+                        return;
+                    } else if (item.bonus_multiple == "") {
+                        this.$message.warning(errorCode5);
+                        this.myProxy.editTabsActivity = "activity";
+                        isValide = false;
+                        return;
+                    }
+                });
             } else {
                 this.myProxy.editTabsActivity = "activity";
             }
         });
-        if (activity && condition) {
+        if (activity && condition && isValide) {
             this.myProxy.onAdd();
         }
     }
@@ -1668,6 +1705,7 @@ export default class PlatActivityDialog extends AbstractView {
                 this.myProxy.editTabsActivity = "activity";
             }
         });
+
         if (activity && condition) {
             this.myProxy.onUpdate();
         }

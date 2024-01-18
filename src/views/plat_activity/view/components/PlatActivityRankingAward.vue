@@ -15,6 +15,8 @@
             <el-input
                 v-model="form.lowest_score"
                 :placeholder="LangUtil('请输入')"
+                onkeyup="this.value=(this.value.match(/\d+(.\d{0,2})?/)||[''])[0]"
+                @blur="inputLowestScoreChange"
                 :disabled="isStatusUpdate"
             ></el-input>
         </el-form-item>
@@ -206,6 +208,10 @@ export default class PlatActivityRankingAward extends AbstractView {
 
     OnChangeVendorId() {
         this.form.vendor_product_id = "";
+    }
+
+    inputLowestScoreChange(e: any) {
+        this.form.lowest_score = e.target.value;
     }
 }
 </script>
