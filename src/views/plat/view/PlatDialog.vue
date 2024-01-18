@@ -744,9 +744,9 @@
                     </div>
                 </el-form-item> -->
 
-                <el-form-item size="mini" :label="tableColumns['betting_tax'].name">
+                <el-form-item size="mini" :label="tableColumns['game_profit_audit'].name">
                     <span slot="label">
-                        {{ tableColumns["betting_tax"].name }}
+                        {{ tableColumns["game_profit_audit"].name }}
                         <el-tooltip
                             :content="
                                 LangUtil(
