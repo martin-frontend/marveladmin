@@ -12,7 +12,13 @@
             </el-select>
         </el-form-item>
         <el-form-item :label="tableColumns['lowest_score'].name" prop="lowest_score" class="mini_input">
-            <el-input v-model="form.lowest_score" :placeholder="LangUtil('请输入')"></el-input>
+            <el-input
+                v-model="form.lowest_score"
+                :placeholder="LangUtil('请输入')"
+                onkeyup="this.value=(this.value.match(/\d+(.\d{0,2})?/)||[''])[0]"
+                @blur="inputLowestScoreChange"
+            >
+            </el-input>
         </el-form-item>
         <el-form-item :label="tableColumns['vendor_type'].name" prop="vendor_type">
             <div style="display: flex;">
@@ -178,6 +184,10 @@ export default class PlatActivityRankingAward extends AbstractView {
 
     OnChangeVendorId() {
         this.form.vendor_product_id = "";
+    }
+
+    inputLowestScoreChange(e: any) {
+        this.form.lowest_score = e.target.value;
     }
 }
 </script>
