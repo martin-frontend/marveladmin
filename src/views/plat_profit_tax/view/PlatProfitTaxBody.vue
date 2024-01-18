@@ -14,7 +14,10 @@
                     {{ tableColumns.plat_id.options[row.plat_id] }}
                 </template>
             </el-table-column>
-            <el-table-column :label="tableColumns.vendor_name.name" prop="vendor_name" align="center">
+            <el-table-column :label="tableColumns.vendor_id.name" prop="vendor_id" align="center">
+                <template slot-scope="{ row }">
+                    {{ tableColumns.vendor_id.options[row.plat_id][row.vendor_id] }}
+                </template>
             </el-table-column>
             <el-table-column :label="tableColumns.tax.name" prop="tax" align="center">
                 <template slot-scope="{ row }">
