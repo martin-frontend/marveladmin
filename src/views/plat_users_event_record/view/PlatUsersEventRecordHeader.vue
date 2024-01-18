@@ -114,11 +114,17 @@ export default class PlatUsersEventRecordHeader extends AbstractView {
 
     changePlat() {
         this.listQuery.channel_id = "";
-        this.tableColumns.channel_id_options = this.tableColumns.channel_id.options[this.listQuery.plat_id];
+        this.myProxy.tableData.columns.channel_id_options = this.myProxy.tableData.columns.channel_id.options[
+            this.listQuery.plat_id
+        ];
         const channel_id_keys = Object.keys(this.tableColumns.channel_id_options);
+        this.myProxy.pageNo = 0;
+        this.myProxy.data = [];
         channel_id_keys.forEach((key: any) => {
-            this.tableColumns.channel_id_options[key] = key;
+            this.myProxy.data.push({ key: key });
         });
+        this.myProxy.allChannelData = this.myProxy.data;
+        this.getPageList();
     }
 
     exportExcel() {
