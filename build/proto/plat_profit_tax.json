@@ -1,0 +1,13 @@
+{
+    "name": "营利税收管理",
+    "description": "营利税收管理",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75271146",
+    "list": [
+        "admin/plat_profit_tax/table_columns",
+        "admin/plat_profit_tax/index",
+        "admin/plat_profit_tax/show/{id}",
+        "admin/plat_profit_tax/store",
+        "admin/plat_profit_tax/update/{id}",
+        "admin/plat_profit_tax/delete/{id}"
+    ]
+}
