@@ -338,6 +338,10 @@ const layoutRouter = {
             name: "弹窗管理",
             component: () => import(/* webpackChunkName: "plat_pops" */"@/views/plat_pops/view/PlatPops.vue")
         },        {
+            path: "plat_profit_tax",
+            name: "营利税收管理",
+            component: () => import(/* webpackChunkName: "plat_profit_tax" */"@/views/plat_profit_tax/view/PlatProfitTax.vue")
+        },        {
             path: "plat_register_same_ip_log",
             name: "同IP注册用户风控",
             component: () => import(/* webpackChunkName: "plat_register_same_ip_log" */"@/views/plat_register_same_ip_log/view/PlatRegisterSameIpLog.vue")

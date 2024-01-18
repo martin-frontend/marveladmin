@@ -731,7 +731,7 @@
                     </div>
                 </el-form-item>
 
-                <el-form-item size="mini" :label="tableColumns['betting_tax'].name">
+                <!-- <el-form-item size="mini" :label="tableColumns['betting_tax'].name">
                     <span slot="label">
                         {{ tableColumns["betting_tax"].name }}
                         <el-tooltip
@@ -753,7 +753,7 @@
                             @blur="inputBettingTaxChange"
                         ></el-input>
                     </div>
-                </el-form-item>
+                </el-form-item> -->
 
                 <el-form-item size="mini" :label="tableColumns['betting_tax'].name">
                     <span slot="label">

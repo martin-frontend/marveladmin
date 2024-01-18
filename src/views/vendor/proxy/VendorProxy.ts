@@ -67,6 +67,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             white_ip: { name: 'IP白名單', options: {} },
             maintain_end_time: { name: '维护结束时间', options: {} },
             maintain_start_time: { name: '维护开始时间', options: {} },
+            is_enable_profit_tax: { name: '是否支持收取营利税收', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -119,6 +120,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             white_ip: "",
             maintain_end_time: "",
             maintain_start_time: "",
+            is_enable_profit_tax: "",
         },
         formSource: null, // 表单的原始数据
         // 扩展数据
@@ -228,6 +230,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             white_ip: "",
             maintain_end_time: "",
             maintain_start_time: "",
+            is_enable_profit_tax: "",
         });
         this.dialogData.extendsData = {};
         this.dialogData.betCodeContentData = {};
@@ -268,6 +271,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             white_ip,
             maintain_end_time,
             maintain_start_time,
+            is_enable_profit_tax,
         } = this.dialogData.form;
         const formCopy: any = {
             bet_detail_url,
@@ -291,6 +295,7 @@ export default class VendorProxy extends AbstractProxy implements IVendorProxy {
             white_ip,
             maintain_end_time,
             maintain_start_time,
+            is_enable_profit_tax,
         };
         formCopy.vendor_types = JSON.stringify(formCopy.vendor_types);
         formCopy.languages = JSON.stringify(formCopy.languages);
