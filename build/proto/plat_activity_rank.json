@@ -1,0 +1,12 @@
+{
+    "name": "排行榜",
+    "description": "排行榜",
+    "document": "http://35.220.178.180:8090/pages/viewpage.action?pageId=75271151",
+    "list": [
+        "admin/plat_activity/rank_list/table_columns",
+        "admin/plat_activity/rank_list/index",
+        "admin/plat_activity/rank_list/update/{id}",
+        "admin/plat_activity/rank_list_user/table_columns",
+        "admin/plat_activity/rank_list_user/index"
+    ]
+}

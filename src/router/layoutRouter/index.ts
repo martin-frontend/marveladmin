@@ -218,6 +218,10 @@ const layoutRouter = {
             name: "活动模版配置",
             component: () => import(/* webpackChunkName: "plat_activity_model" */"@/views/plat_activity_model/view/PlatActivityModel.vue")
         },        {
+            path: "plat_activity_rank",
+            name: "排行榜",
+            component: () => import(/* webpackChunkName: "plat_activity_rank" */"@/views/plat_activity_rank/view/PlatActivityRank.vue")
+        },        {
             path: "plat_activity_rule",
             name: "活动规则配置",
             component: () => import(/* webpackChunkName: "plat_activity_rule" */"@/views/plat_activity_rule/view/PlatActivityRule.vue")
