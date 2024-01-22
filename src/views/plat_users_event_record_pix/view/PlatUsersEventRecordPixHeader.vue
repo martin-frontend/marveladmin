@@ -29,7 +29,8 @@
                     clearable
                     filterable
                     v-el-select-loadmore="loadMore"
-                    :filter-method="filterMethod"
+                    remote
+                    :remote-method="filterMethod"
                     @blur.capture.native="onBlurChannel"
                     @change="onChangeChannel"
                 >
@@ -160,9 +161,11 @@ export default class PlatUsersEventRecordPixHeader extends AbstractView {
 
     onBlurChannel(e: any) {
         if (e.target.value) {
-            if (this.myProxy.options.length == 0) {
-                this.resetChannelOptions();
-            }
+            setTimeout(() => {
+                if (this.myProxy.options.length == 0 || this.myProxy.listQuery.channel_id == "") {
+                    this.resetChannelOptions();
+                }
+            }, 200);
         }
     }
 
