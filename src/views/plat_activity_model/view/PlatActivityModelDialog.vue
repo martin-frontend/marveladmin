@@ -336,11 +336,6 @@ export default class PlatActivityModelDialog extends AbstractView {
             user_term: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             rank_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
             lowest_score: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
-            vendor_id: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
-            vendor_product_id: [
-                { type: "array", required: true, message: this.LangUtil("必须选择"), trigger: "change" },
-            ],
-            vendor_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
         };
     }
 
