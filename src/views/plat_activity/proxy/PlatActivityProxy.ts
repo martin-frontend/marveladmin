@@ -1094,6 +1094,11 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         }
         if (this.dialogData.form.model_type == 15) {
             formCopy.model_type = 15;
+            formCopy.rank_type = this.dialogData.form.rank_type;
+            formCopy.lowest_score = this.dialogData.form.lowest_score;
+            formCopy.vendor_id = this.dialogData.form.vendor_id;
+            formCopy.vendor_type = this.dialogData.form.vendor_type;
+            formCopy.vendor_product_id = JSON.stringify(this.dialogData.form.vendor_product_id);
             formCopy.rank_award = JSON.stringify(this.dialogData.form.rank_award);
         }
         if (this.dialogData.conditionForm.assign_is_all == false &&
