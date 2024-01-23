@@ -20,7 +20,12 @@
                 :disabled="isStatusUpdate"
             ></el-input>
         </el-form-item>
-        <el-form-item size="mini" :label="tableColumns['vendor_type'].name" prop="vendor_type">
+        <el-form-item
+            size="mini"
+            :label="tableColumns['vendor_type'].name"
+            prop="vendor_type"
+            v-if="form.rank_type == 1 || form.rank_type == 2 || form.rank_type == 3"
+        >
             <div style="display: flex;">
                 <el-select
                     v-model="form.vendor_type"
