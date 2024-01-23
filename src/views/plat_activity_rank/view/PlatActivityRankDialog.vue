@@ -40,12 +40,19 @@
                 align="center"
                 min-width="160px"
             >
+                <template slot-scope="{ row }">
+                    <span v-if="activity.rank_type == 4 || activity.rank_type == 5">-</span>
+                    <span v-else>{{ row.reach_num }}</span>
+                </template>
             </el-table-column>
             <el-table-column :label="tableColumns.rank_award.name" prop="rank_award" align="center">
                 <template slot-scope="{ row }">
-                    <p v-for="(value, key) of row.rank_award" :key="key" style="text-align: left;">
-                        {{ key }} : {{ value }}
-                    </p>
+                    <span v-if="row.rank_award.length == 0"> - </span>
+                    <span v-else>
+                        <p v-for="(value, key) of row.rank_award" :key="key" style="text-align: left;">
+                            {{ key }} : {{ value }}
+                        </p>
+                    </span>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.process_status.name" prop="process_status" align="center">
@@ -55,7 +62,8 @@
             </el-table-column>
             <el-table-column :label="tableColumns.award_status.name" prop="award_status" align="center">
                 <template slot-scope="{ row }">
-                    <div>{{ tableColumns.award_status.options[row.award_status] }}</div>
+                    <div v-if="row.award_status == 0">-</div>
+                    <div v-else>{{ tableColumns.award_status.options[row.award_status] }}</div>
                 </template>
             </el-table-column>
         </el-table>
