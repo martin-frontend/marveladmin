@@ -20,7 +20,7 @@
             >
             </el-input>
         </el-form-item>
-        <el-form-item
+        <!-- <el-form-item
             :label="tableColumns['vendor_type'].name"
             prop="vendor_type"
             v-if="form.rank_type == 1 || form.rank_type == 2 || form.rank_type == 3"
@@ -69,7 +69,7 @@
                     </el-select>
                 </el-form-item>
             </div>
-        </el-form-item>
+        </el-form-item> -->
         <!-- 抽奖消耗 -->
         <!-- <div class="border_div_max">
             <div class="title_font">

@@ -32,6 +32,7 @@
                     filterable
                     :placeholder="LangUtil('游戏类型')"
                     :disabled="isStatusUpdate"
+                    @change="onChangeVendorType"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns['vendor_type'].options"
@@ -46,11 +47,11 @@
                         v-model="form.vendor_id"
                         filterable
                         :placeholder="LangUtil('游戏厂商')"
-                        @change="OnChangeVendorId"
+                        @change="onChangeVendorId"
                         :disabled="isStatusUpdate"
                     >
                         <el-option
-                            v-for="(value, key) in tableColumns['vendor_id'].options"
+                            v-for="(value, key) in tableColumns['vendor_id'].options_key[form.vendor_type]"
                             :key="key"
                             :label="value"
                             :value="Number(key)"
@@ -211,7 +212,12 @@ export default class PlatActivityRankingAward extends AbstractView {
         }
     }
 
-    OnChangeVendorId() {
+    onChangeVendorType() {
+        this.form.vendor_id = "";
+        this.form.vendor_product_id = "";
+    }
+
+    onChangeVendorId() {
         this.form.vendor_product_id = "";
     }
 
