@@ -1266,9 +1266,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 active_model_tag,
                 rank_type,
                 lowest_score,
-                vendor_id,
-                vendor_product_id,
-                vendor_type,
             } = body;
             this.dialogData.form.model_open_mode = open_mode;
             this.dialogData.form.settlement_type = settlement_type;
@@ -1285,9 +1282,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.dialogData.form.model_type = body.type;
             this.dialogData.form.rank_type = rank_type;
             this.dialogData.form.lowest_score = lowest_score;
-            this.dialogData.form.vendor_id = vendor_id;
-            this.dialogData.form.vendor_product_id = vendor_product_id;
-            this.dialogData.form.vendor_type = vendor_type;
             if (data.type != 12 && data.type != 13 && data.type != 14 && data.type != 15) {
                 for (const item of rules) {
                     for (const child of item.list) {
