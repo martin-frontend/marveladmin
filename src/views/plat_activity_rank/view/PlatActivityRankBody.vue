@@ -19,7 +19,9 @@
             <el-table-column :label="tableColumns.id.name" prop="id" align="center"> </el-table-column>
             <el-table-column :label="tableColumns.process_status.name" prop="process_status" align="center">
                 <template slot-scope="{ row }">
-                    <div>{{ tableColumns.process_status.options[row.process_status] }}</div>
+                    <div :class="row.process_status | statusFilter">
+                        {{ tableColumns.process_status.options[row.process_status] }}
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.start_time.name" prop="start_time" align="center"> </el-table-column>
@@ -61,6 +63,17 @@ import LangUtil from "@/core/global/LangUtil";
     components: {
         Pagination,
     },
+    filters: {
+        statusFilter(status: any) {
+            const statusMap: any = {
+                1: "prepare",
+                11: "proceed",
+                21: "close",
+                91: "end",
+            };
+            return statusMap[status];
+        },
+    },
 })
 export default class PlatActivityRankBody extends AbstractView {
     //权限标识
@@ -76,6 +89,7 @@ export default class PlatActivityRankBody extends AbstractView {
     pageInfo = this.myProxy.tableData.pageInfo;
     listQuery = this.myProxy.listQuery;
     LangUtil = LangUtil;
+
     handlerPageSwitch(page: number) {
         this.listQuery.page_count = page;
         this.myProxy.onQuery();
@@ -97,4 +111,16 @@ export default class PlatActivityRankBody extends AbstractView {
 
 <style scoped lang="scss">
 @import "@/styles/common.scss";
+.prepare {
+    color: #ff4949;
+}
+.proceed {
+    color: #13ce66;
+}
+.close {
+    color: #c9c92e;
+}
+.end {
+    color: #c9c9c9;
+}
 </style>
