@@ -70,7 +70,7 @@ export default class PlatActivityRankProxy extends AbstractProxy implements IPla
         plat_id: "",
         process_status: "",
         "start_time-{<=}": "",
-        "end_time-{>=}": "",
+        "start_time-{>=}": "",
     };
 
     listUserQuery = {
@@ -133,7 +133,7 @@ export default class PlatActivityRankProxy extends AbstractProxy implements IPla
         Object.assign(this.listQuery, {
             process_status: "",
             "start_time-{<=}": "",
-            "end_time-{>=}": "",
+            "start_time-{>=}": "",
         });
     }
 
@@ -145,6 +145,7 @@ export default class PlatActivityRankProxy extends AbstractProxy implements IPla
             // this.dialogData.formSource = data;
             // Object.assign(this.dialogData.form, JSON.parse(JSON.stringify(data)));
             this.sendNotification(HttpType.admin_plat_activity_rank_list_user_table_columns);
+            this.listUserQuery.page_count = 1;
             this.listUserQuery.activity_id = data.id;
         } else {
             this.resetDialogForm();

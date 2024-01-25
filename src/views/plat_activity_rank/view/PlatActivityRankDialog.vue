@@ -42,7 +42,7 @@
             >
                 <template slot-scope="{ row }">
                     <span v-if="activity.rank_type == 4 || activity.rank_type == 5">-</span>
-                    <span v-else>{{ row.reach_num }}</span>
+                    <span v-else>${{ row.reach_num }}</span>
                 </template>
             </el-table-column>
             <el-table-column :label="tableColumns.rank_award.name" prop="rank_award" align="center">
