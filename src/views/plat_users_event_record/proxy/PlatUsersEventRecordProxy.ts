@@ -93,6 +93,12 @@ export default class PlatUsersEventRecordProxy extends AbstractProxy implements 
         formSource: null, // 表单的原始数据
     };
 
+    allChannelData: any = [];
+    data: any = [];
+    options: any = [];
+    value = "";
+    pageNo = 0;
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -111,9 +117,20 @@ export default class PlatUsersEventRecordProxy extends AbstractProxy implements 
                 channel_id_keys.forEach((key: any) => {
                     this.tableData.columns.channel_id_options[key] = key;
                 });
+                channel_id_keys.forEach((key: any) => {
+                    this.data.push({ key: key });
+                });
+                this.allChannelData = this.data;
+                this.getPageList();
             }
             this.onQuery();
         }
+    }
+
+    getPageList() {
+        this.pageNo++;
+        const list = this.data.slice(0, 100 * this.pageNo);
+        this.options = list;
     }
 
     /**表格数据 */

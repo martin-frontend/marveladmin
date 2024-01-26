@@ -111,6 +111,7 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
         const newdata = this.addTime(datetimeString, newstr);
         return this.addTime(newdata, "+8:00");
     }
+
     /**
      * 时间的加减   传入时间格式为 2023-04-29 12:05:45  传入 与这个时间之间的偏差 输出  计算之后的 时间
      * @param timeStr 时间格式为 2023-04-29 12:05:45
@@ -130,6 +131,7 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
         const seconds24 = this.padZero(time.getSeconds());
         return `${year}-${month}-${day} ${hours24}:${minutes24}:${seconds24}`;
     }
+
     /**时间补齐 00 */
     padZero(n: number): string {
         return n < 10 ? `0${n}` : `${n}`;
@@ -145,6 +147,7 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
         },
         formSource: null, // 表单的原始数据
     };
+
     sortList = [12, 1, 8, 3, 10, 2, 9, 4, 11, 5, 6, 7];
     /**设置事件数组 */
     setEventList() {
@@ -178,6 +181,12 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
         }
     }
 
+    allChannelData: any = [];
+    data: any = [];
+    options: any = [];
+    value = "";
+    pageNo = 0;
+
     /**设置表头数据 */
     setTableColumns(data: any) {
         Object.assign(this.tableData.columns, data);
@@ -190,13 +199,28 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
                 this.listQuery.plat_id = plat_id_options_keys[0];
                 // this.listQuery.plat_id = "30024";
             }
-            this.tableData.columns.channel_id_options = this.tableData.columns.channel_id.options[this.listQuery.plat_id];
-            const channel_id_keys = Object.keys(this.tableData.columns.channel_id_options);
-            channel_id_keys.forEach((key: any) => {
-                this.tableData.columns.channel_id_options[key] = key;
-            });
+            if (this.listQuery.plat_id) {
+                this.tableData.columns.channel_id_options = this.tableData.columns.channel_id.options[
+                    this.listQuery.plat_id
+                ];
+                const channel_id_keys = Object.keys(this.tableData.columns.channel_id_options);
+                channel_id_keys.forEach((key: any) => {
+                    this.tableData.columns.channel_id_options[key] = key;
+                });
+                channel_id_keys.forEach((key: any) => {
+                    this.data.push({ key: key });
+                });
+                this.allChannelData = this.data;
+                this.getPageList();
+            }
             this.onQuery();
         }
+    }
+
+    getPageList() {
+        this.pageNo++;
+        const list = this.data.slice(0, 100 * this.pageNo);
+        this.options = list;
     }
 
     resetListdata(data: any) {
@@ -211,6 +235,7 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
             }
         }
     }
+
     /**表格数据 */
     setTableData(data: any) {
         this.tableData.list.length = 0;
@@ -251,10 +276,12 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
             this.dialogData.formSource = null;
         }
     }
+
     /**隐藏弹窗 */
     hideDialog() {
         this.dialogData.bShow = false;
     }
+
     /**重置弹窗表单 */
     resetDialogForm() { }
 
@@ -276,6 +303,7 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
 
         this.sendNotification(HttpType.admin_plat_users_event_record_pix_index, objectRemoveNull(listQuery));
     }
+
     onQuery_export(pageInfo: any) {
         const obj = JSON.parse(JSON.stringify(this.listQuery));
         obj.page_count = pageInfo.pageCount;
@@ -284,13 +312,14 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
         obj["event_time-{<=}"] = this.convertTime_to_Beijing(obj["event_time-{<=}"]);
         this.sendNotification(HttpType.admin_plat_users_event_record_pix_index, objectRemoveNull(obj));
     }
+
     /**添加数据 */
     onAdd() {
         const formCopy: any = {
             // TODO
         };
-        // this.sendNotification(HttpType.undefined, objectRemoveNull(formCopy));
     }
+
     /**更新数据 */
     onUpdate() {
         const formCopy: any = formCompared(this.dialogData.form, this.dialogData.formSource);
@@ -306,6 +335,7 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
         // 发送消息
         // this.sendNotification(HttpType.undefined, formCopy);
     }
+
     /**删除数据 */
     onDelete(id: any) {
         MessageBox.confirm("您是否删除该记录", "提示", {
@@ -318,6 +348,7 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
             })
             .catch(() => { });
     }
+
     get _userList() {
         const list = <any>["plat_id", "channel_id", "coin_name_unique"];
         for (let index = 0; index < this.sortList.length; index++) {
@@ -326,6 +357,7 @@ export default class PlatUsersEventRecordPixProxy extends AbstractProxy implemen
         }
         return list;
     }
+
     myExportPagedata = <any>{};
     /**导出excel */
     exportExcel(data: any) {

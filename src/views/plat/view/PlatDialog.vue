@@ -562,6 +562,17 @@
                                 ></el-option>
                             </el-select>
                         </div>
+                        <div>
+                            <span class="title_switch">{{ tableColumns["is_need_kyc"].name }}</span>
+                            <el-select class="select" v-model="form.is_need_kyc">
+                                <el-option
+                                    v-for="(value, key) in tableColumns.is_need_kyc.options"
+                                    :key="key"
+                                    :label="value"
+                                    :value="Number(key)"
+                                ></el-option>
+                            </el-select>
+                        </div>
                     </div>
                 </el-form-item>
                 <el-form-item size="mini" :label="LangUtil('活动币相关设置')" prop="">
