@@ -34,6 +34,7 @@ export default class SystemLangMediator extends AbstractMediator {
             EventType.admin_system_lang_import,
             EventType.admin_system_lang_generate,
             EventType.admin_system_lang_translate_all_error_lang,
+            EventType.admin_system_lang_transfer,
         ];
     }
 
@@ -87,6 +88,9 @@ export default class SystemLangMediator extends AbstractMediator {
                 })
                     .then(() => { })
                     .catch(() => { });
+                break;
+            case EventType.admin_system_lang_transfer:
+                Message.success(SuccessMessage.update);
                 break;
         }
     }

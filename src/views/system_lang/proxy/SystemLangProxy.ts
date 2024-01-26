@@ -371,4 +371,8 @@ export default class SystemLangProxy extends AbstractProxy implements ISystemLan
     translateAllLang() {
         this.sendNotification(HttpType.admin_system_lang_translate_all_error_lang);
     }
+
+    migrate(): void {
+        this.sendNotification(HttpType.admin_system_lang_transfer, { type: this.listQuery.type });
+    }
 }

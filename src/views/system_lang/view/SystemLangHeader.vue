@@ -44,11 +44,14 @@
                     <!-- 生成语言包 -->
                     {{ LangUtil("生成语言包") }}
                 </el-button>
+                <el-button style="margin-left: 8px" @click="heandlerMigrate()" type="primary" icon="">
+                    {{ LangUtil("数据迁移") }}
+                </el-button>
             </div>
             <div>
-                <el-button @click="heandlerTranslateAllLang()" type="primary">{{
-                    LangUtil("服务器语言自动插入")
-                }}</el-button>
+                <el-button @click="heandlerTranslateAllLang()" type="primary">
+                    {{ LangUtil("服务器语言自动插入") }}
+                </el-button>
             </div>
         </div>
     </div>
@@ -119,6 +122,10 @@ export default class SystemLangHeader extends AbstractView {
 
     heandlerTranslateAllLang() {
         this.myProxy.translateAllLang();
+    }
+
+    heandlerMigrate() {
+        this.myProxy.migrate();
     }
 }
 </script>

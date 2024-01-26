@@ -303,7 +303,7 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_lang_delete, { id });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     onQueryAll() {
@@ -373,5 +373,9 @@ export default class PlatLangProxy extends AbstractProxy implements IPlatLangPro
 
     generate(): void {
         this.sendNotification(HttpType.admin_plat_lang_generate, { plat_id: this.listQuery.plat_id });
+    }
+
+    migrate(): void {
+        this.sendNotification(HttpType.admin_plat_lang_transfer, { plat_id: this.listQuery.plat_id, type: this.listQuery.type });
     }
 }
