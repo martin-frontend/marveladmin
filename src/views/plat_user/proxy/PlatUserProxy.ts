@@ -143,6 +143,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             ma_token: { name: "ma_token", options: {} },
             bet_at: { name: "最后投注时间", options: {} },
             is_ma_token: { name: "ma_token用户", options: {} },
+            kyc_status: { name: 'KYC状态', options: {} },
         },
         list: <any>[],
         pageInfo: { pageTotal: 0, pageCurrent: 0, pageCount: 1, pageSize: 20 },
@@ -733,7 +734,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
                 const { channel_id, user_id } = this.changeChannelDialogData.form;
                 this.sendNotification(HttpType.admin_plat_user_change_channel, { channel_id, user_id });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     /**取得所有资料 */
@@ -936,7 +937,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             .then(() => {
                 // this.sendNotification(HttpType.admin_plat_mail_content_update, { admin_added_batch: batchId });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
     /**删除数据 */
     onDelete_multiple(batchId: any) {
@@ -948,7 +949,7 @@ export default class PlatUserProxy extends AbstractProxy implements IPlatUserPro
             .then(() => {
                 this.sendNotification(HttpType.admin_plat_user_delete_admin_added_user, { admin_added_batch: batchId });
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     _userList = [

@@ -197,6 +197,7 @@
                     <div>
                         {{ tableColumns["user_remark"].name }}：<span class="user_remark">{{ row.user_remark }}</span>
                     </div>
+                    <div>{{ tableColumns.kyc_status.name }}：{{ tableColumns.kyc_status.options[row.kyc_status] }}</div>
                     <div>{{ LangUtil("账号创建时间") }}：{{ row.user_created_at }}</div>
                 </template>
             </el-table-column>

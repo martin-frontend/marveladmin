@@ -111,6 +111,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
             auth_types: { name: "验证方式", options: {} },
             is_register_store_bank_info: { name: "注册是否储存银行卡信息", options: {} },
             is_currency_conversion: { name: '汇率转换', options: {} },
+            is_need_kyc: { name: 'KYC认证', options: {} },
             commission_config: { name: '直属分红配置', options: {} },
             commission_model_id: { name: '直属分红配置', options: {} },
         },
@@ -194,6 +195,7 @@ export default class PlatProxy extends AbstractProxy implements IPlatProxy {
         auth_types: 1,
         is_register_store_bank_info: 98,
         is_currency_conversion: 98,
+        is_need_kyc: 1,
     };
 
     /**弹窗相关数据 */

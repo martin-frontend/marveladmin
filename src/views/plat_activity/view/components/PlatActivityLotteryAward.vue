@@ -38,7 +38,7 @@
                                     v-model="item.condition.type"
                                     filterable
                                     :placeholder="LangUtil('请选择')"
-                                    disabled
+                                    :disabled="isStatusUpdate"
                                 >
                                     <el-option
                                         v-for="(value, key) in tableColumns['every_point_every_condition_type'].options"
@@ -66,7 +66,12 @@
                             <span>
                                 {{ LangUtil("奖励") }}
                             </span>
-                            <el-select v-model="item.award.type" filterable :placeholder="LangUtil('请选择')" disabled>
+                            <el-select
+                                v-model="item.award.type"
+                                filterable
+                                :placeholder="LangUtil('请选择')"
+                                :disabled="isStatusUpdate"
+                            >
                                 <el-option
                                     v-for="(value, key) in tableColumns['every_point_award_type'].options"
                                     :key="key"
@@ -166,7 +171,7 @@
                                 v-model="item.condition.type"
                                 filterable
                                 :placeholder="LangUtil('请选择')"
-                                disabled
+                                :disabled="isStatusUpdate"
                             >
                                 <el-option
                                     v-for="(value, key) in tableColumns['every_point_cycle_condition_type'].options"
@@ -193,7 +198,12 @@
                         <span>
                             {{ LangUtil("奖励") }}
                         </span>
-                        <el-select v-model="item.award.type" filterable :placeholder="LangUtil('请选择')" disabled>
+                        <el-select
+                            v-model="item.award.type"
+                            filterable
+                            :placeholder="LangUtil('请选择')"
+                            :disabled="isStatusUpdate"
+                        >
                             <el-option
                                 v-for="(value, key) in tableColumns['every_point_award_type'].options"
                                 :key="key"
@@ -285,7 +295,7 @@
                     v-model="form.point_lottery_cons[0].type"
                     filterable
                     :placeholder="LangUtil('请选择')"
-                    disabled
+                    :disabled="isStatusUpdate"
                 >
                     <el-option
                         v-for="(value, key) in tableColumns['every_point_cons_type'].options"
@@ -390,7 +400,7 @@
                                 v-model="item.condition.type"
                                 filterable
                                 :placeholder="LangUtil('请选择')"
-                                disabled
+                                :disabled="isStatusUpdate"
                             >
                                 <el-option
                                     v-for="(value, key) in tableColumns['every_point_routine_condition_type'].options"
@@ -416,7 +426,12 @@
                         <span>
                             {{ LangUtil("奖励") }}
                         </span>
-                        <el-select v-model="item.award.type" filterable :placeholder="LangUtil('请选择')" disabled>
+                        <el-select
+                            v-model="item.award.type"
+                            filterable
+                            :placeholder="LangUtil('请选择')"
+                            :disabled="isStatusUpdate"
+                        >
                             <el-option
                                 v-for="(value, key) in tableColumns['every_point_award_type'].options"
                                 :key="key"
@@ -513,6 +528,14 @@ export default class PlatActivityLotteryAward extends AbstractView {
     myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
     // proxy property
     tableColumns = this.myProxy.tableData.columns;
+
+    get status() {
+        return this.myProxy.dialogData.status;
+    }
+
+    get isStatusUpdate() {
+        return this.status == DialogStatus.update;
+    }
 
     get form() {
         return this.myProxy.dialogData.form;

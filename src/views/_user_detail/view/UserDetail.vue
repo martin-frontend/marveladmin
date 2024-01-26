@@ -95,6 +95,13 @@
                 >
                     <TabEasybet v-if="activeName == 'tab13'" />
                 </el-tab-pane>
+                <el-tab-pane
+                    :label="LangUtil('用户认证')"
+                    name="tab14"
+                    :disabled="net_status.loading || !userShow.finished"
+                >
+                    <TabKyc v-if="activeName == 'tab14'" />
+                </el-tab-pane>
             </el-tabs>
         </el-dialog>
     </div>
@@ -120,6 +127,7 @@ import TabWaterRate from "./tab_water_rate/view/TabWaterRate.vue";
 import TabPlatVendorUser from "./tab_plat_vendor_user/view/TabPlatVendorUser.vue";
 import TabCredit from "./tab_credit/view/TabCredit.vue";
 import TabEasybet from "./tab_easybet/view/TabEasybet.vue";
+import TabKyc from "./tab_kyc/view/TabKyc.vue";
 import Cookies from "js-cookie";
 import GlobalVar from "@/core/global/GlobalVar";
 import { userShow } from "@/views/_user_detail/PageSetting";
@@ -139,6 +147,7 @@ import { userShow } from "@/views/_user_detail/PageSetting";
         TabPlatVendorUser,
         TabCredit,
         TabEasybet,
+        TabKyc,
     },
 })
 export default class UserDetail extends AbstractView {

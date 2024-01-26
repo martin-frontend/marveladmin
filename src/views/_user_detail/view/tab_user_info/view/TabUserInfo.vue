@@ -550,6 +550,17 @@
                         </el-form-item>
                     </div>
 
+                    <div class="row_display">
+                        <el-form-item size="mini" :label="tableColumns['is_need_kyc'].name" prop="is_need_kyc">
+                            <el-switch
+                                @change="onSwitchIs_need_kyc()"
+                                v-model="userInfo.is_need_kyc"
+                                :active-value="1"
+                                :inactive-value="98"
+                            ></el-switch>
+                        </el-form-item>
+                    </div>
+
                     <el-form-item
                         size="mini"
                         :label="tableColumns.gold_columns_disable.name"
@@ -737,6 +748,11 @@ export default class TabUserInfo extends AbstractView {
     onSwitchIsBackVisit() {
         this.myProxy.dialogData.filed = "is_back_visit";
         this.myProxy.onEdit("is_back_visit", this.userInfo.is_back_visit);
+    }
+
+    onSwitchIs_need_kyc() {
+        this.myProxy.dialogData.filed = "is_need_kyc";
+        this.myProxy.onEdit("is_need_kyc", this.userInfo.is_need_kyc);
     }
 
     showUserDetail(user_id: number) {
