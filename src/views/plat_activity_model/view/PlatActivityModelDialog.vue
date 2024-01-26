@@ -387,7 +387,7 @@ export default class PlatActivityModelDialog extends AbstractView {
         this.filterCategory = filterCategory;
 
         if (this.form.type == 15) {
-            this.form.show_types = [0];
+            this.form.show_types = [1];
             this.form.settlement_type = 1;
         } else {
             this.form.show_types = [];
