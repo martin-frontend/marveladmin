@@ -5,7 +5,7 @@ import { EventType, HttpType } from "@/views/plat_lang/setting";
 import { Message } from "element-ui";
 import PlatLangProxy from "../proxy/PlatLangProxy";
 
-interface IPlatLang extends IEventDispatcher {}
+interface IPlatLang extends IEventDispatcher { }
 
 export default class PlatLangMediator extends AbstractMediator {
     private myProxy: PlatLangProxy = <any>this.getProxy(PlatLangProxy);
@@ -32,6 +32,7 @@ export default class PlatLangMediator extends AbstractMediator {
             EventType.admin_plat_lang_import,
             EventType.admin_system_lang_translate,
             EventType.admin_plat_lang_generate,
+            EventType.admin_plat_lang_transfer,
         ];
     }
 
@@ -75,6 +76,9 @@ export default class PlatLangMediator extends AbstractMediator {
                 myProxy.updateForm(body);
                 break;
             case EventType.admin_plat_lang_generate:
+                Message.success(SuccessMessage.update);
+                break;
+            case EventType.admin_plat_lang_transfer:
                 Message.success(SuccessMessage.update);
                 break;
         }

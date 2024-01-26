@@ -50,6 +50,9 @@
                 <!-- 生成语言包 -->
                 {{ LangUtil("生成语言包") }}
             </el-button>
+            <el-button style="margin-left: 8px" @click="heandlerMigrate()" type="primary" icon="">
+                {{ LangUtil("数据迁移") }}
+            </el-button>
         </div>
     </div>
 </template>
@@ -114,6 +117,10 @@ export default class PlatLangHeader extends AbstractView {
     //生成语言包
     heandlerGenerate() {
         this.myProxy.generate();
+    }
+
+    heandlerMigrate() {
+        this.myProxy.migrate();
     }
 }
 </script>
