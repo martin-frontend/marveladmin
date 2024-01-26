@@ -5,15 +5,39 @@
                 <el-form ref="form" :rules="rules" :model="form" label-width="115px">
                     <!-- 模版名称 -->
                     <el-form-item size="mini" :label="tableColumns.activity_name.name" prop="activity_name">
-                        <el-input v-model="form.activity_name" :placeholder="LangUtil('请输入')"></el-input>
+                        <div class="flex d-flex">
+                            <el-input
+                                style="margin-right: 0.8rem"
+                                v-model="form.activity_name"
+                                :placeholder="LangUtil('请输入')"
+                            ></el-input>
+                            <el-button
+                                style="max-height: 35px"
+                                type="primary"
+                                size="mini"
+                                @click="handleTranslate('activity_name')"
+                                >{{ LangUtil("翻译") }}
+                            </el-button>
+                        </div>
                     </el-form-item>
                     <!-- 活动描述 -->
                     <el-form-item size="mini" :label="tableColumns['activity_desc'].name" prop="activity_desc">
-                        <el-input
-                            type="textarea"
-                            v-model="form.activity_desc"
-                            :placeholder="LangUtil('请输入')"
-                        ></el-input>
+                        <div class="flex d-flex">
+                            <el-input
+                                style="margin-right: 0.8rem"
+                                type="textarea"
+                                v-model="form.activity_desc"
+                                :placeholder="LangUtil('请输入')"
+                            >
+                            </el-input>
+                            <el-button
+                                style="max-height: 35px"
+                                type="primary"
+                                size="mini"
+                                @click="handleTranslate('activity_desc')"
+                                >{{ LangUtil("翻译") }}
+                            </el-button>
+                        </div>
                     </el-form-item>
                     <el-form-item size="mini" :label="tableColumns['icon'].name" prop="icon">
                         <el-input v-model="form.icon" :placeholder="LangUtil('请输入')"></el-input>
@@ -257,6 +281,8 @@ import PlatActivityRule from "./components/PlatActivityRule.vue";
 import PlatActivityBallAward from "./components/PlatActivityBallAward.vue";
 import PlatActivitySpinAward from "./components/PlatActivitySpinAward.vue";
 import PlatActivityLotteryAward from "./components/PlatActivityLotteryAward.vue";
+import { LanguageType } from "@/core/enum/UserType";
+import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
 @Component({
     components: {
@@ -273,6 +299,7 @@ export default class PlatActivityModelDialog extends AbstractView {
     checkUnique = checkUnique;
     //网络状态
     net_status = GlobalVar.net_status;
+    langProxy: CommonLangProxy = this.getProxy(CommonLangProxy);
     // proxy
     myProxy: PlatActivityModelProxy = this.getProxy(PlatActivityModelProxy);
     // proxy property
@@ -393,14 +420,28 @@ export default class PlatActivityModelDialog extends AbstractView {
     hide() {
         this.myProxy.dialogData.isRender = false;
     }
+
     /** 添加每日返水  */
     onAddDailyRatio() {
         console.log("点击添加");
         this.form.daily_ratio.push(0);
     }
+
     onDeleteDailyRatio() {
         console.log("点击删除");
         this.form.daily_ratio.pop();
+    }
+
+    handleTranslate(source: string) {
+        const data: any = {};
+        // data.sentence = source;
+        data.type = LanguageType.TYPE_PLAT_ACTIVITY;
+        data.plat_id = this.form.plat_id;
+        //@ts-ignore
+        data.sentence = this.form[source] || source;
+        data.refForm = this.form;
+        data.useKey = source;
+        this.langProxy.showDialog(data);
     }
 }
 </script>
