@@ -4,6 +4,7 @@ import { IEventDispatcher } from "@/core/IEventDispatcher";
 import { EventType, HttpType } from "@/views/plat_activity_rank/setting";
 import { Message } from "element-ui";
 import PlatActivityRankProxy from "../proxy/PlatActivityRankProxy";
+import GlobalEventType from "@/core/global/GlobalEventType";
 
 interface IPlatActivityRank extends IEventDispatcher {
 
@@ -31,6 +32,7 @@ export default class PlatActivityRankMediator extends AbstractMediator {
             EventType.admin_plat_activity_rank_list_update,
             EventType.admin_plat_activity_rank_list_user_table_columns,
             EventType.admin_plat_activity_rank_list_user_index,
+            GlobalEventType.REQUEST_ERROR,
         ];
     }
 
@@ -55,6 +57,9 @@ export default class PlatActivityRankMediator extends AbstractMediator {
                 break;
             case EventType.admin_plat_activity_rank_list_user_index:
                 myProxy.setUserTableData(body);
+                break;
+            case GlobalEventType.REQUEST_ERROR:
+                myProxy.onQuery();
                 break;
         }
     }
