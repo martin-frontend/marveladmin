@@ -85,6 +85,10 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_end_time: { name: "展示-结束时间", options: {} },
             show_start_time: { name: "展示-开始时间", options: {} },
             prize_pool_amount: { name: "奖池金额", options: {} },
+            user_term: { name: "用户期限", options: {} },
+            every_point_cycle_condition_type: { name: '循环任务-条件', options: {} },
+            every_point_every_condition_type: { name: '每日任务-条件', options: {} },
+            every_point_routine_condition_type: { name: '普通任务-条件', options: {} },
         },
         orderData: {
             id: "",
@@ -173,7 +177,12 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         ball_award: <any>[],
         rank_award: <any>[],
         day_num_init_config: <any>[],
-
+        every_task: [],          // 每日任务
+        cycle_task: [],          // 循环任务
+        point_lottery_cons: [],  // 抽奖消耗
+        point_lottery_award: [], // 抽奖奖励
+        routine_task: [],        // 普通任务
+        user_term: "",
         coin_unique: "", // 活動幣種
     };
 
@@ -340,7 +349,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.plat_id = this.dialogData.form.plat_id.toString();
         this.dialogData.fileList[0].url = this.dialogData.form.link_url_url;
         this.dialogData.fileList1[0].url = this.dialogData.form.icon_url;
-        if (this.dialogData.form.rules && data.model_type != 12 && data.model_type != 13)
+        if (this.dialogData.form.rules && data.model_type != 12 && data.model_type != 13 && data.model_type != 14) {
             for (const item of this.dialogData.form.rules) {
                 if (item.list)
                     for (const child of item.list) {
@@ -372,6 +381,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                             }
                     }
             }
+        }
         else {
             if (data.model_type == 12) {
                 this.setBallAwardData(data);
@@ -379,8 +389,10 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             else if (data.model_type == 13) {
                 this.setSpinAwardData(data);
             }
+            else if (data.model_type == 14) {
+                this.setActivityLotteryAwardData(data);
+            }
         }
-        console.log("---->>>", this.dialogData.form);
     }
 
     setConditionDetail(data: any) {
@@ -464,6 +476,14 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         this.dialogData.form.lottery_award = JSON.parse(JSON.stringify(data.lottery_award));
     }
 
+    setActivityLotteryAwardData(data: any) {
+        this.dialogData.form.every_task = JSON.parse(JSON.stringify(data.every_task));
+        this.dialogData.form.cycle_task = JSON.parse(JSON.stringify(data.cycle_task));
+        this.dialogData.form.point_lottery_cons = JSON.parse(JSON.stringify(data.point_lottery_cons));
+        this.dialogData.form.point_lottery_award = JSON.parse(JSON.stringify(data.point_lottery_award));
+        this.dialogData.form.routine_task = JSON.parse(JSON.stringify(data.routine_task));
+    }
+
     /**重置查询条件 */
     resetListQuery() {
         Object.assign(this.listQuery, {
@@ -497,7 +517,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                 page_size: 20000,
                 plat_id: data.plat_id,
             });
-            console.log("---<<< ", this.dialogData.form);
         } else {
             this.resetDialogForm();
             this.resetConditionForm();
@@ -651,7 +670,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             show_start_time,
             coin_unique
         } = this.dialogData.form;
-        if (rules && this.dialogData.form.model_type != 12 && this.dialogData.form.model_type != 13) {
+        if (rules && this.dialogData.form.model_type != 12 && this.dialogData.form.model_type != 13 && this.dialogData.form.model_type != 14) {
             for (const item of rules) {
                 if (item.list)
                     for (const child of item.list) {
@@ -823,7 +842,15 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             formCopy.lottery_cons = JSON.stringify(this.dialogData.form.lottery_cons);
             formCopy.lottery_award = JSON.stringify(this.dialogData.form.lottery_award);
         }
-        console.log("---->>>", formCopy);
+        if (this.dialogData.form.model_type == 14) {
+            formCopy.model_type = 14;
+            formCopy.every_task = JSON.stringify(this.dialogData.form.every_task);
+            formCopy.cycle_task = JSON.stringify(this.dialogData.form.cycle_task);
+            formCopy.point_lottery_cons = JSON.stringify(this.dialogData.form.point_lottery_cons);
+            formCopy.point_lottery_award = JSON.stringify(this.dialogData.form.point_lottery_award);
+            formCopy.routine_task = JSON.stringify(this.dialogData.form.routine_task);
+            formCopy.user_term = this.dialogData.form.user_term;
+        }
 
         if (!formCopy.show_end_time) {
             formCopy.show_end_time = formCopy.end_time;
@@ -914,7 +941,6 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
     //将时间只发送天
     resetDate(date: string) {
         const strArr = date.split(" ");
-        console.log("转换之后的", strArr);
         return strArr[0];
     }
     /**关闭该活动 */
@@ -952,11 +978,9 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
         formCopy = objectRemoveNull(formCopy);
         if (this.dialogData.form.award_type == 16 || this.dialogData.form.award_type == "16") {
             formCopy.daily_ratio = JSON.stringify(this.dialogData.form.daily_ratio);
-            console.log("----formCopy---", formCopy);
         }
         // 如果没有修改，就直接关闭弹窗
         if (Object.keys(formCopy).length == 0) {
-            console.log("如果没有修改，就直接关闭弹窗");
             this.dialogData.bShow = false;
             return false;
         }
@@ -1032,6 +1056,15 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             });
             formCopy.lottery_cons = JSON.stringify(this.dialogData.form.lottery_cons);
             formCopy.lottery_award = JSON.stringify(this.dialogData.form.lottery_award);
+        }
+        if (this.dialogData.form.model_type == 14) {
+            formCopy.model_type = 14;
+            formCopy.every_task = JSON.stringify(this.dialogData.form.every_task);
+            formCopy.cycle_task = JSON.stringify(this.dialogData.form.cycle_task);
+            formCopy.point_lottery_cons = JSON.stringify(this.dialogData.form.point_lottery_cons);
+            formCopy.point_lottery_award = JSON.stringify(this.dialogData.form.point_lottery_award);
+            formCopy.routine_task = JSON.stringify(this.dialogData.form.routine_task);
+            formCopy.user_term = this.dialogData.form.user_term;
         }
         if (this.dialogData.conditionForm.assign_is_all == false &&
             this.dialogData.conditionForm.assign_is_agent == false &&
@@ -1210,7 +1243,7 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
             this.dialogData.form.is_once = is_once;
             this.dialogData.form.show_type = show_types[0];
             this.dialogData.form.model_type = body.type;
-            if (data.type != 12 && data.type != 13) {
+            if (data.type != 12 && data.type != 13 && data.type != 14) {
                 for (const item of rules) {
                     for (const child of item.list) {
                         for (const child_1 of child.list) {
@@ -1235,13 +1268,30 @@ export default class PlatActivityProxy extends AbstractProxy implements IPlatAct
                     this.setBallAwardData(data);
                 } else if (data.type == 13) {
                     this.setSpinAwardData(data);
+                } else if (data.type == 14) {
+                    this.setActivityLotteryAwardData(data);
+                    this.dialogData.form.every_task.forEach((day: { award: { type: number; params: string[]; }; }[]) => {
+                        day.forEach((task: { award: { type: number; params: string[]; }; }) => {
+                            if (task.award.type == 3) {
+                                task.award.params = ["", ""]
+                            }
+                        })
+                    })
+                    this.dialogData.form.cycle_task.forEach((task: { award: { type: number; params: string[]; }; }) => {
+                        if (task.award.type == 3) {
+                            task.award.params = ["", ""]
+                        }
+                    })
+                    this.dialogData.form.routine_task.forEach((task: { award: { type: number; params: string[]; }; }) => {
+                        if (task.award.type == 3) {
+                            task.award.params = ["", ""]
+                        }
+                    })
                 }
             }
             this.dialogData.form.transfer_amount_rate_Arr = <any>[];
             this.dialogData.form.rules = rules;
             this.dialogData.update++;
-
-            console.log(">>>>>>>>>>>>>>>>>>>>>update");
         }
     }
 
