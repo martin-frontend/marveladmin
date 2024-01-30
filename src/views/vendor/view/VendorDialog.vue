@@ -5,7 +5,7 @@
             :rules="rules"
             :model="form"
             label-position="left"
-            label-width="140px"
+            label-width="160px"
             style="width: 100%; padding-left: 50px; padding-right: 50px"
             v-loading="net_status.loading"
         >
@@ -131,6 +131,14 @@
                     ></el-option>
                 </el-select>
                 <el-button type="primary" @click="handleAddCoin()">{{ LangUtil("添加币种") }}</el-button>
+            </el-form-item>
+            <el-form-item
+                size="mini"
+                :label="tableColumns['is_enable_profit_tax'].name"
+                prop="is_enable_profit_tax"
+                v-if="form.vendor_wallet_type == '2'"
+            >
+                <el-switch v-model="form.is_enable_profit_tax" :active-value="1" :inactive-value="98"></el-switch>
             </el-form-item>
             <div class="table">
                 <el-table :data="list.list" border style="width: 100%" v-loading="net_status.loading">

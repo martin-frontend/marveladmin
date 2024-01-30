@@ -1,6 +1,6 @@
 <template>
     <el-dialog :title="textMap[status]" :visible.sync="myProxy.dialogData.bShow" width="90%">
-        <el-form ref="form" :rules="rules" :model="form" label-width="125px" v-loading="net_status.loading">
+        <el-form ref="form" :rules="rules" :model="form" label-width="180px" v-loading="net_status.loading">
             <el-scrollbar>
                 <el-form-item size="mini" :label="tableColumns['plat_name'].name" prop="plat_name">
                     <el-input v-model="form.plat_name" :placeholder="LangUtil('请输入')"></el-input>
@@ -731,6 +731,97 @@
                     </div>
                 </el-form-item>
 
+                <!-- <el-form-item size="mini" :label="tableColumns['betting_tax'].name">
+                    <span slot="label">
+                        {{ tableColumns["betting_tax"].name }}
+                        <el-tooltip
+                            :content="
+                                LangUtil(
+                                    '控制单钱包游戏投注盈利按照此比例收税，设置为0不收税，设置0.01表示收1%税，设置范围[0,1]'
+                                )
+                            "
+                            placement="top"
+                        >
+                            <i class="el-icon-question"></i>
+                        </el-tooltip>
+                    </span>
+                    <div class="item-content">
+                        <el-input
+                            class="select"
+                            v-model="form.betting_tax"
+                            onkeyup="this.value=(this.value.match(/\d+(.\d{0,15})?/)||[''])[0]"
+                            @blur="inputBettingTaxChange"
+                        ></el-input>
+                    </div>
+                </el-form-item> -->
+
+                <!-- <el-form-item size="mini" :label="tableColumns['game_profit_audit'].name">
+                    <span slot="label">
+                        {{ tableColumns["game_profit_audit"].name }}
+                        <el-tooltip
+                            :content="
+                                LangUtil(
+                                    '游戏稽核开关打开状态下，单钱包游戏单笔投注盈利超过起点稽核金额时，程序判断盈利金额超过触发稽核盈利金额，或者爆奖倍数超过触发稽核爆奖倍数，满足任何一个触发条件，提现审核流水需要增加中奖金额*稽核流水倍数'
+                                )
+                            "
+                            placement="top"
+                        >
+                            <i class="el-icon-question"></i>
+                        </el-tooltip>
+                    </span>
+                    <div class="item-content">
+                        <span>{{ tableColumns.is_game_audit.name }}：</span>
+                        <el-switch
+                            class="select"
+                            style="width: 60px;"
+                            v-model="form.is_game_audit"
+                            :active-value="1"
+                            :inactive-value="98"
+                        >
+                        </el-switch>
+                    </div>
+                    <div class="item-content">
+                        <span>{{ tableColumns.start_audit_amount.name }}：</span>
+                        <el-input
+                            class="select"
+                            v-model="form.start_audit_amount"
+                            onkeyup="this.value=(this.value.match(/\d+(.\d{0,3})?/)||[''])[0]"
+                            @blur="inputStartAuditAmountChange"
+                        >
+                        </el-input>
+                    </div>
+                    <div class="item-content">
+                        <span>{{ tableColumns.trigger_audit_profit_amount.name }}：</span>
+                        <el-input
+                            class="select"
+                            v-model="form.trigger_audit_profit_amount"
+                            onkeyup="this.value=(this.value.match(/\d+(.\d{0,3})?/)||[''])[0]"
+                            @blur="inputTriggerAuditProfitAmountChange"
+                        >
+                        </el-input>
+                    </div>
+                    <div class="item-content">
+                        <span>{{ tableColumns.trigger_audit_jackpot_multiplier.name }}：</span>
+                        <el-input
+                            class="select"
+                            v-model="form.trigger_audit_jackpot_multiplier"
+                            onkeyup="this.value=(this.value.match(/\d+(.\d{0,3})?/)||[''])[0]"
+                            @blur="inputTriggerAuditJackpotMultiplierChange"
+                        >
+                        </el-input>
+                    </div>
+                    <div class="item-content">
+                        <span>{{ tableColumns.audit_turnover_multiplier.name }}：</span>
+                        <el-input
+                            class="select"
+                            v-model="form.audit_turnover_multiplier"
+                            onkeyup="this.value=(this.value.match(/\d+(.\d{0,3})?/)||[''])[0]"
+                            @blur="inputAuditTurnoverMultiplierChange"
+                        >
+                        </el-input>
+                    </div>
+                </el-form-item> -->
+
                 <el-form-item size="mini" :label="tableColumns['client_config'].name" prop="client_config">
                     <div class="editor-container">
                         <json-editor ref="jsonEditor" v-model="form.client_config" />
@@ -856,6 +947,26 @@ export default class PlatDialog extends AbstractView {
             return false;
         }
         return true;
+    }
+
+    inputBettingTaxChange(e: any) {
+        this.form.betting_tax = e.target.value;
+    }
+
+    inputStartAuditAmountChange(e: any) {
+        this.form.start_audit_amount = e.target.value;
+    }
+
+    inputTriggerAuditProfitAmountChange(e: any) {
+        this.form.trigger_audit_profit_amount = e.target.value;
+    }
+
+    inputTriggerAuditJackpotMultiplierChange(e: any) {
+        this.form.trigger_audit_jackpot_multiplier = e.target.value;
+    }
+
+    inputAuditTurnoverMultiplierChange(e: any) {
+        this.form.audit_turnover_multiplier = e.target.value;
     }
 }
 </script>
