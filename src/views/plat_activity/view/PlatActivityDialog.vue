@@ -169,7 +169,6 @@
                             size="mini"
                             :label="tableColumns['is_preheat'].name"
                             prop="is_preheat"
-                            v-if="form.show_type == 2 || form.show_type == 4"
                         >
                             <el-radio-group v-model="form.is_preheat" :disabled="isStatusUpdate">
                                 <el-radio
