@@ -79,7 +79,7 @@
             </el-table-column>
             <el-table-column :label="tableColumns.relation_ids.name" class-name="status-col" min-width="100px">
                 <template slot-scope="{ row }">
-                    <span v-if="row.relation_ids"> {{ LangUtil("下注订单编号") }}:{{ row.relation_ids }} </span>
+                    <span v-if="row.relation_ids"> {{ LangUtil("厂商注单") }}:{{ row.relation_ids }} </span>
                     <span v-else> - </span>
                 </template>
             </el-table-column>
