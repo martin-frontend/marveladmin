@@ -253,8 +253,12 @@
                                 size="mini"
                                 :label="tableColumns['award_type'].name"
                                 prop="award_type"
-                                v-if="form.type == 1 && (form.settlement_type == 1 || form.settlement_type == 2)"
-                            >
+                                v-if="
+                                    form.type == 1 &&
+                                        (form.settlement_type == 1 || form.settlement_type == 2) &&
+                                        !isActivityRankingAward
+                                "
+                                >{{}}
                                 <el-radio-group v-model="form.award_type" disabled v-if="isStatusUpdate">
                                     <el-radio
                                         v-for="(value, key) in tableColumns['award_type'].options"
@@ -643,7 +647,10 @@
                         <PlatActivityBallAward v-if="isBallAward" />
                         <PlatActivitySpinAward v-else-if="isSpinAward" />
                         <PlatActivityLotteryAward v-else-if="isActivityLotteryAward" />
-                        <template v-if="!isBallAward && !isSpinAward && !isActivityLotteryAward">
+                        <PlatActivityRankingAward v-else-if="isActivityRankingAward" />
+                        <template
+                            v-if="!isBallAward && !isSpinAward && !isActivityLotteryAward && !isActivityRankingAward"
+                        >
                             <!-- 奖励规则 -->
                             <div v-if="form.type == 1 && form.model_id" class="_title">
                                 {{ LangUtil("奖励规则") }}
@@ -1433,6 +1440,7 @@ import { BaseInfo } from "@/components/vo/commonVo";
 import PlatActivityBallAward from "./components/PlatActivityBallAward.vue";
 import PlatActivitySpinAward from "./components/PlatActivitySpinAward.vue";
 import PlatActivityLotteryAward from "./components/PlatActivityLotteryAward.vue";
+import PlatActivityRankingAward from "./components/PlatActivityRankingAward.vue";
 import SearchDatePicker from "@/components/SearchDatePicker.vue";
 
 @Component({
@@ -1440,6 +1448,7 @@ import SearchDatePicker from "@/components/SearchDatePicker.vue";
         PlatActivityBallAward,
         PlatActivitySpinAward,
         PlatActivityLotteryAward,
+        PlatActivityRankingAward,
         SearchDatePicker,
     },
 })
@@ -1482,6 +1491,10 @@ export default class PlatActivityDialog extends AbstractView {
 
     get isActivityLotteryAward() {
         return this.form.model_type == 14;
+    }
+
+    get isActivityRankingAward() {
+        return this.form.model_type == 15;
     }
 
     get curTime() {
@@ -1592,6 +1605,8 @@ export default class PlatActivityDialog extends AbstractView {
             task_water_rate_64: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             task_water_rate_128: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             user_term: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            rank_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            lowest_score: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
@@ -1613,6 +1628,7 @@ export default class PlatActivityDialog extends AbstractView {
     handleAdd() {
         let activity = false;
         let condition = false;
+        let isValide = true;
         (this.$refs["dialogForm"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 condition = true;
@@ -1623,11 +1639,47 @@ export default class PlatActivityDialog extends AbstractView {
         (this.$refs["form"] as Vue & { validate: (cb: any) => void }).validate((valid: boolean) => {
             if (valid) {
                 activity = true;
+                const config: any = this.myProxy.dialogData.form.rank_award;
+                const element = config;
+                element.forEach((item: any) => {
+                    if (!isValide) return;
+                    let errorCode1: any = this.LangUtil("开始排名必须填写");
+                    let errorCode2: any = this.LangUtil("结束排名必须填写");
+                    let errorCode3: any = this.LangUtil("奖励币种必须选择");
+                    let errorCode4: any = this.LangUtil("奖励数量必须填写");
+                    let errorCode5: any = this.LangUtil("提现流水倍数必须填写");
+                    if (item.interval[0] == "") {
+                        this.$message.warning(errorCode1);
+                        this.myProxy.editTabsActivity = "activity";
+                        isValide = false;
+                        return;
+                    } else if (item.interval[1] == "") {
+                        this.$message.warning(errorCode2);
+                        this.myProxy.editTabsActivity = "activity";
+                        isValide = false;
+                        return;
+                    } else if (item.award.key == "") {
+                        this.$message.warning(errorCode3);
+                        this.myProxy.editTabsActivity = "activity";
+                        isValide = false;
+                        return;
+                    } else if (item.award.value == "") {
+                        this.$message.warning(errorCode4);
+                        this.myProxy.editTabsActivity = "activity";
+                        isValide = false;
+                        return;
+                    } else if (item.bonus_multiple == "") {
+                        this.$message.warning(errorCode5);
+                        this.myProxy.editTabsActivity = "activity";
+                        isValide = false;
+                        return;
+                    }
+                });
             } else {
                 this.myProxy.editTabsActivity = "activity";
             }
         });
-        if (activity && condition) {
+        if (activity && condition && isValide) {
             this.myProxy.onAdd();
         }
     }
@@ -1649,6 +1701,7 @@ export default class PlatActivityDialog extends AbstractView {
                 this.myProxy.editTabsActivity = "activity";
             }
         });
+
         if (activity && condition) {
             this.myProxy.onUpdate();
         }

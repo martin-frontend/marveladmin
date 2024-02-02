@@ -66,6 +66,7 @@
                             12: "彩球排名活动"
                             13: "转盘抽奖"
                             14: "每日积分抽奖活动"
+                            15: "排行榜活动"
                         -->
                         <!-- 模型分类 -->
                         <el-form-item
@@ -91,7 +92,8 @@
                                     :key="key"
                                     :label="value"
                                     :value="Number(key)"
-                                ></el-option>
+                                >
+                                </el-option>
                             </el-select>
                         </el-form-item>
                         <!-- 外部链接 -->
@@ -116,6 +118,7 @@
                             size="mini"
                             :label="tableColumns['settlement_period'].name"
                             prop="settlement_period"
+                            v-if="form.type != 15"
                         >
                             <el-select v-model="form.settlement_period" filterable :placeholder="LangUtil('请选择')">
                                 <el-option
@@ -133,6 +136,7 @@
                                     v-for="(value, key) in tableColumns['settlement_type'].options"
                                     :key="key"
                                     :label="Number(key)"
+                                    :disabled="form.type == 15"
                                 >
                                     {{ value }}
                                 </el-radio>
@@ -142,7 +146,7 @@
                             size="mini"
                             :label="tableColumns['award_types'].name"
                             prop="award_types"
-                            v-if="isShowAwardType"
+                            v-if="isShowAwardType && form.type != 15"
                         >
                             <el-checkbox-group v-model="form.award_types">
                                 <el-checkbox
@@ -213,6 +217,7 @@
                                     :key="key"
                                     :label="Number(key)"
                                     @change="onShowTypeChange($event, key)"
+                                    :disabled="form.type == 15"
                                 >
                                     {{ value }}
                                 </el-checkbox>
@@ -236,16 +241,22 @@
                                 </el-radio>
                             </el-radio-group>
                         </el-form-item>
-                        <el-form-item size="mini" :label="tableColumns['rules'].name" prop="rules">
+                        <el-form-item
+                            size="mini"
+                            :label="tableColumns['rules'].name"
+                            prop="rules"
+                            v-if="form.type != 15"
+                        >
                             <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="onAddRule"
                                 >{{ LangUtil("新增规则") }}
                             </el-button>
                         </el-form-item>
-                        <PlatActivityRule v-if="myProxy.dialogData.isRender" />
+                        <PlatActivityRule v-if="myProxy.dialogData.isRender && form.type != 15" />
                     </template>
                     <PlatActivityBallAward v-if="form.type == 12" />
                     <PlatActivitySpinAward v-if="form.type == 13" />
                     <PlatActivityLotteryAward v-if="form.type == 14" />
+                    <PlatActivityRankingAward v-if="form.type == 15" />
                 </el-form>
             </el-scrollbar>
             <div class="dialog-footer">
@@ -281,6 +292,7 @@ import PlatActivityRule from "./components/PlatActivityRule.vue";
 import PlatActivityBallAward from "./components/PlatActivityBallAward.vue";
 import PlatActivitySpinAward from "./components/PlatActivitySpinAward.vue";
 import PlatActivityLotteryAward from "./components/PlatActivityLotteryAward.vue";
+import PlatActivityRankingAward from "./components/PlatActivityRankingAward.vue";
 import { LanguageType } from "@/core/enum/UserType";
 import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
 
@@ -290,6 +302,7 @@ import CommonLangProxy from "@/views/language_dialog/proxy/CommonLangProxy";
         PlatActivityBallAward,
         PlatActivitySpinAward,
         PlatActivityLotteryAward,
+        PlatActivityRankingAward,
     },
 })
 export default class PlatActivityModelDialog extends AbstractView {
@@ -348,6 +361,8 @@ export default class PlatActivityModelDialog extends AbstractView {
             is_once: [{ required: false, message: this.LangUtil("必须填写"), trigger: "change" }],
             rules: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
             user_term: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
+            rank_type: [{ required: true, message: this.LangUtil("必须选择"), trigger: "change" }],
+            lowest_score: [{ required: true, message: this.LangUtil("必须填写"), trigger: "change" }],
         };
     }
 
@@ -397,6 +412,14 @@ export default class PlatActivityModelDialog extends AbstractView {
         this.form.category = "";
         this.myProxy.resetSpinForm();
         this.filterCategory = filterCategory;
+
+        if (this.form.type == 15) {
+            this.form.show_types = [1];
+            this.form.settlement_type = 1;
+        } else {
+            this.form.show_types = [];
+            this.form.settlement_type = "";
+        }
     }
 
     // 展示方式變動
